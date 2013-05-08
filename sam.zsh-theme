@@ -12,7 +12,7 @@ function batterycharge {
 
 #PROMPT='%{$bg[black]%}%{$fg[green]%}%~%{$fg_bold[blue]%}$(git_prompt_info)%  →'
 #PROMPT='%{$fg[red]%}$(battery.sh)%{$fg[yellow]%} %n %{$fg[green]%}%~%{$fg[white]%} '
-PROMPT=' $(git_prompt_info)%{$fg[green]%}%~%{$fg[white]%} '
+PROMPT=' %{$fg[yellow]%}$(git_prompt_info) %{$fg[green]%}%~%{$fg[white]%} '
 
 
 # Right-side prompt
@@ -28,5 +28,5 @@ PROMPT=' $(git_prompt_info)%{$fg[green]%}%~%{$fg[white]%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="("
 ZSH_THEME_GIT_PROMPT_SUFFIX=")"
-ZSH_THEME_GIT_PROMPT_DIRTY=" ✗"
-ZSH_THEME_GIT_PROMPT_CLEAN=" ✔"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%} ✗%{$fg[yellow]%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ✔%{$fg[yellow]%}"
