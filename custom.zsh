@@ -180,6 +180,7 @@ alias play="mplayer -vo corevideo $1"
 alias web="links"
 alias www="links"
 alias ytdl="youtube-dl $1"
+alias todo="todo.sh"
 
 ###
 ### Hax
