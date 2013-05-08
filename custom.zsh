@@ -19,9 +19,9 @@ source ~/git/functions.zsh
 ###
 ### Open this file and select zsh customizations
 ###
-alias custom='vi ~/git/custom.zsh'
+alias custom='vi ~/dotfiles/custom.zsh'
 # The below functions already exist; use "function" (with quotes) to use original
-alias functions='vi ~/git/functions.zsh'
+alias functions='vi ~/dotfiles/functions.zsh'
 #alias aliases='vi ~/.oh-my-zsh/lib/aliases.zsh'
 
 ###
