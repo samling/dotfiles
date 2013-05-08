@@ -34,6 +34,9 @@ ZSH=$HOME/.oh-my-zsh
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git themes osx ssh-agent zsh-syntax-highlighting)
 
+# Completion
+complete -F _todo t # Todo.sh completion
+
 # GCC stuff
 export ARCHFLAGS="-arch x86_64"
 
