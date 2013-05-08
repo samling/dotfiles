@@ -58,6 +58,42 @@ MAIL=/var/spool/mail/sboynton && export MAIL
 ### Using Homebrew without Linux CoreUtils
 export PATH=/Users/sboynton/scripts:/Users/sboynton/scripts/sdk/APK-Multi-Tool:/Users/sboynton/scripts/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
 
+### Rainbarf
+
+## zsh-specific includes
+#zmodload -i zsh/datetime
+#zmodload -i zsh/stat
+#
+## store the chart
+#RAINBARF_OUT=~/.rainbarf.out
+## update period, in seconds
+#TMOUT=1
+#
+## update chart, avoid multiple instances
+#rainbarf instances
+#rainbarf_update() {
+#    # check if non-existent or outdated
+#    if [[ \
+#        (! -e $RAINBARF_OUT) \
+#        || ($(stat +mtime $RAINBARF_OUT) -lt $(($EPOCHSECONDS - $TMOUT))) \
+#        ]]; then
+#        # rainbarf options should go to ~/.rainbarf.out
+#        rainbarf --notmux > $RAINBARF_OUT
+#    fi
+#}
+#rainbarf_update
+#
+## in-place prompt update hook
+#TRAPALRM() {
+#    rainbarf_update
+#    zle reset-prompt
+#}
+#
+## insert into prompt
+#setopt PROMPT_SUBST
+#PS1="\$(cat $RAINBARF_OUT)$PS1"
+PS1="$PS1"
+
 # Default
 #export LSCOLORS='Gxfxcxdxbxegedabagacad'
 # Matrix
