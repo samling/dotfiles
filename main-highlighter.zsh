@@ -37,7 +37,7 @@
 : ${ZSH_HIGHLIGHT_STYLES[builtin]:=fg=white} # default green
 : ${ZSH_HIGHLIGHT_STYLES[function]:=fg=white} # default green
 : ${ZSH_HIGHLIGHT_STYLES[command]:=fg=white} # default green
-: ${ZSH_HIGHLIGHT_STYLES[precommand]:=fg=green,underline}
+: ${ZSH_HIGHLIGHT_STYLES[precommand]:=fg=red,underline}
 : ${ZSH_HIGHLIGHT_STYLES[commandseparator]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[hashed-command]:=fg=green}
 : ${ZSH_HIGHLIGHT_STYLES[path]:=underline}
