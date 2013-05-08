@@ -12,7 +12,7 @@
 ### Sources
 ###
 
-source ~/git/functions.zsh
+source ~/dotfiles/functions.zsh
 
 #export SUDO_PS1="\[\h:\w\] \u\\$ "
 
