@@ -39,6 +39,7 @@ alias webhost='ssh root@198.61.210.119'
 alias susebox='ssh root@166.78.12.186'
 alias anait='ssh anaitovsepyan@192.168.1.134'
 alias fygenson='ssh samling@128.111.17.27'
+alias vpn='ssh rmsteam@vpn'
 
 ###
 ### Novacoast stuff
@@ -73,7 +74,7 @@ alias desktop="cd ~/Desktop"
 alias documents="cd ~/Documents"
 alias downloads="cd ~/Downloads"
 alias torrents="cd ~/Documents/Torrents"
-alias dropbox="cd ~/Dropbox"
+alias dropbox="cd /Volumes/Storage/Dropbox"
 alias music="cd ~/Music"
 alias movies="cd ~/Movies"
 alias applications="cd ~/Applications"
