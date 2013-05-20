@@ -80,6 +80,7 @@ myLogHook h = dynamicLogWithPP ( defaultPP {
     , ppHiddenNoWindows = dzenColor color6 background . pad
     , ppWsSep       = ""
     , ppSep         = "   "
+    -- To get rid of layout in bar: \(ws:_:t:_) -> [ws]
     , ppOrder       = \(ws:l:t:_) -> [ws,l]
     , ppOutput      = hPutStrLn h
 })
