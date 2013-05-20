@@ -31,8 +31,8 @@ import XMonad.Actions.CycleWS            -- nextWS, prevWS
 import Data.List         -- clickable workspaces
 
 -- Bars
-myXmonadBar = "dzen2 -e '' -x '0' -y '0' -h '14' -w '1400' -xs '1' -ta 'l' -fg '"++foreground++"' -bg '"++background++"' -fn "++myFont
-myStatusBar = "conky -q | dzen2 -e '' -x '1300' -w '766' -h '14' -xs '1' -ta 'r' -bg '"++background++"' -fg '"++foreground++"' -y '0' -fn "++myFont
+myXmonadBar = "dzen2 -e '' -x '0' -y '0' -h '14' -w '1300' -ta 'l' -fg '"++foreground++"' -bg '"++background++"' -fn "++myFont
+myStatusBar = "conky -q | dzen2 -e '' -x '1300' -w '766' -h '14' -ta 'r' -bg '"++background++"' -fg '"++foreground++"' -y '0' -fn "++myFont
 
 -- Layout
 myLayout = onWorkspace (myWorkspaces !! 0) (avoidStruts (tiledSpace ||| tiled) ||| fullTile)
@@ -47,7 +47,7 @@ myLayout = onWorkspace (myWorkspaces !! 0) (avoidStruts (tiledSpace ||| tiled) |
             borderlessTile  =   noBorders(fullTile)
             -- Default # windows in master pane
             nmaster = 1
-            -- Perfecntage of screen to increment when resizing
+            -- Percentage of screen to increment when resizing
             delta = 5/100
             -- Default proportion of screen taken up by main pane
             ratio = toRational (2/(1 + sqrt 5 :: Double))
@@ -59,16 +59,20 @@ myWorkspaces = ["term"
     ,"docs"
     ,"tunes"
     ,"mail"]
-    where clickable l = [ "^ca(l,xdotool key alt+" ++ show (n) ++ ")" ++ ws ++ "^ca()" | (i,ws) <- zip [1..] l, let n = i]
 
 
 -- Management hook
-myManageHook = composeAll [
+-- myManageHook = ComposeAll [
+myManageHook = composeOne [
     transience
-    , resource =? "dmenu" --> doFloat
-    , resource =? "mplayer" --> doFloat
-    , resource =? "feh" --> doFloat
-    , manageDocks]
+    -- , resource =? "dmenu" --> doFloat
+    -- , resource =? "mplayer" --> doFloat
+    -- , resource =? "feh" --> doFloat
+    , resource =? "dmenu" -?> doFloat
+    , resource =? "mplayer" -?> doFloat
+    , resource =? "feh" -?> doFloat
+    -- , manageDocks
+    ]
 newManageHook = myManageHook <+> manageHook defaultConfig
 
 
@@ -80,7 +84,8 @@ myLogHook h = dynamicLogWithPP ( defaultPP {
     , ppHiddenNoWindows = dzenColor color6 background . pad
     , ppWsSep       = ""
     , ppSep         = "   "
-    , ppOrder       = \(ws:l:t:_) -> [ws,l]
+--  , ppOrder	    = \(ws:l:t:_) -> [ws,l]
+    , ppOrder       = \(ws:_:t:_) -> [ws]
     , ppOutput      = hPutStrLn h
 })
 
