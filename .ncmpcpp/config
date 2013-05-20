@@ -1,0 +1,37 @@
+# ncmpcpp settings
+
+mpd_music_dir =                     "/store/Music"
+mpd_host =                          "localhost"
+mpd_port =                          "6600"
+
+# various settings
+autocenter_mode = "yes"
+header_visibility = "yes"
+progressbar_look = "::"
+statusbar_visibility = "no"
+
+# Format options
+
+#
+song_list_format =                  "$5[$9%n$5]$9 %t$R%a $5-$9 %b $5[$9%y$5]$9"
+song_status_format =                "$5[$9%n$5]$9 %t $5-$9 %a $5-$9 %b"
+song_window_title_format =          "[%n] %t - %a - %b"
+
+# Interface options
+#
+autocenter_mode =                   "yes"
+progressbar_look =                  "=>-"
+user_interface =                    "classic"
+fancy_scrolling =                   "yes"
+display_screens_numbers_on_start =  "no"
+jump_to_now_playing_song_at_start = "yes"
+
+# Colours
+#
+colors_enabled =                    "yes"
+empty_tag_color =                   "blue"
+state_line_color =                  "blue"
+main_window_color =                 "white"
+main_window_highlight_color =       "blue"
+progressbar_color =                 "blue"
+active_column_color =               "white"
