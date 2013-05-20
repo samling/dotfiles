@@ -535,4 +535,3 @@ function renameall()    # Rename all files in a folder
         * ) echo "Please make a selection!"
     esac
 }
-
