@@ -514,7 +514,7 @@ function renameall()    # Rename all files in a folder
             case $add in
                 [^\r\n]* ) read "?Enter the filetype to change (e.g. jpg): " ext
                     case $ext in
-                    [a-z]* ) echo "Adding $add to files of type $ext" ; addext ;;
+                    [^\r\n]* ) echo "Adding $add to files of type $ext" ; addext ;;
                     * )      echo "Please enter a file type!" ;;
                     esac
                     ;;
@@ -525,7 +525,7 @@ function renameall()    # Rename all files in a folder
             case $add in 
                 [^\r\n]* ) read "?Enter the filetype to change (e.g. jpg): " ext
                     case $ext in 
-                    [a-z]* ) echo "Removing $rem from files of type $ext" ; remext ;;
+                    [^\r\n]* ) echo "Removing $rem from files of type $ext" ; remext ;;
                     * )      echo "Please enter a file type!" ;;
                     esac
                     ;;
