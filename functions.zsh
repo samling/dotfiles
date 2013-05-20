@@ -500,7 +500,7 @@ function iii()   # Get current host related info.
 
 function renameall()    # Rename all files in a folder
 {
-    read "?Would you like to (a)dd or (r)emove? " choice
+    read -r "?Would you like to (a)dd or (r)emove? " choice
 
     function addext() {
         rename -g 's/\.'$ext'/'$add'\.'$ext'/' *.$ext
@@ -510,9 +510,9 @@ function renameall()    # Rename all files in a folder
         rename -g 's/'$rem'\.'$ext'/.'$ext'/' *.$ext
     }
     case $choice in
-        a ) read "?Add the following to the filename: " add
+        a ) read -r "?Add the following to the filename: " add
             case $add in
-                [^\r\n]* ) read "?Enter the filetype to change (e.g. jpg): " ext
+                [^\r\n]* ) read -r "?Enter the filetype to change (e.g. jpg): " ext
                     case $ext in
                     [^\r\n]* ) echo "Adding $add to files of type $ext" ; addext ;;
                     * )      echo "Please enter a file type!" ;;
@@ -521,9 +521,9 @@ function renameall()    # Rename all files in a folder
                 * ) echo "Please enter something to add!" ;;
             esac
             ;;
-        r ) read "?Remove the following from the filename: " rem
+        r ) read -r "?Remove the following from the filename: " rem
             case $add in 
-                [^\r\n]* ) read "?Enter the filetype to change (e.g. jpg): " ext
+                [^\r\n]* ) read -r"?Enter the filetype to change (e.g. jpg): " ext
                     case $ext in 
                     [^\r\n]* ) echo "Removing $rem from files of type $ext" ; remext ;;
                     * )      echo "Please enter a file type!" ;;
