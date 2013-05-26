@@ -535,3 +535,11 @@ function renameall()    # Rename all files in a folder
         * ) echo "Please make a selection!"
     esac
 }
+
+function scrot() {      # Emulate the scrot command on Linux, but with some better defaults
+    read -r "?Enter filename (leave blank for default): " filename
+    case $filename in
+        [^\r\n]* ) echo "Taking screenshot in 3...2...1..."; sleep 3; screencapture "/Users/sboynton/Desktop/$filename.png" ;;
+        * ) echo "Taking screenshot in 3...2...1..."; sleep 3; screencapture "/Users/sboynton/Desktop/Screenshot_`date | cut -d' ' -f1-3 | sed 's/ /-/g'`_`date | cut -d' ' -f4 | sed 's/:/-/g'`.png" ;;
+    esac
+}
