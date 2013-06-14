@@ -184,6 +184,11 @@ alias web="links"
 alias www="links"
 alias ytdl="youtube-dl $1"
 alias todo="todo.sh"
+alias mysql_start="mysqld_safe &"
+alias mysql_stop="sudo mysqladmin shutdown"
+alias mysql="mysql -uroot"
+alias timer="utimer"
+alias du=ncdu-function
 
 ###
 ### Hax

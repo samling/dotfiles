@@ -543,3 +543,11 @@ function scrot() {      # Emulate the scrot command on Linux, but with some bett
         * ) echo "Taking screenshot in 3...2...1..."; sleep 3; screencapture "/Users/sboynton/Desktop/Screenshot_`date | cut -d' ' -f1-3 | sed 's/ /-/g'`_`date | cut -d' ' -f4 | sed 's/:/-/g'`.png" ;;
     esac
 }
+
+function ncdu-function() {
+    if [ -z "$1" ]; then
+        ncdu -x /
+    else
+        ncdu -x "$1"
+    fi
+}

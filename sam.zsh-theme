@@ -12,7 +12,7 @@ function batterycharge {
 
 #PROMPT='%{$bg[black]%}%{$fg[green]%}%~%{$fg_bold[blue]%}$(git_prompt_info)%  →'
 #PROMPT='%{$fg[red]%}$(battery.sh)%{$fg[yellow]%} %n %{$fg[green]%}%~%{$fg[white]%} '
-PROMPT='%{$fg[yellow]%}$(git_prompt_info) %{$fg[green]%}%~%{$fg[white]%} '
+PROMPT='%{$fg[yellow]%}$(git_prompt_info) %{$fg[red]%}%m%  %{$fg[green]%}%~%{$fg[white]%} '
 
 
 # Right-side prompt
