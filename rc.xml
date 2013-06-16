@@ -388,7 +388,7 @@
         <width>100%</width>
       </action>
     </keybind>
-    <!-- Keybindings for running applications -->
+   <!-- Keybindings for running applications -->
     <keybind key="W-e">
       <action name="Execute">
         <startupnotify>
