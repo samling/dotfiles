@@ -41,6 +41,7 @@ alias anait='ssh anaitovsepyan@192.168.1.134'
 alias fygenson='ssh samling@128.111.17.27'
 alias vpn='ssh rmsteam@vpn'
 alias kiosk='ssh root@172.18.4.151'
+alias kioskvpn='ssh root@172.17.35.160'
 
 ###
 ### Novacoast stuff
