@@ -50,19 +50,15 @@ S Y S T E M    I N F O
 ${hr}
 Host:${color}$alignr$nodename
 Uptime:$alignr$uptime
-RAM:$alignr$mem/$memmax
-Swap usage:$alignr$swap/$swapmax
-Disk usage:$alignr${fs_used /}/${fs_size /}
-CPU usage:$alignr${cpu cpu0}%
 
 M E M O R Y    &    I / O
 ${hr}
 Disk Usage:$alignr${fs_used /}/${fs_size /}
 $fs_bar
+CPU usage:$alignr${cpu cpu0}%
+$cpugraph
 Memory Usage:$alignr$mem / $memfree
 $memgraph
-Disk I/O:$alignr$diskio
-$diskiograph
 
 N E T W O R K     I N F O
 ${hr}
