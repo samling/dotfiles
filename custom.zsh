@@ -58,7 +58,7 @@ alias starwars='traceroute -m 160 216.81.59.173' # Just run it
 alias starwars2='telnet towel.blinkenlights.nl'
 alias matrix='cmatrix'
 alias rickroll='curl https://raw.github.com/keroserene/rickrollrc/master/roll.sh | bash'
-alias undeliverable='afplay ~/Dropbox/Music/undeliverable.m4a'
+alias undeliverable='afplay /Volumes/Storage/Dropbox/Music/undeliverable.m4a'
 
 ###
 ### Applications
