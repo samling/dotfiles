@@ -11,8 +11,8 @@ border_color = #828282 0
 
 # ID 2 - task active
 rounded = 1
-border_width = 0
-background_color = #d8d8d8 30
+border_width = 1
+background_color = #000 30
 border_color = #d8d8d8 30
 
 # ID 3 - task
@@ -56,7 +56,7 @@ border_color = #888888 20
 # Panel
 panel_monitor = 1
 panel_position = top center horizontal
-panel_size = 100% 30
+panel_size = 100% 20
 panel_margin = 0 0
 panel_padding = 0 0 0
 panel_dock = 0
@@ -90,7 +90,7 @@ task_icon = 0
 task_text = 1
 task_centered = 1
 task_maximum_size = 230 35
-task_padding = 5 1
+task_padding = 10 1
 task_background_id = 0
 task_active_background_id = 2
 task_urgent_background_id = 3
