@@ -1,9 +1,72 @@
-background no
- out_to_console yes
- out_to_x no
- update_interval 1.0
- total_run_times 0
- use_spacer none
+# conky configuration
+#
+# The list of variables has been removed from this file in favour
+# of keeping the documentation more maintainable.
+# Check http://conky.sf.net for an up-to-date-list.
+#
+# For ideas about how to modify conky, please see:
+# http://crunchbanglinux.org/forums/topic/59/my-conky-config/
+#
+# For help with conky, please see:
+# http://crunchbanglinux.org/forums/topic/2047/conky-help/
+#
+# Enjoy! :)
+##############################################
+# Settings
+##############################################
+background yes
+use_xft yes
+xftfont Terminus Sans:size=12
+xftalpha 1
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+#own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 200 200
+maximum_width 240
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color FFFFFF
+default_shade_color 000000
+default_outline_color 828282
+alignment top_right
+gap_x 12
+gap_y 1120
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale no
+##############################################
+#  Output
+##############################################
+TEXT
+S Y S T E M    I N F O
+${hr}
+Host:${color}$alignr$nodename
+Uptime:$alignr$uptime
 
- TEXT
- ^fg(\#66d9ef)CPU: ${cpu}% MEM: $mem ^fg()${time %a %b %d %I:%M%P}
+M E M O R Y    &    I / O
+${hr}
+Disk Usage:$alignr${fs_used /}/${fs_size /}
+$fs_bar
+CPU usage:$alignr${cpu cpu0}%
+$cpugraph
+Memory Usage:$alignr$mem / $memfree
+$memgraph
+
+N E T W O R K     I N F O
+${hr}
+Internal IP: $alignr$addr
+Network Mask: $alignr${exec ifconfig eth0 | grep Mask | cut -c 62-}
+Broadcast: $alignr${exec ifconfig -a eth0 | grep Bcast | cut -c 42-54}
+
+Inbound $alignr ${downspeed eth0} KiB/s
+${downspeedgraph eth0}
+Outbound $alignr ${upspeed eth0} KiB/s
+${upspeedgraph eth0}
