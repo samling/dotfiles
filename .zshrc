@@ -39,7 +39,7 @@ export ARCHFLAGS="-arch x86_64"
 
 #eval $(dircolors -b $HOME/LS_COLORS)
 
-ZSH_THEME='clean'
+ZSH_THEME='clean-check'
 #ZSH_THEME='clean-sam'
 #DEFAULT_USER='sboynton'
 
