@@ -320,7 +320,7 @@
       <action name="MoveResizeTo">
         <x>-0</x>
         <y>0</y>
-        <height>100%</height>
+        <height>97%</height>
         <width>50%</width>
       </action>
     </keybind>
@@ -328,7 +328,7 @@
       <action name="MoveResizeTo">
         <x>0</x>
         <y>0</y>
-        <height>100%</height>
+        <height>97%</height>
         <width>50%</width>
       </action>
     </keybind>
@@ -384,12 +384,12 @@
       <action name="MoveResizeTo">
         <x>0</x>
         <y>0</y>
-        <height>100%</height>
+        <height>97%</height>
         <width>100%</width>
       </action>
     </keybind>
     <!-- Keybindings for running applications -->
-    <keybind key="W-m">
+    <keybind key="W-space">
 	<action name="ShowMenu">
 		<menu>root-menu</menu>
 	</action>
