@@ -34,25 +34,32 @@
 		<separator/>
 		<menu id="client-list-menu"/>
 		<separator/>
-		<item label="Nitrogen">
-			<action name="Execute">
-				<execute>nitrogen /home/sboynton/pictures/wallpaper</execute>
-			</action>
-		</item>
-		<item label="ObConf">
-			<action name="Execute">
-				<execute>obconf</execute>
-			</action>
-		</item>
-		<item label="ObMenu">
-			<action name="Execute">
-				<execute>obmenu</execute>
-			</action>
-		</item>
-		<item label="Reconfigure">
+		<menu id="root-menu-861325" label="Settings">
+			<item label="Mixer">
+				<action name="Execute">
+					<execute>terminator --command=&quot;alsamixer&quot;</execute>
+				</action>
+			</item>
+			<item label="Nitrogen">
+				<action name="Execute">
+					<execute>nitrogen /home/sboynton/pictures/wallpaper</execute>
+				</action>
+			</item>
+			<item label="ObConf">
+				<action name="Execute">
+					<execute>obconf</execute>
+				</action>
+			</item>
+			<item label="ObMenu">
+				<action name="Execute">
+					<execute>obmenu</execute>
+				</action>
+			</item>
+		</menu>
+		<item label="Reconfigure Openbox">
 			<action name="Reconfigure"/>
 		</item>
-		<item label="Restart">
+		<item label="Restart Openbox">
 			<action name="Restart"/>
 		</item>
 		<separator/>
