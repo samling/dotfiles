@@ -32,7 +32,7 @@ ZSH=$HOME/.oh-my-zsh
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git themes osx ssh-agent zsh-syntax-highlighting)
+plugins=(git themes osx zsh-syntax-highlighting)
 
 # GCC stuff
 export ARCHFLAGS="-arch x86_64"
@@ -102,5 +102,6 @@ PS1="$PS1"
 # Molokai
 export LSCOLORS='ExFxCxDxBxegedabagacad'
 
+export TERM=xterm-256color
 # GNU man pages
 #export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
