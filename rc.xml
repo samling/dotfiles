@@ -42,7 +42,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>SlimOne</name>
+    <name>modern-grey</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -393,6 +393,11 @@
       <action name="ShowMenu">
         <menu>root-menu</menu>
       </action>
+    </keybind>
+    <keybind key="W-p">
+        <action name="Execute">
+            <command>dmenu_run -b -i</command>
+        </action>
     </keybind>
     <keybind key="W-e">
       <action name="Execute">
