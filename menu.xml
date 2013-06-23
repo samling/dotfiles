@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
 	<menu id="root-menu" label="Openbox 3">
-		<item label="Terminal emulator">
+		<item label="Terminator">
 			<action name="Execute">
 				<execute>terminator</execute>
 			</action>
 		</item>
-		<item label="Web browser">
+		<item label="Chromium">
 			<action name="Execute">
 				<execute>chromium</execute>
 			</action>
 		</item>
-		<item label="File Browser">
+		<item label="Thunar">
 			<action name="Execute">
-				<execute>nautilus --no-desktop</execute>
+				<execute>thunar</execute>
+			</action>
+		</item>
+		<item label="Disk Manager">
+			<action name="Execute">
+				<execute>gksudo gnome-disks</execute>
 			</action>
 		</item>
 		<!-- This requires the presence of the 'menu' package to work -->
@@ -32,6 +37,14 @@
 			</item>
 		</menu>
 		<separator/>
+		<menu id="productivity" label="Productivity">
+			<item label="Geany">
+				<action name="Execute">
+					<execute>geany</execute>
+				</action>
+			</item>
+		</menu>
+		<separator/>
 		<menu id="client-list-menu"/>
 		<separator/>
 		<menu id="root-menu-861325" label="Settings">
@@ -43,6 +56,11 @@
 			<item label="Nitrogen">
 				<action name="Execute">
 					<execute>nitrogen /home/sboynton/pictures/wallpaper</execute>
+				</action>
+			</item>
+			<item label="lxappearance">
+				<action name="Execute">
+					<execute>lxappearance</execute>
 				</action>
 			</item>
 			<item label="ObConf">
