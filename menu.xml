@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
 	<menu id="root-menu" label="Openbox 3">
-		<item label="Terminator">
-			<action name="Execute">
-				<execute>terminator</execute>
-			</action>
-		</item>
 		<item label="Chromium">
 			<action name="Execute">
 				<execute>chromium</execute>
+			</action>
+		</item>
+		<item label="Terminator">
+			<action name="Execute">
+				<execute>terminator</execute>
 			</action>
 		</item>
 		<item label="Thunar">
@@ -28,6 +28,11 @@
 			<item label="Minecraft">
 				<action name="Execute">
 					<execute>sh /home/sboynton/games/minecraft.sh</execute>
+				</action>
+			</item>
+			<item label="PlayOnLinux">
+				<action name="Execute">
+					<execute>playonlinux</execute>
 				</action>
 			</item>
 			<item label="Steam">
