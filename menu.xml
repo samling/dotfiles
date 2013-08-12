@@ -1,38 +1,103 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<openbox_menu xmlns="http://openbox.org/"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://openbox.org/
-                file:///usr/share/openbox/menu.xsd">
-
-<menu id="root-menu" label="Openbox 3">
-  <item label="Terminal emulator">
-    <action name="Execute"><execute>x-terminal-emulator</execute></action>
-  </item>
-  <item label="Web browser">
-    <action name="Execute"><execute>x-www-browser</execute></action>
-  </item>
-<item label="File Browser">
-    <action name="Execute"><execute>nautilus --no-desktop</execute></action>
-  </item>
-  <!-- This requires the presence of the 'menu' package to work -->
-  <menu id="/Debian" />
-  <separator />
-  <menu id="client-list-menu" />
-  <separator />
-  <item label="ObConf">
-    <action name="Execute"><execute>obconf</execute></action>
-  </item>
-  <item label="Reconfigure">
-    <action name="Reconfigure" />
-  </item>
-  <item label="Restart">
-    <action name="Restart" />
-  </item>
-  <separator />
-  <item label="Exit">
-    <action name="Exit" />
-  </item>
-</menu>
-
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
+	<menu id="root-menu" label="Openbox 3">
+		<item label="Chromium">
+			<action name="Execute">
+				<execute>chromium</execute>
+			</action>
+		</item>
+		<item label="Terminator">
+			<action name="Execute">
+				<execute>terminator</execute>
+			</action>
+		</item>
+		<item label="Thunar">
+			<action name="Execute">
+				<execute>thunar</execute>
+			</action>
+		</item>
+		<item label="Disk Manager">
+			<action name="Execute">
+				<execute>gksudo gnome-disks</execute>
+			</action>
+		</item>
+		<!-- This requires the presence of the 'menu' package to work -->
+		<menu id="/Debian"/>
+		<separator/>
+		<menu id="games" label="Games">
+			<item label="Minecraft">
+				<action name="Execute">
+					<execute>sh /home/sboynton/games/minecraft.sh</execute>
+				</action>
+			</item>
+			<item label="PlayOnLinux">
+				<action name="Execute">
+					<execute>playonlinux</execute>
+				</action>
+			</item>
+			<item label="Steam">
+				<action name="Execute">
+					<execute>steam</execute>
+				</action>
+			</item>
+		</menu>
+		<separator/>
+		<menu id="productivity" label="Productivity">
+			<item label="Geany">
+				<action name="Execute">
+					<execute>geany</execute>
+				</action>
+			</item>
+		</menu>
+		<separator/>
+		<menu id="client-list-menu"/>
+		<separator/>
+		<menu id="root-menu-861325" label="Settings">
+			<item label="Mixer">
+				<action name="Execute">
+					<execute>terminator --command=&quot;alsamixer&quot;</execute>
+				</action>
+			</item>
+			<item label="Nitrogen">
+				<action name="Execute">
+					<execute>nitrogen /home/sboynton/pictures/wallpaper</execute>
+				</action>
+			</item>
+			<item label="lxappearance">
+				<action name="Execute">
+					<execute>lxappearance</execute>
+				</action>
+			</item>
+			<item label="ObConf">
+				<action name="Execute">
+					<execute>obconf</execute>
+				</action>
+			</item>
+			<item label="ObMenu">
+				<action name="Execute">
+					<execute>obmenu</execute>
+				</action>
+			</item>
+		</menu>
+		<item label="Reconfigure Openbox">
+			<action name="Reconfigure"/>
+		</item>
+		<item label="Restart Openbox">
+			<action name="Restart"/>
+		</item>
+		<separator/>
+		<item label="Logout">
+			<action name="Exit"/>
+		</item>
+		<item label="Restart Computer">
+			<action name="Execute">
+				<execute>gksudo reboot</execute>
+			</action>
+		</item>
+		<item label="Shutdown Computer">
+			<action name="Execute">
+				<execute>gksudo shutdown -h now</execute>
+			</action>
+		</item>
+	</menu>
 </openbox_menu>

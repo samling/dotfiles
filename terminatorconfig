@@ -1,0 +1,28 @@
+# Rename to config and place in ~/.config/terminator/
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  borderless = True
+[keybindings]
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    palette = "#000000:#d22058:#58d220:#d29920:#5487f6:#9920d2:#20d299:#d6d6d6:#4e4e4e:#eb789c:#9ceb78:#ebc678:#5487f6:#c678eb:#78ebc6:#ffffff"
+    login_shell = True
+    background_image = None
+    background_darkness = 0.77
+    background_type = transparent
+    use_system_font = False
+    foreground_color = "#ffffff"
+    use_custom_command = True
+    show_titlebar = False
+    custom_command = zsh
+    font = Terminus 12
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

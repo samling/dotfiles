@@ -6,13 +6,13 @@
 # ID 1
 rounded = 0
 border_width = 0
-background_color = #000000 40
+background_color = #000000 100
 border_color = #828282 0
 
 # ID 2 - task active
 rounded = 1
 border_width = 1
-background_color = #000 30
+background_color = #eeeeee 30
 border_color = #d8d8d8 30
 
 # ID 3 - task
@@ -54,7 +54,7 @@ border_color = #888888 20
 
 
 # Panel
-panel_monitor = 1
+panel_monitor = 1 
 panel_position = top center horizontal
 panel_size = 100% 20
 panel_margin = 0 0
