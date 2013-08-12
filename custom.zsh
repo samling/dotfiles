@@ -37,6 +37,7 @@ alias r='sudo mtr' # MyTraceRoute, combines ping and traceroute
 alias samsite='ssh root@50.56.174.88'
 alias webhost='ssh root@198.61.210.119'
 alias susebox='ssh root@166.78.12.186'
+alias albert='ssh root@166.78.186.97'
 alias anait='ssh anaitovsepyan@192.168.1.134'
 alias fygenson='ssh samling@128.111.17.27'
 alias vpn='ssh rmsteam@vpn'
