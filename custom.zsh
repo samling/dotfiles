@@ -48,7 +48,7 @@ alias kioskvpn='ssh root@172.17.35.160'
 ### Novacoast stuff
 ###
 
-alias novacoast='less ~/Novacoast.txt'
+alias novacoast='less ~/Documents/Novacoast.txt'
 alias certs='ssh rmsteam@vpn' # Must be on the VPN to do this
 
 ###
