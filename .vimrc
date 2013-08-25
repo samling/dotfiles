@@ -15,6 +15,7 @@ Bundle 'gmarik/vundle'
 " e.g.:
 " Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'scrooloose/nerdtree'
 
 " Bundle-specific settings
 """ vim-easymotion
