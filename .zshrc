@@ -62,42 +62,6 @@ export PATH=/Users/sboynton/scripts:/Users/sboynton/scripts/sdk/APK-Multi-Tool:/
 ###  Write TLS keys used by browser to flat file
 #export SSLKEYLOGFILE=/Users/sboynton/Documents/Security/tlskeys
 
-### Rainbarf
-
-## zsh-specific includes
-#zmodload -i zsh/datetime
-#zmodload -i zsh/stat
-#
-## store the chart
-#RAINBARF_OUT=~/.rainbarf.out
-## update period, in seconds
-#TMOUT=1
-#
-## update chart, avoid multiple instances
-#rainbarf instances
-#rainbarf_update() {
-#    # check if non-existent or outdated
-#    if [[ \
-#        (! -e $RAINBARF_OUT) \
-#        || ($(stat +mtime $RAINBARF_OUT) -lt $(($EPOCHSECONDS - $TMOUT))) \
-#        ]]; then
-#        # rainbarf options should go to ~/.rainbarf.out
-#        rainbarf --notmux > $RAINBARF_OUT
-#    fi
-#}
-#rainbarf_update
-#
-## in-place prompt update hook
-#TRAPALRM() {
-#    rainbarf_update
-#    zle reset-prompt
-#}
-#
-## insert into prompt
-#setopt PROMPT_SUBST
-#PS1="\$(cat $RAINBARF_OUT)$PS1"
-PS1="$PS1"
-
 # Default
 #export LSCOLORS='Gxfxcxdxbxegedabagacad'
 # Matrix
