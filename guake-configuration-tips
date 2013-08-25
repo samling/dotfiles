@@ -1,0 +1,1 @@
+To adjust the starting y position of guake, open /usr/bin/guake (python script) and search for "window_rect.y =". Change the value from 0 to the preferred height.

@@ -1,75 +1,48 @@
-# conky configuration
-#
-# The list of variables has been removed from this file in favour
-# of keeping the documentation more maintainable.
-# Check http://conky.sf.net for an up-to-date-list.
-#
-# For ideas about how to modify conky, please see:
-# http://crunchbanglinux.org/forums/topic/59/my-conky-config/
-#
-# For help with conky, please see:
-# http://crunchbanglinux.org/forums/topic/2047/conky-help/
-#
-# Enjoy! :)
-##############################################
-# Settings
-##############################################
-background yes
-use_xft yes
-xftfont Terminus Sans:size=10
-xftalpha 1
-update_interval 1.0
-total_run_times 0
-own_window yes
-own_window_transparent yes
-own_window_type desktop
-#own_window_argb_visual yes
-own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#avoid flicker
 double_buffer yes
-minimum_size 200 200
-maximum_width 240
-draw_shades no
-draw_outline no
-draw_borders no
+background yes
+
+#own window to run simultanious 2 or more conkys
+own_window  yes
+own_window_transparent yes 
+own_window_type override
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager 
+
+#borders
+draw_borders no 
 draw_graph_borders yes
-default_color FFFFFF
-default_shade_color 000000
-default_outline_color 828282
-alignment top_right
-gap_x 12
-gap_y 1120
-no_buffers yes
-uppercase no
-cpu_avg_samples 2
-override_utf8_locale no
-##############################################
-#  Output
-##############################################
+border_width 1
+border_margin 3
+
+#shades
+draw_shades no
+
+#position
+gap_x 0
+gap_y 4
+alignment bottom_middle
+
+#behaviour
+update_interval 1
+
+#colour
+default_color 757575
+#default_shade_color 000000
+own_window_colour 303030
+#font
+use_xft yes
+xftfont Terminus:size=8
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale yes
+
+#to prevent window from moving
+use_spacer none
+minimum_size 1366 0
+
+#mpd
+#mpd_host localhost
+#mpd_port 6600
+
 TEXT
-S Y S T E M    I N F O
-${hr}
-${color #E28C05}Host:${color #FFF}$alignr$nodename
-${color #E28C05}Uptime:${color #FFF}$alignr$uptime
-
-M E M O R Y    &    I / O
-${hr}
-${color #E28C05}/ :${color #FFF}$alignr${fs_used /}/${fs_size /}
-${fs_bar /}
-${color #E28C05}/home :${color #FFF}$alignr${fs_used /home}/${fs_size /home}
-${fs_bar /home}
-${color #E28C05}CPU usage:${color #FFF}$alignr${cpu cpu0}%
-$cpugraph
-${color #E28C05}RAM:${color #FFF}$alignr${memperc}%
-${color #E28C05}Memory Usage:${color #FFF}$alignr$mem/$memmax
-$memgraph
-
-N E T W O R K     I N F O
-${hr}
-${color #E28C05}Internal IP:  ${color #FFF}$alignr${exec ifconfig enp3s0 | grep mask | cut -c 13-26}
-${color #E28C05}Network Mask: ${color #FFF}$alignr${exec ifconfig enp3s0 | grep mask | cut -c 37-50}
-${color #E28C05}Broadcast: ${color #FFF}$alignr${exec ifconfig -a enp3s0 | grep broadcast | cut -c 62-}
-
-${color #E28C05}Inbound ${color #FFF}$alignr ${downspeed enp3s0} KiB/s
-${downspeedgraph enp3s0}
-${color #E28C05}Outbound ${color #FFF}$alignr ${upspeed enp3s0} KiB/s
-${upspeedgraph enp3s0}
+${alignc}Date: ${color white}${time %d/%m/%y}${color}  Time: ${color white}${time %H:%M:%S}${color}  Kernel: ${color white}$kernel${color}  Uptime: ${color white}${uptime_short}${color}     ${color orange}Computer    ${color}CPU Usage: ${color white}${cpu}%${color}  RAM: ${color white}${memperc}%${color}  Disk: ${color white}${fs_used_perc /}%  ${color}Temp: ${color white}${exec sensors | grep temp1 | cut -c 15-22 }${color}    ${color orange}Network    ${color}Public IP: ${color white}${exec curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'}  ${color}Private IP: ${color white}${addr enp10s0}  ${color}Up: ${color white}${upspeed enp10s0} kb/s${color}  Down: ${color white}${downspeed enp10s0} kb/s${color}${alignc}
