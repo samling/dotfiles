@@ -14,6 +14,12 @@ Bundle 'gmarik/vundle'
 " Call bundles here
 " e.g.:
 " Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+
+" Bundle-specific settings
+""" vim-easymotion
+let g:EasyMotion_leader_key = ','
+
 
 filetype plugin indent on " Required
 
