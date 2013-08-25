@@ -1,5 +1,6 @@
 set nocompatible
 filetype off		" Required
+filetype plugin on
 syntax on		" Language syntax
 set backspace=2		" Make backspace behave normally
 set backspace=indent,eol,start " See above
@@ -16,10 +17,14 @@ Bundle 'gmarik/vundle'
 " Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree'
+" Bundle 'msanders/snipmate.vim'
+Bundle 'tpope/vim-abolish'
 
 " Bundle-specific settings
 """ vim-easymotion
-let g:EasyMotion_leader_key = ','
+let g:EasyMotion_leader_key=','
+""" NERDtree
+map <C-n> :NERDTreeToggle<CR>
 
 
 filetype plugin indent on " Required
