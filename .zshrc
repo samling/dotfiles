@@ -59,6 +59,9 @@ MAIL=/var/spool/mail/sboynton && export MAIL
 ### Using Homebrew without Linux CoreUtils
 export PATH=/Users/sboynton/scripts:/Users/sboynton/scripts/sdk/APK-Multi-Tool:/Users/sboynton/scripts/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
 
+###  Write TLS keys used by browser to flat file
+#export SSLKEYLOGFILE=/Users/sboynton/Documents/Security/tlskeys
+
 ### Rainbarf
 
 ## zsh-specific includes
