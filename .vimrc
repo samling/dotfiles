@@ -8,6 +8,11 @@ set backspace=indent,eol,start " See above
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+" Colorscheme
+colorscheme molokai
+let g:molokai_original = 1
+" let g:rehash256 = 1
+
 " Let Vundle manage itself
 " Required
 Bundle 'gmarik/vundle'
