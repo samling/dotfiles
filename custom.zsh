@@ -167,6 +167,7 @@ alias ss="du -ch *" # Shows size of current directory + files & folders in direc
 alias ssn="du -c * | sort -nr" # Same as above but sorts by size (without -h)
 alias ddi="sudo killall -INFO dd" # Shows progress of dd in the window that dd is running in
 alias ddp="sudo killall -INFO dd" # See above
+alias dnsflush="sudo killall -HUP mDNSResponder"
 
 ###
 ### Homebrew Stuff
