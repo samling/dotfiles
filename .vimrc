@@ -5,6 +5,7 @@ syntax on		" Language syntax
 set backspace=2		" Make backspace behave normally
 set backspace=indent,eol,start " See above
 set laststatus=2
+set ambiwidth=double
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -13,7 +14,7 @@ call vundle#rc()
 colorscheme molokai
 let g:molokai_original = 1
 let g:airline_powerline_fonts = 1
-let g:Powerline_symbols = 'unicode'
+let g:Powerline_symbols = 'fancy'
 " let g:rehash256 = 1
 
 " Let Vundle manage itself
@@ -27,8 +28,8 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree'
 " Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-abolish'
-" Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-Bundle 'bling/vim-airline'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Bundle 'bling/vim-airline'
 
 " Bundle-specific settings
 """ vim-easymotion
