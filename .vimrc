@@ -13,7 +13,7 @@ call vundle#rc()
 colorscheme molokai
 let g:molokai_original = 1
 let g:airline_powerline_fonts = 1
-let g:Powerline_symbols = 'fancy'
+let g:Powerline_symbols = 'unicode'
 " let g:rehash256 = 1
 
 " Let Vundle manage itself
