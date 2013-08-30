@@ -6,6 +6,7 @@ set backspace=2		" Make backspace behave normally
 set backspace=indent,eol,start " See above
 set laststatus=2
 set ambiwidth=double
+set number
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
