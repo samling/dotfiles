@@ -15,17 +15,17 @@ echo ""
 echo ""
 git clone https://github.com/scrooloose/nerdtree.git
 
-echo "Cloning powerline"
-echo ""
-echo ""
-git clone https://github.com/Lokaltog/powerline.git
+#echo "Cloning powerline"
+#echo ""
+#echo ""
+#git clone https://github.com/Lokaltog/powerline.git
 
 #echo "Cloning airline"
 #echo ""
 #echo ""
 #git clone https://github.com/bling/vim-airline.git
 
-echo "Cloning powerline fonts"
-echo ""
-echo ""
-git clone https://github.com/Lokaltog/powerline-fonts.git
+#echo "Cloning powerline fonts"
+#echo ""
+#echo ""
+#git clone https://github.com/Lokaltog/powerline-fonts.git

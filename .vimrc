@@ -28,7 +28,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree'
 " Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-abolish'
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 " Bundle 'bling/vim-airline'
 
 " Bundle-specific settings
