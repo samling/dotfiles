@@ -29,15 +29,20 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree'
 " Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-surround'
+Bundle 'sjl/gundo.vim'
+Bundle 'tpope/vim-commentary'
 " Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 " Bundle 'bling/vim-airline'
 
 " Bundle-specific settings
-""" vim-easymotion
+""" easymotion
 let g:EasyMotion_leader_key=','
 """ NERDtree
 map <C-n> :NERDTreeToggle<CR>
-
+""" gundo
+nnoremap - :GundoToggle<CR>
+let g:gundo_close_on_revert=1
 
 filetype plugin indent on " Required
 

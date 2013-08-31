@@ -15,6 +15,21 @@ echo ""
 echo ""
 git clone https://github.com/scrooloose/nerdtree.git
 
+echo "Cloning surround"
+echo ""
+echo ""
+git clone git://github.com/tpope/vim-surround.git
+
+echo "Cloning gundo"
+echo ""
+echo ""
+git clone http://github.com/sjl/gundo.vim.git
+
+echo "Cloning commentary"
+echo ""
+echo ""
+git clone git://github.com/tpope/vim-commentary.git
+
 #echo "Cloning powerline"
 #echo ""
 #echo ""
