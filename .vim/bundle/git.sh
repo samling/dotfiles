@@ -5,6 +5,11 @@ echo ""
 echo ""
 git clone https://github.com/gmarik/vundle.git
 
+echo "Cloning abolish"
+echo ""
+echo ""
+git clone https://github.com/tpope/vim-abolish.git
+
 echo "Cloning easymotion"
 echo ""
 echo ""
@@ -35,12 +40,12 @@ git clone git://github.com/tpope/vim-commentary.git
 #echo ""
 #git clone https://github.com/Lokaltog/powerline.git
 
-#echo "Cloning airline"
-#echo ""
-#echo ""
-#git clone https://github.com/bling/vim-airline.git
+echo "Cloning airline"
+echo ""
+echo ""
+git clone https://github.com/bling/vim-airline.git
 
-#echo "Cloning powerline fonts"
-#echo ""
-#echo ""
-#git clone https://github.com/Lokaltog/powerline-fonts.git
+echo "Cloning powerline fonts"
+echo ""
+echo ""
+git clone https://github.com/Lokaltog/powerline-fonts.git
