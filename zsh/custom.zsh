@@ -12,16 +12,16 @@
 ### Sources
 ###
 
-source ~/dotfiles/functions.zsh
+source ~/dotfiles/zsh/functions.zsh
 
 #export SUDO_PS1="\[\h:\w\] \u\\$ "
 
 ###
 ### Open this file and select zsh customizations
 ###
-alias custom='vi ~/dotfiles/custom.zsh'
+alias custom='vi ~/dotfiles/zsh/custom.zsh'
 # The below functions already exist; use "function" (with quotes) to use original
-alias functions='vi ~/dotfiles/functions.zsh'
+alias functions='vi ~/dotfiles/zsh/functions.zsh'
 #alias aliases='vi ~/.oh-my-zsh/lib/aliases.zsh'
 
 ###
