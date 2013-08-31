@@ -5,8 +5,9 @@ syntax on		" Language syntax
 set backspace=2		" Make backspace behave normally
 set backspace=indent,eol,start " See above
 set laststatus=2
-set ambiwidth=double
+"set ambiwidth=double
 set number
+set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -33,7 +34,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-commentary'
 " Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-" Bundle 'bling/vim-airline'
+Bundle 'bling/vim-airline'
 
 " Bundle-specific settings
 """ easymotion
