@@ -276,6 +276,10 @@ do
 			echo "Setting up zsh"
 			echo ""
 			check_for_zsh
+			echo ""
+			echo "Setting up vim"
+			echo ""
+			check_for_vim
 			;;
 		"OSX" )
 			echo "Configuring for OSX"
