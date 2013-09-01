@@ -10,23 +10,23 @@ function check_for_zsh {
 				if [ -f /etc/lsb-release ]
 				then
 					echo "OS: $(lsb_release -s -d)"
-					apt-get install zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
+					sudo apt-get install zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
 				elif [ -f /etc/debian_version ]
 				then
 					echo "OS: $(cat /etc/debian_version)"
-					apt-get install zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
+					sudo apt-get install zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
 				elif [ -f /etc/redhat-release ]
 				then
 					echo "OS: $(cat /etc/redhat-release)"
-					yum install zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
+					sudo yum install zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
 				elif [ -f /etc/arch-release ]
 				then
 					echo "OS: $(cat /etc/arch-release)"
-					pacman -S zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
+					sudo pacman -S zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
 				elif [ -f /etc/SuSE-release ]
 				then
 					echo "OS: $(cat /etc/SuSE-release)"
-			       		zypper in zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
+			       		sudo zypper in zsh && echo "" && echo "Changing shell to zsh..." && chsh -s $(which zsh) && echo "Setting up oh-my-zsh..." && install_oh_my_zsh
 				else
 					echo "Distribution not recognized! Please install zsh and run this script again."
 				fi
@@ -124,44 +124,44 @@ function oh_my_zsh_customize {
 					if [ -f /home/$currentuser/.zshrc ]
 					then
 						mv /home/$currentuser/.zshrc /home/$currentuser/.zshrc-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
-						ln -s /home/$currentuser/dotfiles/zsh/.zshrc /home/$currentuser
+						sudo ln -s /home/$currentuser/dotfiles/zsh/.zshrc /home/$currentuser
 					else
-						ln -s /home/$currentuser/dotfiles/zsh/.zshrc /home/$currentuser
+						sudo ln -s /home/$currentuser/dotfiles/zsh/.zshrc /home/$currentuser
 					fi
 
 					echo "Cloning clean-check theme into /home/$currentuser/.oh-my-zsh/themes..."
 					if [ -f /home/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme ]
 					then
 						mv /home/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
-						ln -s /home/$currentuser/dotfiles/zsh/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes
+						sudo ln -s /home/$currentuser/dotfiles/zsh/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes
 					else
-						ln -s /home/$currentuser/dotfiles/zsh/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes
+						sudo ln -s /home/$currentuser/dotfiles/zsh/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes
 					fi
 	
 					echo "Cloning custom, functions into /home/$currentuser/.oh-my-zsh/custom..."
 					if [ -f /home/$currentuser/.oh-my-zsh/custom/custom.zsh ]
 					then
 						mv /home/$currentuser/.oh-my-zsh/custom/custom.zsh /home/$currentuser/.oh-my-zsh/custom/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
-						ln -s /home/$currentuser/dotfiles/zsh/custom.zsh /home/$currentuser/.oh-my-zsh/custom
+						sudo ln -s /home/$currentuser/dotfiles/zsh/custom.zsh /home/$currentuser/.oh-my-zsh/custom
 					else
-						ln -s /home/$currentuser/dotfiles/zsh/custom.zsh /home/$currentuser/.oh-my-zsh/custom
+						sudo ln -s /home/$currentuser/dotfiles/zsh/custom.zsh /home/$currentuser/.oh-my-zsh/custom
 					fi
 
 					if [ -f /home/$currentuser/.oh-my-zsh/custom/functions.zsh ]
 					then
 						mv /home/$currentuser/.oh-my-zsh/custom/functions.zsh /home/$currentuser/.oh-my-zsh/custom/functions-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
-						ln -s /home/$currentuser/dotfiles/zsh/functions.zsh /home/$currentuser/.oh-my-zsh/custom
+						sudo ln -s /home/$currentuser/dotfiles/zsh/functions.zsh /home/$currentuser/.oh-my-zsh/custom
 					else
-						ln -s /home/$currentuser/dotfiles/zsh/functions.zsh /home/$currentuser/.oh-my-zsh/custom
+						sudo ln -s /home/$currentuser/dotfiles/zsh/functions.zsh /home/$currentuser/.oh-my-zsh/custom
 					fi
 
 					echo "Cloning main-highlighter.zsh into /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main..."
 					if [ -f /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
 					then
 						mv /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
-						mkdir -p /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+						mkdir -p /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					else
-						mkdir -p /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+						mkdir -p /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					fi
 				fi
 				unset currentuser
