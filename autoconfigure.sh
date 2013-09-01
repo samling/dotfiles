@@ -61,6 +61,25 @@ function install_oh_my_zsh {
 				fi
 				unset currentuser
 			}
+
+function oh_my_zsh_customize {
+				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+				if ["$currentuser" == "root" ]
+				then
+					ln -s /root/dotfiles/zsh/.zshrc /root
+					ln -s /root/dotfiles/zsh/clean-check.zsh-theme /root/.oh-my-zsh/themes
+					ln -s /root/dotfiles/zsh/custom.zsh /root/.oh-my-zsh/custom
+					ln -s /root/dotfiles/zsh/functions.zsh /root/.oh-my-zsh/custom
+					mkdir -p /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /root/dotfiles/zsh/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+				else
+					ln -s /home/$currentuser/dotfiles/zsh/.zshrc /home/$currentuser
+					ln -s /home/$currentuser/dotfiles/zsh/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes
+					ln -s /home/$currentuser/dotfiles/zsh/custom.zsh /home/$currentuser/.oh-my-zsh/custom
+					ln -s /home/$currentuser/dotfiles/zsh/functions.zsh /home/$currentuser/.oh-my-zsh/custom
+					mkdir -p /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/main && ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+				fi
+				unset currentuser
+}
 				
 
 
