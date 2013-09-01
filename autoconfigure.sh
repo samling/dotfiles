@@ -166,6 +166,95 @@ function oh_my_zsh_customize {
 				fi
 				unset currentuser
 }
+
+function check_for_vim {
+	if ! type vim > /dev/null
+			then
+				echo "vim is not installed on this system; attempting to install"
+				echo ""
+				if [ -f /etc/lsb-release ]
+				then
+					echo "OS: $(lsb_release -s -d)"
+					sudo apt-get install vim && echo "" && echo "Setting up vim..." && vim_customize
+				elif [ -f /etc/debian_version ]
+				then
+					echo "OS: $(cat /etc/debian_version)"
+					sudo apt-get install vim && echo "" && echo "Setting up vim..." && vim_customize
+				elif [ -f /etc/redhat-release ]
+				then
+					echo "OS: $(cat /etc/redhat-release)"
+					sudo yum install vim && echo "" && echo "Setting up vim..." && vim_customize
+				elif [ -f /etc/arch-release ]
+				then
+					echo "OS: $(cat /etc/arch-release)"
+					sudo pacman -S vim && echo "" && echo "Setting up vim..." && vim_customize 
+				elif [ -f /etc/SuSE-release ]
+				then
+					echo "OS: $(cat /etc/SuSE-release)"
+			       		sudo zypper in vim && echo "" && echo "Setting up vim..." && vim_customize
+				else
+					echo "Distribution not recognized! Please install vim and run this script again."
+				fi
+			else
+				echo "vim is already installed!"
+				echo ""
+				echo "Setting up vim..." &&
+				vim_customize
+			fi
+		}
+
+function vim_customize {
+				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+				if [ "$currentuser" == "root" ]
+				then
+					echo "Cloning .vimrc into /$currentuser..."
+					if [ -f /root/.vimrc ]
+					then
+						mv /root/.vimrc /root/.vimrc-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						ln -s /root/dotfiles/vim/.vimrc /root
+					else
+						ln -s /root/dotfiles/vim/.vimrc /root
+					fi
+
+					echo "Cloning .vim into /$currentuser/.vim..."
+					if [ -d /root/.vim ]
+					then
+						mv /root/.vim /root/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						ln -s /root/dotfiles/vim/.vim /root
+						cd /root/.vim/bundle
+						sh git.sh
+					else
+						ln -s /root/dotfiles/vim/.vim /root
+						cd /root/.vim/bundle
+						sh git.sh
+					fi
+				else
+					echo "Cloning .vimrc into /home/$currentuser..."
+					if [ -f /home/$currentuser/.vimrc ]
+					then
+						mv /home/$currentuser/.vimrc /home/$currentuser/.vimrc-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						sudo ln -s /home/$currentuser/dotfiles/vim/.vimrc /home/$currentuser
+					else
+						sudo ln -s /home/$currentuser/dotfiles/vim/.vimrc /home/$currentuser
+					fi
+
+					echo "Cloning clean-check theme into /home/$currentuser/.vim..."
+					if [ -d /home/$currentuser/.vim ]
+					then
+						mv /home/$currentuser/.vim /home/$currentuser/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						sudo ln -s /home/$currentuser/dotfiles/vim/.vim /home/$currentuser
+						cd /home/$currentuser/.vim/bundle
+						sh git.sh
+					else
+						sudo ln -s /home/$currentuser/dotfiles/vim/.vim /home/$currentuser
+						cd /home/$currentuser/.vim/bundle
+						sh git.sh
+					fi
+				fi
+				unset currentuser
+
+}
+
 				
 
 
