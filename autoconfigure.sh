@@ -50,7 +50,7 @@ function install_oh_my_zsh {
 					echo ""
 					echo "Cloning into /root"
 					echo ""
-					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
 					echo ""
 					echo ""
 					echo "Customizing zsh..."
@@ -62,7 +62,7 @@ function install_oh_my_zsh {
 					echo ""
 					echo "Cloning into /home/$currentuser"
 					echo ""
-					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
 					echo ""
 					echo ""
 					echo "Customizing zsh..."
@@ -256,6 +256,213 @@ function vim_customize {
 }
 
 				
+function check_for_zsh_mac {
+	if ! type zsh > /dev/null
+			then
+				echo "zsh is not installed on this system"
+				break
+			fi
+			else
+				echo "zsh is already installed!"
+				echo ""
+				echo "Changing shell to zsh..."
+				chsh -s $(which zsh)
+				echo ""
+				echo "Setting up oh-my-zsh..." &&
+				install_oh_my_zsh_mac
+			fi
+		}
+
+function install_oh_my_zsh_mac {
+				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+				if [ "$currentuser" == "var/root" ]
+				then
+					echo "Moving to directory /var/root"
+					cd /var/root
+					echo ""
+					echo "Cloning into /var/root"
+					echo ""
+					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
+					echo ""
+					echo ""
+					echo "Customizing zsh..."
+					echo ""
+					oh_my_zsh_customize_mac
+				else
+					echo "Moving to directory /home/$currentuser"
+					cd /home/$currentuser
+					echo ""
+					echo "Cloning into /home/$currentuser"
+					echo ""
+					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
+					echo ""
+					echo ""
+					echo "Customizing zsh..."
+					echo ""
+					oh_my_zsh_customize_mac
+				fi
+				unset currentuser
+			}
+
+function oh_my_zsh_customize_mac {
+				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+				if [ "$currentuser" == "root" ]
+				then
+					echo "Cloning .zshrc into /var/$currentuser..."
+					if [ -f /var/root/.zshrc ]
+					then
+						mv /var/root/.zshrc /var/root/.zshrc-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						ln -s /var/root/dotfiles/zsh/.zshrc /var/root
+					else
+						ln -s /var/root/dotfiles/zsh/.zshrc /var/root
+					fi
+
+					echo "Cloning clean-check theme into /var/$currentuser/.oh-my-zsh/themes..."
+					if [ -f /var/root/.oh-my-zsh/themes/clean-check.zsh-theme ]
+					then
+						mv /var/root/.oh-my-zsh/themes/clean-check.zsh-theme /var/root/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						ln -s /var/root/dotfiles/zsh/clean-check.zsh-theme /var/root/.oh-my-zsh/themes
+					else
+						ln -s /var/root/dotfiles/zsh/clean-check.zsh-theme /var/root/.oh-my-zsh/themes
+					fi
+	
+					echo "Cloning custom, functions into /var/$currentuser/.oh-my-zsh/custom..."
+					if [ -f /var/root/.oh-my-zsh/custom/custom.zsh ]
+					then
+						mv /var/root/.oh-my-zsh/custom/custom.zsh /var/root/.oh-my-zsh/custom/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						ln -s /var/root/dotfiles/zsh/custom.zsh /var/root/.oh-my-zsh/custom
+					else
+						ln -s /var/root/dotfiles/zsh/custom.zsh /var/root/.oh-my-zsh/custom
+					fi
+
+					if [ -f /var/root/.oh-my-zsh/custom/functions.zsh ]
+					then
+						mv /var/root/.oh-my-zsh/custom/functions.zsh /var/root/.oh-my-zsh/custom/functions-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						ln -s /var/root/dotfiles/zsh/functions.zsh /var/root/.oh-my-zsh/custom
+					else
+						ln -s /var/root/dotfiles/zsh/functions.zsh /var/root/.oh-my-zsh/custom
+					fi
+
+					echo "Cloning main-highlighter.zsh into /var/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main..."
+					if [ -f /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
+					then
+						mv /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /var/root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						mkdir -p /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+					else
+						mkdir -p /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+					fi
+				else
+					echo "Cloning .zshrc into /Users/$currentuser..."
+					if [ -f /Users/$currentuser/.zshrc ]
+					then
+						mv /Users/$currentuser/.zshrc /Users/$currentuser/.zshrc-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/.zshrc /Users/$currentuser
+					else
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/.zshrc /Users/$currentuser
+					fi
+
+					echo "Cloning clean-check theme into /Users/$currentuser/.oh-my-zsh/themes..."
+					if [ -f /Users/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme ]
+					then
+						mv /Users/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme /Users/$currentuser/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/clean-check.zsh-theme /Users/$currentuser/.oh-my-zsh/themes
+					else
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/clean-check.zsh-theme /Users/$currentuser/.oh-my-zsh/themes
+					fi
+	
+					echo "Cloning custom, functions into /Users/$currentuser/.oh-my-zsh/custom..."
+					if [ -f /Users/$currentuser/.oh-my-zsh/custom/custom.zsh ]
+					then
+						mv /Users/$currentuser/.oh-my-zsh/custom/custom.zsh /Users/$currentuser/.oh-my-zsh/custom/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/custom.zsh /Users/$currentuser/.oh-my-zsh/custom
+					else
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/custom.zsh /Users/$currentuser/.oh-my-zsh/custom
+					fi
+
+					if [ -f /Users/$currentuser/.oh-my-zsh/custom/functions.zsh ]
+					then
+						mv /Users/$currentuser/.oh-my-zsh/custom/functions.zsh /Users/$currentuser/.oh-my-zsh/custom/functions-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/functions.zsh /Users/$currentuser/.oh-my-zsh/custom
+					else
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/functions.zsh /Users/$currentuser/.oh-my-zsh/custom
+					fi
+
+					echo "Cloning main-highlighter.zsh into /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main..."
+					if [ -f /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
+					then
+						mv /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						mkdir -p /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /Users/$currentuser/dotfiles/zsh/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+					else
+						mkdir -p /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /Users/$currentuser/dotfiles/zsh/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+					fi
+				fi
+				unset currentuser
+}
+
+function check_for_vim_mac {
+	if ! type vim > /dev/null
+			then
+				echo "vim is not installed on this system"
+				break
+			else
+				echo "vim is already installed!"
+				echo ""
+				echo "Setting up vim..." &&
+				vim_customize_mac
+			fi
+		}
+
+function vim_customize_mac {
+				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+				if [ "$currentuser" == "root" ]
+				then
+					echo "Cloning .vimrc into /var/$currentuser..."
+					if [ -f /var/root/.vimrc ]
+					then
+						mv /var/root/.vimrc /var/root/.vimrc-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						ln -s /var/root/dotfiles/vim/.vimrc /var/root
+					else
+						ln -s /var/root/dotfiles/vim/.vimrc /var/root
+					fi
+
+					echo "Cloning .vim into /var/$currentuser/.vim..."
+					if [ -d /var/root/.vim ]
+					then
+						mv /var/root/.vim /var/root/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						ln -s /var/root/dotfiles/vim/.vim /var/root
+						cd /var/root/.vim/bundle
+						sh git.sh
+					else
+						ln -s /var/root/dotfiles/vim/.vim /var/root
+						cd /var/root/.vim/bundle
+						sh git.sh
+					fi
+				else
+					echo "Cloning .vimrc into /Users/$currentuser..."
+					if [ -f /Users/$currentuser/.vimrc ]
+					then
+						mv /Users/$currentuser/.vimrc /Users/$currentuser/.vimrc-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						sudo ln -s /Users/$currentuser/dotfiles/vim/.vimrc /Users/$currentuser
+					else
+						sudo ln -s /Users/$currentuser/dotfiles/vim/.vimrc /Users/$currentuser
+					fi
+
+					echo "Cloning clean-check theme into /Users/$currentuser/.vim..."
+					if [ -d /Users/$currentuser/.vim ]
+					then
+						mv /Users/$currentuser/.vim /Users/$currentuser/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						sudo ln -s /Users/$currentuser/dotfiles/vim/.vim /Users/$currentuser
+						cd /Users/$currentuser/.vim/bundle
+						sh git.sh
+					else
+						sudo ln -s /Users/$currentuser/dotfiles/vim/.vim /Users/$currentuser
+						cd /Users/$currentuser/.vim/bundle
+						sh git.sh
+					fi
+				fi
+				unset currentuser
+
+}
 
 
 
@@ -286,6 +493,18 @@ do
 			;;
 		"OSX" )
 			echo "Configuring for OSX"
+			echo ""
+			echo ""
+			echo "Setting up zsh"
+			echo ""
+			check_for_zsh_mac
+			echo ""
+			echo "Setting up vim"
+			echo ""
+			check_for_vim_mac
+			echo ""
+			echo ""
+			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
 		"Other" )
 			echo "Nothing here yet!"
