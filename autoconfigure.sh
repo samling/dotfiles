@@ -280,6 +280,9 @@ do
 			echo "Setting up vim"
 			echo ""
 			check_for_vim
+			echo ""
+			echo ""
+			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
 		"OSX" )
 			echo "Configuring for OSX"
