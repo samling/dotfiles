@@ -101,12 +101,7 @@ alias mv='mv -i' # Prevent clobbering
 alias which='type -a'
 alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
-# MacPorts VIM
-#alias vim="/opt/local/bin/vim"
-#alias vi="/opt/local/bin/vim"
-#":setglobal number" will set line numbers on or off globally
-alias vi=/usr/local/bin/vim
-alias vim=/usr/local/bin/vim
+alias vi='vim'
 alias mount="mount | column -t"
 alias fg="fg %$1"
 alias bg="bg %$1"
