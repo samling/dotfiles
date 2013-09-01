@@ -140,7 +140,7 @@ alias recent=recent
 ###
 alias t="treelvl"
 alias tree='tree -Csuh'	# Alternative to recursive ls
-alias ld="ls -l | grep "^d"" # List only directories
+# alias ld="ls -l | grep "^d"" # List only directories
 alias df="df -kH" # Clean disk info
 alias h="history"
 alias i="ifconfig"
