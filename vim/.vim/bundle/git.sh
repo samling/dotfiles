@@ -19,3 +19,5 @@ echo ""
 git clone https://github.com/bling/vim-airline.git
 echo ""
 git clone https://github.com/Lokaltog/powerline-fonts.git
+echo ""
+git clone https://github.com/scrooloose/syntastic.git

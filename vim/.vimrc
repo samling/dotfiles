@@ -10,6 +10,9 @@ set laststatus=2
 "set ambiwidth=double
 set number
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
+set incsearch		" highlight options as you type expression (emacs style)
+set ignorecase		" ignore case for entirely lowercase searches
+set smartcase		" respect case when capitals are included
 
 """ Remap defaults
 """ ---------------------------------------------------
@@ -46,6 +49,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-commentary'
 " Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'bling/vim-airline'
+Bundle 'scrooloose/syntastic'
 
 " Bundle-specific settings
 """ easymotion
