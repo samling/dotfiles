@@ -1,3 +1,5 @@
+""" Settings
+""" ---------------------------------------------------
 set nocompatible
 filetype off		" Required
 filetype plugin on
@@ -9,10 +11,13 @@ set laststatus=2
 set number
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+""" Remap defaults
+""" ---------------------------------------------------
+nmap j gj
+nmap k gk
 
-" Colorscheme/theme
+""" Colorscheme/theme
+""" ---------------------------------------------------
 colorscheme molokai
 let g:molokai_original = 1
 let g:airline_powerline_fonts = 1
@@ -20,9 +25,13 @@ let g:Powerline_symbols = 'fancy'
 " let g:airline_theme='wombat'
 " let g:rehash256 = 1
 
+""" Vundle
+""" ---------------------------------------------------
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
 " Let Vundle manage itself
-" Required
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/vundle'	" Required
 
 " Call bundles here
 " e.g.:
