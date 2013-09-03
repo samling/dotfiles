@@ -21,3 +21,5 @@ echo ""
 git clone https://github.com/Lokaltog/powerline-fonts.git
 echo ""
 git clone https://github.com/scrooloose/syntastic.git
+echo ""
+git clone https://github.com/kien/ctrlp.vim.git

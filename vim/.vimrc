@@ -50,6 +50,7 @@ Bundle 'tpope/vim-commentary'
 " Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
+Bundle 'kien/ctrlp.vim'
 
 " Bundle-specific settings
 """ easymotion
@@ -59,6 +60,9 @@ map <C-n> :NERDTreeToggle<CR>
 """ gundo
 nnoremap - :GundoToggle<CR>
 let g:gundo_close_on_revert=1
+""" Ctrl-P
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
 filetype plugin indent on " Required
 
