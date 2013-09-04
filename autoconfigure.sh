@@ -261,7 +261,6 @@ function check_for_zsh_mac {
 			then
 				echo "zsh is not installed on this system"
 				break
-			fi
 			else
 				echo "zsh is already installed!"
 				echo ""
