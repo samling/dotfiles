@@ -16,8 +16,8 @@ set smartcase		" respect case when capitals are included
 
 """ Remap defaults
 """ ---------------------------------------------------
-nmap j gj
-nmap k gk
+nnoremap j gj
+nnoremap k gk
 
 """ Colorscheme/theme
 """ ---------------------------------------------------
@@ -63,6 +63,10 @@ let g:gundo_close_on_revert=1
 """ Ctrl-P
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+nmap ; :CtrlPBuffer<CR>
+let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_working_path_mode = 'ra'
 
 filetype plugin indent on " Required
 
