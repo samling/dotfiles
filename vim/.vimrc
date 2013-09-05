@@ -53,6 +53,8 @@ Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 
 " Bundle-specific settings
+""" airline
+let g:airline#extensions#tabline#enabled = 1
 """ easymotion
 let g:EasyMotion_leader_key=','
 """ NERDtree
