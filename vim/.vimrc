@@ -81,7 +81,7 @@ Bundle 'tpope/vim-commentary'
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
-Bundle 'Valloric/MatchTagAlways'
+" Bundle 'Valloric/MatchTagAlways'
 
 " Bundle-specific settings
 """ airline
