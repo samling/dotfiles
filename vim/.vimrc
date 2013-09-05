@@ -1,32 +1,62 @@
 """ Settings
 """ ---------------------------------------------------
-set nocompatible
-filetype off		" Required
-filetype plugin on
-syntax on		" Language syntax
-set backspace=2		" Make backspace behave normally
-set backspace=indent,eol,start " See above
-set laststatus=2
-"set ambiwidth=double
-set number
+""" reset.vim
+if &compatible
+	set nocompatible
+	" Treats a wrapped line as two separate lines when scrolling
+endif
+nnoremap j gj
+nnoremap k gk
+map < :bp<CR>
+map > :bn<CR> 
+map " :bd<CR>
+map ' :tabnew<CR>
+
+""" Display Settings
+" set nowrap		" don't wrap lines
+set showmatch		" show matching bracket (briefly jump)
+set matchtime=2		" show matching bracket for 0.2 seconds
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
+set laststatus=2	" use 2 lines for the status bar
+set matchpairs+=<:>	" specifically for html
+
+""" Editor Settings
 set incsearch		" highlight options as you type expression (emacs style)
 set ignorecase		" ignore case for entirely lowercase searches
 set smartcase		" respect case when capitals are included
+set number		" enable line numbers
+" set ambiwidth=double	" make ambiguously-sized characters double the width
+set backspace=2		" make backspace behave normally
+set backspace=indent,eol,start	" see above; allow backspacing over everything in insert mode
+set smarttab		" smart tab handling for indenting
+set magic		" change the way backslashes are used in search patterns
 
-""" Remap defaults
-""" ---------------------------------------------------
-nnoremap j gj
-nnoremap k gk
+""" File Type Settings
+filetype off		" required
+filetype plugin on	" required
+filetype plugin indent on " required
 
-""" Colorscheme/theme
-""" ---------------------------------------------------
-colorscheme molokai
-let g:molokai_original = 1
-let g:airline_powerline_fonts = 1
-let g:Powerline_symbols = 'fancy'
-" let g:airline_theme='wombat'
-" let g:rehash256 = 1
+""" Color settings
+if &t_Co > 2 || has("gui_running")
+	syntax on		" language syntax
+	set hlsearch		" highlight search
+	set incsearch		" search incrementally (search while typing)
+	colorscheme molokai
+	let g:molokai_original = 1
+	let g:airline_powerline_fonts = 1
+	let g:Powerline_symbols = 'fancy'
+	" let g:airline_theme='wombat'
+	" let g:rehash256 = 1
+endif
+
+""" System Settings
+set confirm		" get dialog when :q, :w, or :wq fails
+set nobackup		" no backup~ files
+set viminfo='20,\"500	" remember copy registers after quitting in the .viminfo
+set hidden		" remember undo after quitting
+set history=50		" keep 50 lines of command history
+" set mouse=v		" use mouse in visual mode (not normal, insert,
+			" command, help modes)
 
 """ Vundle
 """ ---------------------------------------------------
@@ -51,6 +81,7 @@ Bundle 'tpope/vim-commentary'
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
+Bundle 'Valloric/MatchTagAlways'
 
 " Bundle-specific settings
 """ airline
@@ -69,9 +100,14 @@ nmap ; :CtrlPBuffer<CR>
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_working_path_mode = 'ra'
-
-
-filetype plugin indent on " Required
+""" MatchTagAlways
+let g:mta_filetypes = {
+	\ 'html' : 1,
+	\ 'xhtml' : 1,
+	\ 'xml' : 1,
+	\ 'jinja' : 1,
+	\ 'php' : 1,
+	\}
 
 " Vundle shortcuts
 " :BundleList		- List configured bundles

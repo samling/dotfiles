@@ -23,3 +23,5 @@ echo ""
 git clone https://github.com/scrooloose/syntastic.git
 echo ""
 git clone https://github.com/kien/ctrlp.vim.git
+echo ""
+git clone https://github.com/Valloric/MatchTagAlways.git
