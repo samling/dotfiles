@@ -90,6 +90,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:EasyMotion_leader_key=','
 """ NERDtree
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen=1
 """ gundo
 nnoremap - :GundoToggle<CR>
 let g:gundo_close_on_revert=1
