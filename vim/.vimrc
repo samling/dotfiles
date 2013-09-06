@@ -41,8 +41,8 @@ if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
 	set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
-	colorscheme molokai
-	let g:molokai_original = 1
+	colorscheme molokai 
+	let g:molokai_original = 1 
 	let g:airline_powerline_fonts = 1
 	let g:Powerline_symbols = 'fancy'
 	" let g:airline_theme='wombat'
