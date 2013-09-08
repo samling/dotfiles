@@ -24,8 +24,8 @@ set matchpairs+=<:>	" specifically for html
 set incsearch		" highlight options as you type expression (emacs style)
 set ignorecase		" ignore case for entirely lowercase searches
 set smartcase		" respect case when capitals are included
-set number		" enable line numbers
-set rnu			" relative row numbers
+" set number		" enable line numbers
+set relativenumber	" relative row numbers when exiting Insert mode
 " set ambiwidth=double	" make ambiguously-sized characters double the width
 set backspace=2		" make backspace behave normally
 set backspace=indent,eol,start	" see above; allow backspacing over everything in insert mode
