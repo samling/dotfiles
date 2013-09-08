@@ -40,7 +40,7 @@ filetype plugin indent on " required
 """ Color settings
 if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
-	set hlsearch		" highlight search
+	" set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
 	colorscheme molokai 
 	let g:molokai_original = 1 
