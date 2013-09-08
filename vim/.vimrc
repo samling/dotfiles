@@ -7,10 +7,10 @@ if &compatible
 endif
 nnoremap j gj
 nnoremap k gk
-map < :bp<CR>
-map > :bn<CR> 
-map " :bd<CR>
-map ' :tabnew<CR>
+" map < :bp<CR>
+" map > :bn<CR> 
+" map " :bd<CR>
+" map ' :tabnew<CR>
 " Experimental -- disabling cursor keys to better learn and get used to hjkl
 inoremap <Up> 	<NOP>
 inoremap <Down> <NOP>
@@ -20,6 +20,9 @@ noremap  <Up>	<NOP>
 noremap	 <Down>	<NOP>
 noremap	 <Left>	<NOP>
 noremap  <Right> <NOP>
+" Remap <Escape>
+inoremap jk <esc>
+" inoremap <Leader><Leader> <esc>
 
 """ Display Settings
 " set nowrap		" don't wrap lines
@@ -40,6 +43,9 @@ set backspace=2		" make backspace behave normally
 set backspace=indent,eol,start	" see above; allow backspacing over everything in insert mode
 set smarttab		" smart tab handling for indenting
 set magic		" change the way backslashes are used in search patterns
+set shiftwidth=4	" use 4 spaces as indent guide
+set tabstop=4		" use 4 spaces as indent guide
+set expandtab		" convert tabs to spaces
 
 """ File Type Settings
 filetype off		" required
