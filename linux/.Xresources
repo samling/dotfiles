@@ -56,7 +56,7 @@ URxvt.urlLauncher:              /usr/bin/chromium
 URxvt.matcher.button:           1
 
 URxvt.borderColor:      #333631
-URxvt.internalBorder:   6
+URxvt.internalBorder:   0
 
 URxvt*underlineColor:       #333333
 
