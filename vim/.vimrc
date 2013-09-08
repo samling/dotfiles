@@ -11,6 +11,15 @@ map < :bp<CR>
 map > :bn<CR> 
 map " :bd<CR>
 map ' :tabnew<CR>
+" Experimental -- disabling cursor keys to better learn and get used to hjkl
+inoremap <Up> 	<NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
+noremap  <Up>	<NOP>
+noremap	 <Down>	<NOP>
+noremap	 <Left>	<NOP>
+noremap  <Right> <NOP>
 
 """ Display Settings
 " set nowrap		" don't wrap lines
