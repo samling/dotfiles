@@ -1,17 +1,33 @@
 """ Settings
 """ ---------------------------------------------------
+
 """ reset.vim
+"""
+"""
+
 if &compatible
 	set nocompatible
-	" Treats a wrapped line as two separate lines when scrolling
 endif
-nnoremap j gj
-nnoremap k gk
+
+""" move according to visual lines instead of line numbers (i.e. treat line
+""" breaks as two separate lines)
+"""
+"""
+" nnoremap j gj
+" nnoremap k gk
+
+""" map/remap some characters
+"""
+"""
 " map < :bp<CR>
 " map > :bn<CR> 
 " map " :bd<CR>
 " map ' :tabnew<CR>
-" Experimental -- disabling cursor keys to better learn and get used to hjkl
+
+
+""" Experimental -- disabling cursor keys to better learn and get used to hjkl
+"""
+"""
 inoremap <Up> 	<NOP>
 inoremap <Down> <NOP>
 inoremap <Left> <NOP>
@@ -25,6 +41,8 @@ inoremap jk <esc>
 " inoremap <Leader><Leader> <esc>
 
 """ Display Settings
+"""
+"""
 " set nowrap		" don't wrap lines
 set showmatch		" show matching bracket (briefly jump)
 set matchtime=2		" show matching bracket for 0.2 seconds
@@ -33,6 +51,8 @@ set laststatus=2	" use 2 lines for the status bar
 set matchpairs+=<:>	" specifically for html
 
 """ Editor Settings
+"""
+"""
 set incsearch		" highlight options as you type expression (emacs style)
 set ignorecase		" ignore case for entirely lowercase searches
 set smartcase		" respect case when capitals are included
@@ -42,18 +62,23 @@ set relativenumber	" relative row numbers when exiting Insert mode
 set backspace=2		" make backspace behave normally
 set backspace=indent,eol,start	" see above; allow backspacing over everything in insert mode
 set smarttab		" smart tab handling for indenting
-set magic		" change the way backslashes are used in search patterns
+set magic   		" change the way backslashes are used in search patterns
 set shiftwidth=4	" use 4 spaces as indent guide
 set tabstop=4		" use 4 spaces as indent guide
 set expandtab		" convert tabs to spaces
+set virtualedit=onemore " allow the cursor to move past the last character
 
 """ File Type Settings
+"""
+"""
 filetype off		" required
 filetype plugin on	" required
 filetype plugin indent on " required
 autocmd FileType make setlocal noexpandtab  " avoid expandtab when editing make files (as this may break them)
 
 """ Color settings
+"""
+"""
 if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
 	" set hlsearch		" highlight search
@@ -77,6 +102,7 @@ set history=50		" keep 50 lines of command history
 
 """ Vundle
 """ ---------------------------------------------------
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 

@@ -63,7 +63,7 @@ export PATH=/Users/sboynton/scripts:/Users/sboynton/.local.bin:/usr/local/bin:/u
 #export SSLKEYLOGFILE=/Users/sboynton/Documents/Security/tlskeys
 
 # Default
-#export LSCOLORS='Gxfxcxdxbxegedabagacad'
+# export LSCOLORS='Gxfxcxdxbxegedabagacad'
 # Matrix
 #export LSCOLORS=Cafacadagaeaeaabagacad
 # Molokai
