@@ -112,6 +112,7 @@ alias cwd='pwd'
 ### Directory changing
 ###
 
+alias .='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'

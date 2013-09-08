@@ -51,6 +51,7 @@ set expandtab		" convert tabs to spaces
 filetype off		" required
 filetype plugin on	" required
 filetype plugin indent on " required
+autocmd FileType make setlocal noexpandtab  " avoid expandtab when editing make files (as this may break them)
 
 """ Color settings
 if &t_Co > 2 || has("gui_running")
@@ -98,6 +99,8 @@ Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 " Bundle 'Valloric/MatchTagAlways'
+Bundle 'godlygeek/csapprox'
+Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
 
 " Bundle-specific settings
 """ airline

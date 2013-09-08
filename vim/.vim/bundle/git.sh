@@ -25,3 +25,7 @@ echo ""
 git clone https://github.com/kien/ctrlp.vim.git
 echo ""
 git clone https://github.com/Valloric/MatchTagAlways.git
+echo ""
+git clone https://github.com/godlygeek/csapprox.git
+echo ""
+git clone https://github.com/vim-scripts/Better-CSS-Syntax-for-Vim.git
