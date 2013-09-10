@@ -19,8 +19,8 @@ endif
 """ map/remap some characters
 """
 """
-map < :bp<CR>
-map > :bn<CR> 
+map { :bp<CR>
+map } :bn<CR> 
 map " :bd<CR>
 map ' :tabnew<CR>
 
