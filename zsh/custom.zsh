@@ -37,12 +37,15 @@ alias r='sudo mtr' # MyTraceRoute, combines ping and traceroute
 alias samsite='ssh root@50.56.174.88'
 alias webhost='ssh root@198.61.210.119'
 alias susebox='ssh root@166.78.12.186'
-alias albert='ssh root@166.78.186.97'
 alias anait='ssh anaitovsepyan@192.168.1.134'
 alias fygenson='ssh samling@128.111.17.27'
 alias vpn='ssh rmsteam@vpn'
 alias kiosk='ssh root@172.18.4.151'
 alias kioskvpn='ssh root@172.17.35.160'
+alias hr='ssh root@192.168.254.23'
+alias devinside='ssh root@192.168.254.55'
+alias inside='ssh root@inside-host'
+alias db='ssh root@db'
 
 ###
 ### Novacoast stuff
