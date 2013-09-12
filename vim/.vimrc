@@ -24,6 +24,8 @@ map } :bn<CR>
 map " :bd<CR>
 map ' :tabnew<CR>
 
+" Toggle paste mode for pasting in external text
+map = :set paste!<CR>
 
 """ Experimental -- disabling cursor keys to better learn and get used to hjkl
 """
