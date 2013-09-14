@@ -19,10 +19,10 @@ endif
 """ map/remap some characters
 """
 """
-map { :bp<CR>
-map } :bn<CR> 
-map " :bd<CR>
-map ' :tabnew<CR>
+" map { :bp<CR>
+" map } :bn<CR> 
+" map " :bd<CR>
+" map ' :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
 map = :set paste!<CR>
