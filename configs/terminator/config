@@ -1,0 +1,27 @@
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  borderless = True
+[keybindings]
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    palette = "#2e3436:#cc0000:#4e9a06:#c47800:#4a85d0:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fcbc4f:#80b6ef:#ad7fa8:#34e2e2:#eeeeec"
+    login_shell = True
+    background_image = None
+    background_darkness = 0.71
+    background_type = transparent
+    use_system_font = False
+    foreground_color = "#ffffff"
+    use_custom_command = True
+    show_titlebar = False
+    custom_command = zsh
+    font = Terminess Powerline 8
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
