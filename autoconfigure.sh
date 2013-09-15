@@ -301,11 +301,11 @@ function tmux_customize {
 						mv /root/.tmux.conf /root/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						ln -s /root/dotfiles/tmux/.tmux.conf /root
                         cd /root/dotfiles/tmux
-                        sh git.sh && sudo ln -s /root/dotfiles/tmux/sam.sh /root/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /root/dotfiles/tmux/sam.sh /root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /root/dotfiles/tmux/.tmux-powerlinerc /root
 					else
 						ln -s /root/dotfiles/tmux/.tmux.conf /root
                         cd /root/dotfiles/tmux
-                        sh git.sh && sudo ln -s /root/dotfiles/tmux/sam.sh /root/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /root/dotfiles/tmux/sam.sh /root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /root/dotfiles/tmux/.tmux-powerlinerc /root
 
 					fi
                 else
@@ -315,11 +315,11 @@ function tmux_customize {
 						mv /home/$currentuser/.tmux.conf /home/$currentuser/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux.conf /home/$currentuser
                         cd /home/$currentuser/dotfiles/tmux
-                        sh git.sh && sudo ln -s /home/$currentuser/dotfiles/tmux/sam.sh /home/$currentuser/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /home/$currentuser/dotfiles/tmux/sam.sh /home/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux-powerlinerc /home/$currentuser
 					else
 						sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux.conf /home/$currentuser
                         cd /home/$currentuser/dotfiles/tmux
-                        sh git.sh && sudo ln -s /home/$currentuser/dotfiles/tmux/sam.sh /home/$currentuser/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /home/$currentuser/dotfiles/tmux/sam.sh /home/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux-powerlinerc /home/$currentuser
 
 					fi
 				fi
@@ -558,11 +558,11 @@ function tmux_customize_mac {
 						mv /var/root/.tmux.conf /var/root/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
                         cd /var/root/dotfiles/tmux
-                        sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
 					else
 						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
                         cd /var/root/dotfiles/tmux
-                        sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
 					fi
 				else
 					echo "Cloning .tmux.conf into /Users/$currentuser..."
@@ -571,11 +571,11 @@ function tmux_customize_mac {
 						mv /Users/$currentuser/.tmux.conf /Users/$currentuser/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
                         cd /Users/$currentuser/dotfiles/tmux
-                        sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
 					else
 						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
                         cd /Users/$currentuser/dotfiles/tmux 
-                        sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes
+                        sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
 					fi
 				fi
 				unset currentuser
