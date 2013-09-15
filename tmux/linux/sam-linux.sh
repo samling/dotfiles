@@ -30,11 +30,11 @@ if [ -z $TMUX_POWERLINE_LEFT_STATUS_SEGMENTS ]; then
 		#"ifstat_sys 235 214" \
 		"lan_ip 236 214 " \
 		"wan_ip 238 214 " \
-		"vcs_branch 235 214" \
-		"vcs_compare 235 214" \
-		"vcs_staged 235 214" \
-		"vcs_modified 235 214" \
-		"vcs_others 235 214" \
+		#"vcs_branch 235 214" \
+		#"vcs_compare 235 214" \
+		#"vcs_staged 235 214" \
+		#"vcs_modified 235 214" \
+		#"vcs_others 235 214" \
 	)
 fi
 
