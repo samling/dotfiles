@@ -86,6 +86,9 @@ if &t_Co > 2 || has("gui_running")
 	" set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
 	colorscheme molokai 
+    " Remove the background color from the theme to match the terminal bg
+    " color
+    hi Normal ctermbg=NONE
 	let g:molokai_original = 1 
 	let g:airline_powerline_fonts = 1
 	let g:Powerline_symbols = 'fancy'

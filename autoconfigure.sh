@@ -255,6 +255,69 @@ function vim_customize {
 
 }
 
+function check_for_tmux {
+	if ! type tmux > /dev/null
+			then
+				echo "tmux is not installed on this system; attempting to install"
+				echo ""
+				if [ -f /etc/lsb-release ]
+				then
+					echo "OS: $(lsb_release -s -d)"
+					sudo apt-get install tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+				elif [ -f /etc/debian_version ]
+				then
+					echo "OS: $(cat /etc/debian_version)"
+					sudo apt-get install tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+				elif [ -f /etc/redhat-release ]
+				then
+					echo "OS: $(cat /etc/redhat-release)"
+					sudo yum install tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+				elif [ -f /etc/arch-release ]
+				then
+					echo "OS: $(cat /etc/arch-release)"
+					sudo pacman -S tmux && echo "" && echo "Setting up tmux..." && tmux_customize 
+				elif [ -f /etc/SuSE-release ]
+				then
+					echo "OS: $(cat /etc/SuSE-release)"
+			       		sudo zypper in tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+				else
+					echo "Distribution not recognized! Please install tmux and run this script again."
+				fi
+			else
+				echo "tmux is already installed!"
+				echo ""
+				echo "Setting up tmux..." &&
+				tmux_customize
+			fi
+		}
+
+function tmux_customize {
+				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+				if [ "$currentuser" == "root" ]
+				then
+					echo "Cloning .tmux.conf into /$currentuser..."
+					if [ -f /root/.tmux.conf ]
+					then
+						mv /root/.tmux.conf /root/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						ln -s /root/dotfiles/tmux/.tmux.conf /root
+					else
+						ln -s /root/dotfiles/tmux/.tmux.conf /root
+					fi
+                else
+					echo "Cloning .tmux.conf into /home/$currentuser..."
+					if [ -f /home/$currentuser/.tmux.conf ]
+					then
+						mv /home/$currentuser/.tmux.conf /home/$currentuser/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux.conf /home/$currentuser
+					else
+						sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux.conf /home/$currentuser
+					fi
+				fi
+				unset currentuser
+
+}
+
+
 				
 function check_for_zsh_mac {
 	if ! type zsh > /dev/null
@@ -460,8 +523,50 @@ function vim_customize_mac {
 					fi
 				fi
 				unset currentuser
-
 }
+
+function check_for_tmux_mac {
+	if ! type tmux > /dev/null
+			then
+				echo "tmux is not installed on this system"
+				break
+			else
+				echo "tmux is already installed!"
+				echo ""
+				echo "Setting up tmux..." &&
+				tmux_customize_mac
+			fi
+		}
+
+function tmux_customize_mac {
+				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+				if [ "$currentuser" == "root" ]
+				then
+					echo "Cloning .tmux.conf into /var/$currentuser..."
+					if [ -f /var/root/.tmux.conf ]
+					then
+						mv /var/root/.tmux.conf /var/root/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
+					else
+						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
+					fi
+				else
+					echo "Cloning .tmux.conf into /Users/$currentuser..."
+					if [ -f /Users/$currentuser/.tmux.conf ]
+					then
+						mv /Users/$currentuser/.tmux.conf /Users/$currentuser/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
+					else
+						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
+					fi
+				fi
+				unset currentuser
+}
+
+
+
+
+
 
 
 
@@ -487,6 +592,9 @@ do
 			echo ""
 			check_for_vim
 			echo ""
+            echo "Setting up tmux"
+            echo ""
+            check_for_tmux
 			echo ""
 			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
@@ -502,6 +610,9 @@ do
 			echo ""
 			check_for_vim_mac
 			echo ""
+            echo "Setting up tmux"
+            echo ""
+            check_for_tmux_mac
 			echo ""
 			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
