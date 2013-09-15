@@ -40,14 +40,14 @@ fi
 if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
 		#"earthquake 235 136" \
-		"pwd 235 136" \
-		"mailcount 235 136" \
-		"now_playing 235 136" \
+		#"pwd 235 136" \
+		#"mailcount 235 136" \
+		#"now_playing 235 136" \
 		#"cpu 235 136" \
 		"load 235 136" \
 		#"tmux_mem_cpu_load 235 136" \
-		"battery 235 136" \
-		"weather 235 136" \
+		#"battery 235 136" \
+		#"weather 235 136" \
 		#"rainbarf 235 136" \
 		#"xkb_layout 235 136" \
 		"date_day 235 136" \

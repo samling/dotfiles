@@ -37,6 +37,8 @@ plugins=(git themes osx zsh-syntax-highlighting)
 # GCC stuff
 export ARCHFLAGS="-arch x86_64"
 
+# Tmux variables
+export TMUX_POWERLINE_SEG_WETHER_LOCATION="2411898"
 #eval $(dircolors -b $HOME/LS_COLORS)
 
 ZSH_THEME='clean-check'
