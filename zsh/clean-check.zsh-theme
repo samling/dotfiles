@@ -1,6 +1,7 @@
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="white"; fi
 
 PROMPT='%{$fg[$NCOLOR]%}%B%m%b%{$reset_color%}:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)% » '
+PROMPT="$PROMPT"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 RPROMPT='[%*]'
 
 # git theming
