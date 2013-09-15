@@ -74,6 +74,12 @@ alias gv='/Applications/MacVim.app/Contents/MacOS/Vim -g' # Use MacVim instead o
 alias calc='bc -l'
 
 ###
+### Tmux
+###
+alias tmuxa="tmux attach -d"
+alias ta="tmux attach -d"
+
+###
 ### Shortcuts
 ###
 alias desktop="cd ~/Desktop"
