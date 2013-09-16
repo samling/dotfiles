@@ -46,7 +46,7 @@ alias hr='ssh root@192.168.254.23'
 alias devinside='ssh root@192.168.254.55'
 alias inside='ssh root@inside-host'
 alias db='ssh root@db'
-alias pugrc='ssh root@166.78.186.111'
+alias pugrc='ssh root@192.237.216.201'
 
 ###
 ### Novacoast stuff
