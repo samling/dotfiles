@@ -197,7 +197,7 @@ alias mysql_start="mysqld_safe &"
 alias mysql_stop="sudo mysqladmin shutdown"
 alias mysql="mysql -uroot"
 alias timer="utimer"
-alias du=ncdu-function
+#alias du=ncdu-function
 
 ###
 ### Hax
