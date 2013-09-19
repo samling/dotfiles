@@ -47,7 +47,7 @@ export TMUX_POWERLINE_SEG_WETHER_LOCATION="2411898"
 
 #eval $(dircolors -b $HOME/LS_COLORS)
 
-ZSH_THEME='custom'
+ZSH_THEME='clean-check'
 #ZSH_THEME='clean-check'
 #ZSH_THEME='clean-sam'
 #DEFAULT_USER='sboynton'
