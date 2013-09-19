@@ -85,13 +85,16 @@ function oh_my_zsh_customize {
 						ln -s /root/dotfiles/zsh/.zshrc /root
 					fi
 
-					echo "Cloning clean-check theme into /$currentuser/.oh-my-zsh/themes..."
-					if [ -f /root/.oh-my-zsh/themes/clean-check.zsh-theme ]
+					echo "Cloning clean-check and custom themes into /$currentuser/.oh-my-zsh/themes..."
+					if [ -f /root/.oh-my-zsh/themes/clean-check.zsh-theme ] || [ -f /root/.oh-my-zsh/themes/custom.zsh-theme ]
 					then
 						mv /root/.oh-my-zsh/themes/clean-check.zsh-theme /root/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						mv /root/.oh-my-zsh/themes/custom.zsh-theme /root/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
 						ln -s /root/dotfiles/zsh/clean-check.zsh-theme /root/.oh-my-zsh/themes
+						ln -s /root/dotfiles/zsh/custom.zsh-theme /root/.oh-my-zsh/themes
 					else
 						ln -s /root/dotfiles/zsh/clean-check.zsh-theme /root/.oh-my-zsh/themes
+						ln -s /root/dotfiles/zsh/custom.zsh-theme /root/.oh-my-zsh/themes
 					fi
 	
 					echo "Cloning custom, functions into /$currentuser/.oh-my-zsh/custom..."
@@ -129,13 +132,16 @@ function oh_my_zsh_customize {
 						sudo ln -s /home/$currentuser/dotfiles/zsh/.zshrc /home/$currentuser
 					fi
 
-					echo "Cloning clean-check theme into /home/$currentuser/.oh-my-zsh/themes..."
-					if [ -f /home/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme ]
+					echo "Cloning clean-check and custom themes into /home/$currentuser/.oh-my-zsh/themes..."
+					if [ -f /home/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme ] || [ -f /home/$currentuser/.oh-my-zsh/themes/custom.zsh-theme ]
 					then
 						mv /home/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						mv /home/$currentuser/.oh-my-zsh/themes/custom.zsh-theme /home/$currentuser/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
 						sudo ln -s /home/$currentuser/dotfiles/zsh/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes
+						sudo ln -s /home/$currentuser/dotfiles/zsh/custom.zsh-theme /home/$currentuser/.oh-my-zsh/themes
 					else
 						sudo ln -s /home/$currentuser/dotfiles/zsh/clean-check.zsh-theme /home/$currentuser/.oh-my-zsh/themes
+						sudo ln -s /home/$currentuser/dotfiles/zsh/custom.zsh-theme /home/$currentuser/.oh-my-zsh/themes
 					fi
 	
 					echo "Cloning custom, functions into /home/$currentuser/.oh-my-zsh/custom..."
@@ -389,13 +395,16 @@ function oh_my_zsh_customize_mac {
 						ln -s /var/root/dotfiles/zsh/.zshrc /var/root
 					fi
 
-					echo "Cloning clean-check theme into /var/$currentuser/.oh-my-zsh/themes..."
-					if [ -f /var/root/.oh-my-zsh/themes/clean-check.zsh-theme ]
+					echo "Cloning clean-check and custom themes into /var/$currentuser/.oh-my-zsh/themes..."
+					if [ -f /var/root/.oh-my-zsh/themes/clean-check.zsh-theme ] || [ -f /var/root/.oh-my-zsh/themes/custom.zsh-theme ]
 					then
 						mv /var/root/.oh-my-zsh/themes/clean-check.zsh-theme /var/root/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						mv /var/root/.oh-my-zsh/themes/custom.zsh-theme /var/root/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
 						ln -s /var/root/dotfiles/zsh/clean-check.zsh-theme /var/root/.oh-my-zsh/themes
+						ln -s /var/root/dotfiles/zsh/custom.zsh-theme /var/root/.oh-my-zsh/themes
 					else
 						ln -s /var/root/dotfiles/zsh/clean-check.zsh-theme /var/root/.oh-my-zsh/themes
+						ln -s /var/root/dotfiles/zsh/custom.zsh-theme /var/root/.oh-my-zsh/themes
 					fi
 	
 					echo "Cloning custom, functions into /var/$currentuser/.oh-my-zsh/custom..."
@@ -433,13 +442,16 @@ function oh_my_zsh_customize_mac {
 						sudo ln -s /Users/$currentuser/dotfiles/zsh/.zshrc /Users/$currentuser
 					fi
 
-					echo "Cloning clean-check theme into /Users/$currentuser/.oh-my-zsh/themes..."
-					if [ -f /Users/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme ]
+					echo "Cloning clean-check and custom themes into /Users/$currentuser/.oh-my-zsh/themes..."
+					if [ -f /Users/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme ] || [ -f /Users/$currentuser/.oh-my-zsh/themes/custom.zsh-theme ]
 					then
 						mv /Users/$currentuser/.oh-my-zsh/themes/clean-check.zsh-theme /Users/$currentuser/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						mv /Users/$currentuser/.oh-my-zsh/themes/custom.zsh-theme /Users/$currentuser/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
 						sudo ln -s /Users/$currentuser/dotfiles/zsh/clean-check.zsh-theme /Users/$currentuser/.oh-my-zsh/themes
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/custom.zsh-theme /Users/$currentuser/.oh-my-zsh/themes
 					else
 						sudo ln -s /Users/$currentuser/dotfiles/zsh/clean-check.zsh-theme /Users/$currentuser/.oh-my-zsh/themes
+						sudo ln -s /Users/$currentuser/dotfiles/zsh/custom.zsh-theme /Users/$currentuser/.oh-my-zsh/themes
 					fi
 	
 					echo "Cloning custom, functions into /Users/$currentuser/.oh-my-zsh/custom..."

@@ -47,7 +47,8 @@ export TMUX_POWERLINE_SEG_WETHER_LOCATION="2411898"
 
 #eval $(dircolors -b $HOME/LS_COLORS)
 
-ZSH_THEME='clean-check'
+ZSH_THEME='custom'
+#ZSH_THEME='clean-check'
 #ZSH_THEME='clean-sam'
 #DEFAULT_USER='sboynton'
 
@@ -71,11 +72,11 @@ export PATH=/Users/sboynton/scripts:/Users/sboynton/.local.bin:/usr/local/bin:/u
 #export SSLKEYLOGFILE=/Users/sboynton/Documents/Security/tlskeys
 
 # Default
-# export LSCOLORS='Gxfxcxdxbxegedabagacad'
+export LSCOLORS='Gxfxcxdxbxegedabagacad'
 # Matrix
 #export LSCOLORS=Cafacadagaeaeaabagacad
 # Molokai
-export LSCOLORS='ExFxCxDxBxegedabagacad'
+# export LSCOLORS='ExFxCxDxBxegedabagacad'
 
 export TERM=xterm-256color
 # GNU man pages
