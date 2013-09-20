@@ -40,7 +40,7 @@ noremap	 <Left>	<NOP>
 noremap  <Right> <NOP>
 " Remap <Escape>
 inoremap jk <esc>
-vnoremap jk <esc>
+" vnoremap jk <esc>
 
 " inoremap <Leader><Leader> <esc>
 

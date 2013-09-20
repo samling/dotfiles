@@ -118,9 +118,12 @@ function oh_my_zsh_customize {
 					if [ -f /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
 					then
 						mv /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
-						mkdir -p /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /root/dotfiles/zsh/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+						ln -s /root/dotfiles/zsh/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					else
-						mkdir -p /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /root/dotfiles/zsh/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+                        cd /root/.oh-my-zsh/custom/plugins
+                        sh /root/dotfiles/zsh/git.sh
+						mv /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						ln -s /root/dotfiles/zsh/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					fi
 				else
 					echo "Cloning .zshrc into /home/$currentuser..."
@@ -165,9 +168,12 @@ function oh_my_zsh_customize {
 					if [ -f /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
 					then
 						mv /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
-						mkdir -p /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+						ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					else
-						mkdir -p /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+                        cd /home/$currentuser/.oh-my-zsh/custom/plugins
+                        sh /home/$currentuser/dotfiles/zsh/git.sh
+						mv /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						ln -s /home/$currentuser/dotfiles/zsh/main-highlighter.zsh /home/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					fi
 				fi
 				unset currentuser
@@ -428,9 +434,12 @@ function oh_my_zsh_customize_mac {
 					if [ -f /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
 					then
 						mv /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /var/root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
-						mkdir -p /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+						ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					else
-						mkdir -p /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+                        cd /var/root/.oh-my-zsh/custom/plugins
+                        sh /var/root/dotfiles/zsh/git.sh
+						mv /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /var/root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					fi
 				else
 					echo "Cloning .zshrc into /Users/$currentuser..."
@@ -474,10 +483,13 @@ function oh_my_zsh_customize_mac {
 					echo "Cloning main-highlighter.zsh into /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main..."
 					if [ -f /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
 					then
-						mv /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
-						mkdir -p /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /Users/$currentuser/dotfiles/zsh/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+                        mv /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						ln -s /Users/$currentuser/dotfiles/zsh/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					else
-						mkdir -p /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main && sudo ln -s /Users/$currentuser/dotfiles/zsh/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
+                        cd /Users/$currentuser/.oh-my-zsh/custom/plugins
+                        sh /Users/$currentuser/dotfiles/zsh/git.sh
+						mv /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						ln -s /Users/$currentuser/dotfiles/zsh/main-highlighter.zsh /Users/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					fi
 				fi
 				unset currentuser
