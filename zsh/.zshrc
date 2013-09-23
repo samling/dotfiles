@@ -42,6 +42,9 @@ export EDITOR="vim"
 bindkey -r '^l'
 bindkey -r '^j'
 
+# Other tmux stuff
+source ~/dotfiles/tmux/completion/tmuxinator.zsh
+
 # GCC stuff
 export ARCHFLAGS="-arch x86_64"
 

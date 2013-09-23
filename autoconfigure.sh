@@ -53,9 +53,6 @@ function install_oh_my_zsh {
 					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
 					echo ""
 					echo ""
-					echo "Customizing zsh..."
-					echo ""
-					oh_my_zsh_customize
 				else
 					echo "Moving to directory /home/$currentuser"
 					cd /home/$currentuser
@@ -65,14 +62,12 @@ function install_oh_my_zsh {
 					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
 					echo ""
 					echo ""
-					echo "Customizing zsh..."
-					echo ""
-					oh_my_zsh_customize
 				fi
 				unset currentuser
 			}
 
 function oh_my_zsh_customize {
+                echo "Customizing zsh..."
 				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
 				if [ "$currentuser" == "root" ]
 				then
@@ -187,35 +182,34 @@ function check_for_vim {
 				if [ -f /etc/lsb-release ]
 				then
 					echo "OS: $(lsb_release -s -d)"
-					sudo apt-get install vim && echo "" && echo "Setting up vim..." && vim_customize
+					sudo apt-get install vim && echo ""
 				elif [ -f /etc/debian_version ]
 				then
 					echo "OS: $(cat /etc/debian_version)"
-					sudo apt-get install vim && echo "" && echo "Setting up vim..." && vim_customize
+					sudo apt-get install vim && echo ""
 				elif [ -f /etc/redhat-release ]
 				then
 					echo "OS: $(cat /etc/redhat-release)"
-					sudo yum install vim && echo "" && echo "Setting up vim..." && vim_customize
+					sudo yum install vim && echo ""
 				elif [ -f /etc/arch-release ]
 				then
 					echo "OS: $(cat /etc/arch-release)"
-					sudo pacman -S vim && echo "" && echo "Setting up vim..." && vim_customize 
+					sudo pacman -S vim && echo ""
 				elif [ -f /etc/SuSE-release ]
 				then
 					echo "OS: $(cat /etc/SuSE-release)"
-			       		sudo zypper in vim && echo "" && echo "Setting up vim..." && vim_customize
+			       		sudo zypper in vim && echo ""
 				else
 					echo "Distribution not recognized! Please install vim and run this script again."
 				fi
 			else
 				echo "vim is already installed!"
-				echo ""
-				echo "Setting up vim..." &&
-				vim_customize
+                echo ""
 			fi
 		}
 
 function vim_customize {
+                echo "Setting up vim..."
 				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
 				if [ "$currentuser" == "root" ]
 				then
@@ -275,35 +269,34 @@ function check_for_tmux {
 				if [ -f /etc/lsb-release ]
 				then
 					echo "OS: $(lsb_release -s -d)"
-					sudo apt-get install tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+					sudo apt-get install tmux && echo ""
 				elif [ -f /etc/debian_version ]
 				then
 					echo "OS: $(cat /etc/debian_version)"
-					sudo apt-get install tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+					sudo apt-get install tmux && echo ""
 				elif [ -f /etc/redhat-release ]
 				then
 					echo "OS: $(cat /etc/redhat-release)"
-					sudo yum install tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+					sudo yum install tmux && echo ""
 				elif [ -f /etc/arch-release ]
 				then
 					echo "OS: $(cat /etc/arch-release)"
-					sudo pacman -S tmux && echo "" && echo "Setting up tmux..." && tmux_customize 
+					sudo pacman -S tmux && echo ""
 				elif [ -f /etc/SuSE-release ]
 				then
 					echo "OS: $(cat /etc/SuSE-release)"
-			       		sudo zypper in tmux && echo "" && echo "Setting up tmux..." && tmux_customize
+			       		sudo zypper in tmux && echo ""
 				else
 					echo "Distribution not recognized! Please install tmux and run this script again."
 				fi
 			else
 				echo "tmux is already installed!"
-				echo ""
-				echo "Setting up tmux..." &&
-				tmux_customize
+                echo ""
 			fi
 		}
 
 function tmux_customize {
+                echo "Setting up tmux..."
 				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
 				if [ "$currentuser" == "root" ]
 				then
@@ -373,9 +366,6 @@ function install_oh_my_zsh_mac {
 					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
 					echo ""
 					echo ""
-					echo "Customizing zsh..."
-					echo ""
-					oh_my_zsh_customize_mac
 				else
 					echo "Moving to directory /home/$currentuser"
 					cd /home/$currentuser
@@ -385,14 +375,12 @@ function install_oh_my_zsh_mac {
 					wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh &&
 					echo ""
 					echo ""
-					echo "Customizing zsh..."
-					echo ""
-					oh_my_zsh_customize_mac
 				fi
 				unset currentuser
 			}
 
 function oh_my_zsh_customize_mac {
+                echo "Customizing zsh..."
 				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
 				if [ "$currentuser" == "root" ]
 				then
@@ -506,13 +494,12 @@ function check_for_vim_mac {
 				break
 			else
 				echo "vim is already installed!"
-				echo ""
-				echo "Setting up vim..." &&
-				vim_customize_mac
+                echo ""
 			fi
 		}
 
 function vim_customize_mac {
+                echo "Setting up vim..."
 				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
 				if [ "$currentuser" == "root" ]
 				then
@@ -570,13 +557,12 @@ function check_for_tmux_mac {
 				break
 			else
 				echo "tmux is already installed!"
-				echo ""
-				echo "Setting up tmux..." &&
-				tmux_customize_mac
+                echo ""
 			fi
 		}
 
 function tmux_customize_mac {
+                echo "Setting up tmux..."
 				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
 				if [ "$currentuser" == "root" ]
 				then
@@ -621,7 +607,7 @@ function tmux_customize_mac {
 
 
 echo "This script will automatically configure a Unix-based system with custom configs and other files"
-echo "Current supported distributions are: Ubuntu (and derivatives), Debian, Redhat, Arch, SuSE"
+echo "Current supported distributions are: Ubuntu (and derivatives), Debian, Redhat, Arch, and SuSE, with partial support for OS X"
 echo "(c)2013 Sam Boynton"
 echo ""
 echo "What OS are you configuring?"
@@ -637,14 +623,17 @@ do
 			echo "Setting up zsh"
 			echo ""
 			check_for_zsh
+            oh_my_zsh_customize
 			echo ""
 			echo "Setting up vim"
 			echo ""
 			check_for_vim
+            customize_vim
 			echo ""
             echo "Setting up tmux"
             echo ""
             check_for_tmux
+            tmux_customize
 			echo ""
 			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
@@ -655,14 +644,17 @@ do
 			echo "Setting up zsh"
 			echo ""
 			check_for_zsh_mac
+            oh_my_zsh_customize_mac
 			echo ""
 			echo "Setting up vim"
 			echo ""
 			check_for_vim_mac
+            customize_vim_mac
 			echo ""
             echo "Setting up tmux"
             echo ""
             check_for_tmux_mac
+            tmux_customize_mac
 			echo ""
 			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
