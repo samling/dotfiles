@@ -34,6 +34,9 @@ ZSH=$HOME/.oh-my-zsh
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git themes osx zsh-syntax-highlighting)
 
+# Exports
+export EDITOR="vim"
+
 # Key bindings
 # Remove ctrl-l and ctrl-j to make way for tmux
 bindkey -r '^l'

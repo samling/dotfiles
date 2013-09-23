@@ -314,10 +314,12 @@ function tmux_customize {
 						ln -s /root/dotfiles/tmux/.tmux.conf /root
                         cd /root/dotfiles/tmux
                         sh git.sh && sudo ln -s /root/dotfiles/tmux/linux/sam-linux.sh /root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /root/dotfiles/tmux/linux/.tmux-powerlinerc /root
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 					else
 						ln -s /root/dotfiles/tmux/.tmux.conf /root
                         cd /root/dotfiles/tmux
                         sh git.sh && sudo ln -s /root/dotfiles/tmux/linux/sam-linux.sh /root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /root/dotfiles/tmux/linux/.tmux-powerlinerc /root
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 
 					fi
                 else
@@ -328,10 +330,12 @@ function tmux_customize {
 						sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux.conf /home/$currentuser
                         cd /home/$currentuser/dotfiles/tmux
                         sh git.sh && sudo ln -s /home/$currentuser/dotfiles/tmux/linux/sam-linux.sh /home/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /home/$currentuser/dotfiles/tmux/linux/.tmux-powerlinerc /home/$currentuser
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 					else
 						sudo ln -s /home/$currentuser/dotfiles/tmux/.tmux.conf /home/$currentuser
                         cd /home/$currentuser/dotfiles/tmux
                         sh git.sh && sudo ln -s /home/$currentuser/dotfiles/tmux/linux/sam-linux.sh /home/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /home/$currentuser/dotfiles/tmux/linux/.tmux-powerlinerc /home/$currentuser
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 
 					fi
 				fi
@@ -583,10 +587,12 @@ function tmux_customize_mac {
 						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
                         cd /var/root/dotfiles/tmux
                         sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 					else
 						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
                         cd /var/root/dotfiles/tmux
                         sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 					fi
 				else
 					echo "Cloning .tmux.conf into /Users/$currentuser..."
@@ -596,10 +602,12 @@ function tmux_customize_mac {
 						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
                         cd /Users/$currentuser/dotfiles/tmux
                         sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 					else
 						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
                         cd /Users/$currentuser/dotfiles/tmux 
                         sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
+                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
 					fi
 				fi
 				unset currentuser
