@@ -112,12 +112,12 @@ function oh_my_zsh_customize {
 					echo "Cloning main-highlighter.zsh into /$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main..."
 					if [ -f /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
 					then
-						mv /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						mv /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
 						ln -s /root/dotfiles/zsh/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					else
                         cd /root/.oh-my-zsh/custom/plugins
                         sh /root/dotfiles/zsh/git.sh
-						mv /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						mv /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
 						ln -s /root/dotfiles/zsh/main-highlighter.zsh /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					fi
 				else
@@ -425,12 +425,12 @@ function oh_my_zsh_customize_mac {
 					echo "Cloning main-highlighter.zsh into /var/$currentuser/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main..."
 					if [ -f /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh ]
 					then
-						mv /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /var/root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						mv /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
 						ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					else
                         cd /var/root/.oh-my-zsh/custom/plugins
                         sh /var/root/dotfiles/zsh/git.sh
-						mv /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /var/root/.oh-my-zsh/custom/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
+						mv /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh
 						ln -s /var/root/dotfiles/zsh/main-highlighter.zsh /var/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main
 					fi
 				else
@@ -628,7 +628,7 @@ do
 			echo "Setting up vim"
 			echo ""
 			check_for_vim
-            customize_vim
+			vim_customize
 			echo ""
             echo "Setting up tmux"
             echo ""
