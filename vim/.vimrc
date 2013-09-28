@@ -38,11 +38,14 @@ noremap  <Up>	<NOP>
 noremap	 <Down>	<NOP>
 noremap	 <Left>	<NOP>
 noremap  <Right> <NOP>
+" Unmapping 's' to make way for vim-seek
+noremap s <NOP>
+noremap S <NOP>
+vnoremap s <NOP>
+vnoremap S <NOP>
 " Disabling whatever shift+j/shift+k does
 noremap <S-Up> <NOP>
 noremap <S-Down> <NOP>
-inoremap <S-Up> <NOP>
-inoremap <S-Down> <NOP>
 vnoremap <S-Up> <NOP>
 vnoremap <S-Down> <NOP>
 " Remap <Escape>
@@ -143,6 +146,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'godlygeek/csapprox'
 Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
 Bundle 'matze/vim-move'
+Bundle 'goldfeld/vim-seek'
 
 " Bundle-specific settings
 """ airline
