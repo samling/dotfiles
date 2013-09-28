@@ -38,6 +38,13 @@ noremap  <Up>	<NOP>
 noremap	 <Down>	<NOP>
 noremap	 <Left>	<NOP>
 noremap  <Right> <NOP>
+" Disabling whatever shift+j/shift+k does
+noremap <S-Up> <NOP>
+noremap <S-Down> <NOP>
+inoremap <S-Up> <NOP>
+inoremap <S-Down> <NOP>
+vnoremap <S-Up> <NOP>
+vnoremap <S-Down> <NOP>
 " Remap <Escape>
 inoremap jk <esc>
 " vnoremap jk <esc>
@@ -118,6 +125,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Call bundles here
+" Run :BundleInstall (case-sensitive) to install
 " e.g.:
 " Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
@@ -134,12 +142,15 @@ Bundle 'kien/ctrlp.vim'
 " Bundle 'Valloric/MatchTagAlways'
 Bundle 'godlygeek/csapprox'
 Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
+Bundle 'matze/vim-move'
 
 " Bundle-specific settings
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 """ easymotion
 let g:EasyMotion_leader_key=','
+""" vim-move
+let g:move_key_modifier = 'S'
 """ NERDtree
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeQuitOnOpen=1

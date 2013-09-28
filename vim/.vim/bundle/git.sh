@@ -29,3 +29,6 @@ echo ""
 git clone https://github.com/godlygeek/csapprox.git
 echo ""
 git clone https://github.com/vim-scripts/Better-CSS-Syntax-for-Vim.git
+echo ""
+git clone https://github.com/matze/vim-move.git
+echo ""
