@@ -649,7 +649,7 @@ do
 			echo "Setting up vim"
 			echo ""
 			check_for_vim_mac
-            customize_vim_mac
+            vim_customize_mac
 			echo ""
             echo "Setting up tmux"
             echo ""
