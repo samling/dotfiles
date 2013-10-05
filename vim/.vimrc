@@ -97,7 +97,7 @@ if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
 	" set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
-	colorscheme molokai 
+	colorscheme custom 
     " Remove the background color from the theme to match the terminal bg
     " color
     hi Normal ctermbg=NONE
@@ -147,6 +147,7 @@ Bundle 'godlygeek/csapprox'
 Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
 Bundle 'matze/vim-move'
 Bundle 'goldfeld/vim-seek'
+Bundle 'flazz/vim-colorschemes'
 
 " Bundle-specific settings
 """ airline
