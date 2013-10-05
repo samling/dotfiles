@@ -97,7 +97,7 @@ if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
 	" set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
-	colorscheme custom 
+	colorscheme molokai-nobg
     " Remove the background color from the theme to match the terminal bg
     " color
     hi Normal ctermbg=NONE
