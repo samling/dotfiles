@@ -32,5 +32,5 @@ git clone https://github.com/vim-scripts/Better-CSS-Syntax-for-Vim.git
 echo ""
 git clone https://github.com/matze/vim-move.git
 echo ""
-git clone http://github.com/goldfeld/vim-eek.git
+git clone http://github.com/goldfeld/vim-seek.git
 echo ""
