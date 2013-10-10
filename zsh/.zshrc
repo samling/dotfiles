@@ -48,6 +48,11 @@ source ~/dotfiles/tmux/completion/tmuxinator.zsh
 # GCC stuff
 export ARCHFLAGS="-arch x86_64"
 
+# Ruby stuff
+#export RBENV_ROOT="$(brew --prefix rbenv)"
+#export GEM_HOME="$(brew --prefix)/opt/gems"
+#export GEM_PATH="$(brew --prefix)/opt/gems"
+
 # Tmux variables
 export TMUX_POWERLINE_SEG_WETHER_LOCATION="2411898"
 
@@ -87,3 +92,5 @@ export LSCOLORS='ExFxCxDxBxegedabagacad'
 export TERM=xterm-256color
 # GNU man pages
 #export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
