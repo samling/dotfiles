@@ -51,7 +51,6 @@ vnoremap <S-Down> <NOP>
 " Remap <Escape>
 inoremap jk <esc>
 " vnoremap jk <esc>
-
 " inoremap <Leader><Leader> <esc>
 
 """ Display Settings
@@ -81,6 +80,9 @@ set shiftwidth=4	" use 4 spaces as indent guide
 set tabstop=4		" use 4 spaces as indent guide
 set expandtab		" convert tabs to spaces
 set virtualedit=onemore " allow the cursor to move past the last character
+set splitbelow      " vsplit new panes below current pane
+set splitright      " vsplit new panes to the right of the current pane
+
 
 """ File Type Settings
 """
