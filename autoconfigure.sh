@@ -83,8 +83,8 @@ function oh_my_zsh_customize {
 					echo "Cloning clean-check and custom themes into /$currentuser/.oh-my-zsh/themes..."
 					if [ -f /root/.oh-my-zsh/themes/clean-check.zsh-theme ] || [ -f /root/.oh-my-zsh/themes/custom.zsh-theme ]
 					then
-						mv /root/.oh-my-zsh/themes/clean-check.zsh-theme /root/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
-						mv /root/.oh-my-zsh/themes/custom.zsh-theme /root/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						mv /root/.oh-my-zsh/themes/clean-check.zsh-theme /root/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme
+						mv /root/.oh-my-zsh/themes/custom.zsh-theme /root/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme
 						ln -s /root/dotfiles/zsh/clean-check.zsh-theme /root/.oh-my-zsh/themes
 						ln -s /root/dotfiles/zsh/custom.zsh-theme /root/.oh-my-zsh/themes
 					else
@@ -396,8 +396,8 @@ function oh_my_zsh_customize_mac {
 					echo "Cloning clean-check and custom themes into /var/$currentuser/.oh-my-zsh/themes..."
 					if [ -f /var/root/.oh-my-zsh/themes/clean-check.zsh-theme ] || [ -f /var/root/.oh-my-zsh/themes/custom.zsh-theme ]
 					then
-						mv /var/root/.oh-my-zsh/themes/clean-check.zsh-theme /var/root/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
-						mv /var/root/.oh-my-zsh/themes/custom.zsh-theme /var/root/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme &&
+						mv /var/root/.oh-my-zsh/themes/clean-check.zsh-theme /var/root/.oh-my-zsh/themes/clean-check-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme
+						mv /var/root/.oh-my-zsh/themes/custom.zsh-theme /var/root/.oh-my-zsh/themes/custom-`date|cut -d' ' -f5|sed 's/:/_/g'`.zsh-theme
 						ln -s /var/root/dotfiles/zsh/clean-check.zsh-theme /var/root/.oh-my-zsh/themes
 						ln -s /var/root/dotfiles/zsh/custom.zsh-theme /var/root/.oh-my-zsh/themes
 					else
