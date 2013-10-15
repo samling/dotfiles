@@ -154,6 +154,7 @@ Bundle 'matze/vim-move'
 " Bundle 'goldfeld/vim-seek'
 " Bundle 'flazz/vim-colorschemes'
 Bundle 'Raimondi/delimitMate'
+Bundle 'tpope/vim-fugitive'
 
 " Bundle-specific settings
 """ airline

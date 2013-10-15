@@ -36,3 +36,5 @@ echo ""
 echo ""
 git clone https://github.com/Raimondi/delimitMate.git
 echo ""
+git clone https://github.com/tpope/vim-fugitive.git
+echo ""
