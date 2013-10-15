@@ -34,3 +34,5 @@ git clone https://github.com/matze/vim-move.git
 echo ""
 #git clone http://github.com/goldfeld/vim-seek.git
 echo ""
+git clone https://github.com/Raimondi/delimitMate.git
+echo ""

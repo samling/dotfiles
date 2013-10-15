@@ -150,6 +150,7 @@ Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
 Bundle 'matze/vim-move'
 " Bundle 'goldfeld/vim-seek'
 " Bundle 'flazz/vim-colorschemes'
+Bundle 'Raimondi/delimitMate'
 
 " Bundle-specific settings
 """ airline
