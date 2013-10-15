@@ -25,7 +25,7 @@ endif
 " map ' :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
-map = :set paste!<CR>
+map + :set paste!<CR>
 
 """ Experimental -- disabling cursor keys to better learn and get used to hjkl
 """
@@ -38,6 +38,9 @@ noremap  <Up>	<NOP>
 noremap	 <Down>	<NOP>
 noremap	 <Left>	<NOP>
 noremap  <Right> <NOP>
+" Mapping the +/- keys to inc/dec
+noremap - <C-x>
+noremap = <C-a>
 " Unmapping 's' to make way for vim-seek
 noremap s <NOP>
 noremap S <NOP>
@@ -163,7 +166,7 @@ let g:move_key_modifier = 'S'
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeQuitOnOpen=1
 """ gundo
-nnoremap - :GundoToggle<CR>
+" nnoremap - :GundoToggle<CR>
 let g:gundo_close_on_revert=1
 """ Ctrl-P
 let g:ctrlp_map = '<c-p>'
