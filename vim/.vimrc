@@ -63,6 +63,7 @@ set nowrap		" don't wrap lines
 set showmatch		" show matching bracket (briefly jump)
 set matchtime=2		" show matching bracket for 0.2 seconds
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
+set guifont=Inconsolata-dz_for_Powerline_Medium:h12
 set laststatus=2	" use 2 lines for the status bar
 set matchpairs+=<:>	" specifically for html
 
