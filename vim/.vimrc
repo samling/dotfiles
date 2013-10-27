@@ -9,6 +9,10 @@ if &compatible
 	set nocompatible
 endif
 
+"""
+" Leader key
+let mapleader=','
+
 """ move according to visual lines instead of line numbers (i.e. treat line
 """ breaks as two separate lines)
 """
@@ -25,7 +29,7 @@ endif
 " map ' :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
-map + :set paste!<CR>
+map \ :set paste!<CR>
 
 """ Experimental -- disabling cursor keys to better learn and get used to hjkl
 """
@@ -55,6 +59,13 @@ vnoremap <S-Down> <NOP>
 inoremap jk <esc>
 " vnoremap jk <esc>
 " inoremap <Leader><Leader> <esc>
+"
+" Underline the current line with various symbols (such that the number of
+" underline matches line length and indendation)
+nnoremap <Leader>= yypv$r=
+nnoremap <Leader>- yypv$r-
+nnoremap <Leader># yypv$r#
+nnoremap <Leader>" yypv$r"
 
 """ Display Settings
 """
