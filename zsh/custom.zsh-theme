@@ -12,8 +12,8 @@ function prompt_char {
     echo '•'
 }
 
-PROMPT='[%{$fg_bold[blue]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info)]
-@%{$fg[red]%}%m%{$reset_color%} ≫ '
+PROMPT='[%{$fg[red]%}%m %{$reset_color%}in %{$fg_bold[blue]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info)]
+%{$reset_color%} ≫ '
 
 RPROMPT=''
 
