@@ -1,3 +1,7 @@
+function precmd {
+    local TERMWIDTH
+    (( TERMWIDTH = ${COLUMNS} - 1 ))
+}
 
 function collapse_pwd {
     echo $(pwd | sed -e "s,^$HOME,~,")
@@ -8,8 +12,8 @@ function prompt_char {
     echo '•'
 }
 
-PROMPT='@%{$fg[red]%}%m%{$reset_color%} in %{$fg_bold[blue]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info)
- • '
+PROMPT='[%{$fg_bold[blue]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info)]
+@%{$fg[red]%}%m%{$reset_color%} ≫ '
 
 RPROMPT=''
 
