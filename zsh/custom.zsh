@@ -145,7 +145,7 @@ alias l="ls -G" # Full list of files including hidden files; folders highlighted
 ###
 ### The ubiquitous 'll': directories first, with alphanumeric sorting
 ###
-alias ll="ls -lFh"
+alias ll="ls -a"
 alias lll="ls -lAh"
 alias llll="ls++ -a"
 alias lr="ls -GR"
