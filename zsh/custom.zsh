@@ -185,7 +185,7 @@ alias dnsflush="sudo killall -HUP mDNSResponder"
 ### Homebrew Stuff
 ###
 alias wget='wget -c' # Ensure wget resumes every time
-alias wgetr='wget -r --no-parent --reject "index.html*"' # Recursively download folder structure, ignoring index.html
+alias wgetfr='wget -r --no-parent --reject "index.html*"' # Recursively download folder structure, ignoring index.html
 alias rss="/usr/local/bin/newsbeuter"
 alias weather="weather.sh"
 alias mp3="ncmpcpp" # Be sure to run the mpd server first

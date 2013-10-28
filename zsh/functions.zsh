@@ -551,3 +551,21 @@ function ncdu-function() {
         ncdu -x "$1"
     fi
 }
+
+###
+### wget recursively for arbitrary filetypes
+###
+
+function wgetr() {
+    EXPECTED_ARGS=2
+    E_BADARGS=65
+
+    if [ $# -ne $EXPECTED_ARGS ]; then
+        echo "Usage: `basename $0` {filetype[s]} {url}"
+        echo "Filetypes may be comma separated, e.g. jpg,jpeg,png"
+        echo ""
+    fi
+    
+    wget -r -A $1 $2
+
+}
