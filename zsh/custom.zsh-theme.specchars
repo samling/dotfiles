@@ -4,12 +4,16 @@ function collapse_pwd {
 }
 
 function prompt_char {
-    git branch >/dev/null 2>/dev/null && echo '•' && return
-    echo '•'
+    git branch >/dev/null 2>/dev/null && echo '±' && return
+    echo '○'
+}
+
+function virtualenv_info {
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
 }
 
 PROMPT='@%{$fg[red]%}%m%{$reset_color%} in %{$fg_bold[blue]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info)
- • '
+˪$(virtualenv_info)$(prompt_char) '
 
 RPROMPT=''
 
