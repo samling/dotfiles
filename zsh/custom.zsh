@@ -180,7 +180,7 @@ alias ssn="du -c * | sort -nr" # Same as above but sorts by size (without -h)
 alias ddi="sudo killall -INFO dd" # Shows progress of dd in the window that dd is running in
 alias ddp="sudo killall -INFO dd" # See above
 alias dnsflush="sudo killall -HUP mDNSResponder"
-alias pping="prettyping.sh"
+alias pping="prettyping.sh --nolegend"
 
 ###
 ### Homebrew Stuff
