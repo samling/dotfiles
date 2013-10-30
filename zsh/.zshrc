@@ -77,7 +77,7 @@ MAIL=/var/spool/mail/sboynton && export MAIL
 #export PATH=/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
 
 ### Using Homebrew without Linux CoreUtils
-export PATH=/Users/sboynton/scripts:/Users/sboynton/dotfiles/fun:/Users/sboynton/.local.bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/munki
+export PATH=/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local.bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/munki
 
 ###  Write TLS keys used by browser to flat file
 #export SSLKEYLOGFILE=/Users/sboynton/Documents/Security/tlskeys
