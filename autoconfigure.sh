@@ -336,7 +336,18 @@ function tmux_customize {
 
 }
 
-
+function deploy_scripts {
+    echo "Symlinking scripts into /usr/local/bin"
+    export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+    if [ "$currentuser" == "root" ]; then
+        cd /root/dotfiles/fun
+        sh INSTALL.sh
+    else
+        cd /home/$currentuser/dotfiles/fun
+        sh INSTALL.sh
+    fi
+    unset currentuser
+}
 				
 function check_for_zsh_mac {
 	if ! type zsh > /dev/null
@@ -558,47 +569,59 @@ function check_for_tmux_mac {
 			else
 				echo "tmux is already installed!"
                 echo ""
-			fi
-		}
+    fi
+    }
 
 function tmux_customize_mac {
-                echo "Setting up tmux..."
-				export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
-				if [ "$currentuser" == "root" ]
-				then
-					echo "Cloning .tmux.conf into /var/$currentuser..."
-					if [ -f /var/root/.tmux.conf ]
-					then
-						mv /var/root/.tmux.conf /var/root/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
-						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
-                        cd /var/root/dotfiles/tmux
-                        sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
-                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
-					else
-						ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
-                        cd /var/root/dotfiles/tmux
-                        sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
-                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
-					fi
-				else
-					echo "Cloning .tmux.conf into /Users/$currentuser..."
-					if [ -f /Users/$currentuser/.tmux.conf ]
-					then
-						mv /Users/$currentuser/.tmux.conf /Users/$currentuser/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
-						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
-                        cd /Users/$currentuser/dotfiles/tmux
-                        sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
-                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
-					else
-						sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
-                        cd /Users/$currentuser/dotfiles/tmux 
-                        sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
-                        sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
-					fi
-				fi
-				unset currentuser
+    echo "Setting up tmux..."
+    export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+    if [ "$currentuser" == "root" ]
+    then
+        echo "Cloning .tmux.conf into /var/$currentuser..."
+        if [ -f /var/root/.tmux.conf ]
+        then
+            mv /var/root/.tmux.conf /var/root/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+            ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
+            cd /var/root/dotfiles/tmux
+            sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
+            sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
+        else
+            ln -s /var/root/dotfiles/tmux/.tmux.conf /var/root
+            cd /var/root/dotfiles/tmux
+            sh git.sh && sudo ln -s /var/root/dotfiles/tmux/sam.sh /var/root/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /var/root/dotfiles/tmux/.tmux-powerlinerc /var/root
+            sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
+        fi
+    else
+        echo "Cloning .tmux.conf into /Users/$currentuser..."
+        if [ -f /Users/$currentuser/.tmux.conf ]
+        then
+            mv /Users/$currentuser/.tmux.conf /Users/$currentuser/.tmux.conf-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
+            sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
+            cd /Users/$currentuser/dotfiles/tmux
+            sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
+            sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
+        else
+            sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux.conf /Users/$currentuser
+            cd /Users/$currentuser/dotfiles/tmux 
+            sh git.sh && sudo ln -s /Users/$currentuser/dotfiles/tmux/sam.sh /Users/$currentuser/dotfiles/tmux/tmux-powerline/themes && sudo ln -s /Users/$currentuser/dotfiles/tmux/.tmux-powerlinerc /Users/$currentuser
+            sudo gem install tmuxinator || echo "Ruby not installed or installation failed!"
+        fi
+    fi
+    unset currentuser
 }
 
+function deploy_scripts_mac {
+    echo "Symlinking scripts into /usr/local/bin"
+    export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
+    if [ "$currentuser" == "root" ]; then
+        cd /var/root/dotfiles/fun
+        sh INSTALL.sh
+    else
+        cd /Users/$currentuser/dotfiles/fun
+        sh INSTALL.sh
+    fi
+    unset currentuser
+}
 
 
 
@@ -635,6 +658,11 @@ do
             check_for_tmux
             tmux_customize
 			echo ""
+			echo "Setting up custom scripts"
+			echo ""
+            deploy_scripts
+			echo ""
+			echo ""
 			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
 		"OSX" )
@@ -655,6 +683,11 @@ do
             echo ""
             check_for_tmux_mac
             tmux_customize_mac
+			echo ""
+			echo "Setting up custom scripts"
+			echo ""
+            deploy_scripts_mac
+			echo ""
 			echo ""
 			echo "Done! If any of the git repos failed to download, simply run vim/.vim/bundle/git.sh again"
 			;;
