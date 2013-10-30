@@ -569,3 +569,9 @@ function wgetr() {
     wget -r -A $1 $2
 
 }
+ function git-cleanup() {
+    cd `brew --prefix`
+    sudo git remote add origin https://github.com/mxcl/homebrew.git
+    sudo git fetch origin
+    sudo git reset --hard origin/master
+}
