@@ -168,6 +168,7 @@ Bundle 'matze/vim-move'
 Bundle 'Raimondi/delimitMate'
 " Bundle 'tpope/vim-fugitive'
 Bundle 'Yggdroot/indentLine'
+Bundle 'tpope/vim-rails'
 
 " Bundle-specific settings
 """ airline

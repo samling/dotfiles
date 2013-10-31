@@ -40,3 +40,5 @@ echo ""
 echo ""
 git clone https://github.com/Yggdroot/indentLine.git
 echo ""
+git clone https://github.com/tpope/vim-rails.git
+echo ""
