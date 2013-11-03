@@ -14,9 +14,10 @@ endif
 let mapleader=','
 
 """
-" Change cursor depending on mode (iTerm2 + tmux only)
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+" Source .vimrc.local if present
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
 
 """ move according to visual lines instead of line numbers (i.e. treat line
 """ breaks as two separate lines)
