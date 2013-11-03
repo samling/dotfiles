@@ -13,6 +13,11 @@ endif
 " Leader key
 let mapleader=','
 
+"""
+" Change cursor depending on mode (iTerm2 + tmux only)
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
 """ move according to visual lines instead of line numbers (i.e. treat line
 """ breaks as two separate lines)
 """
