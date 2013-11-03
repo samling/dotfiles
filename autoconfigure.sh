@@ -341,10 +341,10 @@ function deploy_scripts {
     export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
     if [ "$currentuser" == "root" ]; then
         cd /root/dotfiles/fun
-        sh INSTALL.sh
+        sudo sh INSTALL.sh
     else
         cd /home/$currentuser/dotfiles/fun
-        sh INSTALL.sh
+        sudo sh INSTALL.sh
     fi
     unset currentuser
 }
@@ -615,10 +615,10 @@ function deploy_scripts_mac {
     export currentuser=`env | grep USER | head -n 1 | cut -d'=' -f2`
     if [ "$currentuser" == "root" ]; then
         cd /var/root/dotfiles/fun
-        sh INSTALL.sh
+        sudo sh INSTALL.sh
     else
         cd /Users/$currentuser/dotfiles/fun
-        sh INSTALL.sh
+        sudo sh INSTALL.sh
     fi
     unset currentuser
 }
