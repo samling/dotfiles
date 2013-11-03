@@ -3,96 +3,100 @@ ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#ZSH_THEME="robbyrussell"
+ZSH_THEME='custom'
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Need to be below theme
+source $ZSH/oh-my-zsh.sh
+unsetopt correct_all
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+# Path
+#
+# Using Homebrew without Linux CoreUtils
+export PATH=/usr/local/rvm/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local.bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/munki
+#
+# Using Homebrew + Linux CoreUtils
+#export PATH=/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
 
-# Comment this out to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+# GNU man pages
+#export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git themes osx zsh-syntax-highlighting)
 
-# Exports
+# Environment
+export TERM=xterm-256color
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# Default editor
 export EDITOR="vim"
 
-# Key bindings
 # Remove ctrl-l and ctrl-j to make way for tmux
 bindkey -r '^l'
 bindkey -r '^j'
 
-# Other tmux stuff
+# Tmux
+export TMUX_POWERLINE_SEG_WETHER_LOCATION="2411898"
+
+# Tmuxinator
 source ~/dotfiles/tmux/completion/tmuxinator.zsh
 
-# GCC stuff
+# GCC
 export ARCHFLAGS="-arch x86_64"
 
-# Ruby stuff
+# Ruby
 #export RBENV_ROOT="$(brew --prefix rbenv)"
 #export GEM_HOME="$(brew --prefix)/opt/gems"
 #export GEM_PATH="$(brew --prefix)/opt/gems"
-
-# Tmux variables
-export TMUX_POWERLINE_SEG_WETHER_LOCATION="2411898"
-
-#eval $(dircolors -b $HOME/LS_COLORS)
-
-ZSH_THEME='custom'
-#ZSH_THEME='clean-check'
-#ZSH_THEME='clean-sam'
-#DEFAULT_USER='sboynton'
-
-source $ZSH/oh-my-zsh.sh
-unsetopt correct_all
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # Setting up GMail in Mutt
-MAIL=/var/spool/mail/sboynton && export MAIL
-
-# Customize to your needs...
-### Using MacPorts + Linux CoreUtils
-#export PATH=/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
-
-### Using Homebrew + Linux CoreUtils
-#export PATH=/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
-
-### Using Homebrew without Linux CoreUtils
-export PATH=/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local.bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/munki
+#MAIL=/var/spool/mail/sboynton && export MAIL
 
 ###  Write TLS keys used by browser to flat file
 #export SSLKEYLOGFILE=/Users/sboynton/Documents/Security/tlskeys
 
-# Default
-# export LSCOLORS='Gxfxcxdxbxegedabagacad'
+### LS_COLORS
+#
 # Matrix
-#export LSCOLORS=Cafacadagaeaeaabagacad
+# export LSCOLORS=Cafacadagaeaeaabagacad
 # Molokai
 export LSCOLORS='ExFxCxDxBxegedabagacad'
-
-export TERM=xterm-256color
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-# GNU man pages
-#export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# Template
+# export LSCOLORS='xxxxxxxxxxxxxxxxxxxxxx'
+#
+# From the man pages:
+#
+# Default: exfxcxdxbxegedabagacad
+#
+# a     black
+# b     red
+# c     green
+# d     brown
+# e     blue
+# f     magenta
+# g     cyan
+# h     light grey
+# A     bold black, usually shows up as dark grey
+# B     bold red
+# C     bold green
+# D     bold brown, usually shows up as yellow
+# E     bold blue
+# F     bold magenta
+# G     bold cyan
+# H     bold light grey; looks like bright white
+# x     default foreground or background 
+#
+# 1.   directory
+# 2.   symbolic link
+# 3.   socket
+# 4.   pipe
+# 5.   executable
+# 6.   block special
+# 7.   character special
+# 8.   executable with setuid bit set
+# 9.   executable with setgid bit set
+# 10.  directory writable to others, with sticky bit
+# 11.  directory writable to others, without sticky bit
