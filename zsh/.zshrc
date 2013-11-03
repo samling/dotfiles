@@ -7,6 +7,9 @@ ZSH_THEME='custom'
 
 # Need to be below theme
 source $ZSH/oh-my-zsh.sh
+if [[ -f .zshrc.local ]]; then
+    source .zshrc.local
+fi
 unsetopt correct_all
 
 # Path
