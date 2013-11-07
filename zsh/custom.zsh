@@ -54,6 +54,7 @@ alias devinside='ssh root@192.168.254.55'
 alias inside='ssh root@inside-host'
 alias db='ssh root@db'
 alias zenoss='ssh rmsteam@10.254.254.4'
+alias servicedesk='ssh root@66.162.157.100'
 
 ###
 ### Novacoast stuff
