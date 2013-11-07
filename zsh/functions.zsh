@@ -569,9 +569,31 @@ function wgetr() {
     wget -r -A $1 $2
 
 }
- function git-cleanup() {
+
+###
+### USE WITH CAUTION
+###
+
+function git-cleanup() {
     cd `brew --prefix`
     sudo git remote add origin https://github.com/mxcl/homebrew.git
     sudo git fetch origin
     sudo git reset --hard origin/master
+}
+
+###
+### Add SSH key to any server
+###
+
+function add-ssh-key() {
+    EXPECTED_ARGS=1
+    E_BADARGS=65
+
+    if [ $# -ne $EXPECTED_ARGS ]; then
+        echo "Usage: `basename $0` {user@host}"
+        echo "E.g. add-ssh-key root@192.168.254.23"
+        echo ""
+    else
+        ssh-copy-id -i $HOME/.ssh/id_dsa.pub "$1"
+    fi
 }
