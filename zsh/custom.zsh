@@ -239,6 +239,8 @@ alias hidehidden="defaults write com.apple.Finder AppleShowAllFiles -bool false"
 alias showhidden="defaults write com.apple.Finder AppleShowAllFiles -bool true"
 alias f='find' # Usage: find <directory> -name <filename> | e.g. find / -name readme.txt
 alias addspacer="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'" # Kill dock for this to take effect; run as many times as needed
+alias disable_spotlight='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist'
+alias enable_spotlight='sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist'
 
 #####
 ##### Function aliases
