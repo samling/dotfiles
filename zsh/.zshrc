@@ -5,7 +5,8 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 ZSH_THEME='custom'
 
-# Need to be below theme
+# Needs to be below theme
+# Allows for addition of .zshrc.local for machine-specific things
 source $ZSH/oh-my-zsh.sh
 if [[ -f .zshrc.local ]]; then
     source .zshrc.local
