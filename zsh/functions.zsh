@@ -606,6 +606,6 @@ function gnuls() {
     if hash gls 2>/dev/null; then
         gls --color "$@"
     else
-        ls --color "$@"
+        builtin ls --color "$@"
     fi
 }
