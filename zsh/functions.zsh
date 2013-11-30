@@ -597,3 +597,15 @@ function add-ssh-key() {
         ssh-copy-id -i $HOME/.ssh/id_dsa.pub "$1"
     fi
 }
+
+###
+### Use GNU ls in OS X (gls) or fall back to ls if not found
+###
+
+function gnuls() {
+    if hash gls 2>/dev/null; then
+        gls --color "$@"
+    else
+        ls --color "$@"
+    fi
+}

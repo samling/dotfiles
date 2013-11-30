@@ -141,17 +141,19 @@ alias ......='cd ../../../../..'
 ###
 ### The 'ls' family
 ###
+# Using GNU ls as defined in functions.zsh
+#
 # Add colors for filetype and human-readable sizes by default on 'ls'
-alias l="ls -G" # Full list of files including hidden files; folders highlighted in yellow have permissions of 777; files listed in bold red text have X permissions on any role (i.e. 755, 777, etc.), which generally indicates a filetype outside a text or image file
+alias l="gnuls" # Full list of files including hidden files; folders highlighted in yellow have permissions of 777; files listed in bold red text have X permissions on any role (i.e. 755, 777, etc.), which generally indicates a filetype outside a text or image file
 
 ###
 ### The ubiquitous 'll': directories first, with alphanumeric sorting
 ###
-alias ll="ls -a"
-alias lll="ls -lAh"
+alias ll="gnuls -a"
+alias lll="gnuls -lAh"
 alias llll="ls++ -a"
-alias lr="ls -GR"
-alias lf="ls *(.)"
+alias lr="gnuls -GR"
+alias lf="gnuls *(.)"
 alias lsusb="system_profiler SPUSBDataType"
 alias recent=recent
 
