@@ -603,5 +603,9 @@ function add-ssh-key() {
 ###
 
 function gnuls() {
-    command -v gls >/dev/null && gls --color "$@" || ls --color "$@"
+    if ! type -p gls &> /dev/null; then
+        ls --color "$@"
+    else
+        gls --color "$@"
+    fi
 }
