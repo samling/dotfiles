@@ -143,17 +143,16 @@ alias ......='cd ../../../../..'
 ###
 #
 # Add colors for filetype and human-readable sizes by default on 'ls'
-alias l="ls --color" # Full list of files including hidden files; folders highlighted in yellow have permissions of 777; files listed in bold red text have X permissions on any role (i.e. 755, 777, etc.), which generally indicates a filetype outside a text or image file
-alias ls="ls --color" # Redefine standard ls
+alias l="ls" # Full list of files including hidden files; folders highlighted in yellow have permissions of 777; files listed in bold red text have X permissions on any role (i.e. 755, 777, etc.), which generally indicates a filetype outside a text or image file
 
 ###
 ### The ubiquitous 'll': directories first, with alphanumeric sorting
 ###
-alias ll="gnuls -a"
-alias lll="gnuls -lAh"
+alias ll="ls -a"
+alias lll="ls -lAh"
 alias llll="ls++ -a"
-alias lr="gnuls -GR"
-alias lf="gnuls *(.)"
+alias lr="ls -GR"
+alias lf="ls *(.)"
 alias lsusb="system_profiler SPUSBDataType"
 alias recent=recent
 
