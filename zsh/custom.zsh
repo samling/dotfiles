@@ -188,6 +188,7 @@ alias pping="prettyping.sh --nolegend"
 ###
 ### Homebrew Stuff
 ###
+alias brew_fix='cd $(brew --repository) && sudo git reset --hard FETCH_HEAD'
 alias wget='wget -c' # Ensure wget resumes every time
 alias wgetfr='wget -r --no-parent --reject "index.html*"' # Recursively download folder structure, ignoring index.html
 alias rss="/usr/local/bin/newsbeuter"
