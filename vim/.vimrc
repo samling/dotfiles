@@ -61,6 +61,8 @@ noremap <S-Up> <NOP>
 noremap <S-Down> <NOP>
 vnoremap <S-Up> <NOP>
 vnoremap <S-Down> <NOP>
+" Remapping shift+q, aka Ex mode
+noremap Q @q
 " Remap <Escape>
 inoremap jk <esc>
 " vnoremap jk <esc>
@@ -154,7 +156,7 @@ Bundle 'gmarik/vundle'
 " Run :BundleInstall (case-sensitive) to install
 " e.g.:
 " Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
+" Bundle 'Lokaltog/vim-easymotion'
 " Bundle 'scrooloose/nerdtree'
 " Bundle 'msanders/snipmate.vim'
 " Bundle 'tpope/vim-abolish'
@@ -175,12 +177,13 @@ Bundle 'Raimondi/delimitMate'
 " Bundle 'tpope/vim-fugitive'
 Bundle 'Yggdroot/indentLine'
 Bundle 'tpope/vim-rails'
+Bundle 'justinmk/vim-sneak'
 
 " Bundle-specific settings
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 """ easymotion
-let g:EasyMotion_leader_key=','
+" let g:EasyMotion_leader_key=','
 """ vim-move
 let g:move_key_modifier = 'S'
 """ NERDtree
@@ -206,6 +209,8 @@ let g:mta_filetypes = {
 	\ 'jinja' : 1,
 	\ 'php' : 1,
 	\}
+""" vim-sneak
+let g:sneak#streak = 1
 
 " Vundle shortcuts
 " :BundleList		- List configured bundles
