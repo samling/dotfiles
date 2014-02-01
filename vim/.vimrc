@@ -48,6 +48,14 @@ noremap  <Up>	<NOP>
 noremap	 <Down>	<NOP>
 noremap	 <Left>	<NOP>
 noremap  <Right> <NOP>
+" Mapping j and k to move vertically by visual rather than actual line
+nnoremap j gj
+nnoremap k gk
+" Better beginning and end shortcuts
+nnoremap B ^
+nnoremap E $
+"nnoremap $ <nop>
+"nnoremap ^ <nop>
 " Mapping the +/- keys to inc/dec
 noremap - <C-x>
 noremap = <C-a>
@@ -63,7 +71,7 @@ vnoremap <S-Up> <NOP>
 vnoremap <S-Down> <NOP>
 " Remapping shift+q, aka Ex mode
 noremap Q @q
-" Remap <Escape>
+" Alias for <Escape>
 inoremap jk <esc>
 " vnoremap jk <esc>
 " inoremap <Leader><Leader> <esc>
