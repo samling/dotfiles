@@ -1,0 +1,9 @@
+To pull APK off device:
+    adb shell pm path com.(appname).android (may vary)
+    adb pull (above_path)
+
+Decompile apk:
+    ./apktool d (filename).apk
+
+Alternatively:
+    d2j-dex2jar.sh (filename).apk
