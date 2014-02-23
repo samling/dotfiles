@@ -16,7 +16,7 @@ unsetopt correct_all
 # Path
 #
 # Using Homebrew without Linux CoreUtils
-export PATH=/usr/local/rvm/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local.bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/munki/:/Users/sboynton/android/SDK/platform-tools:/Users/sboynton/android/Utilites/dex2jar:$PATH
+export PATH=/usr/local/rvm/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local.bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/munki/:/Users/sboynton/android/SDK/platform-tools:/Users/sboynton/android/Utilities/dex2jar:$PATH
 #
 # Using Homebrew + Linux CoreUtils
 #export PATH=/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
