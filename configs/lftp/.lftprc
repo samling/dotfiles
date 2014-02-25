@@ -1,0 +1,16 @@
+set bmk:save-passwords true
+set net:persist-retries
+set pget:default-n 10
+set mirror:use-pget-n 5
+set mirror:parallel-transfer-count 2
+set mirror:parallel-directories true
+
+
+alias j jobs
+alias jv jobs -v
+alias q queue
+alias qs queue stop
+alias k kill
+alias ka kill all
+alias m mirror -c --use-pget-n=5
+alias p pget -c -n 5
