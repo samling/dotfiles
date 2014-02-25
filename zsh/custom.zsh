@@ -57,18 +57,18 @@ alias zenoss='ssh rmsteam@10.254.254.4'
 alias servicedesk='ssh root@66.162.157.100'
 alias treeschat='ssh sboynton@166.78.159.129'
 alias whatbox='echo """
-*****************************************************
-* Commands:                                         *
-*                                                   *
-* Download file with # concurrent threads:          *
-* pget -n (#) (filename)                            *
-* e.g. pget -n 5 file.ext                           *
-*                                                   *
-* Download directory with # concurrent threads:     *
-* mirror --use-pget-n=(#) (directory)               *
-* e.g. mirror --use-pget-n=5 Folder/                *
-*                                                   *
-*****************************************************
+**********************************************************
+* Commands:                                              *
+*                                                        *
+* Download file with # concurrent threads:               *
+* pget -n (#) (filename)                                 *
+* e.g. pget -n 5 file.ext                                *
+*                                                        *
+* Download directory with # concurrent threads:          *
+* mirror --use-pget-n=(#) [--parallel=(#)] (directory)   *
+* e.g. mirror --use-pget-n=5 --parallel=5 Folder/        *
+*                                                        *
+**********************************************************
 """ &&
 echo "lftp samling@bagel.whatbox.ca" &&
 echo "" &&
