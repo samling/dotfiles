@@ -16,6 +16,9 @@ source ~/dotfiles/zsh/functions.zsh
 
 #export SUDO_PS1="\[\h:\w\] \u\\$ "
 
+# Resource this file when changes are made without having to open up a new terminal
+alias R='source ~/.zshrc && echo ".zshrc reloaded"'
+
 ###
 ### Open this file and select zsh customizations
 ###
