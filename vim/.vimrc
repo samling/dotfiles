@@ -164,7 +164,7 @@ Bundle 'gmarik/vundle'
 " Run :BundleInstall (case-sensitive) to install
 " e.g.:
 " Bundle 'tpope/vim-fugitive'
-" Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-easymotion'
 " Bundle 'scrooloose/nerdtree'
 " Bundle 'msanders/snipmate.vim'
 " Bundle 'tpope/vim-abolish'
@@ -191,7 +191,7 @@ Bundle 'justinmk/vim-sneak'
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 """ easymotion
-" let g:EasyMotion_leader_key=','
+let g:EasyMotion_leader_key=','
 """ vim-move
 let g:move_key_modifier = 'S'
 """ NERDtree
