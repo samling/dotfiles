@@ -38,7 +38,7 @@ alias r='sudo mtr' # MyTraceRoute, combines ping and traceroute
 ###
 
 # Personal
-alias sboynton='ssh root@198.61.207.185'
+alias sboynton='ssh root@107.170.229.199'
 #alias samsite='ssh root@50.56.174.88'
 #alias webhost='ssh root@198.61.210.119'
 #alias susebox='ssh root@166.78.12.186'
