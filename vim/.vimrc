@@ -186,6 +186,8 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'Yggdroot/indentLine'
 Bundle 'tpope/vim-rails'
 Bundle 'justinmk/vim-sneak'
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
 
 " Bundle-specific settings
 """ airline
