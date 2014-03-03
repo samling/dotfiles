@@ -38,14 +38,15 @@ alias r='sudo mtr' # MyTraceRoute, combines ping and traceroute
 ###
 
 # Personal
+alias wol='wakeonlan -i 68.6.37.101 -p 9 60:a4:4c:62:85:d2'
+alias woll='wakeonlan -i 192.168.1.219 -p 9 60:a4:4c:62:85:d2'
 alias sboynton='ssh root@107.170.229.199'
-#alias samsite='ssh root@50.56.174.88'
-#alias webhost='ssh root@198.61.210.119'
-#alias susebox='ssh root@166.78.12.186'
 alias anait='ssh anaitovsepyan@192.168.1.134'
 alias fygenson='ssh samling@128.111.17.27'
 alias pugrc='ssh root@192.237.216.201'
 alias pugrc-sb='ssh sboynton@192.237.216.201'
+alias whatbox='lftp sftp://samling@bagel.whatbox.ca'
+alias treeschat='ssh sboynton@166.78.159.129'
 # Novacoast
 alias vpn='ssh rmsteam@vpn'
 alias kiosk='ssh root@172.18.4.151'
@@ -58,9 +59,6 @@ alias inside='ssh root@inside-host'
 alias db='ssh root@db'
 alias zenoss='ssh rmsteam@10.254.254.4'
 alias servicedesk='ssh root@66.162.157.100'
-alias treeschat='ssh sboynton@166.78.159.129'
-alias whatbox='lftp sftp://samling@bagel.whatbox.ca'
-
 
 ###
 ### Novacoast stuff
