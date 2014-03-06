@@ -49,7 +49,7 @@ alias whatbox='lftp sftp://samling@bagel.whatbox.ca'
 alias treeschat='ssh sboynton@166.78.159.129'
 # Novacoast
 alias vpn='ssh rmsteam@vpn'
-alias kiosk='ssh root@172.18.4.151'
+alias kiosk='ssh sboynton@172.18.4.151'
 alias kioskvpn='ssh root@172.17.35.160'
 alias hrqa='ssh root@192.168.254.23'
 alias hrprod='ssh root@66.162.157.23'
