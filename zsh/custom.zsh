@@ -153,7 +153,7 @@ alias l="ls" # Full list of files including hidden files; folders highlighted in
 ###
 alias ll="ls -a"
 alias lll="ls -lAh"
-alias llll="lsof -i"
+alias llll="sudo lsof -i"
 alias lr="ls -GR"
 alias lf="ls *(.)"
 alias lsusb="system_profiler SPUSBDataType"
