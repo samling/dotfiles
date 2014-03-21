@@ -17,7 +17,7 @@ source ~/dotfiles/zsh/functions.zsh
 #export SUDO_PS1="\[\h:\w\] \u\\$ "
 
 # Resource this file when changes are made without having to open up a new terminal
-alias R='source ~/.zshrc && echo ".zshrc reloaded"'
+alias R='cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"'
 
 ###
 ### Open this file and select zsh customizations
@@ -49,7 +49,7 @@ alias whatbox='lftp sftp://samling@bagel.whatbox.ca'
 alias treeschat='ssh sboynton@166.78.159.129'
 # Novacoast
 alias vpn='ssh rmsteam@vpn'
-alias kiosk='ssh sboynton@172.18.4.151'
+alias kiosk='ssh sboynton@172.18.4.8'
 alias kioskvpn='ssh root@172.17.35.160'
 alias hrqa='ssh root@192.168.254.23'
 alias hrprod='ssh root@66.162.157.23'

@@ -68,7 +68,11 @@ export ARCHFLAGS="-arch x86_64"
 # Matrix
 # export LSCOLORS=Cafacadagaeaeaabagacad
 # Molokai
-export LSCOLORS='ExFxCxDxBxegedabagacad'
+if [ -f ~/.dircolors ]; then
+    eval `gdircolors -b ~/.dircolors`
+else
+    export LSCOLORS='ExFxCxDxBxegedabagacad'
+fi
 # Template
 # export LSCOLORS='xxxxxxxxxxxxxxxxxxxxxx'
 #

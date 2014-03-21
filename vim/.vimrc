@@ -11,7 +11,8 @@ endif
 
 """
 " Leader key
-let mapleader=','
+"let mapleader=','
+let mapleader="\<Space>"
 
 """
 " Source .vimrc.local if present
@@ -113,6 +114,7 @@ set expandtab		" convert tabs to spaces
 "set virtualedit=onemore " allow the cursor to move past the last character
 set splitbelow      " vsplit new panes below current pane
 set splitright      " vsplit new panes to the right of the current pane
+set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 
 
 """ File Type Settings
