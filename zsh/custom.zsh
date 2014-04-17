@@ -34,38 +34,10 @@ alias functions='vi ~/dotfiles/zsh/functions.zsh'
 alias r='sudo mtr' # MyTraceRoute, combines ping and traceroute
 
 ###
-### SSH shortcuts
-###
-
-# Personal
-alias wol='wakeonlan -i 68.6.37.101 -p 9 60:a4:4c:62:85:d2'
-alias woll='wakeonlan -i 192.168.1.219 -p 9 60:a4:4c:62:85:d2'
-alias sboynton='ssh root@107.170.229.199'
-alias anait='ssh anaitovsepyan@192.168.1.134'
-alias fygenson='ssh samling@128.111.17.27'
-alias pugrc='ssh root@192.237.216.201'
-alias pugrc-sb='ssh sboynton@192.237.216.201'
-alias whatbox='lftp sftp://samling@bagel.whatbox.ca'
-alias treeschat='ssh sboynton@166.78.159.129'
-# Novacoast
-alias vpn='ssh rmsteam@vpn'
-alias kiosk='ssh sboynton@172.18.4.8'
-alias kioskvpn='ssh root@172.17.35.160'
-alias hrqa='ssh root@192.168.254.23'
-alias hrprod='ssh root@66.162.157.23'
-alias qainside='ssh root@192.168.100.176'
-alias devinside='ssh root@192.168.254.55'
-alias inside='ssh root@inside-host'
-alias db='ssh root@db'
-alias zenoss='ssh rmsteam@10.254.254.4'
-alias servicedesk='ssh root@66.162.157.100'
-
-###
 ### Novacoast stuff
 ###
 
 alias novacoast='less ~/Documents/Novacoast.txt'
-alias certs='ssh rmsteam@vpn' # Must be on the VPN to do this
 
 ###
 ### Fun stuff
