@@ -189,12 +189,9 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'Yggdroot/indentLine'
 Bundle 'tpope/vim-rails'
 Bundle 'justinmk/vim-sneak'
-<<<<<<< Updated upstream
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
-=======
 Bundle 'groenewege/vim-less'
->>>>>>> Stashed changes
 
 " Bundle-specific settings
 """ airline
