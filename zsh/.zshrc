@@ -18,7 +18,7 @@ unsetopt correct_all
 # Using Homebrew without Linux CoreUtils
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin
 export PATH=$PATH:/usr/local/rvm/bin:/opt/local/bin:/opt/local/sbin:/Users/sboynton/.local.bin:/opt/X11/bin:/usr/local/munki:/Users/sboynton/android/SDK/tools:/Users/sboynton/android/SDK/platform-tools:/Users/sboynton/android/Utilities/dex2jar:$HOME/.rbenv/bin:$HOME/.rbenv/shims
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 #
 # Using Homebrew + Linux CoreUtils
 #export PATH=/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/opt/X11/bin:/usr/local/munki:/opt/local/bin:/opt/local/sbin
