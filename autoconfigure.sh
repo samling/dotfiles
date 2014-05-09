@@ -227,12 +227,8 @@ function vim_customize {
 					then
 						mv /root/.vim /root/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						ln -s /root/dotfiles/vim/.vim /root
-						cd /root/.vim/bundle
-						sh git.sh
 					else
 						ln -s /root/dotfiles/vim/.vim /root
-						cd /root/.vim/bundle
-						sh git.sh
 					fi
 				else
 					echo "Cloning .vimrc into /home/$currentuser..."
@@ -249,12 +245,8 @@ function vim_customize {
 					then
 						mv /home/$currentuser/.vim /home/$currentuser/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						sudo ln -s /home/$currentuser/dotfiles/vim/.vim /home/$currentuser
-						cd /home/$currentuser/.vim/bundle
-						sh git.sh
 					else
 						sudo ln -s /home/$currentuser/dotfiles/vim/.vim /home/$currentuser
-						cd /home/$currentuser/.vim/bundle
-						sh git.sh
 					fi
 				fi
 				unset currentuser
@@ -528,12 +520,8 @@ function vim_customize_mac {
 					then
 						mv /var/root/.vim /var/root/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						ln -s /var/root/dotfiles/vim/.vim /var/root
-						cd /var/root/.vim/bundle
-						sh git.sh
 					else
 						ln -s /var/root/dotfiles/vim/.vim /var/root
-						cd /var/root/.vim/bundle
-						sh git.sh
 					fi
 				else
 					echo "Cloning .vimrc into /Users/$currentuser..."
@@ -550,12 +538,8 @@ function vim_customize_mac {
 					then
 						mv /Users/$currentuser/.vim /Users/$currentuser/.vim-`date|cut -d' ' -f5|sed 's/:/_/g'` &&
 						sudo ln -s /Users/$currentuser/dotfiles/vim/.vim /Users/$currentuser
-						cd /Users/$currentuser/.vim/bundle
-						sh git.sh
 					else
 						sudo ln -s /Users/$currentuser/dotfiles/vim/.vim /Users/$currentuser
-						cd /Users/$currentuser/.vim/bundle
-						sh git.sh
 					fi
 				fi
 				unset currentuser
