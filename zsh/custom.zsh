@@ -118,13 +118,13 @@ alias ......='cd ../../../../..'
 ###
 #
 # Add colors for filetype and human-readable sizes by default on 'ls'
-alias l="ls" # Full list of files including hidden files; folders highlighted in yellow have permissions of 777; files listed in bold red text have X permissions on any role (i.e. 755, 777, etc.), which generally indicates a filetype outside a text or image file
+alias l="ls --color" # Full list of files including hidden files; folders highlighted in yellow have permissions of 777; files listed in bold red text have X permissions on any role (i.e. 755, 777, etc.), which generally indicates a filetype outside a text or image file
 
 ###
 ### The ubiquitous 'll': directories first, with alphanumeric sorting
 ###
-alias ll="ls -a"
-alias lll="ls -lAh"
+alias ll="ls -a --color"
+alias lll="ls -lAh --color"
 alias llll="sudo lsof -i"
 alias lr="ls -GR"
 alias lf="ls *(.)"

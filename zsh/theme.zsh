@@ -62,8 +62,8 @@ function git_prompt_string() {
 }
 
 function ssh_prompt_string() {
-  [ -n "$SSH_CONNECTION" ] && echo "%n %n %n"
-  [ -z "$SSH_CONNECTION" ] && echo ""
+  [ -n "$SSH_CONNECTION" ] && echo "%{$fg[green]%}%n%{$fg[white]%}@%{$fg[red]%}%m"
+  [ -z "$SSH_CONNECTION" ] && echo "%{$fg[green]%}%n"
 }
 
 function precmd {
@@ -96,7 +96,7 @@ function prompt_char {
 #
 # Color: $fg[color]
 #
-PROMPT='$(ssh_prompt_string)$fg[green]%n $fg[white]in $fg[blue]$(collapse_pwd) $(git_prompt_string)
+PROMPT='$(ssh_prompt_string) $fg[white]in $fg[blue]$(collapse_pwd) $(git_prompt_string)
 $fg[white]'
 
 RPROMPT=''
