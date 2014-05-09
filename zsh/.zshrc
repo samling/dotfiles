@@ -8,6 +8,10 @@ unsetopt correct_all
 #
 source ~/dotfiles/zsh/path.zsh
 
+# Setopt
+#
+source ~/dotfiles/zsh/opt.zsh
+
 # Prompt theme
 #
 source ~/dotfiles/zsh/theme.zsh

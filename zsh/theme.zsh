@@ -1,6 +1,3 @@
-setopt prompt_subst
-autoload -U colors && colors
-
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
 #GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
 #GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
