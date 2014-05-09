@@ -124,6 +124,7 @@ filetype off		" required
 filetype plugin on	" required
 filetype plugin indent on " required
 autocmd FileType make setlocal noexpandtab  " avoid expandtab when editing make files (as this may break them)
+autocmd BufNewFile,BufRead *.less setf less " Set .less files to have the correct filetype
 
 """ Color settings
 """
@@ -190,6 +191,7 @@ Bundle 'tpope/vim-rails'
 Bundle 'justinmk/vim-sneak'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
+Bundle 'groenewege/vim-less'
 
 " Bundle-specific settings
 """ airline
