@@ -1,8 +1,8 @@
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
 #GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
 #GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
-GIT_PROMPT_PREFIX=''
-GIT_PROMPT_SUFFIX=''
+GIT_PROMPT_PREFIX="%{$fg[white]%}(%{$reset_color%}"
+GIT_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%}"
 GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"
 GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"
 GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡︎%{$reset_color%}"
@@ -54,7 +54,7 @@ function parse_git_state() {
 
 function git_prompt_string() {
   local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "%{$fg[white]%}on $GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX $(parse_git_state)"
+  [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX $(parse_git_state)"
   [ -z "$git_where" ] && echo ""
 }
 
@@ -93,7 +93,7 @@ function prompt_char {
 #
 # Color: $fg[color]
 #
-PROMPT='$(ssh_prompt_string) $fg[white]in $fg[blue]$(collapse_pwd) $(git_prompt_string)
-$fg[white]'
+PROMPT='$(ssh_prompt_string) $fg[blue]$(collapse_pwd) $(git_prompt_string)
+%{$reset_color%}'
 
 RPROMPT=''

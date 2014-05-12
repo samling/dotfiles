@@ -4,6 +4,10 @@ if [[ -f ~/.zshrc.local ]]; then
 fi
 unsetopt correct_all
 
+# Plugins
+#
+source ~/dotfiles/zsh/zsh-history-substring-search.zsh
+
 # Path
 #
 source ~/dotfiles/zsh/path.zsh
