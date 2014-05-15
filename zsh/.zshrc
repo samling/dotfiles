@@ -1,9 +1,3 @@
-# Allows for addition of .zshrc.local for machine-specific things
-if [[ -f ~/.zshrc.local ]]; then
-    source ~/.zshrc.local
-fi
-unsetopt correct_all
-
 # Plugins
 #
 source ~/dotfiles/zsh/zsh-history-substring-search.zsh
@@ -42,3 +36,9 @@ source ~/dotfiles/zsh/custom.zsh
 # Custom functions
 #
 source ~/dotfiles/zsh/functions.zsh
+
+# Allows for addition of .zshrc.local for machine-specific things
+if [[ -f $HOME/.zshrc.local ]]; then
+    source $HOME/.zshrc.local
+fi
+
