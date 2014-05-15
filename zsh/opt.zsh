@@ -20,7 +20,7 @@ setopt HIST_VERIFY              # Don't execute, just expand history
 
 # ======== COMPLETION
 
-setopt COMPLETE_IN_WORD         # Allow copmleting from within a word/phrase
+setopt COMPLETE_IN_WORD         # Allow completing from within a word/phrase
 setopt ALWAYS_TO_END            # When completing from the middle of a word, move cursor to the end of the word
 unsetopt MENU_COMPLETE          # do not autoselect the first completion entry
 setopt AUTO_MENU                # Show completion menu on successive tab press; needs unsetopt menu_complete to work
