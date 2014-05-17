@@ -12,7 +12,7 @@ source ~/dotfiles/zsh/opt.zsh
 
 # Prompt theme
 #
-source ~/dotfiles/zsh/theme.zsh
+source ~/dotfiles/zsh/prompt.zsh
 
 # Environment
 #
@@ -42,3 +42,6 @@ if [[ -f $HOME/.zshrc.local ]]; then
     source $HOME/.zshrc.local
 fi
 
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

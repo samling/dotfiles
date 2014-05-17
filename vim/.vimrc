@@ -150,6 +150,7 @@ set nobackup		" no backup~ files
 set viminfo='20,\"500	" remember copy registers after quitting in the .viminfo
 set hidden		" remember undo after quitting
 set history=50		" keep 50 lines of command history
+set backupskip=/tmp/*,/private/tmp/*    " Allow vim to edit crontab
 " set mouse=v		" use mouse in visual mode (not normal, insert,
 			" command, help modes)
 
