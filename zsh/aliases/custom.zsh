@@ -22,7 +22,7 @@ alias R='cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"'
 ###
 ### Open this file and select zsh customizations
 ###
-alias custom='vi ~/dotfiles/zsh/custom.zsh'
+alias custom='vi ~/dotfiles/zsh/aliases/custom.zsh'
 # The below functions already exist; use "function" (with quotes) to use original
 alias functions='vi ~/dotfiles/zsh/functions.zsh'
 #alias aliases='vi ~/.oh-my-zsh/lib/aliases.zsh'

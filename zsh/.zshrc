@@ -31,7 +31,8 @@ source ~/dotfiles/zsh/lscolors.zsh
 
 # Custom aliases
 #
-source ~/dotfiles/zsh/custom.zsh
+source ~/dotfiles/zsh/aliases/custom.zsh
+source ~/dotfiles/zsh/aliases/docker.zsh
 
 # Custom functions
 #
