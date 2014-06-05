@@ -85,7 +85,7 @@ alias top="sudo htop"
 alias img="quick-look"
 
 ###
-### Redefining existing functions
+### Redefining and extending existing functions
 ###
 alias please='sudo'
 alias fucking='sudo'
@@ -101,6 +101,7 @@ alias fg="fg %$1"
 alias bg="bg %$1"
 alias cfd='cdf'
 alias cwd='pwd'
+alias manpdf=man2pdf
 
 ###
 ### Directory changing

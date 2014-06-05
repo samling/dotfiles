@@ -609,3 +609,11 @@ function gnuls() {
         gls --color "$@"
     fi
 }
+
+###
+### Print manpage to PDF
+###
+
+function man2pdf() {
+    man -t "$1" | ps2pdf - "$1.pdf"
+}
