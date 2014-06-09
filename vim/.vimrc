@@ -87,7 +87,10 @@ nnoremap <Leader>" yypv$r"
 """ Display Settings
 """
 """
-set nowrap		" don't wrap lines
+"set nowrap		    " don't wrap lines
+set wrap            " enable line wrapping
+set linebreak       " wrap words but don't break line unless hitting enter
+set nolist          " list disables linebreak
 set showmatch		" show matching bracket (briefly jump)
 set matchtime=2		" show matching bracket for 0.2 seconds
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
