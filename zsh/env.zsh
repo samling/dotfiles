@@ -13,4 +13,4 @@ export TMUX_POWERLINE_SEG_WEATHER_LOCATION="2411898"
 export ARCHFLAGS="-arch x86_64"
 
 # Docker
-export DOCKER_HOST=tcp://127.0.0.1:4243
+export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2375
