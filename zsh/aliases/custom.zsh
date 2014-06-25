@@ -85,6 +85,12 @@ alias top="sudo htop"
 alias img="quick-look"
 
 ###
+### Colorify
+###
+
+alias colorify="grc -es --colour=auto"
+
+###
 ### Redefining and extending existing functions
 ###
 alias please='sudo'
