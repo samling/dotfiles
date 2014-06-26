@@ -14,6 +14,9 @@ alias netstat="colorify netstat"
 alias ping="colorify ping"
 alias traceroute="colorify traceroute"
 
+# Replacing grep with ack
+alias grep="ack"
+
 # Personal
 alias wol="wakeonlan -i 192.168.1.219 -p 9 60:a4:4c:62:85:d2"
 alias sboynton="ssh sboynton@107.170.229.199"
