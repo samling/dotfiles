@@ -118,6 +118,7 @@ set expandtab		" convert tabs to spaces
 set splitbelow      " vsplit new panes below current pane
 set splitright      " vsplit new panes to the right of the current pane
 set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
+"set synmaxcol=120   " stop vim from syntax highlighting after 120 columns to prevent long strings from making vim chug
 
 
 """ File Type Settings
