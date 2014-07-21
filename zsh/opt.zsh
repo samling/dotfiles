@@ -26,6 +26,7 @@ unsetopt MENU_COMPLETE          # do not autoselect the first completion entry
 setopt AUTO_MENU                # Show completion menu on successive tab press; needs unsetopt menu_complete to work
 setopt LIST_AMBIGUOUS           # Complete as much as possible until ambiguous
 unsetopt CORRECT                # Disable autocorrection
+unsetopt CASE_GLOB              # Turn off case-sensitive globbing
 
 # ======== PUSHD
 
