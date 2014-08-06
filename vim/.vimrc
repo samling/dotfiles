@@ -196,6 +196,7 @@ Bundle 'justinmk/vim-sneak'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
 Bundle 'groenewege/vim-less'
+Bundle 'joonty/vim-phpqa.git'
 
 " Bundle-specific settings
 """ airline
