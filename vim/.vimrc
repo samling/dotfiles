@@ -11,8 +11,8 @@ endif
 
 """
 " Leader key
-"let mapleader=','
-let mapleader="\<Space>"
+let mapleader=','
+"let mapleader="\<Space>"
 
 """
 " Source .vimrc.local if present
@@ -196,7 +196,6 @@ Bundle 'justinmk/vim-sneak'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
 Bundle 'groenewege/vim-less'
-Bundle 'joonty/vim-phpqa.git'
 
 " Bundle-specific settings
 """ airline
