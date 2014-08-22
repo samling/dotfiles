@@ -111,8 +111,8 @@ set backspace=2		" make backspace behave normally
 set backspace=indent,eol,start	" see above; allow backspacing over everything in insert mode
 set smarttab		" smart tab handling for indenting
 set magic   		" change the way backslashes are used in search patterns
-set shiftwidth=4	" use 4 spaces as indent guide
-set tabstop=4		" use 4 spaces as indent guide
+set shiftwidth=2	" use 4 spaces as indent guide
+set tabstop=2		" use 4 spaces as indent guide
 set expandtab		" convert tabs to spaces
 "set virtualedit=onemore " allow the cursor to move past the last character
 set splitbelow      " vsplit new panes below current pane
@@ -171,8 +171,8 @@ Bundle 'gmarik/vundle'
 " Run :BundleInstall (case-sensitive) to install
 " e.g.:
 " Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'scrooloose/nerdtree'
+" Bundle 'Lokaltog/vim-easymotion'
+Bundle 'scrooloose/nerdtree'
 " Bundle 'msanders/snipmate.vim'
 " Bundle 'tpope/vim-abolish'
 " Bundle 'tpope/vim-surround'
@@ -185,16 +185,16 @@ Bundle 'bling/vim-airline'
 " Bundle 'Valloric/MatchTagAlways'
 Bundle 'godlygeek/csapprox'
 Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
-Bundle 'matze/vim-move'
+" Bundle 'matze/vim-move'
 " Bundle 'goldfeld/vim-seek'
 " Bundle 'flazz/vim-colorschemes'
-Bundle 'Raimondi/delimitMate'
+" Bundle 'Raimondi/delimitMate'
 " Bundle 'tpope/vim-fugitive'
 Bundle 'Yggdroot/indentLine'
-Bundle 'tpope/vim-rails'
-Bundle 'justinmk/vim-sneak'
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
+" Bundle 'tpope/vim-rails'
+" Bundle 'justinmk/vim-sneak'
+" Bundle 'rizzatti/funcoo.vim'
+" Bundle 'rizzatti/dash.vim'
 Bundle 'groenewege/vim-less'
 
 " Bundle-specific settings
