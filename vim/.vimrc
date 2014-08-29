@@ -111,8 +111,8 @@ set backspace=2		" make backspace behave normally
 set backspace=indent,eol,start	" see above; allow backspacing over everything in insert mode
 set smarttab		" smart tab handling for indenting
 set magic   		" change the way backslashes are used in search patterns
-set shiftwidth=2	" use 4 spaces as indent guide
-set tabstop=2		" use 4 spaces as indent guide
+set shiftwidth=4	" use 4 spaces as indent guide
+set tabstop=4		" use 4 spaces as indent guide
 set expandtab		" convert tabs to spaces
 "set virtualedit=onemore " allow the cursor to move past the last character
 set splitbelow      " vsplit new panes below current pane

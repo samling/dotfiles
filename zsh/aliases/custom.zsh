@@ -108,6 +108,7 @@ alias bg="bg %$1"
 alias cfd='cdf'
 alias cwd='pwd'
 alias manpdf=man2pdf
+alias body=body_alias
 
 ###
 ### Directory changing
