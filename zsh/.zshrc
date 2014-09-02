@@ -32,7 +32,12 @@ source ~/dotfiles/zsh/lscolors.zsh
 # Custom aliases
 #
 source ~/dotfiles/zsh/aliases/custom.zsh
-source ~/dotfiles/zsh/aliases/docker.zsh
+if ! type "docker" > /dev/null; then
+    break
+else
+    source ~/dotfiles/zsh/aliases/docker.zsh
+fi
+
 
 # Custom functions
 #
