@@ -205,8 +205,8 @@ let g:EasyMotion_leader_key=','
 """ vim-move
 let g:move_key_modifier = 'S'
 """ NERDtree
-" map <C-n> :NERDTreeToggle<CR>
-" let NERDTreeQuitOnOpen=1
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen=1
 """ gundo
 " nnoremap - :GundoToggle<CR>
 let g:gundo_close_on_revert=1
