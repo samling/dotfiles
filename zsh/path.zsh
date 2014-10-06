@@ -1,5 +1,8 @@
+# Set Android SDK home
+ANDROID_HOME=$HOME/Documents/Android-SDK
+
 # Specify correct homebrew-installed python directory
-PATH=/usr/local/Cellar/python/2.7.7_2/bin
+PATH=/usr/local/Cellar/python/2.7.8_1/bin
 # Using Homebrew without Linux CoreUtils
 PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # Java applet plugin
@@ -11,7 +14,7 @@ PATH=$PATH:/opt/X11/bin
 # Munki
 PATH=$PATH:/usr/local/munki
 # Android SDK
-PATH=$PATH:/Users/sboynton/android/SDK/tools:/Users/sboynton/android/SDK/platform-tools
+PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 # Final path export
 export PATH
 

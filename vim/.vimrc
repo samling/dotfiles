@@ -93,8 +93,8 @@ set linebreak       " wrap words but don't break line unless hitting enter
 set nolist          " list disables linebreak
 set showmatch		" show matching bracket (briefly jump)
 set matchtime=2		" show matching bracket for 0.2 seconds
-set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
-set guifont=Inconsolata-dz_for_Powerline_Medium:h12
+set guifont=Menlo\ Regular\ for\ Powerline\ 12
+set guifont=Menlo_Regular_for_Powerline:h12
 set laststatus=2	" use 2 lines for the status bar
 set matchpairs+=<:>	" specifically for html
 
@@ -195,7 +195,7 @@ Bundle 'Yggdroot/indentLine'
 " Bundle 'justinmk/vim-sneak'
 " Bundle 'rizzatti/funcoo.vim'
 " Bundle 'rizzatti/dash.vim'
-Bundle 'groenewege/vim-less'
+" Bundle 'groenewege/vim-less'
 
 " Bundle-specific settings
 """ airline
