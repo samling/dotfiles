@@ -169,47 +169,32 @@ Bundle 'gmarik/vundle'
 
 " Call bundles here
 " Run :BundleInstall (case-sensitive) to install
-" e.g.:
-" Bundle 'tpope/vim-fugitive'
-" Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree'
-" Bundle 'msanders/snipmate.vim'
-" Bundle 'tpope/vim-abolish'
-" Bundle 'tpope/vim-surround'
-" Bundle 'sjl/gundo.vim'
-" Bundle 'tpope/vim-commentary'
-" Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'bling/vim-airline'
-" Bundle 'scrooloose/syntastic'
-" Bundle 'kien/ctrlp.vim'
-" Bundle 'Valloric/MatchTagAlways'
 Bundle 'godlygeek/csapprox'
 Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
-" Bundle 'matze/vim-move'
-" Bundle 'goldfeld/vim-seek'
-" Bundle 'flazz/vim-colorschemes'
-" Bundle 'Raimondi/delimitMate'
-" Bundle 'tpope/vim-fugitive'
 Bundle 'Yggdroot/indentLine'
-" Bundle 'tpope/vim-rails'
-" Bundle 'justinmk/vim-sneak'
-" Bundle 'rizzatti/funcoo.vim'
-" Bundle 'rizzatti/dash.vim'
-" Bundle 'groenewege/vim-less'
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
 
 " Bundle-specific settings
 """ airline
 let g:airline#extensions#tabline#enabled = 1
+
 """ easymotion
 let g:EasyMotion_leader_key=','
+
 """ vim-move
 let g:move_key_modifier = 'S'
+
 """ NERDtree
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeQuitOnOpen=1
+
 """ gundo
 " nnoremap - :GundoToggle<CR>
 let g:gundo_close_on_revert=1
+
 """ Ctrl-P
 " let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlP'
@@ -217,8 +202,10 @@ let g:gundo_close_on_revert=1
 " let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 " let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 " let g:ctrlp_working_path_mode = 'ra'
+
 """ indentLine
 let g:indentLine_color_term = 239
+
 """ MatchTagAlways
 let g:mta_filetypes = {
 	\ 'html' : 1,

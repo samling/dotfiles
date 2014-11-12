@@ -7,6 +7,10 @@ PATH=/usr/local/Cellar/python/2.7.8_1/bin
 PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # Java applet plugin
 PATH=$PATH:/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin
+# Golang
+PATH=$PATH:/usr/local/go/bin
+# Go Home
+PATH=$PATH:$HOME/.gocode
 # RVM
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
 # X11
