@@ -77,6 +77,10 @@ function prompt_char {
     echo '-'
 }
 
+function history_number {
+    echo "%{$fg[red]%}(!%h)"
+}
+
 # Prompt left and right sides
 #
 # %b => git branch
