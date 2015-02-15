@@ -19,3 +19,7 @@ export ARCHFLAGS="-arch x86_64"
 export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=/Users/sboynton/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
+
+# Wireshark
+# This exports the symmetric session key to a file
+launchctl setenv SSLKEYLOGFILE ~/Documents/Security/Keys/sslkeylog.log
