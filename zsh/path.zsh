@@ -6,7 +6,7 @@ PATH=/usr/local/Cellar/python/2.7.8_1/bin
 # Using Homebrew without Linux CoreUtils
 PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # Java applet plugin
-PATH=$PATH:/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin
+PATH=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin:$PATH
 # Golang
 PATH=$PATH:/usr/local/go/bin
 # Go Home
