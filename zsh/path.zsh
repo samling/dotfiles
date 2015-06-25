@@ -1,8 +1,6 @@
 # Set Android SDK home
 ANDROID_HOME=$HOME/Documents/Android-SDK
 
-# Specify correct homebrew-installed python directory
-PATH=/usr/local/Cellar/python/2.7.8_1/bin
 # Using Homebrew without Linux CoreUtils
 PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # Java applet plugin
