@@ -13,6 +13,8 @@ PATH=$PATH:$HOME/.gocode
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
 # X11
 PATH=$PATH:/opt/X11/bin
+# Mono
+PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Library/Frameworks/Mono.framework/Versions/Current/bin
 # Munki
 PATH=$PATH:/usr/local/munki
 # Android SDK

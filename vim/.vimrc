@@ -70,6 +70,9 @@ noremap <S-Up> <NOP>
 noremap <S-Down> <NOP>
 vnoremap <S-Up> <NOP>
 vnoremap <S-Down> <NOP>
+" Remap Enter to insert a new line without entering Insert mode
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
 " Remapping shift+q, aka Ex mode
 noremap Q @q
 " Alias for <Escape>
