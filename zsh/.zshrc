@@ -1,3 +1,7 @@
+# Commands
+#
+source ~/dotfiles/zsh/cmd.zsh
+
 # Plugins
 #
 source ~/dotfiles/zsh/zsh-history-substring-search.zsh
