@@ -1,5 +1,5 @@
 # Set Android SDK home
-ANDROID_HOME=$HOME/Documents/Android-SDK
+ANDROID_HOME=$HOME/Library/Android/sdk
 
 # Using Homebrew without Linux CoreUtils
 PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
