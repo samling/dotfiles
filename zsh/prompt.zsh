@@ -54,7 +54,7 @@ function parse_git_state() {
 
 function git_prompt_string() {
   local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX $(parse_git_state)"
+  [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX $(parse_git_state) "
   [ -z "$git_where" ] && echo ""
 }
 
@@ -97,7 +97,6 @@ function history_number {
 #
 # Color: $fg[color]
 #
-PROMPT='$(ssh_prompt_string) $fg[blue]$(collapse_pwd) $(git_prompt_string)
-%{$reset_color%}'
+PROMPT=' %F{blue}%~%F{white} > '
 
-RPROMPT=''
+RPROMPT='$(git_prompt_string)'
