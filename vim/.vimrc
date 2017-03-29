@@ -173,12 +173,17 @@ Bundle 'gmarik/vundle'
 " Call bundles here
 " Run :BundleInstall (case-sensitive) to install
 Bundle 'scrooloose/nerdtree'
-Bundle 'bling/vim-airline'
+"Bundle 'bling/vim-airline'
 Bundle 'godlygeek/csapprox'
 Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
+
+" Powerline
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 
 " Bundle-specific settings
 """ airline
