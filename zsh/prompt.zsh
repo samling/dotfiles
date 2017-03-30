@@ -1,8 +1,10 @@
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
 #GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
 #GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
-GIT_PROMPT_PREFIX="%{$fg[white]%}(%{$reset_color%}"
-GIT_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%}"
+#GIT_PROMPT_PREFIX="%{$fg[white]%}(%{$reset_color%}"
+#GIT_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%}"
+GIT_PROMPT_PREFIX=
+GIT_PROMPT_SUFFIX=
 GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"
 GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"
 GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡︎%{$reset_color%}"
