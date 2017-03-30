@@ -108,7 +108,7 @@ set incsearch		" highlight options as you type expression (emacs style)
 set ignorecase		" ignore case for entirely lowercase searches
 set smartcase		" respect case when capitals are included
 set number		    " enable line numbers
-set relativenumber	" relative row numbers when exiting Insert mode
+"set relativenumber	" relative row numbers when exiting Insert mode
 " set ambiwidth=double	" make ambiguously-sized characters double the width
 set backspace=2		" make backspace behave normally
 set backspace=indent,eol,start	" see above; allow backspacing over everything in insert mode
@@ -139,7 +139,7 @@ if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
 	" set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
-	colorscheme molokai-nobg
+	colorscheme gruvbox
     " Remove the background color from the theme to match the terminal bg
     " color
     hi Normal ctermbg=NONE
@@ -149,6 +149,27 @@ if &t_Co > 2 || has("gui_running")
 	" let g:airline_theme='wombat'
 	" let g:rehash256 = 1
 endif
+
+""" Theme Settings
+"""
+"""
+hi vertsplit ctermfg=238 ctermbg=235
+hi LineNr ctermfg=237
+hi StatusLine ctermfg=235 ctermbg=245
+hi StatusLineNC ctermfg=235 ctermbg=237
+hi Search ctermbg=58 ctermfg=15
+hi Default ctermfg=1
+hi clear SignColumn
+hi SignColumn ctermbg=235
+hi GitGutterAdd ctermbg=235 ctermfg=245
+hi GitGutterChange ctermbg=235 ctermfg=245
+hi GitGutterDelete ctermbg=235 ctermfg=245
+hi GitGutterChangeDelete ctermbg=235 ctermfg=245
+hi EndOfBuffer ctermfg=237 ctermbg=235
+set statusline=%F\ %m%=%P\ %c,%l/%L
+set fillchars=vert:\ ,stl:\ ,stlnc:\ 
+set laststatus=2
+set noshowmode
 
 """ System Settings
 set confirm		" get dialog when :q, :w, or :wq fails
@@ -181,9 +202,9 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 
 " Powerline
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
 
 " Bundle-specific settings
 """ airline

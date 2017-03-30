@@ -97,6 +97,6 @@ function history_number {
 #
 # Color: $fg[color]
 #
-PROMPT=' %F{blue}%~%F{white} > '
+PROMPT=' %F{cyan}%~%F{white} > '
 
 RPROMPT='$(git_prompt_string)'

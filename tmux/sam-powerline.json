@@ -1,10 +1,7 @@
 {
     "default_module": "powerline.segments.common",
 	"segments": {
-		"right": [
-			{
-				"function": "powerline.segments.common.net.internal_ip"
-			},
+        "right": [
 			{
 				"function": "powerline.segments.common.time.date",
 				"name": "time",
@@ -12,9 +9,6 @@
 					"format": "%d/%m/%Y %H:%M",
 					"istime": true
 				}
-			},
-			{
-				"function": "powerline.segments.common.net.hostname"
 			}
 		]
 	}
