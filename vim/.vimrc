@@ -33,7 +33,7 @@ endif
 map <Leader>[ :bp<CR>
 map <Leader>] :bn<CR> 
 map <Leader>w :bd<CR>
-map <leader>n :tabnew<CR>
+map <leader>t :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
 map \ :set paste!<CR>
