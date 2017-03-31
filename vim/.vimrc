@@ -200,6 +200,7 @@ Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'fatih/vim-go'
 
 " Powerline
 "python from powerline.vim import setup as powerline_setup
