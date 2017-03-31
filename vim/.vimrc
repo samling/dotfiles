@@ -30,10 +30,10 @@ endif
 """ map/remap some characters
 """
 """
-" map { :bp<CR>
-" map } :bn<CR> 
-" map " :bd<CR>
-" map ' :tabnew<CR>
+map <Leader>[ :bp<CR>
+map <Leader>] :bn<CR> 
+map <Leader>w :bd<CR>
+map <leader>n :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
 map \ :set paste!<CR>
@@ -132,6 +132,16 @@ filetype plugin indent on " required
 autocmd FileType make setlocal noexpandtab  " avoid expandtab when editing make files (as this may break them)
 autocmd BufNewFile,BufRead *.less setf less " Set .less files to have the correct filetype
 
+""" GoLang settings
+"""
+"""
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
 """ Color settings
 """
 """
@@ -184,23 +194,26 @@ set backupskip=/tmp/*,/private/tmp/*    " Allow vim to edit crontab
 """ Vundle
 """ ---------------------------------------------------
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
 " Let Vundle manage itself
 " Required
-Bundle 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
-" Call bundles here
-" Run :BundleInstall (case-sensitive) to install
-Bundle 'scrooloose/nerdtree'
-"Bundle 'bling/vim-airline'
-Bundle 'godlygeek/csapprox'
-Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
-Bundle 'Yggdroot/indentLine'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'fatih/vim-go'
+" Call plugins here
+" Run :PluginInstall (case-sensitive) to install
+Plugin 'scrooloose/nerdtree'
+"Plugin 'bling/vim-airline'
+Plugin 'godlygeek/csapprox'
+Plugin 'vim-scripts/Better-CSS-Syntax-for-Vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'tpope/vim-fugitive'
+"Plugin 'Lokaltog/vim-easymotion'
+Plugin 'fatih/vim-go'
+Plugin 'bling/vim-bufferline'
+
+call vundle#end()
 
 " Powerline
 "python from powerline.vim import setup as powerline_setup
