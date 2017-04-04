@@ -83,6 +83,12 @@ function history_number {
     echo "%{$fg[red]%}(!%h)"
 }
 
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $(git_prompt_string) $EPS1"
+    zle reset-prompt
+}
+
 # Prompt left and right sides
 #
 # %b => git branch
@@ -100,5 +106,3 @@ function history_number {
 # Color: $fg[color]
 #
 PROMPT=' %F{cyan}%~%F{white} > '
-
-RPROMPT='$(git_prompt_string)'

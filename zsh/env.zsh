@@ -7,6 +7,7 @@ export LANG=en_US.UTF-8
 export EDITOR="vim"
 
 # Go Code
+export GOROOT=$HOME/.gocode
 export GOPATH=$HOME/.gocode
 
 # Tmux
@@ -20,3 +21,6 @@ eval $(docker-machine env default)
 #export DOCKER_HOST=tcp://192.168.59.103:2376
 #export DOCKER_CERT_PATH=/Users/sboynton/.boot2docker/certs/boot2docker-vm
 #export DOCKER_TLS_VERIFY=1
+
+# VI Mode
+export KEYTIMEOUT=1

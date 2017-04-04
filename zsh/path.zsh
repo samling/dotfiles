@@ -9,6 +9,8 @@ PATH=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin:$PATH
 PATH=$PATH:/usr/local/go/bin
 # Go Home
 PATH=$PATH:$HOME/.gocode
+# Go binaries
+PATH=$PATH:$HOME/.gocode/bin
 # RVM
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
 # X11
