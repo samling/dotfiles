@@ -30,9 +30,13 @@ endif
 """ map/remap some characters
 """
 """
+" Previous buffer
 map <Leader>[ :bp<CR>
+" Next buffer
 map <Leader>] :bn<CR> 
+" Close buffer
 map <Leader>w :bd<CR>
+" New buffer
 map <leader>t :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
@@ -215,12 +219,18 @@ Plugin 'bling/vim-bufferline'
 
 call vundle#end()
 
-" Powerline
+" Bundle-specific settings
+
+""" Powerline
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
 "python del powerline_setup
 
-" Bundle-specific settings
+""" vim-go
+nnoremap gj :cnext<CR>
+nnoremap gk :cprevious<CR>
+nnoremap gx :cclose<CR>
+
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 

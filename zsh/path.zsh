@@ -6,11 +6,11 @@ PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sb
 # Java applet plugin
 PATH=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin:$PATH
 # Golang
-PATH=$PATH:/usr/local/go/bin
+PATH=$PATH:/usr/local/opt/go/libexec/bin
 # Go Home
-PATH=$PATH:$HOME/.gocode
+PATH=$PATH:$GOPATH
 # Go binaries
-PATH=$PATH:$HOME/.gocode/bin
+PATH=$PATH:$GOROOT/bin
 # RVM
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
 # X11

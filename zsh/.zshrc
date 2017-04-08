@@ -6,6 +6,10 @@ source ~/dotfiles/zsh/zsh-history-substring-search.zsh
 #
 source ~/dotfiles/zsh/cmd.zsh
 
+# Environment
+#
+source ~/dotfiles/zsh/env.zsh
+
 # Path
 #
 source ~/dotfiles/zsh/path.zsh
@@ -17,10 +21,6 @@ source ~/dotfiles/zsh/opt.zsh
 # Prompt theme
 #
 source ~/dotfiles/zsh/prompt.zsh
-
-# Environment
-#
-source ~/dotfiles/zsh/env.zsh
 
 # Key bindings
 #
