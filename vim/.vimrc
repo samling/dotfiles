@@ -11,7 +11,8 @@ endif
 
 """
 " Leader key
-let mapleader=','
+let mapleader='\'
+"let mapleader=','
 "let mapleader="\<Space>"
 
 """
@@ -19,13 +20,6 @@ let mapleader=','
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
-
-""" move according to visual lines instead of line numbers (i.e. treat line
-""" breaks as two separate lines)
-"""
-"""
-" nnoremap j gj
-" nnoremap k gk
 
 """ map/remap some characters
 """
@@ -40,7 +34,7 @@ map <Leader>w :bd<CR>
 map <leader>t :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
-map \ :set paste!<CR>
+map , :set paste!<CR>
 
 """ Experimental -- disabling cursor keys to better learn and get used to hjkl
 """
@@ -235,7 +229,7 @@ nnoremap gx :cclose<CR>
 let g:airline#extensions#tabline#enabled = 1
 
 """ easymotion
-let g:EasyMotion_leader_key=','
+let g:EasyMotion_leader_key='\'
 map <Leader> <Plug>(easymotion-prefix)
 
 """ vim-move
