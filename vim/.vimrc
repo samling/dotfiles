@@ -213,7 +213,7 @@ Plugin 'godlygeek/csapprox'
 Plugin 'vim-scripts/Better-CSS-Syntax-for-Vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-fugitive'
-"Plugin 'Lokaltog/vim-easymotion'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'bling/vim-bufferline'
 
@@ -236,6 +236,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 """ easymotion
 let g:EasyMotion_leader_key=','
+map <Leader> <Plug>(easymotion-prefix)
 
 """ vim-move
 let g:move_key_modifier = 'S'
