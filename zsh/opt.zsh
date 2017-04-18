@@ -3,9 +3,6 @@
 setopt AUTO_CD                  # Typing a directory and hitting enter will go to that directory
 setopt INTERACTIVE_COMMENTS     # Allow comments in interactive shells
 setopt NO_BEEP                  # No beep on error
-
-# ======== HISTORY
-
 HISTFILE=$HOME/.zhistory        # Make a history file
 HISTSIZE=2000                   # Save 2000 bytes of command history
 SAVEHIST=2000                   # Maximum commands to save
@@ -28,6 +25,7 @@ setopt AUTO_MENU                # Show completion menu on successive tab press; 
 setopt LIST_AMBIGUOUS           # Complete as much as possible until ambiguous
 unsetopt CORRECT                # Disable autocorrection
 unsetopt CASE_GLOB              # Turn off case-sensitive globbing
+setopt NONOMATCH                # Disable "no match found" behavior to be more like bash in cases of failed expansion
 
 # ======== PUSHD
 

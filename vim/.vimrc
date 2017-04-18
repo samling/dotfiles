@@ -215,7 +215,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'bling/vim-bufferline'
 "Plugin 'valloric/youcompleteme'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 
 call vundle#end()
 
