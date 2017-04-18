@@ -178,6 +178,10 @@ set statusline=%F\ %m%=%P\ %c,%l/%L
 set fillchars=vert:\ ,stl:\ ,stlnc:\ 
 set laststatus=2
 set noshowmode
+" Change the cursor according to mode (formatted for tmux)
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 """ System Settings
 set confirm		" get dialog when :q, :w, or :wq fails
@@ -210,6 +214,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'bling/vim-bufferline'
+"Plugin 'valloric/youcompleteme'
+Plugin 'ervandew/supertab'
 
 call vundle#end()
 
@@ -224,6 +230,9 @@ call vundle#end()
 nnoremap gj :cnext<CR>
 nnoremap gk :cprevious<CR>
 nnoremap gx :cclose<CR>
+
+""" SuperTab
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
