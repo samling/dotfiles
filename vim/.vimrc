@@ -214,6 +214,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'bling/vim-bufferline'
+Plugin 'majutsushi/tagbar'
 "Plugin 'valloric/youcompleteme'
 "Plugin 'ervandew/supertab'
 
@@ -230,6 +231,38 @@ call vundle#end()
 nnoremap gj :cnext<CR>
 nnoremap gk :cprevious<CR>
 nnoremap gx :cclose<CR>
+
+""" TagBar
+"nmap <F8> :TagbarToggle<CR>
+nmap <leader>c :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
 
 """ SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
