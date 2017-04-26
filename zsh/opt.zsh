@@ -43,8 +43,12 @@ setopt PROMPT_SUBST             # Enable parameter expansion, command substituti
 setopt AUTO_REMOVE_SLASH        # Removes slashes
 setopt CHASE_LINKS              # Resolve symlinks
 setopt GLOB_DOTS                # Include dotfiles in globbing
-unsetopt CASE_GLOB		# Turn off case-sensitive globbing
+unsetopt CASE_GLOB		        # Turn off case-sensitive globbing
 
 # ======== VI MODE
 zle -N zle-line-init
 zle -N zle-keymap-select
+
+# ======== ZSTYLES
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion
+#zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion only if there are no case-sensitive matches
