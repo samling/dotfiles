@@ -215,6 +215,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
+Plugin 'aperezdc/vim-template'
 "Plugin 'valloric/youcompleteme'
 "Plugin 'ervandew/supertab'
 
