@@ -218,6 +218,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'aperezdc/vim-template'
 "Plugin 'valloric/youcompleteme'
 "Plugin 'ervandew/supertab'
+Plugin 'samling/previewcolors.vim'
 
 call vundle#end()
 
