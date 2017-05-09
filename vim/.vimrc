@@ -140,6 +140,11 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
+""" Python Settings
+"""
+"""
+let python_highlight_all = 1
+
 """ Color settings
 """
 """
@@ -209,6 +214,7 @@ Plugin 'scrooloose/nerdtree'
 "Plugin 'bling/vim-airline'
 Plugin 'godlygeek/csapprox'
 Plugin 'vim-scripts/Better-CSS-Syntax-for-Vim'
+Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-fugitive'
 Plugin 'easymotion/vim-easymotion'
@@ -216,7 +222,7 @@ Plugin 'fatih/vim-go'
 Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
 Plugin 'aperezdc/vim-template'
-"Plugin 'valloric/youcompleteme'
+Plugin 'valloric/youcompleteme'
 "Plugin 'ervandew/supertab'
 Plugin 'samling/previewcolors.vim'
 
