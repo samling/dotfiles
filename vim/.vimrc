@@ -152,10 +152,9 @@ if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
 	" set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
-	colorscheme gruvbox
+	colorscheme nord
     " Remove the background color from the theme to match the terminal bg
     " color
-    hi Normal ctermbg=NONE
 	let g:molokai_original = 1 
 	let g:airline_powerline_fonts = 1
 	let g:Powerline_symbols = 'fancy'
@@ -166,10 +165,11 @@ endif
 """ Theme Settings
 """
 """
+hi Normal ctermbg=NONE
 hi vertsplit ctermfg=238 ctermbg=235
-hi LineNr ctermfg=237
-hi StatusLine ctermfg=235 ctermbg=245
-hi StatusLineNC ctermfg=235 ctermbg=237
+hi LineNr ctermfg=242 ctermbg=None
+hi StatusLine ctermfg=242 ctermbg=None
+hi StatusLineNC ctermfg=242 ctermbg=None
 hi Search ctermbg=58 ctermfg=15
 hi Default ctermfg=1
 hi clear SignColumn
@@ -234,6 +234,9 @@ call vundle#end()
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
 "python del powerline_setup
+
+""" youcompleteme
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 """ vim-go
 nnoremap gj :cnext<CR>
