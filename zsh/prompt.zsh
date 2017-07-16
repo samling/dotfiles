@@ -105,4 +105,4 @@ function zle-line-init zle-keymap-select {
 #
 # Color: $fg[color]
 #
-PROMPT=' %F{cyan}%~%F{white} > '
+PROMPT='%F{blue}░▒▓%{$bg[blue]%}%  %F{black}%~ %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  '
