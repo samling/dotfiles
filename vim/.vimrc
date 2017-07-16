@@ -223,7 +223,6 @@ Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
 Plugin 'aperezdc/vim-template'
 Plugin 'valloric/youcompleteme'
-Plugin 'tmux-plugins/vim-tmux'
 "Plugin 'ervandew/supertab'
 Plugin 'samling/previewcolors.vim'
 
