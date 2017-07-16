@@ -53,3 +53,6 @@ fi
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# Enable fuzzy finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
