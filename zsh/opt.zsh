@@ -40,15 +40,22 @@ autoload -U colors && colors    # Allow colors in prompt
 setopt PROMPT_SUBST             # Enable parameter expansion, command substitution, and arithmetic expansion in the prompt
 
 # ======== GLOBBING
+
 setopt AUTO_REMOVE_SLASH        # Removes slashes
 setopt CHASE_LINKS              # Resolve symlinks
 setopt GLOB_DOTS                # Include dotfiles in globbing
 unsetopt CASE_GLOB		        # Turn off case-sensitive globbing
 
 # ======== VI MODE
+
 zle -N zle-line-init
 zle -N zle-keymap-select
 
+# ======== TERMINAL BEHAVIOR
+
+setopt IGNORE_EOF               # Prevent ZSH from quitting with ctrl-d
+
 # ======== ZSTYLES
+
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion
 #zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion only if there are no case-sensitive matches
