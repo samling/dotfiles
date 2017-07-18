@@ -105,5 +105,6 @@ function zle-line-init zle-keymap-select {
 #
 # Color: $fg[color]
 #
-PROMPT=" %F{blue}░▒▓%{$bg[blue]%}%  %F{black}%(5~|%-1~/…/%3~|%4~) %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
+PROMPT=" %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  "
+#PROMPT=" %F{blue}░▒▓%{$bg[blue]%}%  %F{black}%(5~|%-1~/…/%3~|%4~) %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
 #PROMPT="%U${(r:$COLUMNS:: :)}%u "$'\n'"%F{blue}░▒▓%{$bg[blue]%}%  %F{black}%~ %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
