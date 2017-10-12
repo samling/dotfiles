@@ -53,8 +53,8 @@ alias undeliverable='afplay /Volumes/Storage/Dropbox/Music/undeliverable.m4a'
 ### Applications
 ###
 #alias chrome="open -a Google\ Chrome"
-alias chrome=chrome
-alias gc=chrome
+#alias chrome=chrome
+#alias gc=chrome
 alias gv='/Applications/MacVim.app/Contents/MacOS/Vim -g' # Use MacVim instead of vim
 alias calc='bc -l'
 
