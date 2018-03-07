@@ -237,6 +237,7 @@ call vundle#end()
 
 """ youcompleteme
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_python_binary_path = '/usr/local/bin/python'
 
 """ vim-go
 nnoremap gj :cnext<CR>

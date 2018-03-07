@@ -5,6 +5,8 @@ ANDROID_HOME=$HOME/Library/Android/sdk
 PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # Java applet plugin
 #PATH=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin:$PATH
+# pip & python
+PATH=$PATH:/Users/sboynton/Library/Python/3.6/bin
 # Golang
 PATH=$PATH:/usr/local/opt/go/libexec/bin
 # Go Home
