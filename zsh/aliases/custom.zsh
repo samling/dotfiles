@@ -95,9 +95,9 @@ alias colorify="grc -es --colour=auto"
 ###
 alias please='sudo'
 alias fucking='sudo'
-alias rm='rm -i' # Prevent clobbering
-alias cp='cp -i' # Prevent clobbering
-alias mv='mv -i' # Prevent clobbering
+alias rm='rm -iv' # Prevent clobbering
+alias cp='cp -iv' # Prevent clobbering
+alias mv='mv -iv' # Prevent clobbering
 alias which='type -a'
 alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
