@@ -1,0 +1,36 @@
+pane	base	1	:GoNotes	0	:	1	:/Users/sboynton/Documents/Programming/GoLang/Notes/src/notes	1	zsh	:-zsh
+pane	base	1	:GoNotes	0	:	2	:/Users/sboynton/Documents/Programming/GoLang/Notes/src/notes	0	zsh	:-zsh
+pane	base	1	:GoNotes	0	:	3	:/Users/sboynton/Documents/Programming/GoLang/Notes	0	zsh	:-zsh
+pane	base	1	:GoNotes	0	:	4	:/Users/sboynton/Documents/Programming/GoLang/Notes/src/notes	0	zsh	:-zsh
+pane	base	2	:CLANH	0	:	1	:/Users/sboynton/Downloads/clanh	1	zsh	:-zsh
+pane	base	2	:CLANH	0	:	2	:/Users/sboynton/Downloads/clanh/main	0	zsh	:-zsh
+pane	base	2	:CLANH	0	:	3	:/Users/sboynton/Downloads/clanh	0	zsh	:-zsh
+pane	base	2	:CLANH	0	:	4	:/Users/sboynton/Downloads/clanh	0	zsh	:-zsh
+pane	base	3	:Ameren	0	:	1	:/Users/sboynton/Documents/Novacoast/Projects/Ameren/scripts/accountpurge	1	zsh	:-zsh
+pane	base	3	:Ameren	0	:	2	:/Users/sboynton/Documents/Novacoast/Projects/Ameren/scripts/accountpurge	0	zsh	:-zsh
+pane	base	4	:YTS Go	0	:	1	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram/Sampler	1	zsh	:-zsh
+pane	base	4	:YTS Go	0	:	2	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram/Sampler	0	zsh	:-zsh
+pane	base	5	:YTS Docker	0	:	1	:/Users/sboynton/Documents/Programming/Docker/YTSpectrogram	1	Vim	:-zsh
+pane	base	5	:YTS Docker	0	:	2	:/Users/sboynton/Documents/Programming/Docker/YTSpectrogram	0	Vim	:-zsh
+pane	base	5	:YTS Docker	0	:	3	:/Users/sboynton/Documents/Programming/Docker/YTSpectrogram	0	zsh	:-zsh
+pane	base	6	:VPS	0	:	1	:/Users/sboynton/Documents/Programming/GoLang	0	zsh	:-zsh
+pane	base	6	:VPS	0	:	2	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram/API	1	zsh	:-zsh
+pane	base	6	:VPS	0	:	3	:/Users/sboynton	0	zsh	:-zsh
+pane	base	7	:YTS Go API	0	:	1	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram/API	0	zsh	:-zsh
+pane	base	7	:YTS Go API	0	:	2	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram/API	1	zsh	:-zsh
+pane	base	7	:YTS Go API	0	:	3	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram/API	0	zsh	:-zsh
+pane	base	8	:YTS Javascript	0	:-	1	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram	0	zsh	:-zsh
+pane	base	8	:YTS Javascript	0	:-	2	:/Users/sboynton/Documents/Programming/Javascript/YTSpectrogram	0	zsh	:-zsh
+pane	base	8	:YTS Javascript	0	:-	3	:/Users/sboynton/Documents/Programming/GoLang/YTSpectrogram/HTML	1	zsh	:-zsh
+pane	base	9	:zsh	1	:*	1	:/Users/sboynton/dotfiles	1	zsh	:-zsh
+pane	base	9	:zsh	1	:*	2	:/Users/sboynton/dotfiles/tmux/tpm	0	zsh	:-zsh
+window	base	1	0	:	abbc,204x67,0,0{82x67,0,0[82x33,0,0,10,82x33,0,34,15],121x67,83,0[121x40,83,0,5,121x26,83,41,60]}
+window	base	2	0	:	7442,204x67,0,0{102x67,0,0[102x33,0,0,64,102x33,0,34,66],101x67,103,0[101x33,103,0,65,101x33,103,34,67]}
+window	base	3	0	:	e56a,204x67,0,0{102x67,0,0,94,101x67,103,0,100}
+window	base	4	0	:	3f90,204x67,0,0{102x67,0,0,130,101x67,103,0,145}
+window	base	5	0	:	8f5f,204x67,0,0{102x67,0,0[102x33,0,0,110,102x33,0,34,112],101x67,103,0,111}
+window	base	6	0	:	6f61,204x67,0,0{102x67,0,0[102x33,0,0,136,102x33,0,34,137],101x67,103,0,121}
+window	base	7	0	:	5f17,204x67,0,0{115x67,0,0,129,88x67,116,0[88x33,116,0,116,88x33,116,34,114]}
+window	base	8	0	:-	bf63,204x67,0,0{102x67,0,0[102x33,0,0,139,102x33,0,34,146],101x67,103,0,144}
+window	base	9	1	:*	bf8e,204x67,0,0{102x67,0,0,150,101x67,103,0,151}
+state	base	
