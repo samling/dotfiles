@@ -12,7 +12,7 @@ PATH=$PATH:/usr/local/opt/go/libexec/bin
 # Go Home
 PATH=$PATH:$GOPATH
 # Go binaries
-PATH=$PATH:$GOROOT/bin
+PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # RVM
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
 # X11
