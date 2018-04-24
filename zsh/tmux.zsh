@@ -1,1 +1,1 @@
-tmux attach -t base || tmux new -s base
+tmux new-session -A -s base
