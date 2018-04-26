@@ -169,6 +169,11 @@ alias dnsflush="sudo killall -HUP mDNSResponder"
 alias pping="prettyping.sh --nolegend"
 
 ###
+### Docker
+###
+alias dcp='docker-compose'
+
+###
 ### Homebrew Stuff
 ###
 alias brew_fix='cd $(brew --repository) && sudo git reset --hard FETCH_HEAD'
