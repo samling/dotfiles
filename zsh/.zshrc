@@ -1,8 +1,3 @@
-# tmux
-#
-source ~/dotfiles/zsh/tmux.zsh
-
-source ~/dotfiles/zsh/zsh-history-substring-search.zsh
 # Plugins
 #
 source ~/dotfiles/zsh/zsh-history-substring-search.zsh
