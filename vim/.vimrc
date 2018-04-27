@@ -198,6 +198,16 @@ set backupskip=/tmp/*,/private/tmp/*    " Allow vim to edit crontab
 " set mouse=v		" use mouse in visual mode (not normal, insert,
 			" command, help modes)
 
+""" vim-plug
+""" ---------------------------------------------------
+call plug#begin('~/.vim/plugged')
+Plug 'fsharp/vim-fsharp', {
+    \ 'for': 'fsharp',
+    \ 'do':  'make fsautocomplete',
+    \ }
+call plug#end()
+
+
 """ Vundle
 """ ---------------------------------------------------
 
