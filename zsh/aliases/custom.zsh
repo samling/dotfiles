@@ -136,7 +136,6 @@ alias lll="ls -lAh --color"
 alias llll="sudo lsof -i"
 alias lr="ls -GR"
 alias lf="ls *(.)"
-alias lsusb="system_profiler SPUSBDataType"
 alias recent=recent
 
 ###
