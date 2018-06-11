@@ -1,18 +1,13 @@
 # Set Android SDK home
 ANDROID_HOME=$HOME/Library/Android/sdk
-
+# Golang
+PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # Using Homebrew without Linux CoreUtils
 PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # Java applet plugin
 #PATH=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin:$PATH
 # pip & python
 PATH=$PATH:/Users/sboynton/Library/Python/3.6/bin
-# Golang
-PATH=$PATH:/usr/local/opt/go/libexec/bin
-# Go Home
-PATH=$PATH:$GOPATH
-# Go binaries
-PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # RVM
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
 # X11
