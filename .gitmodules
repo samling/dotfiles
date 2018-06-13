@@ -1,0 +1,3 @@
+[submodule "mvi"]
+	path = mvi
+	url = https://github.com/occivink/mpv-image-viewer
