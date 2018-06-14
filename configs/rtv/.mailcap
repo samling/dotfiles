@@ -25,13 +25,13 @@
 # Feh is a simple and effective image viewer
 # Note that rtv returns a list of urls for imgur albums, so we don't put quotes
 # around the `%s`
-image/x-imgur-album; mpv --config-dir=%HOME/.config/mvi %s; test=test -n "$DISPLAY"
-image/*; mpv --config-dir=%HOME/.config/mvi '%s'; test=test -n "$DISPLAY"
+#image/x-imgur-album; mpv --config-dir=%HOME/.config/mvi %s; test=test -n "$DISPLAY"
+image/*; mpv --config-dir=%HOME/.config/mvi --loop=inf '%s'; test=test -n "$DISPLAY"
 
 # Youtube videos are assigned a custom mime-type, which can be streamed with
 # vlc or youtube-dl.
-video/x-youtube; vlc '%s' --width 640 --height 480; test=test -n "$DISPLAY"
-video/x-youtube; youtube-dl -q -o - '%s' | mpv - --autofit 640x480; test=test -n "$DISPLAY"
+#video/x-youtube; vlc '%s' --width 640 --height 480; test=test -n "$DISPLAY"
+#video/x-youtube; youtube-dl -q -o - '%s' | mpv - --autofit 640x480; test=test -n "$DISPLAY"
 
 # Mpv is a simple and effective video streamer
 video/webm; mpv '%s' --autofit 640x480 --loop=inf; test=test -n "$DISPLAY"
@@ -47,16 +47,16 @@ video/*; mpv '%s' --autofit 640x480 --loop=inf; test=test -n "$DISPLAY"
 # image/*; w3m -o 'ext_image_viewer=off' '%s'; needsterminal
 
 # Don't have a solution for albums yet
-image/x-imgur-album; echo
+#image/x-imgur-album; echo
 
 # 256 color images using half-width unicode characters
 # Much higher quality that img2txt, but must be built from source
 # https://github.com/rossy/img2xterm
-image/*; mpv --config-dir=%HOME/.config/mvi '%s'; needsterminal; copiousoutput
+#image/*; mpv --config-dir=%HOME/.config/mvi '%s'; needsterminal; copiousoutput
 
 # Display images in classic ascii using img2txt and lib-caca
-image/*; curl -s '%s' | convert - jpg:/tmp/rtv.jpg && img2txt -f utf8 /tmp/rtv.jpg; needsterminal; copiousoutput
+#image/*; curl -s '%s' | convert - jpg:/tmp/rtv.jpg && img2txt -f utf8 /tmp/rtv.jpg; needsterminal; copiousoutput
 
 # Ascii videos
-video/x-youtube; youtube-dl -q -o - '%s' | mplayer -cache 8192 -vo caca -quiet -; needsterminal
-video/*; wget '%s' -O - | mplayer -cache 8192 -vo caca -quiet -; needsterminal
+#video/x-youtube; youtube-dl -q -o - '%s' | mplayer -cache 8192 -vo caca -quiet -; needsterminal
+#video/*; wget '%s' -O - | mplayer -cache 8192 -vo caca -quiet -; needsterminal
