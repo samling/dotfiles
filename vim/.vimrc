@@ -235,6 +235,7 @@ Plugin 'aperezdc/vim-template'
 "Plugin 'valloric/youcompleteme'
 "Plugin 'ervandew/supertab'
 Plugin 'samling/previewcolors.vim'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end()
 
