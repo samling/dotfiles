@@ -149,11 +149,14 @@ let python_highlight_all = 1
 """ Color settings
 """
 """
+set background=dark
+set t_Co=256
 if &t_Co > 2 || has("gui_running")
 	syntax on		" language syntax
 	" set hlsearch		" highlight search
 	set incsearch		" search incrementally (search while typing)
-	colorscheme nord
+	"colorscheme nord
+    colorscheme sublimemonokai
     " Remove the background color from the theme to match the terminal bg
     " color
 	let g:molokai_original = 1 
@@ -238,6 +241,9 @@ Plugin 'aperezdc/vim-template'
 Plugin 'samling/previewcolors.vim'
 Plugin 'airblade/vim-gitgutter'
 "Plugin 'mhinz/vim-signify'
+"Plugin 'crusoexia/vim-monokai'
+"Plugin 'vim-python/python-syntax'
+Plugin 'sheerun/vim-polyglot'
 
 call vundle#end()
 
@@ -331,6 +337,8 @@ let g:mta_filetypes = {
 	\}
 """ vim-sneak
 let g:sneak#streak = 1
+""" python-syntax
+let g:python_highlight_all = 1
 
 " Vundle shortcuts
 " :BundleList		- List configured bundles

@@ -7,6 +7,7 @@ PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sb
 # Java applet plugin
 #PATH=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin:$PATH
 # pip & python
+PATH=/usr/local/opt/python/libexec/bin:$PATH
 PATH=$PATH:/Users/sboynton/Library/Python/3.6/bin
 # RVM
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
