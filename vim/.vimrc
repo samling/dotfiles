@@ -11,7 +11,6 @@ endif
 
 """
 " Leader key
-let mapleader='\'
 "let mapleader=','
 "let mapleader="\<Space>"
 
@@ -34,7 +33,7 @@ map <Leader>w :bd<CR>
 map <leader>t :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
-map \ :set paste!<CR>
+"map . :set paste!<CR>
 
 """ Experimental -- disabling cursor keys to better learn and get used to hjkl
 """
