@@ -121,6 +121,7 @@ set splitright      " vsplit new panes to the right of the current pane
 set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 "set synmaxcol=120   " stop vim from syntax highlighting after 120 columns to prevent long strings from making vim chug
 set updatetime=100  " Update file every 100ms (default: 4000ms) to process gitgutter etc. changes
+set nohlsearch
 
 """ File Type Settings
 """
