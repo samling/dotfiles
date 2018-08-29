@@ -249,6 +249,9 @@ call vundle#end()
 
 " Bundle-specific settings
 
+""" polyglot
+let g:polyglot_disabled = ['graphql']
+
 """ Powerline
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
