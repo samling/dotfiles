@@ -25,6 +25,9 @@ export ARCHFLAGS="-arch x86_64"
 # VI Mode
 export KEYTIMEOUT=1
 
+# Python/Pip options
+export PIP_REQUIRE_VIRTUALENV=1 # Require a virtualenv before pip will install a package (prevents packages being installed globally)
+
 # Perl
 PATH="/Users/sboynton/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/Users/sboynton/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
