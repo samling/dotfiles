@@ -11,9 +11,10 @@ endif
 
 """
 " Leader key
-"let mapleader=','
+let mapleader=','
 "let mapleader="\<Space>"
 
+"""
 """
 " Source .vimrc.local if present
 if filereadable(glob("~/.vimrc.local"))
@@ -24,13 +25,13 @@ endif
 """
 """
 " Previous buffer
-map <Leader>[ :bp<CR>
+"map <Leader>[ :bp<CR>
 " Next buffer
-map <Leader>] :bn<CR> 
+"map <Leader>] :bn<CR> 
 " Close buffer
-map <Leader>w :bd<CR>
-" New buffer
-map <leader>t :tabnew<CR>
+"map <Leader>w :bd<CR>
+" New tab
+"map <leader>t :tabnew<CR>
 
 " Toggle paste mode for pasting in external text
 "map . :set paste!<CR>
@@ -54,6 +55,8 @@ nnoremap B ^
 nnoremap E $
 "nnoremap $ <nop>
 "nnoremap ^ <nop>
+" Unbind 'find next character'
+noremap f <NOP>
 " Mapping the +/- keys to inc/dec
 noremap - <C-x>
 noremap = <C-a>
@@ -79,10 +82,10 @@ inoremap jk <esc>
 "
 " Underline the current line with various symbols (such that the number of
 " underline matches line length and indendation)
-nnoremap <Leader>= yypv$r=
-nnoremap <Leader>- yypv$r-
-nnoremap <Leader># yypv$r#
-nnoremap <Leader>" yypv$r"
+"nnoremap <Leader>= yypv$r=
+"nnoremap <Leader>- yypv$r-
+"nnoremap <Leader># yypv$r#
+"nnoremap <Leader>" yypv$r"
 
 """ Display Settings
 """
@@ -244,10 +247,37 @@ Plugin 'airblade/vim-gitgutter'
 "Plugin 'crusoexia/vim-monokai'
 "Plugin 'vim-python/python-syntax'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'liuchengxu/vim-which-key'
 
 call vundle#end()
 
 " Bundle-specific settings
+
+""" WhichVim
+let g:which_key_map = {
+            \ }
+let g:which_key_map.b = {
+            \ 'name' : '+buffer' ,
+            \ 't' : ['tab-new'   , 'new-buffer']      ,
+            \ 'd' : ['bd'        , 'delete-buffer']   ,
+            \ ']' : ['bnext'     , 'next-buffer']     ,
+            \ '[' : ['bprevious' , 'previous-buffer'] ,
+            \ }
+"let g:which_key_map.f = {
+"           \ 'name' : 'EasyMotion',
+"           \ 'f' : ['<Plug>(easymotion-overwin-f)', 'search'] ,
+"           \ }
+let g:which_key_map['c'] = ['TagbarToggle' , '+tagbar-toggle']
+let g:which_key_map.h = {
+            \ 'name' : 'Gitter',
+            \ 'p' : ['<Plug>GitGutterPreviewHunk', 'preview-hunk'],
+            \ 's' : ['<Plug>GitGutterStageHunk',   'stage-hunk'],
+            \ 'u' : ['<Plug>GitGutterUndoHunk',    'undo-hunk'],
+            \ 'w' : ['pc', 'close-preview'],
+            \ }
+call which_key#register(',', "g:which_key_map")
+nnoremap <silent> <leader> :WhichKey ','<CR>
+set timeoutlen=0
 
 """ polyglot
 let g:polyglot_disabled = ['graphql']
@@ -305,8 +335,9 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:airline#extensions#tabline#enabled = 1
 
 """ easymotion
-let g:EasyMotion_leader_key=','
-map <Leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_leader_key='f'
+nmap f <Plug>(easymotion-overwin-f)
 
 """ vim-move
 let g:move_key_modifier = 'S'
