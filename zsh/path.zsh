@@ -9,6 +9,7 @@ PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sb
 # pip & python
 PATH=/usr/local/opt/python/libexec/bin:$PATH
 PATH=$PATH:/Users/sboynton/Library/Python/3.6/bin
+PATH=$PATH:/Users/sboynton/Library/Python/3.7/bin
 # RVM
 PATH=$PATH:$HOME/.rvm/bin:/usr/local/rvm/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims
 # X11
