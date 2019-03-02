@@ -1,6 +1,9 @@
 # Enable vi mode
 #bindkey -v
 
+# Enable emacs mode (default)
+bindkey -e
+
 # Remove ctrl-l and ctrl-j to make way for tmux
 bindkey -r '^l'
 bindkey -r '^j'
