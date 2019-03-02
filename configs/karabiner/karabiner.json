@@ -48,14 +48,13 @@
                                     "key_code": "h",
                                     "modifiers": {
                                         "mandatory": [
-                                            "fn"
+                                            "right_control"
                                         ],
                                         "optional": [
                                             "caps_lock",
                                             "command",
                                             "option",
-                                            "shift",
-                                            "control"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -71,14 +70,13 @@
                                     "key_code": "j",
                                     "modifiers": {
                                         "mandatory": [
-                                            "fn"
+                                            "right_control"
                                         ],
                                         "optional": [
                                             "caps_lock",
                                             "command",
                                             "option",
-                                            "shift",
-                                            "control"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -94,14 +92,13 @@
                                     "key_code": "k",
                                     "modifiers": {
                                         "mandatory": [
-                                            "fn"
+                                            "right_control"
                                         ],
                                         "optional": [
                                             "caps_lock",
                                             "command",
                                             "option",
-                                            "shift",
-                                            "control"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -117,14 +114,13 @@
                                     "key_code": "l",
                                     "modifiers": {
                                         "mandatory": [
-                                            "fn"
+                                            "right_control"
                                         ],
                                         "optional": [
                                             "caps_lock",
                                             "command",
                                             "option",
-                                            "shift",
-                                            "control"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -151,7 +147,16 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": []
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "right_option"
+                            },
+                            "to": {
+                                "key_code": "right_control"
+                            }
+                        }
+                    ]
                 }
             ],
             "fn_function_keys": [
