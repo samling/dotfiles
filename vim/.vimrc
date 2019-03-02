@@ -76,7 +76,8 @@ nmap <CR> o<Esc>
 " Remapping shift+q, aka Ex mode
 noremap Q @q
 " Alias for <Escape>
-inoremap jk <esc>
+""" See vim-easyescape plugin below
+" inoremap jj <esc>
 " vnoremap jk <esc>
 " inoremap <Leader><Leader> <esc>
 "
@@ -191,9 +192,9 @@ set fillchars=vert:\ ,stl:\ ,stlnc:\
 set laststatus=2
 set noshowmode
 " Change the cursor according to mode (formatted for tmux)
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+"let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+"let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 """ System Settings
 set confirm		" get dialog when :q, :w, or :wq fails
@@ -202,6 +203,7 @@ set viminfo='20,\"500	" remember copy registers after quitting in the .viminfo
 set hidden		" remember undo after quitting
 set history=50		" keep 50 lines of command history
 set backupskip=/tmp/*,/private/tmp/*    " Allow vim to edit crontab
+let g:python3_host_prog = '/usr/local/bin/python3' " Required for nvim to recognize that python3 is there
 " set mouse=v		" use mouse in visual mode (not normal, insert,
 			" command, help modes)
 
@@ -227,17 +229,18 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Call plugins here
 " Run :PluginInstall (case-sensitive) to install
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 "Plugin 'bling/vim-airline'
 Plugin 'godlygeek/csapprox'
-Plugin 'vim-scripts/Better-CSS-Syntax-for-Vim'
+"Plugin 'vim-scripts/Better-CSS-Syntax-for-Vim'
 "Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-fugitive'
-Plugin 'easymotion/vim-easymotion'
+"Plugin 'easymotion/vim-easymotion'
+"Plugin 'zhou13/vim-easyescape'
 "Plugin 'fatih/vim-go'
-Plugin 'bling/vim-bufferline'
-Plugin 'majutsushi/tagbar'
+"Plugin 'bling/vim-bufferline'
+"Plugin 'majutsushi/tagbar'
 Plugin 'aperezdc/vim-template'
 "Plugin 'valloric/youcompleteme'
 "Plugin 'ervandew/supertab'
@@ -247,37 +250,43 @@ Plugin 'airblade/vim-gitgutter'
 "Plugin 'crusoexia/vim-monokai'
 "Plugin 'vim-python/python-syntax'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'liuchengxu/vim-which-key'
+"Plugin 'liuchengxu/vim-which-key'
 
 call vundle#end()
 
 " Bundle-specific settings
 
+""" Vim-EasyEscape
+let g:easyescape_chars = { "j": 1, "k": 1 }
+let g:easyescape_timeout = 100
+cnoremap jk <ESC>
+cnoremap kj <ESC>
+
 """ WhichVim
-let g:which_key_map = {
-            \ }
-let g:which_key_map.b = {
-            \ 'name' : '+buffer' ,
-            \ 't' : ['tab-new'   , 'new-buffer']      ,
-            \ 'd' : ['bd'        , 'delete-buffer']   ,
-            \ ']' : ['bnext'     , 'next-buffer']     ,
-            \ '[' : ['bprevious' , 'previous-buffer'] ,
-            \ }
-"let g:which_key_map.f = {
-"           \ 'name' : 'EasyMotion',
-"           \ 'f' : ['<Plug>(easymotion-overwin-f)', 'search'] ,
-"           \ }
-let g:which_key_map['c'] = ['TagbarToggle' , '+tagbar-toggle']
-let g:which_key_map.h = {
-            \ 'name' : 'Gitter',
-            \ 'p' : ['<Plug>GitGutterPreviewHunk', 'preview-hunk'],
-            \ 's' : ['<Plug>GitGutterStageHunk',   'stage-hunk'],
-            \ 'u' : ['<Plug>GitGutterUndoHunk',    'undo-hunk'],
-            \ 'w' : ['pc', 'close-preview'],
-            \ }
-call which_key#register(',', "g:which_key_map")
-nnoremap <silent> <leader> :WhichKey ','<CR>
-set timeoutlen=0
+"let g:which_key_map = {
+"            \ }
+"let g:which_key_map.b = {
+"            \ 'name' : '+buffer' ,
+"            \ 't' : ['tab-new'   , 'new-buffer']      ,
+"            \ 'd' : ['bd'        , 'delete-buffer']   ,
+"            \ ']' : ['bnext'     , 'next-buffer']     ,
+"            \ '[' : ['bprevious' , 'previous-buffer'] ,
+"            \ }
+""let g:which_key_map.f = {
+""           \ 'name' : 'EasyMotion',
+""           \ 'f' : ['<Plug>(easymotion-overwin-f)', 'search'] ,
+""           \ }
+"let g:which_key_map['c'] = ['TagbarToggle' , '+tagbar-toggle']
+"let g:which_key_map.h = {
+"            \ 'name' : 'Gitter',
+"            \ 'p' : ['<Plug>GitGutterPreviewHunk', 'preview-hunk'],
+"            \ 's' : ['<Plug>GitGutterStageHunk',   'stage-hunk'],
+"            \ 'u' : ['<Plug>GitGutterUndoHunk',    'undo-hunk'],
+"            \ 'w' : ['pc', 'close-preview'],
+"            \ }
+"call which_key#register(',', "g:which_key_map")
+"nnoremap <silent> <leader> :WhichKey ','<CR>
+"set timeoutlen=0
 
 """ polyglot
 let g:polyglot_disabled = ['graphql']
