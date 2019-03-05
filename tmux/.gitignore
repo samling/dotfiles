@@ -1,0 +1,3 @@
+tpm/
+.tmux/plugins/*
+!.tmux/plugins/.gitkeep
