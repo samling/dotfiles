@@ -50,7 +50,6 @@ if [[ -f $HOME/.zshrc.local ]]; then
     source $HOME/.zshrc.local
 fi
 
-
 ### Added by the Heroku Toolbelt
 #export PATH="/usr/local/heroku/bin:$PATH"
 
@@ -62,3 +61,10 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/vault vault
+
+# Start tmux
+tmux attach &> /dev/null
+
+if [[ ! $TERM =~ screen ]]; then
+    exec tmux
+fi
