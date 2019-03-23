@@ -114,12 +114,12 @@ alias which='type -a'
 ### Directory changing
 ###
 
-#alias .='cd ..'
-#alias ..='cd ..'
-#alias ...='cd ../..'
-#alias ....='cd ../../..'
-#alias .....='cd ../../../..'
-#alias ......='cd ../../../../..'
+alias .='cd ..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 
 ###
 ### The 'ls' family
