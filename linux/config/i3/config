@@ -57,6 +57,8 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+grave exec i3-dmenu-desktop --dmenu='rofi -dmenu'
 bindsym $mod+grave exec rofi -combi-modi 'drun#run' -show combi
 
+# take a screenshot macos-style
+bindsym Mod1+Shift+3 exec scrot ~/Desktop/%Y-%m-%d-%H%M%S_$(xdpyinfo | awk '/dimensions/{print $2}')_scrot.png
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
