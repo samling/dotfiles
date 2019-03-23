@@ -1,0 +1,73 @@
+! "xrdb ~/.Xresources" to source changes without restarting
+
+! xft
+Xft.dpi: 192
+
+! rofi
+rofi.dpi: 192
+rofi.hide-scrollbar: true
+!rofi.color-window: argb:c82d303b, #7c8389, #1d1f21
+!rofi.color-normal: argb:3c1d1f21, #c4cbd4, argb:96404552, #4084d6, #f9f9f9
+!rofi.color-urgent: argb:2c1d1f21, #cc6666, argb:e54b5160, #a54242, #f9f9f9
+!rofi.color-active: argb:2c1d1f21, #65acff, argb:e44b5160, #4491ed, #f9f9f9
+!rofi.width: 100
+rofi.lines: 10
+rofi.columns: 1
+!rofi.font: Noto Sans 14
+rofi.bw: 0
+rofi.padding: 400
+rofi.eh: 1
+!rofi.separator-style: solid
+
+! urxvt
+URxvt.font:         xft:FiraCode-Regular:size=11
+URxvt.boldFont:     xft:FiraCode-Regular:size=11
+URxvt.scrollBar:    false
+
+! copy/paste
+URxvt.keysym.Shift-Control-V:   eval:paste_clipboard
+URxvt.keysym.Shift-Control-C:   eval:selection_to_clipboard
+! disable ctrl-shift modes
+URxvt.iso14755:                 false
+URxvt.iso14755_52:              false
+
+! internal padding
+URxvt.internalBorder: 10
+
+! foreground/background
+URxvt.foreground:   #c5c8c6
+URxvt.background:   [90]#1d1f21
+URxvt.depth: 32
+URxvt.cursorColor:  #c5c8c6
+
+! black
+URxvt.color0:       #282a2e
+URxvt.color8:       #373b41
+
+! red
+URxvt.color1:       #a54242
+URxvt.color9:       #cc6666
+
+! green
+URxvt.color2:       #8c9440
+URxvt.color10:      #b5bd68
+
+! yellow
+URxvt.color3:       #de935f
+URxvt.color11:      #f0c674
+
+! blue
+URxvt.color4:       #5f819d
+URxvt.color12:      #81a2be
+
+! magenta
+URxvt.color5:       #85678f
+URxvt.color13:      #b294bb
+
+! cyan
+URxvt.color6:       #5e8d87
+URxvt.color14:      #8abeb7
+
+! white
+URxvt.color7:       #707880
+URxvt.color15:      #c5c8c6
