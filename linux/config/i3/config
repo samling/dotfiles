@@ -55,7 +55,7 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+grave exec sh ~/dotfiles/zsh/aliases/rofi-exec.sh
 #bindsym $mod+grave exec rofi -show drun
 #bindsym $mod+grave exec i3-dmenu-desktop --dmenu='rofi -dmenu'
-bindsym $mod+grave exec rofi -combi-modi 'drun#run' -show combi
+bindsym $mod+grave exec rofi -combi-modi 'drun#run' -show combi -display-combi ""
 
 # take a screenshot macos-style
 bindsym Mod1+Shift+3 exec scrot ~/Desktop/%Y-%m-%d-%H%M%S_$(xdpyinfo | awk '/dimensions/{print $2}')_scrot.png

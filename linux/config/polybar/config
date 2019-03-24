@@ -423,6 +423,11 @@ exec = ~/.config/polybar/gmail/launch.py
 tail = true
 click-left = xdg-open https://mail.google.com
 
+[module/battery-combined-tlp]
+type = custom/script
+exec = ~/.config/polybar/battery-combined-tlp/battery-combined-tlp.sh
+interval = 10
+
 [settings]
 screenchange-reload = true
 ;compositing-background = xor
