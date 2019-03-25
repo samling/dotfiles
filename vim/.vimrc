@@ -97,8 +97,10 @@ set linebreak       " wrap words but don't break line unless hitting enter
 set nolist          " list disables linebreak
 set showmatch		" show matching bracket (briefly jump)
 set matchtime=2		" show matching bracket for 0.2 seconds
-set guifont=Menlo\ Regular\ for\ Powerline\ 12
-set guifont=Menlo_Regular_for_Powerline:h12
+"set guifont=Menlo\ Regular\ for\ Powerline\ 12
+"set guifont=Menlo_Regular_for_Powerline:h12
+set guifont=Fira\ Code:12
+set guifont=Fira_Code:h12
 set laststatus=2	" use 2 lines for the status bar
 set matchpairs+=<:>	" specifically for html
 
@@ -173,20 +175,20 @@ endif
 """ Theme Settings
 """
 """
-hi Normal ctermbg=NONE
-hi vertsplit ctermfg=238 ctermbg=235
+hi Normal guibg=NONE ctermbg=NONE
+hi vertsplit ctermfg=238 ctermbg=NONE
 hi LineNr ctermfg=242 ctermbg=None
 hi StatusLine ctermfg=242 ctermbg=None
 hi StatusLineNC ctermfg=242 ctermbg=None
 hi Search ctermbg=58 ctermfg=15
 hi Default ctermfg=1
 hi clear SignColumn
-hi SignColumn ctermbg=235
-hi GitGutterAdd ctermbg=235 ctermfg=245
-hi GitGutterChange ctermbg=235 ctermfg=245
-hi GitGutterDelete ctermbg=235 ctermfg=245
-hi GitGutterChangeDelete ctermbg=235 ctermfg=245
-hi EndOfBuffer ctermfg=237 ctermbg=235
+hi SignColumn ctermbg=NONE
+hi GitGutterAdd ctermbg=NONE ctermfg=245
+hi GitGutterChange ctermbg=NONE ctermfg=245
+hi GitGutterDelete ctermbg=NONE ctermfg=245
+hi GitGutterChangeDelete ctermbg=NONE ctermfg=245
+hi EndOfBuffer ctermfg=245 ctermbg=NONE
 set statusline=%F\ %m%=%P\ %c,%l/%L
 set fillchars=vert:\ ,stl:\ ,stlnc:\ 
 set laststatus=2

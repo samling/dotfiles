@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #222
+background = #cc222222
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -26,24 +26,26 @@ foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
+window = #0000ff
 
-[bar/example]
+[bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 50
 dpi = 192
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 6.0
+radius = 0
 fixed-center = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
-line-color = #f00
+line-size = 0
+line-color = #ffb52a
 
-border-size = 4
+border-size = 0
+border-bottom-size = 0
 border-color = #00000000
 
 padding-left = 0
@@ -54,12 +56,13 @@ module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+;font-1 = NotoColorEmoji:scale=10
 font-2 = siji:pixelsize=10;1
-font-3 = symbola:pixelsize=10;1
+font-3 = symbola:pixelsize=13;1
 
 modules-left = bspwm i3
 modules-center = mpd
-modules-right = filesystem gmail backlight-acpi pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
+modules-right = filesystem gmail backlight-acpi pulseaudio cpu memory wlan eth battery-combined-tlp temperature date powermenu
 
 enable-ipc = true
 
@@ -108,7 +111,8 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+;label-mounted = 💻 %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = 💻 %percentage_used%% (%used%/%total%)
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -149,8 +153,9 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index%
-label-focused-background = ${module/bspwm.label-focused-background}
-label-focused-underline = ${module/bspwm.label-focused-underline}
+label-focused-background = #008df8
+;label-focused-underline = ${module/bspwm.label-focused-underline}
+label-focused-underline = #008df8
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
 ; unfocused = Inactive workspace on any monitor
@@ -208,21 +213,22 @@ bar-empty-foreground = ${colors.foreground-alt}
 inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
+label = ☀ %percentage%%
 
 [module/cpu]
 type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
-label = %percentage:2%%
+format-underline = ${colors.primary}
+label = 🖥 %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+format-memory-underline = #ffb52a
 label = %percentage_used%%
 
 [module/wlan]
@@ -231,8 +237,8 @@ interface = wlp2s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
+format-connected-underline = #ffb52a
+label-connected = 📶 %essid%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -275,9 +281,9 @@ time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #ffb52a
 
-label = %date% %time%
+label = 🕒 %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -346,7 +352,7 @@ format-charging-underline = #ffb52a
 label-charging = Charging %percentage%%
 
 format-discharging = <animation-discharging> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging-underline = #ffb52a
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
@@ -375,12 +381,12 @@ thermal-zone = 0
 warn-temperature = 60
 
 format = <ramp> <label>
-format-underline = #f50a4d
+format-underline = #ff0000
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = %temperature-c%
-label-warn = %temperature-c%
+label = 🌡 %temperature-c%
+label-warn = 🌡 %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
 ramp-0 = 
@@ -426,6 +432,7 @@ click-left = xdg-open https://mail.google.com
 [module/battery-combined-tlp]
 type = custom/script
 exec = ~/.config/polybar/battery-combined-tlp/battery-combined-tlp.sh
+format-batter-combined-tlp-underline = #ffb52a
 interval = 10
 
 [settings]
@@ -437,7 +444,7 @@ screenchange-reload = true
 ;pseudo-transparency = false
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 0
+margin-bottom = 0
 
 ; vim:ft=dosini

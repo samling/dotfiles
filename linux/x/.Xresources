@@ -20,8 +20,11 @@ rofi.eh: 1
 !rofi.separator-style: solid
 
 ! urxvt
-URxvt.font:         xft:FiraCode-Regular:size=11
-URxvt.boldFont:     xft:FiraCode-Regular:size=11
+URxvt.termname:     rxvt-unicode-256color
+URxvt.font:         xft:FiraCode-Regular:size=11,\
+                    xft:Noto Mono:size=10:antialias=true:hinting=true,\
+                    xft:Noto Color Emoji,\
+                    xft:Symbola
 URxvt.scrollBar:    false
 
 ! copy/paste

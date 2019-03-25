@@ -16,15 +16,21 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:monospace 8
 
+# Colors
+# Only display indicator if more than one window is open
+hide_edge_borders both
+#              border  bg      text    indicator
+client.focused #ffffff #008df8 #ffffff #008df8
+
+# Borders
+for_window [class="^.*"] border pixel 1
+
 # Gaps
 smart_gaps on
 gaps inner 10
 
 # Start Authy in a floating window
 for_window [class="Google-chrome" instance="crx_gaedmjdfmmahhbjefcbgaolhhanlaolb"] floating enable
-
-# Borders
-for_window [class="^.*"] border pixel 1
 
 # Disable mouse following/warping
 focus_follows_mouse no
@@ -189,6 +195,7 @@ bindsym $mod+r mode "resize"
 exec_always --no-startup-id xss-lock -- i3lock -n -i /home/sboynton/Pictures/Lockscreen/scenic_vista.png &
 
 # Start compton
+#exec_always --no-startup-id compton --config ~/.config/compton.conf -b
 exec_always --no-startup-id compton --config ~/.config/compton.conf -b
 
 # Start polybar
@@ -232,8 +239,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
