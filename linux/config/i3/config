@@ -9,8 +9,10 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $alt Mod1
-set $mod Mod4
+# Super key on HHKB (swapped in firmware)
+set $alt Mod4
+# Option/Alt key on HHKB (swapped in firmware)
+set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -31,6 +33,9 @@ gaps inner 10
 
 # Start Authy in a floating window
 for_window [class="Google-chrome" instance="crx_gaedmjdfmmahhbjefcbgaolhhanlaolb"] floating enable
+
+# Start Synergy in a floating window
+for_window [class="Synergy"] floating enable
 
 # Disable mouse following/warping
 focus_follows_mouse no
@@ -64,7 +69,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+grave exec rofi -combi-modi 'drun#run' -show combi -display-combi ""
 
 # take a screenshot macos-style
-bindsym Mod1+Shift+3 exec scrot ~/Desktop/%Y-%m-%d-%H%M%S_$(xdpyinfo | awk '/dimensions/{print $2}')_scrot.png
+bindsym $alt+Shift+3 exec scrot ~/Desktop/%Y-%m-%d-%H%M%S_$(xdpyinfo | awk '/dimensions/{print $2}')_scrot.png
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -87,6 +92,12 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# or hjkl
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # split in horizontal orientation
 bindsym $mod+Shift+d split h
@@ -196,14 +207,14 @@ exec_always --no-startup-id xss-lock -- i3lock -n -i /home/sboynton/Pictures/Loc
 
 # Start compton
 #exec_always --no-startup-id compton --config ~/.config/compton.conf -b
-exec_always --no-startup-id compton --config ~/.config/compton.conf -b
+exec --no-startup-id compton --config ~/.config/compton.conf -b
 
 # Start polybar
 exec_always --no-startup-id ~/.i3/polybar.sh &
 
 # Start kdeconnect
-exec_always --no-startup-id /usr/lib/x86_64-linux-gnu/libexec/kdeconnectd
-exec_always --no-startup-id indicator-kdeconnect
+#exec_always --no-startup-id /usr/lib/x86_64-linux-gnu/libexec/kdeconnectd
+#exec_always --no-startup-id indicator-kdeconnect
 
 # Start Fusuma (multitouch gestures)
 #exec_always --no-startup-id fusuma
@@ -220,6 +231,9 @@ exec_always --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=s
 # Start the nm-applet for wifi
 exec_always --no-startup-id nm-applet
 
+# Start Synergy
+exec --no-startup-id synergy
+
 # Start pulseeffects in the background
 exec_always --no-startup-id pulseeffects --gapplication-service &
 
@@ -228,10 +242,10 @@ exec_always --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
 exec_always --no-startup-id xcape -e 'Caps_Lock=Escape'
 
 # Grab a random background
-exec_always --no-startup-id feh --randomize --bg-fill ~/Google\ Drive/Apps/Desktoppr/*
+exec_always --no-startup-id feh --randomize --bg-fill ~/samlingx@gmail.com/Apps/Desktoppr/*
 
 # Select a new background
-bindsym $mod+Shift+f exec feh --randomize --bg-fill ~/Google\ Drive/Apps/Desktoppr/*
+bindsym $mod+Shift+f exec feh --randomize --bg-fill ~/samlingx@gmail.com/Apps/Desktoppr/*
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume

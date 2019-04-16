@@ -26,13 +26,13 @@ foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
-window = #0000ff
+window = #6495a8
 
 [bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 50
-dpi = 192
+height = 20
+dpi = 96
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 0
@@ -54,21 +54,23 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-;font-1 = NotoColorEmoji:scale=10
-font-2 = siji:pixelsize=10;1
-font-3 = symbola:pixelsize=13;1
+font-0 = Fira Code:pixelsize=10;1
+font-1 = Font Awesome 5 Free:style=Regular:pixelsize=10;1
+font-2 = Font Awesome 5 Brands:style=Regular:pixelsize=10;1
+font-3 = Font Awesome 5 Free Solid:style=Regular:pixelsize=10;1
+;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+;font-3 = siji:pixelsize=10;1
+;font-3 = symbola:pixelsize=13;1
 
 modules-left = bspwm i3
-modules-center = mpd
-modules-right = filesystem gmail backlight-acpi pulseaudio cpu memory wlan eth battery-combined-tlp temperature date powermenu
+modules-center = 
+modules-right = filesystem backlight-acpi pulseaudio-tail cpu memory wlan eth temperature date powermenu
 
 enable-ipc = true
 
 tray-position = right
 tray-padding = 2
-tray-maxsize = 1000
+;tray-maxsize = 1000
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -112,7 +114,7 @@ interval = 25
 mount-0 = /
 
 ;label-mounted = 💻 %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
-label-mounted = 💻 %percentage_used%% (%used%/%total%)
+label-mounted =  %percentage_used%% (%used%/%total%)
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -120,7 +122,7 @@ label-unmounted-foreground = ${colors.foreground-alt}
 type = internal/bspwm
 
 label-focused = %index%
-label-focused-background = ${colors.background-alt}
+label-focused-background = ${colors.window}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 2
 
@@ -221,7 +223,7 @@ interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = ${colors.primary}
-label = 🖥 %percentage:2%%
+label =  %percentage:2%%
 
 [module/memory]
 type = internal/memory
@@ -229,7 +231,7 @@ interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-memory-underline = #ffb52a
-label = %percentage_used%%
+label =  %percentage_used%%
 
 [module/wlan]
 type = internal/network
@@ -255,13 +257,13 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = net0
+interface = enp6s0
 interval = 3.0
 
 format-connected-underline = #55aa55
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+label-connected =  %local_ip%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -283,16 +285,16 @@ format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #ffb52a
 
-label = 🕒 %date% %time%
+label =  %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
+label-muted =  muted
 label-muted-foreground = #666
 
 bar-volume-width = 10
@@ -385,8 +387,8 @@ format-underline = #ff0000
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = 🌡 %temperature-c%
-label-warn = 🌡 %temperature-c%
+label =  %temperature-c%
+label-warn =  %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
 ramp-0 = 
@@ -434,6 +436,15 @@ type = custom/script
 exec = ~/.config/polybar/battery-combined-tlp/battery-combined-tlp.sh
 format-batter-combined-tlp-underline = #ffb52a
 interval = 10
+
+[module/pulseaudio-tail]
+type = custom/script
+exec = ~/.config/polybar/pulseaudio-tail/pulseaudio-tail.sh
+tail = true
+click-right = exec pavucontrol &
+click-left = ~/.config/polybar/pulseaudio-tail/pulseaudio-tail.sh --mute
+scroll-up = ~/.config/polybar/pulseaudio-tail/pulseaudio-tail.sh --up
+scroll-down = ~/.config/polybar/pulseaudio-tail/pulseaudio-tail.sh --down
 
 [settings]
 screenchange-reload = true

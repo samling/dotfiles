@@ -1,30 +1,27 @@
-! "xrdb ~/.Xresources" to source changes without restarting
+! "xrdb -merge ~/.Xresources" to source changes without restarting
 
 ! xft
-Xft.dpi: 192
+Xft.dpi: 96
 
 ! rofi
-rofi.dpi: 192
+rofi.dpi: 96
 rofi.hide-scrollbar: true
-!rofi.color-window: argb:c82d303b, #7c8389, #1d1f21
-!rofi.color-normal: argb:3c1d1f21, #c4cbd4, argb:96404552, #4084d6, #f9f9f9
-!rofi.color-urgent: argb:2c1d1f21, #cc6666, argb:e54b5160, #a54242, #f9f9f9
-!rofi.color-active: argb:2c1d1f21, #65acff, argb:e44b5160, #4491ed, #f9f9f9
-!rofi.width: 100
+rofi.color-window: argb:c82d303b, #7c8389, #1d1f21
+rofi.color-normal: argb:3c1d1f21, #c4cbd4, argb:96404552, #4084d6, #f9f9f9
+rofi.color-urgent: argb:2c1d1f21, #cc6666, argb:e54b5160, #a54242, #f9f9f9
+rofi.color-active: argb:2c1d1f21, #65acff, argb:e44b5160, #4491ed, #f9f9f9
+rofi.width: 30
 rofi.lines: 10
 rofi.columns: 1
 !rofi.font: Noto Sans 14
 rofi.bw: 0
-rofi.padding: 400
+rofi.padding: 20
 rofi.eh: 1
 !rofi.separator-style: solid
 
 ! urxvt
 URxvt.termname:     rxvt-unicode-256color
-URxvt.font:         xft:FiraCode-Regular:size=11,\
-                    xft:Noto Mono:size=10:antialias=true:hinting=true,\
-                    xft:Noto Color Emoji,\
-                    xft:Symbola
+URxvt.font:         xft:FiraCode-Regular:size=10,xft:Font Awesome 5 Free Regular:size=10:antialias=false:hinting=false
 URxvt.scrollBar:    false
 
 ! copy/paste
