@@ -84,7 +84,7 @@ alt + {o,i}
 
 # focus or send to the given desktop
 alt + {_,shift + }{1-9,0}
-	rspc {desktop -f,node -d} '^{1-9,10}'
+	bspc {desktop -f,node -d} '^{1-9,10}'
 
 #
 # preselect
@@ -123,7 +123,47 @@ super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 #
-# Other
+# Screenshot
 #
 Print
 	flameshot gui
+
+#
+# Brightness
+#
+alt + shift + XF86MonBrightnessDown
+	light -U 0.1
+alt + XF86MonBrightnessDown
+	light -U 1
+XF86MonBrightnessDown
+	light -U 5
+shift + XF86MonBrightnessDown
+	light -U 10
+
+alt + shift + XF86MonBrightnessUp
+	light -A 0.1
+alt + XF86MonBrightnessUp
+	light -A 1
+XF86MonBrightnessUp
+	light -A 5
+shift + XF86MonBrightnessUp
+	light -A 10
+
+#
+# Volume
+#
+XF86AudioMute
+	pactl set-sink-mute @DEFAULT_SINK@ toggle
+alt + XF86AudioLowerVolume
+	pactl set-sink-volume @DEFAULT_SINK@ -1%
+XF86AudioLowerVolume
+	pactl set-sink-volume @DEFAULT_SINK@ -5%
+shift + XF86AudioLowerVolume
+	pactl set-sink-volume @DEFAULT_SINK@ -10%
+
+alt + XF86AudioRaiseVolume
+	pactl set-sink-volume @DEFAULT_SINK@ +1%
+XF86AudioRaiseVolume
+	pactl set-sink-volume @DEFAULT_SINK@ +5%
+shift + XF86AudioRaiseVolume
+	pactl set-sink-volume @DEFAULT_SINK@ +10%

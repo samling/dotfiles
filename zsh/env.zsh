@@ -7,7 +7,7 @@ export LANG=en_US.UTF-8
 export EDITOR="vim"
 
 # Go Code
-export GOROOT=/usr/local/opt/go/libexec
+export GOROOT=/usr/lib/go
 export GOPATH=$HOME/.gocode
 
 # Tmux

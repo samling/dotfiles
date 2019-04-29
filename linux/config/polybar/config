@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #cc222222
+background = #00222222
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -31,12 +31,77 @@ window = #6495a8
 [bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 20
-dpi = 96
+height = 40
+dpi = 128
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 0
 fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 0
+line-color = #ffb52a
+
+border-size = 0
+border-bottom-size = 0
+border-color = #00000000
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = Fira Code:pixelsize=10;1
+font-1 = Font Awesome 5 Free:style=Regular:pixelsize=10;1
+font-2 = Font Awesome 5 Brands:style=Regular:pixelsize=10;1
+font-3 = Font Awesome 5 Free Solid:style=Regular:pixelsize=10;1
+;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+;font-3 = siji:pixelsize=10;1
+;font-3 = symbola:pixelsize=13;1
+
+modules-left = filesystem cpu memory temperature
+modules-center = 
+modules-right = wlan eth date battery powermenu
+
+enable-ipc = true
+
+override-redirect = false
+
+;tray-position = right
+;tray-padding = 2
+;tray-maxsize = 1000
+;tray-background = #0063ff
+
+;wm-restack = bspwm
+;wm-restack = i3
+
+;override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[bar/bottom]
+bottom = true
+width = 100%
+height = 40
+dpi = 128
+
+modules-left = bspwm i3
+modules-center = 
+modules-right = backlight-acpi pulseaudio 
+
+tray-position = right
+tray-padding = 2
+tray-maxsize = 25
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -58,34 +123,6 @@ font-0 = Fira Code:pixelsize=10;1
 font-1 = Font Awesome 5 Free:style=Regular:pixelsize=10;1
 font-2 = Font Awesome 5 Brands:style=Regular:pixelsize=10;1
 font-3 = Font Awesome 5 Free Solid:style=Regular:pixelsize=10;1
-;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-;font-3 = siji:pixelsize=10;1
-;font-3 = symbola:pixelsize=13;1
-
-modules-left = bspwm i3
-modules-center = 
-modules-right = filesystem backlight-acpi pulseaudio-tail cpu memory wlan eth temperature date powermenu
-
-enable-ipc = true
-
-tray-position = right
-tray-padding = 2
-;tray-maxsize = 1000
-;tray-background = #0063ff
-
-;wm-restack = bspwm
-;wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
-
-cursor-click = pointer
-cursor-scroll = ns-resize
 
 [module/xwindow]
 type = internal/xwindow
@@ -240,7 +277,7 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #ffb52a
-label-connected = 📶 %essid%
+label-connected =  %essid%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -351,7 +388,8 @@ full-at = 98
 format-charging = <animation-charging> <label-charging>
 format-charging-underline = #ffb52a
 
-label-charging = Charging %percentage%%
+label-charging =  Charging %percentage%%
+label-discharging =  %percentage%% (%time%)
 
 format-discharging = <animation-discharging> <label-discharging>
 format-discharging-underline = #ffb52a
