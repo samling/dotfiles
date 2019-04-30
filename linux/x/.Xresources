@@ -8,7 +8,7 @@ rofi.dpi: 128
 rofi.theme: sidetab
 rofi.kb-row-up: Up,Alt+k,Shift+Tab
 rofi.kb-row-down: Down,Alt+j
-rofi.kb-accept-entry: Alt+m,Return,KP_Enter
+rofi.kb-accept-entry: Alt+m,Return,KP_Enter,Alt+Return
 rofi.kb-mode-next: Shift+Right,Alt+Tab,Alt+l
 rofi.kb-mode-previous: Shift+Left,Alt+Shift+Tab,Alt+h
 rofi.kb-remove-char-back: BackSpace
