@@ -167,3 +167,17 @@ XF86AudioRaiseVolume
 	pactl set-sink-volume @DEFAULT_SINK@ +5%
 shift + XF86AudioRaiseVolume
 	pactl set-sink-volume @DEFAULT_SINK@ +10%
+
+#
+# Wallpaper
+#
+
+alt + r
+    feh --randomize --bg-fill ~/Google\ Drive/Apps/Desktoppr/*
+
+#
+# Toggle Visibility
+#
+
+alt + space
+    sh /home/sboynton/.config/polybar/toggle.sh
