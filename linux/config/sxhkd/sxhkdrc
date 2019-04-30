@@ -72,6 +72,9 @@ alt + {_,shift + }c
 alt + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
+alt + super + bracket{left,right}
+    bspc desktop -s {prev,next}.local
+
 # focus the last node/desktop
 alt + {grave,Tab}
 	bspc {node,desktop} -f last
@@ -181,3 +184,10 @@ alt + r
 
 alt + space
     sh /home/sboynton/.config/polybar/toggle.sh
+
+#
+# Lock Screen
+#
+
+alt + ctrl + super + l
+    betterlockscreen -l dim

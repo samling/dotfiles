@@ -390,6 +390,7 @@ format-charging-underline = #ffb52a
 
 label-charging =  Charging %percentage%%
 label-discharging =  %percentage%% (%time%)
+label-full =  %percentage%%
 
 format-discharging = <animation-discharging> <label-discharging>
 format-discharging-underline = #ffb52a

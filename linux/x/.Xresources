@@ -16,6 +16,7 @@ rofi.columns: 1
 !rofi.font: Noto Sans 14
 rofi.bw: 0
 rofi.padding: 20
+rofi.font: FiraCode-Regular 14
 rofi.eh: 1
 !rofi.separator-style: solid
 
