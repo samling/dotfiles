@@ -1,0 +1,19 @@
+[Added Associations]
+image/jpeg=nomacs.desktop;feh.desktop;
+video/mp4=mpv.desktop;
+application/pdf=google-chrome.desktop;gimp.desktop;
+text/plain=code-oss.desktop;
+image/gif=nomacs.desktop;gimp.desktop;
+application/rtf=libreoffice-writer.desktop;code-oss.desktop;
+image/png=nomacs.desktop;gimp.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-2Y0A1Z.desktop;
+message/rfc822=userapp-Thunderbird-2Y0A1Z.desktop;
+
+[Default Applications]
+image/jpeg=nomacs.desktop
+x-scheme-handler/magnet=google-chrome.desktop
+image/gif=nomacs.desktop
+image/png=nomacs.desktop
+x-scheme-handler/kite=kite-copilot.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-2Y0A1Z.desktop
+message/rfc822=userapp-Thunderbird-2Y0A1Z.desktop

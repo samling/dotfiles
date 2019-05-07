@@ -1,0 +1,435 @@
+**** BEGIN LOGGING AT Fri May  3 13:49:59 2019
+
+May 03 13:49:59 *	Now talking on #archlinux
+May 03 13:49:59 *	Topic for #archlinux is: Welcome to Arch Linux, Good Luck: https://archlinux.org | Rules: https://goo.gl/XWFreH | Pastebins: see !paste | https://i.imgflip.com/nwm8q.jpg | Happy 17th birthday Arch - may you have the great feature of many more broken installations
+May 03 13:49:59 *	Topic for #archlinux set by alad!~alad@archlinux/trusteduser/alad (Mon Mar 11 08:44:32 2019)
+May 03 13:51:10 *	docmax has quit (Quit: WeeChat 1.6)
+May 03 13:51:37 *	easo2k (a@unaffiliated/easo2k) has joined
+May 03 13:52:07 *	docmax (~docmax@x5f74af3c.dyn.telefonica.de) has joined
+May 03 13:54:29 *	jottr has quit (Ping timeout: 268 seconds)
+May 03 13:54:35 <Nivim>	There are clearly ways to downgrade packages, but how does one downgrade the master package database? (From what I can gather, I need to upgrade in controlled steps, but foolishly used the latest package databases, making any upgrades impossible.)
+May 03 13:54:51 <MrElendig>	why do you want to do this?
+May 03 13:54:56 *	nanobist (~luke@96-41-217-7.dhcp.elbg.wa.charter.com) has joined
+May 03 13:54:59 *	vuoto has quit (Quit: WeeChat 2.5-dev)
+May 03 13:55:05 <MrElendig>	what is the actual problem?
+May 03 13:55:17 <Nivim>	Brining an extremely out of date system to current.
+May 03 13:55:18 *	dude5767 has quit (Remote host closed the connection)
+May 03 13:55:34 <MrElendig>	reinstall, will be faster, more reliable and cleaner
+May 03 13:55:40 *	binTrl has quit (Ping timeout: 256 seconds)
+May 03 13:56:03 <Nivim>	Is there a good way to back stuff up without mounting anything?
+May 03 13:56:04 <MrElendig>	15min vs steve ballmer knows how many houers and litres of booze
+May 03 13:56:10 <MrElendig>	dd
+May 03 13:56:22 <MrElendig>	(or any other block level backup solution=
+May 03 13:56:27 <Nivim>	Thank you.
+May 03 13:56:29 <MrElendig>	why not mount though?
+May 03 13:56:37 <Nivim>	Because that doesn't work until I can upgrade again.
+May 03 13:56:54 <MrElendig>	uhm what
+May 03 13:56:59 <MrElendig>	is the filesystem broken?
+May 03 13:57:21 <Nivim>	Currently a lot of functions on this system are broken for reason I don't entirely understand, but when I look up solutions, the answer is usually -Syu.
+May 03 13:57:27 *	heywoodlh has quit (Quit: WeeChat 2.4)
+May 03 13:57:39 <MrElendig>	just how out of date is this system
+May 03 13:57:48 <Nivim>	About 2-3 years.
+May 03 13:58:29 *	mSSM has quit (Ping timeout: 250 seconds)
+May 03 13:58:38 <Scimmia>	did the upgrade fail? at 2 years, you may be fine
+May 03 13:59:18 <Nivim>	The upgrade has failed in many, many different ways. I've run the commands for pacman -Su dozens of times now in various incarnations, each time getting through more errors.
+May 03 13:59:19 *	jottr (~jottr@unaffiliated/jottr) has joined
+May 03 13:59:36 <MrElendig>	just reinstall
+May 03 13:59:40 <MrElendig>	you can keep your /home
+May 03 13:59:43 <Nivim>	(Really though, now that my attention has been directed to a non-mount way of backup stuff up, I can just-- yes.)
+May 03 13:59:47 *	adenosine3p (~adenosine@2607:fcd0:100:e50f::fa6a:7f8a) has joined
+May 03 13:59:56 <Nivim>	s/backup/backing/
+May 03 14:00:39 <Scimmia>	that's block-level, though, you're not backing up specific files
+May 03 14:00:52 *	kris-nova has quit (Ping timeout: 246 seconds)
+May 03 14:04:10 *	Hasselsaurus has quit (Ping timeout: 252 seconds)
+May 03 14:04:15 *	jottr has quit (Ping timeout: 246 seconds)
+May 03 14:06:02 *	altab has quit (Read error: Connection reset by peer)
+May 03 14:06:14 *	yyy- has quit (Ping timeout: 255 seconds)
+May 03 14:06:33 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 14:07:07 *	DoomPatrol recommends to always do file level backups
+May 03 14:08:01 *	plexigras has quit (Ping timeout: 250 seconds)
+May 03 14:08:13 *	Bert-vd-Lingen has quit (Quit: Connection closed for inactivity)
+May 03 14:09:33 *	jottr (~jottr@unaffiliated/jottr) has joined
+May 03 14:09:59 *	C5OK5Y has quit (Quit: C5OK5Y)
+May 03 14:10:05 *	poplan (~poplan@unaffiliated/poplan) has joined
+May 03 14:10:11 *	nackjicholson has quit (Ping timeout: 250 seconds)
+May 03 14:11:23 *	Diemuzi has quit (Quit: See you on the flip side!)
+May 03 14:12:08 *	Eiii has quit (Quit: !)
+May 03 14:13:48 *	meLon (~meLon@unaffiliated/earthmelon) has joined
+May 03 14:14:22 *	cottoneyejim has quit (Quit: cottoneyejim)
+May 03 14:14:31 *	jottr has quit (Ping timeout: 250 seconds)
+May 03 14:14:42 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 14:15:07 *	cottoneyejim has quit (Client Quit)
+May 03 14:15:24 <fckr>	Nivim: why can't you mount?  making a disk image isn't going to really help you, unless your filesystem is actually foobared and you need to do recovery
+May 03 14:15:34 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 14:15:53 *	cottoneyejim has quit (Client Quit)
+May 03 14:15:57 <Nivim>	fckr: So dd doesn't circumvent needing to mount a drive like MrElendig implied?
+May 03 14:16:10 *	theNeuro1 (~theNeuron@host86-175-225-136.range86-175.btcentralplus.com) has joined
+May 03 14:16:15 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 14:16:21 *	ugjka is now known as pickanameandstic
+May 03 14:16:23 *	duczen (~duczen@unaffiliated/duczen) has joined
+May 03 14:16:33 <MrElendig>	dd just copies whatever is on the disk byte by byte, it doesn't care about what is on it
+May 03 14:16:48 *	pickanameandstic is now known as adults
+May 03 14:17:10 <fckr>	dd is going to take a disk image, which will be more work than just taking a file backup
+May 03 14:17:20 *	jack-james (~jj@unaffiliated/jack-james) has joined
+May 03 14:17:28 <fckr>	because you still have to get the data off of the image
+May 03 14:17:52 *	adults is now known as ugjka
+May 03 14:17:58 <Nivim>	And once I get mount working I can do that? Are there non-mount ways for file-level backups?
+May 03 14:18:04 *	jackjames has quit (Ping timeout: 264 seconds)
+May 03 14:18:10 <fckr>	what happens whe you try to mount?
+May 03 14:18:39 <Prestige>	Anyone using groff know how to make only the first row of a table bolden?
+May 03 14:18:40 *	olavx200 has quit (Quit: leaving)
+May 03 14:18:41 <MrElendig>	just boot the new install image, mount stuff, do the backup?
+May 03 14:18:48 <fckr>	^
+May 03 14:18:52 *	rossome has quit (Quit: WeeChat 2.2)
+May 03 14:19:46 *	jottr (~jottr@unaffiliated/jottr) has joined
+May 03 14:19:46 *	alex-EP_ has quit (Read error: Connection reset by peer)
+May 03 14:20:44 *	poplan has quit (Quit: Leaving)
+May 03 14:21:44 *	alex-EP (~alex-EP@91.77.167.245) has joined
+May 03 14:22:07 *	cottoneyejim has quit (Quit: cottoneyejim)
+May 03 14:22:30 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 14:22:34 *	octes (~unknown@88.130.153.183) has joined
+May 03 14:22:44 *	mcquinn (~Thunderbi@p200300C54F206A45E6B318FFFE448220.dip0.t-ipconnect.de) has joined
+May 03 14:23:16 *	flxfoo has quit (Ping timeout: 246 seconds)
+May 03 14:23:32 *	agent_white has quit (Quit: bbl)
+May 03 14:23:51 *	poplan (~poplan@unaffiliated/poplan) has joined
+May 03 14:23:59 *	cottoneyejim has quit (Client Quit)
+May 03 14:24:19 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 14:24:26 *	cottoneyejim has quit (Client Quit)
+May 03 14:24:35 *	jottr has quit (Ping timeout: 245 seconds)
+May 03 14:24:47 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 14:25:08 *	Namarrgon has quit (Remote host closed the connection)
+May 03 14:25:31 *	well_laid_lawn (~Jean-luc@114.77.254.225) has joined
+May 03 14:26:16 *	Namarrgon (~glei@archlinux/op/namarrgon) has joined
+May 03 14:27:18 *	AnLog (~AnLog@188.25.61.186) has joined
+May 03 14:27:32 *	poplan has quit (Client Quit)
+May 03 14:27:42 *	xlx has quit (Quit: Leaving...)
+May 03 14:28:34 *	fopso has quit (Quit: WeeChat 2.4)
+May 03 14:28:52 *	fopso (~fopso@p200300CD472F5400C2143DFFFED3467B.dip0.t-ipconnect.de) has joined
+May 03 14:29:01 *	Hayanada has quit (Ping timeout: 276 seconds)
+May 03 14:30:00 *	jottr (~jottr@unaffiliated/jottr) has joined
+May 03 14:30:07 *	xlx (~xlx@unaffiliated/xlx) has joined
+May 03 14:31:28 *	redarrow has quit (Ping timeout: 250 seconds)
+May 03 14:31:47 *	Hasselsaurus (~broseidon@c-73-0-12-47.hsd1.fl.comcast.net) has joined
+May 03 14:33:07 *	mcquinn has quit (Quit: mcquinn)
+May 03 14:35:06 *	jottr has quit (Ping timeout: 258 seconds)
+May 03 14:36:39 *	Stanley00 has quit (Remote host closed the connection)
+May 03 14:37:31 <pronoun>	Nivim guestfstools maybe, testdisk
+May 03 14:37:31 *	Warepire has quit (Read error: Connection reset by peer)
+May 03 14:38:12 *	Warepire (~Warepire@unaffiliated/warepire) has joined
+May 03 14:39:03 *	Athemis has quit (*.net *.split)
+May 03 14:39:03 *	julemand101 has quit (*.net *.split)
+May 03 14:39:03 *	pitelpan has quit (*.net *.split)
+May 03 14:39:03 *	xulfer has quit (*.net *.split)
+May 03 14:39:03 *	MadDecent has quit (*.net *.split)
+May 03 14:39:03 *	ganthore has quit (*.net *.split)
+May 03 14:39:03 *	IRCsum has quit (*.net *.split)
+May 03 14:39:03 *	rio has quit (*.net *.split)
+May 03 14:39:03 *	saucyfox has quit (*.net *.split)
+May 03 14:39:03 *	Marc3l_ has quit (*.net *.split)
+May 03 14:39:03 *	feklee has quit (*.net *.split)
+May 03 14:39:03 *	Oxidative has quit (*.net *.split)
+May 03 14:39:03 *	nihilazo has quit (*.net *.split)
+May 03 14:39:04 *	Cloudef has quit (*.net *.split)
+May 03 14:39:04 *	isophote has quit (*.net *.split)
+May 03 14:39:04 *	ItzExor has quit (*.net *.split)
+May 03 14:39:04 *	sunitknandi has quit (*.net *.split)
+May 03 14:39:04 *	pid1 has quit (*.net *.split)
+May 03 14:39:04 *	tpankaj has quit (*.net *.split)
+May 03 14:39:04 *	grawity has quit (*.net *.split)
+May 03 14:39:04 *	jmad980 has quit (*.net *.split)
+May 03 14:39:04 *	jus has quit (*.net *.split)
+May 03 14:39:04 *	willer has quit (*.net *.split)
+May 03 14:39:04 *	d1z has quit (*.net *.split)
+May 03 14:39:04 *	mrhanky has quit (*.net *.split)
+May 03 14:39:04 *	jkhsjdhjs has quit (*.net *.split)
+May 03 14:39:04 *	abc_ has quit (*.net *.split)
+May 03 14:39:04 *	buhman has quit (*.net *.split)
+May 03 14:39:04 *	ablackack has quit (*.net *.split)
+May 03 14:39:04 *	Case_Of has quit (*.net *.split)
+May 03 14:39:04 *	copypasteque has quit (*.net *.split)
+May 03 14:39:04 *	quizzi has quit (*.net *.split)
+May 03 14:39:04 *	atlas has quit (*.net *.split)
+May 03 14:39:04 *	octet has quit (*.net *.split)
+May 03 14:39:04 *	ndk has quit (*.net *.split)
+May 03 14:39:04 *	Ahti333_ has quit (*.net *.split)
+May 03 14:39:04 *	thelinuxguy has quit (*.net *.split)
+May 03 14:39:04 *	minad has quit (*.net *.split)
+May 03 14:39:04 *	waldhar has quit (*.net *.split)
+May 03 14:39:04 *	baedert has quit (*.net *.split)
+May 03 14:39:04 *	calebj has quit (*.net *.split)
+May 03 14:39:04 *	mikroskeem has quit (*.net *.split)
+May 03 14:39:04 *	Wojo has quit (*.net *.split)
+May 03 14:39:04 *	bdt has quit (*.net *.split)
+May 03 14:39:04 *	hns has quit (*.net *.split)
+May 03 14:39:04 *	TheLugal has quit (*.net *.split)
+May 03 14:39:36 *	jkhsjdhjs (jkhsjdhjs@unaffiliated/jkhsjdhjs) has joined
+May 03 14:40:33 *	jottr (~jottr@unaffiliated/jottr) has joined
+May 03 14:40:40 *	fopso has quit (Quit: WeeChat 2.4)
+May 03 14:40:57 *	fopso (~fopso@p200300CD472F5400C2143DFFFED3467B.dip0.t-ipconnect.de) has joined
+May 03 14:41:20 *	thecoffemaker has quit (Ping timeout: 253 seconds)
+May 03 14:41:34 *	mcquinn (~Thunderbi@p200300C54F206A45E6B318FFFE448220.dip0.t-ipconnect.de) has joined
+May 03 14:42:05 *	dos11 (~dos1@neo900/coreteam/dos) has joined
+May 03 14:42:21 *	waldhar (~waldhar@bitchy-ceo.micro-managed.space) has joined
+May 03 14:42:42 *	louisg (~louis@x-160-94-179-187.acm.umn.edu) has joined
+May 03 14:42:46 *	tiqpit (~tiqpit@195.158.107.83) has joined
+May 03 14:42:52 *	olavx200 (~olavx200@233.171.189.109.customer.cdi.no) has joined
+May 03 14:43:08 *	queip has quit (Ping timeout: 255 seconds)
+May 03 14:43:16 *	rtypo (~alex@unaffiliated/rtypo) has joined
+May 03 14:43:32 *	_thelion_ (~matthias@192-164-8-92.hdsl.highway.telekom.at) has joined
+May 03 14:43:50 *	fred`` has quit (*.net *.split)
+May 03 14:43:50 *	jfhbrook has quit (*.net *.split)
+May 03 14:43:50 *	aitch_ has quit (*.net *.split)
+May 03 14:43:50 *	Lenny_ has quit (*.net *.split)
+May 03 14:43:50 *	arti_ has quit (*.net *.split)
+May 03 14:43:50 *	pylsan has quit (*.net *.split)
+May 03 14:43:50 *	sku1d has quit (*.net *.split)
+May 03 14:43:50 *	victorbjelkholm has quit (*.net *.split)
+May 03 14:43:50 *	orumin has quit (*.net *.split)
+May 03 14:43:50 *	neoweb has quit (*.net *.split)
+May 03 14:43:50 *	firesock has quit (*.net *.split)
+May 03 14:43:50 *	zack6849 has quit (*.net *.split)
+May 03 14:43:50 *	Firnwath has quit (*.net *.split)
+May 03 14:43:50 *	Satin has quit (*.net *.split)
+May 03 14:43:50 *	tinywrkb has quit (*.net *.split)
+May 03 14:43:50 *	sheep has quit (*.net *.split)
+May 03 14:43:50 *	rmanak has quit (*.net *.split)
+May 03 14:43:50 *	Soni has quit (*.net *.split)
+May 03 14:43:50 *	syntacticNaCl has quit (*.net *.split)
+May 03 14:43:50 *	zxrf has quit (*.net *.split)
+May 03 14:43:50 *	jvb has quit (*.net *.split)
+May 03 14:43:50 *	vishwin has quit (*.net *.split)
+May 03 14:43:50 *	dieggsy has quit (*.net *.split)
+May 03 14:43:50 *	Stary has quit (*.net *.split)
+May 03 14:43:50 *	oprypin has quit (*.net *.split)
+May 03 14:43:50 *	M11dr__m[m] has quit (*.net *.split)
+May 03 14:43:50 *	thealamenthe has quit (*.net *.split)
+May 03 14:43:50 *	belst has quit (*.net *.split)
+May 03 14:43:50 *	flocke has quit (*.net *.split)
+May 03 14:43:50 *	physpi has quit (*.net *.split)
+May 03 14:43:50 *	vidal72[m] has quit (*.net *.split)
+May 03 14:43:50 *	vistefan[m] has quit (*.net *.split)
+May 03 14:43:50 *	Throne3d[m] has quit (*.net *.split)
+May 03 14:43:51 *	yurihs has quit (*.net *.split)
+May 03 14:43:51 *	xInferno has quit (*.net *.split)
+May 03 14:43:51 *	electrohead has quit (*.net *.split)
+May 03 14:43:51 *	pingveno has quit (*.net *.split)
+May 03 14:43:51 *	flagrama has quit (*.net *.split)
+May 03 14:43:51 *	lambarena has quit (*.net *.split)
+May 03 14:43:51 *	jdiez has quit (*.net *.split)
+May 03 14:43:51 *	georgyo has quit (*.net *.split)
+May 03 14:43:51 *	Momentum has quit (*.net *.split)
+May 03 14:43:51 *	mkroman has quit (*.net *.split)
+May 03 14:43:51 *	kbabioch has quit (*.net *.split)
+May 03 14:43:51 *	Uniquibous has quit (*.net *.split)
+May 03 14:43:51 *	ugjka has quit (*.net *.split)
+May 03 14:43:51 *	patrick96 has quit (*.net *.split)
+May 03 14:43:51 *	natten has quit (*.net *.split)
+May 03 14:43:51 *	dos1 has quit (*.net *.split)
+May 03 14:43:51 *	ford has quit (*.net *.split)
+May 03 14:43:51 *	kamyl has quit (*.net *.split)
+May 03 14:43:51 *	loofygun has quit (*.net *.split)
+May 03 14:43:51 *	dusares has quit (*.net *.split)
+May 03 14:43:51 *	nspaced has quit (*.net *.split)
+May 03 14:43:51 *	Lartza has quit (*.net *.split)
+May 03 14:43:51 *	meicceli has quit (*.net *.split)
+May 03 14:43:51 *	GH0S1 has quit (*.net *.split)
+May 03 14:43:51 *	webmeister has quit (*.net *.split)
+May 03 14:43:51 *	grosjean has quit (*.net *.split)
+May 03 14:43:51 *	echarlie has quit (*.net *.split)
+May 03 14:43:51 *	eri451 has quit (*.net *.split)
+May 03 14:43:51 *	nbg has quit (*.net *.split)
+May 03 14:43:51 *	roxlu has quit (*.net *.split)
+May 03 14:43:51 *	Luyin has quit (*.net *.split)
+May 03 14:43:51 *	mpgarate has quit (*.net *.split)
+May 03 14:43:51 *	csnxs has quit (*.net *.split)
+May 03 14:43:51 *	nlf has quit (*.net *.split)
+May 03 14:43:51 *	Belial has quit (*.net *.split)
+May 03 14:43:51 *	len has quit (*.net *.split)
+May 03 14:43:51 *	finlstrm has quit (*.net *.split)
+May 03 14:43:51 *	Dieterbe has quit (*.net *.split)
+May 03 14:43:51 *	FFY00 has quit (*.net *.split)
+May 03 14:43:51 *	alad has quit (*.net *.split)
+May 03 14:43:51 *	sphrak has quit (*.net *.split)
+May 03 14:43:51 *	Linlz has quit (*.net *.split)
+May 03 14:43:51 *	flagellum has quit (*.net *.split)
+May 03 14:43:51 *	AtomVelvet has quit (*.net *.split)
+May 03 14:43:51 *	Hoolean has quit (*.net *.split)
+May 03 14:43:51 *	onnex has quit (*.net *.split)
+May 03 14:44:02 *	fwhcat has quit (Remote host closed the connection)
+May 03 14:44:02 *	j00n has quit (Ping timeout: 250 seconds)
+May 03 14:44:08 *	FFY00_ is now known as FFY00
+May 03 14:44:24 *	evilmonads (~evilmonad@static.176.147.216.95.clients.your-server.de) has joined
+May 03 14:44:31 *	lambarena (~lambarena@199.180.255.226) has joined
+May 03 14:44:39 *	lucenera (~lux@net-2-35-226-49.cust.vodafonedsl.it) has joined
+May 03 14:44:58 *	jottr has quit (Ping timeout: 246 seconds)
+May 03 14:45:04 *	MarcinWieczorek has quit (Quit: ZNC 1.7.3 - https://znc.in)
+May 03 14:45:05 *	tiqpit has quit (Client Quit)
+May 03 14:46:03 *	logion (~root@unaffiliated/logion) has joined
+May 03 14:46:17 *	Asandari has quit (Ping timeout: 255 seconds)
+May 03 14:46:17 *	bibekG has quit (Ping timeout: 255 seconds)
+May 03 14:46:33 *	Kilroo (~Kilroo@173.94.24.151) has joined
+May 03 14:46:49 *	thecoffemaker (~thecoffem@unaffiliated/thecoffemaker) has joined
+May 03 14:46:58 *	Stanley00 (~Stanley00@unaffiliated/stanley00) has joined
+May 03 14:47:42 *	dos11 is now known as dos1
+May 03 14:48:18 *	ugjka (~ugjka@ugjka.net) has joined
+May 03 14:48:37 *	queip (~queip@unaffiliated/rezurus) has joined
+May 03 14:49:51 *	Asandari (~Asandari@107-179-197-180.cpe.teksavvy.com) has joined
+May 03 14:50:03 *	tiqpit (~tiqpit@195.158.107.83) has joined
+May 03 14:50:24 *	jottr (~jottr@unaffiliated/jottr) has joined
+May 03 14:50:57 <logion>	2~/win 3
+May 03 14:51:28 *	octes has quit (Remote host closed the connection)
+May 03 14:51:48 *	purist has quit (Remote host closed the connection)
+May 03 14:52:09 *	purist (~purist@gateway/tor-sasl/purist) has joined
+May 03 14:52:16 *	tdy (~tdy@unaffiliated/tdy) has joined
+May 03 14:52:18 *	gloomy has quit (Quit: My MacBook has gone to sleep. ZZZzzz…)
+May 03 14:52:22 *	dos1 has quit (Remote host closed the connection)
+May 03 14:53:46 *	dos1 (~dos1@neo900/coreteam/dos) has joined
+May 03 14:53:55 *	linux_dream has quit (Quit: WeeChat 2.4)
+May 03 14:54:46 *	fopso has quit (Quit: WeeChat 2.4)
+May 03 14:54:59 *	lucenera has quit (Ping timeout: 245 seconds)
+May 03 14:55:03 *	fopso (~fopso@p200300CD472F5400C2143DFFFED3467B.dip0.t-ipconnect.de) has joined
+May 03 14:55:19 *	fopso has quit (Client Quit)
+May 03 14:55:28 <MrElendig>	shouldn't irc as root
+May 03 14:55:44 *	cgundersson has quit (Ping timeout: 255 seconds)
+May 03 14:56:28 *	lucenera (~lux@net-2-35-226-49.cust.vodafonedsl.it) has joined
+May 03 14:57:23 <dmc>	why won't you accept my DCC request
+May 03 14:57:25 *	_thelion_ has quit (Quit: WeeChat 2.4)
+May 03 14:57:52 *	fopso (~fopso@p200300CD472F5400C2143DFFFED3467B.dip0.t-ipconnect.de) has joined
+May 03 14:58:10 *	fopso has quit (Client Quit)
+May 03 15:00:53 *	jottr has quit (Ping timeout: 250 seconds)
+May 03 15:01:51 *	nperry has quit (Remote host closed the connection)
+May 03 15:01:57 *	Elpaulo has quit (Ping timeout: 252 seconds)
+May 03 15:02:26 *	cottoneyejim has quit (Quit: cottoneyejim)
+May 03 15:02:45 *	nanobist has quit (Quit: Konversation terminated!)
+May 03 15:02:51 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 15:04:04 *	ctroy (~ctroy@187.113.42.116) has joined
+May 03 15:04:05 *	bashfulshell (uid190567@gateway/web/irccloud.com/x-pxhpygggpuipllzv) has joined
+May 03 15:04:31 *	xlx has quit (Ping timeout: 252 seconds)
+May 03 15:04:34 *	misuto (~misuto@193.183.116.209) has joined
+May 03 15:04:37 *	nanobist (~luke@96-41-217-7.dhcp.elbg.wa.charter.com) has joined
+May 03 15:05:21 *	cottoneyejim has quit (Client Quit)
+May 03 15:05:32 *	Tobbi (~Tobbi@supertux/tobbi) has joined
+May 03 15:05:41 *	cottoneyejim (~cottoneye@85.94.97.200) has joined
+May 03 15:05:42 *	AnLog has quit (Read error: Connection reset by peer)
+May 03 15:06:12 *	jottr (~jottr@unaffiliated/jottr) has joined
+May 03 15:06:27 *	tiqpit has quit (Quit: The Lounge - https://thelounge.chat)
+May 03 15:06:47 *	tiqpit (~tiqpit@195.158.107.83) has joined
+May 03 15:06:48 *	tiqpit has quit (Excess Flood)
+May 03 15:07:01 *	nanobist has quit (Client Quit)
+May 03 15:07:12 *	tiqpit (~tiqpit@195.158.107.83) has joined
+May 03 15:07:20 *	Case_Of (~Case_Of@unaffiliated/caseof) has joined
+May 03 15:07:22 *	nanobist (~luke@96-41-217-7.dhcp.elbg.wa.charter.com) has joined
+May 03 15:07:22 *	mikroskeem (~markv@unaffiliated/mikroskeem) has joined
+May 03 15:07:23 *	thelinuxguy (~thelinuxg@unaffiliated/joq) has joined
+May 03 15:07:24 *	atlas (atlas@unaffiliated/atlas-) has joined
+May 03 15:07:25 *	tpankaj (sid330249@gateway/web/irccloud.com/x-gsyorqatwfppvygi) has joined
+May 03 15:07:27 *	pid1 (sid303205@archlinux/op/pid1) has joined
+May 03 15:07:27 *	Cloudef (~Cloudef@2a00:4cc1:6:1008:8088:ddff:fecb:a379) has joined
+May 03 15:07:27 *	grawity (grawity@sky.nullroute.eu.org) has joined
+May 03 15:07:29 *	MadDecent (sid127952@gateway/web/irccloud.com/x-qhgmrnikxvzstojz) has joined
+May 03 15:07:32 *	baedert (~baedert@delorean.baedersonline.de) has joined
+May 03 15:07:33 *	ablackack (~ablackack@unaffiliated/ablackack) has joined
+May 03 15:07:33 *	d1z (~gt@unaffiliated/gtt) has joined
+May 03 15:07:33 *	willer (potato@gateway/shell/blinkenshell.org/x-yllvxhdqlkjvucwa) has joined
+May 03 15:07:34 *	Athemis (~Athemis@pelargir.athemis.de) has joined
+May 03 15:07:34 *	IRCsum (~IRCsum@2600-6c5c-6d00-21e0-c146-ccf4-bb1b-3b56.dhcp6.chtrptr.net) has joined
+May 03 15:07:35 *	hns (hannes@irc-out.lrr.0xef.de) has joined
+May 03 15:07:36 *	ShadowKyogre (7358dd25f8@gateway/shell/jabberfr/x-airsjyhhabuntyqg) has joined
+May 03 15:07:39 *	bdt (~fredrik@2a03:b0c0:3:d0::39f4:6001) has joined
+May 03 15:07:39 *	Ahti333 (~Ahti333@2a01:4f8:141:3068::2) has joined
+May 03 15:07:39 *	xulfer (~none@puffy.cheapbsd.net) has joined
+May 03 15:07:39 *	ganthore (~ganthore@99-85-31-177.lightspeed.rlghnc.sbcglobal.net) has joined
+May 03 15:07:40 *	julemand101 (~julemand1@pdpc/supporter/student/julemand101) has joined
+May 03 15:07:40 *	buhman (~rewt@c-73-231-171-137.hsd1.ca.comcast.net) has joined
+May 03 15:07:43 *	copypasteque (~copypaste@2001:41d0:8:b325::1) has joined
+May 03 15:07:49 *	ndk (~ndk@88.198.50.201) has joined
+May 03 15:07:51 *	Dieterbe (~Dieterbe@li245-243.members.linode.com) has joined
+May 03 15:07:51 *	bwe (~bwe@unaffiliated/bwe) has joined
+May 03 15:07:52 *	mkroman (~mkroman@unaffiliated/mkroman) has joined
+May 03 15:07:52 *	ItzExor (~exor@unaffiliated/itzexor) has joined
+May 03 15:07:54 *	csnxs (sean@unaffiliated/plussean) has joined
+May 03 15:07:58 *	belst (~belst@unaffiliated/belst) has joined
+May 03 15:07:59 *	flocke (~flocke@shadowice.org) has joined
+May 03 15:08:00 *	flagrama (sid145621@gateway/web/irccloud.com/x-bdfdjftxavnnopdv) has joined
+May 03 15:08:00 *	georgyo (sid71307@gateway/web/irccloud.com/x-cidytuebhmdyxtpu) has joined
+May 03 15:08:04 *	len (~lenisko@n251h246.sprintdatacenter.net) has joined
+May 03 15:08:04 *	sheep (~lucius@unaffiliated/sheep) has joined
+May 03 15:08:05 *	roxlu (~roxlu@2a01:7c8:aac0:286:8c3a:b01c:3830:245b) has joined
+May 03 15:08:07 *	sphrak (~niclas@178.255.113.33) has joined
+May 03 15:08:08 *	fred`` (fred@earthli.ng) has joined
+May 03 15:08:08 *	Luyin (~Luyin@basteles-bastelknecht.bastelfreak.org) has joined
+May 03 15:08:09 *	loofygun (~loofygun@unaffiliated/loofygun) has joined
+May 03 15:08:09 *	Momentum (lovelybyte@gateway/shell/blinkenshell.org/x-qkvxywlxixqsbvru) has joined
+May 03 15:08:09 *	jdiez (~jdiez@unaffiliated/jdiez) has joined
+May 03 15:08:11 *	AtomVelvet (~AtomVelve@188.166.96.248) has joined
+May 03 15:08:11 *	pingveno (sid269408@gateway/web/irccloud.com/x-bqytwscfemmtcgyh) has joined
+May 03 15:08:12 *	quizzi (quizzi@bnc.quizzmaster.de) has joined
+May 03 15:08:12 *	jfhbrook (sid301834@gateway/web/irccloud.com/x-yabhzuswibdmhtkq) has joined
+May 03 15:08:13 *	latz (~latz@li193-194.members.linode.com) has joined
+May 03 15:08:13 *	Firnwath (~firnwath@2001:2003:f6f9:a200:ba27:ebff:feeb:9bd6) has joined
+May 03 15:08:13 *	kbabioch (~karol@babioch.de) has joined
+May 03 15:08:13 *	tinywrkb (~tinywrkb@2001:470:7857:fb2::f) has joined
+May 03 15:08:14 *	zxrf (~zxrf@209.222.21.111) has joined
+May 03 15:08:14 *	Satin (~satina@unaffiliated/satin) has joined
+May 03 15:08:14 *	Duckbuster_ (~Duckbuste@lolisandstuff.moe) has joined
+May 03 15:08:14 *	thealamenthe (~qwert@unaffiliated/thealamenthe) has joined
+May 03 15:08:16 *	Lenny_ (lenny@srv3.blesmrt.net) has joined
+May 03 15:08:17 *	feklee (sid284307@gateway/web/irccloud.com/x-bimrhzyzuuhdgieo) has joined
+May 03 15:08:19 *	minad (~minad@server.qxqx.de) has joined
+May 03 15:08:20 *	mrhanky (~mrhanky@unterschicht.tv) has joined
+May 03 15:08:20 *	isophote (~isophote@c-71-203-200-219.hsd1.tn.comcast.net) has joined
+May 03 15:08:22 *	firesock (uid332172@gateway/web/irccloud.com/x-gmxfeuihcrwmkyla) has joined
+May 03 15:08:22 *	grosjean (~grosjean@unaffiliated/grosjean) has joined
+May 03 15:08:22 *	Soni (~quassel@unaffiliated/soniex2) has joined
+May 03 15:08:24 *	zack6849 (zack6849@unaffiliated/zack6849) has joined
+May 03 15:08:24 *	neoweb (sid343200@makerslocal/webdawg) has joined
+May 03 15:08:26 *	abc_ (~abc_@unaffiliated/abc-/x-4125962) has joined
+May 03 15:08:36 *	vishwin (~brioux@wikimedia/O) has joined
+May 03 15:08:42 *	Duckbuster has quit (Ping timeout: 250 seconds)
+May 03 15:08:47 *	gremax (gremax@gateway/shell/firrre/x-mrimneslewpsndpo) has joined
+May 03 15:08:53 *	arti (~arti@do.arti.ee) has joined
+May 03 15:08:56 *	Lartza (lartza@unaffiliated/lartza) has joined
+May 03 15:08:57 *	bazaar has quit (Ping timeout: 250 seconds)
+May 03 15:08:57 *	yurihs (~yurihs@162.243.167.128) has joined
+May 03 15:09:03 *	finlstrm (~quassel@pool-96-253-61-204.prvdri.fios.verizon.net) has joined
+May 03 15:09:05 *	eri (~eri@watch.chelnok.de) has joined
+May 03 15:09:06 *	dieggsy (~dieggsy@unaffiliated/dieggsy) has joined
+May 03 15:09:10 *	shadow98 has quit (Ping timeout: 250 seconds)
+May 03 15:09:12 *	aakvik has quit (Ping timeout: 250 seconds)
+May 03 15:09:12 *	snowolf has quit (Ping timeout: 250 seconds)
+May 03 15:09:20 *	victorbjelkholm (sid208353@gateway/web/irccloud.com/x-ahamrxsmcxwesvmy) has joined
+May 03 15:09:20 *	echarlie (irc-user@2a00:1768:1001:37:d873:59d9:968f:3663) has joined
+May 03 15:09:21 *	GH0S1 (~GH0S1@2602:ffc5::ffc5:d74d) has joined
+May 03 15:09:23 *	Stary (znc@thonk.9net.org) has joined
+May 03 15:09:24 *	natten (~jn@unaffiliated/jnatten) has joined
+May 03 15:09:26 *	jstimm (~jstimm@unaffiliated/jstimm) has joined
+May 03 15:09:26 *	syntacticNaCl (~syntactic@159.203.140.249) has joined
+May 03 15:09:26 *	Marc3l (~Marc3l@unaffiliated/marc3l) has joined
+May 03 15:09:28 *	eri is now known as Guest7419
+May 03 15:09:30 *	dusares (~dusares@dusares.com) has joined
+May 03 15:09:32 *	snowolf (~snowolf@wikimedia/Snowolf) has joined
+May 03 15:09:40 *	shadow98 (uid236862@gateway/web/irccloud.com/x-tusueoeprwxlhkae) has joined
+May 03 15:09:51 *	bazaar_ (~bazaar@unaffiliated/bazaar) has joined
+May 03 15:09:51 *	milkii has quit (Remote host closed the connection)
+May 03 15:09:54 *	aakvik (goodtimes@aakvik.net) has joined
+May 03 15:10:02 *	maciuszek has quit (Ping timeout: 250 seconds)
+May 03 15:10:02 *	Signaltonsalat has quit (Ping timeout: 250 seconds)
+May 03 15:10:06 *	alad (~alad@archlinux/trusteduser/alad) has joined
+May 03 15:10:15 *	purist has quit (Remote host closed the connection)
+May 03 15:10:26 *	patrick96 (~Patrick@polybar/patrick) has joined
+May 03 15:10:28 *	dxu has quit (Ping timeout: 250 seconds)
+May 03 15:10:35 *	Asandari has quit (Ping timeout: 255 seconds)
+May 03 15:10:35 *	fk has quit (Ping timeout: 255 seconds)
+May 03 15:10:47 *	Linlz (~Linlz@unaffiliated/linlz) has joined
+May 03 15:10:52 *	Signaltonsalat (~dickbutt@ip4d150cce.dynamic.kabel-deutschland.de) has joined
+May 03 15:10:55 *	sunitknandi (~sunit@unaffiliated/sunitknandi) has joined
+May 03 15:11:22 *	maciuszek (sid246459@gateway/web/irccloud.com/x-vjltmloybojvovmg) has joined
+May 03 15:11:22 *	purist (~purist@gateway/tor-sasl/purist) has joined
+May 03 15:11:22 *	dxu (~dxu@2604:a880:800:10::2232:e001) has joined
+May 03 15:11:22 *	milkii (~milk@2001:19f0:7401:866a:15f3:a8f4:441d:ab86) has joined
+May 03 15:11:22 *	jottr has quit (Ping timeout: 258 seconds)
+May 03 15:11:22 *	xlx (~xlx@unaffiliated/xlx) has joined
+May 03 15:11:29 *	queip has quit (Ping timeout: 255 seconds)
+May 03 15:24:44 *	Disconnected ()
+**** ENDING LOGGING AT Fri May  3 15:24:44 2019
+

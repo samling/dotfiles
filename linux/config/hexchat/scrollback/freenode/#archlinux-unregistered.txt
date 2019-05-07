@@ -1,0 +1,17 @@
+T 1556916415 19*	Now talking on 22#archlinux-unregistered
+T 1556916415 22*	Topic for 22#archlinux-unregistered is: === You need a freenode account to join #archlinux. Register by following the instructions at <http://freenode.net/kb/answer/registration>. You can get a list of people who can help you by typing `/msg chanserv access #archlinux list`, or join #freenode and ask there. The bot can give you a one-time ticket. ===
+T 1556916415 22*	Topic for 22#archlinux-unregistered set by 26tigrmesh!~tigrmesh@archlinux/op/tigrmesh (24Mon Aug  8 21:33:51 2016)
+T 1556916416 24*	Received a CTCP 24VERSION from 18EMIYA
+T 1556916474 24*	NVM5 has quit (Remote host closed the connection)
+T 1556916478 23*	nietomek (~tomasz@kr-bart-21-179.t-mont.net.pl23) has joined
+T 1556922308 19*	Now talking on 22#archlinux-unregistered
+T 1556922308 22*	Topic for 22#archlinux-unregistered is: === You need a freenode account to join #archlinux. Register by following the instructions at <http://freenode.net/kb/answer/registration>. You can get a list of people who can help you by typing `/msg chanserv access #archlinux list`, or join #freenode and ask there. The bot can give you a one-time ticket. ===
+T 1556922308 22*	Topic for 22#archlinux-unregistered set by 26tigrmesh!~tigrmesh@archlinux/op/tigrmesh (24Mon Aug  8 21:33:51 2016)
+T 1556922312 23*	PileOfDirt (~DIRT@wetmoreavail-dynamic-174-137-99-226.jbntelco.com23) has joined
+T 1556922866 24*	PileOfDirt has quit (Ping timeout: 255 seconds)
+T 1556923068 23*	krompus (~krompus@2607:f2c0:94f6:900:dfb8:d30b:afc:c62223) has joined
+T 1556923136 24*	saucyfox (~saucyfox@saucyfox.net24) has left (requested by EMIYA (Moving to #archlinux.))
+T 1557115822 19*	Now talking on 22#archlinux-unregistered
+T 1557115822 22*	Topic for 22#archlinux-unregistered is: === You need a freenode account to join #archlinux. Register by following the instructions at <http://freenode.net/kb/answer/registration>. You can get a list of people who can help you by typing `/msg chanserv access #archlinux list`, or join #freenode and ask there. The bot can give you a one-time ticket. ===
+T 1557115822 22*	Topic for 22#archlinux-unregistered set by 26tigrmesh!~tigrmesh@archlinux/op/tigrmesh (24Mon Aug  8 21:33:51 2016)
+T 1557115822 -18NickServ-	You are now identified for samling.

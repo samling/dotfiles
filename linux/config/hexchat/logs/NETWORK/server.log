@@ -1,0 +1,299 @@
+**** BEGIN LOGGING AT Tue Apr 30 10:35:33 2019
+
+Apr 30 10:35:33 Perl interface loaded
+Apr 30 10:35:33 Checksum plugin loaded
+Apr 30 10:35:33 Sysinfo plugin loaded
+Apr 30 10:35:33 FiSHLiM plugin loaded
+Apr 30 10:35:33 Python interface loaded
+Apr 30 10:35:33 AutoLoad failed for: /usr/lib/hexchat/plugins/lua.so
+Apr 30 10:35:33 liblua.so.5.3: cannot open shared object file: No such file or directory
+**** BEGIN LOGGING AT Tue Apr 30 10:38:39 2019
+
+Apr 30 10:38:39 Perl interface loaded
+Apr 30 10:38:39 Checksum plugin loaded
+Apr 30 10:38:39 Sysinfo plugin loaded
+Apr 30 10:38:39 FiSHLiM plugin loaded
+Apr 30 10:38:40 Python interface loaded
+Apr 30 10:38:40 AutoLoad failed for: /usr/lib/hexchat/plugins/lua.so
+Apr 30 10:38:40 liblua.so.5.3: cannot open shared object file: No such file or directory
+Apr 30 10:38:40 *	Looking up irc.trees.chat
+Apr 30 10:38:40 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+Apr 30 10:38:40 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 10:38:40 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 10:38:40 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 10:38:40 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 10:38:40 *	* Subject: /CN=irc.trees.chat
+Apr 30 10:38:40 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 10:38:41 *	* Certification info:
+Apr 30 10:38:41 *	  Subject:
+Apr 30 10:38:41 *	    CN=irc.trees.chat
+Apr 30 10:38:41 *	  Issuer:
+Apr 30 10:38:41 *	    C=US
+Apr 30 10:38:41 *	    O=Let's Encrypt
+Apr 30 10:38:41 *	    CN=Let's Encrypt Authority X3
+Apr 30 10:38:41 *	  Public key algorithm: rsaEncryption (2048 bits)
+Apr 30 10:38:41 *	  Sign algorithm sha256WithRSAEncryption
+Apr 30 10:38:41 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+Apr 30 10:38:41 *	* Cipher info:
+Apr 30 10:38:41 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+Apr 30 10:38:41 *	Connected. Now logging in.
+Apr 30 10:38:41 *	*** Looking up your hostname...
+Apr 30 10:38:41 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net) -- cached
+Apr 30 10:38:42 *	Welcome to trees.chat!
+**** ENDING LOGGING AT Tue Apr 30 10:38:42 2019
+
+**** BEGIN LOGGING AT Tue Apr 30 10:58:37 2019
+
+Apr 30 10:58:37 Perl interface loaded
+Apr 30 10:58:37 Checksum plugin loaded
+Apr 30 10:58:37 Sysinfo plugin loaded
+Apr 30 10:58:37 FiSHLiM plugin loaded
+Apr 30 10:58:38 Python interface loaded
+Apr 30 10:58:38 AutoLoad failed for: /usr/lib/hexchat/plugins/lua.so
+Apr 30 10:58:38 liblua.so.5.3: cannot open shared object file: No such file or directory
+Apr 30 10:58:38 *	Looking up irc.trees.chat
+Apr 30 10:58:39 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+Apr 30 10:58:39 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 10:58:39 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 10:58:39 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 10:58:39 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 10:58:39 *	* Subject: /CN=irc.trees.chat
+Apr 30 10:58:39 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 10:58:40 *	* Certification info:
+Apr 30 10:58:40 *	  Subject:
+Apr 30 10:58:40 *	    CN=irc.trees.chat
+Apr 30 10:58:40 *	  Issuer:
+Apr 30 10:58:40 *	    C=US
+Apr 30 10:58:40 *	    O=Let's Encrypt
+Apr 30 10:58:40 *	    CN=Let's Encrypt Authority X3
+Apr 30 10:58:40 *	  Public key algorithm: rsaEncryption (2048 bits)
+Apr 30 10:58:40 *	  Sign algorithm sha256WithRSAEncryption
+Apr 30 10:58:40 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+Apr 30 10:58:40 *	* Cipher info:
+Apr 30 10:58:40 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+Apr 30 10:58:40 *	Connected. Now logging in.
+Apr 30 10:58:40 *	*** Looking up your hostname...
+Apr 30 10:58:40 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net) -- cached
+Apr 30 10:58:41 *	Welcome to trees.chat!
+**** ENDING LOGGING AT Tue Apr 30 10:58:41 2019
+
+**** BEGIN LOGGING AT Tue Apr 30 11:52:58 2019
+
+Apr 30 11:52:58 Perl interface loaded
+Apr 30 11:52:58 Checksum plugin loaded
+Apr 30 11:52:58 Sysinfo plugin loaded
+Apr 30 11:52:58 FiSHLiM plugin loaded
+Apr 30 11:52:58 Python interface loaded
+Apr 30 11:52:58 AutoLoad failed for: /usr/lib/hexchat/plugins/lua.so
+Apr 30 11:52:58 liblua.so.5.3: cannot open shared object file: No such file or directory
+Apr 30 11:52:58 *	Looking up irc.trees.chat
+Apr 30 11:52:58 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+Apr 30 11:52:59 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 11:52:59 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 11:52:59 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 11:52:59 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 11:52:59 *	* Subject: /CN=irc.trees.chat
+Apr 30 11:52:59 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 11:52:59 *	* Certification info:
+Apr 30 11:52:59 *	  Subject:
+Apr 30 11:52:59 *	    CN=irc.trees.chat
+Apr 30 11:52:59 *	  Issuer:
+Apr 30 11:52:59 *	    C=US
+Apr 30 11:52:59 *	    O=Let's Encrypt
+Apr 30 11:52:59 *	    CN=Let's Encrypt Authority X3
+Apr 30 11:52:59 *	  Public key algorithm: rsaEncryption (2048 bits)
+Apr 30 11:52:59 *	  Sign algorithm sha256WithRSAEncryption
+Apr 30 11:52:59 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+Apr 30 11:52:59 *	* Cipher info:
+Apr 30 11:52:59 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+Apr 30 11:52:59 *	Connected. Now logging in.
+Apr 30 11:52:59 *	*** Looking up your hostname...
+Apr 30 11:52:59 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net) -- cached
+Apr 30 11:53:00 *	Welcome to trees.chat!
+**** ENDING LOGGING AT Tue Apr 30 11:53:00 2019
+
+**** BEGIN LOGGING AT Tue Apr 30 21:30:03 2019
+
+Apr 30 21:30:03 Perl interface loaded
+Apr 30 21:30:03 Checksum plugin loaded
+Apr 30 21:30:03 Sysinfo plugin loaded
+Apr 30 21:30:03 FiSHLiM plugin loaded
+Apr 30 21:30:03 Python interface loaded
+Apr 30 21:30:03 AutoLoad failed for: /usr/lib/hexchat/plugins/lua.so
+Apr 30 21:30:03 liblua.so.5.3: cannot open shared object file: No such file or directory
+Apr 30 21:30:03 *	Looking up irc.trees.chat
+Apr 30 21:30:04 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+Apr 30 21:30:05 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 21:30:05 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 21:30:05 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 21:30:05 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 21:30:05 *	* Subject: /CN=irc.trees.chat
+Apr 30 21:30:05 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 21:30:05 *	* Certification info:
+Apr 30 21:30:05 *	  Subject:
+Apr 30 21:30:05 *	    CN=irc.trees.chat
+Apr 30 21:30:05 *	  Issuer:
+Apr 30 21:30:05 *	    C=US
+Apr 30 21:30:05 *	    O=Let's Encrypt
+Apr 30 21:30:05 *	    CN=Let's Encrypt Authority X3
+Apr 30 21:30:05 *	  Public key algorithm: rsaEncryption (2048 bits)
+Apr 30 21:30:05 *	  Sign algorithm sha256WithRSAEncryption
+Apr 30 21:30:05 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+Apr 30 21:30:05 *	* Cipher info:
+Apr 30 21:30:05 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+Apr 30 21:30:05 *	Connected. Now logging in.
+Apr 30 21:30:05 *	*** Looking up your hostname...
+Apr 30 21:30:05 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net) -- cached
+Apr 30 21:30:05 *	Welcome to trees.chat!
+**** ENDING LOGGING AT Tue Apr 30 21:30:05 2019
+
+**** BEGIN LOGGING AT Tue Apr 30 21:32:17 2019
+
+Apr 30 21:32:17 Perl interface loaded
+Apr 30 21:32:17 Checksum plugin loaded
+Apr 30 21:32:17 Sysinfo plugin loaded
+Apr 30 21:32:17 FiSHLiM plugin loaded
+Apr 30 21:32:17 Python interface loaded
+Apr 30 21:32:17 AutoLoad failed for: /usr/lib/hexchat/plugins/lua.so
+Apr 30 21:32:17 liblua.so.5.3: cannot open shared object file: No such file or directory
+Apr 30 21:32:29 *	Looking up irc.trees.chat
+Apr 30 21:32:29 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+Apr 30 21:32:29 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 21:32:29 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 21:32:29 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 21:32:29 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+Apr 30 21:32:29 *	* Subject: /CN=irc.trees.chat
+Apr 30 21:32:29 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+Apr 30 21:32:30 *	* Certification info:
+Apr 30 21:32:30 *	  Subject:
+Apr 30 21:32:30 *	    CN=irc.trees.chat
+Apr 30 21:32:30 *	  Issuer:
+Apr 30 21:32:30 *	    C=US
+Apr 30 21:32:30 *	    O=Let's Encrypt
+Apr 30 21:32:30 *	    CN=Let's Encrypt Authority X3
+Apr 30 21:32:30 *	  Public key algorithm: rsaEncryption (2048 bits)
+Apr 30 21:32:30 *	  Sign algorithm sha256WithRSAEncryption
+Apr 30 21:32:30 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+Apr 30 21:32:30 *	* Cipher info:
+Apr 30 21:32:30 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+Apr 30 21:32:30 *	Connected. Now logging in.
+Apr 30 21:32:30 *	*** Looking up your hostname...
+Apr 30 21:32:30 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net) -- cached
+Apr 30 21:32:31 *	Welcome to trees.chat!
+**** ENDING LOGGING AT Tue Apr 30 21:32:31 2019
+
+**** BEGIN LOGGING AT Wed May  1 21:56:43 2019
+
+May 01 21:56:43 Perl interface loaded
+May 01 21:56:43 Checksum plugin loaded
+May 01 21:56:43 Sysinfo plugin loaded
+May 01 21:56:43 FiSHLiM plugin loaded
+May 01 21:56:44 Python interface loaded
+May 01 21:56:44 AutoLoad failed for: /usr/lib/hexchat/plugins/lua.so
+May 01 21:56:44 liblua.so.5.3: cannot open shared object file: No such file or directory
+May 01 21:56:55 *	Looking up irc.trees.chat
+May 01 21:56:55 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+May 01 21:56:56 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 01 21:56:56 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 01 21:56:56 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 01 21:56:56 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 01 21:56:56 *	* Subject: /CN=irc.trees.chat
+May 01 21:56:56 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 01 21:56:56 *	* Certification info:
+May 01 21:56:56 *	  Subject:
+May 01 21:56:56 *	    CN=irc.trees.chat
+May 01 21:56:56 *	  Issuer:
+May 01 21:56:56 *	    C=US
+May 01 21:56:56 *	    O=Let's Encrypt
+May 01 21:56:56 *	    CN=Let's Encrypt Authority X3
+May 01 21:56:56 *	  Public key algorithm: rsaEncryption (2048 bits)
+May 01 21:56:56 *	  Sign algorithm sha256WithRSAEncryption
+May 01 21:56:56 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+May 01 21:56:56 *	* Cipher info:
+May 01 21:56:56 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 01 21:56:56 *	Connected. Now logging in.
+May 01 21:56:56 *	*** Looking up your hostname...
+May 01 21:56:56 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net)
+May 01 21:56:57 *	Welcome to trees.chat!
+**** ENDING LOGGING AT Wed May  1 21:56:57 2019
+
+**** BEGIN LOGGING AT Thu May  2 22:17:24 2019
+
+May 02 22:17:24 Perl interface loaded
+May 02 22:17:24 Checksum plugin loaded
+May 02 22:17:24 Sysinfo plugin loaded
+May 02 22:17:24 FiSHLiM plugin loaded
+May 02 22:17:24 Python interface loaded
+May 02 22:17:24 Lua version 1.3/5.3 loaded.
+May 02 22:17:37 *	Looking up irc.trees.chat
+May 02 22:17:38 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+May 02 22:17:39 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 02 22:17:39 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 02 22:17:39 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 02 22:17:39 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 02 22:17:39 *	* Subject: /CN=irc.trees.chat
+May 02 22:17:39 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 02 22:17:39 *	* Certification info:
+May 02 22:17:39 *	  Subject:
+May 02 22:17:39 *	    CN=irc.trees.chat
+May 02 22:17:39 *	  Issuer:
+May 02 22:17:39 *	    C=US
+May 02 22:17:39 *	    O=Let's Encrypt
+May 02 22:17:39 *	    CN=Let's Encrypt Authority X3
+May 02 22:17:39 *	  Public key algorithm: rsaEncryption (2048 bits)
+May 02 22:17:39 *	  Sign algorithm sha256WithRSAEncryption
+May 02 22:17:39 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+May 02 22:17:39 *	* Cipher info:
+May 02 22:17:39 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 02 22:17:39 *	Connected. Now logging in.
+May 02 22:17:39 *	*** Looking up your hostname...
+May 02 22:17:39 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net)
+May 02 22:17:40 *	Welcome to trees.chat!
+**** ENDING LOGGING AT Thu May  2 22:17:40 2019
+
+**** BEGIN LOGGING AT Fri May  3 13:46:34 2019
+
+May 03 13:46:34 Perl interface loaded
+May 03 13:46:34 Checksum plugin loaded
+May 03 13:46:34 Sysinfo plugin loaded
+May 03 13:46:34 FiSHLiM plugin loaded
+May 03 13:46:34 Python interface loaded
+May 03 13:46:35 Lua version 1.3/5.3 loaded.
+**** BEGIN LOGGING AT Sun May  5 21:10:09 2019
+
+May 05 21:10:09 Perl interface loaded
+May 05 21:10:09 Checksum plugin loaded
+May 05 21:10:09 Sysinfo plugin loaded
+May 05 21:10:09 FiSHLiM plugin loaded
+May 05 21:10:09 Python interface loaded
+May 05 21:10:09 Lua version 1.3/5.3 loaded.
+May 05 21:10:09 *	Looking up irc.freenode.net
+May 05 21:10:09 *	Connecting to chat.freenode.net (195.154.200.232:6697)
+May 05 21:10:10 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 05 21:10:10 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 05 21:10:10 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 05 21:10:10 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 05 21:10:10 *	* Subject: /CN=barjavel.freenode.net
+May 05 21:10:10 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 05 21:10:11 *	* Certification info:
+May 05 21:10:11 *	  Subject:
+May 05 21:10:11 *	    CN=barjavel.freenode.net
+May 05 21:10:11 *	  Issuer:
+May 05 21:10:11 *	    C=US
+May 05 21:10:11 *	    O=Let's Encrypt
+May 05 21:10:11 *	    CN=Let's Encrypt Authority X3
+May 05 21:10:11 *	  Public key algorithm: rsaEncryption (4096 bits)
+May 05 21:10:11 *	  Sign algorithm sha256WithRSAEncryption
+May 05 21:10:11 *	  Valid since Apr 22 05:01:50 2019 GM to Jul 21 05:01:50 2019 GM
+May 05 21:10:11 *	* Cipher info:
+May 05 21:10:11 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 05 21:10:11 *	Connected. Now logging in.
+May 05 21:10:11 *	*** Looking up your hostname...
+May 05 21:10:11 *	*** Checking Ident
+May 05 21:10:11 *	*** Found your hostname
+May 05 21:10:17 *	*** No Ident response
+May 05 21:10:17 *	Capabilities supported: account-notify extended-join identify-msg multi-prefix sasl
+May 05 21:10:17 *	Capabilities requested: account-notify extended-join identify-msg multi-prefix 
+May 05 21:10:17 *	Capabilities acknowledged: account-notify extended-join identify-msg multi-prefix 
+**** ENDING LOGGING AT Sun May  5 21:10:17 2019
+

@@ -1,0 +1,327 @@
+**** BEGIN LOGGING AT Fri May  3 13:48:12 2019
+
+May 03 13:48:12 *	Now talking on #archlinux-offtopic
+May 03 13:48:12 *	Topic for #archlinux-offtopic is: Welcome to #alots | Rules: https://www.youtube.com/watch?v=ZQjS9EZSaxs | Stats: https://alyptik.org/aot contact jp (alyptik) to opt out | op at work https://imgur.com/gallery/oCHhMdo | https://www.youtube.com/watch?v=J7UwSVsiwzI | Topikittehs! (10:28) https://www.youtube.com/watch?v=QcD8DrJKejQ
+May 03 13:48:12 *	Topic for #archlinux-offtopic set by tigrmesh!~tigrmesh@archlinux/op/tigrmesh (Tue Apr  9 18:14:30 2019)
+May 03 13:48:15 <paulguy>	if it's completely disabled, a watchdog I guess reboots the board.
+May 03 13:48:35 <paulguy>	every few minutes or something
+May 03 13:48:43 <SysGhost>	indeed. I've read about attempts to erase it completely, it jsut won't post 
+May 03 13:48:47 <HEX0>	30 minutes
+May 03 13:49:08 <HEX0>	according to github page after 30 minutes system shuts down
+May 03 13:49:30 <HEX0>	if ME or signing key is not present or something
+May 03 13:50:18 <HEX0>	and it runs minix, so the year of minux desktop afaik.
+May 03 13:50:33 <soft_cement>	Depending on what you
+May 03 13:50:48 <HEX0>	so I guess the year of Minix desktop happened long ago lol
+May 03 13:51:05 <soft_cement>	You're after, putting a firewall between the machine and your gateway could be a way of stopping it from calling home... maybe? Just a guess
+May 03 13:52:54 *	SysGhost ssh's into the PSP, and executes "echo 1 > /proc/sys/kernel/self_destruct".
+May 03 13:53:03 <HEX0>	bittersweet that we can't have libre x86 hardware while linux FOSS drivers got so good
+May 03 13:53:22 <soft_cement>	I would like to see RISC-V become an option
+May 03 13:53:53 <soft_cement>	this exists: https://www.sifive.com/boards/hifive1
+May 03 13:53:57 <phrik>	Title: HiFive1 - SiFive (at www.sifive.com)
+May 03 13:54:08 <soft_cement>	IIRC, it's a fully Libre RISC-V dev board
+May 03 13:54:23 <HEX0>	I wonder if it would be possible to emulate legacy x86 prorpietary games on Talos Power9 systems with acceptable performance 
+May 03 13:54:56 <soft_cement>	you want libre hardware to play proprietary video games? really?
+May 03 13:55:27 <HEX0>	would be nice thought wouldn't it
+May 03 13:55:33 <paulguy>	i'm OK with application software being proprietary to some degree, I at least accept it.
+May 03 13:55:48 <paulguy>	but the basis of a system it would be nice to be totally out there.
+May 03 13:55:54 <soft_cement>	paulguy: agreed
+May 03 13:56:27 <soft_cement>	hardware, firmware, kernel... so the user has freedom and can know what their system is up to, if they wish
+May 03 13:56:48 <soft_cement>	if they wish to install proprietary software/spyware on top of that, then that's their choice, they're not forced into it
+May 03 13:58:01 <paulguy>	would be nice if that stuff wasn't a thing either heh
+May 03 13:59:20 <SysGhost>	HEX0: Somne more info about it: https://www.howtogeek.com/334013/intel-management-engine-explained-the-tiny-computer-inside-your-cpu/ And two quotes I'd like to snip out: 
+May 03 13:59:22 <SysGhost>	-"This isn’t any sort of spying or monitoring software—unless an organization has enabled AMT and is using it to monitor their own PCs. If Intel’s Management Engine was contacting the network in other situations, we’d likely have heard of it thanks to tools like Wireshark, which allow people to monitor traffic on a network."
+May 03 13:59:31 <SysGhost>	-"However, the presence of software like Intel ME that can’t be disabled and is closed source is certainly a security concern. It’s another avenue for attack, and we’ve already seen security holes in Intel ME."
+May 03 14:00:52 <dmc>	how bad of an idea would it be to get drunk prior to going to watch a 3 hour long movie
+May 03 14:01:08 <SysGhost>	Same goes for AMD. One wonder what the american congress forces large american-owned multinational companies to do. ¯\_(ツ)_/¯
+May 03 14:01:13 <haavard>	dmc: amazing idea honestly 
+May 03 14:01:19 <dmc>	> A urologist’s tips on watching the 3-hour-plus ‘Avengers: Endgame’ without a bathroom break
+May 03 14:01:20 <paulguy>	probably end up having to pee a few times
+May 03 14:01:23 <dmc>	lol haavard
+May 03 14:01:25 <haavard>	Movie is too boring sober 
+May 03 14:01:46 <haavard>	If you have a festival bladder it's all good 
+May 03 14:01:49 <SysGhost>	haavard: you're watching the wrong movies then
+May 03 14:01:53 <dmc>	going to need to note good times for bathroom breaks if I do this
+May 03 14:01:57 <dmc>	I do not
+May 03 14:01:59 <HEX0>	dmc: you'll probably forget the plot mid movie
+May 03 14:02:01 <haavard>	SysGhost: indeed 
+May 03 14:02:08 <dmc>	and I'd be getting drunk on beer
+May 03 14:02:16 <dmc>	HEX0, perhaps..
+May 03 14:02:27 <haavard>	dmc: dehydrate yourself prior to drinking beer 
+May 03 14:02:50 <HEX0>	dmc: don't recommend watching a horror movie after smoking a joint though. pretty intense in that state :P
+May 03 14:03:06 *	F55 (~umryk@unaffiliated/fer755) has joined
+May 03 14:03:11 <SysGhost>	Trick is: empty your baldder just before entering the cinema. Even if you don't need to. Squeeze the drops out so the bladder is all empty. that'll make you last for a good 2-5 hours depending on liquid intake and bladder-zize. 
+May 03 14:03:47 <paulguy>	expanded bladder implants
+May 03 14:03:53 <dmc>	I'd be drinking up to 75 oz of beer
+May 03 14:04:00 <dmc>	any more and I might not make it to the theater
+May 03 14:04:20 <SysGhost>	Talking of which... time for me to go grab a bunch of bottles ... BBL...
+May 03 14:04:28 <haavard>	How much is 75 oz 
+May 03 14:04:29 <F55>	theatr balder zizzer respawner
+May 03 14:04:40 <dmc>	in what
+May 03 14:04:59 <haavard>	Normal units 
+May 03 14:04:59 <paulguy>	!convert 75 floz l
+May 03 14:05:00 <phrik>	paulguy: 2.22
+May 03 14:05:06 <HEX0>	or just put a catheter in there and enjoy you beer
+May 03 14:05:07 <F55>	popcorn balder
+May 03 14:05:16 <haavard>	What so like four pints 
+May 03 14:05:18 <haavard>	Come on 
+May 03 14:05:26 <haavard>	I thought you said drunk 
+May 03 14:05:47 <SysGhost>	uh... one more thing.... one can bring an empty emergenzy-bottle, and do the business during the most intense scenes when everyone is so occupied they'd never notice it. Loud scenes works the best =P
+May 03 14:06:14 <paulguy>	you can buy those hospital pee jugs
+May 03 14:06:31 <HEX0>	make sure to loudly drink something through a straw while peeing in the bottle
+May 03 14:06:52 <SysGhost>	in that case... don't mix the bottles.
+May 03 14:07:05 <F55>	in the middle of the movie they starting to moving the air, so start entering cold breeze, too damn cold
+May 03 14:07:06 <haavard>	Just man up and hold it 
+May 03 14:07:20 <HEX0>	that might be a challenge when you are drunk. could easily mix up bottles
+May 03 14:07:28 <haavard>	Or man up and realize you can miss a scene 
+May 03 14:07:48 <SysGhost>	Noes!
+May 03 14:07:50 <Reventlov>	is it bad if I recognize domino's pizza in people fart
+May 03 14:08:06 <HEX0>	no you are gifted
+May 03 14:08:07 <SysGhost>	Yep
+May 03 14:08:14 <SysGhost>	...but gifted... 
+May 03 14:08:15 <dmc>	!grab Reventlov
+May 03 14:08:15 <phrik>	dmc: Bingpot!
+May 03 14:08:28 <dmc>	haavard, depends on how fast you drink
+May 03 14:08:29 <Reventlov>	fuck me
+May 03 14:08:32 <F55>	'zinga
+May 03 14:08:34 <SysGhost>	!rq Reventlov
+May 03 14:08:34 <phrik>	SysGhost: <Reventlov> because you touch yourself at night
+May 03 14:08:45 <F55>	!why
+May 03 14:08:45 <phrik>	Because you touch yourself at night.
+May 03 14:08:54 <dmc>	I've been passing out shortly after cracking the last 25 oz
+May 03 14:09:01 <dmc>	(out of 100)
+May 03 14:09:11 <haavard>	dmc is lightweight 
+May 03 14:09:31 <SysGhost>	!rq Reventlov
+May 03 14:09:31 <phrik>	SysGhost: <Reventlov> fial.
+May 03 14:09:35 <SysGhost>	meh
+May 03 14:09:37 <dmc>	better on my wallet :)
+May 03 14:09:40 <SysGhost>	!multirq Reventlov
+May 03 14:09:41 <phrik>	<Reventlov> timestamps are there to remind me that life is short and that I should go to sleep <Reventlov> timestamps are there to remind me that life is short and that I should go to sleep <Reventlov> because you touch yourself at night <Reventlov> I only have 2 knees :( <Reventlov> because you touch yourself at night
+May 03 14:09:43 <haavard>	True 
+May 03 14:10:14 <haavard>	The budget drinker will fast for a day and then get smashed on a single pint 
+May 03 14:10:17 <SysGhost>	Reventlov: you really need to write more insanity.
+May 03 14:10:21 <haavard>	NextHendrix does that because he's poor 
+May 03 14:10:21 <dmc>	I don't fast
+May 03 14:10:26 <dmc>	but I don't do a pre-game meal
+May 03 14:10:38 <dmc>	though I do have a fat meal after 25 or 50 oz
+May 03 14:10:56 <NextHendrix>	haavard is right
+May 03 14:11:54 <SysGhost>	Am I the only one who aims to drink a lot and avoid getting smashed?
+May 03 14:11:58 <haavard>	Always am 
+May 03 14:12:08 <haavard>	!grab NextHendrix
+May 03 14:12:08 *	Eiii has quit (Quit: !)
+May 03 14:12:08 <phrik>	haavard: Tada!
+May 03 14:12:12 <dmc>	SysGhost, what's the point of that
+May 03 14:12:26 <NextHendrix>	SysGhost: i do that when i have money
+May 03 14:12:27 <F55>	!yt He is - ghost
+May 03 14:12:29 <phrik>	YouTube :: https://youtu.be/7hMaHDTw-pI :: Ghost - He Is (Music Video)
+May 03 14:12:33 <NextHendrix>	dmc: those who get hammered don't get to nail
+May 03 14:12:42 <SysGhost>	dmc: to drink more, and laugh at your drinking buddies when they do crazy stuff.. .and actually remember it all.
+May 03 14:12:47 <haavard>	Wise words, NextHendrix
+May 03 14:12:58 <NextHendrix>	haavard: not mine, but the wise words of mike skinner
+May 03 14:13:09 <SysGhost>	...although it's oftem them telling me of stuff I never remember I did.
+May 03 14:13:12 <NextHendrix>	,yt the streets war of the sexes
+May 03 14:13:28 <NextHendrix>	!give haavard yt the streets war of the sexes
+May 03 14:13:29 <phrik>	YouTube :: https://youtu.be/ScSefMVf_RU :: The Streets - War Of The Sexes (Official Audio)
+May 03 14:13:56 <HEX0>	used to be able to handle alcohol. then I became a workaholic and didn't drink for straight 2 years. now I can barely handle 2 shots of vodka
+May 03 14:14:46 <HEX0>	also being in the military, always exhausted and sleepless 
+May 03 14:16:21 *	ugjka is now known as pickanameandstic
+May 03 14:16:48 *	pickanameandstic is now known as adults
+May 03 14:17:52 *	adults is now known as ugjka
+May 03 14:18:17 <SysGhost>	Heard that one, when a tad older and can't take as much alcohol, can get around it by lowering the sugar intake for a few hours/days before a "drink out" to get more headroom before the roof is hit. Haven't tested it though.
+May 03 14:18:40 *	olavx200 has quit (Quit: leaving)
+May 03 14:18:52 *	rossome has quit (Quit: WeeChat 2.2)
+May 03 14:19:07 <dmc>	I generally only get smashed during social drinking if I forget to eat
+May 03 14:19:40 *	aHick (~aHick@unaffiliated/ahick) has joined
+May 03 14:19:42 <gehidore>	uh-huh
+May 03 14:20:42 <dmc>	like alcohol poisoning smashed
+May 03 14:20:51 <dmc>	!ud smashed
+May 03 14:20:52 <phrik>	dmc: Urban Dictionary: smashed <https://www.urbandictionary.com/define.php?term=smashed>
+May 03 14:21:04 <dmc>	oh
+May 03 14:21:04 <MrElendig>	not being able to drink a litre of 96% in 30 mins is generally not a bad thing
+May 03 14:21:05 <fckr>	if you smash the bottles on the floor before you get smashed, you won't get poisoned
+May 03 14:21:36 <dmc>	I take back what I said
+May 03 14:21:45 <dmc>	s/smashed/alcohol poisoning/
+May 03 14:21:58 <dmc>	to get smashed is my goal
+May 03 14:22:28 <fckr>	sober -> tipsy -> drunk -> smashed -> poisoned -> ded
+May 03 14:22:29 <SysGhost>	dmc: How fast one get drunk, and how much it takes before getting drunk is different. You're right that if on emty stomach, the alcoholl gets into the system faster, but the factor of how much it takes before one get to a certain level still differes on what's already in the system.
+May 03 14:22:31 <paulguy>	haven't drank enough to throw up in a while.
+May 03 14:22:55 <dmc>	wut
+May 03 14:24:12 <F55>	gin
+May 03 14:24:16 <HEX0>	paulguy: oh yeah it's probably the most miserable feeling after food poisoning
+May 03 14:24:33 <NextHendrix>	i don't always throw up, but when i do it's during predrinks
+May 03 14:24:38 <F55>	more empty stomach is a bad thing
+May 03 14:24:39 <NextHendrix>	then go out refreshes
+May 03 14:24:41 <NextHendrix>	d
+May 03 14:24:42 <HEX0>	atleast for me that is
+May 03 14:24:43 <th0rne>	Goddamn amateurs.
+May 03 14:25:07 *	SysGhost nods with th0rne
+May 03 14:25:08 *	Namarrgon has quit (Remote host closed the connection)
+May 03 14:25:26 *	F55 press F55 to refresh
+May 03 14:25:40 *	SysGhost wanna see that keyboard
+May 03 14:25:56 <haavard>	NextHendrix: you don't know you're drunk until you've vomited 
+May 03 14:25:56 <F55>	it's F2 fault
+May 03 14:26:07 <paulguy>	no letter keys just F1 to F255
+May 03 14:26:16 *	Namarrgon (~glei@archlinux/op/namarrgon) has joined
+May 03 14:26:17 <fckr>	if you mix together grain alcohol, benzos, and amphetamines in the right proportions, you can get yourself to the perfect state of fucked up
+May 03 14:26:20 <SysGhost>	!qs drunk
+May 03 14:26:21 <phrik>	SysGhost: #55518: how many cows must i eat to get drunk?, #55218: 1) Get drunk. 2) Take a gun. 3) Point..., #54881: I am become drunk, destroyer of AUR, #54613: I am too drunk to help you, #54518: As somebody who was shot at by a drunk..., #54346: * rcf plots to eat a huge turkey and..., #53981: just come straight to slovakia and get..., #53453: ok, who let gnu go drunk driving #..., #53171: You being drunk is not a problem.  (20 more message
+May 03 14:27:12 <F55>	!qs turkey
+May 03 14:27:12 <phrik>	F55: #55308: "what! what do you want! the book said..., #54346: * rcf plots to eat a huge turkey and..., #46848: I like European food so I decided to..., #44026: for eight years I was addicted to cold..., #39419: I was addicted to cold turkey for far..., #23803: can you send over the sauce code?, #22219: god damned it appears I am love with him, #22218: facts? who needs em when I have CNN, #20638: MutantTurkey, admins are  (4 more messages)
+May 03 14:27:18 *	AnLog (~AnLog@188.25.61.186) has joined
+May 03 14:27:49 <SysGhost>	fckr: sounds like any combination of that in any quantity has that effect.
+May 03 14:27:52 <th0rne>	So interestingly the query about drunk had more animal violence than the one about turkey.
+May 03 14:28:55 <SysGhost>	!qsay 55218
+May 03 14:28:56 <phrik>	SysGhost: <mpan> 1) Get drunk. 2) Take a gun. 3) Point at a target. 4) Now you know how Shroedinger’s cat can be alive and dead at the same time. ;)
+May 03 14:29:13 <mnrmnaugh>	lmfao https://youtube.com/watch?v=QTzgWrq41LY
+May 03 14:29:15 <phrik>	Title: 240V bananacuting bananticlimax. (mastication alert) - YouTube (at youtube.com)
+May 03 14:29:43 <paulguy>	sup mnrmnaugh
+May 03 14:29:53 <F55>	!qsay 44026
+May 03 14:29:53 <phrik>	F55: <mar77i> for eight years I was addicted to cold turkey. And when I said to people I was quitting cold turkey, they asked me back, "what are you quitting?" I said I was quitting fucking cold turkey
+May 03 14:29:56 <NextHendrix>	haavard: truth
+May 03 14:30:01 <mnrmnaugh>	this fkin hotdog machine tho. lol like better version of cornballer
+May 03 14:30:07 <th0rne>	Lol
+May 03 14:30:20 <NextHendrix>	mar77i certified legend
+May 03 14:30:29 <mnrmnaugh>	hey paulguy 
+May 03 14:30:32 <rcf>	mnrmnaugh: I wonder how well it would cook animal penis 
+May 03 14:30:35 <SysGhost>	Got one dude you wanna shoot?, but still leave the dude alive to tell that you've shot the dude?... 1: Get drunk  til you see doubles 2: Shoot one of the doubles 3: ??? 4: Tell the dude you've shot him ded.
+May 03 14:30:41 *	haavard masticates
+May 03 14:30:48 <mnrmnaugh>	lol thats a yakov smirnoff joke
+May 03 14:30:51 *	fckr watches haavard masticate
+May 03 14:31:06 <haavard>	Why is Google giving me ads for an app I already have installed and have a premium subscription in 
+May 03 14:31:12 <mnrmnaugh>	that ice crusher is so big, the ice crushes you!
+May 03 14:31:14 <haavard>	I thought they were supposed to know everything 
+May 03 14:31:26 <DarkPsydeLord>	cause google's a dick?
+May 03 14:31:27 <mnrmnaugh>	kek
+May 03 14:31:46 <rcf>	haavard: maybe some percentage of people who see an ad like that actually decide to buy it again. 
+May 03 14:32:18 <SysGhost>	DarkPsydeLord: Indeed. Now imagine that a large portion of the world uses the same dick every day.
+May 03 14:32:24 <haavard>	But like.. you can't install an app twice 
+May 03 14:32:42 <fckr>	is it a monthly subscription?
+May 03 14:32:48 <haavard>	Yes
+May 03 14:32:51 <rcf>	Sure you can, if you buy a new Google Pixel smartphone!
+May 03 14:33:11 <fckr>	then they probably want you to remember that you have it, and continue to enjoy it, and don't forget about it, so you never break up with it
+May 03 14:33:32 <paulguy>	and don't stop giving it information!
+May 03 14:33:33 <haavard>	I guess 
+May 03 14:33:37 <DarkPsydeLord>	must be a very infected dick then
+May 03 14:33:39 <MrElendig>	haavard: buy amd card, install drivers, get spammed with ads for two gen older cards while you install the driver
+May 03 14:33:47 <haavard>	They still showed me the whole thing with an install button and everything 
+May 03 14:34:03 <DarkPsydeLord>	SysGhost: are we talking about the bald guy from brazzers?
+May 03 14:34:10 <fckr>	complain to their cheif marketing rockstar
+May 03 14:34:17 <haavard>	MrElendig: lol true, buy something online and get ads for weeks 
+May 03 14:34:34 <MrElendig>	haavard: in the driver installer itself
+May 03 14:34:41 <mnrmnaugh>	lol fools!
+May 03 14:34:42 <haavard>	Doesn't get better 
+May 03 14:35:41 <paulguy>	someone should make photorealistic crash bandicoot in the style of movie sonic.
+May 03 14:36:21 <mnrmnaugh>	live action?
+May 03 14:36:25 <rcf>	Presumably exists at a furry convention somewhere 
+May 03 14:36:28 <paulguy>	also photorealistic Toad
+May 03 14:36:36 <mnrmnaugh>	lol
+May 03 14:37:07 <DarkPsydeLord>	a photorealistic pepe
+May 03 14:37:25 <paulguy>	nah, Toad from mario
+May 03 14:38:28 <SysGhost>	https://www.patheos.com/blogs/filmchat/2008/03/photorealistic-cartoon-characters-you-say.html
+May 03 14:38:29 <phrik>	Title: Photorealistic cartoon characters, you say? | Peter T. Chattaway (at www.patheos.com)
+May 03 14:38:58 <mnrmnaugh>	terrifying
+May 03 14:39:03 *	saucyfox has quit (*.net *.split)
+May 03 14:39:04 *	grawity has quit (*.net *.split)
+May 03 14:39:04 *	jmad980 has quit (*.net *.split)
+May 03 14:39:04 *	abc_ has quit (*.net *.split)
+May 03 14:39:04 *	nexxus6 has quit (*.net *.split)
+May 03 14:39:04 *	ndk has quit (*.net *.split)
+May 03 14:39:15 <SysGhost>	Best one would be this: https://www.youtube.com/watch?v=TStUjbIxcy8
+May 03 14:39:16 <phrik>	Title: Real-Life Professor Farnsworth from Futurama! - YouTube (at www.youtube.com)
+May 03 14:39:32 <SysGhost>	I'm still waiting for the real life Bender
+May 03 14:39:45 <NextHendrix>	haavard is a real life bender
+May 03 14:39:53 <mnrmnaugh>	lol ye, that farnsworth
+May 03 14:40:29 <mnrmnaugh>	zoidberg too
+May 03 14:41:01 <mnrmnaugh>	"we caught someone trying to sandcrab into the building"
+May 03 14:41:41 <haavard>	Brilliant 
+May 03 14:42:17 <haavard>	Can we ban NextHendrix for harassing me please 
+May 03 14:42:26 *	SysGhost chucks a few beer bottles at haavard. Don't go run out of fuel now.
+May 03 14:42:39 <SysGhost>	You do look a bit rusty/sober.
+May 03 14:42:52 *	olavx200 (~olavx200@233.171.189.109.customer.cdi.no) has joined
+May 03 14:42:58 <mnrmnaugh>	lol pls no throw beer
+May 03 14:43:06 <rcf>	 /me throws crackpipe at haavard 
+May 03 14:43:23 *	haavard throws feces at rcf
+May 03 14:43:25 <dmc>	I feel like trying to watch a >3 hour movie while coming down from alcohol might be a bad idea
+May 03 14:43:36 <mnrmnaugh>	beer can to the face lol oof
+May 03 14:43:38 <haavard>	dmc: drink alcohol while watching it obviously 
+May 03 14:43:50 <dmc>	the logistics just aren't there
+May 03 14:43:50 *	jfhbrook has quit (*.net *.split)
+May 03 14:43:50 *	arti_ has quit (*.net *.split)
+May 03 14:43:50 *	orumin has quit (*.net *.split)
+May 03 14:43:50 *	sheep has quit (*.net *.split)
+May 03 14:43:50 *	Soni has quit (*.net *.split)
+May 03 14:43:50 *	lennox has quit (*.net *.split)
+May 03 14:43:50 *	thealamenthe has quit (*.net *.split)
+May 03 14:43:51 *	krup has quit (*.net *.split)
+May 03 14:43:51 *	ugjka has quit (*.net *.split)
+May 03 14:43:51 *	Lartza has quit (*.net *.split)
+May 03 14:43:51 *	Belial has quit (*.net *.split)
+May 03 14:43:51 *	FFY00 has quit (*.net *.split)
+May 03 14:43:51 *	alad has quit (*.net *.split)
+May 03 14:43:55 *	rcf eagerly devours feces
+May 03 14:44:08 <haavard>	I did the mistake of having a couple beers before it, almost fell asleep 2/3rds in 
+May 03 14:44:11 <SysGhost>	!grab rcf
+May 03 14:44:12 <phrik>	SysGhost: Tada!
+May 03 14:45:10 <SysGhost>	rcf: you drunk already?
+May 03 14:45:19 <rcf>	Not at all. 
+May 03 14:45:33 <SysGhost>	Bah... you're not doing it right.
+May 03 14:46:04 <rcf>	A bit early in my time zone for getting properly wasted. 
+May 03 14:46:08 *	logion (~root@unaffiliated/logion) has joined
+May 03 14:46:26 <mnrmnaugh>	"while youre out can you pick me up a box of chore boy and a glass rose?"
+May 03 14:47:11 *	alyptik has quit (Ping timeout: 255 seconds)
+May 03 14:47:41 <logion>	his means you have to be identified via NickServ to be able to join these channels and send messages, respectively. If you are not registered and identified, you will be forwarded to #archlinux-unregistered.
+May 03 14:48:18 *	ugjka (~ugjka@ugjka.net) has joined
+May 03 14:48:27 *	alyptik (ayy@cpe-76-173-133-37.hawaii.res.rr.com) has joined
+May 03 14:48:57 <dmc>	k
+May 03 14:49:13 <dmc>	that's, like, just your opinion, man
+May 03 14:49:25 <dmc>	mnrmnaugh
+May 03 14:49:32 <dmc>	get me a cab to Times Square
+May 03 14:49:40 <mnrmnaugh>	lol
+May 03 14:50:11 *	rcf sends a 'cab' to dmc, which is a real cab, and not a ploy to rob anybody at all because that would be wrong.
+May 03 14:51:48 *	purist has quit (Remote host closed the connection)
+May 03 14:52:07 <dmc>	welp, here I go to the beericatessen
+May 03 14:52:09 *	purist (~purist@gateway/tor-sasl/purist) has joined
+May 03 14:52:24 <dmc>	what a terrible plan this is
+May 03 14:53:08 <mnrmnaugh>	!g site:ebay.com lyft light
+May 03 14:53:09 <phrik>	mnrmnaugh: LYFT LOGO Sign, Light Up, Glowing, Sticker lyft illuminated led EL ... <https://www.ebay.com/itm/LYFT-LOGO-Sign-Light-Up-Glowing-illuminated-led-EL-car-truck-suv-/162235687708>
+May 03 14:53:53 <dmc>	Research reveals young people get drunk BEFORE they go out
+May 03 14:54:28 *	yoav___ (~yoav@5.29.162.10) has joined
+May 03 14:54:38 <rcf>	For the under-21 crowd, definitely. Not that I ever did, because I was a law-abiding citizen. 
+May 03 14:54:42 <mnrmnaugh>	always be hustlin' dmc 
+May 03 14:55:00 <mnrmnaugh>	https://0x0.st/zKJq.png
+May 03 14:55:22 <dmc>	I actually don't think I got drunk before college
+May 03 14:55:23 <mnrmnaugh>	>meritocracy and toe-stepping
+May 03 14:55:30 <dmc>	though I probably did
+May 03 14:55:43 <dmc>	definitely didn't get high before college
+May 03 14:57:48 <dagle>	ox: Mark Rippetoe is strange... "I kinda wish I got a death treat, I think it would be kinda cool".
+May 03 14:58:53 <dmc>	I only make death promises
+May 03 15:00:35 <mnrmnaugh>	!grab dmc
+May 03 15:00:36 <phrik>	mnrmnaugh: Tada!
+May 03 15:00:56 <mnrmnaugh>	onoes, dmc is made of javascript
+May 03 15:04:05 *	bashfulshell (uid190567@gateway/web/irccloud.com/x-pxhpygggpuipllzv) has joined
+May 03 15:04:26 <mnrmnaugh>	lol nice fold https://0x0.st/zcdW.png
+May 03 15:05:42 *	AnLog has quit (Read error: Connection reset by peer)
+May 03 15:07:21 *	nexxus6 (~nexxus6@unaffiliated/nexxus6) has joined
+May 03 15:07:28 *	grawity (grawity@sky.nullroute.eu.org) has joined
+May 03 15:07:46 *	ndk (~ndk@88.198.50.201) has joined
+May 03 15:07:53 *	jmad980 (~ku@205.185.117.153) has joined
+May 03 15:07:59 *	Belial (~joe@gibson.unneeded.info) has joined
+May 03 15:08:04 *	lennox (lennox@dopenig.ga) has joined
+May 03 15:08:04 *	sheep (~lucius@unaffiliated/sheep) has joined
+May 03 15:08:12 *	jfhbrook (sid301834@gateway/web/irccloud.com/x-yabhzuswibdmhtkq) has joined
+May 03 15:08:14 *	thealamenthe (~qwert@unaffiliated/thealamenthe) has joined
+May 03 15:08:15 *	krup (krup@unaffiliated/krup) has joined
+May 03 15:08:22 *	Soni (~quassel@unaffiliated/soniex2) has joined
+May 03 15:08:26 *	abc_ (~abc_@unaffiliated/abc-/x-4125962) has joined
+May 03 15:08:53 *	arti (~arti@do.arti.ee) has joined
+May 03 15:08:56 *	Lartza (lartza@unaffiliated/lartza) has joined
+May 03 15:09:01 *	saucyfox (~saucyfox@saucyfox.net) has joined
+May 03 15:09:37 <mnrmnaugh>	!give dmc g argpeggio.vim
+May 03 15:09:39 <phrik>	dmc: GitHub - kana/vim-arpeggio: Vim plugin: Mappings for ... <https://github.com/kana/vim-arpeggio>
+May 03 15:10:06 *	alad (~alad@archlinux/trusteduser/alad) has joined
+May 03 15:10:15 *	purist has quit (Remote host closed the connection)
+May 03 15:10:17 <mnrmnaugh>	fek orf google https://www.vim.org/scripts/script.php?script_id=2425
+May 03 15:10:19 <phrik>	Title: arpeggio - Key mappings for simultaneously pressed keys : vim online (at www.vim.org)
+May 03 15:11:22 *	purist (~purist@gateway/tor-sasl/purist) has joined
+May 03 15:24:44 *	Disconnected ()
+**** ENDING LOGGING AT Fri May  3 15:24:44 2019
+

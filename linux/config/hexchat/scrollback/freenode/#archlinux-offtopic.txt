@@ -1,0 +1,328 @@
+T 1556916492 19*	Now talking on 22#archlinux-offtopic
+T 1556916492 22*	Topic for 22#archlinux-offtopic is: Welcome to #alots | Rules: https://www.youtube.com/watch?v=ZQjS9EZSaxs | Stats: https://alyptik.org/aot contact jp (alyptik) to opt out | op at work https://imgur.com/gallery/oCHhMdo | https://www.youtube.com/watch?v=J7UwSVsiwzI | Topikittehs! (10:28) https://www.youtube.com/watch?v=QcD8DrJKejQ
+T 1556916492 22*	Topic for 22#archlinux-offtopic set by 26tigrmesh!~tigrmesh@archlinux/op/tigrmesh (24Tue Apr  9 18:14:30 2019)
+T 1556916495 18<paulguy18>	if it's completely disabled, a watchdog I guess reboots the board.
+T 1556916515 18<paulguy18>	every few minutes or something
+T 1556916523 18<SysGhost18>	indeed. I've read about attempts to erase it completely, it jsut won't post 
+T 1556916527 18<HEX018>	30 minutes
+T 1556916548 18<HEX018>	according to github page after 30 minutes system shuts down
+T 1556916570 18<HEX018>	if ME or signing key is not present or something
+T 1556916618 18<HEX018>	and it runs minix, so the year of minux desktop afaik.
+T 1556916633 18<soft_cement18>	Depending on what you
+T 1556916648 18<HEX018>	so I guess the year of Minix desktop happened long ago lol
+T 1556916665 18<soft_cement18>	You're after, putting a firewall between the machine and your gateway could be a way of stopping it from calling home... maybe? Just a guess
+T 1556916774 18*	SysGhost ssh's into the PSP, and executes "echo 1 > /proc/sys/kernel/self_destruct".
+T 1556916783 18<HEX018>	bittersweet that we can't have libre x86 hardware while linux FOSS drivers got so good
+T 1556916802 18<soft_cement18>	I would like to see RISC-V become an option
+T 1556916833 18<soft_cement18>	this exists: https://www.sifive.com/boards/hifive1
+T 1556916837 18<phrik18>	Title: HiFive1 - SiFive (at www.sifive.com)
+T 1556916848 18<soft_cement18>	IIRC, it's a fully Libre RISC-V dev board
+T 1556916863 18<HEX018>	I wonder if it would be possible to emulate legacy x86 prorpietary games on Talos Power9 systems with acceptable performance 
+T 1556916896 18<soft_cement18>	you want libre hardware to play proprietary video games? really?
+T 1556916927 18<HEX018>	would be nice thought wouldn't it
+T 1556916933 18<paulguy18>	i'm OK with application software being proprietary to some degree, I at least accept it.
+T 1556916948 18<paulguy18>	but the basis of a system it would be nice to be totally out there.
+T 1556916954 18<soft_cement18>	paulguy: agreed
+T 1556916987 18<soft_cement18>	hardware, firmware, kernel... so the user has freedom and can know what their system is up to, if they wish
+T 1556917008 18<soft_cement18>	if they wish to install proprietary software/spyware on top of that, then that's their choice, they're not forced into it
+T 1556917081 18<paulguy18>	would be nice if that stuff wasn't a thing either heh
+T 1556917160 18<SysGhost18>	HEX0: Somne more info about it: https://www.howtogeek.com/334013/intel-management-engine-explained-the-tiny-computer-inside-your-cpu/ And two quotes I'd like to snip out: 
+T 1556917162 18<SysGhost18>	-"This isn’t any sort of spying or monitoring software—unless an organization has enabled AMT and is using it to monitor their own PCs. If Intel’s Management Engine was contacting the network in other situations, we’d likely have heard of it thanks to tools like Wireshark, which allow people to monitor traffic on a network."
+T 1556917171 18<SysGhost18>	-"However, the presence of software like Intel ME that can’t be disabled and is closed source is certainly a security concern. It’s another avenue for attack, and we’ve already seen security holes in Intel ME."
+T 1556917252 18<dmc18>	how bad of an idea would it be to get drunk prior to going to watch a 3 hour long movie
+T 1556917268 18<SysGhost18>	Same goes for AMD. One wonder what the american congress forces large american-owned multinational companies to do. ¯\_(ツ)_/¯
+T 1556917273 18<haavard18>	dmc: amazing idea honestly 
+T 1556917279 18<dmc18>	> A urologist’s tips on watching the 3-hour-plus ‘Avengers: Endgame’ without a bathroom break
+T 1556917280 18<paulguy18>	probably end up having to pee a few times
+T 1556917283 18<dmc18>	lol haavard
+T 1556917285 18<haavard18>	Movie is too boring sober 
+T 1556917306 18<haavard18>	If you have a festival bladder it's all good 
+T 1556917309 18<SysGhost18>	haavard: you're watching the wrong movies then
+T 1556917313 18<dmc18>	going to need to note good times for bathroom breaks if I do this
+T 1556917317 18<dmc18>	I do not
+T 1556917319 18<HEX018>	dmc: you'll probably forget the plot mid movie
+T 1556917321 18<haavard18>	SysGhost: indeed 
+T 1556917328 18<dmc18>	and I'd be getting drunk on beer
+T 1556917336 18<dmc18>	HEX0, perhaps..
+T 1556917347 18<haavard18>	dmc: dehydrate yourself prior to drinking beer 
+T 1556917370 18<HEX018>	dmc: don't recommend watching a horror movie after smoking a joint though. pretty intense in that state :P
+T 1556917386 23*	F55 (~umryk@unaffiliated/fer75523) has joined
+T 1556917391 18<SysGhost18>	Trick is: empty your baldder just before entering the cinema. Even if you don't need to. Squeeze the drops out so the bladder is all empty. that'll make you last for a good 2-5 hours depending on liquid intake and bladder-zize. 
+T 1556917427 18<paulguy18>	expanded bladder implants
+T 1556917433 18<dmc18>	I'd be drinking up to 75 oz of beer
+T 1556917440 18<dmc18>	any more and I might not make it to the theater
+T 1556917460 18<SysGhost18>	Talking of which... time for me to go grab a bunch of bottles ... BBL...
+T 1556917468 18<haavard18>	How much is 75 oz 
+T 1556917469 18<F5518>	theatr balder zizzer respawner
+T 1556917480 18<dmc18>	in what
+T 1556917499 18<haavard18>	Normal units 
+T 1556917499 18<paulguy18>	!convert 75 floz l
+T 1556917500 18<phrik18>	paulguy: 2.22
+T 1556917506 18<HEX018>	or just put a catheter in there and enjoy you beer
+T 1556917507 18<F5518>	popcorn balder
+T 1556917516 18<haavard18>	What so like four pints 
+T 1556917518 18<haavard18>	Come on 
+T 1556917526 18<haavard18>	I thought you said drunk 
+T 1556917547 18<SysGhost18>	uh... one more thing.... one can bring an empty emergenzy-bottle, and do the business during the most intense scenes when everyone is so occupied they'd never notice it. Loud scenes works the best =P
+T 1556917574 18<paulguy18>	you can buy those hospital pee jugs
+T 1556917591 18<HEX018>	make sure to loudly drink something through a straw while peeing in the bottle
+T 1556917612 18<SysGhost18>	in that case... don't mix the bottles.
+T 1556917625 18<F5518>	in the middle of the movie they starting to moving the air, so start entering cold breeze, too damn cold
+T 1556917626 18<haavard18>	Just man up and hold it 
+T 1556917640 18<HEX018>	that might be a challenge when you are drunk. could easily mix up bottles
+T 1556917648 18<haavard18>	Or man up and realize you can miss a scene 
+T 1556917668 18<SysGhost18>	Noes!
+T 1556917670 18<Reventlov18>	is it bad if I recognize domino's pizza in people fart
+T 1556917686 18<HEX018>	no you are gifted
+T 1556917687 18<SysGhost18>	Yep
+T 1556917694 18<SysGhost18>	...but gifted... 
+T 1556917695 18<dmc18>	!grab Reventlov
+T 1556917695 18<phrik18>	dmc: Bingpot!
+T 1556917708 18<dmc18>	haavard, depends on how fast you drink
+T 1556917709 18<Reventlov18>	fuck me
+T 1556917712 18<F5518>	'zinga
+T 1556917714 18<SysGhost18>	!rq Reventlov
+T 1556917714 18<phrik18>	SysGhost: <Reventlov> because you touch yourself at night
+T 1556917725 18<F5518>	!why
+T 1556917725 18<phrik18>	Because you touch yourself at night.
+T 1556917734 18<dmc18>	I've been passing out shortly after cracking the last 25 oz
+T 1556917741 18<dmc18>	(out of 100)
+T 1556917751 18<haavard18>	dmc is lightweight 
+T 1556917771 18<SysGhost18>	!rq Reventlov
+T 1556917771 18<phrik18>	SysGhost: <Reventlov> fial.
+T 1556917775 18<SysGhost18>	meh
+T 1556917777 18<dmc18>	better on my wallet :)
+T 1556917780 18<SysGhost18>	!multirq Reventlov
+T 1556917781 18<phrik18>	<Reventlov> timestamps are there to remind me that life is short and that I should go to sleep <Reventlov> timestamps are there to remind me that life is short and that I should go to sleep <Reventlov> because you touch yourself at night <Reventlov> I only have 2 knees :( <Reventlov> because you touch yourself at night
+T 1556917783 18<haavard18>	True 
+T 1556917814 18<haavard18>	The budget drinker will fast for a day and then get smashed on a single pint 
+T 1556917817 18<SysGhost18>	Reventlov: you really need to write more insanity.
+T 1556917821 18<haavard18>	NextHendrix does that because he's poor 
+T 1556917821 18<dmc18>	I don't fast
+T 1556917826 18<dmc18>	but I don't do a pre-game meal
+T 1556917838 18<dmc18>	though I do have a fat meal after 25 or 50 oz
+T 1556917856 18<NextHendrix18>	haavard is right
+T 1556917914 18<SysGhost18>	Am I the only one who aims to drink a lot and avoid getting smashed?
+T 1556917918 18<haavard18>	Always am 
+T 1556917928 18<haavard18>	!grab NextHendrix
+T 1556917928 24*	Eiii has quit (Quit: !)
+T 1556917928 18<phrik18>	haavard: Tada!
+T 1556917932 18<dmc18>	SysGhost, what's the point of that
+T 1556917946 18<NextHendrix18>	SysGhost: i do that when i have money
+T 1556917947 18<F5518>	!yt He is - ghost
+T 1556917949 18<phrik18>	YouTube :: https://youtu.be/7hMaHDTw-pI :: Ghost - He Is (Music Video)
+T 1556917953 18<NextHendrix18>	dmc: those who get hammered don't get to nail
+T 1556917962 18<SysGhost18>	dmc: to drink more, and laugh at your drinking buddies when they do crazy stuff.. .and actually remember it all.
+T 1556917967 18<haavard18>	Wise words, NextHendrix
+T 1556917978 18<NextHendrix18>	haavard: not mine, but the wise words of mike skinner
+T 1556917989 18<SysGhost18>	...although it's oftem them telling me of stuff I never remember I did.
+T 1556917992 18<NextHendrix18>	,yt the streets war of the sexes
+T 1556918008 18<NextHendrix18>	!give haavard yt the streets war of the sexes
+T 1556918009 18<phrik18>	YouTube :: https://youtu.be/ScSefMVf_RU :: The Streets - War Of The Sexes (Official Audio)
+T 1556918036 18<HEX018>	used to be able to handle alcohol. then I became a workaholic and didn't drink for straight 2 years. now I can barely handle 2 shots of vodka
+T 1556918086 18<HEX018>	also being in the military, always exhausted and sleepless 
+T 1556918181 24*	28ugjka is now known as 18pickanameandstic
+T 1556918208 24*	28pickanameandstic is now known as 18adults
+T 1556918272 24*	28adults is now known as 18ugjka
+T 1556918297 18<SysGhost18>	Heard that one, when a tad older and can't take as much alcohol, can get around it by lowering the sugar intake for a few hours/days before a "drink out" to get more headroom before the roof is hit. Haven't tested it though.
+T 1556918320 24*	olavx200 has quit (Quit: leaving)
+T 1556918332 24*	rossome has quit (Quit: WeeChat 2.2)
+T 1556918347 18<dmc18>	I generally only get smashed during social drinking if I forget to eat
+T 1556918380 23*	aHick (~aHick@unaffiliated/ahick23) has joined
+T 1556918382 18<gehidore18>	uh-huh
+T 1556918442 18<dmc18>	like alcohol poisoning smashed
+T 1556918451 18<dmc18>	!ud smashed
+T 1556918452 18<phrik18>	dmc: Urban Dictionary: smashed <https://www.urbandictionary.com/define.php?term=smashed>
+T 1556918464 18<dmc18>	oh
+T 1556918464 18<MrElendig18>	not being able to drink a litre of 96% in 30 mins is generally not a bad thing
+T 1556918465 18<fckr18>	if you smash the bottles on the floor before you get smashed, you won't get poisoned
+T 1556918496 18<dmc18>	I take back what I said
+T 1556918505 18<dmc18>	s/smashed/alcohol poisoning/
+T 1556918518 18<dmc18>	to get smashed is my goal
+T 1556918548 18<fckr18>	sober -> tipsy -> drunk -> smashed -> poisoned -> ded
+T 1556918549 18<SysGhost18>	dmc: How fast one get drunk, and how much it takes before getting drunk is different. You're right that if on emty stomach, the alcoholl gets into the system faster, but the factor of how much it takes before one get to a certain level still differes on what's already in the system.
+T 1556918551 18<paulguy18>	haven't drank enough to throw up in a while.
+T 1556918575 18<dmc18>	wut
+T 1556918652 18<F5518>	gin
+T 1556918656 18<HEX018>	paulguy: oh yeah it's probably the most miserable feeling after food poisoning
+T 1556918673 18<NextHendrix18>	i don't always throw up, but when i do it's during predrinks
+T 1556918678 18<F5518>	more empty stomach is a bad thing
+T 1556918679 18<NextHendrix18>	then go out refreshes
+T 1556918681 18<NextHendrix18>	d
+T 1556918682 18<HEX018>	atleast for me that is
+T 1556918683 18<th0rne18>	Goddamn amateurs.
+T 1556918707 18*	SysGhost nods with th0rne
+T 1556918708 24*	Namarrgon has quit (Remote host closed the connection)
+T 1556918726 18*	F55 press F55 to refresh
+T 1556918740 18*	SysGhost wanna see that keyboard
+T 1556918756 18<haavard18>	NextHendrix: you don't know you're drunk until you've vomited 
+T 1556918756 18<F5518>	it's F2 fault
+T 1556918767 18<paulguy18>	no letter keys just F1 to F255
+T 1556918776 23*	Namarrgon (~glei@archlinux/op/namarrgon23) has joined
+T 1556918777 18<fckr18>	if you mix together grain alcohol, benzos, and amphetamines in the right proportions, you can get yourself to the perfect state of fucked up
+T 1556918780 18<SysGhost18>	!qs drunk
+T 1556918781 18<phrik18>	SysGhost: #55518: how many cows must i eat to get drunk?, #55218: 1) Get drunk. 2) Take a gun. 3) Point..., #54881: I am become drunk, destroyer of AUR, #54613: I am too drunk to help you, #54518: As somebody who was shot at by a drunk..., #54346: * rcf plots to eat a huge turkey and..., #53981: just come straight to slovakia and get..., #53453: ok, who let gnu go drunk driving #..., #53171: You being drunk is not a problem.  (20 more message
+T 1556918832 18<F5518>	!qs turkey
+T 1556918832 18<phrik18>	F55: #55308: "what! what do you want! the book said..., #54346: * rcf plots to eat a huge turkey and..., #46848: I like European food so I decided to..., #44026: for eight years I was addicted to cold..., #39419: I was addicted to cold turkey for far..., #23803: can you send over the sauce code?, #22219: god damned it appears I am love with him, #22218: facts? who needs em when I have CNN, #20638: MutantTurkey, admins are  (4 more messages)
+T 1556918838 23*	AnLog (~AnLog@188.25.61.18623) has joined
+T 1556918869 18<SysGhost18>	fckr: sounds like any combination of that in any quantity has that effect.
+T 1556918872 18<th0rne18>	So interestingly the query about drunk had more animal violence than the one about turkey.
+T 1556918935 18<SysGhost18>	!qsay 55218
+T 1556918936 18<phrik18>	SysGhost: <mpan> 1) Get drunk. 2) Take a gun. 3) Point at a target. 4) Now you know how Shroedinger’s cat can be alive and dead at the same time. ;)
+T 1556918953 18<mnrmnaugh18>	lmfao https://youtube.com/watch?v=QTzgWrq41LY
+T 1556918955 18<phrik18>	Title: 240V bananacuting bananticlimax. (mastication alert) - YouTube (at youtube.com)
+T 1556918983 18<paulguy18>	sup mnrmnaugh
+T 1556918993 18<F5518>	!qsay 44026
+T 1556918993 18<phrik18>	F55: <mar77i> for eight years I was addicted to cold turkey. And when I said to people I was quitting cold turkey, they asked me back, "what are you quitting?" I said I was quitting fucking cold turkey
+T 1556918996 18<NextHendrix18>	haavard: truth
+T 1556919001 18<mnrmnaugh18>	this fkin hotdog machine tho. lol like better version of cornballer
+T 1556919007 18<th0rne18>	Lol
+T 1556919020 18<NextHendrix18>	mar77i certified legend
+T 1556919029 18<mnrmnaugh18>	hey paulguy 
+T 1556919032 18<rcf18>	mnrmnaugh: I wonder how well it would cook animal penis 
+T 1556919035 18<SysGhost18>	Got one dude you wanna shoot?, but still leave the dude alive to tell that you've shot the dude?... 1: Get drunk  til you see doubles 2: Shoot one of the doubles 3: ??? 4: Tell the dude you've shot him ded.
+T 1556919041 18*	haavard masticates
+T 1556919048 18<mnrmnaugh18>	lol thats a yakov smirnoff joke
+T 1556919051 18*	fckr watches haavard masticate
+T 1556919066 18<haavard18>	Why is Google giving me ads for an app I already have installed and have a premium subscription in 
+T 1556919072 18<mnrmnaugh18>	that ice crusher is so big, the ice crushes you!
+T 1556919074 18<haavard18>	I thought they were supposed to know everything 
+T 1556919086 18<DarkPsydeLord18>	cause google's a dick?
+T 1556919087 18<mnrmnaugh18>	kek
+T 1556919106 18<rcf18>	haavard: maybe some percentage of people who see an ad like that actually decide to buy it again. 
+T 1556919138 18<SysGhost18>	DarkPsydeLord: Indeed. Now imagine that a large portion of the world uses the same dick every day.
+T 1556919144 18<haavard18>	But like.. you can't install an app twice 
+T 1556919162 18<fckr18>	is it a monthly subscription?
+T 1556919168 18<haavard18>	Yes
+T 1556919171 18<rcf18>	Sure you can, if you buy a new Google Pixel smartphone!
+T 1556919191 18<fckr18>	then they probably want you to remember that you have it, and continue to enjoy it, and don't forget about it, so you never break up with it
+T 1556919212 18<paulguy18>	and don't stop giving it information!
+T 1556919213 18<haavard18>	I guess 
+T 1556919217 18<DarkPsydeLord18>	must be a very infected dick then
+T 1556919219 18<MrElendig18>	haavard: buy amd card, install drivers, get spammed with ads for two gen older cards while you install the driver
+T 1556919227 18<haavard18>	They still showed me the whole thing with an install button and everything 
+T 1556919243 18<DarkPsydeLord18>	SysGhost: are we talking about the bald guy from brazzers?
+T 1556919250 18<fckr18>	complain to their cheif marketing rockstar
+T 1556919257 18<haavard18>	MrElendig: lol true, buy something online and get ads for weeks 
+T 1556919274 18<MrElendig18>	haavard: in the driver installer itself
+T 1556919281 18<mnrmnaugh18>	lol fools!
+T 1556919282 18<haavard18>	Doesn't get better 
+T 1556919341 18<paulguy18>	someone should make photorealistic crash bandicoot in the style of movie sonic.
+T 1556919381 18<mnrmnaugh18>	live action?
+T 1556919385 18<rcf18>	Presumably exists at a furry convention somewhere 
+T 1556919388 18<paulguy18>	also photorealistic Toad
+T 1556919396 18<mnrmnaugh18>	lol
+T 1556919427 18<DarkPsydeLord18>	a photorealistic pepe
+T 1556919445 18<paulguy18>	nah, Toad from mario
+T 1556919508 18<SysGhost18>	https://www.patheos.com/blogs/filmchat/2008/03/photorealistic-cartoon-characters-you-say.html
+T 1556919509 18<phrik18>	Title: Photorealistic cartoon characters, you say? | Peter T. Chattaway (at www.patheos.com)
+T 1556919538 18<mnrmnaugh18>	terrifying
+T 1556919543 24*	saucyfox has quit (*.net *.split)
+T 1556919544 24*	grawity has quit (*.net *.split)
+T 1556919544 24*	jmad980 has quit (*.net *.split)
+T 1556919544 24*	abc_ has quit (*.net *.split)
+T 1556919544 24*	nexxus6 has quit (*.net *.split)
+T 1556919544 24*	ndk has quit (*.net *.split)
+T 1556919555 18<SysGhost18>	Best one would be this: https://www.youtube.com/watch?v=TStUjbIxcy8
+T 1556919556 18<phrik18>	Title: Real-Life Professor Farnsworth from Futurama! - YouTube (at www.youtube.com)
+T 1556919572 18<SysGhost18>	I'm still waiting for the real life Bender
+T 1556919585 18<NextHendrix18>	haavard is a real life bender
+T 1556919593 18<mnrmnaugh18>	lol ye, that farnsworth
+T 1556919629 18<mnrmnaugh18>	zoidberg too
+T 1556919661 18<mnrmnaugh18>	"we caught someone trying to sandcrab into the building"
+T 1556919701 18<haavard18>	Brilliant 
+T 1556919737 18<haavard18>	Can we ban NextHendrix for harassing me please 
+T 1556919746 18*	SysGhost chucks a few beer bottles at haavard. Don't go run out of fuel now.
+T 1556919759 18<SysGhost18>	You do look a bit rusty/sober.
+T 1556919772 23*	olavx200 (~olavx200@233.171.189.109.customer.cdi.no23) has joined
+T 1556919778 18<mnrmnaugh18>	lol pls no throw beer
+T 1556919786 18<rcf18>	 /me throws crackpipe at haavard 
+T 1556919803 18*	haavard throws feces at rcf
+T 1556919805 18<dmc18>	I feel like trying to watch a >3 hour movie while coming down from alcohol might be a bad idea
+T 1556919816 18<mnrmnaugh18>	beer can to the face lol oof
+T 1556919818 18<haavard18>	dmc: drink alcohol while watching it obviously 
+T 1556919830 18<dmc18>	the logistics just aren't there
+T 1556919830 24*	jfhbrook has quit (*.net *.split)
+T 1556919830 24*	arti_ has quit (*.net *.split)
+T 1556919830 24*	orumin has quit (*.net *.split)
+T 1556919830 24*	sheep has quit (*.net *.split)
+T 1556919830 24*	Soni has quit (*.net *.split)
+T 1556919830 24*	lennox has quit (*.net *.split)
+T 1556919830 24*	thealamenthe has quit (*.net *.split)
+T 1556919831 24*	krup has quit (*.net *.split)
+T 1556919831 24*	ugjka has quit (*.net *.split)
+T 1556919831 24*	Lartza has quit (*.net *.split)
+T 1556919831 24*	Belial has quit (*.net *.split)
+T 1556919831 24*	FFY00 has quit (*.net *.split)
+T 1556919831 24*	alad has quit (*.net *.split)
+T 1556919835 18*	rcf eagerly devours feces
+T 1556919848 18<haavard18>	I did the mistake of having a couple beers before it, almost fell asleep 2/3rds in 
+T 1556919851 18<SysGhost18>	!grab rcf
+T 1556919852 18<phrik18>	SysGhost: Tada!
+T 1556919910 18<SysGhost18>	rcf: you drunk already?
+T 1556919919 18<rcf18>	Not at all. 
+T 1556919933 18<SysGhost18>	Bah... you're not doing it right.
+T 1556919964 18<rcf18>	A bit early in my time zone for getting properly wasted. 
+T 1556919968 23*	logion (~root@unaffiliated/logion23) has joined
+T 1556919986 18<mnrmnaugh18>	"while youre out can you pick me up a box of chore boy and a glass rose?"
+T 1556920031 24*	alyptik has quit (Ping timeout: 255 seconds)
+T 1556920061 18<logion18>	his means you have to be identified via NickServ to be able to join these channels and send messages, respectively. If you are not registered and identified, you will be forwarded to #archlinux-unregistered.
+T 1556920098 23*	ugjka (~ugjka@ugjka.net23) has joined
+T 1556920107 23*	alyptik (ayy@cpe-76-173-133-37.hawaii.res.rr.com23) has joined
+T 1556920137 18<dmc18>	k
+T 1556920153 18<dmc18>	that's, like, just your opinion, man
+T 1556920165 18<dmc18>	mnrmnaugh
+T 1556920172 18<dmc18>	get me a cab to Times Square
+T 1556920180 18<mnrmnaugh18>	lol
+T 1556920211 18*	rcf sends a 'cab' to dmc, which is a real cab, and not a ploy to rob anybody at all because that would be wrong.
+T 1556920308 24*	purist has quit (Remote host closed the connection)
+T 1556920327 18<dmc18>	welp, here I go to the beericatessen
+T 1556920329 23*	purist (~purist@gateway/tor-sasl/purist23) has joined
+T 1556920344 18<dmc18>	what a terrible plan this is
+T 1556920388 18<mnrmnaugh18>	!g site:ebay.com lyft light
+T 1556920389 18<phrik18>	mnrmnaugh: LYFT LOGO Sign, Light Up, Glowing, Sticker lyft illuminated led EL ... <https://www.ebay.com/itm/LYFT-LOGO-Sign-Light-Up-Glowing-illuminated-led-EL-car-truck-suv-/162235687708>
+T 1556920433 18<dmc18>	Research reveals young people get drunk BEFORE they go out
+T 1556920468 23*	yoav___ (~yoav@5.29.162.1023) has joined
+T 1556920478 18<rcf18>	For the under-21 crowd, definitely. Not that I ever did, because I was a law-abiding citizen. 
+T 1556920482 18<mnrmnaugh18>	always be hustlin' dmc 
+T 1556920500 18<mnrmnaugh18>	https://0x0.st/zKJq.png
+T 1556920522 18<dmc18>	I actually don't think I got drunk before college
+T 1556920523 18<mnrmnaugh18>	>meritocracy and toe-stepping
+T 1556920530 18<dmc18>	though I probably did
+T 1556920543 18<dmc18>	definitely didn't get high before college
+T 1556920668 18<dagle18>	ox: Mark Rippetoe is strange... "I kinda wish I got a death treat, I think it would be kinda cool".
+T 1556920733 18<dmc18>	I only make death promises
+T 1556920835 18<mnrmnaugh18>	!grab dmc
+T 1556920836 18<phrik18>	mnrmnaugh: Tada!
+T 1556920856 18<mnrmnaugh18>	onoes, dmc is made of javascript
+T 1556921045 23*	bashfulshell (uid190567@gateway/web/irccloud.com/x-pxhpygggpuipllzv23) has joined
+T 1556921066 18<mnrmnaugh18>	lol nice fold https://0x0.st/zcdW.png
+T 1556921142 24*	AnLog has quit (Read error: Connection reset by peer)
+T 1556921241 23*	nexxus6 (~nexxus6@unaffiliated/nexxus623) has joined
+T 1556921248 23*	grawity (grawity@sky.nullroute.eu.org23) has joined
+T 1556921266 23*	ndk (~ndk@88.198.50.20123) has joined
+T 1556921273 23*	jmad980 (~ku@205.185.117.15323) has joined
+T 1556921279 23*	Belial (~joe@gibson.unneeded.info23) has joined
+T 1556921284 23*	lennox (lennox@dopenig.ga23) has joined
+T 1556921284 23*	sheep (~lucius@unaffiliated/sheep23) has joined
+T 1556921292 23*	jfhbrook (sid301834@gateway/web/irccloud.com/x-yabhzuswibdmhtkq23) has joined
+T 1556921294 23*	thealamenthe (~qwert@unaffiliated/thealamenthe23) has joined
+T 1556921295 23*	krup (krup@unaffiliated/krup23) has joined
+T 1556921302 23*	Soni (~quassel@unaffiliated/soniex223) has joined
+T 1556921306 23*	abc_ (~abc_@unaffiliated/abc-/x-412596223) has joined
+T 1556921333 23*	arti (~arti@do.arti.ee23) has joined
+T 1556921336 23*	Lartza (lartza@unaffiliated/lartza23) has joined
+T 1556921341 23*	saucyfox (~saucyfox@saucyfox.net23) has joined
+T 1556921377 18<mnrmnaugh18>	!give dmc g argpeggio.vim
+T 1556921379 18<phrik18>	dmc: GitHub - kana/vim-arpeggio: Vim plugin: Mappings for ... <https://github.com/kana/vim-arpeggio>
+T 1556921406 23*	alad (~alad@archlinux/trusteduser/alad23) has joined
+T 1556921415 24*	purist has quit (Remote host closed the connection)
+T 1556921417 18<mnrmnaugh18>	fek orf google https://www.vim.org/scripts/script.php?script_id=2425
+T 1556921419 18<phrik18>	Title: arpeggio - Key mappings for simultaneously pressed keys : vim online (at www.vim.org)
+T 1556921482 23*	purist (~purist@gateway/tor-sasl/purist23) has joined
+T 1556922284 20*	Disconnected (20)
+T 1556922302 22*	26samling sets mode 24+Z on 22samling
+T 1556922302 22*	26samling sets mode 24+i on 22samling
+T 1556922302 -18NickServ-	This nickname is registered. Please choose a different nickname, or identify via /msg NickServ identify <password>.
+T 1556922303 -18freenode-connect-	Welcome to freenode. To protect the network all new connections will be scanned for vulnerabilities. This will not harm your computer, and vulnerable hosts will be notified.
+T 1556922303 24*	Received a CTCP 24VERSION from 18freenode-connect

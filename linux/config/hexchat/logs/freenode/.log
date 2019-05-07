@@ -1,0 +1,29 @@
+**** BEGIN LOGGING AT Fri May  3 13:46:35 2019
+
+May 03 13:46:35 *	Connecting to chat.freenode.net (185.30.166.37:6697)
+May 03 13:46:35 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 03 13:46:35 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 03 13:46:35 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 03 13:46:35 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 03 13:46:35 *	* Subject: /CN=orwell.freenode.net
+May 03 13:46:35 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 03 13:46:36 *	* Certification info:
+May 03 13:46:36 *	  Subject:
+May 03 13:46:36 *	    CN=orwell.freenode.net
+May 03 13:46:36 *	  Issuer:
+May 03 13:46:36 *	    C=US
+May 03 13:46:36 *	    O=Let's Encrypt
+May 03 13:46:36 *	    CN=Let's Encrypt Authority X3
+May 03 13:46:36 *	  Public key algorithm: rsaEncryption (4096 bits)
+May 03 13:46:36 *	  Sign algorithm sha256WithRSAEncryption
+May 03 13:46:36 *	  Valid since Apr 22 05:05:47 2019 GM to Jul 21 05:05:47 2019 GM
+May 03 13:46:36 *	* Cipher info:
+May 03 13:46:36 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 03 13:46:36 *	Connected. Now logging in.
+**** BEGIN LOGGING AT Fri May  3 15:25:02 2019
+
+May 03 15:25:02 *	samling sets mode +Z on samling
+May 03 15:25:02 *	samling sets mode +i on samling
+May 03 15:25:02 -NickServ-	This nickname is registered. Please choose a different nickname, or identify via /msg NickServ identify <password>.
+May 03 15:25:03 -freenode-connect-	Welcome to freenode. To protect the network all new connections will be scanned for vulnerabilities. This will not harm your computer, and vulnerable hosts will be notified.
+May 03 15:25:03 *	Received a CTCP VERSION from freenode-connect

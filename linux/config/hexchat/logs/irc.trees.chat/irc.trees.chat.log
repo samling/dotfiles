@@ -1,0 +1,1362 @@
+**** BEGIN LOGGING AT Tue Apr 30 10:37:53 2019
+
+Apr 30 10:37:53 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+Apr 30 10:37:53 *	Your host is trees.chat, running version InspIRCd-2.0
+Apr 30 10:37:53 *	This server was created 15:53:04 Nov 13 2017
+Apr 30 10:37:53 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+Apr 30 10:37:53 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+Apr 30 10:37:53 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+Apr 30 10:37:53 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+Apr 30 10:37:53 *	543AAB9GT :your unique ID
+Apr 30 10:37:53 *	trees.chat message of the day
+Apr 30 10:37:53 *	- 
+Apr 30 10:37:53 *	-                                                                                 
+Apr 30 10:37:53 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+Apr 30 10:37:53 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+Apr 30 10:37:53 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+Apr 30 10:37:53 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+Apr 30 10:37:53 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+Apr 30 10:37:53 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+Apr 30 10:37:53 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+Apr 30 10:37:53 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+Apr 30 10:37:53 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+Apr 30 10:37:53 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+Apr 30 10:37:53 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+Apr 30 10:37:53 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+Apr 30 10:37:53 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+Apr 30 10:37:53 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+Apr 30 10:37:53 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+Apr 30 10:37:53 *	-             88ZZZZZZZZ                           $$$                            
+Apr 30 10:37:53 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+Apr 30 10:37:53 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+Apr 30 10:37:53 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+Apr 30 10:37:53 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+Apr 30 10:37:53 *	-               888888Z777777777777777$OOO  $$$,                         
+Apr 30 10:37:53 *	-                   :88                  ,$$$$$,          
+Apr 30 10:37:53 *	-                     8                 $$$$$$$,                   
+Apr 30 10:37:53 *	-                      ?                $$$$$$$,               
+Apr 30 10:37:53 *	-                                       $$$$$$$,           
+Apr 30 10:37:53 *	-                                       $$$$$$$,      
+Apr 30 10:37:53 *	-                                       $$$$$$$,                 
+Apr 30 10:37:53 *	-                                       $$$$$$$,               
+Apr 30 10:37:53 *	-                                       $$$$$$$,                     
+Apr 30 10:37:53 *	-                                       $$$$$$$,                        
+Apr 30 10:37:53 *	-                                       $$$$$$$,                           
+Apr 30 10:37:53 *	-                                       $$$$$$$,                      
+Apr 30 10:37:53 *	-                                       $$$$$$$,                       
+Apr 30 10:37:53 *	-                                       $$$$$$$,                          
+Apr 30 10:37:53 *	-                                       $$$$$$$,                       
+Apr 30 10:37:53 *	-                                       $$$$$$$,                         
+Apr 30 10:37:53 *	-                                       $$$$$$$,                           
+Apr 30 10:37:53 *	-                                       $$$$$$$,                            
+Apr 30 10:37:53 *	-                                      ,$$$$$$$?                           
+Apr 30 10:37:53 *	-                                      $$$$Z$$$$~                      
+Apr 30 10:37:53 *	-                                                                           
+Apr 30 10:37:53 *	- 
+Apr 30 10:37:53 *	-              7                                    7             7        
+Apr 30 10:37:53 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+Apr 30 10:37:53 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+Apr 30 10:37:53 *	-              7   77   7     7         7    77     7   7 77   7  7         
+Apr 30 10:37:53 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+Apr 30 10:37:53 *	-                                                                           
+Apr 30 10:37:53 *	- 
+Apr 30 10:37:53 *	- Welcome to the trees.chat IRC network, please read the rules below;
+Apr 30 10:37:53 *	- - No solicitation or asking for cannabis or any other controlled substance.
+Apr 30 10:37:53 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+Apr 30 10:37:53 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+Apr 30 10:37:53 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+Apr 30 10:37:53 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+Apr 30 10:37:53 *	- - Don't post personal information of other members.
+Apr 30 10:37:53 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+Apr 30 10:37:53 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+Apr 30 10:37:53 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+Apr 30 10:37:53 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+Apr 30 10:37:53 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+Apr 30 10:37:53 *	End of message of the day.
+Apr 30 10:37:53 *	There are 39 users and 0 invisible on 2 servers
+Apr 30 10:37:53 *	4 :operator(s) online
+Apr 30 10:37:53 *	12 :channels formed
+Apr 30 10:37:53 *	I have 30 clients and 1 servers
+Apr 30 10:37:53 *	Current Local Users: 30  Max: 52
+Apr 30 10:37:53 *	Current Global Users: 39  Max: 61
+Apr 30 10:37:53 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+Apr 30 10:37:53 *	samling sets mode +x on samling
+Apr 30 10:37:53 *	samling sets mode +T on samling
+Apr 30 10:37:53 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+Apr 30 10:37:53 -NickServ-	This nickname is registered and protected.  If it is your
+Apr 30 10:37:53 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+Apr 30 10:37:53 -NickServ-	please choose a different nick.
+Apr 30 10:37:53 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+Apr 30 10:37:53 *	Received a CTCP VERSION from StatServ
+Apr 30 10:37:53 -NickServ-	Password incorrect.
+**** BEGIN LOGGING AT Tue Apr 30 10:38:12 2019
+
+Apr 30 10:38:12 *	Welcome to the trees.chat IRC Network samling_!samling@ip72-205-65-178.sb.sd.cox.net
+Apr 30 10:38:12 *	Your host is trees.chat, running version InspIRCd-2.0
+Apr 30 10:38:12 *	This server was created 15:53:04 Nov 13 2017
+Apr 30 10:38:12 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+Apr 30 10:38:12 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+Apr 30 10:38:12 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+Apr 30 10:38:12 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+Apr 30 10:38:12 *	543AAB9GU :your unique ID
+Apr 30 10:38:12 *	trees.chat message of the day
+Apr 30 10:38:12 *	- 
+Apr 30 10:38:12 *	-                                                                                 
+Apr 30 10:38:12 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+Apr 30 10:38:12 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+Apr 30 10:38:12 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+Apr 30 10:38:12 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+Apr 30 10:38:12 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+Apr 30 10:38:12 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+Apr 30 10:38:12 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+Apr 30 10:38:12 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+Apr 30 10:38:12 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+Apr 30 10:38:12 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+Apr 30 10:38:12 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+Apr 30 10:38:12 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+Apr 30 10:38:12 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+Apr 30 10:38:12 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+Apr 30 10:38:12 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+Apr 30 10:38:12 *	-             88ZZZZZZZZ                           $$$                            
+Apr 30 10:38:12 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+Apr 30 10:38:12 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+Apr 30 10:38:12 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+Apr 30 10:38:12 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+Apr 30 10:38:12 *	-               888888Z777777777777777$OOO  $$$,                         
+Apr 30 10:38:12 *	-                   :88                  ,$$$$$,          
+Apr 30 10:38:12 *	-                     8                 $$$$$$$,                   
+Apr 30 10:38:12 *	-                      ?                $$$$$$$,               
+Apr 30 10:38:12 *	-                                       $$$$$$$,           
+Apr 30 10:38:12 *	-                                       $$$$$$$,      
+Apr 30 10:38:12 *	-                                       $$$$$$$,                 
+Apr 30 10:38:12 *	-                                       $$$$$$$,               
+Apr 30 10:38:12 *	-                                       $$$$$$$,                     
+Apr 30 10:38:12 *	-                                       $$$$$$$,                        
+Apr 30 10:38:12 *	-                                       $$$$$$$,                           
+Apr 30 10:38:12 *	-                                       $$$$$$$,                      
+Apr 30 10:38:12 *	-                                       $$$$$$$,                       
+Apr 30 10:38:12 *	-                                       $$$$$$$,                          
+Apr 30 10:38:12 *	-                                       $$$$$$$,                       
+Apr 30 10:38:12 *	-                                       $$$$$$$,                         
+Apr 30 10:38:12 *	-                                       $$$$$$$,                           
+Apr 30 10:38:12 *	-                                       $$$$$$$,                            
+Apr 30 10:38:12 *	-                                      ,$$$$$$$?                           
+Apr 30 10:38:12 *	-                                      $$$$Z$$$$~                      
+Apr 30 10:38:12 *	-                                                                           
+Apr 30 10:38:12 *	- 
+Apr 30 10:38:12 *	-              7                                    7             7        
+Apr 30 10:38:12 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+Apr 30 10:38:12 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+Apr 30 10:38:12 *	-              7   77   7     7         7    77     7   7 77   7  7         
+Apr 30 10:38:12 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+Apr 30 10:38:12 *	-                                                                           
+Apr 30 10:38:12 *	- 
+Apr 30 10:38:12 *	- Welcome to the trees.chat IRC network, please read the rules below;
+Apr 30 10:38:12 *	- - No solicitation or asking for cannabis or any other controlled substance.
+Apr 30 10:38:12 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+Apr 30 10:38:12 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+Apr 30 10:38:12 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+Apr 30 10:38:12 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+Apr 30 10:38:12 *	- - Don't post personal information of other members.
+Apr 30 10:38:12 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+Apr 30 10:38:12 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+Apr 30 10:38:12 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+Apr 30 10:38:12 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+Apr 30 10:38:12 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+Apr 30 10:38:12 *	End of message of the day.
+Apr 30 10:38:12 *	There are 40 users and 0 invisible on 2 servers
+Apr 30 10:38:12 *	4 :operator(s) online
+Apr 30 10:38:12 *	12 :channels formed
+Apr 30 10:38:12 *	I have 31 clients and 1 servers
+Apr 30 10:38:12 *	Current Local Users: 31  Max: 52
+Apr 30 10:38:12 *	Current Global Users: 40  Max: 61
+Apr 30 10:38:12 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+Apr 30 10:38:12 *	samling_ sets mode +x on samling_
+Apr 30 10:38:12 *	samling_ sets mode +T on samling_
+Apr 30 10:38:12 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+Apr 30 10:38:12 *	Received a CTCP VERSION from StatServ
+Apr 30 10:38:12 -NickServ-	Nick samling_ isn't registered.
+**** ENDING LOGGING AT Tue Apr 30 10:38:16 2019
+
+**** BEGIN LOGGING AT Tue Apr 30 10:38:42 2019
+
+Apr 30 10:38:42 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+Apr 30 10:38:42 *	Your host is trees.chat, running version InspIRCd-2.0
+Apr 30 10:38:42 *	This server was created 15:53:04 Nov 13 2017
+Apr 30 10:38:42 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+Apr 30 10:38:42 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+Apr 30 10:38:42 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+Apr 30 10:38:42 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+Apr 30 10:38:42 *	543AAB9GV :your unique ID
+Apr 30 10:38:42 *	trees.chat message of the day
+Apr 30 10:38:42 *	- 
+Apr 30 10:38:42 *	-                                                                                 
+Apr 30 10:38:42 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+Apr 30 10:38:42 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+Apr 30 10:38:42 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+Apr 30 10:38:42 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+Apr 30 10:38:42 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+Apr 30 10:38:42 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+Apr 30 10:38:42 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+Apr 30 10:38:42 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+Apr 30 10:38:42 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+Apr 30 10:38:42 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+Apr 30 10:38:42 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+Apr 30 10:38:42 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+Apr 30 10:38:42 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+Apr 30 10:38:42 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+Apr 30 10:38:42 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+Apr 30 10:38:42 *	-             88ZZZZZZZZ                           $$$                            
+Apr 30 10:38:42 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+Apr 30 10:38:42 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+Apr 30 10:38:42 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+Apr 30 10:38:42 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+Apr 30 10:38:42 *	-               888888Z777777777777777$OOO  $$$,                         
+Apr 30 10:38:42 *	-                   :88                  ,$$$$$,          
+Apr 30 10:38:42 *	-                     8                 $$$$$$$,                   
+Apr 30 10:38:42 *	-                      ?                $$$$$$$,               
+Apr 30 10:38:42 *	-                                       $$$$$$$,           
+Apr 30 10:38:42 *	-                                       $$$$$$$,      
+Apr 30 10:38:42 *	-                                       $$$$$$$,                 
+Apr 30 10:38:42 *	-                                       $$$$$$$,               
+Apr 30 10:38:42 *	-                                       $$$$$$$,                     
+Apr 30 10:38:42 *	-                                       $$$$$$$,                        
+Apr 30 10:38:42 *	-                                       $$$$$$$,                           
+Apr 30 10:38:42 *	-                                       $$$$$$$,                      
+Apr 30 10:38:42 *	-                                       $$$$$$$,                       
+Apr 30 10:38:42 *	-                                       $$$$$$$,                          
+Apr 30 10:38:42 *	-                                       $$$$$$$,                       
+Apr 30 10:38:42 *	-                                       $$$$$$$,                         
+Apr 30 10:38:42 *	-                                       $$$$$$$,                           
+Apr 30 10:38:42 *	-                                       $$$$$$$,                            
+Apr 30 10:38:42 *	-                                      ,$$$$$$$?                           
+Apr 30 10:38:42 *	-                                      $$$$Z$$$$~                      
+Apr 30 10:38:42 *	-                                                                           
+Apr 30 10:38:42 *	- 
+Apr 30 10:38:42 *	-              7                                    7             7        
+Apr 30 10:38:42 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+Apr 30 10:38:42 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+Apr 30 10:38:42 *	-              7   77   7     7         7    77     7   7 77   7  7         
+Apr 30 10:38:42 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+Apr 30 10:38:42 *	-                                                                           
+Apr 30 10:38:42 *	- 
+Apr 30 10:38:42 *	- Welcome to the trees.chat IRC network, please read the rules below;
+Apr 30 10:38:42 *	- - No solicitation or asking for cannabis or any other controlled substance.
+Apr 30 10:38:42 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+Apr 30 10:38:42 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+Apr 30 10:38:42 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+Apr 30 10:38:42 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+Apr 30 10:38:42 *	- - Don't post personal information of other members.
+Apr 30 10:38:42 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+Apr 30 10:38:42 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+Apr 30 10:38:42 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+Apr 30 10:38:42 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+Apr 30 10:38:42 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+Apr 30 10:38:42 *	End of message of the day.
+Apr 30 10:38:42 *	There are 39 users and 0 invisible on 2 servers
+Apr 30 10:38:42 *	4 :operator(s) online
+Apr 30 10:38:42 *	12 :channels formed
+Apr 30 10:38:42 *	I have 30 clients and 1 servers
+Apr 30 10:38:42 *	Current Local Users: 30  Max: 52
+Apr 30 10:38:42 *	Current Global Users: 39  Max: 61
+Apr 30 10:38:42 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+Apr 30 10:38:42 *	samling sets mode +x on samling
+Apr 30 10:38:42 *	samling sets mode +T on samling
+Apr 30 10:38:42 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+Apr 30 10:38:42 -NickServ-	This nickname is registered and protected.  If it is your
+Apr 30 10:38:42 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+Apr 30 10:38:42 -NickServ-	please choose a different nick.
+Apr 30 10:38:42 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+Apr 30 10:38:42 *	Received a CTCP VERSION from StatServ
+Apr 30 10:38:42 -NickServ-	Password accepted - you are now recognized.
+Apr 30 10:38:42 *	You are now logged in as samling
+Apr 30 10:38:42 *	NickServ sets mode +r on samling
+Apr 30 10:58:32 *	Disconnected ()
+**** BEGIN LOGGING AT Tue Apr 30 10:58:41 2019
+
+Apr 30 10:58:41 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+Apr 30 10:58:41 *	Your host is trees.chat, running version InspIRCd-2.0
+Apr 30 10:58:41 *	This server was created 15:53:04 Nov 13 2017
+Apr 30 10:58:41 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+Apr 30 10:58:41 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+Apr 30 10:58:41 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+Apr 30 10:58:41 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+Apr 30 10:58:41 *	543AAB9GY :your unique ID
+Apr 30 10:58:41 *	trees.chat message of the day
+Apr 30 10:58:41 *	- 
+Apr 30 10:58:41 *	-                                                                                 
+Apr 30 10:58:41 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+Apr 30 10:58:41 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+Apr 30 10:58:41 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+Apr 30 10:58:41 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+Apr 30 10:58:41 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+Apr 30 10:58:41 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+Apr 30 10:58:41 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+Apr 30 10:58:41 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+Apr 30 10:58:41 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+Apr 30 10:58:41 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+Apr 30 10:58:41 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+Apr 30 10:58:41 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+Apr 30 10:58:41 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+Apr 30 10:58:41 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+Apr 30 10:58:41 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+Apr 30 10:58:41 *	-             88ZZZZZZZZ                           $$$                            
+Apr 30 10:58:41 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+Apr 30 10:58:41 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+Apr 30 10:58:41 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+Apr 30 10:58:41 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+Apr 30 10:58:41 *	-               888888Z777777777777777$OOO  $$$,                         
+Apr 30 10:58:41 *	-                   :88                  ,$$$$$,          
+Apr 30 10:58:41 *	-                     8                 $$$$$$$,                   
+Apr 30 10:58:41 *	-                      ?                $$$$$$$,               
+Apr 30 10:58:41 *	-                                       $$$$$$$,           
+Apr 30 10:58:41 *	-                                       $$$$$$$,      
+Apr 30 10:58:41 *	-                                       $$$$$$$,                 
+Apr 30 10:58:41 *	-                                       $$$$$$$,               
+Apr 30 10:58:41 *	-                                       $$$$$$$,                     
+Apr 30 10:58:41 *	-                                       $$$$$$$,                        
+Apr 30 10:58:41 *	-                                       $$$$$$$,                           
+Apr 30 10:58:41 *	-                                       $$$$$$$,                      
+Apr 30 10:58:41 *	-                                       $$$$$$$,                       
+Apr 30 10:58:41 *	-                                       $$$$$$$,                          
+Apr 30 10:58:41 *	-                                       $$$$$$$,                       
+Apr 30 10:58:41 *	-                                       $$$$$$$,                         
+Apr 30 10:58:41 *	-                                       $$$$$$$,                           
+Apr 30 10:58:41 *	-                                       $$$$$$$,                            
+Apr 30 10:58:41 *	-                                      ,$$$$$$$?                           
+Apr 30 10:58:41 *	-                                      $$$$Z$$$$~                      
+Apr 30 10:58:41 *	-                                                                           
+Apr 30 10:58:41 *	- 
+Apr 30 10:58:41 *	-              7                                    7             7        
+Apr 30 10:58:41 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+Apr 30 10:58:41 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+Apr 30 10:58:41 *	-              7   77   7     7         7    77     7   7 77   7  7         
+Apr 30 10:58:41 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+Apr 30 10:58:41 *	-                                                                           
+Apr 30 10:58:41 *	- 
+Apr 30 10:58:41 *	- Welcome to the trees.chat IRC network, please read the rules below;
+Apr 30 10:58:41 *	- - No solicitation or asking for cannabis or any other controlled substance.
+Apr 30 10:58:41 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+Apr 30 10:58:41 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+Apr 30 10:58:41 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+Apr 30 10:58:41 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+Apr 30 10:58:41 *	- - Don't post personal information of other members.
+Apr 30 10:58:41 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+Apr 30 10:58:41 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+Apr 30 10:58:41 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+Apr 30 10:58:41 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+Apr 30 10:58:41 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+Apr 30 10:58:41 *	End of message of the day.
+Apr 30 10:58:41 *	There are 37 users and 0 invisible on 2 servers
+Apr 30 10:58:41 *	4 :operator(s) online
+Apr 30 10:58:41 *	12 :channels formed
+Apr 30 10:58:41 *	I have 28 clients and 1 servers
+Apr 30 10:58:41 *	Current Local Users: 28  Max: 52
+Apr 30 10:58:41 *	Current Global Users: 37  Max: 61
+Apr 30 10:58:41 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+Apr 30 10:58:41 *	samling sets mode +x on samling
+Apr 30 10:58:41 *	samling sets mode +T on samling
+Apr 30 10:58:41 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+Apr 30 10:58:41 -NickServ-	This nickname is registered and protected.  If it is your
+Apr 30 10:58:41 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+Apr 30 10:58:41 -NickServ-	please choose a different nick.
+Apr 30 10:58:41 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+Apr 30 10:58:41 *	Received a CTCP VERSION from StatServ
+Apr 30 10:58:41 -NickServ-	Password accepted - you are now recognized.
+Apr 30 10:58:41 *	You are now logged in as samling
+Apr 30 10:58:41 *	NickServ sets mode +r on samling
+**** ENDING LOGGING AT Tue Apr 30 10:59:20 2019
+
+**** BEGIN LOGGING AT Tue Apr 30 11:53:00 2019
+
+Apr 30 11:53:00 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+Apr 30 11:53:00 *	Your host is trees.chat, running version InspIRCd-2.0
+Apr 30 11:53:00 *	This server was created 15:53:04 Nov 13 2017
+Apr 30 11:53:00 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+Apr 30 11:53:00 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+Apr 30 11:53:00 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+Apr 30 11:53:00 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+Apr 30 11:53:00 *	543AAB9HA :your unique ID
+Apr 30 11:53:00 *	trees.chat message of the day
+Apr 30 11:53:00 *	- 
+Apr 30 11:53:00 *	-                                                                                 
+Apr 30 11:53:00 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+Apr 30 11:53:00 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+Apr 30 11:53:00 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+Apr 30 11:53:00 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+Apr 30 11:53:00 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+Apr 30 11:53:00 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+Apr 30 11:53:00 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+Apr 30 11:53:00 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+Apr 30 11:53:00 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+Apr 30 11:53:00 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+Apr 30 11:53:00 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+Apr 30 11:53:00 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+Apr 30 11:53:00 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+Apr 30 11:53:00 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+Apr 30 11:53:00 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+Apr 30 11:53:00 *	-             88ZZZZZZZZ                           $$$                            
+Apr 30 11:53:00 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+Apr 30 11:53:00 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+Apr 30 11:53:00 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+Apr 30 11:53:00 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+Apr 30 11:53:00 *	-               888888Z777777777777777$OOO  $$$,                         
+Apr 30 11:53:00 *	-                   :88                  ,$$$$$,          
+Apr 30 11:53:00 *	-                     8                 $$$$$$$,                   
+Apr 30 11:53:00 *	-                      ?                $$$$$$$,               
+Apr 30 11:53:00 *	-                                       $$$$$$$,           
+Apr 30 11:53:00 *	-                                       $$$$$$$,      
+Apr 30 11:53:00 *	-                                       $$$$$$$,                 
+Apr 30 11:53:00 *	-                                       $$$$$$$,               
+Apr 30 11:53:00 *	-                                       $$$$$$$,                     
+Apr 30 11:53:00 *	-                                       $$$$$$$,                        
+Apr 30 11:53:00 *	-                                       $$$$$$$,                           
+Apr 30 11:53:00 *	-                                       $$$$$$$,                      
+Apr 30 11:53:00 *	-                                       $$$$$$$,                       
+Apr 30 11:53:00 *	-                                       $$$$$$$,                          
+Apr 30 11:53:00 *	-                                       $$$$$$$,                       
+Apr 30 11:53:00 *	-                                       $$$$$$$,                         
+Apr 30 11:53:00 *	-                                       $$$$$$$,                           
+Apr 30 11:53:00 *	-                                       $$$$$$$,                            
+Apr 30 11:53:00 *	-                                      ,$$$$$$$?                           
+Apr 30 11:53:00 *	-                                      $$$$Z$$$$~                      
+Apr 30 11:53:00 *	-                                                                           
+Apr 30 11:53:00 *	- 
+Apr 30 11:53:00 *	-              7                                    7             7        
+Apr 30 11:53:00 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+Apr 30 11:53:00 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+Apr 30 11:53:00 *	-              7   77   7     7         7    77     7   7 77   7  7         
+Apr 30 11:53:00 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+Apr 30 11:53:00 *	-                                                                           
+Apr 30 11:53:00 *	- 
+Apr 30 11:53:00 *	- Welcome to the trees.chat IRC network, please read the rules below;
+Apr 30 11:53:00 *	- - No solicitation or asking for cannabis or any other controlled substance.
+Apr 30 11:53:00 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+Apr 30 11:53:00 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+Apr 30 11:53:00 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+Apr 30 11:53:00 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+Apr 30 11:53:00 *	- - Don't post personal information of other members.
+Apr 30 11:53:00 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+Apr 30 11:53:00 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+Apr 30 11:53:00 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+Apr 30 11:53:00 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+Apr 30 11:53:00 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+Apr 30 11:53:00 *	End of message of the day.
+Apr 30 11:53:00 *	There are 43 users and 0 invisible on 2 servers
+Apr 30 11:53:00 *	4 :operator(s) online
+Apr 30 11:53:00 *	19 :channels formed
+Apr 30 11:53:00 *	I have 34 clients and 1 servers
+Apr 30 11:53:00 *	Current Local Users: 34  Max: 52
+Apr 30 11:53:00 *	Current Global Users: 43  Max: 61
+Apr 30 11:53:00 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+Apr 30 11:53:00 *	samling sets mode +x on samling
+Apr 30 11:53:00 *	samling sets mode +T on samling
+Apr 30 11:53:00 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+Apr 30 11:53:00 -NickServ-	This nickname is registered and protected.  If it is your
+Apr 30 11:53:00 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+Apr 30 11:53:00 -NickServ-	please choose a different nick.
+Apr 30 11:53:00 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+Apr 30 11:53:00 *	Received a CTCP VERSION from StatServ
+Apr 30 11:53:01 -NickServ-	Password accepted - you are now recognized.
+Apr 30 11:53:01 *	You are now logged in as samling
+Apr 30 11:53:01 *	NickServ sets mode +r on samling
+Apr 30 17:48:49 *	No ping reply for 5181 seconds, disconnecting.
+Apr 30 17:48:49 *	Disconnected ()
+**** BEGIN LOGGING AT Tue Apr 30 21:30:05 2019
+
+Apr 30 21:30:05 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+Apr 30 21:30:05 *	Your host is trees.chat, running version InspIRCd-2.0
+Apr 30 21:30:05 *	This server was created 15:53:04 Nov 13 2017
+Apr 30 21:30:05 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+Apr 30 21:30:05 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+Apr 30 21:30:05 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+Apr 30 21:30:05 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+Apr 30 21:30:05 *	543AAB9LF :your unique ID
+Apr 30 21:30:05 *	trees.chat message of the day
+Apr 30 21:30:05 *	- 
+Apr 30 21:30:05 *	-                                                                                 
+Apr 30 21:30:05 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+Apr 30 21:30:05 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+Apr 30 21:30:05 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+Apr 30 21:30:05 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+Apr 30 21:30:05 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+Apr 30 21:30:05 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+Apr 30 21:30:05 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+Apr 30 21:30:05 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+Apr 30 21:30:05 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+Apr 30 21:30:05 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+Apr 30 21:30:05 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+Apr 30 21:30:05 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+Apr 30 21:30:05 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+Apr 30 21:30:05 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+Apr 30 21:30:05 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+Apr 30 21:30:05 *	-             88ZZZZZZZZ                           $$$                            
+Apr 30 21:30:05 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+Apr 30 21:30:05 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+Apr 30 21:30:05 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+Apr 30 21:30:05 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+Apr 30 21:30:05 *	-               888888Z777777777777777$OOO  $$$,                         
+Apr 30 21:30:05 *	-                   :88                  ,$$$$$,          
+Apr 30 21:30:05 *	-                     8                 $$$$$$$,                   
+Apr 30 21:30:05 *	-                      ?                $$$$$$$,               
+Apr 30 21:30:05 *	-                                       $$$$$$$,           
+Apr 30 21:30:05 *	-                                       $$$$$$$,      
+Apr 30 21:30:05 *	-                                       $$$$$$$,                 
+Apr 30 21:30:05 *	-                                       $$$$$$$,               
+Apr 30 21:30:05 *	-                                       $$$$$$$,                     
+Apr 30 21:30:05 *	-                                       $$$$$$$,                        
+Apr 30 21:30:05 *	-                                       $$$$$$$,                           
+Apr 30 21:30:05 *	-                                       $$$$$$$,                      
+Apr 30 21:30:05 *	-                                       $$$$$$$,                       
+Apr 30 21:30:05 *	-                                       $$$$$$$,                          
+Apr 30 21:30:05 *	-                                       $$$$$$$,                       
+Apr 30 21:30:05 *	-                                       $$$$$$$,                         
+Apr 30 21:30:05 *	-                                       $$$$$$$,                           
+Apr 30 21:30:05 *	-                                       $$$$$$$,                            
+Apr 30 21:30:05 *	-                                      ,$$$$$$$?                           
+Apr 30 21:30:05 *	-                                      $$$$Z$$$$~                      
+Apr 30 21:30:05 *	-                                                                           
+Apr 30 21:30:05 *	- 
+Apr 30 21:30:05 *	-              7                                    7             7        
+Apr 30 21:30:05 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+Apr 30 21:30:05 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+Apr 30 21:30:05 *	-              7   77   7     7         7    77     7   7 77   7  7         
+Apr 30 21:30:05 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+Apr 30 21:30:05 *	-                                                                           
+Apr 30 21:30:05 *	- 
+Apr 30 21:30:05 *	- Welcome to the trees.chat IRC network, please read the rules below;
+Apr 30 21:30:05 *	- - No solicitation or asking for cannabis or any other controlled substance.
+Apr 30 21:30:05 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+Apr 30 21:30:05 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+Apr 30 21:30:05 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+Apr 30 21:30:05 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+Apr 30 21:30:05 *	- - Don't post personal information of other members.
+Apr 30 21:30:05 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+Apr 30 21:30:05 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+Apr 30 21:30:05 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+Apr 30 21:30:05 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+Apr 30 21:30:05 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+Apr 30 21:30:05 *	End of message of the day.
+Apr 30 21:30:05 *	There are 50 users and 0 invisible on 2 servers
+Apr 30 21:30:05 *	4 :operator(s) online
+Apr 30 21:30:05 *	19 :channels formed
+Apr 30 21:30:05 *	I have 41 clients and 1 servers
+Apr 30 21:30:05 *	Current Local Users: 41  Max: 52
+Apr 30 21:30:05 *	Current Global Users: 50  Max: 61
+Apr 30 21:30:05 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+Apr 30 21:30:05 *	samling sets mode +x on samling
+Apr 30 21:30:05 *	samling sets mode +T on samling
+Apr 30 21:30:05 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+Apr 30 21:30:05 -NickServ-	This nickname is registered and protected.  If it is your
+Apr 30 21:30:05 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+Apr 30 21:30:05 -NickServ-	please choose a different nick.
+Apr 30 21:30:05 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+Apr 30 21:30:05 *	Received a CTCP VERSION from StatServ
+Apr 30 21:30:05 -NickServ-	Password accepted - you are now recognized.
+Apr 30 21:30:05 *	You are now logged in as samling
+Apr 30 21:30:05 *	NickServ sets mode +r on samling
+**** BEGIN LOGGING AT Tue Apr 30 21:32:31 2019
+
+Apr 30 21:32:31 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+Apr 30 21:32:31 *	Your host is trees.chat, running version InspIRCd-2.0
+Apr 30 21:32:31 *	This server was created 15:53:04 Nov 13 2017
+Apr 30 21:32:31 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+Apr 30 21:32:31 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+Apr 30 21:32:31 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+Apr 30 21:32:31 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+Apr 30 21:32:31 *	543AAB9LG :your unique ID
+Apr 30 21:32:31 *	trees.chat message of the day
+Apr 30 21:32:31 *	- 
+Apr 30 21:32:31 *	-                                                                                 
+Apr 30 21:32:31 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+Apr 30 21:32:31 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+Apr 30 21:32:31 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+Apr 30 21:32:31 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+Apr 30 21:32:31 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+Apr 30 21:32:31 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+Apr 30 21:32:31 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+Apr 30 21:32:31 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+Apr 30 21:32:31 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+Apr 30 21:32:31 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+Apr 30 21:32:31 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+Apr 30 21:32:31 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+Apr 30 21:32:31 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+Apr 30 21:32:31 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+Apr 30 21:32:31 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+Apr 30 21:32:31 *	-             88ZZZZZZZZ                           $$$                            
+Apr 30 21:32:31 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+Apr 30 21:32:31 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+Apr 30 21:32:31 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+Apr 30 21:32:31 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+Apr 30 21:32:31 *	-               888888Z777777777777777$OOO  $$$,                         
+Apr 30 21:32:31 *	-                   :88                  ,$$$$$,          
+Apr 30 21:32:31 *	-                     8                 $$$$$$$,                   
+Apr 30 21:32:31 *	-                      ?                $$$$$$$,               
+Apr 30 21:32:31 *	-                                       $$$$$$$,           
+Apr 30 21:32:31 *	-                                       $$$$$$$,      
+Apr 30 21:32:31 *	-                                       $$$$$$$,                 
+Apr 30 21:32:31 *	-                                       $$$$$$$,               
+Apr 30 21:32:31 *	-                                       $$$$$$$,                     
+Apr 30 21:32:31 *	-                                       $$$$$$$,                        
+Apr 30 21:32:31 *	-                                       $$$$$$$,                           
+Apr 30 21:32:31 *	-                                       $$$$$$$,                      
+Apr 30 21:32:31 *	-                                       $$$$$$$,                       
+Apr 30 21:32:31 *	-                                       $$$$$$$,                          
+Apr 30 21:32:31 *	-                                       $$$$$$$,                       
+Apr 30 21:32:31 *	-                                       $$$$$$$,                         
+Apr 30 21:32:31 *	-                                       $$$$$$$,                           
+Apr 30 21:32:31 *	-                                       $$$$$$$,                            
+Apr 30 21:32:31 *	-                                      ,$$$$$$$?                           
+Apr 30 21:32:31 *	-                                      $$$$Z$$$$~                      
+Apr 30 21:32:31 *	-                                                                           
+Apr 30 21:32:31 *	- 
+Apr 30 21:32:31 *	-              7                                    7             7        
+Apr 30 21:32:31 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+Apr 30 21:32:31 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+Apr 30 21:32:31 *	-              7   77   7     7         7    77     7   7 77   7  7         
+Apr 30 21:32:31 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+Apr 30 21:32:31 *	-                                                                           
+Apr 30 21:32:31 *	- 
+Apr 30 21:32:31 *	- Welcome to the trees.chat IRC network, please read the rules below;
+Apr 30 21:32:31 *	- - No solicitation or asking for cannabis or any other controlled substance.
+Apr 30 21:32:31 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+Apr 30 21:32:31 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+Apr 30 21:32:31 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+Apr 30 21:32:31 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+Apr 30 21:32:31 *	- - Don't post personal information of other members.
+Apr 30 21:32:31 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+Apr 30 21:32:31 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+Apr 30 21:32:31 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+Apr 30 21:32:31 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+Apr 30 21:32:31 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+Apr 30 21:32:31 *	End of message of the day.
+Apr 30 21:32:31 *	There are 50 users and 0 invisible on 2 servers
+Apr 30 21:32:31 *	4 :operator(s) online
+Apr 30 21:32:31 *	19 :channels formed
+Apr 30 21:32:31 *	I have 41 clients and 1 servers
+Apr 30 21:32:31 *	Current Local Users: 41  Max: 52
+Apr 30 21:32:31 *	Current Global Users: 50  Max: 61
+Apr 30 21:32:31 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+Apr 30 21:32:31 *	samling sets mode +x on samling
+Apr 30 21:32:31 *	samling sets mode +T on samling
+Apr 30 21:32:31 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+Apr 30 21:32:31 -NickServ-	This nickname is registered and protected.  If it is your
+Apr 30 21:32:31 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+Apr 30 21:32:31 -NickServ-	please choose a different nick.
+Apr 30 21:32:31 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+Apr 30 21:32:31 *	Received a CTCP VERSION from StatServ
+Apr 30 21:32:31 -NickServ-	Password accepted - you are now recognized.
+Apr 30 21:32:31 *	You are now logged in as samling
+Apr 30 21:32:31 *	NickServ sets mode +r on samling
+**** BEGIN LOGGING AT Wed May  1 21:56:57 2019
+
+May 01 21:56:57 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+May 01 21:56:57 *	Your host is trees.chat, running version InspIRCd-2.0
+May 01 21:56:57 *	This server was created 15:53:04 Nov 13 2017
+May 01 21:56:57 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+May 01 21:56:57 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+May 01 21:56:57 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+May 01 21:56:57 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+May 01 21:56:57 *	543AAB9R1 :your unique ID
+May 01 21:56:57 *	trees.chat message of the day
+May 01 21:56:57 *	- 
+May 01 21:56:57 *	-                                                                                 
+May 01 21:56:57 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+May 01 21:56:57 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+May 01 21:56:57 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+May 01 21:56:57 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+May 01 21:56:57 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+May 01 21:56:57 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+May 01 21:56:57 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+May 01 21:56:57 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+May 01 21:56:57 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+May 01 21:56:57 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+May 01 21:56:57 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+May 01 21:56:57 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+May 01 21:56:57 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+May 01 21:56:57 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+May 01 21:56:57 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+May 01 21:56:57 *	-             88ZZZZZZZZ                           $$$                            
+May 01 21:56:57 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+May 01 21:56:57 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+May 01 21:56:57 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+May 01 21:56:57 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+May 01 21:56:57 *	-               888888Z777777777777777$OOO  $$$,                         
+May 01 21:56:57 *	-                   :88                  ,$$$$$,          
+May 01 21:56:57 *	-                     8                 $$$$$$$,                   
+May 01 21:56:57 *	-                      ?                $$$$$$$,               
+May 01 21:56:57 *	-                                       $$$$$$$,           
+May 01 21:56:57 *	-                                       $$$$$$$,      
+May 01 21:56:57 *	-                                       $$$$$$$,                 
+May 01 21:56:57 *	-                                       $$$$$$$,               
+May 01 21:56:57 *	-                                       $$$$$$$,                     
+May 01 21:56:57 *	-                                       $$$$$$$,                        
+May 01 21:56:57 *	-                                       $$$$$$$,                           
+May 01 21:56:57 *	-                                       $$$$$$$,                      
+May 01 21:56:57 *	-                                       $$$$$$$,                       
+May 01 21:56:57 *	-                                       $$$$$$$,                          
+May 01 21:56:57 *	-                                       $$$$$$$,                       
+May 01 21:56:57 *	-                                       $$$$$$$,                         
+May 01 21:56:57 *	-                                       $$$$$$$,                           
+May 01 21:56:57 *	-                                       $$$$$$$,                            
+May 01 21:56:57 *	-                                      ,$$$$$$$?                           
+May 01 21:56:57 *	-                                      $$$$Z$$$$~                      
+May 01 21:56:57 *	-                                                                           
+May 01 21:56:57 *	- 
+May 01 21:56:57 *	-              7                                    7             7        
+May 01 21:56:57 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+May 01 21:56:57 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+May 01 21:56:57 *	-              7   77   7     7         7    77     7   7 77   7  7         
+May 01 21:56:57 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+May 01 21:56:57 *	-                                                                           
+May 01 21:56:57 *	- 
+May 01 21:56:57 *	- Welcome to the trees.chat IRC network, please read the rules below;
+May 01 21:56:57 *	- - No solicitation or asking for cannabis or any other controlled substance.
+May 01 21:56:57 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+May 01 21:56:57 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+May 01 21:56:57 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+May 01 21:56:57 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+May 01 21:56:57 *	- - Don't post personal information of other members.
+May 01 21:56:57 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+May 01 21:56:57 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+May 01 21:56:57 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+May 01 21:56:57 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+May 01 21:56:57 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+May 01 21:56:57 *	End of message of the day.
+May 01 21:56:57 *	There are 42 users and 0 invisible on 2 servers
+May 01 21:56:57 *	4 :operator(s) online
+May 01 21:56:57 *	12 :channels formed
+May 01 21:56:57 *	I have 33 clients and 1 servers
+May 01 21:56:57 *	Current Local Users: 33  Max: 52
+May 01 21:56:57 *	Current Global Users: 42  Max: 61
+May 01 21:56:57 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+May 01 21:56:57 *	samling sets mode +x on samling
+May 01 21:56:57 *	samling sets mode +T on samling
+May 01 21:56:57 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+May 01 21:56:57 -NickServ-	This nickname is registered and protected.  If it is your
+May 01 21:56:57 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+May 01 21:56:57 -NickServ-	please choose a different nick.
+May 01 21:56:57 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+May 01 21:56:57 *	Received a CTCP VERSION from StatServ
+May 01 21:56:57 -NickServ-	Password accepted - you are now recognized.
+May 01 21:56:57 *	You are now logged in as samling
+May 01 21:56:57 *	NickServ sets mode +r on samling
+May 02 08:41:40 *	No ping reply for 22766 seconds, disconnecting.
+May 02 08:41:40 *	Disconnected ()
+May 02 08:41:50 *	Looking up irc.trees.chat
+May 02 08:41:50 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+May 02 08:41:51 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 02 08:41:51 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 02 08:41:51 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 02 08:41:51 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 02 08:41:51 *	* Subject: /CN=irc.trees.chat
+May 02 08:41:51 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 02 08:41:51 *	* Certification info:
+May 02 08:41:51 *	  Subject:
+May 02 08:41:51 *	    CN=irc.trees.chat
+May 02 08:41:51 *	  Issuer:
+May 02 08:41:51 *	    C=US
+May 02 08:41:51 *	    O=Let's Encrypt
+May 02 08:41:51 *	    CN=Let's Encrypt Authority X3
+May 02 08:41:51 *	  Public key algorithm: rsaEncryption (2048 bits)
+May 02 08:41:51 *	  Sign algorithm sha256WithRSAEncryption
+May 02 08:41:51 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+May 02 08:41:51 *	* Cipher info:
+May 02 08:41:51 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 02 08:41:51 *	Connected. Now logging in.
+May 02 08:41:51 *	*** Looking up your hostname...
+May 02 08:41:51 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net)
+May 02 08:41:52 *	Welcome to trees.chat!
+May 02 08:41:52 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+May 02 08:41:52 *	Your host is trees.chat, running version InspIRCd-2.0
+May 02 08:41:52 *	This server was created 15:53:04 Nov 13 2017
+May 02 08:41:52 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+May 02 08:41:52 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+May 02 08:41:52 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+May 02 08:41:52 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+May 02 08:41:52 *	543AAB9UH :your unique ID
+May 02 08:41:52 *	trees.chat message of the day
+May 02 08:41:52 *	- 
+May 02 08:41:52 *	-                                                                                 
+May 02 08:41:52 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+May 02 08:41:52 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+May 02 08:41:52 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+May 02 08:41:52 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+May 02 08:41:52 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+May 02 08:41:52 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+May 02 08:41:52 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+May 02 08:41:52 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+May 02 08:41:52 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+May 02 08:41:52 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+May 02 08:41:52 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+May 02 08:41:52 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+May 02 08:41:52 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+May 02 08:41:52 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+May 02 08:41:52 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+May 02 08:41:52 *	-             88ZZZZZZZZ                           $$$                            
+May 02 08:41:52 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+May 02 08:41:52 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+May 02 08:41:52 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+May 02 08:41:52 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+May 02 08:41:52 *	-               888888Z777777777777777$OOO  $$$,                         
+May 02 08:41:52 *	-                   :88                  ,$$$$$,          
+May 02 08:41:52 *	-                     8                 $$$$$$$,                   
+May 02 08:41:52 *	-                      ?                $$$$$$$,               
+May 02 08:41:52 *	-                                       $$$$$$$,           
+May 02 08:41:52 *	-                                       $$$$$$$,      
+May 02 08:41:52 *	-                                       $$$$$$$,                 
+May 02 08:41:52 *	-                                       $$$$$$$,               
+May 02 08:41:52 *	-                                       $$$$$$$,                     
+May 02 08:41:52 *	-                                       $$$$$$$,                        
+May 02 08:41:52 *	-                                       $$$$$$$,                           
+May 02 08:41:52 *	-                                       $$$$$$$,                      
+May 02 08:41:52 *	-                                       $$$$$$$,                       
+May 02 08:41:52 *	-                                       $$$$$$$,                          
+May 02 08:41:52 *	-                                       $$$$$$$,                       
+May 02 08:41:52 *	-                                       $$$$$$$,                         
+May 02 08:41:52 *	-                                       $$$$$$$,                           
+May 02 08:41:52 *	-                                       $$$$$$$,                            
+May 02 08:41:52 *	-                                      ,$$$$$$$?                           
+May 02 08:41:52 *	-                                      $$$$Z$$$$~                      
+May 02 08:41:52 *	-                                                                           
+May 02 08:41:52 *	- 
+May 02 08:41:52 *	-              7                                    7             7        
+May 02 08:41:52 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+May 02 08:41:52 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+May 02 08:41:52 *	-              7   77   7     7         7    77     7   7 77   7  7         
+May 02 08:41:52 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+May 02 08:41:52 *	-                                                                           
+May 02 08:41:52 *	- 
+May 02 08:41:52 *	- Welcome to the trees.chat IRC network, please read the rules below;
+May 02 08:41:52 *	- - No solicitation or asking for cannabis or any other controlled substance.
+May 02 08:41:52 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+May 02 08:41:52 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+May 02 08:41:52 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+May 02 08:41:52 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+May 02 08:41:52 *	- - Don't post personal information of other members.
+May 02 08:41:52 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+May 02 08:41:52 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+May 02 08:41:52 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+May 02 08:41:52 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+May 02 08:41:52 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+May 02 08:41:52 *	End of message of the day.
+May 02 08:41:52 *	There are 32 users and 1 invisible on 2 servers
+May 02 08:41:52 *	3 :operator(s) online
+May 02 08:41:52 *	11 :channels formed
+May 02 08:41:52 *	I have 24 clients and 1 servers
+May 02 08:41:52 *	Current Local Users: 24  Max: 52
+May 02 08:41:52 *	Current Global Users: 33  Max: 61
+May 02 08:41:52 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+May 02 08:41:52 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+May 02 08:41:52 *	You are now logged in as samling
+**** BEGIN LOGGING AT Thu May  2 22:17:40 2019
+
+May 02 22:17:40 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+May 02 22:17:40 *	Your host is trees.chat, running version InspIRCd-2.0
+May 02 22:17:40 *	This server was created 15:53:04 Nov 13 2017
+May 02 22:17:40 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+May 02 22:17:40 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+May 02 22:17:40 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+May 02 22:17:40 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+May 02 22:17:40 *	543AAB9Y3 :your unique ID
+May 02 22:17:40 *	trees.chat message of the day
+May 02 22:17:40 *	- 
+May 02 22:17:40 *	-                                                                                 
+May 02 22:17:40 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+May 02 22:17:40 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+May 02 22:17:40 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+May 02 22:17:40 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+May 02 22:17:40 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+May 02 22:17:40 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+May 02 22:17:40 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+May 02 22:17:40 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+May 02 22:17:40 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+May 02 22:17:40 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+May 02 22:17:40 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+May 02 22:17:40 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+May 02 22:17:40 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+May 02 22:17:40 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+May 02 22:17:40 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+May 02 22:17:40 *	-             88ZZZZZZZZ                           $$$                            
+May 02 22:17:40 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+May 02 22:17:40 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+May 02 22:17:40 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+May 02 22:17:40 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+May 02 22:17:40 *	-               888888Z777777777777777$OOO  $$$,                         
+May 02 22:17:40 *	-                   :88                  ,$$$$$,          
+May 02 22:17:40 *	-                     8                 $$$$$$$,                   
+May 02 22:17:40 *	-                      ?                $$$$$$$,               
+May 02 22:17:40 *	-                                       $$$$$$$,           
+May 02 22:17:40 *	-                                       $$$$$$$,      
+May 02 22:17:40 *	-                                       $$$$$$$,                 
+May 02 22:17:40 *	-                                       $$$$$$$,               
+May 02 22:17:40 *	-                                       $$$$$$$,                     
+May 02 22:17:40 *	-                                       $$$$$$$,                        
+May 02 22:17:40 *	-                                       $$$$$$$,                           
+May 02 22:17:40 *	-                                       $$$$$$$,                      
+May 02 22:17:40 *	-                                       $$$$$$$,                       
+May 02 22:17:40 *	-                                       $$$$$$$,                          
+May 02 22:17:40 *	-                                       $$$$$$$,                       
+May 02 22:17:40 *	-                                       $$$$$$$,                         
+May 02 22:17:40 *	-                                       $$$$$$$,                           
+May 02 22:17:40 *	-                                       $$$$$$$,                            
+May 02 22:17:40 *	-                                      ,$$$$$$$?                           
+May 02 22:17:40 *	-                                      $$$$Z$$$$~                      
+May 02 22:17:40 *	-                                                                           
+May 02 22:17:40 *	- 
+May 02 22:17:40 *	-              7                                    7             7        
+May 02 22:17:40 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+May 02 22:17:40 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+May 02 22:17:40 *	-              7   77   7     7         7    77     7   7 77   7  7         
+May 02 22:17:40 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+May 02 22:17:40 *	-                                                                           
+May 02 22:17:40 *	- 
+May 02 22:17:40 *	- Welcome to the trees.chat IRC network, please read the rules below;
+May 02 22:17:40 *	- - No solicitation or asking for cannabis or any other controlled substance.
+May 02 22:17:40 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+May 02 22:17:40 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+May 02 22:17:40 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+May 02 22:17:40 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+May 02 22:17:40 *	- - Don't post personal information of other members.
+May 02 22:17:40 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+May 02 22:17:40 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+May 02 22:17:40 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+May 02 22:17:40 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+May 02 22:17:40 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+May 02 22:17:40 *	End of message of the day.
+May 02 22:17:40 *	There are 44 users and 1 invisible on 2 servers
+May 02 22:17:40 *	3 :operator(s) online
+May 02 22:17:40 *	17 :channels formed
+May 02 22:17:40 *	I have 36 clients and 1 servers
+May 02 22:17:40 *	Current Local Users: 36  Max: 52
+May 02 22:17:40 *	Current Global Users: 45  Max: 61
+May 02 22:17:40 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+May 02 22:17:40 *	samling sets mode +x on samling
+May 02 22:17:40 *	samling sets mode +T on samling
+May 02 22:17:40 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+May 02 22:17:40 -NickServ-	This nickname is registered and protected.  If it is your
+May 02 22:17:40 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+May 02 22:17:40 -NickServ-	please choose a different nick.
+May 02 22:17:40 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+May 02 22:17:40 *	Received a CTCP VERSION from StatServ
+May 02 22:17:40 -NickServ-	Password accepted - you are now recognized.
+May 02 22:17:40 *	You are now logged in as samling
+May 02 22:17:40 *	NickServ sets mode +r on samling
+**** BEGIN LOGGING AT Sun May  5 21:10:14 2019
+
+May 05 21:10:14 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+May 05 21:10:14 *	Your host is trees.chat, running version InspIRCd-2.0
+May 05 21:10:14 *	This server was created 15:53:04 Nov 13 2017
+May 05 21:10:14 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+May 05 21:10:14 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+May 05 21:10:14 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+May 05 21:10:14 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+May 05 21:10:14 *	543AACAKB :your unique ID
+May 05 21:10:14 *	trees.chat message of the day
+May 05 21:10:14 *	- 
+May 05 21:10:14 *	-                                                                                 
+May 05 21:10:14 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+May 05 21:10:14 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+May 05 21:10:14 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+May 05 21:10:14 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+May 05 21:10:14 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+May 05 21:10:14 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+May 05 21:10:14 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+May 05 21:10:14 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+May 05 21:10:14 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+May 05 21:10:14 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+May 05 21:10:14 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+May 05 21:10:14 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+May 05 21:10:14 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+May 05 21:10:14 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+May 05 21:10:14 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+May 05 21:10:14 *	-             88ZZZZZZZZ                           $$$                            
+May 05 21:10:14 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+May 05 21:10:14 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+May 05 21:10:14 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+May 05 21:10:14 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+May 05 21:10:14 *	-               888888Z777777777777777$OOO  $$$,                         
+May 05 21:10:14 *	-                   :88                  ,$$$$$,          
+May 05 21:10:14 *	-                     8                 $$$$$$$,                   
+May 05 21:10:14 *	-                      ?                $$$$$$$,               
+May 05 21:10:14 *	-                                       $$$$$$$,           
+May 05 21:10:14 *	-                                       $$$$$$$,      
+May 05 21:10:14 *	-                                       $$$$$$$,                 
+May 05 21:10:14 *	-                                       $$$$$$$,               
+May 05 21:10:14 *	-                                       $$$$$$$,                     
+May 05 21:10:14 *	-                                       $$$$$$$,                        
+May 05 21:10:14 *	-                                       $$$$$$$,                           
+May 05 21:10:14 *	-                                       $$$$$$$,                      
+May 05 21:10:14 *	-                                       $$$$$$$,                       
+May 05 21:10:14 *	-                                       $$$$$$$,                          
+May 05 21:10:14 *	-                                       $$$$$$$,                       
+May 05 21:10:14 *	-                                       $$$$$$$,                         
+May 05 21:10:14 *	-                                       $$$$$$$,                           
+May 05 21:10:14 *	-                                       $$$$$$$,                            
+May 05 21:10:14 *	-                                      ,$$$$$$$?                           
+May 05 21:10:14 *	-                                      $$$$Z$$$$~                      
+May 05 21:10:14 *	-                                                                           
+May 05 21:10:14 *	- 
+May 05 21:10:14 *	-              7                                    7             7        
+May 05 21:10:14 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+May 05 21:10:14 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+May 05 21:10:14 *	-              7   77   7     7         7    77     7   7 77   7  7         
+May 05 21:10:14 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+May 05 21:10:14 *	-                                                                           
+May 05 21:10:14 *	- 
+May 05 21:10:14 *	- Welcome to the trees.chat IRC network, please read the rules below;
+May 05 21:10:14 *	- - No solicitation or asking for cannabis or any other controlled substance.
+May 05 21:10:14 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+May 05 21:10:14 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+May 05 21:10:14 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+May 05 21:10:14 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+May 05 21:10:14 *	- - Don't post personal information of other members.
+May 05 21:10:14 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+May 05 21:10:14 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+May 05 21:10:14 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+May 05 21:10:14 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+May 05 21:10:15 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+May 05 21:10:15 *	End of message of the day.
+May 05 21:10:15 *	There are 44 users and 2 invisible on 2 servers
+May 05 21:10:15 *	3 :operator(s) online
+May 05 21:10:15 *	18 :channels formed
+May 05 21:10:15 *	I have 37 clients and 1 servers
+May 05 21:10:15 *	Current Local Users: 37  Max: 52
+May 05 21:10:15 *	Current Global Users: 46  Max: 61
+May 05 21:10:15 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+May 05 21:10:15 *	samling sets mode +x on samling
+May 05 21:10:15 *	samling sets mode +T on samling
+May 05 21:10:15 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+May 05 21:10:15 -NickServ-	This nickname is registered and protected.  If it is your
+May 05 21:10:15 -NickServ-	nick, type /msg NickServ IDENTIFY password.  Otherwise,
+May 05 21:10:15 -NickServ-	please choose a different nick.
+May 05 21:10:15 -NickServ-	If you do not change within 20 seconds, I will change your nick.
+May 05 21:10:15 *	Received a CTCP VERSION from StatServ
+May 05 21:10:15 -NickServ-	Password accepted - you are now recognized.
+May 05 21:10:15 *	You are now logged in as samling
+May 05 21:10:15 *	NickServ sets mode +r on samling
+May 05 22:42:14 *	No ping reply for 244 seconds, disconnecting.
+May 05 22:42:14 *	Disconnected ()
+May 05 22:42:24 *	Looking up irc.trees.chat
+May 05 22:42:24 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+May 05 22:42:25 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 05 22:42:25 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 05 22:42:25 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 05 22:42:25 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 05 22:42:25 *	* Subject: /CN=irc.trees.chat
+May 05 22:42:25 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 05 22:42:25 *	* Certification info:
+May 05 22:42:25 *	  Subject:
+May 05 22:42:25 *	    CN=irc.trees.chat
+May 05 22:42:25 *	  Issuer:
+May 05 22:42:25 *	    C=US
+May 05 22:42:25 *	    O=Let's Encrypt
+May 05 22:42:25 *	    CN=Let's Encrypt Authority X3
+May 05 22:42:25 *	  Public key algorithm: rsaEncryption (2048 bits)
+May 05 22:42:25 *	  Sign algorithm sha256WithRSAEncryption
+May 05 22:42:25 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+May 05 22:42:25 *	* Cipher info:
+May 05 22:42:25 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 05 22:42:25 *	Connected. Now logging in.
+May 05 22:42:25 *	*** Looking up your hostname...
+May 05 22:42:25 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net) -- cached
+May 05 22:42:26 *	Welcome to trees.chat!
+May 05 22:42:26 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+May 05 22:42:26 *	Your host is trees.chat, running version InspIRCd-2.0
+May 05 22:42:26 *	This server was created 15:53:04 Nov 13 2017
+May 05 22:42:26 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+May 05 22:42:26 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+May 05 22:42:26 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+May 05 22:42:26 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+May 05 22:42:26 *	543AACAK8 :your unique ID
+May 05 22:42:26 *	trees.chat message of the day
+May 05 22:42:26 *	- 
+May 05 22:42:26 *	-                                                                                 
+May 05 22:42:26 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+May 05 22:42:26 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+May 05 22:42:26 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+May 05 22:42:26 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+May 05 22:42:26 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+May 05 22:42:26 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+May 05 22:42:26 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+May 05 22:42:26 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+May 05 22:42:26 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+May 05 22:42:26 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+May 05 22:42:26 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+May 05 22:42:26 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+May 05 22:42:26 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+May 05 22:42:26 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+May 05 22:42:26 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+May 05 22:42:26 *	-             88ZZZZZZZZ                           $$$                            
+May 05 22:42:26 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+May 05 22:42:26 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+May 05 22:42:26 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+May 05 22:42:26 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+May 05 22:42:26 *	-               888888Z777777777777777$OOO  $$$,                         
+May 05 22:42:26 *	-                   :88                  ,$$$$$,          
+May 05 22:42:26 *	-                     8                 $$$$$$$,                   
+May 05 22:42:26 *	-                      ?                $$$$$$$,               
+May 05 22:42:26 *	-                                       $$$$$$$,           
+May 05 22:42:26 *	-                                       $$$$$$$,      
+May 05 22:42:26 *	-                                       $$$$$$$,                 
+May 05 22:42:26 *	-                                       $$$$$$$,               
+May 05 22:42:26 *	-                                       $$$$$$$,                     
+May 05 22:42:26 *	-                                       $$$$$$$,                        
+May 05 22:42:26 *	-                                       $$$$$$$,                           
+May 05 22:42:26 *	-                                       $$$$$$$,                      
+May 05 22:42:26 *	-                                       $$$$$$$,                       
+May 05 22:42:26 *	-                                       $$$$$$$,                          
+May 05 22:42:26 *	-                                       $$$$$$$,                       
+May 05 22:42:26 *	-                                       $$$$$$$,                         
+May 05 22:42:26 *	-                                       $$$$$$$,                           
+May 05 22:42:26 *	-                                       $$$$$$$,                            
+May 05 22:42:26 *	-                                      ,$$$$$$$?                           
+May 05 22:42:26 *	-                                      $$$$Z$$$$~                      
+May 05 22:42:26 *	-                                                                           
+May 05 22:42:26 *	- 
+May 05 22:42:26 *	-              7                                    7             7        
+May 05 22:42:26 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+May 05 22:42:26 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+May 05 22:42:26 *	-              7   77   7     7         7    77     7   7 77   7  7         
+May 05 22:42:26 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+May 05 22:42:26 *	-                                                                           
+May 05 22:42:26 *	- 
+May 05 22:42:26 *	- Welcome to the trees.chat IRC network, please read the rules below;
+May 05 22:42:26 *	- - No solicitation or asking for cannabis or any other controlled substance.
+May 05 22:42:26 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+May 05 22:42:26 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+May 05 22:42:26 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+May 05 22:42:26 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+May 05 22:42:26 *	- - Don't post personal information of other members.
+May 05 22:42:26 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+May 05 22:42:26 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+May 05 22:42:26 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+May 05 22:42:26 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+May 05 22:42:26 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+May 05 22:42:26 *	End of message of the day.
+May 05 22:42:26 *	There are 46 users and 2 invisible on 2 servers
+May 05 22:42:26 *	3 :operator(s) online
+May 05 22:42:26 *	1 :unknown connections
+May 05 22:42:26 *	18 :channels formed
+May 05 22:42:26 *	I have 39 clients and 1 servers
+May 05 22:42:26 *	Current Local Users: 39  Max: 52
+May 05 22:42:26 *	Current Global Users: 48  Max: 61
+May 05 22:42:26 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+May 05 22:42:26 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+May 05 22:42:26 *	You are now logged in as samling
+May 06 00:35:05 *	No ping reply for 5301 seconds, disconnecting.
+May 06 00:35:05 *	Disconnected ()
+May 06 00:35:15 *	Looking up irc.trees.chat
+May 06 00:35:15 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+May 06 00:35:15 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 06 00:35:15 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 06 00:35:15 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 06 00:35:15 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 06 00:35:15 *	* Subject: /CN=irc.trees.chat
+May 06 00:35:15 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 06 00:35:16 *	* Certification info:
+May 06 00:35:16 *	  Subject:
+May 06 00:35:16 *	    CN=irc.trees.chat
+May 06 00:35:16 *	  Issuer:
+May 06 00:35:16 *	    C=US
+May 06 00:35:16 *	    O=Let's Encrypt
+May 06 00:35:16 *	    CN=Let's Encrypt Authority X3
+May 06 00:35:16 *	  Public key algorithm: rsaEncryption (2048 bits)
+May 06 00:35:16 *	  Sign algorithm sha256WithRSAEncryption
+May 06 00:35:16 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+May 06 00:35:16 *	* Cipher info:
+May 06 00:35:16 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 06 00:35:16 *	Connected. Now logging in.
+May 06 00:35:16 *	*** Looking up your hostname...
+May 06 00:35:16 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net) -- cached
+May 06 00:35:17 *	Welcome to trees.chat!
+May 06 00:35:17 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+May 06 00:35:17 *	Your host is trees.chat, running version InspIRCd-2.0
+May 06 00:35:17 *	This server was created 15:53:04 Nov 13 2017
+May 06 00:35:17 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+May 06 00:35:17 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+May 06 00:35:17 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+May 06 00:35:17 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+May 06 00:35:17 *	543AACALU :your unique ID
+May 06 00:35:17 *	trees.chat message of the day
+May 06 00:35:17 *	- 
+May 06 00:35:17 *	-                                                                                 
+May 06 00:35:17 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+May 06 00:35:17 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+May 06 00:35:17 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+May 06 00:35:17 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+May 06 00:35:17 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+May 06 00:35:17 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+May 06 00:35:17 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+May 06 00:35:17 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+May 06 00:35:17 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+May 06 00:35:17 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+May 06 00:35:17 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+May 06 00:35:17 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+May 06 00:35:17 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+May 06 00:35:17 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+May 06 00:35:17 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+May 06 00:35:17 *	-             88ZZZZZZZZ                           $$$                            
+May 06 00:35:17 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+May 06 00:35:17 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+May 06 00:35:17 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+May 06 00:35:17 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+May 06 00:35:17 *	-               888888Z777777777777777$OOO  $$$,                         
+May 06 00:35:17 *	-                   :88                  ,$$$$$,          
+May 06 00:35:17 *	-                     8                 $$$$$$$,                   
+May 06 00:35:17 *	-                      ?                $$$$$$$,               
+May 06 00:35:17 *	-                                       $$$$$$$,           
+May 06 00:35:17 *	-                                       $$$$$$$,      
+May 06 00:35:17 *	-                                       $$$$$$$,                 
+May 06 00:35:17 *	-                                       $$$$$$$,               
+May 06 00:35:17 *	-                                       $$$$$$$,                     
+May 06 00:35:17 *	-                                       $$$$$$$,                        
+May 06 00:35:17 *	-                                       $$$$$$$,                           
+May 06 00:35:17 *	-                                       $$$$$$$,                      
+May 06 00:35:17 *	-                                       $$$$$$$,                       
+May 06 00:35:17 *	-                                       $$$$$$$,                          
+May 06 00:35:17 *	-                                       $$$$$$$,                       
+May 06 00:35:17 *	-                                       $$$$$$$,                         
+May 06 00:35:17 *	-                                       $$$$$$$,                           
+May 06 00:35:17 *	-                                       $$$$$$$,                            
+May 06 00:35:17 *	-                                      ,$$$$$$$?                           
+May 06 00:35:17 *	-                                      $$$$Z$$$$~                      
+May 06 00:35:17 *	-                                                                           
+May 06 00:35:17 *	- 
+May 06 00:35:17 *	-              7                                    7             7        
+May 06 00:35:17 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+May 06 00:35:17 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+May 06 00:35:17 *	-              7   77   7     7         7    77     7   7 77   7  7         
+May 06 00:35:17 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+May 06 00:35:17 *	-                                                                           
+May 06 00:35:17 *	- 
+May 06 00:35:17 *	- Welcome to the trees.chat IRC network, please read the rules below;
+May 06 00:35:17 *	- - No solicitation or asking for cannabis or any other controlled substance.
+May 06 00:35:17 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+May 06 00:35:17 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+May 06 00:35:17 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+May 06 00:35:17 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+May 06 00:35:17 *	- - Don't post personal information of other members.
+May 06 00:35:17 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+May 06 00:35:17 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+May 06 00:35:17 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+May 06 00:35:17 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+May 06 00:35:17 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+May 06 00:35:17 *	End of message of the day.
+May 06 00:35:17 *	There are 37 users and 2 invisible on 2 servers
+May 06 00:35:17 *	3 :operator(s) online
+May 06 00:35:17 *	18 :channels formed
+May 06 00:35:17 *	I have 30 clients and 1 servers
+May 06 00:35:17 *	Current Local Users: 30  Max: 52
+May 06 00:35:17 *	Current Global Users: 39  Max: 61
+May 06 00:35:17 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+May 06 00:35:17 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+May 06 00:35:17 *	You are now logged in as samling
+May 06 08:50:05 *	No ping reply for 28410 seconds, disconnecting.
+May 06 08:50:05 *	Disconnected ()
+May 06 08:50:15 *	Looking up irc.trees.chat
+May 06 08:50:16 *	Connecting to irc.trees.chat (104.237.132.233:6697)
+May 06 08:50:17 *	* Subject: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 06 08:50:17 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 06 08:50:17 *	* Subject: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 06 08:50:17 *	* Issuer: /O=Digital Signature Trust Co./CN=DST Root CA X3
+May 06 08:50:17 *	* Subject: /CN=irc.trees.chat
+May 06 08:50:17 *	* Issuer: /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+May 06 08:50:17 *	* Certification info:
+May 06 08:50:17 *	  Subject:
+May 06 08:50:17 *	    CN=irc.trees.chat
+May 06 08:50:17 *	  Issuer:
+May 06 08:50:17 *	    C=US
+May 06 08:50:17 *	    O=Let's Encrypt
+May 06 08:50:17 *	    CN=Let's Encrypt Authority X3
+May 06 08:50:17 *	  Public key algorithm: rsaEncryption (2048 bits)
+May 06 08:50:17 *	  Sign algorithm sha256WithRSAEncryption
+May 06 08:50:17 *	  Valid since Feb 10 08:41:24 2019 GM to May 11 08:41:24 2019 GM
+May 06 08:50:17 *	* Cipher info:
+May 06 08:50:17 *	  Version: TLSv1.2, cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits)
+May 06 08:50:17 *	Connected. Now logging in.
+May 06 08:50:17 *	*** Looking up your hostname...
+May 06 08:50:17 *	*** Found your hostname (ip72-205-65-178.sb.sd.cox.net)
+May 06 08:50:17 *	Welcome to trees.chat!
+May 06 08:50:17 *	Welcome to the trees.chat IRC Network samling!samling@ip72-205-65-178.sb.sd.cox.net
+May 06 08:50:17 *	Your host is trees.chat, running version InspIRCd-2.0
+May 06 08:50:17 *	This server was created 15:53:04 Nov 13 2017
+May 06 08:50:17 *	trees.chat InspIRCd-2.0 BHIRSTWdiorswx CFHIKLMNOQRSTUVYabcfhijklmnopqrstvz FHILVYabfhjkloqv
+May 06 08:50:17 *	AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=Ib,k,FHLfjl,CKMNOQRSTUcimnprstz CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU EXTBAN=,CNOQRSTUcmpuz FNC INVEX=I KICKLEN=255 MAP MAXBANS=60 :are supported by this server
+May 06 08:50:17 *	MAXCHANNELS=40 MAXPARA=32 MAXTARGETS=20 MODES=20 NAMESX NETWORK=trees.chat NICKLEN=18 PREFIX=(YqaohvV)!~&@%+- SSL=[::]:6697 STARTTLS STATUSMSG=!~&@%+- TOPICLEN=307 UHNAMES :are supported by this server
+May 06 08:50:17 *	USERIP VBANLIST WALLCHOPS WALLVOICES WATCH=32 :are supported by this server
+May 06 08:50:17 *	543AACANE :your unique ID
+May 06 08:50:17 *	trees.chat message of the day
+May 06 08:50:17 *	- 
+May 06 08:50:17 *	-                                                                                 
+May 06 08:50:17 *	-                         $O88888888888888888$$$$$$$$$$$$$?                       
+May 06 08:50:17 *	-                      ~ZZZZZ88888888888888877777777777777778                     
+May 06 08:50:17 *	-                     +ZZZZZZZZ8888888888887777777777777777888                    
+May 06 08:50:17 *	-                     ZZZZZZZZZZ8888888888777777777777777O88888                   
+May 06 08:50:17 *	-                     ZZZZZZZZZOOO88888887777777777777778888888                   
+May 06 08:50:17 *	-                     ZZZZZZZOOOOOOO888877777777777777$88888888                   
+May 06 08:50:17 *	-                     ZZZZZZOOOOOOOOZ78777777777777778888888888                   
+May 06 08:50:17 *	-                     ZZZZZOOOOOOOOOIII777777777777788888888888                   
+May 06 08:50:17 *	-                     ZZZOOOOOOOOOOIIIII$7777777777888888888888                   
+May 06 08:50:17 *	-              OZZZZ  ZZOOOOOOOOOOIIIIIIII$777777$$$$$$$$$$Z888                   
+May 06 08:50:17 *	-             OZZZZZ  OOOOOOOOOOO7IIIIIIIIII7777$$$$$$$$$$$$$$$                   
+May 06 08:50:17 *	-             ZZZZZZ  OOOOOOOOOOIIIIIIIIIIIII7$$$$$$$$$$$$$$$$$                   
+May 06 08:50:17 *	-             ZZZZZZ: OOOOOOOOO7IIIIIIIIIIIIIII$$$$$$$$$$$$$$$+                   
+May 06 08:50:17 *	-             ZZZZZZZ. OOOOOOOZIIIIIIIIIIIIIIIII7$$$$$$$$$$$$7                    
+May 06 08:50:17 *	-             8ZZZZZZZ~ .OOOOOIIIIIIIIIIIIIIIIIIII$$$$$$$$$$                      
+May 06 08:50:17 *	-             88ZZZZZZZZ                           $$$                            
+May 06 08:50:17 *	-             8888ZZZZZZ777777777OOOOOOOOOOO: $,  Z$Z                             
+May 06 08:50:17 *	-             88888ZZZZZ7777777777ZOOOOOOOOO: $,  $?                              
+May 06 08:50:17 *	-             888888ZZZZ777777777777OOOOOOOO  $,  ,                               
+May 06 08:50:17 *	-             :888888ZZ$7777777777777OOOOOOI $$,                              
+May 06 08:50:17 *	-               888888Z777777777777777$OOO  $$$,                         
+May 06 08:50:17 *	-                   :88                  ,$$$$$,          
+May 06 08:50:17 *	-                     8                 $$$$$$$,                   
+May 06 08:50:17 *	-                      ?                $$$$$$$,               
+May 06 08:50:17 *	-                                       $$$$$$$,           
+May 06 08:50:17 *	-                                       $$$$$$$,      
+May 06 08:50:17 *	-                                       $$$$$$$,                 
+May 06 08:50:17 *	-                                       $$$$$$$,               
+May 06 08:50:17 *	-                                       $$$$$$$,                     
+May 06 08:50:17 *	-                                       $$$$$$$,                        
+May 06 08:50:17 *	-                                       $$$$$$$,                           
+May 06 08:50:17 *	-                                       $$$$$$$,                      
+May 06 08:50:17 *	-                                       $$$$$$$,                       
+May 06 08:50:17 *	-                                       $$$$$$$,                          
+May 06 08:50:17 *	-                                       $$$$$$$,                       
+May 06 08:50:17 *	-                                       $$$$$$$,                         
+May 06 08:50:17 *	-                                       $$$$$$$,                           
+May 06 08:50:17 *	-                                       $$$$$$$,                            
+May 06 08:50:17 *	-                                      ,$$$$$$$?                           
+May 06 08:50:17 *	-                                      $$$$Z$$$$~                      
+May 06 08:50:17 *	-                                                                           
+May 06 08:50:17 *	- 
+May 06 08:50:17 *	-              7                                    7             7        
+May 06 08:50:17 *	-             7777 7777 7777   7777  7777     7777  7777   77777 7777       
+May 06 08:50:17 *	-              7   77   7   7 7   7  77      77     7   7 77   7  7         
+May 06 08:50:17 *	-              7   77   7     7         7    77     7   7 77   7  7         
+May 06 08:50:17 *	-               77 77    7777  7777  7777  7  7777  7   7  77777   77       
+May 06 08:50:17 *	-                                                                           
+May 06 08:50:17 *	- 
+May 06 08:50:17 *	- Welcome to the trees.chat IRC network, please read the rules below;
+May 06 08:50:17 *	- - No solicitation or asking for cannabis or any other controlled substance.
+May 06 08:50:17 *	- - No trolling, taunting, annoying, baiting people into arguments or disrupting the chatroom flow.
+May 06 08:50:17 *	- - We do not tolerate discrimination of any kind including discriminatory jokes.
+May 06 08:50:17 *	- - Be respectful to others, don't attack users for their opinions and beliefs.
+May 06 08:50:17 *	- - If you have a conflict or complaint about another user get a screenshot of the messages and report them by typing /msg SycnhroBot !report <user> <reason>.
+May 06 08:50:17 *	- - Don't post personal information of other members.
+May 06 08:50:17 *	- - Don't waste bandwidth, occasional gaming may be streamed but don't stream movies or gifs. Mods may ask you to stop streaming at any time.
+May 06 08:50:17 *	- - No spamming. If you have a lot to say to someone, try to reduce it to a single sentence or use private messages.
+May 06 08:50:17 *	- - No gratuitous nudity, being topless is allowed but behave decently.
+May 06 08:50:17 *	- - Say hi when joining, lurking without talking and responding to PMs might get you kicked.
+May 06 08:50:18 *	- - Mods can enforce these rules by kicking, banning temporarily or permanently, when you have been banned temporarily evading this ban will result in you being banned permanently.
+May 06 08:50:18 *	End of message of the day.
+May 06 08:50:18 *	There are 30 users and 2 invisible on 2 servers
+May 06 08:50:18 *	3 :operator(s) online
+May 06 08:50:18 *	10 :channels formed
+May 06 08:50:18 *	I have 23 clients and 1 servers
+May 06 08:50:18 *	Current Local Users: 23  Max: 52
+May 06 08:50:18 *	Current Global Users: 32  Max: 61
+May 06 08:50:18 *	TC-g68.jli.5hnsft.IP :is now your displayed host
+May 06 08:50:18 *	*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD"
+May 06 08:50:18 *	You are now logged in as samling
