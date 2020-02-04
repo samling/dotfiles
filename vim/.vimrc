@@ -251,7 +251,7 @@ Plugin 'airblade/vim-gitgutter'
 "Plugin 'mhinz/vim-signify'
 "Plugin 'crusoexia/vim-monokai'
 "Plugin 'vim-python/python-syntax'
-Plugin 'sheerun/vim-polyglot'
+"Plugin 'sheerun/vim-polyglot'
 "Plugin 'liuchengxu/vim-which-key'
 
 call vundle#end()
