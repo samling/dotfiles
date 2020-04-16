@@ -40,6 +40,11 @@ source ~/dotfiles/zsh/aliases/custom.zsh
 #    source ~/dotfiles/zsh/aliases/docker.zsh
 #fi
 
+# Novacoast stuff
+#
+if [ -f ~/.zshrc.novacoast ]; then
+    source ~/.zshrc.novacoast
+fi
 
 # Custom functions
 #
