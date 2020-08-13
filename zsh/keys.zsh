@@ -14,3 +14,6 @@ bindkey "^[[B" history-substring-search-down
 
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+
+# Bind option-backspace to delete word
+bindkey '^[^?' backward-kill-word
