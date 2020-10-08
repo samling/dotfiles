@@ -51,7 +51,7 @@ fi
 source ~/dotfiles/zsh/functions.zsh
 
 # Allows for addition of .zshrc.local for machine-specific things
-if [[ -f $HOME/.zshrc.local ]]; then
+if [ -f $HOME/.zshrc.local ]; then
     source $HOME/.zshrc.local
 fi
 
