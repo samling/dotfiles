@@ -17,3 +17,7 @@ bindkey "^[[1;5D" backward-word
 
 # Bind option-backspace to delete word
 bindkey '^[^?' backward-kill-word
+
+# Unbind ctrl-p/ctrl-n
+bindkey -r "^p"
+bindkey -r "^n"
