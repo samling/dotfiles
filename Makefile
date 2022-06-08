@@ -26,8 +26,7 @@ install_tools: \
 	install_fzf
 
 configure_vim: \
-	install_vundle \
-	nvim_use_vimrc
+	install_vundle
 
 postconfigure: \
 	echo_final_steps
