@@ -96,7 +96,8 @@ endef
 export NVIM_INIT
 install_vundle:
 	@echo "Installing Vundle"
-	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+	rm -rf ${HOME}/.vim/bundle/Vundle.vim
+	git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
 	@echo "Using .vimrc in nvim"
 	mkdir -p ${HOME}/.config/nvim && touch ${HOME}/.config/nvim/init.vim
 	echo "$$NVIM_INIT" > ${HOME}/.config/nvim/init.vim
