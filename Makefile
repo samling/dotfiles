@@ -110,6 +110,8 @@ define FINAL_STEPS
 Done! Remember to do the following:
 	1. chsh -s /usr/bin/zsh
 	2. vim +PluginInstall +qall
+	3. Uncomment the tmux session lines at the bottom of ~/.zshrc
+	4. Clone local dotfiles and symlink into place
 endef
 export FINAL_STEPS
 echo_final_steps:
