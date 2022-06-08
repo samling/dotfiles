@@ -22,7 +22,8 @@ install_tools: \
 	install_exa \
 	install_bat \
 	install_grc \
-	install_rg
+	install_rg \
+	install_fzf
 
 configure_vim: \
 	install_vundle \
@@ -77,6 +78,11 @@ install_rg:
 	wget ${LATEST_RG} -O /tmp/rg.deb
 	sudo dpkg -i /tmp/rg.deb
 	rm -rf /tmp/rg.deb
+
+install_fzf:
+	@echo "Installing fzf"
+	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
+	${HOME}/.fzf/install --all
 
 #################
 #     NVIM      #
