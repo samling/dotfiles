@@ -44,8 +44,11 @@ create_symlinks:
 	@echo "Creating symlinks"
 	ln -sf ${HOME}/dotfiles/zsh/.zshrc ${HOME}/.zshrc
 	ln -sf ${HOME}/dotfiles/vim/.vim ${HOME}/.vim
+	# TODO: Try just symlinking to ${HOME}
+	rm ${HOME}/dotfiles/vim/.vim/.vim
 	ln -sf ${HOME}/dotfiles/vim/.vimrc ${HOME}/.vimrc
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
+	rm ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 
 #################

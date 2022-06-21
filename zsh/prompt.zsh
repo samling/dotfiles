@@ -105,6 +105,10 @@ function zle-line-init zle-keymap-select {
 #
 # Color: $fg[color]
 #
-PROMPT=" %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  "
+if [[ -n $SSH_CONNECTION ]]; then
+    PROMPT=" $(ssh_prompt_string) %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  "
+else
+    PROMPT=" %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  "
+fi
 #PROMPT=" %F{blue}░▒▓%{$bg[blue]%}%  %F{black}%(5~|%-1~/…/%3~|%4~) %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
 #PROMPT="%U${(r:$COLUMNS:: :)}%u "$'\n'"%F{blue}░▒▓%{$bg[blue]%}%  %F{black}%~ %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "

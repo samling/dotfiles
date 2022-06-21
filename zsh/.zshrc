@@ -68,8 +68,8 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/vault vault
 
 # Start tmux
-tmux attach &> /dev/null
-
-if [[ ! $TERM =~ screen ]]; then
-    exec tmux
-fi
+#tmux attach &> /dev/null
+#
+#if [[ ! $TERM =~ screen ]]; then
+#    exec tmux
+#fi
