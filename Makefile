@@ -1,7 +1,8 @@
-LATEST_EXA 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
-LATEST_BAT 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
-LATEST_GRC 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
-LATEST_RG 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
+LATEST_EXA 	 :curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
+LATEST_BAT 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_GRC 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
+LATEST_RG 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
+LATEST_VIDDY := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
 
 #################
 #    TARGETS    #
@@ -23,7 +24,8 @@ install_tools: \
 	install_bat \
 	install_grc \
 	install_rg \
-	install_fzf
+	install_fzf \
+	install_viddy
 
 configure_vim: \
 	install_vundle
@@ -86,6 +88,14 @@ install_fzf:
 	rm -rf ${HOME}/.fzf
 	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
 	${HOME}/.fzf/install --all
+
+install_viddy:
+	@echo "Installing viddy"
+	wget ${LATEST_VIDDY} -O /tmp/viddy.tar.gz
+	mkdir -p /tmp/viddy
+	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
+	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
+	rm -rf /tmp/viddy.tar.gz /tmp/viddy
 
 #################
 #     NVIM      #

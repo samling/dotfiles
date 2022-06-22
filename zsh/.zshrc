@@ -54,6 +54,9 @@ source ~/dotfiles/zsh/functions.zsh
 if [ -f $HOME/.zshrc.local ]; then
     source $HOME/.zshrc.local
 fi
+if [ -f $HOME/.zshrc.nvidia ]; then
+    source $HOME/.zshrc.nvidia
+fi
 
 ### Added by the Heroku Toolbelt
 #export PATH="/usr/local/heroku/bin:$PATH"
