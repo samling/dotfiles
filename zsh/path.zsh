@@ -20,6 +20,8 @@ PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Library
 PATH=$PATH:/usr/local/munki
 # Android SDK
 PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+# Pulumi
+PATH=$PATH:$HOME/.pulumi/bin
 # Final path export
 export PATH
 
