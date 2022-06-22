@@ -1,4 +1,4 @@
-LATEST_EXA 	 :curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
+LATEST_EXA 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
 LATEST_BAT 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_GRC 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
 LATEST_RG 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
@@ -47,10 +47,10 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/zsh/.zshrc ${HOME}/.zshrc
 	ln -sf ${HOME}/dotfiles/vim/.vim ${HOME}/.vim
 	# TODO: Try just symlinking to ${HOME}
-	rm ${HOME}/dotfiles/vim/.vim/.vim
+	rm -f ${HOME}/dotfiles/vim/.vim/.vim
 	ln -sf ${HOME}/dotfiles/vim/.vimrc ${HOME}/.vimrc
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
-	rm ${HOME}/dotfiles/tmux/.tmux/.tmux
+	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 
 #################
