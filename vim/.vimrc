@@ -95,7 +95,10 @@ set nowrap		    " don't wrap lines
 "set wrap            " enable line wrapping
 set linebreak       " wrap words but don't break line unless hitting enter
 set nolist          " list disables linebreak
-set showmatch		" show matching bracket (briefly jump)
+" don't show matching bracket
+"set noshowmatch	" show matching bracket (briefly jump)
+set noshowmatch		
+let loaded_matchparen=0
 set matchtime=2		" show matching bracket for 0.2 seconds
 "set guifont=Menlo\ Regular\ for\ Powerline\ 12
 "set guifont=Menlo_Regular_for_Powerline:h12
