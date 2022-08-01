@@ -27,6 +27,11 @@ install_tools: \
 	install_fzf \
 	install_viddy
 
+install_k8s_tools: \
+	install_kubectl \
+	install_krew \
+	install_krew_plugins
+
 configure_vim: \
 	install_vundle
 
@@ -96,6 +101,35 @@ install_viddy:
 	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
 	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
 	rm -rf /tmp/viddy.tar.gz /tmp/viddy
+
+#################
+#   K8S-TOOLS   #
+#################
+
+install_kubectl:
+	@echo "Installing kubectl"
+	cd /tmp && { curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"; cd -; }
+	sudo mv /tmp/kubectl /usr/local/bin/kubectl
+	sudo chmod +x /usr/local/bin/kubectl
+
+install_krew:
+	@echo "Installing krew"
+	(
+	  set -x; cd "$(mktemp -d)" &&
+	  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+	  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+	  KREW="krew-${OS}_${ARCH}" &&
+	  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+	  tar zxvf "${KREW}.tar.gz" &&
+	  ./"${KREW}" install krew
+	)
+
+install_krew_plugins:
+	@echo "Installing krew plugins"
+	kubectl krew install ns
+	kubectl krew install ctx
+	kubectl krew install neat
+	kubectl krew install sniff
 
 #################
 #     NVIM      #
