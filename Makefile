@@ -1,8 +1,11 @@
-LATEST_EXA 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
-LATEST_BAT 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
-LATEST_GRC 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
-LATEST_RG 	 := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
-LATEST_VIDDY := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
+LATEST_EXA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
+LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
+LATEST_RG       := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
+LATEST_VIDDY    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
+LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
+LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
+LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
 
 #################
 #    TARGETS    #
@@ -25,7 +28,8 @@ install_tools: \
 	install_grc \
 	install_rg \
 	install_fzf \
-	install_viddy
+	install_viddy \
+	install_tmux
 
 install_k8s_tools: \
 	install_kubectl \
@@ -45,7 +49,7 @@ postconfigure: \
 install_prereqs:
 	@echo "Downloading prereqs"
 	sudo apt update
-	sudo apt install -y neovim tmux zsh jq curl unzip autotools-dev automake
+	sudo apt install -y neovim zsh jq curl unzip autotools-dev automake gcc bison flex # tmux
 
 create_symlinks:
 	@echo "Creating symlinks"
@@ -101,6 +105,27 @@ install_viddy:
 	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
 	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
 	rm -rf /tmp/viddy.tar.gz /tmp/viddy
+
+install_tmux:
+	@echo "Installing tmux"
+	@echo "Installing prereq: libevent"
+	wget ${LATEST_LIBEVENT} -O /tmp/libevent.tar.gz
+	mkdir -p /tmp/libevent
+	tar xzvf /tmp/libevent.tar.gz -C /tmp/libevent
+	cd /tmp/libevent; sh configure.sh --disable-openssl && make && sudo make install
+	rm -rf /tmp/libevent.tar.gz /tmp/libevent
+	@echo "Installing prereq: ncurses"
+	wget ${LATEST_NCURSES} -O /tmp/ncurses.tar.gz
+	mkdir -p /tmp/ncurses
+	tar xzvf /tmp/ncurses.tar.gz -C /tmp/ncurses
+	cd /tmp/ncurses; sh configure && make && sudo make install
+	rm -rf /tmp/ncurses.tar.gz /tmp/ncurses
+	@echo "Installing tmux"
+	wget ${LATEST_TMUX} -O /tmp/tmux.tar.gz
+	mkdir -p /tmp/tmux
+	tar xzvf -/tmp/tmux.tar.gz -C /tmp/tmux
+	cd /tmp/tmux; sh configure && make && sudo make install
+	rm -rf /tmp/tmux.tar.gz /tmp/tmux
 
 #################
 #   K8S-TOOLS   #
