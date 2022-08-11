@@ -17,4 +17,4 @@ My ever-growing collection of dotfiles and configs.
 
 ### To use
 
-* `make`
+* `sudo -E make`

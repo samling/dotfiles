@@ -6,6 +6,7 @@ LATEST_VIDDY    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
 LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
 LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
+LATEST_KUBECTL  := `curl -L -s https://dl.k8s.io/release/stable.txt`
 
 #################
 #    TARGETS    #
@@ -15,10 +16,13 @@ LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 all: \
 	preconfigure \
 	install_tools \
+	install_k8s_tools \
 	configure_vim \
+	configure_tmux \
 	postconfigure
 
 preconfigure: \
+	check_github_token \
 	install_prereqs \
 	create_symlinks
 
@@ -37,7 +41,11 @@ install_k8s_tools: \
 	install_krew_plugins
 
 configure_vim: \
-	install_vundle
+	install_vundle \
+	install_vundle_plugins
+
+configure_tmux: \
+	install_tmux_tpm
 
 postconfigure: \
 	echo_final_steps
@@ -45,6 +53,9 @@ postconfigure: \
 #################
 #    PREREQS    #
 #################
+
+check_github_token:
+	@[ "${GITHUB_TOKEN}" ] && echo "Found GITHUB_TOKEN; continuing with install" || ( echo "GITHUB_TOKEN is not set"; exit 1 )
 
 install_prereqs:
 	@echo "Downloading prereqs"
@@ -112,20 +123,28 @@ install_tmux:
 	wget ${LATEST_LIBEVENT} -O /tmp/libevent.tar.gz
 	mkdir -p /tmp/libevent
 	tar xzvf /tmp/libevent.tar.gz -C /tmp/libevent
-	cd /tmp/libevent; sh configure.sh --disable-openssl && make && sudo make install
+	cd /tmp/libevent/libevent*; sh configure --disable-openssl && make && sudo make install
 	rm -rf /tmp/libevent.tar.gz /tmp/libevent
 	@echo "Installing prereq: ncurses"
 	wget ${LATEST_NCURSES} -O /tmp/ncurses.tar.gz
 	mkdir -p /tmp/ncurses
 	tar xzvf /tmp/ncurses.tar.gz -C /tmp/ncurses
-	cd /tmp/ncurses; sh configure && make && sudo make install
+	cd /tmp/ncurses/ncurses*; sh configure && make && sudo make install
 	rm -rf /tmp/ncurses.tar.gz /tmp/ncurses
 	@echo "Installing tmux"
 	wget ${LATEST_TMUX} -O /tmp/tmux.tar.gz
 	mkdir -p /tmp/tmux
-	tar xzvf -/tmp/tmux.tar.gz -C /tmp/tmux
-	cd /tmp/tmux; sh configure && make && sudo make install
+	tar xzvf /tmp/tmux.tar.gz -C /tmp/tmux
+	cd /tmp/tmux/tmux*; sh configure && make && sudo make install
 	rm -rf /tmp/tmux.tar.gz /tmp/tmux
+
+################
+# TMUX PLUGINS #
+################
+
+install_tmux_tpm:
+	@echo "Installing tpm"
+	git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
 
 #################
 #   K8S-TOOLS   #
@@ -133,28 +152,23 @@ install_tmux:
 
 install_kubectl:
 	@echo "Installing kubectl"
-	cd /tmp && { curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"; cd -; }
+	cd /tmp && { curl -LO "https://dl.k8s.io/release/${LATEST_KUBECTL}/bin/linux/amd64/kubectl"; cd -; }
 	sudo mv /tmp/kubectl /usr/local/bin/kubectl
 	sudo chmod +x /usr/local/bin/kubectl
 
 install_krew:
 	@echo "Installing krew"
-	(
-	  set -x; cd "$(mktemp -d)" &&
-	  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-	  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-	  KREW="krew-${OS}_${ARCH}" &&
-	  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-	  tar zxvf "${KREW}.tar.gz" &&
-	  ./"${KREW}" install krew
-	)
+	set -x; cd "$$(mktemp -d)" && \
+	OS="$$(uname | tr '[:upper:]' '[:lower:]')" && \
+	ARCH="$$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$$/arm64/')" && \
+	KREW="krew-$${OS}_$${ARCH}" && \
+	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/$${KREW}.tar.gz" && \
+	tar zxvf "$${KREW}.tar.gz" && \
+	./"$${KREW}" install krew
 
 install_krew_plugins:
 	@echo "Installing krew plugins"
-	kubectl krew install ns
-	kubectl krew install ctx
-	kubectl krew install neat
-	kubectl krew install sniff
+	kubectl krew install ns ctx neat sniff konfig
 
 #################
 #     NVIM      #
@@ -174,6 +188,10 @@ install_vundle:
 	mkdir -p ${HOME}/.config/nvim && touch ${HOME}/.config/nvim/init.vim
 	echo "$$NVIM_INIT" > ${HOME}/.config/nvim/init.vim
 
+install_vundle_plugins:
+	@echo "Installing vundle plugins"
+	vim +PluginInstall +qall
+
 #################
 #      END      #
 #################
@@ -181,10 +199,8 @@ install_vundle:
 define FINAL_STEPS
 Done! Remember to do the following:
 	1. chsh -s /usr/bin/zsh
-	2. vim +PluginInstall +qall
-	3. Uncomment the tmux session lines at the bottom of ~/.zshrc
-	4. Clone local dotfiles and symlink into place
-	5. Reboot!
+	2. Clone local dotfiles and symlink into place
+	3. (Optional) Reboot!
 endef
 export FINAL_STEPS
 echo_final_steps:
