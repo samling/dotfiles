@@ -168,7 +168,7 @@ install_krew:
 
 install_krew_plugins:
 	@echo "Installing krew plugins"
-	kubectl krew install ns ctx neat sniff konfig
+	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig
 
 #################
 #     NVIM      #
