@@ -45,7 +45,7 @@ postconfigure: \
 install_prereqs:
 	@echo "Downloading prereqs"
 	sudo apt update
-	sudo apt install -y neovim tmux zsh jq curl
+	sudo apt install -y neovim tmux zsh jq curl unzip autotools-dev automake
 
 create_symlinks:
 	@echo "Creating symlinks"
