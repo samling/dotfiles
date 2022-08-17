@@ -37,6 +37,8 @@ setopt PUSHD_TO_HOME            # `pushd` = `pushd $HOME`
 # ======== PROMPT
 
 autoload -U colors && colors    # Allow colors in prompt
+autoload -Uz add-zsh-hook       # Enable ZSH hooks
+autoload -Uz vcs_info           # Enable VCS info
 setopt PROMPT_SUBST             # Enable parameter expansion, command substitution, and arithmetic expansion in the prompt
 
 # ======== GLOBBING
