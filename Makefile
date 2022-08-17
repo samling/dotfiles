@@ -60,7 +60,7 @@ check_github_token:
 install_prereqs:
 	@echo "Downloading prereqs"
 	sudo apt update
-	sudo apt install -y neovim zsh jq curl unzip autotools-dev automake gcc bison flex # tmux
+	sudo apt install -y neovim zsh jq curl unzip autotools-dev automake gcc bison flex libevent-core-2.1-7 # tmux
 
 create_symlinks:
 	@echo "Creating symlinks"
