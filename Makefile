@@ -199,7 +199,7 @@ install_vundle_plugins:
 define FINAL_STEPS
 Done! Remember to do the following:
 	1. chsh -s /usr/bin/zsh
-	2. Clone local dotfiles and symlink into place
+	2. (Optional) Clone local dotfiles repo
 	3. (Optional) Reboot!
 endef
 export FINAL_STEPS
