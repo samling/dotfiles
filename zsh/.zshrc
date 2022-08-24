@@ -45,6 +45,7 @@ source ~/dotfiles/zsh/functions.zsh
 #
 LOCAL_DOTFILES=(${HOME}/zshrc-local/zshrc.*.local)
 for dotfile in ${LOCAL_DOTFILES}; do
+    echo -e "Sourced local dotfile $dotfile"
     source $dotfile
 done
 
