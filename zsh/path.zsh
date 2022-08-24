@@ -1,3 +1,5 @@
+# Reset PATH
+unset PATH
 # Set Android SDK home
 ANDROID_HOME=$HOME/Library/Android/sdk
 # Golang
