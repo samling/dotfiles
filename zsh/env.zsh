@@ -6,6 +6,9 @@ export LANG=en_US.UTF-8
 # Default editor
 export EDITOR="vim"
 
+# fzf
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+
 # Go Code
 export GOROOT=/usr/lib/go
 export GOPATH=$HOME/.gocode

@@ -235,7 +235,10 @@ Plugin 'VundleVim/Vundle.vim'
 " Call plugins here
 " Run :PluginInstall (case-sensitive) to install
 "Plugin 'scrooloose/nerdtree'
-"Plugin 'bling/vim-airline'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'godlygeek/csapprox'
 "Plugin 'vim-scripts/Better-CSS-Syntax-for-Vim'
 "Plugin 'scrooloose/syntastic'
@@ -266,6 +269,10 @@ let g:easyescape_chars = { "j": 1, "k": 1 }
 let g:easyescape_timeout = 100
 cnoremap jk <ESC>
 cnoremap kj <ESC>
+
+" fzf
+set rtp+=~/.fzf
+let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore-vcs --hidden'
 
 """ WhichVim
 "let g:which_key_map = {
