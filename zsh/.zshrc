@@ -43,11 +43,21 @@ source ~/dotfiles/zsh/functions.zsh
 
 # Source ${HOME}/zshrc-local/zshrc.*.local files
 #
-LOCAL_DOTFILES=(${HOME}/zshrc-local/zshrc.*.local)
-for dotfile in ${LOCAL_DOTFILES}; do
-    echo -e "Sourced local dotfile $dotfile"
-    source $dotfile
-done
+LOCAL_DOTFILES_GIT=(${HOME}/zshrc-local/zshrc.*.local)
+if [[ ! -z ${LOCAL_DOTFILES_GIT} && ${LOCAL_DOTFILES_GIT} != "${HOME}/zshrc-local/zshrc.*.local" ]]; then
+    for dotfile in ${LOCAL_DOTFILES_GIT}; do
+        echo -e "Sourced local dotfile from git repo: $dotfile"
+        source $dotfile
+    done
+fi
+
+LOCAL_DOTFILES=(${HOME}/.zshrc.*)
+if [[ ! -z ${LOCAL_DOTFILES} && ${LOCAL_DOTFILES} != "${HOME}/.zshrc.*" ]]; then
+    for dotfile in ${LOCAL_DOTFILES}; do
+        echo -e "Sourced local dotfile: $dotfile"
+        source $dotfile
+    done
+fi
 
 # Enable fuzzy finder
 #
