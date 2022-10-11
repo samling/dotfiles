@@ -25,6 +25,7 @@ all: \
 preconfigure: \
 	check_github_token \
 	install_prereqs \
+	create_folders \
 	create_symlinks
 
 install_tools: \
@@ -67,6 +68,10 @@ install_prereqs:
 	sudo apt update
 	sudo apt install -y zsh jq curl unzip autotools-dev automake gcc bison flex libevent-core-2.1-7 # tmux
 
+create_folders:
+	@echo "Creating required folders"
+	mkdir -p ${HOME}/.config/nvim/lua/custom
+
 create_symlinks:
 	@echo "Creating symlinks"
 	ln -sf ${HOME}/dotfiles/zsh/.zshrc ${HOME}/.zshrc
@@ -77,6 +82,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
+	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom
 
 #################
 #     TOOLS     #
