@@ -181,13 +181,15 @@ install_krew_plugins:
 
 install_nvim:
 	@echo "Removing any previous neovim installations"
-	apt remove neovim neovim-runtime
+	yes | sudo apt remove neovim neovim-runtime
 	@echo "Installing neovim"
 	wget ${LATEST_NVIM} -O /tmp/nvim-linux64.deb
 	sudo dpkg -i /tmp/nvim-linux64.deb
 	rm -rf /tmp/nvim-linux64.deb
 
 install_nvchad:
+	@echo "Renaming any existing ${HOME}/.config/nvim"
+	mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old
 	@echo "Installing nvchad"
 	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 	@echo "Please run neovim once to finish configuration"
