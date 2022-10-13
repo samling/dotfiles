@@ -44,7 +44,7 @@ install_k8s_tools: \
 	install_krew_plugins
 
 configure_nvim: \
-	install_nvchak
+	install_nvchad
 
 configure_vim: \
 	install_vundle \
