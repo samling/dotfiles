@@ -82,7 +82,8 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
-	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom
+	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom/init.lua
+	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/chadrc.lua ${HOME}/.config/nvim/lua/custom/chadrc.lua
 
 #################
 #     TOOLS     #
