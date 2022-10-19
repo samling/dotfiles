@@ -41,6 +41,10 @@ source ~/dotfiles/zsh/aliases/custom.zsh
 #
 source ~/dotfiles/zsh/functions.zsh
 
+# Prompt functions
+#
+source ~/dotfiles/zsh/PS1.zsh
+
 # Source ${HOME}/zshrc-local/zshrc.*.local files
 #
 LOCAL_DOTFILES_GIT=(${HOME}/zshrc-local/zshrc.*.local)
