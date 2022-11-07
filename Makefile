@@ -156,7 +156,11 @@ install_tmux:
 
 install_tmux_tpm:
 	@echo "Installing tpm"
-	git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
+	if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then 
+		git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
+	else
+		@echo "tpm is already installed; skipping..."
+	fi
 
 #################
 #   K8S-TOOLS   #
