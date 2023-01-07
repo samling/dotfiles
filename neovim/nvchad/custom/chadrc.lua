@@ -1,7 +1,8 @@
 local M = {}
 
 M.ui = {
-  transparency = true
+  transparency = true,
+  theme = "vscode_dark"
 }
 
 return M

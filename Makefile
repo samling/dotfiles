@@ -25,8 +25,8 @@ all: \
 preconfigure: \
 	check_github_token \
 	install_prereqs \
-	create_folders \
 	create_symlinks
+	#create_folders \
 
 install_tools: \
 	install_exa \
@@ -82,8 +82,6 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
-	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom/init.lua
-	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/chadrc.lua ${HOME}/.config/nvim/lua/custom/chadrc.lua
 
 #################
 #     TOOLS     #
@@ -156,11 +154,7 @@ install_tmux:
 
 install_tmux_tpm:
 	@echo "Installing tpm"
-	if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then 
-		git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
-	else
-		@echo "tpm is already installed; skipping..."
-	fi
+	if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm; else @echo "tpm is already installed; skipping..."; fi
 
 #################
 #   K8S-TOOLS   #
@@ -203,6 +197,10 @@ install_nvchad:
 	mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old
 	@echo "Installing nvchad"
 	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+	@echo "Creating custom directories, symlinking files"
+	mkdir -p ${HOME}/.config/nvim/lua/custom
+	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom/init.lua
+	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/chadrc.lua ${HOME}/.config/nvim/lua/custom/chadrc.lua
 	@echo "Please run neovim once to finish configuration"
 
 #define NVIM_INIT
