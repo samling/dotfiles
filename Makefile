@@ -66,7 +66,7 @@ check_github_token:
 install_prereqs:
 	@echo "Downloading prereqs"
 	sudo apt update
-	sudo apt install -y zsh jq curl unzip autotools-dev automake gcc bison flex libevent-core-2.1-7 # tmux
+	sudo apt install -y zsh jq curl unzip autotools-dev automake gcc bison flex libevent-core-2.1-7 xclip # tmux
 
 create_folders:
 	@echo "Creating required folders"
