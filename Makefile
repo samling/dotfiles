@@ -229,8 +229,10 @@ define FINAL_STEPS
 Done! Remember to do the following:
 	1. chsh -s /usr/bin/zsh
 	2. Run neovim to finish NvChad configuration
-	3. (Optional) Clone local dotfiles repo
-	4. (Optional) Reboot!
+	3. Install tmux plugins with ctrl-A + I
+	5. (Optional) Install nvm, pyenv
+	5. (Optional) Clone local dotfiles repo
+	6. (Optional) Reboot!
 endef
 export FINAL_STEPS
 echo_final_steps:
