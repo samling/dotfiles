@@ -194,7 +194,7 @@ install_nvim:
 
 install_nvchad:
 	@echo "Renaming any existing ${HOME}/.config/nvim"
-	mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old
+	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old; fi
 	@echo "Installing nvchad"
 	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 	@echo "Creating custom directories, symlinking files"
