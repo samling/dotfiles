@@ -18,3 +18,6 @@ My ever-growing collection of dotfiles and configs.
 ### To use
 
 * `sudo -E make`
+
+### Notes/Troubleshooting
+- For the `kube-tmux` plugin to work, the file `~/.kube/config` must exist. The contents of this file presumably get swapped by `kubectx`.
