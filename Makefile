@@ -7,6 +7,8 @@ LATEST_VIDDY    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
 LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
 LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
+LATEST_JC     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
+
 LATEST_KUBECTL  := `curl -L -s https://dl.k8s.io/release/stable.txt`
 
 #################
@@ -36,7 +38,8 @@ install_tools: \
 	install_fzf \
 	install_viddy \
 	install_tmux \
-	install_nvim
+	install_nvim \
+	install_jc
 
 install_k8s_tools: \
 	install_kubectl \
@@ -112,6 +115,12 @@ install_rg:
 	wget ${LATEST_RG} -O /tmp/rg.deb
 	sudo dpkg -i /tmp/rg.deb
 	rm -rf /tmp/rg.deb
+
+install_jc:
+	@echo "Installing jc"
+	wget ${LATEST_JC} -O /tmp/jc.deb
+	sudo dpkg -i /tmp/jc.deb
+	rm -rf /tmp/jc.deb
 
 install_fzf:
 	@echo "Installing fzf"
