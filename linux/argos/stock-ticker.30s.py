@@ -18,26 +18,26 @@ import json
 # 3. Verify your email address
 # 4. Click "API Tokens" in the left menu
 # 5. Enter the "Publishable" Token in the quotes below (it should start with "pk_")
-api_token = "pk_4ebdafa02f404d5dbae71157e2575cc1"
+#api_token = "pk_4ebdafa02f404d5dbae71157e2575cc1"
+api_token = "C73XO06BAO77V2PN"
 
 # Enter your stock symbols here in the format: ["symbol1", "symbol2", ...]
-stock_symbols = ["NVDA"]
+stock_symbol = "NVDA"
 #-----------------------------------------------------------------------------
 
-response = urllib.request.urlopen("https://cloud.iexapis.com/stable/stock/market/batch?symbols=" + ','.join(stock_symbols) + "&types=quote&filter=symbol,latestPrice,change,changePercent&displayPercent=true&token=" + api_token)
+response = urllib.request.urlopen(f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={stock_symbol}&apikey={api_token}")
 json_data = json.loads(response.read())
 
-for stock_symbol in stock_symbols:
-    stock_quote = json_data[stock_symbol]["quote"]
-    price_current = stock_quote["latestPrice"]
-    price_changed = stock_quote["change"]
-    price_percent_changed = stock_quote["changePercent"]
+stock_quote = json_data["Global Quote"]
+price_current = float(stock_quote["05. price"])
+price_changed = float(stock_quote["09. change"])
+price_percent_changed = float(stock_quote["10. change percent"].replace('%', ''))
 
-    if price_changed is not None:
-        if float(price_changed) < 0:
-            print("📉 <span></span> <span foreground='#ffb3ba'>{} {:.2f} {:.2f} ({:.2f}%)</span>".format(stock_symbol, price_current, price_changed, price_percent_changed))
-        else:
-            print("📈 <span></span> <span foreground='#baffc9'>{} {:.2f} {:.2f} ({:.2f}%)</span>".format(stock_symbol, price_current, price_changed, price_percent_changed))
+if price_changed is not None:
+    if float(price_changed) < 0:
+        print("📉 <span></span> <span foreground='#ffb3ba'>{} {:.2f} {:.2f} ({:.2f}%)</span>".format(stock_symbol, price_current, price_changed, price_percent_changed))
     else:
-        color = "black"
-        print("{} {:.2f} | color={}".format(stock_symbol, price_current, color))
+        print("📈 <span></span> <span foreground='#baffc9'>{} {:.2f} {:.2f} ({:.2f}%)</span>".format(stock_symbol, price_current, price_changed, price_percent_changed))
+else:
+    color = "black"
+    print("{} {:.2f} | color={}".format(stock_symbol, price_current, color))

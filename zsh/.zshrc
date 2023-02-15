@@ -1,3 +1,8 @@
+# Required
+#
+export ZSH_VERSION=$ZSH_VERSION
+[ -f "${HOME}/zshrc-local/github-token" ] && export GITHUB_TOKEN
+
 # Plugins
 #
 source ~/dotfiles/zsh/zsh-history-substring-search.zsh

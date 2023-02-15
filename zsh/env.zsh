@@ -10,8 +10,8 @@ export EDITOR="vim"
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
 # Go Code
-export GOROOT=/usr/lib/go
-export GOPATH=$HOME/.gocode
+#export GOROOT=/usr/lib/go
+#export GOPATH=$HOME/.gocode
 
 # Tmux
 export TMUX_POWERLINE_SEG_WEATHER_LOCATION="2411898"

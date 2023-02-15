@@ -8,7 +8,6 @@ LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
 LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
 LATEST_JC     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
-
 LATEST_KUBECTL  := `curl -L -s https://dl.k8s.io/release/stable.txt`
 
 #################
@@ -25,10 +24,12 @@ all: \
 	postconfigure
 
 preconfigure: \
-	check_github_token \
 	install_prereqs \
 	create_symlinks
 	#create_folders \
+
+install_apps: \
+	install_google_chrome
 
 install_tools: \
 	install_exa \
@@ -63,13 +64,25 @@ postconfigure: \
 #    PREREQS    #
 #################
 
-check_github_token:
-	@[ "${GITHUB_TOKEN}" ] && echo "Found GITHUB_TOKEN; continuing with install" || ( echo "GITHUB_TOKEN is not set"; exit 1 )
-
 install_prereqs:
 	@echo "Downloading prereqs"
 	sudo apt update
-	sudo apt install -y zsh jq curl unzip autotools-dev automake gcc bison flex libevent-core-2.1-7 xclip # tmux
+	sudo apt install -y \
+		zsh \
+		jq \
+		curl \
+		unzip \
+		autotools-dev \
+		automake \
+		gcc \
+		bison \
+		flex \
+		guake \
+		evolution \
+		libevent-core-2.1-7 xclip \
+		smbclient \
+		dialog \
+		# tmux
 
 create_folders:
 	@echo "Creating required folders"
@@ -86,6 +99,16 @@ create_symlinks:
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 
+################
+#     APPS     #
+################
+
+install_google_chrome:
+	@echo "Installing Google Chrome"
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb
+	sudo dpkg -i /tmp/google-chrome.deb
+	rm -rf /tmp/google-chrome.deb
+	
 #################
 #     TOOLS     #
 #################
@@ -203,6 +226,7 @@ install_nvim:
 
 install_nvchad:
 	@echo "Renaming any existing ${HOME}/.config/nvim"
+	# TODO: Check that we don't already have an nvim.old/ directory
 	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old; fi
 	@echo "Installing nvchad"
 	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
@@ -236,12 +260,9 @@ install_nvchad:
 
 define FINAL_STEPS
 Done! Remember to do the following:
-	1. chsh -s /usr/bin/zsh
-	2. Run neovim to finish NvChad configuration
-	3. Install tmux plugins with ctrl-A + I
-	5. (Optional) Install nvm, pyenv
-	5. (Optional) Clone local dotfiles repo
-	6. (Optional) Reboot!
+	1. Run neovim to finish NvChad configuration
+	2. Install tmux plugins with ctrl-A + I
+	3. (Optional) Reboot!
 endef
 export FINAL_STEPS
 echo_final_steps:
