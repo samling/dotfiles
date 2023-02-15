@@ -10,6 +10,7 @@
 import urllib
 from urllib.request import urlopen
 import json
+import os
 
 #-----------------------------------------------------------------------------
 # IMPORTANT: You will need an API Token.  Follow these steps
@@ -19,7 +20,7 @@ import json
 # 4. Click "API Tokens" in the left menu
 # 5. Enter the "Publishable" Token in the quotes below (it should start with "pk_")
 #api_token = "pk_4ebdafa02f404d5dbae71157e2575cc1"
-api_token = "C73XO06BAO77V2PN"
+api_token = os.getenv('ALPHAVANTAGE_API_KEY')
 
 # Enter your stock symbols here in the format: ["symbol1", "symbol2", ...]
 stock_symbol = "NVDA"
