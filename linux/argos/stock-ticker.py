@@ -7,10 +7,12 @@
 # <xbar.dependencies>python</xbar.dependencies>
 # <xbar.image>https://i.imgur.com/Nf4jiRd.png</xbar.image>
 # <xbar.abouturl>https://github.com/rkanter</xbar.abouturl>
+from datetime import datetime
 import urllib
 from urllib.request import urlopen
 import json
 import os
+from pathlib import Path
 
 #-----------------------------------------------------------------------------
 # IMPORTANT: You will need an API Token.  Follow these steps
@@ -42,3 +44,11 @@ if price_changed is not None:
 else:
     color = "black"
     print("{} {:.2f} | color={}".format(stock_symbol, price_current, color))
+
+# Write last timestamp
+curr_date = datetime.now()
+curr_date_str = curr_date.strftime('%-m/%d/%Y %-I:%M%p')
+last_updated = open(f"/tmp/argos-stockticker-lastupdated.txt", "w")
+last_updated.write(curr_date_str)
+last_updated.close()
+
