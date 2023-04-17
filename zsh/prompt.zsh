@@ -56,7 +56,7 @@ function parse_git_state() {
 
 function git_prompt_string() {
   local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX $(parse_git_state) "
+  [ -n "$git_where" ] && local git_base=$(basename `git rev-parse --show-toplevel`) && echo "$GIT_PROMPT_PREFIX%{$fg[blue]%}${git_base}%{$fg[white]%}:%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX $(parse_git_state) "
   [ -z "$git_where" ] && echo ""
 }
 
