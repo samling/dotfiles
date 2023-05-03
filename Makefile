@@ -1,5 +1,6 @@
 LATEST_EXA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
 LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
 LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
 LATEST_NVIM     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("linux64.deb")).value'`
 LATEST_RG       := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
@@ -34,6 +35,7 @@ install_apps: \
 install_tools: \
 	install_exa \
 	install_bat \
+	install_zoxide \
 	install_grc \
 	install_rg \
 	install_fzf \
@@ -125,6 +127,12 @@ install_bat:
 	wget ${LATEST_BAT} -O /tmp/bat.deb
 	sudo dpkg -i /tmp/bat.deb
 	rm -rf /tmp/bat.deb
+
+install_zoxide:
+	@echo "Installing zoxide"
+	wget ${LATEST_ZOXIDE} -O /tmp/zoxide.deb
+	sudo dpkg -i /tmp/zoxide.deb
+	rm -rf /tmp/zoxide.deb
 
 install_grc:
 	@echo "Installing grc"
