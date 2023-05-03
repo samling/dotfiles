@@ -1,0 +1,10 @@
+
+Checking requirements...
+  [✓] GITHUB_TOKEN is set
+  [✓] Current shell is ZSH
+  [✓] We can use sudonn
+nvchad is already installed; do you want to reinstall? (This will back up and replace your old installation.)
+Done! Remember to do the following:
+	1. Run neovim to finish NvChad configuration
+	2. Install tmux plugins with ctrl-A + I
+	3. (Optional) Reboot!
