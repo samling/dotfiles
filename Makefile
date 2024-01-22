@@ -100,6 +100,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
+	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
 
 ################
 #     APPS     #
