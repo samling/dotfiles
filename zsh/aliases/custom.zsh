@@ -99,6 +99,7 @@ alias rm='rm -iv' # Prevent clobbering
 alias cp='cp -iv' # Prevent clobbering
 alias mv='mv -iv' # Prevent clobbering
 alias which='type -a'
+alias b64='base64'
 #alias path='echo -e ${PATH//:/\\n}'
 #alias grep='grep --color=auto'
 #alias vi='vim'
