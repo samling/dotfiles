@@ -21,6 +21,7 @@ all: \
 	preconfigure \
 	install_tools \
 	install_k8s_tools \
+	configure_zsh \
 	configure_tmux \
 	configure_nvim \
 	postconfigure
@@ -60,6 +61,10 @@ configure_vim: \
 
 configure_tmux: \
 	install_tmux_tpm
+
+configure_zsh: \
+	install_gitstatus \
+	install_zsh_pure
 
 postconfigure: \
 	echo_final_steps
@@ -206,6 +211,18 @@ install_tmux:
 install_tmux_tpm:
 	@echo "Installing tpm"
 	if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm; else echo "tpm is already installed; skipping..."; fi
+
+###############
+# ZSH PLUGINS #
+###############
+
+install_gitstatus:
+	@echo "Installing gitstatus"
+	if [ ! -d "${HOME}/dotfiles/zsh/gitstatus" ] || [ -n "$(find "$HOME/dotfiles/zsh/gitstatus" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone --depth=1 https://github.com/romkatv/gitstatus.git "${HOME}/dotfiles/zsh/gitstatus"; else echo "Gitstatus already cloned"; fi
+
+install_zsh_pure:
+	@echo "Installing zsh pure prompt"
+	if [ ! -d "${HOME}/dotfiles/zsh/pure" ] || [ -n "$(find "$HOME/dotfiles/zsh/pure" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone https://github.com/sindresorhus/pure.git "${HOME}/dotfiles/zsh/pure"; else echo "Zsh Pure already cloned"; fi
 
 #################
 #   K8S-TOOLS   #

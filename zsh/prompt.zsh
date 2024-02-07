@@ -88,6 +88,18 @@ function zle-line-init zle-keymap-select {
     #RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $(git_prompt_string) $EPS1"
     zle reset-prompt
 }
+function prompt-length() {
+  local s=${(%)1}
+  echo $#s
+}
+
+function fill-line() {
+  local left_len=$(prompt-length $1)
+  local right_len=$(prompt-length $2)
+  local pad_len=$((COLUMNS - left_len - right_len - 1))
+  local pad=${(pl.$pad_len.. .)}
+  echo ${1}${pad}${2}
+}
 
 # Prompt left and right sides
 #
@@ -113,9 +125,13 @@ function zle-line-init zle-keymap-select {
 #zstyle ':vcs_info:git:*' formats        '[%b%u%c]'
 #zstyle ':vcs_info:git:*' actionformats  '[%b|%a%u%c]'
 if [[ -n $SSH_CONNECTION ]]; then
-    PROMPT=" $(ssh_prompt_string) %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  "
+    #PROMPT=" $(ssh_prompt_string) %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  "
 else
-    PROMPT=' %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  '
+    top_left=' %F{blue}%(5~|%-1~/…/%3~|%4~)'
+    top_right=""
+    bottom_left=' %F{white}> '
+    #PROMPT=$' $top_left $top_right \n %F{white}>%{$reset_color%}%  '
+    #PROMPT="$(fill-line "$top_left" "$top_right")"$'\n'$bottom_left
 fi
 #PROMPT=" %F{blue}░▒▓%{$bg[blue]%}%  %F{black}%(5~|%-1~/…/%3~|%4~) %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
 #PROMPT="%U${(r:$COLUMNS:: :)}%u "$'\n'"%F{blue}░▒▓%{$bg[blue]%}%  %F{black}%~ %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
