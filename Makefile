@@ -1,4 +1,4 @@
-LATEST_EXA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ogham/exa/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64-v")).value'`
+LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu")).value'`
 LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
 LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
@@ -35,7 +35,7 @@ install_apps: \
 	install_google_chrome
 
 install_tools: \
-	install_exa \
+	install_eza \
 	install_bat \
 	install_zoxide \
 	install_grc \
@@ -123,12 +123,12 @@ install_google_chrome:
 #     TOOLS     #
 #################
 
-install_exa:
-	@echo "Installing exa"
-	wget ${LATEST_EXA} -O /tmp/exa.zip
-	unzip -d /tmp/exa -o /tmp/exa.zip
-	sudo cp -f /tmp/exa/bin/exa /usr/local/bin/exa
-	rm -rf /tmp/exa.zip /tmp/exa
+install_eza:
+	@echo "Installing eza"
+	wget ${LATEST_EZA} -O /tmp/eza.zip
+	unzip -d /tmp/eza -o /tmp/eza.zip
+	sudo cp -f /tmp/eza/eza /usr/local/eza
+	rm -rf /tmp/eza.zip /tmp/eza
 
 install_bat:
 	@echo "Installing bat"

@@ -11,7 +11,8 @@ endif
 
 """
 " Leader key
-let mapleader=','
+let mapleader=' '
+"let mapleader=','
 "let mapleader="\<Space>"
 
 """
