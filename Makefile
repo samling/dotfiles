@@ -1,5 +1,6 @@
 LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu")).value'`
 LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_FD 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
 LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
 LATEST_NVIM     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("appimage")).value'`
@@ -35,8 +36,10 @@ install_apps: \
 	install_google_chrome
 
 install_tools: \
+	install_kitty \
 	install_eza \
 	install_bat \
+	install_fd \
 	install_zoxide \
 	install_grc \
 	install_rg \
@@ -53,7 +56,8 @@ install_k8s_tools: \
 	install_krew_plugins
 
 configure_nvim: \
-	install_nvchad
+	install_nvim_conf
+	#install_nvchad
 
 configure_vim: \
 	install_vundle \
@@ -86,16 +90,18 @@ install_prereqs:
 		gcc \
 		bison \
 		flex \
-		guake \
 		evolution \
 		libevent-core-2.1-7 xclip \
 		smbclient \
 		dialog \
+		xdotool
+		# guake
 		# tmux
 
 create_folders:
 	@echo "Creating required folders"
-	mkdir -p ${HOME}/.config/nvim/lua/custom
+	#mkdir -p ${HOME}/.config/nvim/lua/custom
+	mkdir -p ${HOME}/.config/kitty
 
 create_symlinks:
 	@echo "Creating symlinks"
@@ -108,6 +114,7 @@ create_symlinks:
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
+	ln -sf ${HOME}/dotfiles/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
 
 ################
 #     APPS     #
@@ -123,12 +130,31 @@ install_google_chrome:
 #     TOOLS     #
 #################
 
+install_kitty:
+	@echo "Installing kitty"
+	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+	@echo "Creating application launcher"
+	ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin
+	cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+	sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty.desktop
+	
+install_kitty_themes:
+	@echo "Installing kitty themes"
+	git clone https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes/
+	ln -sf ~/.config/kitty/kitty-themes/themes/Tomorrow_Night.conf ~/.config/kitty/theme.conf
+
 install_eza:
 	@echo "Installing eza"
 	wget ${LATEST_EZA} -O /tmp/eza.zip
 	unzip -d /tmp/eza -o /tmp/eza.zip
 	sudo cp -f /tmp/eza/eza /usr/local/eza
 	rm -rf /tmp/eza.zip /tmp/eza
+
+install_fd:
+	@echo "Installing fd"
+	wget ${LATEST_FD} -O /tmp/fd.deb
+	sudo dpkg -i /tmp/fd.deb
+	rm -rf /tmp/fd.deb
 
 install_bat:
 	@echo "Installing bat"
@@ -166,6 +192,12 @@ install_fzf:
 	rm -rf ${HOME}/.fzf
 	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
 	${HOME}/.fzf/install --all
+
+install_tdrop:
+	@echo "Installing tdrop"
+	rm -rf ${HOME}/Downloads/tdrop
+	git clone https://github.com/noctuid/tdrop.git ${HOME}/Downloads/tdrop
+	cd ${HOME}/Downloads/tdrop && sudo make install
 
 install_viddy:
 	@echo "Installing viddy"
@@ -259,18 +291,23 @@ install_nvim:
 	wget ${LATEST_NVIM} -O /tmp/nvim.appimage
 	chmod +x /tmp/nvim.appimage && sudo mv /tmp/nvim.appimage /usr/local/bin/nvim
 
-install_nvchad:
-	@echo "Renaming any existing ${HOME}/.config/nvim"
-	# TODO: Check that we don't already have an nvim.old/ directory
+install_nvim_conf:
+	@echo "Moving nvim configuration into place"
 	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old; fi
-	@echo "Installing nvchad"
-	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-	@echo "Creating custom directories, symlinking files"
-	mkdir -p ${HOME}/.config/nvim/lua/custom
-	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom/init.lua
-	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/chadrc.lua ${HOME}/.config/nvim/lua/custom/chadrc.lua
-	@echo "Please run neovim once to finish configuration"
+	ln -sf ${HOME}/dotfiles/nvim ${HOME}/.config/nvim
 
+#install_nvchad:
+#	@echo "Renaming any existing ${HOME}/.config/nvim"
+#	# TODO: Check that we don't already have an nvim.old/ directory
+#	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old; fi
+#	@echo "Installing nvchad"
+#	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+#	@echo "Creating custom directories, symlinking files"
+#	mkdir -p ${HOME}/.config/nvim/lua/custom
+#	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom/init.lua
+#	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/chadrc.lua ${HOME}/.config/nvim/lua/custom/chadrc.lua
+#	@echo "Please run neovim once to finish configuration"
+#
 #define NVIM_INIT
 #set runtimepath^=~/.vim runtimepath+=~/.vim/after
 #let &packpath=&runtimepath
@@ -295,9 +332,10 @@ install_nvchad:
 
 define FINAL_STEPS
 Done! Remember to do the following:
-	1. Run neovim to finish NvChad configuration
-	2. Install tmux plugins with ctrl-A + I
-	3. (Optional) Reboot!
+	1. Create a new shortcut to open kitty: `tdrop kitty --start-as fullscreen`
+	2. Run neovim to finish LazyVim configuration
+	3. Install tmux plugins with ctrl-A + I
+	4. (Optional) Reboot!
 endef
 export FINAL_STEPS
 echo_final_steps:
