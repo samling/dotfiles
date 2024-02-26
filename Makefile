@@ -141,7 +141,7 @@ install_kitty:
 install_kitty_themes:
 	@echo "Installing kitty themes"
 	git clone https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes/
-	ln -sf ~/.config/kitty/kitty-themes/themes/Tomorrow_Night.conf ~/.config/kitty/theme.conf
+	ln -sf ~/dotfiles/kitty/theme.conf ~/.config/kitty/theme.conf
 
 install_eza:
 	@echo "Installing eza"
