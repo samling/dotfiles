@@ -96,7 +96,6 @@ install_prereqs:
 		dialog \
 		xdotool
 		# guake
-		# tmux
 
 create_folders:
 	@echo "Creating required folders"
@@ -132,7 +131,7 @@ install_google_chrome:
 
 install_kitty:
 	@echo "Installing kitty"
-	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
 	@echo "Creating application launcher"
 	mkdir -p ~/.local/share/applications
 	ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin
@@ -148,7 +147,6 @@ install_eza:
 	@echo "Installing eza"
 	wget ${LATEST_EZA} -O /tmp/eza.zip
 	unzip -d /tmp/eza -o /tmp/eza.zip
-	7za x /tmp/eza.zip -o/tmp/eza 
 	sudo cp -f /tmp/eza/eza /usr/local/eza
 	rm -rf /tmp/eza.zip /tmp/eza
 
@@ -294,39 +292,14 @@ install_nvim:
 	chmod +x /tmp/nvim.appimage && sudo mv /tmp/nvim.appimage /usr/local/bin/nvim
 
 install_nvim_conf:
+	@echo "Cleaning up old lazyvim state"
+	rm -rf "${HOME}/.local/share/nvim/lazy"
+	rm -rf "${HOME}/.local/state/nvim/lazy"
+	rm -f "${HOME}/.config/nvim/lazy-lock.json"
 	@echo "Moving nvim configuration into place"
-	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old; fi
+	current_dt=`date '+%d-%m-%Y_%H-%M-%S'`
+	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old.${current_dt}; fi
 	ln -sf ${HOME}/dotfiles/nvim ${HOME}/.config/nvim
-
-#install_nvchad:
-#	@echo "Renaming any existing ${HOME}/.config/nvim"
-#	# TODO: Check that we don't already have an nvim.old/ directory
-#	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old; fi
-#	@echo "Installing nvchad"
-#	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-#	@echo "Creating custom directories, symlinking files"
-#	mkdir -p ${HOME}/.config/nvim/lua/custom
-#	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/init.lua ${HOME}/.config/nvim/lua/custom/init.lua
-#	ln -sf ${HOME}/dotfiles/neovim/nvchad/custom/chadrc.lua ${HOME}/.config/nvim/lua/custom/chadrc.lua
-#	@echo "Please run neovim once to finish configuration"
-#
-#define NVIM_INIT
-#set runtimepath^=~/.vim runtimepath+=~/.vim/after
-#let &packpath=&runtimepath
-#source ~/.vimrc
-#endef
-#export NVIM_INIT
-#install_vundle:
-#	@echo "Installing Vundle"
-#	rm -rf ${HOME}/.vim/bundle/Vundle.vim
-#	git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
-#	@echo "Using .vimrc in nvim"
-#	mkdir -p ${HOME}/.config/nvim && touch ${HOME}/.config/nvim/init.vim
-#	echo "$$NVIM_INIT" > ${HOME}/.config/nvim/init.vim
-#
-#install_vundle_plugins:
-#	@echo "Installing vundle plugins"
-#	vim +PluginInstall +qall
 
 #################
 #      END      #
