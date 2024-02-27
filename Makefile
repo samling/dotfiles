@@ -307,7 +307,7 @@ install_nvim_conf:
 
 define FINAL_STEPS
 Done! Remember to do the following:
-	1. Create a new shortcut to open kitty: `tdrop kitty --start-as fullscreen`
+	1. Create a new shortcut to open kitty: `tdrop -a -s 0 kitty --start-as fullscreen`
 	2. Run neovim to finish LazyVim configuration
 	3. Install tmux plugins with ctrl-A + I
 	4. (Optional) Reboot!
