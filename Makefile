@@ -57,7 +57,6 @@ install_k8s_tools: \
 
 configure_nvim: \
 	install_nvim_conf
-	#install_nvchad
 
 configure_vim: \
 	install_vundle \
