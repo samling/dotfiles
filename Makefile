@@ -1,4 +1,4 @@
-LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu")).value'`
+LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
 LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_FD 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
@@ -85,6 +85,7 @@ install_prereqs:
 		jq \
 		curl \
 		unzip \
+		p7zip \
 		autotools-dev \
 		automake \
 		gcc \
@@ -134,6 +135,7 @@ install_kitty:
 	@echo "Installing kitty"
 	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 	@echo "Creating application launcher"
+	mkdir -p ~/.local/share/applications
 	ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin
 	cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
 	sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty.desktop
@@ -147,6 +149,7 @@ install_eza:
 	@echo "Installing eza"
 	wget ${LATEST_EZA} -O /tmp/eza.zip
 	unzip -d /tmp/eza -o /tmp/eza.zip
+	7za x /tmp/eza.zip -o/tmp/eza 
 	sudo cp -f /tmp/eza/eza /usr/local/eza
 	rm -rf /tmp/eza.zip /tmp/eza
 
