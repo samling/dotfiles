@@ -56,6 +56,7 @@ install_k8s_tools: \
 	install_krew_plugins
 
 configure_nvim: \
+	cleanup_nvim_state \
 	install_nvim_conf
 
 configure_vim: \
@@ -291,13 +292,15 @@ install_nvim:
 	wget ${LATEST_NVIM} -O /tmp/nvim.appimage
 	chmod +x /tmp/nvim.appimage && sudo mv /tmp/nvim.appimage /usr/local/bin/nvim
 
-install_nvim_conf:
+cleanup_nvim_state:
 	@echo "Cleaning up old lazyvim state"
 	rm -rf "${HOME}/.local/share/nvim/lazy"
 	rm -rf "${HOME}/.local/state/nvim/lazy"
 	rm -f "${HOME}/.config/nvim/lazy-lock.json"
-	@echo "Moving nvim configuration into place"
-	current_dt=`date '+%d-%m-%Y_%H-%M-%S'`
+
+install_nvim_conf:
+	@echo ""
+	current_dt=$(date '+%d-%m-%Y_%H-%M-%S')
 	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old.${current_dt}; fi
 	ln -sf ${HOME}/dotfiles/nvim ${HOME}/.config/nvim
 
