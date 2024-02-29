@@ -84,6 +84,13 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+-- Disable netrw (for nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Use term gui colors
+vim.opt.termguicolors = true
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -186,10 +193,21 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- telescope-file-browser
+vim.api.nvim_set_keymap('n', '<space>f', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true })
+
+-- buffers
+vim.keymap.set('n', '<leader>b', function()
+  local builtin = require 'telescope.builtin'
+  builtin.buffers { sort_mru = true, ignore_current_buffer = true }
+end)
+vim.keymap.set('n', '<A-h>', ':bprev<CR>', { desc = 'Move to the previous buffer' })
+vim.keymap.set('n', '<A-l>', ':bnext<CR>', { desc = 'Move to the next buffer' })
 
 -- [[ Basic Autocommands ]]
 --  See :help lua-guide-autocommands
