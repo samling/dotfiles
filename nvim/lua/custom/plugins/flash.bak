@@ -1,6 +1,7 @@
 return {
   'folke/flash.nvim',
   event = 'VeryLazy',
+  treesitter_search = {},
   opts = {
     modes = {
       char = {
