@@ -22,6 +22,7 @@ all: \
 	preconfigure \
 	install_tools \
 	install_k8s_tools \
+	configure_kitty \
 	configure_zsh \
 	configure_tmux \
 	configure_nvim \
@@ -45,6 +46,7 @@ install_tools: \
 	install_rg \
 	install_fzf \
 	install_viddy \
+	install_tdrop \
 	install_gitmux \
 	install_tmux \
 	install_nvim \
@@ -54,6 +56,9 @@ install_k8s_tools: \
 	install_kubectl \
 	install_krew \
 	install_krew_plugins
+
+configure_kitty; \
+	install_kitty_themes
 
 configure_nvim: \
 	cleanup_nvim_state \
