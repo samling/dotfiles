@@ -83,22 +83,23 @@ vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+-- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Buffers
 vim.keymap.set('n', '<leader>b', function()
   local builtin = require 'telescope.builtin'
   builtin.buffers { sort_mru = true, ignore_current_buffer = true }
 end)
-vim.keymap.set('n', '<leader>p', ':bprev<CR>', { desc = 'Move to the previous buffer' })
-vim.keymap.set('n', '<leader>n', ':bnext<CR>', { desc = 'Move to the next buffer' })
-vim.keymap.set('n', '<leader>d', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
-vim.keymap.set('n', '<leader>v', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
-vim.keymap.set('n', '<leader>x', ':bdelete<CR>', { desc = 'Delete the current buffer' })
-vim.keymap.set('n', '<leader>wy', '<C-W>q', { desc = 'Close the current buffer' })
+vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = 'Create a new buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Move to the previous buffer' })
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Move to the next buffer' })
+vim.keymap.set('n', '<leader>bd', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
+vim.keymap.set('n', '<leader>bD', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
+vim.keymap.set('n', '<leader>bx', ':bdelete<CR>', { desc = 'Delete the current buffer' })
+vim.keymap.set('n', '<leader>bwy', '<C-W>q', { desc = 'Close the current buffer' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -120,7 +121,7 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- [[ Plugin Keymaps ]]
 
 -- telescope-file-browser
-vim.api.nvim_set_keymap('n', '<space>f', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true })
+vim.keymap.set('n', '<space>f', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = 'Telescope File Browser' })
 
 -- [[ Basic Autocommands ]]
 --  See :help lua-guide-autocommands

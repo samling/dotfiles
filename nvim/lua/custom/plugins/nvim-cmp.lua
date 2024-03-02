@@ -23,6 +23,10 @@ return { -- Autocompletion
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-buffer',
+    -- 'garyhurtz/cmp_kitty',
+    -- 'tamago324/cmp-zsh',
+    -- 'andersevenrud/cmp-tmux',
+    -- 'petertriho/cmp-git',
 
     -- If you want to add a bunch of pre-configured snippets,
     --    you can use this plugin to help you. It even has snippets
@@ -88,6 +92,10 @@ return { -- Autocompletion
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+        -- { name = 'kitty' },
+        -- { name = 'zsh' },
+        -- { name = 'tmux' },
+        -- { name = 'git' },
       },
     }
   end,

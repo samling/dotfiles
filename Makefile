@@ -51,7 +51,7 @@ install_tools: \
 	install_gitmux \
 	install_tmux \
 	install_nvim \
-	install_jc
+	install_jc \
 	#install_eza \
 
 install_k8s_tools: \
@@ -59,7 +59,7 @@ install_k8s_tools: \
 	install_krew \
 	install_krew_plugins
 
-configure_kitty; \
+configure_kitty: \
 	install_kitty_themes
 
 configure_nvim: \
@@ -160,10 +160,9 @@ install_eza:
 
 install_lsd:
 	@echo "Installing lsd"
-	wget ${LATEST_LSD} -O /tmp/lsd.zip
-	unzip -d /tmp/lsd -o /tmp/lsd.zip
-	sudo cp -f /tmp/lsd/lsd /usr/local/lsd
-	rm -rf /tmp/lsd.zip /tmp/lsd
+	wget ${LATEST_LSD} -O /tmp/lsd.deb
+	sudo dpkg -i /tmp/lsd.deb
+	rm -rf /tmp/lsd.deb
 
 install_fd:
 	@echo "Installing fd"
