@@ -1,4 +1,5 @@
 LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
+LATEST_LSD      := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_FD 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
@@ -38,7 +39,7 @@ install_apps: \
 
 install_tools: \
 	install_kitty \
-	install_eza \
+	install_lsd \
 	install_bat \
 	install_fd \
 	install_zoxide \
@@ -51,6 +52,7 @@ install_tools: \
 	install_tmux \
 	install_nvim \
 	install_jc
+	#install_eza \
 
 install_k8s_tools: \
 	install_kubectl \
@@ -155,6 +157,13 @@ install_eza:
 	unzip -d /tmp/eza -o /tmp/eza.zip
 	sudo cp -f /tmp/eza/eza /usr/local/eza
 	rm -rf /tmp/eza.zip /tmp/eza
+
+install_lsd:
+	@echo "Installing lsd"
+	wget ${LATEST_LSD} -O /tmp/lsd.zip
+	unzip -d /tmp/lsd -o /tmp/lsd.zip
+	sudo cp -f /tmp/lsd/lsd /usr/local/lsd
+	rm -rf /tmp/lsd.zip /tmp/lsd
 
 install_fd:
 	@echo "Installing fd"
