@@ -120,6 +120,20 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 -- [[ Plugin Keymaps ]]
 
+-- nvim-spectre
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+  desc = 'Toggle Spectre',
+})
+vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+  desc = 'Search current word',
+})
+vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+  desc = 'Search current word',
+})
+vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+  desc = 'Search on current file',
+})
+
 -- telescope-file-browser
 vim.keymap.set('n', '<space>f', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = 'Telescope File Browser' })
 
