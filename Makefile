@@ -292,7 +292,7 @@ install_krew:
 
 install_krew_plugins:
 	@echo "Installing krew plugins"
-	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity
+	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree
 
 #################
 #     NVIM      #
