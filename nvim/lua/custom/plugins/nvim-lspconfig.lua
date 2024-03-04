@@ -133,7 +133,9 @@ return { -- LSP Configuration & Plugins
     local servers = {
       -- clangd = {},
       bashls = {},
-      gopls = {},
+      gopls = {
+        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+      },
       pyright = {},
       rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
