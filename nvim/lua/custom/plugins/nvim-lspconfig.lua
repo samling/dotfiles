@@ -134,19 +134,11 @@ return { -- LSP Configuration & Plugins
     local servers = {
       -- clangd = {},
       bashls = {},
+      dockerls = {},
+      docker_compose_language_service = {},
       gopls = {
         filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
       },
-      pyright = {},
-      rust_analyzer = {},
-      -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-      --
-      -- Some languages (like typescript) have entire language plugins that can be useful:
-      --    https://github.com/pmizio/typescript-tools.nvim
-      --
-      -- But for many setups, the LSP (`tsserver`) will work just fine
-      tsserver = {},
-      yamlls = {},
       helm_ls = {
         settings = {
           ['helm-ls'] = {
@@ -172,13 +164,9 @@ return { -- LSP Configuration & Plugins
           },
         },
       },
-
-      --
-
+      jqls = {},
+      jsonls = {},
       lua_ls = {
-        -- cmd = {...},
-        -- filetypes { ...},
-        -- capabilities = {},
         settings = {
           Lua = {
             runtime = { version = 'LuaJIT' },
@@ -198,6 +186,15 @@ return { -- LSP Configuration & Plugins
           },
         },
       },
+      markdownlint = {},
+      pylint = {},
+      pylsp = {},
+      pyright = {},
+      rust_analyzer = {},
+      tsserver = {},
+      vimls = {},
+      yamlls = {},
+      yq = {},
     }
 
     -- Ensure the servers and tools above are installed
