@@ -10,6 +10,7 @@ return { -- LSP Configuration & Plugins
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim', opts = {} },
   },
+  event = { 'BufReadPre', 'BufNewFile', 'BufEnter' },
   config = function()
     -- Brief Aside: **What is LSP?**
     --
@@ -145,6 +146,33 @@ return { -- LSP Configuration & Plugins
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
       tsserver = {},
+      yamlls = {},
+      helm_ls = {
+        settings = {
+          ['helm-ls'] = {
+            logLevel = 'Info',
+            valuesFile = {
+              mainValuesFile = 'values.yaml',
+              lintOverlayValuesFile = 'values.lint.yaml',
+              additionalValuesFilesGlobPattern = 'values*.yaml',
+            },
+            yamlls = {
+              enabled = true,
+              diagnosticsLimit = 50,
+              showDiagnosticsDirectly = false,
+              path = 'yaml-language-server',
+              config = {
+                schemas = {
+                  kubernetes = 'templates/**',
+                },
+                completion = true,
+                hover = true,
+              },
+            },
+          },
+        },
+      },
+
       --
 
       lua_ls = {
