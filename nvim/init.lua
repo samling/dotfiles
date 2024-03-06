@@ -96,9 +96,9 @@ end)
 vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = 'Create a new buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Move to the previous buffer' })
 vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Move to the next buffer' })
-vim.keymap.set('n', '<leader>bd', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
-vim.keymap.set('n', '<leader>bD', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
-vim.keymap.set('n', '<leader>bx', ':bdelete<CR>', { desc = 'Delete the current buffer' })
+vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
+vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
+vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Delete the current buffer' })
 vim.keymap.set('n', '<leader>bwy', '<C-W>q', { desc = 'Close the current buffer' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -133,6 +133,9 @@ vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual(
 vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
   desc = 'Search on current file',
 })
+
+-- nvim-tree
+vim.keymap.set('n', '<leader>t', ':NvimTreeOpen<CR>')
 
 -- telescope-file-browser
 vim.keymap.set('n', '<space>f', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = 'Telescope File Browser' })
