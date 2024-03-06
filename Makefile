@@ -12,6 +12,7 @@ LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
 LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
 LATEST_JC     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
+LATEST_PKL     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/apple/pkl/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("-linux-amd64")).value'`
 LATEST_KUBECTL  := `curl -L -s https://dl.k8s.io/release/stable.txt`
 
 #################
@@ -52,6 +53,7 @@ install_tools: \
 	install_tmux \
 	install_nvim \
 	install_jc \
+	install_pkl \
 	#install_eza \
 
 install_k8s_tools: \
@@ -220,6 +222,13 @@ install_viddy:
 	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
 	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
 	rm -rf /tmp/viddy.tar.gz /tmp/viddy
+
+install_pkl:
+	@echo "Installing pkl"
+	cd /tmp && { curl -L -o pkl ${LATEST_PKL}; cd -; }
+	sudo mv /tmp/pkl /usr/local/bin/pkl
+	sudo chmod +x /usr/local/bin/pkl
+
 
 install_gitmux:
 	@echo "Installing gitmux"
