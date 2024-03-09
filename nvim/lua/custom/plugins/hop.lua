@@ -49,7 +49,7 @@ return {
 
     -- hop vertical
     vim.keymap.set('', '<leader>hv', function()
-      hop.hint_patterns {}
+      hop.hint_vertical {}
     end, { remap = true, desc = 'Hop to vertical position' })
   end,
 }
