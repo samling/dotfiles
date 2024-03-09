@@ -3,7 +3,9 @@ fpath+=($HOME/dotfiles/zsh/pure)
 
 autoload -Uz compinit bashcompinit
 
-compinit
+for dump in ~/.zcompdump(N.mh+24);do
+  compinit
+done
 bashcompinit
 
 autoload -U promptinit; promptinit
