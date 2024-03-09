@@ -1,19 +1,20 @@
-LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
-LATEST_LSD      := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_BTOP     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value'`
+LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
 LATEST_FD 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
-LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
+LATEST_GITMUX   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
 LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
+LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
+LATEST_LSD      := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
 LATEST_NVIM     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("appimage")).value'`
 LATEST_RG       := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
-LATEST_VIDDY    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
-LATEST_GITMUX   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
-LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
-LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
 LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
+LATEST_VIDDY    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
+LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
 LATEST_JC     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
+
 # LATEST_PKL     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/apple/pkl/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("-linux-amd64")).value'`
-LATEST_KUBECTL  := `curl -L -s https://dl.k8s.io/release/stable.txt`
 
 #################
 #    TARGETS    #
@@ -211,9 +212,9 @@ install_fzf:
 
 install_tdrop:
 	@echo "Installing tdrop"
-	rm -rf ${HOME}/Downloads/tdrop
-	git clone https://github.com/noctuid/tdrop.git ${HOME}/Downloads/tdrop
-	cd ${HOME}/Downloads/tdrop && sudo make install
+	git clone https://github.com/noctuid/tdrop.git /tmp/tdrop
+	cd /tmp/tdrop && sudo make install
+	rm -rf /tmp/tdrop
 
 install_viddy:
 	@echo "Installing viddy"
@@ -222,6 +223,14 @@ install_viddy:
 	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
 	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
 	rm -rf /tmp/viddy.tar.gz /tmp/viddy
+
+install_btop:
+	@echo "Installing btop"
+	wget ${LATEST_BTOP} -O /tmp/btop.tbz
+	mkdir -p /tmp/btop
+	tar xjf /tmp/btop.tbz -C /tmp/btop
+	cd /tmp/btop/btop/ && sudo make install
+	rm -rf /tmp/btop.tbz /tmp/btop
 
 # install_pkl:
 # 	@echo "Installing pkl"
@@ -285,6 +294,7 @@ install_zsh_pure:
 
 install_kubectl:
 	@echo "Installing kubectl"
+	LATEST_KUBECTL=`curl -L -s https://dl.k8s.io/release/stable.txt`
 	cd /tmp && { curl -LO "https://dl.k8s.io/release/${LATEST_KUBECTL}/bin/linux/amd64/kubectl"; cd -; }
 	sudo mv /tmp/kubectl /usr/local/bin/kubectl
 	sudo chmod +x /usr/local/bin/kubectl
