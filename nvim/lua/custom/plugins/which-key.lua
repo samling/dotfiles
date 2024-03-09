@@ -13,19 +13,26 @@ return {
   config = function()
     local wk = require 'which-key'
     wk.setup {
-      plugins = { spelling = true },
+      plugins = {
+        spelling = true,
+        presets = {
+          operators = false,
+        },
+      },
       key_labels = { ['<leader>'] = 'SPC' },
     }
     wk.register {
-      mode = { 'n', 'v' },
-      ['g'] = { name = '+goto' },
-      [']'] = { name = '+next' },
-      ['['] = { name = '+prev' },
-      ['<leader>b'] = { name = '+buffer' },
-      ['<leader>q'] = { name = '+quit/session' },
-      ['<leader>s'] = { name = '+search' },
-      ['<leader>w'] = { name = '+windows' },
-      ['<leader><tab>'] = { name = '+tabs' },
+      ['<leader>'] = {
+        q = {
+          name = '[q] Quit/session',
+        },
+        h = {
+          name = '[h] Hop',
+        },
+        s = {
+          name = '[s] Search with Telescope',
+        },
+      },
     }
   end,
 }

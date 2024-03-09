@@ -92,14 +92,12 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>b', function()
   local builtin = require 'telescope.builtin'
   builtin.buffers { sort_mru = true, ignore_current_buffer = true }
-end)
-vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = 'Create a new buffer' })
-vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Move to the previous buffer' })
-vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Move to the next buffer' })
-vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
-vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
-vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Delete the current buffer' })
-vim.keymap.set('n', '<leader>bwy', '<C-W>q', { desc = 'Close the current buffer' })
+end, { desc = '[b] Buffers' })
+vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = '[N] Create a [N]ew buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = '[p] Move to the [p]revious buffer' })
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = '[n] Move to the [n]ext buffer' })
+vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = '[x] Split the current buffer horizontally' })
+vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = '[y] Split the current buffer vertically' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -122,23 +120,23 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 -- nvim-spectre
 vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = 'Toggle Spectre',
+  desc = '[S] Toggle Spectre',
 })
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = 'Search current word',
-})
-vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-  desc = 'Search current word',
-})
-vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = 'Search on current file',
-})
+-- vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+--   desc = 'Search current word',
+-- })
+-- vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+--   desc = 'Search current word',
+-- })
+-- vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+--   desc = 'Search on current file',
+-- })
 
 -- nvim-tree
-vim.keymap.set('n', '<leader>t', ':NvimTreeOpen<CR>')
+vim.keymap.set('n', '<leader>t', ':NvimTreeOpen<CR>', { desc = '[T] Toggle NvimTree' })
 
 -- telescope-file-browser
-vim.keymap.set('n', '<space>f', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = 'Telescope File Browser' })
+vim.keymap.set('n', '<space>f', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = '[f] Telescope [f]ile browser' })
 
 -- [[ Basic Autocommands ]]
 --  See :help lua-guide-autocommands

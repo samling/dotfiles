@@ -20,15 +20,15 @@ return {
     end, { remap = true })
     vim.keymap.set('', '<leader>hl', function()
       hop.hint_lines {}
-    end, { remap = true })
+    end, { remap = true, desc = '[H]op [l]ine' })
     vim.keymap.set('', '<leader>hs', function()
       hop.hint_lines_skip_whitespace {}
-    end, { remap = true })
+    end, { remap = true, desc = '[H]op lines and [s]kip whitespace' })
     vim.keymap.set('', '<leader>hw', function()
       hop.hint_words {}
-    end, { remap = true })
+    end, { remap = true, desc = '[H]op [w]ords' })
     vim.keymap.set('', '<leader>hp', function()
       hop.hint_patterns {}
-    end, { remap = true })
+    end, { remap = true, desc = '[H]op [p]atterns' })
   end,
 }
