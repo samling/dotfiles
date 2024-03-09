@@ -9,6 +9,7 @@ return {
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
+    mode = { 'n', 'v' },
   },
   config = function()
     local wk = require 'which-key'
@@ -22,15 +23,35 @@ return {
       key_labels = { ['<leader>'] = 'SPC' },
     }
     wk.register {
+      g = {
+        name = '+goto',
+      },
+      ['['] = {
+        name = '+prev',
+      },
+      [']'] = {
+        name = '+next',
+      },
       ['<leader>'] = {
-        q = {
-          name = '[q] Quit/session',
+        b = {
+          name = '+buffers',
         },
         h = {
-          name = '[h] Hop',
+          mode = { 'n', 'v' },
+          name = '+hop',
+        },
+        n = {
+          name = '+noice',
+        },
+        q = {
+          name = '+quit/session',
+        },
+        r = {
+          mode = { 'n', 'v' },
+          name = '+replace with spectre',
         },
         s = {
-          name = '[s] Search with Telescope',
+          name = '+search with telescope',
         },
       },
     }
