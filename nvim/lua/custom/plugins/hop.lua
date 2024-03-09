@@ -11,21 +11,33 @@ return {
     vim.keymap.set('', 'f', function()
       hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = false }
     end, { remap = true })
+    vim.keymap.set('', '<leader>hf', function()
+      hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = false }
+    end, { remap = true, desc = 'Hop forward' })
 
     -- search backward
     vim.keymap.set('', 'F', function()
       hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = false }
     end, { remap = true })
+    vim.keymap.set('', '<leader>hF', function()
+      hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = false }
+    end, { remap = true, desc = 'Hop backward' })
 
     -- search forward (offset 1)
     vim.keymap.set('', 't', function()
       hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = false, hint_offset = -1 }
     end, { remap = true })
+    vim.keymap.set('', '<leader>ht', function()
+      hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = false, hint_offset = -1 }
+    end, { remap = true, desc = 'Hop forward (offset 1)' })
 
     -- search backward (offset 1)
     vim.keymap.set('', 'T', function()
       hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = 1 }
     end, { remap = true })
+    vim.keymap.set('', '<leader>hT', function()
+      hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = 1 }
+    end, { remap = true, desc = 'Hop backward (offset 1)' })
 
     -- hop line
     vim.keymap.set('', '<leader>hl', function()
