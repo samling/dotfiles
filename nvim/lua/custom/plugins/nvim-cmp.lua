@@ -23,6 +23,7 @@ return { -- Autocompletion
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-cmdline',
     -- 'garyhurtz/cmp_kitty',
     -- 'tamago324/cmp-zsh',
     -- 'andersevenrud/cmp-tmux',
@@ -92,11 +93,19 @@ return { -- Autocompletion
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+        { name = 'buffer' },
         -- { name = 'kitty' },
         -- { name = 'zsh' },
         -- { name = 'tmux' },
         -- { name = 'git' },
       },
     }
+
+    cmp.setup.cmdline('/', {
+      mapping = cmp.mapping.preset.cmdline(),
+      source = {
+        { name = 'buffer' },
+      },
+    })
   end,
 }
