@@ -92,12 +92,12 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>bb', function()
   local builtin = require 'telescope.builtin'
   builtin.buffers { sort_mru = true, ignore_current_buffer = false }
-end, { desc = '[b] Buffers' })
-vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = '[N] Create a [N]ew buffer' })
-vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = '[p] Move to the [p]revious buffer' })
-vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = '[n] Move to the [n]ext buffer' })
-vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = '[x] Split the current buffer horizontally' })
-vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = '[y] Split the current buffer vertically' })
+end, { desc = 'Current buffers' })
+vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = 'Create a new buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Move to the previous buffer' })
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Move to the next buffer' })
+vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
+vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which

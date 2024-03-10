@@ -32,7 +32,14 @@ return {
       [']'] = {
         name = '+next',
       },
+      ['s'] = {
+        name = '+surround',
+      },
+      ['z'] = {
+        name = '+fold',
+      },
       ['<leader>'] = {
+        name = '+leader',
         b = {
           name = '+buffers',
         },
