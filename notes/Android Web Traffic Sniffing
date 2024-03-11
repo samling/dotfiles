@@ -1,5 +1,0 @@
-First terminal:
-adb shell "./data/local/tcpdump-arm -n -s 0 -w - | busybox nc -l -p 12345"
-
-Second terminal:
-adb forward tcp:54321 tcp:12345 && nc 127.0.0.1 54321 | wireshark -k -S -i -

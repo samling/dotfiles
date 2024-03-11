@@ -1,5 +1,0 @@
-Airodump-ng
-===========
-
-+ If no beacons are being received, try disabling network-manager: sudo /etc/init.d/network-manager stop
-+ Make sure to specify the correct channel when targeting a specific bssid

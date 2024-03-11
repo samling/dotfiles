@@ -124,7 +124,8 @@ create_symlinks:
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
-	ln -sf ${HOME}/dotfiles/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
+	ln -sf ${HOME}/dotfiles/config/linux/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
+	ln -sf ${HOME}/dotfiles/config/linux/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
 
 ################
 #     APPS     #
