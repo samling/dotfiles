@@ -182,15 +182,30 @@ return { -- LSP Configuration & Plugins
               -- library = { vim.env.VIMRUNTIME },
             },
             -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-            -- diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = { disable = { 'missing-fields' } },
           },
         },
       },
       markdownlint = {},
-      pylint = {},
-      pylsp = {},
-      pyright = {},
-      rust_analyzer = {},
+      -- pylint = {},
+      pylsp = {
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = {
+                ignore = { 'E501', 'E231' },
+              },
+            },
+          },
+        },
+      },
+      pyright = {
+        settings = {
+          python = {
+            analysis = { diagnosticMode = 'off', typeCheckingMode = 'off' },
+          },
+        },
+      },
       tsserver = {},
       vimls = {},
       yamlls = {},
