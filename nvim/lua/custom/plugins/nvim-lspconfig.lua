@@ -193,18 +193,18 @@ return { -- LSP Configuration & Plugins
           pylsp = {
             plugins = {
               pycodestyle = {
-                ignore = { 'E501', 'E231' },
+                ignore = { 'E501' },
               },
             },
           },
         },
       },
       pyright = {
-        settings = {
-          python = {
-            analysis = { diagnosticMode = 'off', typeCheckingMode = 'off' },
-          },
-        },
+        -- settings = {
+        --   python = {
+        --     -- analysis = { diagnosticMode = 'off', typeCheckingMode = 'off' },
+        --   },
+        -- },
       },
       tsserver = {},
       vimls = {},
