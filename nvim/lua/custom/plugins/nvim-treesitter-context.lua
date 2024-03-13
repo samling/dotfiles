@@ -5,6 +5,7 @@ return {
     require('treesitter-context').setup {
       line_numbers = true,
       mode = 'topline',
+      max_lines = 2,
     }
 
     function highlight(args)
