@@ -43,6 +43,9 @@ return {
         b = {
           name = '+buffers',
         },
+        d = {
+          name = '+definitions',
+        },
         h = {
           mode = { 'n', 'v' },
           name = '+hop',
