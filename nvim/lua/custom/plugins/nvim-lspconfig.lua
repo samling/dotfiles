@@ -199,13 +199,13 @@ return { -- LSP Configuration & Plugins
           },
         },
       },
-      pyright = {
-        -- settings = {
-        --   python = {
-        --     -- analysis = { diagnosticMode = 'off', typeCheckingMode = 'off' },
-        --   },
-        -- },
-      },
+      -- pyright = {
+      -- settings = {
+      --   python = {
+      --     -- analysis = { diagnosticMode = 'off', typeCheckingMode = 'off' },
+      --   },
+      -- },
+      -- },
       tsserver = {},
       vimls = {},
       yamlls = {},
@@ -218,6 +218,8 @@ return { -- LSP Configuration & Plugins
     --    :Mason
     --
     --  You can press `g?` for help in this menu
+    require('lspconfig').basedpyright.setup {}
+
     require('mason').setup()
 
     -- You can add other tools here that you want Mason to install
