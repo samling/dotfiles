@@ -4,9 +4,11 @@ LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 LATEST_FD 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_GITMUX   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
 LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
+LATEST_LAZYGIT	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*'`
 LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
 LATEST_LSD      := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
+LATEST_NVM      := `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name'`
 LATEST_NVIM     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("appimage")).value'`
 LATEST_RG       := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
 LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
@@ -28,7 +30,9 @@ all: \
 	configure_kitty \
 	configure_zsh \
 	configure_tmux \
+	configure_nvm \
 	configure_nvim \
+	configure_pyenv \
 	postconfigure
 
 preconfigure: \
@@ -40,22 +44,23 @@ install_apps: \
 	install_google_chrome
 
 install_tools: \
-	install_kitty \
-	install_lsd \
 	install_bat \
 	install_fd \
-	install_zoxide \
-	install_grc \
-	install_rg \
 	install_fzf \
-	install_viddy \
-	install_tdrop \
 	install_gitmux \
-	install_tmux \
-	install_nvim \
+	install_grc \
 	install_jc \
-	# install_pkl \
-	# install_eza \
+	install_kitty \
+	install_lazygit \
+	install_lsd \
+	install_nvm \
+	install_nvim \
+	install_pyenv \
+	install_rg \
+	install_tdrop \
+	install_tmux \
+	install_viddy \
+	install_zoxide \
 
 install_k8s_tools: \
 	install_kubectl \
@@ -65,9 +70,15 @@ install_k8s_tools: \
 configure_kitty: \
 	install_kitty_themes
 
+configure_nvm: \
+	install_npm
+
 configure_nvim: \
 	cleanup_nvim_state \
 	install_nvim_conf
+
+configure_pyenv: \
+	install_python310
 
 configure_vim: \
 	install_vundle \
@@ -91,22 +102,37 @@ install_prereqs:
 	@echo "Downloading prereqs"
 	sudo apt update
 	sudo apt install -y \
-		zsh \
-		jq \
-		curl \
-		unzip \
-		p7zip \
 		autotools-dev \
 		automake \
-		gcc \
 		bison \
+		build-essential \
+		curl \
+		dialog \
+		gcc \
 		flex \
 		evolution \
-		libevent-core-2.1-7 xclip \
+		jq \
+		libevent-core-2.1-7 \
+		libbz2-dev \
+		libffi-dev \
+		libfuse2 \
+		liblzma-dev \
+		libncursesw5-dev \
+		libreadline-dev \
+		libsqlite3-dev
+		libssl-dev \
+		libxml2-dev \
+		libxmlsec1-dev \
+		llvm \
+		p7zip \
 		smbclient \
-		dialog \
-		xdotool
-		# guake
+		tk-dev \
+		unzip \
+		xclip \
+		xdotool \
+		xz-utils \
+		zlib1g-dev \
+		zsh
 
 create_folders:
 	@echo "Creating required folders"
@@ -141,6 +167,60 @@ install_google_chrome:
 #     TOOLS     #
 #################
 
+install_bat:
+	@echo "Installing bat"
+	wget ${LATEST_BAT} -O /tmp/bat.deb
+	sudo dpkg -i /tmp/bat.deb
+	rm -rf /tmp/bat.deb
+
+install_btop:
+	@echo "Installing btop"
+	wget ${LATEST_BTOP} -O /tmp/btop.tbz
+	mkdir -p /tmp/btop
+	tar xjf /tmp/btop.tbz -C /tmp/btop
+	cd /tmp/btop/btop/ && sudo make install
+	rm -rf /tmp/btop.tbz /tmp/btop
+
+install_fd:
+	@echo "Installing fd"
+	wget ${LATEST_FD} -O /tmp/fd.deb
+	sudo dpkg -i /tmp/fd.deb
+	rm -rf /tmp/fd.deb
+
+install_eza:
+	@echo "Installing eza"
+	wget ${LATEST_EZA} -O /tmp/eza.zip
+	unzip -d /tmp/eza -o /tmp/eza.zip
+	sudo cp -f /tmp/eza/eza /usr/local/eza
+	rm -rf /tmp/eza.zip /tmp/eza
+
+install_fzf:
+	@echo "Installing fzf"
+	rm -rf ${HOME}/.fzf
+	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
+	${HOME}/.fzf/install --all
+
+install_grc:
+	@echo "Installing grc"
+	wget ${LATEST_GRC} -O /tmp/grc.zip
+	unzip -d /tmp/grc -o /tmp/grc.zip
+	cd /tmp/grc/garabik*; sudo sh install.sh
+	rm -rf /tmp/grc.zip /tmp/grc
+
+install_gitmux:
+	@echo "Installing gitmux"
+	wget ${LATEST_GITMUX} -O /tmp/gitmux.tar.gz
+	mkdir -p /tmp/gitmux
+	tar xzvf /tmp/gitmux.tar.gz -C /tmp/gitmux
+	sudo cp -f /tmp/gitmux/gitmux /usr/local/bin/gitmux
+	rm -rf /tmp/gitmux.tar.gz /tmp/gitmux
+
+install_jc:
+	@echo "Installing jc"
+	wget ${LATEST_JC} -O /tmp/jc.deb
+	sudo dpkg -i /tmp/jc.deb
+	rm -rf /tmp/jc.deb
+
 install_kitty:
 	@echo "Installing kitty"
 	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
@@ -155,12 +235,13 @@ install_kitty_themes:
 	git clone https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes/
 	ln -sf ~/dotfiles/kitty/theme.conf ~/.config/kitty/theme.conf
 
-install_eza:
-	@echo "Installing eza"
-	wget ${LATEST_EZA} -O /tmp/eza.zip
-	unzip -d /tmp/eza -o /tmp/eza.zip
-	sudo cp -f /tmp/eza/eza /usr/local/eza
-	rm -rf /tmp/eza.zip /tmp/eza
+install_lazygit:
+	@echo "Installing lazygit"
+	curl -Lo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LATEST_LAZYGIT}_Linux_x86_64.tar.gz"
+	mkdir -p /tmp/lazygit
+	tar xzvf /tmp/lazygit.tar.gz -C /tmp/lazygit
+	sudo mv /tmp/lazygit/lazygit /usr/local/bin
+	rm -rf /tmp/lazygit /tmp/lazygit.tar.gz
 
 install_lsd:
 	@echo "Installing lsd"
@@ -168,30 +249,13 @@ install_lsd:
 	sudo dpkg -i /tmp/lsd.deb
 	rm -rf /tmp/lsd.deb
 
-install_fd:
-	@echo "Installing fd"
-	wget ${LATEST_FD} -O /tmp/fd.deb
-	sudo dpkg -i /tmp/fd.deb
-	rm -rf /tmp/fd.deb
+install_nvm:
+	@echo "Installing nvm"
+	(unset ZSH_VERSION && curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${LATEST_NVM}/install.sh" | bash)
 
-install_bat:
-	@echo "Installing bat"
-	wget ${LATEST_BAT} -O /tmp/bat.deb
-	sudo dpkg -i /tmp/bat.deb
-	rm -rf /tmp/bat.deb
-
-install_zoxide:
-	@echo "Installing zoxide"
-	wget ${LATEST_ZOXIDE} -O /tmp/zoxide.deb
-	sudo dpkg -i /tmp/zoxide.deb
-	rm -rf /tmp/zoxide.deb
-
-install_grc:
-	@echo "Installing grc"
-	wget ${LATEST_GRC} -O /tmp/grc.zip
-	unzip -d /tmp/grc -o /tmp/grc.zip
-	cd /tmp/grc/garabik*; sudo sh install.sh
-	rm -rf /tmp/grc.zip /tmp/grc
+install_pyenv:
+	@echo "Installing pyenv"
+	curl https://pyenv.run | bash
 
 install_rg:
 	@echo "Installing rg"
@@ -199,54 +263,11 @@ install_rg:
 	sudo dpkg -i /tmp/rg.deb
 	rm -rf /tmp/rg.deb
 
-install_jc:
-	@echo "Installing jc"
-	wget ${LATEST_JC} -O /tmp/jc.deb
-	sudo dpkg -i /tmp/jc.deb
-	rm -rf /tmp/jc.deb
-
-install_fzf:
-	@echo "Installing fzf"
-	rm -rf ${HOME}/.fzf
-	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
-	${HOME}/.fzf/install --all
-
 install_tdrop:
 	@echo "Installing tdrop"
 	git clone https://github.com/noctuid/tdrop.git /tmp/tdrop
 	cd /tmp/tdrop && sudo make install
 	rm -rf /tmp/tdrop
-
-install_viddy:
-	@echo "Installing viddy"
-	wget ${LATEST_VIDDY} -O /tmp/viddy.tar.gz
-	mkdir -p /tmp/viddy
-	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
-	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
-	rm -rf /tmp/viddy.tar.gz /tmp/viddy
-
-install_btop:
-	@echo "Installing btop"
-	wget ${LATEST_BTOP} -O /tmp/btop.tbz
-	mkdir -p /tmp/btop
-	tar xjf /tmp/btop.tbz -C /tmp/btop
-	cd /tmp/btop/btop/ && sudo make install
-	rm -rf /tmp/btop.tbz /tmp/btop
-
-# install_pkl:
-# 	@echo "Installing pkl"
-# 	cd /tmp && { curl -L -o pkl ${LATEST_PKL}; cd -; }
-# 	sudo mv /tmp/pkl /usr/local/bin/pkl
-# 	sudo chmod +x /usr/local/bin/pkl
-
-
-install_gitmux:
-	@echo "Installing gitmux"
-	wget ${LATEST_GITMUX} -O /tmp/gitmux.tar.gz
-	mkdir -p /tmp/gitmux
-	tar xzvf /tmp/gitmux.tar.gz -C /tmp/gitmux
-	sudo cp -f /tmp/gitmux/gitmux /usr/local/bin/gitmux
-	rm -rf /tmp/gitmux.tar.gz /tmp/gitmux
 
 install_tmux:
 	@echo "Installing tmux"
@@ -268,6 +289,20 @@ install_tmux:
 	tar xzvf /tmp/tmux.tar.gz -C /tmp/tmux
 	cd /tmp/tmux/tmux*; sh configure && make && sudo make install
 	rm -rf /tmp/tmux.tar.gz /tmp/tmux
+
+install_viddy:
+	@echo "Installing viddy"
+	wget ${LATEST_VIDDY} -O /tmp/viddy.tar.gz
+	mkdir -p /tmp/viddy
+	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
+	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
+	rm -rf /tmp/viddy.tar.gz /tmp/viddy
+
+install_zoxide:
+	@echo "Installing zoxide"
+	wget ${LATEST_ZOXIDE} -O /tmp/zoxide.deb
+	sudo dpkg -i /tmp/zoxide.deb
+	rm -rf /tmp/zoxide.deb
 
 ################
 # TMUX PLUGINS #
@@ -315,6 +350,13 @@ install_krew_plugins:
 	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree
 
 #################
+#     NPM      #
+#################
+install_npm:
+	@echo "Installing latest npm"
+	nvm install stable
+
+#################
 #     NVIM      #
 #################
 
@@ -336,6 +378,13 @@ install_nvim_conf:
 	current_dt=$(date '+%d-%m-%Y_%H-%M-%S')
 	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old.${current_dt}; fi
 	ln -sf ${HOME}/dotfiles/nvim ${HOME}/.config/nvim
+
+#################
+#     PYENV    #
+#################
+install_python310:
+	@echo "Installing latest python3 with pyenv"
+	pyenv install -f 3.10
 
 #################
 #      END      #

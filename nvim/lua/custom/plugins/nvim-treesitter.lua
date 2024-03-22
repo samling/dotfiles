@@ -13,7 +13,6 @@ return { -- Highlight, edit, and navigate code
         'html',
         'lua',
         'markdown',
-        'pkl',
         'query',
         'vim',
         'vimdoc',
