@@ -33,8 +33,8 @@ all: \
 
 preconfigure: \
 	install_prereqs \
+	create_folders \
 	create_symlinks
-	#create_folders \
 
 install_apps: \
 	install_google_chrome
