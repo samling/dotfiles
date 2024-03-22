@@ -124,14 +124,10 @@ function fill-line() {
 #zstyle ':vcs_info:*' stagedstr ' %F{green}●%F{green}'
 #zstyle ':vcs_info:git:*' formats        '[%b%u%c]'
 #zstyle ':vcs_info:git:*' actionformats  '[%b|%a%u%c]'
-if [[ -n $SSH_CONNECTION ]]; then
-    #PROMPT=" $(ssh_prompt_string) %F{blue}%(5~|%-1~/…/%3~|%4~)%{$reset_color%}%  %F{white}>%{$reset_color%}%  "
-else
     top_left=' %F{blue}%(5~|%-1~/…/%3~|%4~)'
     top_right=""
     bottom_left=' %F{white}> '
     #PROMPT=$' $top_left $top_right \n %F{white}>%{$reset_color%}%  '
     #PROMPT="$(fill-line "$top_left" "$top_right")"$'\n'$bottom_left
-fi
 #PROMPT=" %F{blue}░▒▓%{$bg[blue]%}%  %F{black}%(5~|%-1~/…/%3~|%4~) %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
 #PROMPT="%U${(r:$COLUMNS:: :)}%u "$'\n'"%F{blue}░▒▓%{$bg[blue]%}%  %F{black}%~ %{$reset_color%}% %F{blue}▓▒░%{$reset_color%}%  "
