@@ -117,6 +117,9 @@ install_prereqs:
 		libffi-dev \
 		libfuse2 \
 		liblzma-dev \
+		libncurses5 \
+		libncurses5-dev \
+		libncursesw5 \
 		libncursesw5-dev \
 		libreadline-dev \
 		libsqlite3-dev
