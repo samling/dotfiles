@@ -45,6 +45,7 @@ install_apps: \
 
 install_tools: \
 	install_bat \
+	install_btop \
 	install_fd \
 	install_fzf \
 	install_gitmux \
