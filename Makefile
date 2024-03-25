@@ -4,6 +4,7 @@ LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 LATEST_FD 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_GITMUX   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
 LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
+LATEST_KUBECTL  := `curl -L -s https://dl.k8s.io/release/stable.txt`
 LATEST_LAZYGIT	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*'`
 LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
 LATEST_LSD      := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
@@ -27,13 +28,16 @@ all: \
 	preconfigure \
 	install_tools \
 	install_k8s_tools \
+	configure \
+	postconfigure
+
+configure: \
 	configure_kitty \
 	configure_zsh \
 	configure_tmux \
 	configure_nvm \
 	configure_nvim \
-	configure_pyenv \
-	postconfigure
+	configure_pyenv
 
 preconfigure: \
 	install_prereqs \
@@ -123,7 +127,7 @@ install_prereqs:
 		libncursesw5 \
 		libncursesw5-dev \
 		libreadline-dev \
-		libsqlite3-dev
+		libsqlite3-dev \
 		libssl-dev \
 		libxml2-dev \
 		libxmlsec1-dev \
@@ -236,7 +240,7 @@ install_kitty:
 	
 install_kitty_themes:
 	@echo "Installing kitty themes"
-	git clone https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes/
+	if [ ! -d ~/.config/kitty/kitty-themes ]; then git clone https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes/; fi
 	ln -sf ~/dotfiles/kitty/theme.conf ~/.config/kitty/theme.conf
 
 install_lazygit:
@@ -334,7 +338,6 @@ install_zsh_pure:
 
 install_kubectl:
 	@echo "Installing kubectl"
-	LATEST_KUBECTL=`curl -L -s https://dl.k8s.io/release/stable.txt`
 	cd /tmp && { curl -LO "https://dl.k8s.io/release/${LATEST_KUBECTL}/bin/linux/amd64/kubectl"; cd -; }
 	sudo mv /tmp/kubectl /usr/local/bin/kubectl
 	sudo chmod +x /usr/local/bin/kubectl
@@ -358,6 +361,7 @@ install_krew_plugins:
 #################
 install_npm:
 	@echo "Installing latest npm"
+	. ${HOME}/.nvm/nvm.sh && \
 	nvm install stable
 
 #################
