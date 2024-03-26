@@ -10,6 +10,7 @@ return { -- Highlight, edit, and navigate code
         'bash',
         'c',
         'cpp',
+        'devicetree',
         'hcl',
         'html',
         'lua',
