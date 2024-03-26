@@ -1,23 +1,25 @@
-LATEST_BAT 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
-LATEST_BTOP     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value'`
-LATEST_EZA 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
-LATEST_FD 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
-LATEST_GITMUX   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
-LATEST_GRC 	    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
-LATEST_KUBECTL  := `curl -L -s https://dl.k8s.io/release/stable.txt`
-LATEST_LAZYGIT	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*'`
-LATEST_LIBEVENT := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
-LATEST_LSD      := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
-LATEST_NCURSES  := `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
-LATEST_NVM      := `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name'`
-LATEST_NVIM     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("appimage")).value'`
-LATEST_RG       := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
-LATEST_TMUX     := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
-LATEST_VIDDY    := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
-LATEST_ZOXIDE   := `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
-LATEST_JC     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
+LATEST_BAT			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_BTOP     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value'`
+LATEST_EZA 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
+LATEST_FD 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_GITMUX   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
+LATEST_GRC 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
+LATEST_KUBECTL  	:= `curl -L -s https://dl.k8s.io/release/stable.txt`
+LATEST_LAZYGIT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*'`
+LATEST_LIBEVENT 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
+LATEST_LSD      	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_NCURSES  	:= `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
+LATEST_NVM      	:= `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name'`
+LATEST_NVIM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("appimage")).value'`
+LATEST_RG       	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
+LATEST_TERRAGRUNT	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("_linux_amd64")).value'`
+LATEST_TMUX			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
+LATEST_VENDIR    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/vendir/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value'`
+LATEST_VIDDY    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
+LATEST_YTT	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/ytt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value'`
+LATEST_ZOXIDE   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
+LATEST_JC     		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
 
-# LATEST_PKL     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/apple/pkl/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("-linux-amd64")).value'`
 
 #################
 #    TARGETS    #
@@ -27,7 +29,6 @@ LATEST_JC     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api
 all: \
 	preconfigure \
 	install_tools \
-	install_k8s_tools \
 	configure \
 	postconfigure
 
@@ -48,11 +49,22 @@ install_apps: \
 	install_google_chrome
 
 install_tools: \
+	install_common_tools \
+	install_carvel_tools \
+	install_cloud_tools \
+	install_k8s_tools \
+	install_terraform_tools \
+	install_tmux_tools
+
+install_cloud_tools: \
+	install_aws \
+	install_az
+
+install_common_tools: \
 	install_bat \
 	install_btop \
 	install_fd \
 	install_fzf \
-	install_gitmux \
 	install_grc \
 	install_jc \
 	install_kitty \
@@ -63,14 +75,25 @@ install_tools: \
 	install_pyenv \
 	install_rg \
 	install_tdrop \
-	install_tmux \
 	install_viddy \
-	install_zoxide \
+	install_zoxide
+
+install_carvel_tools: \
+	install_vendir \
+	install_ytt
 
 install_k8s_tools: \
 	install_kubectl \
 	install_krew \
 	install_krew_plugins
+
+install_terraform_tools: \
+	install_terraform \
+	install_terragrunt
+
+install_tmux_tools: \
+	install_tmux \
+	install_gitmux
 
 configure_kitty: \
 	install_kitty_themes
@@ -114,6 +137,7 @@ install_prereqs:
 		curl \
 		dialog \
 		gcc \
+		gnupg \
 		flex \
 		evolution \
 		jq \
@@ -134,6 +158,7 @@ install_prereqs:
 		llvm \
 		p7zip \
 		smbclient \
+		software-properties-common \
 		tk-dev \
 		unzip \
 		xclip \
@@ -174,6 +199,16 @@ install_google_chrome:
 #################
 #     TOOLS     #
 #################
+
+install_aws:
+	@echo "Installing aws"
+	wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O /tmp/awscliv2.zip
+	unzip -od /tmp /tmp/awscliv2.zip
+	(cd /tmp/aws && sudo ./install)
+
+install_az:
+	@echo "Installing az"
+	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 install_bat:
 	@echo "Installing bat"
@@ -271,6 +306,23 @@ install_rg:
 	sudo dpkg -i /tmp/rg.deb
 	rm -rf /tmp/rg.deb
 
+install_terraform:
+	@echo "Installing terraform"
+	wget -O- https://apt.releases.hashicorp.com/gpg | \
+		gpg --dearmor | \
+		sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+	gpg --no-default-keyring \
+		--keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+		--fingerprint
+	echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $$(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+	sudo apt update
+	sudo apt-get install terraform
+
+install_terragrunt:
+	@echo "Installing terragrunt"
+	wget ${LATEST_TERRAGRUNT} -O /tmp/terragrunt
+	sudo mv /tmp/terragrunt /usr/local/bin && chmod +x /usr/local/bin/terragrunt
+
 install_tdrop:
 	@echo "Installing tdrop"
 	git clone https://github.com/noctuid/tdrop.git /tmp/tdrop
@@ -298,6 +350,11 @@ install_tmux:
 	cd /tmp/tmux/tmux*; sh configure && make && sudo make install
 	rm -rf /tmp/tmux.tar.gz /tmp/tmux
 
+install_vendir:
+	@echo "Installing vendir"
+	wget ${LATEST_VENDIR} -O /tmp/vendir
+	sudo mv /tmp/vendir /usr/local/bin && chmod +x /usr/local/bin/vendir
+
 install_viddy:
 	@echo "Installing viddy"
 	wget ${LATEST_VIDDY} -O /tmp/viddy.tar.gz
@@ -305,6 +362,11 @@ install_viddy:
 	tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
 	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
 	rm -rf /tmp/viddy.tar.gz /tmp/viddy
+
+install_ytt:
+	@echo "Installing ytt"
+	wget ${LATEST_YTT} -O /tmp/ytt
+	sudo mv /tmp/ytt /usr/local/bin && chmod +x /usr/local/bin/ytt
 
 install_zoxide:
 	@echo "Installing zoxide"

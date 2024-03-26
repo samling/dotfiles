@@ -31,6 +31,14 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic error messages' })
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic quickfix list' })
 
+-- If moving up and down lines with j and k, remap to gj/gk in order to move up and down relative lines (i.e. consider a wrapped line a new line). If using j/k with a count, function normally
+-- vim.keymap.set({ 'n', 'x' }, 'j', function()
+--   return vim.v.count > 0 and 'j' or 'gj'
+-- end, { noremap = true, expr = true })
+-- vim.keymap.set({ 'n', 'x' }, 'k', function()
+--   return vim.v.count > 0 and 'k' or 'gk'
+-- end, { noremap = true, expr = true })
+
 -- Buffers
 vim.keymap.set('n', '<leader>bb', function()
   local builtin = require 'telescope.builtin'
