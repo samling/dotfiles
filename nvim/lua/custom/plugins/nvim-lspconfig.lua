@@ -206,6 +206,7 @@ return { -- LSP Configuration & Plugins
       --   },
       -- },
       -- },
+      terraformls = {},
       tsserver = {},
       vimls = {},
       yamlls = {},
