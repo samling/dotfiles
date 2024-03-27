@@ -54,12 +54,20 @@ return {
         return getLspName()
       end,
     }
+
+    local branch = {
+      'branch',
+      icons_enabled = true,
+      icon = '',
+    }
+
     local filetype = {
       'filetype',
       icon_only = false,
       colored = true,
       separator = { left = '', right = '' },
     }
+
     -- local copilot_indicator = {
     --   function()
     --     local client = vim.lsp.get_active_clients({ name = 'copilot' })[1]
@@ -70,6 +78,27 @@ return {
     --     end
     --   end,
     -- }
+
+    local diagnostics = {
+      'diagnostics',
+      sources = { 'nvim_diagnostic' },
+      sections = { 'error', 'warn' },
+      symbols = { error = ' ', warn = ' ' },
+      colored = true,
+      update_in_insert = false,
+      always_visible = true,
+    }
+
+    local diff = {
+      'diff',
+      colored = true,
+      symbols = { added = ' ', modified = ' ', removed = ' ' }, -- changes diff symbols
+      cond = hide_in_width,
+      -- separator = {
+      --   left = 'A',
+      -- },
+    }
+
     require('lualine').setup {
       options = {
         icons_enabled = true,
@@ -94,7 +123,7 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_b = { branch, diff, diagnostics },
         lualine_c = { filetype, { 'filename', path = 1 } },
         lualine_x = {
           -- stylua: ignore
