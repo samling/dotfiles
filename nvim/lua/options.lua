@@ -72,8 +72,8 @@ vim.opt.scrolloff = 10
 vim.opt.expandtab = true
 
 -- Tab stop and shift width
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
