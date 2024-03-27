@@ -169,22 +169,21 @@ install_prereqs:
 
 create_folders:
 	@echo "Creating required folders"
-	#mkdir -p ${HOME}/.config/nvim/lua/custom
+	mkdir -p ${HOME}/.config
 	mkdir -p ${HOME}/.config/kitty
+	mkdir -p ${HOME}/.config/lsd
 
 create_symlinks:
 	@echo "Creating symlinks"
 	ln -sf ${HOME}/dotfiles/zsh/.zshrc ${HOME}/.zshrc
-	#ln -sf ${HOME}/dotfiles/vim/.vim ${HOME}/.vim
-	# TODO: Try just symlinking to ${HOME}
-	#rm -f ${HOME}/dotfiles/vim/.vim/.vim
-	#ln -sf ${HOME}/dotfiles/vim/.vimrc ${HOME}/.vimrc
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
-	ln -sf ${HOME}/dotfiles/config/linux/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
-	ln -sf ${HOME}/dotfiles/config/linux/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
+	ln -sf ${HOME}/dotfiles/linux/config/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
+	ln -sf ${HOME}/dotfiles/linux/config/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
+	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
+	ln -sf ${HOME}/dotfiles/linux/config/lsd/icons.yaml ${HOME}/.config/lsd/icons.yaml
 
 ################
 #     APPS     #

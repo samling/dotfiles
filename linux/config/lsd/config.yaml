@@ -1,0 +1,10 @@
+date: '+%a %b %y %H:%M'
+
+icons:
+  theme: fancy
+  separator: " "
+
+permission: octal
+
+sorting:
+  dir-grouping: first
