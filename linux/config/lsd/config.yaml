@@ -1,5 +1,14 @@
 date: '+%a %b %y %H:%M'
 
+blocks:
+  - permission
+  - user
+  - size
+  - name
+
+color:
+  theme: custom
+
 icons:
   theme: fancy
   separator: " "

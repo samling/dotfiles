@@ -1,0 +1,38 @@
+user: 4
+group: '#cba6f7'
+permission:
+  read: dark_green
+  write: dark_yellow
+  exec: dark_red
+  exec-sticky: 5
+  no-access: 245
+  octal: '#94E2D5'
+  acl: dark_cyan
+  context: cyan
+date:
+  hour-old: 1
+  day-old: '#fab387'
+  older: '#f9e2af'
+size:
+  none: 245
+  small: '#f9e2af'
+  medium: '#fab387'
+  large: '#f38ba8'
+inode:
+  valid: 13
+  invalid: 245
+links:
+  valid: 13
+  invalid: 245
+tree-edge: 245
+git-status:
+  default: 245
+  unmodified: 245
+  ignored: 245
+  new-in-index: dark_green
+  new-in-workdir: dark_green
+  typechange: '#f9e2af'
+  deleted: dark_red
+  renamed: dark_green
+  modified: '#f9e2af'
+  conflicted: dark_red

@@ -184,6 +184,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/icons.yaml ${HOME}/.config/lsd/icons.yaml
+	ln -sf ${HOME}/dotfiles/linux/config/lsd/colors.yaml ${HOME}/.config/lsd/colors.yaml
 
 ################
 #     APPS     #
