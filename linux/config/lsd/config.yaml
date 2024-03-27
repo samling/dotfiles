@@ -1,0 +1,19 @@
+date: '+%a %b %y %H:%M'
+
+blocks:
+  - permission
+  - user
+  - size
+  - name
+
+color:
+  theme: custom
+
+icons:
+  theme: fancy
+  separator: " "
+
+permission: octal
+
+sorting:
+  dir-grouping: first
