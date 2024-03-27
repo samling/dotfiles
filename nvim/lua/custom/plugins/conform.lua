@@ -10,6 +10,8 @@ return { -- Autoformat
       lua = { 'stylua' },
       python = { 'isort', 'black' },
       sh = { 'shfmt' },
+      json = { 'jq ' },
+      yaml = { 'yq' },
     },
   },
 }
