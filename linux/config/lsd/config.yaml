@@ -1,19 +1,14 @@
-date: '+%a %b %y %H:%M'
-
+date: +%a %b %y %H:%M:%S
 blocks:
   - permission
   - user
   - size
   - name
-
 color:
   theme: custom
-
 icons:
   theme: fancy
-  separator: " "
-
+  separator: ' '
 permission: octal
-
 sorting:
   dir-grouping: first
