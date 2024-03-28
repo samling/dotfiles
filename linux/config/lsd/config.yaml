@@ -1,4 +1,4 @@
-date: +%a %b %y %H:%M:%S
+date: +%Y/%m/%d %H:%M:%S
 blocks:
   - permission
   - user
