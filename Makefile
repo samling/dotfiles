@@ -177,6 +177,7 @@ create_folders:
 	mkdir -p ${HOME}/.config
 	mkdir -p ${HOME}/.config/kitty
 	mkdir -p ${HOME}/.config/lsd
+	mkdir -p ${HOME}/.kube/kubeconfigs
 
 create_symlinks:
 	@echo "Creating symlinks"
