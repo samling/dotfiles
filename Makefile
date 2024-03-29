@@ -20,6 +20,11 @@ LATEST_YTT	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://ap
 LATEST_ZOXIDE   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
 LATEST_JC     		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
 
+#####################
+#    ENVIRONMENT    #
+#####################
+
+SHELL := /bin/bash
 
 #################
 #    TARGETS    #
