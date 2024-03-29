@@ -209,7 +209,7 @@ install_aws:
 	@echo "Installing aws"
 	wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O /tmp/awscliv2.zip
 	unzip -od /tmp /tmp/awscliv2.zip
-	(cd /tmp/aws && sudo ./install)
+	(cd /tmp/aws && sudo ./install --update)
 
 install_az:
 	@echo "Installing az"
@@ -303,7 +303,12 @@ install_nvm:
 
 install_pyenv:
 	@echo "Installing pyenv"
-	curl https://pyenv.run | bash
+	if [ ! -d "${HOME}/.pyenv" ]; \
+	then \
+		curl https://pyenv.run | bash \
+	else \
+		$(info "Pyenv already installed; skipping...); \
+	fi
 
 install_rg:
 	@echo "Installing rg"
