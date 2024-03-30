@@ -47,6 +47,7 @@ configure: \
 preconfigure: \
 	install_prereqs \
 	create_folders \
+	create_files \
 	create_symlinks
 
 install_apps: \
@@ -177,6 +178,10 @@ create_folders:
 	mkdir -p ${HOME}/.config/kitty
 	mkdir -p ${HOME}/.config/lsd
 	mkdir -p ${HOME}/.kube/kubeconfigs
+
+create_files:
+	@echo "Creating required files and stubs"
+	touch ${HOME}/.kube/config
 
 create_symlinks:
 	@echo "Creating symlinks"
