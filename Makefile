@@ -8,7 +8,6 @@ LATEST_KUBECTL  	:= `curl -L -s https://dl.k8s.io/release/stable.txt`
 LATEST_LAZYGIT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*'`
 LATEST_LIBEVENT 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
 LATEST_LSD      	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
-LATEST_NCURSES  	:= `curl -s https://invisible-mirror.net/archives/ncurses/current/ | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep ncurses | tail -n +2 | head -n 1 | xargs -I {} echo https://invisible-mirror.net/archives/ncurses/current/{}`
 LATEST_NVM      	:= `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name'`
 LATEST_NVIM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("appimage")).value'`
 LATEST_RG       	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
@@ -304,12 +303,7 @@ install_nvm:
 
 install_pyenv:
 	@echo "Installing pyenv"
-	if [ ! -d "${HOME}/.pyenv" ]; \
-	then \
-		curl https://pyenv.run | bash \
-	else \
-		$(info "Pyenv already installed; skipping...); \
-	fi
+	curl https://pyenv.run | bash
 
 install_rg:
 	@echo "Installing rg"
@@ -348,12 +342,6 @@ install_tmux:
 	tar xzvf /tmp/libevent.tar.gz -C /tmp/libevent
 	cd /tmp/libevent/libevent*; sh configure --disable-openssl && make && sudo make install
 	rm -rf /tmp/libevent.tar.gz /tmp/libevent
-	@echo "Installing prereq: ncurses"
-	wget ${LATEST_NCURSES} -O /tmp/ncurses.tar.gz
-	mkdir -p /tmp/ncurses
-	tar xzvf /tmp/ncurses.tar.gz -C /tmp/ncurses
-	cd /tmp/ncurses/ncurses*; sh configure && make && sudo make install
-	rm -rf /tmp/ncurses.tar.gz /tmp/ncurses
 	@echo "Installing tmux"
 	wget ${LATEST_TMUX} -O /tmp/tmux.tar.gz
 	mkdir -p /tmp/tmux
