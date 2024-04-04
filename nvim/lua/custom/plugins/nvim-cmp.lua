@@ -47,7 +47,8 @@ return { -- Autocompletion
           luasnip.lsp_expand(args.body)
         end,
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+      -- https://github.com/hrsh7th/cmp-cmdline/issues/96
+      completion = { completeopt = 'menu,menuone,noselect' },
 
       -- For an understanding of why these mappings were
       -- chosen, you will need to read `:help ins-completion`

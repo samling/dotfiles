@@ -4,7 +4,7 @@ return {
     ---@type qmk.UserConfig
     local conf = {
       name = 'LAYOUT',
-      variant = 'qmk',
+      auto_format_pattern = 'fakefile.c',
       layout = {
         'x x x x x x _ _ _ _ x x x x x x',
         'x x x x x x _ _ _ _ x x x x x x',

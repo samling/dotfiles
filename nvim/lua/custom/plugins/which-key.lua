@@ -69,7 +69,7 @@ M.config = function()
     },
     -- hide mapping boilerplate
     hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
-    show_help = true, -- show help message on teh command line when popup is visible
+    show_help = true, -- show help message on the command line when popup is visible
     triggers = 'auto', -- automatically set up triggers
     -- triggers = {"<leader>"} -- or specify a list manually
   }
