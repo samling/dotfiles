@@ -1,5 +1,6 @@
 LATEST_BAT			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_BTOP     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value'`
+LATEST_DELTA 	   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/dandavison/delta/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value'`
 LATEST_EZA 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
 LATEST_FD 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_GITMUX   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
@@ -68,6 +69,7 @@ install_cloud_tools: \
 install_common_tools: \
 	install_bat \
 	install_btop \
+	install_delta \
 	install_fd \
 	install_fzf \
 	install_grc \
@@ -177,6 +179,7 @@ create_folders:
 	mkdir -p ${HOME}/.config
 	mkdir -p ${HOME}/.config/kitty
 	mkdir -p ${HOME}/.config/lsd
+	mkdir -p ${HOME}/.config/bat
 	mkdir -p ${HOME}/.kube/kubeconfigs
 
 create_files:
@@ -190,6 +193,8 @@ create_symlinks:
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
+	ln -sf ${HOME}/dotfiles/linux/config/bat/themes ${HOME}/.config/bat/themes
+	ln -sf ${HOME}/dotfiles/linux/config/git/gitconfig ${HOME}/.gitconfig
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
@@ -233,6 +238,12 @@ install_btop:
 	tar xjf /tmp/btop.tbz -C /tmp/btop
 	cd /tmp/btop/btop/ && sudo make install
 	rm -rf /tmp/btop.tbz /tmp/btop
+
+install_delta:
+	@echo "Installing delta"
+	wget ${LATEST_DELTA} -O /tmp/delta.deb
+	sudo dpkg -i /tmp/delta.deb
+	rm -rf /tmp/delta.deb
 
 install_fd:
 	@echo "Installing fd"

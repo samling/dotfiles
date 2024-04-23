@@ -1,0 +1,23 @@
+[core]
+        pager = delta
+
+[interactive]
+        diffFilter = delta --color-only
+
+[include]
+        path = /home/sboynton/dotfiles/linux/config/delta/catppuccin.gitconfig
+
+[delta]
+        navigate = true
+        features = catppuccin-macchiato
+
+[merge]
+        conflictstyle = diff3
+
+[diff]
+        colorMoved = default
+
+[user]
+        email = samlingx@gmail.com
+        name = Sam Boynton
+
