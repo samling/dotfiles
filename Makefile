@@ -230,6 +230,8 @@ install_bat:
 	wget ${LATEST_BAT} -O /tmp/bat.deb
 	sudo dpkg -i /tmp/bat.deb
 	rm -rf /tmp/bat.deb
+	@echo "Configuring bat themes"
+	bat cache --build
 
 install_btop:
 	@echo "Installing btop"
