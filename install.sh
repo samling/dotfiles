@@ -12,6 +12,12 @@ CURR_SHELL=$(ps -p $$ | tail -n -1 | awk '{print $4}')
 	chsh -s /usr/bin/zsh
 )
 
+[[ command -v make ]] && echo -e "  [✓] Make is installed" || (
+	echo "  [x] Make is not installed; installing make."
+  sudo apt-get install make
+
+)
+
 # Check if we're running as root; if not, elevate via sudo
 sudo bash -c "echo -e '  [✓] We can use sudo'"
 echo ""

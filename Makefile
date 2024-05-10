@@ -184,6 +184,7 @@ create_folders:
 	mkdir -p ${HOME}/.config/lsd
 	mkdir -p ${HOME}/.config/bat
 	mkdir -p ${HOME}/.kube/kubeconfigs
+	mkdir -p ${HOME}/.local/bin
 
 create_files:
 	@echo "Creating required files and stubs"
