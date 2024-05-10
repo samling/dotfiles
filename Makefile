@@ -5,6 +5,7 @@ LATEST_EZA 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://a
 LATEST_FD 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_GITMUX   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
 LATEST_GRC 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
+LATEST_HELM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name'`
 LATEST_JC     		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
 LATEST_KUBECTL  	:= `curl -L -s https://dl.k8s.io/release/stable.txt`
 LATEST_LAZYGIT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*'`
@@ -74,6 +75,7 @@ install_common_tools: \
 	install_fd \
 	install_fzf \
 	install_grc \
+	install_helm \
 	install_jc \
 	install_kitty \
 	install_lazygit \
@@ -281,6 +283,14 @@ install_gitmux:
 	tar xzvf /tmp/gitmux.tar.gz -C /tmp/gitmux
 	sudo cp -f /tmp/gitmux/gitmux /usr/local/bin/gitmux
 	rm -rf /tmp/gitmux.tar.gz /tmp/gitmux
+
+install_helm:
+	@echo "Installing helm"
+	wget "https://get.helm.sh/helm-${LATEST_HELM}-linux-amd64.tar.gz" -O /tmp/helm.tar.gz
+	mkdir -p /tmp/helm
+	tar xzvf /tmp/helm.tar.gz -C /tmp/helm
+	sudo cp -f /tmp/helm/linux-amd64/helm /usr/local/bin/helm
+	rm -rf /tmp/helm.tar.gz /tmp/helm
 
 install_jc:
 	@echo "Installing jc"
