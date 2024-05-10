@@ -490,7 +490,7 @@ install_nvim_conf:
 #################
 install_python310:
 	@echo "Installing latest python3 with pyenv"
-	pyenv install -f 3.10
+	[[ -d ${HOME}/.pyenv/bin ]] && PATH="${HOME}/.pyenv/bin:${PATH}" pyenv install -f 3.10
 
 #################
 #      END      #
