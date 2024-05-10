@@ -26,9 +26,3 @@ echo ""
 
 # Provision system
 make -f ./Makefile
-#make -f ./Makefile preconfigure
-#make -f ./Makefile install_tools
-#make -f ./Makefile install_k8s_tools
-#make -f ./Makefile configure_tmux
-#make -f ./Makefile configure_nvim
-#make -f ./Makefile postconfigure

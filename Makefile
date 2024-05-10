@@ -51,7 +51,8 @@ preconfigure: \
 	install_prereqs \
 	create_folders \
 	create_files \
-	create_symlinks
+	create_symlinks \
+	configure_locale
 
 install_apps: \
 	install_google_chrome
@@ -166,6 +167,7 @@ install_prereqs:
 		libxml2-dev \
 		libxmlsec1-dev \
 		llvm \
+		locales \
 		p7zip \
 		smbclient \
 		software-properties-common \
@@ -204,6 +206,12 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/icons.yaml ${HOME}/.config/lsd/icons.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/colors.yaml ${HOME}/.config/lsd/colors.yaml
+
+configure_locale:
+	@echo "Configuring locale"
+	sudo echo "en_US.UTF-8 UTF-8 > /etc/locale.gen"
+	sudo echo "en_US.ISO-8859-15 ISO-8859-15 >> /etc/locale.gen"
+	sudo locale-gen
 
 ################
 #     APPS     #
