@@ -341,6 +341,7 @@ install_nvm:
 
 install_pyenv:
 	@echo "Installing pyenv"
+	rm -rf ${HOME}/.pyenv
 	curl https://pyenv.run | bash
 
 install_rg:
@@ -507,7 +508,7 @@ install_python310:
 
 define FINAL_STEPS
 Done! Remember to do the following:
-	1. Create a new shortcut to open kitty: `tdrop -a -s 0 kitty --start-as fullscreen`
+	1. Create a new shortcut to open kitty: `tdrop -a kitty --start-as fullscreen`
 	2. Run neovim to finish LazyVim configuration
 	3. Install tmux plugins with ctrl-A + I
 	4. (Optional) Reboot!
