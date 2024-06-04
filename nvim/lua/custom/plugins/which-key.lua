@@ -108,7 +108,7 @@ M.config = function()
       },
       h = {
         mode = { 'n', 'v' },
-        name = '+hop',
+        name = '+harpoon',
       },
       n = {
         name = '+noice',
