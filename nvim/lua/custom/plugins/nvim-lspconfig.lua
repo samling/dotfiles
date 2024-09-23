@@ -72,23 +72,23 @@ return {
       },
       markdownlint = {},
       -- pylint = {},
-      pylsp = {
-        settings = {
-          pylsp = {
-            plugins = {
-              pycodestyle = {
-                ignore = { 'E501' },
-              },
-            },
-          },
-        },
-      },
-      -- pyright = {
-      -- settings = {
-      --   python = {
-      --     -- analysis = { diagnosticMode = 'off', typeCheckingMode = 'off' },
+      -- pylsp = {
+      --   settings = {
+      --     pylsp = {
+      --       plugins = {
+      --         pycodestyle = {
+      --           ignore = { 'E501' },
+      --         },
+      --       },
+      --     },
       --   },
       -- },
+      -- pyright = {
+      --   settings = {
+      --     python = {
+      --       analysis = { diagnosticMode = 'off', typeCheckingMode = 'off' },
+      --     },
+      --   },
       -- },
       terraformls = {},
       tsserver = {},

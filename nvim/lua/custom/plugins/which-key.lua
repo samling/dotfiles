@@ -13,6 +13,10 @@ M.config = function()
   vim.keymap.set('v', '<leader>?', "<Esc>:WhichKey '' v<CR>", { silent = true })
   vim.keymap.set('n', '<leader>?', "<Esc>:WhichKey '' n<CR>", { silent = true, desc = 'which-key root' })
 
+  -- Diagnostics
+  vim.keymap.set('', '<leader>d', '<cmd> lua vim.diagnostic.open_float() <CR>', { desc = 'Opens floating window with full diagnostics'})
+
+
   -- https://github.com/folke/which-key.nvim#colors
   vim.cmd [[highlight default link WhichKey          Label]]
   vim.cmd [[highlight default link WhichKeySeperator String]]

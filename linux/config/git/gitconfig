@@ -21,3 +21,5 @@
         email = samlingx@gmail.com
         name = Sam Boynton
 
+[includeIf "gitdir:~/nv-dotfiles/"]
+        path = ~/nv-dotfiles/linux/config/git/gitconfig
