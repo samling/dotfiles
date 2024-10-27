@@ -17,7 +17,7 @@ LATEST_RG       	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://a
 LATEST_TERRAGRUNT	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("_linux_amd64")).value'`
 LATEST_TMUX			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
 LATEST_VENDIR    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/vendir/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value'`
-LATEST_VIDDY    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("Linux_x86_64")).value'`
+LATEST_VIDDY    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64.tar.gz")).value'`
 LATEST_YTT	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/ytt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value'`
 LATEST_ZELLIJ   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/zellij-org/zellij/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("x86_64-unknown-linux-musl.tar.gz")).value'`
 LATEST_ZOXIDE   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
@@ -157,10 +157,7 @@ install_prereqs:
 		libffi-dev \
 		libfuse2 \
 		liblzma-dev \
-		libncurses5 \
-		libncurses5-dev \
-		libncursesw5 \
-		libncursesw5-dev \
+		libncurses6 \
 		libreadline-dev \
 		libsqlite3-dev \
 		libssl-dev \
@@ -178,6 +175,9 @@ install_prereqs:
 		xz-utils \
 		zlib1g-dev \
 		zsh
+		#libncursesw6 \
+		#libncursesw6-dev \
+		#libncurses6-dev \
 
 create_folders:
 	@echo "Creating required folders"
@@ -209,9 +209,8 @@ create_symlinks:
 
 configure_locale:
 	@echo "Configuring locale"
-	sudo echo "en_US.UTF-8 UTF-8 > /etc/locale.gen"
-	sudo echo "en_US.ISO-8859-15 ISO-8859-15 >> /etc/locale.gen"
-	sudo locale-gen
+	sudo locale-gen en_US.UTF-8
+	sudo locale-gen en_US.ISO-8859-15
 
 ################
 #     APPS     #
