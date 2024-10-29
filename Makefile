@@ -1,3 +1,4 @@
+LATEST_AICHAT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sigoden/aichat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-unknown-linux-musl.tar.gz"))'.value`
 LATEST_BAT			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_BTOP     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value'`
 LATEST_DELTA 	   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/dandavison/delta/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value'`
@@ -70,6 +71,7 @@ install_cloud_tools: \
 	install_az
 
 install_common_tools: \
+	install_aichat \
 	install_bat \
 	install_btop \
 	install_delta \
@@ -225,6 +227,14 @@ install_google_chrome:
 #################
 #     TOOLS     #
 #################
+
+install_aichat:
+	@echo "Installing aichat"
+	wget ${LATEST_AICHAT} -O /tmp/aichat.tar.gz
+	mkdir -p /tmp/aichat
+	tar xzvf /tmp/aichat.tar.gz -C /tmp/aichat
+	sudo cp -f /tmp/aichat/aichat /usr/local/bin/aichat
+	rm -rf /tmp/aichat.tar.gz /tmp/aichat
 
 install_aws:
 	@echo "Installing aws"
@@ -461,7 +471,8 @@ install_krew:
 
 install_krew_plugins:
 	@echo "Installing krew plugins"
-	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree
+	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew index add kubectl-ai https://github.com/sozercan/kubectl-ai
+	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree kubectl-ai/kubectl-ai
 
 #################
 #     NPM      #
