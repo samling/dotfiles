@@ -52,8 +52,8 @@ source ~/dotfiles/zsh/PS1.zsh
 
 # Source ${HOME}/dotfiles-private/zshrc.*.local files
 #
-LOCAL_DOTFILES_GIT=(${HOME}/dotfiles-private/zshrc.*.local)
-if [[ ! -z ${LOCAL_DOTFILES_GIT} && ${LOCAL_DOTFILES_GIT} != "${HOME}/dotfiles-private/zshrc.*.local" ]]; then
+LOCAL_DOTFILES_GIT=(${HOME}/dotfiles-private/zsh/zshrc.*.local)
+if [[ ! -z ${LOCAL_DOTFILES_GIT} && ${LOCAL_DOTFILES_GIT} != "${HOME}/dotfiles-private/zsh/zshrc.*.local" ]]; then
     for dotfile in ${LOCAL_DOTFILES_GIT}; do
         #echo -e "Sourced local dotfile from git repo: $dotfile"
         source $dotfile
