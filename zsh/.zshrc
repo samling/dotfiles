@@ -1,7 +1,7 @@
 # Required
 #
 export ZSH_VERSION=$ZSH_VERSION
-[ -f "${HOME}/zshrc-local/github-token" ] && export GITHUB_TOKEN
+[ -f "${HOME}/dotfiles-private/github-token" ] && export GITHUB_TOKEN
 
 # Plugins
 #
@@ -50,10 +50,10 @@ source ~/dotfiles/zsh/functions.zsh
 #
 source ~/dotfiles/zsh/PS1.zsh
 
-# Source ${HOME}/zshrc-local/zshrc.*.local files
+# Source ${HOME}/dotfiles-private/zshrc.*.local files
 #
-LOCAL_DOTFILES_GIT=(${HOME}/zshrc-local/zshrc.*.local)
-if [[ ! -z ${LOCAL_DOTFILES_GIT} && ${LOCAL_DOTFILES_GIT} != "${HOME}/zshrc-local/zshrc.*.local" ]]; then
+LOCAL_DOTFILES_GIT=(${HOME}/dotfiles-private/zshrc.*.local)
+if [[ ! -z ${LOCAL_DOTFILES_GIT} && ${LOCAL_DOTFILES_GIT} != "${HOME}/dotfiles-private/zshrc.*.local" ]]; then
     for dotfile in ${LOCAL_DOTFILES_GIT}; do
         #echo -e "Sourced local dotfile from git repo: $dotfile"
         source $dotfile
