@@ -5,6 +5,7 @@ LATEST_DELTA 	   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://
 LATEST_EZA 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
 LATEST_FD 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_GITMUX   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
+LATEST_GO 				:= `curl -s https://go.dev/dl/?mode=json | jq -r '.[0].version'`
 LATEST_GRC 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
 LATEST_HELM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name'`
 LATEST_JC     		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
@@ -301,6 +302,15 @@ install_gitmux:
 	tar xzvf /tmp/gitmux.tar.gz -C /tmp/gitmux
 	sudo cp -f /tmp/gitmux/gitmux /usr/local/bin/gitmux
 	rm -rf /tmp/gitmux.tar.gz /tmp/gitmux
+
+install_go:
+	@echo "Installing go"
+	wget https://go.dev/dl/${LATEST_GO}.linux-amd64.tar.gz -O /tmp/go.tar.gz
+	mkdir -p /tmp/go
+	tar xzvf /tmp/go.tar.gz -C /tmp/go
+	sudo cp -r /tmp/go/go /usr/local
+	rm -rf /tmp/go.tar.gz /tmp/go
+	endif
 
 install_helm:
 	@echo "Installing helm"
