@@ -171,6 +171,7 @@ install_prereqs:
 		p7zip \
 		smbclient \
 		software-properties-common \
+		telnet \
 		tk-dev \
 		unzip \
 		xclip \
