@@ -168,6 +168,7 @@ install_prereqs:
 		libxmlsec1-dev \
 		llvm \
 		locales \
+		nmap \
 		p7zip \
 		smbclient \
 		software-properties-common \
