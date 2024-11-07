@@ -173,6 +173,7 @@ install_prereqs:
 		smbclient \
 		software-properties-common \
 		telnet \
+		traceroute \
 		tk-dev \
 		unzip \
 		xclip \
