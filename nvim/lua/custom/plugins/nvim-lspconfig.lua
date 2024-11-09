@@ -91,7 +91,7 @@ return {
       --   },
       -- },
       terraformls = {},
-      tsserver = {},
+      -- tsserver = {},
       vimls = {},
       yamlls = {},
       yq = {},
