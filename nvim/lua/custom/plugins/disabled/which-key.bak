@@ -48,8 +48,8 @@ M.config = function()
     },
     -- add operators taht will trigger motion and text object completion
     -- to enable all native operators, set the preset / operators plugin above
-    operators = { gc = 'Comments' },
-    key_labels = {
+    defer = { gc = 'Comments' },
+    replace = {
       -- override the label used to display some keys
       ['<space>'] = 'SPC',
       ['<cr>'] = 'RET',
@@ -60,7 +60,7 @@ M.config = function()
       separator = '➜', -- symbol used between a key and its label
       group = '+', -- symbol prepended to a group
     },
-    window = {
+    win = {
       border = 'none', -- none, single, double, window
       position = 'bottom', -- bottom, top
       margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
@@ -72,9 +72,9 @@ M.config = function()
       spacing = 5, -- spacing between columns
     },
     -- hide mapping boilerplate
-    hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
+    -- hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
     show_help = true, -- show help message on the command line when popup is visible
-    triggers = 'auto', -- automatically set up triggers
+    -- triggers = 'auto', -- automatically set up triggers
     -- triggers = {"<leader>"} -- or specify a list manually
   }
 
