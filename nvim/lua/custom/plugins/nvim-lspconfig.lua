@@ -72,17 +72,19 @@ return {
       },
       markdownlint = {},
       -- pylint = {},
-      -- pylsp = {
-      --   settings = {
-      --     pylsp = {
-      --       plugins = {
-      --         pycodestyle = {
-      --           ignore = { 'E501' },
-      --         },
-      --       },
-      --     },
-      --   },
-      -- },
+      pylsp = {
+        settings = {
+          pylsp = {
+            plugins = {
+              pylint = { enabled = false },
+              pyflakes = { enabled = false },
+              pycodestyle = {
+                ignore = { 'E501', 'E302', 'E305', 'E226' },
+              },
+            },
+          },
+        },
+      },
       -- pyright = {
       --   settings = {
       --     python = {
@@ -97,7 +99,7 @@ return {
       yq = {},
     }
 
-    lsp.basedpyright.setup {}
+    -- lsp.basedpyright.setup {}
 
     require('mason').setup()
 
