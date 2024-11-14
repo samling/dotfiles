@@ -79,7 +79,7 @@ return {
               pylint = { enabled = false },
               pyflakes = { enabled = false },
               pycodestyle = {
-                ignore = { 'E501', 'E302', 'E305', 'E226' },
+                ignore = { 'E501', 'E302', 'E305', 'E226', 'E114', 'E121', 'E111', 'E114', 'E303' },
               },
             },
           },
