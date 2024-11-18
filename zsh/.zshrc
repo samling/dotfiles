@@ -3,52 +3,17 @@
 export ZSH_VERSION=$ZSH_VERSION
 [ -f "${HOME}/dotfiles-private/github-token" ] && export GITHUB_TOKEN
 
-# Plugins
+# Source global config
 #
-source ~/dotfiles/zsh/zsh-history-substring-search.zsh
-
-# Commands
-#
+source ~/dotfiles/zsh/plugins/zsh-history-substring-search.zsh
 source ~/dotfiles/zsh/cmd.zsh
-
-# Environment
-#
 source ~/dotfiles/zsh/env.zsh
-
-# Path
-#
 source ~/dotfiles/zsh/path.zsh
-
-# Setopt
-#
 source ~/dotfiles/zsh/opt.zsh
-
-# Prompt theme
-#
 source ~/dotfiles/zsh/prompt.zsh
-
-# Key bindings
-#
 source ~/dotfiles/zsh/keys.zsh
-
-# Tmuxinator
-source ~/dotfiles/tmux/completion/tmuxinator.zsh
-
-# LS_COLORS
-#
-source ~/dotfiles/zsh/lscolors.zsh
-
-# Custom aliases
-#
-source ~/dotfiles/zsh/aliases/custom.zsh
-
-# Custom functions
-#
+source ~/dotfiles/zsh/aliases.zsh
 source ~/dotfiles/zsh/functions.zsh
-
-# Prompt functions
-#
-source ~/dotfiles/zsh/PS1.zsh
 
 # Source ${HOME}/dotfiles-private/zshrc.*.local files
 #
@@ -60,6 +25,8 @@ if [[ ! -z ${LOCAL_DOTFILES_GIT} && ${LOCAL_DOTFILES_GIT} != "${HOME}/dotfiles-p
     done
 fi
 
+# Source ${HOME}/.zshrc.* files
+#
 LOCAL_DOTFILES=(${HOME}/.zshrc.*)
 if [[ ! -z ${LOCAL_DOTFILES} && ${LOCAL_DOTFILES} != "${HOME}/.zshrc.*" ]]; then
     for dotfile in ${LOCAL_DOTFILES}; do
