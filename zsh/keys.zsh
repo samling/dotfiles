@@ -1,6 +1,3 @@
-# Enable vi mode
-#bindkey -v
-
 # Enable emacs mode (default)
 bindkey -e
 
