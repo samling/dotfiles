@@ -2,7 +2,8 @@ LATEST_AICHAT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api
 LATEST_BAT			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_BTOP     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value'`
 LATEST_DELTA 	   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/dandavison/delta/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value'`
-LATEST_EZA 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_x86_64-unknown-linux-gnu.zip")).value'`
+LATEST_DUF  	   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/muesli/duf/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value'`
+LATEST_EZA 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_linux_amd64.deb")).value'`
 LATEST_FD 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_GITMUX   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value'`
 LATEST_GO 				:= `curl -s https://go.dev/dl/?mode=json | jq -r '.[0].version'`
@@ -76,6 +77,7 @@ install_common_tools: \
 	install_bat \
 	install_btop \
 	install_delta \
+	install_duf \
 	install_fd \
 	install_fzf \
 	install_grc \
@@ -271,6 +273,12 @@ install_delta:
 	wget ${LATEST_DELTA} -O /tmp/delta.deb
 	sudo dpkg -i /tmp/delta.deb
 	rm -rf /tmp/delta.deb
+
+install_duf:
+	@echo "Installing duf"
+	wget ${LATEST_DUF} -O /tmp/duf.deb
+	sudo dpkg -i /tmp/duf.deb
+	rm -rf /tmp/duf.deb
 
 install_fd:
 	@echo "Installing fd"
