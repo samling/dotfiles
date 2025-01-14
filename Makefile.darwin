@@ -21,7 +21,7 @@ all: \
 configure: \
 	configure_zsh \
 	configure_tmux \
-	configure_nvm \
+	configure_npm \
 	configure_nvim \
 	configure_pyenv
 
@@ -43,8 +43,8 @@ install_k8s_tools: \
 	install_krew \
 	install_krew_plugins
 
-configure_nvm: \
-	install_nvm \
+configure_npm: \
+	install_fnm \
 	install_npm
 
 configure_nvim: \
@@ -155,6 +155,7 @@ install_brew_tools:
 		rg \
 		sketchybar \
 		sqlite3 \
+		starship \
 		tcl-tk@8 \
 		hashicorp/tap/terraform \
 		terragrunt \
@@ -211,14 +212,19 @@ install_krew_plugins:
 #################
 #     NPM      #
 #################
-install_nvm:
-	@echo "Installing nvm"
-	(unset ZSH_VERSION && curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${LATEST_NVM}/install.sh" | bash)
+# install_nvm:
+# 	@echo "Installing nvm"
+# 	(unset ZSH_VERSION && curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${LATEST_NVM}/install.sh" | bash)
+
+install_fnm:
+	@echo "Installing fnm"
+	curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 
 install_npm:
 	@echo "Installing latest npm"
-	. ${HOME}/.nvm/nvm.sh && \
-	nvm install stable
+	fnm install --lts
+	# . ${HOME}/.nvm/nvm.sh && \
+	# nvm install stable
 
 #################
 #     NVIM      #

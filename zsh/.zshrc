@@ -1,3 +1,7 @@
+# Enable profiling
+#
+# zmodload zsh/zprof
+
 # Required
 #
 export ZSH_VERSION=$ZSH_VERSION
@@ -14,6 +18,7 @@ source ~/dotfiles/zsh/prompt.zsh
 source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/aliases.zsh
 source ~/dotfiles/zsh/functions.zsh
+source ~/dotfiles/zsh/fnm.zsh
 
 # Source ${HOME}/dotfiles-private/zshrc.*.local files
 #
@@ -54,6 +59,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Run profiling
+# zprof

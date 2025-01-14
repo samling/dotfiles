@@ -1,5 +1,4 @@
 fpath=($HOME/dotfiles/zsh $fpath)
-fpath+=($HOME/dotfiles/zsh/pure)
 
 autoload -U +X compinit && compinit
 
@@ -11,4 +10,12 @@ done
 bashcompinit
 
 autoload -U promptinit; promptinit
-prompt pure
+
+# Starship prompt
+#
+eval "$(starship init zsh)"
+
+# Pure prompt
+#
+# fpath+=($HOME/dotfiles/zsh/pure)
+# prompt pure
