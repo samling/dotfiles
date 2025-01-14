@@ -123,6 +123,7 @@ create_symlinks:
 add_brew_taps:
 	@echo "Adding brew taps"
 	brew tap arl/arl
+	brew tap FelixKratz/formulae
 	brew tap hashicorp/tap
 		
 install_brew_tools:
@@ -152,6 +153,7 @@ install_brew_tools:
 		pyenv \
 		readline \
 		rg \
+		sketchybar \
 		sqlite3 \
 		tcl-tk@8 \
 		hashicorp/tap/terraform \
