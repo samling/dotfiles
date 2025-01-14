@@ -134,7 +134,7 @@ configure_tmux: \
 
 configure_zsh: \
 	install_gitstatus \
-	install_zsh_pure
+	configure_starship
 
 postconfigure: \
 	echo_final_steps
@@ -470,6 +470,10 @@ install_tmux_tpm:
 install_gitstatus:
 	@echo "Installing gitstatus"
 	if [ ! -d "${HOME}/dotfiles/zsh/gitstatus" ] || [ -n "$(find "$HOME/dotfiles/zsh/gitstatus" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone --depth=1 https://github.com/romkatv/gitstatus.git "${HOME}/dotfiles/zsh/gitstatus"; else echo "Gitstatus already cloned"; fi
+
+configure_starship:
+	@echo "Configuring starship"
+	starship preset pure-preset -o ~/.config/starship.toml
 
 install_zsh_pure:
 	@echo "Installing zsh pure prompt"
