@@ -12,6 +12,9 @@ $character"""
 
 [directory]
 style = "blue"
+truncation_length = 8
+truncation_symbol = "…/"
+truncate_to_repo = false
 
 [character]
 success_symbol = "[❯](purple)"
@@ -20,7 +23,7 @@ vimcmd_symbol = "[❮](green)"
 
 [git_branch]
 format = "[$branch]($style)"
-style = "bright-black"
+style = "242"
 
 [git_status]
 format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
@@ -35,7 +38,7 @@ stashed = "≡"
 
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
-style = "bright-black"
+style = "242"
 
 [cmd_duration]
 format = "[$duration]($style) "
