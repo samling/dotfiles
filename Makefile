@@ -193,7 +193,6 @@ create_folders:
 	mkdir -p ${HOME}/.config/bat
 	mkdir -p ${HOME}/.config/kitty
 	mkdir -p ${HOME}/.config/lsd
-	mkdir -p ${HOME}/.config/starship
 	mkdir -p ${HOME}/.kube/kubeconfigs
 	mkdir -p ${HOME}/.local/bin
 
@@ -215,7 +214,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/icons.yaml ${HOME}/.config/lsd/icons.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/colors.yaml ${HOME}/.config/lsd/colors.yaml
-	ln -sf ${HOME}/dotfiles/linux/config/starship/starship.toml ${HOME}/.config/starship/starship.toml
+	ln -sf ${HOME}/dotfiles/linux/config/starship/starship.toml ${HOME}/.config/starship.toml
 
 configure_locale:
 	@echo "Configuring locale"
