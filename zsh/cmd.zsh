@@ -1,6 +1,8 @@
 fpath=($HOME/dotfiles/zsh $fpath)
 fpath+=($HOME/dotfiles/zsh/pure)
 
+autoload -U +X compinit && compinit
+
 autoload -Uz compinit bashcompinit
 
 for dump in ~/.zcompdump(N.mh+24);do

@@ -1,0 +1,256 @@
+LATEST_NVM      	:= `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name'`
+
+#####################
+#    ENVIRONMENT    #
+#####################
+
+SHELL := /bin/zsh
+
+#################
+#    TARGETS    #
+#################
+
+.PHONY: all
+all: \
+	preconfigure \
+	install_brew \
+	install_tools \
+	configure \
+	postconfigure
+
+configure: \
+	configure_zsh \
+	configure_tmux \
+	configure_nvm \
+	configure_nvim \
+	configure_pyenv
+
+preconfigure: \
+	install_prereqs \
+	create_folders \
+	create_files \
+	create_symlinks
+
+install_brew: \
+	add_brew_taps \
+	install_brew_tools
+
+install_tools: \
+	install_carvel_tools \
+	install_k8s_tools
+
+install_k8s_tools: \
+	install_krew \
+	install_krew_plugins
+
+configure_nvm: \
+	install_nvm \
+	install_npm
+
+configure_nvim: \
+	cleanup_nvim_state \
+	install_nvim_conf
+
+configure_pyenv: \
+	install_python310
+
+configure_vim: \
+	install_vundle \
+	install_vundle_plugins
+
+configure_tmux: \
+	install_tmux_tpm
+
+configure_zsh: \
+	install_gitstatus
+
+postconfigure: \
+	echo_final_steps
+
+#################
+#    PREREQS    #
+#################
+
+install_prereqs:
+	@echo "Downloading prereqs"
+	brew install \
+		automake \
+		bison \
+		curl \
+		dialog \
+		gcc \
+		gnupg \
+		flex \
+		jq \
+		nmap \
+		p7zip \
+		telnet \
+		tcptraceroute \
+		unzip \
+		xclip \
+		xdotool \
+		zsh
+
+create_folders:
+	@echo "Creating required folders"
+	mkdir -p ${HOME}/.config
+	mkdir -p ${HOME}/.config/lsd
+	mkdir -p ${HOME}/.config/bat
+	mkdir -p ${HOME}/.kube/kubeconfigs
+	mkdir -p ${HOME}/.local/bin
+
+create_files:
+	@echo "Creating required files and stubs"
+	touch ${HOME}/.kube/config
+
+create_symlinks:
+	@echo "Creating symlinks"
+	ln -sf ${HOME}/dotfiles/zsh/.zshrc ${HOME}/.zshrc
+	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}/.tmux
+	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
+	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
+	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
+	ln -sf ${HOME}/dotfiles/linux/config/bat/themes ${HOME}/.config/bat/themes
+	ln -sf ${HOME}/dotfiles/linux/config/git/gitconfig ${HOME}/.gitconfig
+	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
+	ln -sf ${HOME}/dotfiles/linux/config/lsd/icons.yaml ${HOME}/.config/lsd/icons.yaml
+	ln -sf ${HOME}/dotfiles/linux/config/lsd/colors.yaml ${HOME}/.config/lsd/colors.yaml
+
+#################
+#     BREW     #
+#################
+
+add_brew_taps:
+	@echo "Adding brew taps"
+	brew tap arl/arl
+	brew tap hashicorp/tap
+		
+install_brew_tools:
+	@echo "Installing tools via brew"
+	brew install \
+		asdf \
+		awscli \
+		azure-cli \
+		bat \
+		btop \
+		delta \
+		duf \
+		eza \
+		fd \
+		fzf \
+		gitmux \
+		go \
+		grc \
+		helm \
+		jc \
+		jesseduffield/lazygit/lazygit \
+		kubectl \
+		lsd \
+		nvim \
+		openssl \
+		pure \
+		pyenv \
+		readline \
+		rg \
+		sqlite3 \
+		tcl-tk@8 \
+		hashicorp/tap/terraform \
+		terragrunt \
+		tmux \
+		viddy \
+		wget \
+		xz \
+		zellij \
+		zlib \
+		zoxide
+
+################
+# CARVEL TOOLS #
+################
+
+install_carvel_tools:
+	@echo "Installing carvel tools"
+	if [ ! -f "${HOME}/.carvelinstalled" ]; then curl -L https://carvel.dev/install.sh > /tmp/install-carvel.sh; chmod +x /tmp/install-carvel.sh; sudo /tmp/install-carvel.sh; rm /tmp/install-carvel.sh; touch "${HOME}/.carvelinstalled"; fi
+	
+################
+# TMUX PLUGINS #
+################
+
+install_tmux_tpm:
+	@echo "Installing tpm"
+	if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm; else echo "tpm is already installed; skipping..."; fi
+
+###############
+# ZSH PLUGINS #
+###############
+
+install_gitstatus:
+	@echo "Installing gitstatus"
+	if [ ! -d "${HOME}/dotfiles/zsh/gitstatus" ] || [ -n "$(find "$HOME/dotfiles/zsh/gitstatus" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone --depth=1 https://github.com/romkatv/gitstatus.git "${HOME}/dotfiles/zsh/gitstatus"; else echo "Gitstatus already cloned"; fi
+
+#################
+#   K8S-TOOLS   #
+#################
+
+install_krew:
+	@echo "Installing krew"
+	set -x; cd "$$(mktemp -d)" && \
+	OS="$$(uname | tr '[:upper:]' '[:lower:]')" && \
+	ARCH="$$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$$/arm64/')" && \
+	KREW="krew-$${OS}_$${ARCH}" && \
+	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/$${KREW}.tar.gz" && \
+	tar zxvf "$${KREW}.tar.gz" && \
+	./"$${KREW}" install krew
+
+install_krew_plugins:
+	@echo "Installing krew plugins"
+	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree
+
+#################
+#     NPM      #
+#################
+install_nvm:
+	@echo "Installing nvm"
+	(unset ZSH_VERSION && curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${LATEST_NVM}/install.sh" | bash)
+
+install_npm:
+	@echo "Installing latest npm"
+	. ${HOME}/.nvm/nvm.sh && \
+	nvm install stable
+
+#################
+#     NVIM      #
+#################
+
+cleanup_nvim_state:
+	@echo "Cleaning up old lazyvim state"
+	rm -rf "${HOME}/.local/share/nvim/lazy"
+	rm -rf "${HOME}/.local/state/nvim/lazy"
+	rm -f "${HOME}/.config/nvim/lazy-lock.json"
+
+install_nvim_conf:
+	@echo ""
+	current_dt=$(date '+%d-%m-%Y_%H-%M-%S')
+	if [ -d "${HOME}/.config/nvim" ]; then mv ${HOME}/.config/nvim ${HOME}/.config/nvim.old.${current_dt}; fi
+	ln -sf ${HOME}/dotfiles/nvim ${HOME}/.config/nvim
+
+#################
+#     PYENV    #
+#################
+install_python310:
+	@echo "Installing latest python3 with pyenv"
+	pyenv install -f 3.10
+
+#################
+#      END      #
+#################
+
+define FINAL_STEPS
+Done! Remember to do the following:
+	1. Run neovim to finish LazyVim configuration
+	2. Install tmux plugins with ctrl-A + I
+	3. (Optional) Reboot!
+endef
+export FINAL_STEPS
+echo_final_steps:
+	@echo "$$FINAL_STEPS"

@@ -12,7 +12,7 @@ export EDITOR="vim"
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
 # GCC
-export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch $(uname -m)"
 
 # VI Mode
 export KEYTIMEOUT=1
