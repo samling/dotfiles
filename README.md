@@ -22,4 +22,3 @@ My ever-growing collection of dotfiles and configs.
 ### Notes/Troubleshooting
 - For the `kube-tmux` plugin to work, the file `~/.kube/config` must exist. The contents of this file presumably get swapped by `kubectx`.
 - See [this page](https://www.cyberciti.biz/faq/linux-unix-macos-fix-error-cant-open-display-null-with-ssh-xclip-command-in-headless/) to configure X11 forwarding over ssh
-
