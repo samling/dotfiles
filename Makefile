@@ -133,8 +133,7 @@ configure_tmux: \
 	install_tmux_tpm
 
 configure_zsh: \
-	install_gitstatus \
-	configure_starship
+	install_gitstatus
 
 postconfigure: \
 	echo_final_steps
@@ -191,9 +190,10 @@ install_prereqs:
 create_folders:
 	@echo "Creating required folders"
 	mkdir -p ${HOME}/.config
+	mkdir -p ${HOME}/.config/bat
 	mkdir -p ${HOME}/.config/kitty
 	mkdir -p ${HOME}/.config/lsd
-	mkdir -p ${HOME}/.config/bat
+	mkdir -p ${HOME}/.config/starship
 	mkdir -p ${HOME}/.kube/kubeconfigs
 	mkdir -p ${HOME}/.local/bin
 
@@ -215,6 +215,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/icons.yaml ${HOME}/.config/lsd/icons.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/colors.yaml ${HOME}/.config/lsd/colors.yaml
+	ln -sf ${HOME}/dotfiles/linux/config/starship/starship.toml ${HOME}/.config/starship/starship.toml
 
 configure_locale:
 	@echo "Configuring locale"
@@ -470,10 +471,6 @@ install_tmux_tpm:
 install_gitstatus:
 	@echo "Installing gitstatus"
 	if [ ! -d "${HOME}/dotfiles/zsh/gitstatus" ] || [ -n "$(find "$HOME/dotfiles/zsh/gitstatus" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone --depth=1 https://github.com/romkatv/gitstatus.git "${HOME}/dotfiles/zsh/gitstatus"; else echo "Gitstatus already cloned"; fi
-
-configure_starship:
-	@echo "Configuring starship"
-	starship preset pure-preset -o ~/.config/starship.toml
 
 install_zsh_pure:
 	@echo "Installing zsh pure prompt"
