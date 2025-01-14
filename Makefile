@@ -46,7 +46,7 @@ configure: \
 	configure_kitty \
 	configure_zsh \
 	configure_tmux \
-	configure_nvm \
+	configure_npm \
 	configure_nvim \
 	configure_pyenv
 
@@ -86,10 +86,10 @@ install_common_tools: \
 	install_kitty \
 	install_lazygit \
 	install_lsd \
-	install_nvm \
 	install_nvim \
 	install_pyenv \
 	install_rg \
+	install_starship \
 	install_tdrop \
 	install_viddy \
 	install_zoxide
@@ -114,7 +114,8 @@ install_tmux_tools: \
 configure_kitty: \
 	install_kitty_themes
 
-configure_nvm: \
+configure_npm: \
+	install_fnm \
 	install_npm
 
 configure_nvim: \
@@ -380,6 +381,10 @@ install_rg:
 	sudo dpkg -i /tmp/rg.deb
 	rm -rf /tmp/rg.deb
 
+install_starship:
+	@echo "Installing starship"
+	(unset ZSH_VERSION && curl -sS https://starship.rs/install.sh | sh)
+
 install_terraform:
 	@echo "Installing terraform"
 	wget -O- https://apt.releases.hashicorp.com/gpg | \
@@ -498,10 +503,13 @@ install_krew_plugins:
 #################
 #     NPM      #
 #################
+install_fnm:
+	@echo "Installing fnm"
+	curl -fsSL https://fnm.vercel.app/install | bash
+
 install_npm:
 	@echo "Installing latest npm"
-	. ${HOME}/.nvm/nvm.sh && \
-	nvm install stable
+	fnm install --lts
 
 #################
 #     NVIM      #

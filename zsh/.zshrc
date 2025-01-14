@@ -61,3 +61,17 @@ unset __conda_setup
 
 # Run profiling
 # zprof
+
+# fnm
+FNM_PATH="/home/sboynton/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/sboynton/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi
+
+# fnm
+FNM_PATH="/home/sboynton/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/sboynton/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi

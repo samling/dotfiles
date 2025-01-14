@@ -218,13 +218,11 @@ install_krew_plugins:
 
 install_fnm:
 	@echo "Installing fnm"
-	curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+	curl -fsSL https://fnm.vercel.app/install | bash
 
 install_npm:
 	@echo "Installing latest npm"
 	fnm install --lts
-	# . ${HOME}/.nvm/nvm.sh && \
-	# nvm install stable
 
 #################
 #     NVIM      #
