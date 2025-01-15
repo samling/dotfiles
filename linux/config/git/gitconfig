@@ -5,7 +5,7 @@
         diffFilter = delta --color-only
 
 [include]
-        path = /home/sboynton/dotfiles/linux/config/delta/catppuccin.gitconfig
+        path = ~/dotfiles/linux/config/delta/catppuccin.gitconfig
 
 [delta]
         navigate = true
