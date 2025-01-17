@@ -17,9 +17,9 @@ autoload -U promptinit; promptinit
 
 # Starship prompt
 #
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 
 # Pure prompt
 #
-# fpath+=($HOME/dotfiles/zsh/pure)
-# prompt pure
+fpath+=($HOME/dotfiles/zsh/pure)
+prompt pure
