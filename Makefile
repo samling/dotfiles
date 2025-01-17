@@ -89,7 +89,7 @@ install_common_tools: \
 	install_nvim \
 	install_pyenv \
 	install_rg \
-	install_starship \
+	# install_starship \
 	install_tdrop \
 	install_viddy \
 	install_zoxide
@@ -133,7 +133,8 @@ configure_tmux: \
 	install_tmux_tpm
 
 configure_zsh: \
-	install_gitstatus
+	install_gitstatus \
+	install_zsh_pure
 
 postconfigure: \
 	echo_final_steps

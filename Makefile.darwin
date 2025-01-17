@@ -62,7 +62,8 @@ configure_tmux: \
 	install_tmux_tpm
 
 configure_zsh: \
-	install_gitstatus
+	install_gitstatus \
+	install_zsh_pure
 
 postconfigure: \
 	echo_final_steps
@@ -150,7 +151,6 @@ install_brew_tools:
 		lsd \
 		nvim \
 		openssl \
-		pure \
 		pyenv \
 		readline \
 		rg \
@@ -191,6 +191,10 @@ install_tmux_tpm:
 install_gitstatus:
 	@echo "Installing gitstatus"
 	if [ ! -d "${HOME}/dotfiles/zsh/gitstatus" ] || [ -n "$(find "$HOME/dotfiles/zsh/gitstatus" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone --depth=1 https://github.com/romkatv/gitstatus.git "${HOME}/dotfiles/zsh/gitstatus"; else echo "Gitstatus already cloned"; fi
+
+install_zsh_pure:
+	@echo "Installing zsh pure prompt"
+	if [ ! -d "${HOME}/dotfiles/zsh/pure" ] || [ -n "$(find "$HOME/dotfiles/zsh/pure" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone https://github.com/sindresorhus/pure.git "${HOME}/dotfiles/zsh/pure"; else echo "Zsh Pure already cloned"; fi
 
 #################
 #   K8S-TOOLS   #
