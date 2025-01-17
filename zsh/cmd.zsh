@@ -1,6 +1,7 @@
 # fpath
 #
 fpath=($HOME/dotfiles/zsh $fpath)
+fpath+=($HOME/dotfiles/zsh/pure)
 
 # compinit
 #
@@ -21,5 +22,4 @@ autoload -U promptinit; promptinit
 
 # Pure prompt
 #
-fpath+=($HOME/dotfiles/zsh/pure)
 prompt pure
