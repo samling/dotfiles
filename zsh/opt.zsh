@@ -3,7 +3,9 @@
 setopt AUTO_CD                  # Typing a directory and hitting enter will go to that directory
 setopt INTERACTIVE_COMMENTS     # Allow comments in interactive shells
 setopt NO_BEEP                  # No beep on error
+HISTCONTROL=ignoreboth          # Ignore duplicate lines and lines starting with spaces in the history
 HISTFILE=$HOME/.zhistory        # Make a history file
+HISTFILESIZE=2000               # Save 2000 bytes of command history
 HISTSIZE=2000                   # Save 2000 bytes of command history
 SAVEHIST=2000                   # Maximum commands to save
 setopt SHARE_HISTORY            # Share history between zsh sessions

@@ -48,9 +48,3 @@ alias df="df -kH" # Clean disk info
 alias v="clear"
 alias ddi="sudo killall -INFO dd" # Shows progress of dd in the window that dd is running in
 
-#####
-##### Modify terminal behavior
-#####
-
-export HISTCONTROL=ignoreboth # Prevent duplicates in history
-export HISTCONTROL=erasedups # Prevent duplicates in history

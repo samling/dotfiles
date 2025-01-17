@@ -1,5 +1,9 @@
+# fpath
+#
 fpath=($HOME/dotfiles/zsh $fpath)
 
+# compinit
+#
 autoload -U +X compinit && compinit
 
 autoload -Uz compinit bashcompinit
