@@ -1,13 +1,13 @@
 # ======== HISTORY
 
-setopt AUTO_CD                  # Typing a directory and hitting enter will go to that directory
-setopt INTERACTIVE_COMMENTS     # Allow comments in interactive shells
-setopt NO_BEEP                  # No beep on error
 HISTCONTROL=ignoreboth          # Ignore duplicate lines and lines starting with spaces in the history
 HISTFILE=$HOME/.zhistory        # Make a history file
 HISTFILESIZE=2000               # Save 2000 bytes of command history
 HISTSIZE=2000                   # Save 2000 bytes of command history
 SAVEHIST=2000                   # Maximum commands to save
+setopt AUTO_CD                  # Typing a directory and hitting enter will go to that directory
+setopt INTERACTIVE_COMMENTS     # Allow comments in interactive shells
+setopt NO_BEEP                  # No beep on error
 setopt SHARE_HISTORY            # Share history between zsh sessions
 setopt INC_APPEND_HISTORY       # Append lines to history as soon as they're entered, rather than when the shell exits
 setopt HIST_IGNORE_DUPS         # Do not write events to history that are duplicates of previous events
@@ -19,14 +19,14 @@ setopt HIST_VERIFY              # Don't execute, just expand history
 
 # ======== COMPLETION
 
+unsetopt MENU_COMPLETE          # Do not autoselect the first completion entry
+unsetopt CORRECT                # Disable autocorrection
+unsetopt CASE_GLOB              # Turn off case-sensitive globbing
 setopt EXTENDED_GLOB            # Activate complex pattern globbing; required to change CASE_GLOB
 setopt COMPLETE_IN_WORD         # Allow completing from within a word/phrase
 setopt ALWAYS_TO_END            # When completing from the middle of a word, move cursor to the end of the word
-unsetopt MENU_COMPLETE          # do not autoselect the first completion entry
 setopt AUTO_MENU                # Show completion menu on successive tab press; needs unsetopt menu_complete to work
 setopt LIST_AMBIGUOUS           # Complete as much as possible until ambiguous
-unsetopt CORRECT                # Disable autocorrection
-unsetopt CASE_GLOB              # Turn off case-sensitive globbing
 setopt NONOMATCH                # Disable "no match found" behavior to be more like bash in cases of failed expansion
 
 # ======== PUSHD
@@ -45,10 +45,10 @@ setopt PROMPT_SUBST             # Enable parameter expansion, command substituti
 
 # ======== GLOBBING
 
+unsetopt CASE_GLOB		          # Turn off case-sensitive globbing
 setopt AUTO_REMOVE_SLASH        # Removes slashes
 setopt CHASE_LINKS              # Resolve symlinks
 setopt GLOB_DOTS                # Include dotfiles in globbing
-unsetopt CASE_GLOB		        # Turn off case-sensitive globbing
 
 # ======== VI MODE
 
