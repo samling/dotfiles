@@ -10,6 +10,7 @@ LATEST_GO 				:= `curl -s https://go.dev/dl/?mode=json | jq -r '.[0].version'`
 LATEST_GRC 	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url'`
 LATEST_HELM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name'`
 LATEST_JC     		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value'`
+LATEST_K9s				:= `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/derailed/k9s/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64.deb")).value'`
 LATEST_KUBECTL  	:= `curl -L -s https://dl.k8s.io/release/stable.txt`
 LATEST_LAZYGIT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*'`
 LATEST_LIBEVENT 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
@@ -101,6 +102,7 @@ install_carvel_tools: \
 install_k8s_tools: \
 	install_kubectl \
 	install_krew \
+	add_krew_index \
 	install_krew_plugins
 
 install_terraform_tools: \
@@ -496,10 +498,19 @@ install_krew:
 	tar zxvf "$${KREW}.tar.gz" && \
 	./"$${KREW}" install krew
 
+add_krew_index:
+	@echo "Adding Krew index"
+	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew index add kubectl-ai https://github.com/sozercan/kubectl-ai
+
 install_krew_plugins:
 	@echo "Installing krew plugins"
-	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew index add kubectl-ai https://github.com/sozercan/kubectl-ai
-	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree kubectl-ai/kubectl-ai
+	PATH="${PATH}:${HOME}/.krew/bin" kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree ktop
+
+install_k9s:
+	@echo "Installing k9s"
+	wget ${LATEST_K9s} -O /tmp/k9s.deb
+	sudo dpkg -i /tmp/k9s.deb
+	rm /tmp/k9s.deb
 
 #################
 #     NPM      #

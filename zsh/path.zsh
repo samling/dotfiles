@@ -15,6 +15,10 @@ PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sb
 #
 PATH=$PATH:${HOME}/.local/bin
 
+# fzf
+#
+PATH=$PATH:${HOME}/.fzf/bin
+
 # Final path export
 #
 export PATH
