@@ -141,6 +141,7 @@ install_brew_tools:
 		duf \
 		eza \
 		fd \
+		ffmpeg \
 		fzf \
 		gitmux \
 		go \
