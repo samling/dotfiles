@@ -140,6 +140,7 @@ install_brew_tools:
 		derailed/k9s/k9s \
 		duf \
 		eza \
+		falcosuessgott/tap/vkv \
 		fd \
 		ffmpeg \
 		fzf \

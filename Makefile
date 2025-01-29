@@ -1,5 +1,5 @@
 LATEST_AICHAT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sigoden/aichat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-unknown-linux-musl.tar.gz"))'.value`
-LATEST_BAT			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
+LATEST_BAT			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and (contains("musl") | not)))'.value`
 LATEST_BTOP     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value'`
 LATEST_DELTA 	   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/dandavison/delta/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value'`
 LATEST_DUF  	   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/muesli/duf/releases/latest |  jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value'`
@@ -16,12 +16,13 @@ LATEST_LAZYGIT		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://a
 LATEST_LIBEVENT 	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value'`
 LATEST_LSD      	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value`
 LATEST_NVM      	:= `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name'`
-LATEST_NVIM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("appimage")).value'`
+LATEST_NVIM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("linux-x86_64.appimage")).value'`
 LATEST_RG       	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
 LATEST_TERRAGRUNT	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("_linux_amd64")).value'`
 LATEST_TMUX			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
 LATEST_VENDIR    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/vendir/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value'`
 LATEST_VIDDY    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64.tar.gz")).value'`
+LATEST_VKV				:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/FalcoSuessgott/vkv/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("linux_amd64.deb")).value'`
 LATEST_YTT	    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/ytt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value'`
 LATEST_ZELLIJ   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/zellij-org/zellij/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("x86_64-unknown-linux-musl.tar.gz")).value'`
 LATEST_ZOXIDE   	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
@@ -43,23 +44,12 @@ all: \
 	configure \
 	postconfigure
 
-configure: \
-	configure_kitty \
-	configure_zsh \
-	configure_tmux \
-	configure_npm \
-	configure_nvim \
-	configure_pyenv
-
 preconfigure: \
 	install_prereqs \
 	create_folders \
 	create_files \
 	create_symlinks \
 	configure_locale
-
-install_apps: \
-	install_google_chrome
 
 install_tools: \
 	install_common_tools \
@@ -68,6 +58,9 @@ install_tools: \
 	install_k8s_tools \
 	install_terraform_tools \
 	install_tmux_tools
+
+install_apps: \
+	install_google_chrome
 
 install_cloud_tools: \
 	install_aws \
@@ -93,6 +86,7 @@ install_common_tools: \
 	# install_starship \
 	install_tdrop \
 	install_viddy \
+	install_vkv \
 	install_zoxide
 
 install_carvel_tools: \
@@ -112,6 +106,14 @@ install_terraform_tools: \
 install_tmux_tools: \
 	install_tmux \
 	install_gitmux
+
+configure: \
+	configure_kitty \
+	configure_zsh \
+	configure_tmux \
+	configure_npm \
+	configure_nvim \
+	configure_pyenv
 
 configure_kitty: \
 	install_kitty_themes
@@ -439,6 +441,12 @@ install_viddy:
 	sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
 	rm -rf /tmp/viddy.tar.gz /tmp/viddy
 
+install_vkv:
+	@echo "Installing vkv"
+	wget ${LATEST_VKV} -O /tmp/vkv.deb
+	sudo dpkg -i /tmp/vkv.deb
+	rm /tmp/vkv.deb
+
 install_ytt:
 	@echo "Installing ytt"
 	wget ${LATEST_YTT} -O /tmp/ytt
@@ -559,9 +567,9 @@ install_python310:
 
 define FINAL_STEPS
 Done! Remember to do the following:
-	1. Create a new shortcut to open kitty: `tdrop -a kitty --start-as fullscreen`
-	2. Run neovim to finish LazyVim configuration
-	3. Install tmux plugins with ctrl-A + I
+	1. Run neovim to finish LazyVim configuration
+	2. Install tmux plugins with ctrl-A + I
+	3. Make sure bat cache is built: bat cache --build
 	4. (Optional) Reboot!
 endef
 export FINAL_STEPS
