@@ -200,6 +200,7 @@ create_folders:
 	mkdir -p ${HOME}/.config/lsd
 	mkdir -p ${HOME}/.kube/kubeconfigs
 	mkdir -p ${HOME}/.local/bin
+	mkdir -p ${HOME}/.tmux-continuum-sessions
 
 create_files:
 	@echo "Creating required files and stubs"
