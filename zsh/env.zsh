@@ -8,6 +8,9 @@ export XAUTHORITY=$HOME/.Xauthority
 # Default editor
 export EDITOR="vim"
 
+# Colorized man pages
+export MANPAGER="sh -c 'col -bx | bat -l man -p --paging always'"
+
 # fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 

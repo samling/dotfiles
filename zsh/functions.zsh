@@ -7,3 +7,17 @@ function git-recent {
   PREV_BRANCH=$(echo $RECENT_BRANCHES | cut -d'.' -f2 | sed 's/refs\/heads\///g' | tr -d ' ')
   git checkout $PREV_BRANCH
 }
+
+# man pages + fzf
+# dependencies: fzf, awk, bat, tr
+fman() {
+        man -k . |
+        fzf --exact -q "$1" --prompt='man> '  --preview $'echo {} |
+        tr -d \'()\' |
+        awk \'{printf "%s ", $2} {print $1}\' |
+        xargs -r man |
+        col -bx |
+        bat -l man -p --color always'|
+        tr -d '()' | awk '{printf "%s ", $2} {print $1}' |
+        xargs -r man
+}
