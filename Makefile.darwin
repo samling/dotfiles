@@ -163,6 +163,7 @@ install_brew_tools:
 		starship \
 		tcl-tk@8 \
 		hashicorp/tap/terraform \
+		tealdeer \
 		terragrunt \
 		tmux \
 		viddy \

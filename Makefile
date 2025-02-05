@@ -18,6 +18,7 @@ LATEST_LSD      	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://a
 LATEST_NVM      	:= `curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name'`
 LATEST_NVIM     	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("linux-x86_64.appimage")).value'`
 LATEST_RG       	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value'`
+LATEST_TEALDEER		:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tealdeer-rs/tealdeer/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("-linux-x86_64-musl")).value'`
 LATEST_TERRAGRUNT	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("_linux_amd64")).value'`
 LATEST_TMUX			:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value'`
 LATEST_VENDIR    	:= `curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/vendir/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value'`
@@ -83,8 +84,7 @@ install_common_tools: \
 	install_nvim \
 	install_pyenv \
 	install_rg \
-	# install_starship \
-	install_tdrop \
+	install_tealdeer \
 	install_viddy \
 	install_vkv \
 	install_zoxide
@@ -390,6 +390,11 @@ install_rg:
 install_starship:
 	@echo "Installing starship"
 	(unset ZSH_VERSION && curl -sS https://starship.rs/install.sh | sh)
+
+install_tealdeer:
+	@echo "Installing tealdeer"
+	wget ${LATEST_TEALDEER} -O /tmp/tealdeer
+	sudo mv /tmp/tealdeer /usr/local/bin && chmod +x /usr/local/bin/tealdeer
 
 install_terraform:
 	@echo "Installing terraform"
