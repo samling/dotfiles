@@ -157,6 +157,7 @@ install_prereqs:
 		build-essential \
 		curl \
 		dialog \
+		direnv \
 		gcc \
 		gnupg \
 		flex \

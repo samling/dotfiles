@@ -139,6 +139,7 @@ install_brew_tools:
 		btop \
 		delta \
 		derailed/k9s/k9s \
+		direnv \
 		duf \
 		eza \
 		falcosuessgott/tap/vkv \

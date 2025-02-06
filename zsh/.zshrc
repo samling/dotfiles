@@ -11,14 +11,14 @@ export ZSH_VERSION=$ZSH_VERSION
 #
 source ~/dotfiles/zsh/plugins/zsh-history-substring-search.zsh
 # source ~/dotfiles/zsh/plugins/git-auto-fetch.plugin.zsh
-source ~/dotfiles/zsh/cmd.zsh
-source ~/dotfiles/zsh/env.zsh
 source ~/dotfiles/zsh/path.zsh
+source ~/dotfiles/zsh/env.zsh
+source ~/dotfiles/zsh/cmd.zsh
 source ~/dotfiles/zsh/opt.zsh
-source ~/dotfiles/zsh/prompt.zsh
-source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/aliases.zsh
+source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/functions.zsh
+source ~/dotfiles/zsh/prompt.zsh
 source ~/dotfiles/zsh/fnm.zsh
 
 ## Plugins
