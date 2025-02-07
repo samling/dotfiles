@@ -9,21 +9,11 @@ alias vi=nvim
 alias vim=nvim
 
 #=== cd
-alias .='cd ..'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
-alias ........='cd ../../../../../../..'
-alias .........='cd ../../../../../../../..'
-alias ..........='cd ../../../../../../../../..'
-alias ...........='cd ../../../../../../../../../..'
-alias ............='cd ../../../../../../../../../../..'
-alias .............='cd ../../../../../../../../../../../..'
-alias ..............='cd ../../../../../../../../../../../../..'
-alias ...............='cd ../../../../../../../../../../../../../..'
+# Create aliases for up to 15 directories (offset by 1: '..'='cd ../', '...'='cd ../../', etc.)
+for i in {2..15}; do
+  alias "$(printf '%0.s.' $(seq 1 $i))"="cd $(printf '../%.0s' $(seq 1 $((i-1))))"
+done
+alias .="cd ." # Don't go anywhere with one dot
 
 #=== Defaults
 alias ddi="sudo killall -INFO dd" # Shows progress of dd in the window that dd is running in
@@ -33,9 +23,10 @@ alias cp='cp -iv' # Prevent clobbering
 alias mv='mv -iv' # Prevent clobbering
 
 #=== Extra tools
+alias ai="aichat"
 alias jinaai="curl https://r.jina.ai -H \"Authorization: Bearer ${JINA_AI_API_KEY}\""
 alias lg="lazygit"
-alias tldr="tealdeer"
+# alias tldr="tealdeer"
 alias yless="jless --yaml"
 
 #=== Kubectl

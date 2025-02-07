@@ -132,6 +132,7 @@ add_brew_taps:
 install_brew_tools:
 	@echo "Installing tools via brew"
 	brew install \
+		aichat \
 		asdf \
 		awscli \
 		azure-cli \
