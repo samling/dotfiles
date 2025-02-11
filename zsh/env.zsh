@@ -18,21 +18,21 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 # Unset opts to prevent appending multiple times in nested shells
 unset FZF_ALT_C_OPTS FZF_CTRL_R_OPTS FZF_DEFAULT_OPTS
 
-# View full path in preview window (?)
-export FZF_ALT_C_OPTS="${FZF_ALT_C_OPTS:+$FZF_ALT_C_OPTS }--preview 'echo {}' --preview-window down:5:hidden:wrap --bind '?:toggle-preview'"
+# Alt-C opts
+# export FZF_ALT_C_OPTS="${FZF_ALT_C_OPTS:+$FZF_ALT_C_OPTS }--preview 'echo {}' --preview-window down:5:hidden:wrap --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--height 50% --preview 'ls {1..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
 
-# View full command in preview window (?)
-# export FZF_CTRL_R_OPTS="${FZF_CTRL_R_OPTS:+$FZF_CTRL_R_OPTS }--preview 'echo {}' --preview-window down:5:hidden:wrap --bind '?:toggle-preview'"
-export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
+# Ctrl-R opts
+export FZF_CTRL_R_OPTS="--height 100% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
+
+# Ctrl-T opts
+export FZF_CTRL_T_OPTS="--height 100% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,25' --bind '?:toggle-preview'"
 
 # Exact-match rather than fuzzy matching by default (use ' to negate)
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact"
 
 # Prevent fzf from reducing height to 40% by default
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--no-height"
-
-# Ctrl-T opts
-export FZF_CTRL_T_OPTS=""
 
 # Default command to run in fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
