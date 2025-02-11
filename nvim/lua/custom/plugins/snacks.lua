@@ -18,5 +18,8 @@ return {
     statuscolumn = { enabled = true },
     toggle = { enabled = true },
     util = { enabled = true },
-  }
+  },
+  keys = function()
+    vim.keymap.set('', '<leader>sp', function() require("snacks").notifier.show_history() end, {desc="Search notifications"})
+  end
 }
