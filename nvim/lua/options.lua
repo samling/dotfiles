@@ -6,8 +6,8 @@ vim.g.loaded_netrwPlugin = 1
 -- Set <space> as the leader key
 -- See `:help mapleader`
 -- Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = ','
+-- vim.g.maplocalleader = ' '
 
 -- [[ Options ]]
 --  For more options, you can see `:help option-list`
