@@ -1,3 +1,5 @@
+-- nvim-lspconfig is a "data only" repo, providing basic, default Nvim LSP client configurations for various LSP servers.
+--
 return {
   'neovim/nvim-lspconfig',
   event = { 'BufReadPre', 'BufNewFile', 'BufEnter' },

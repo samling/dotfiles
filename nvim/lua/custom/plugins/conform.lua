@@ -1,3 +1,5 @@
+-- Conform provides language-specific formatting for files.
+--
 return { -- Autoformat
   'stevearc/conform.nvim',
   keys = {

@@ -1,5 +1,3 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
+-- Init is here to avoid errors in case there are no other plugins in the directory.
 --
--- See the kickstart.nvim README for more information
 return {}

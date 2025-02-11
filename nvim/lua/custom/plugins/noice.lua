@@ -1,3 +1,5 @@
+-- Noice replaces the UI for messages, command line, and popup menus.
+--
 return {
   'folke/noice.nvim',
   event = 'VeryLazy',

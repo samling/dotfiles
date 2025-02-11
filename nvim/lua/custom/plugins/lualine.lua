@@ -1,21 +1,5 @@
--- File: lua/custom/plugins/autopairs.lua
-
--- return {
---   'nvim-lualine/lualine.nvim',
---   dependencies = { 'nvim-tree/nvim-web-devicons' },
---   config = function()
---     local lualine = require 'lualine'
---     local config = {
---       options = {
---         section_separators = { left = '', right = '' },
---         component_separators = { left = '', right = '' },
---       },
---     }
+-- Lualine provides a fancy bottom bar for Nvim.
 --
---     lualine.setup(config)
---   end,
--- }
-
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'kyazdani42/nvim-web-devicons' },

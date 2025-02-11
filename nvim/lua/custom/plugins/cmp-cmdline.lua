@@ -1,3 +1,5 @@
+-- Completion for the nvim command line.
+--
 return {
   'hrsh7th/cmp-cmdline',
   keys = {

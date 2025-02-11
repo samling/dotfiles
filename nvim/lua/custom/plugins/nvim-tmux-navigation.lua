@@ -1,3 +1,5 @@
+-- nvim-tmux-navigation makes the transition between nvim and tmux panes smoother.
+--
 return {
   'alexghergh/nvim-tmux-navigation',
   config = function()

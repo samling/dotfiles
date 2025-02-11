@@ -1,3 +1,5 @@
+-- Provides a pop-up with a map of configured keybindings.
+--
 local M = {
   'folke/which-key.nvim',
   -- "VeryLazy" hides splash screen

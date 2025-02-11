@@ -1,3 +1,5 @@
+-- Snacks provides a collection of small plugins.
+--
 return {
   'folke/snacks.nvim',
   priority = 1000,
