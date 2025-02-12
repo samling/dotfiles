@@ -138,7 +138,8 @@ configure_tmux: \
 
 configure_zsh: \
 	install_gitstatus \
-	install_zsh_pure
+	install_zsh_pure \
+	install_zsh_plugins
 
 postconfigure: \
 	echo_final_steps
@@ -492,6 +493,10 @@ install_gitstatus:
 install_zsh_pure:
 	@echo "Installing zsh pure prompt"
 	if [ ! -d "${HOME}/dotfiles/zsh/pure" ] || [ -n "$(find "$HOME/dotfiles/zsh/pure" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone https://github.com/sindresorhus/pure.git "${HOME}/dotfiles/zsh/pure"; else echo "Zsh Pure already cloned"; fi
+
+install_zsh_plugins:
+	@echo "Installing zsh plugins"
+	if [ ! -d "${HOME}/dotfiles/zsh/plugins/zsh-syntax-highlighting" ] || [ -n "$(find "$HOME/dotfiles/zsh/plugins/zsh-syntax-highlighting" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/dotfiles/zsh/plugins/zsh-syntax-highlighting"; else echo "Zsh Syntax Highlighting already cloned"; fi
 
 #################
 #   K8S-TOOLS   #

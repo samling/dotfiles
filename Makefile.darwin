@@ -137,6 +137,7 @@ install_brew_tools:
 		awscli \
 		azure-cli \
 		bat \
+		bruno \
 		btop \
 		delta \
 		derailed/k9s/k9s \

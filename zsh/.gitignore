@@ -1,3 +1,4 @@
 .zshrc.local
 gitstatus/
 pure/
+plugins/zsh-syntax-highlighting/

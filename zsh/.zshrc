@@ -10,6 +10,7 @@ export ZSH_VERSION=$ZSH_VERSION
 # Source global config
 #
 source ~/dotfiles/zsh/plugins/zsh-history-substring-search.zsh
+source ~/dotfiles/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # source ~/dotfiles/zsh/plugins/git-auto-fetch.plugin.zsh
 source ~/dotfiles/zsh/path.zsh
 source ~/dotfiles/zsh/env.zsh
