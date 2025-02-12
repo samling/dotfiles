@@ -38,3 +38,31 @@ jwtdecode() {
   fi
 }
 
+nvim-maybe-profile() {
+  if [ "$NVIM_PROFILE" == "true" ]; then
+    echo "[DEBUG] Logging nvim startup profile to /tmp/nvim-profile.log"
+    echo '[DEBUG] Run `unset NVIM_PROFILE` to disable'
+    if [ -f /tmp/nvim-profile.log ]; then
+      echo "[DEBUG] Previous log file found; removing it"
+      rm -f /tmp/nvim-profile.log >/dev/null 2>&1
+    fi
+
+    nvim --startuptime /tmp/nvim-profile.log "$@"
+
+    if [ $? -eq 0 ]; then
+      echo "[DEBUG] Log file saved to /tmp/nvim-profile.log"
+      if [ -f /tmp/nvim-profile.log ] && [ ! "$NVIM_PROFILE_SAVE_ON_EXIT" == "true" ]; then
+        echo '[DEBUG] Set `NVIM_PROFILE_SAVE_ON_EXIT=true` to save the file instead'
+        echo ""
+        cat /tmp/nvim-profile.log
+        echo ""
+        echo '[DEBUG] Removing temporary log file'
+        rm -f /tmp/nvim-profile.log >/dev/null 2>&1
+      else
+        echo '[DEBUG] Log file saved to /tmp/nvim-profile.log'
+      fi
+    fi
+  else
+    nvim "$@"
+  fi
+}

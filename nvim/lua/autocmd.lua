@@ -11,3 +11,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- -- Sync with system clipboard on focus
+-- vim.api.nvim_create_autocmd({ "FocusGained" }, {
+--   pattern = { "*" },
+--   command = [[call setreg("@", getreg("+"))]],
+-- })
+--
+-- -- Sync with system clipboard on focus
+-- vim.api.nvim_create_autocmd({ "FocusLost" }, {
+--   pattern = { "*" },
+--   command = [[call setreg("+", getreg("@"))]],
+-- })
