@@ -215,7 +215,7 @@ create_symlinks:
 	rm -f ${HOME}/dotfiles/tmux/.tmux/.tmux
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}/.tmux.conf
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
-	ln -sf ${HOME}/dotfiles/linux/config/bat/themes ${HOME}/.config/bat/themes
+	ln -sf ${HOME}/dotfiles/linux/config/bat/themes ${HOME}/.config/bat
 	ln -sf ${HOME}/dotfiles/linux/config/git/gitconfig ${HOME}/.gitconfig
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
