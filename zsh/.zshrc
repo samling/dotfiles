@@ -75,8 +75,8 @@ if [ -d "$FNM_PATH" ]; then
 fi
 
 # fnm
-FNM_PATH="/home/sboynton/.local/share/fnm"
+FNM_PATH="/Users/sboynton/Library/Application Support/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="/home/sboynton/.local/share/fnm:$PATH"
+  export PATH="/Users/sboynton/Library/Application Support/fnm:$PATH"
   eval "`fnm env`"
 fi
