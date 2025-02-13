@@ -3,7 +3,43 @@
 local M = {
   'folke/which-key.nvim',
   -- "VeryLazy" hides splash screen
-  event = 'BufReadPost',
+  -- event = {'BufNewFile', 'BufReadPost'},
+  opts = {
+    preset = "modern",
+    keys = {
+      scroll_down = "<c-d>",
+      sroll_up = "<c-u>",
+    },
+    layout = {
+      height = { min = 4, max = 25 },
+      width = { min = 20, max = 50 },
+      spacing = 3,
+      align = "center",
+    },
+    win = {
+      title = false,
+    },
+    replace = {
+      key = {
+        function(key)
+          return require("which-key.view").format(key)
+        end,
+        -- { "<Space>", "SPC" },
+      },
+      desc = {
+        { "<Plug>%(?(.*)%)?", "%1" },
+        { "^%+", "" },
+        { "<[cC]md>", "" },
+        { "<[cC][rR]>", "" },
+        { "<[sS]ilent>", "" },
+        { "^lua%s+", "" },
+        { "^call%s+", "" },
+        { "^:%s*", "" },
+      },
+    },
+    show_help = false,
+    show_keys = false,
+  },
 }
 
 M.init = function()
