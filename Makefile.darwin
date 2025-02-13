@@ -157,6 +157,8 @@ install_brew_tools:
 		jesseduffield/lazygit/lazygit \
 		kubectl \
 		lsd \
+		luarocks \
+		imagemagick \
 		nvim \
 		openssl \
 		pyenv \
