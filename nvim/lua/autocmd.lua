@@ -7,7 +7,7 @@ local is_windows = vim.fn.has "win32" or vim.fn.has "win64"
 local is_mac = vim.fn.has "macunix"
 local is_unix = vim.fn.has "unix"
 
-vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+vim.api.nvim_create_autocmd({ "BufNew", "BufReadPost", "BufNewFile" }, {
   once = true,
   callback = function()
     if is_windows == 1 and not is_wsl == 1 then
