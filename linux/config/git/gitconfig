@@ -21,7 +21,7 @@
         email = samlingx@gmail.com
         name = Sam Boynton
 
-[includeIf "gitdir:~/Documents/NVIDIA"]
+[includeIf "gitdir:~/Documents/NVIDIA/"]
         path = ~/nv-dotfiles/linux/config/git/gitconfig
 [init]
 	defaultBranch = main
