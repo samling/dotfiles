@@ -3,6 +3,7 @@ return {
   config = function()
     require('deferred-clipboard').setup {
       lazy = true,
+      fallback = 'unnamedplus',
     }
   end
 }
