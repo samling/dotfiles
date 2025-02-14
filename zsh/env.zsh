@@ -80,3 +80,6 @@ export KEYTIMEOUT=1
 
 #=== X11 Forwarding
 export XAUTHORITY=$HOME/.Xauthority
+
+#=== Zoxide
+# export _ZO_FZF_OPTS="--exact --no-sort --bind=ctrl-z:ignore,btab:up,tab:down --cycle --keep-right --border=sharp --height=45% --info=inline --layout=reverse --tabstop=1 --exit-0 --preview='command -p ls {2..}'"
