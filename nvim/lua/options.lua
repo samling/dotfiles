@@ -32,8 +32,10 @@ vim.opt.showmode = false
 --  See `:help 'clipboard'`
 local is_mac = vim.fn.has "macunix"
 if is_mac == 1 then
+  print("clipboard is unset")
   vim.opt.clipboard = ''
 else
+  print("clipboard is set to unnamedplus")
   vim.opt.clipboard = 'unnamedplus'
 end
 
