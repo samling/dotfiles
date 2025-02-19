@@ -1,3 +1,3 @@
 # linux-specific tmux options
 
-set -g @thumbs-command 'echo -n {} | xclip -sel clip'
+set -g @fingers-copy-command 'xclip -sel clip'
