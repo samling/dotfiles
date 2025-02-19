@@ -28,17 +28,8 @@ vim.opt.mouse = 'a'
 vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
--- local is_mac = vim.fn.has "macunix"
--- if is_mac == 1 then
---   print("clipboard is unset")
---   vim.opt.clipboard = ''
--- else
---   print("clipboard is set to unnamedplus")
---   vim.opt.clipboard = 'unnamedplus'
--- end
-vim.opt.clipboard = "unnamedplus"
+-- (Set via autocmd)
+-- vim.opt.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.opt.breakindent = true

@@ -1,7 +1,7 @@
 #=== Builtin Replacements
 alias cat="bat -pp"
 alias df="duf -hide special,fuse"
-alias find="fd"
+# alias find="fd" # use find and fd separately
 alias grep="rg -u"
 alias top="btop"
 alias watch="viddy -d"
@@ -10,7 +10,7 @@ alias vim=nvim-maybe-profile
 
 #=== cd
 # Create aliases for up to 15 directories (offset by 1: '..'='cd ../', '...'='cd ../../', etc.)
-for i in {2..15}; do
+for i in {2..25}; do
   alias "$(printf '%0.s.' $(seq 1 $i))"="cd $(printf '../%.0s' $(seq 1 $((i-1))))"
 done
 alias .="cd ." # Don't go anywhere with one dot
