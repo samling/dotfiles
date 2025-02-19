@@ -179,6 +179,7 @@ install_prereqs:
 		locales \
 		nmap \
 		p7zip \
+		rename \
 		smbclient \
 		software-properties-common \
 		telnet \

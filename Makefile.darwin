@@ -163,6 +163,7 @@ install_brew_tools:
 		openssl \
 		pyenv \
 		readline \
+		rename \
 		rg \
 		sketchybar \
 		sqlite3 \
