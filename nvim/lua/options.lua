@@ -1,7 +1,7 @@
 -- [[ Global Settings ]]
 -- Disable netrw (for nvim-tree)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -30,14 +30,15 @@ vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-local is_mac = vim.fn.has "macunix"
-if is_mac == 1 then
-  print("clipboard is unset")
-  vim.opt.clipboard = ''
-else
-  print("clipboard is set to unnamedplus")
-  vim.opt.clipboard = 'unnamedplus'
-end
+-- local is_mac = vim.fn.has "macunix"
+-- if is_mac == 1 then
+--   print("clipboard is unset")
+--   vim.opt.clipboard = ''
+-- else
+--   print("clipboard is set to unnamedplus")
+--   vim.opt.clipboard = 'unnamedplus'
+-- end
+vim.opt.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -53,8 +54,8 @@ vim.opt.smartcase = true
 vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
-vim.opt.updatetime = 200
-vim.opt.timeoutlen = 300
+-- vim.opt.updatetime = 200
+-- vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
