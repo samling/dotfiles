@@ -1,4 +1,4 @@
-require 'autocmd'
+-- require 'autocmd'
 require 'options'
 require 'keymaps'
 
