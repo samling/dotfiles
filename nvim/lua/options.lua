@@ -38,7 +38,7 @@ vim.opt.showmode = false
 --   print("clipboard is set to unnamedplus")
 --   vim.opt.clipboard = 'unnamedplus'
 -- end
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.opt.breakindent = true
