@@ -1,0 +1,5 @@
+theme = catppuccin-mocha.conf
+
+macos-titlebar-style = hidden
+macos-option-as-alt = true
+

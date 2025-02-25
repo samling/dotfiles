@@ -199,6 +199,7 @@ create_folders:
 	@echo "Creating required folders"
 	mkdir -p ${HOME}/.config
 	mkdir -p ${HOME}/.config/bat
+	mkdir -p ${HOME}/.config/ghostty
 	mkdir -p ${HOME}/.config/kitty
 	mkdir -p ${HOME}/.config/lsd
 	mkdir -p ${HOME}/.kube/kubeconfigs
@@ -218,6 +219,8 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
 	ln -sf ${HOME}/dotfiles/linux/config/bat/themes ${HOME}/.config/bat
 	ln -sf ${HOME}/dotfiles/linux/config/git/gitconfig ${HOME}/.gitconfig
+	ln -sf ${HOME}/dotfiles/linux/config/ghostty/themes ${HOME}/.config/ghostty
+	ln -sf ${HOME}/dotfiles/linux/config/ghostty/config ${HOME}/.config/ghostty
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml

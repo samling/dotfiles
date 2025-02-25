@@ -73,7 +73,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:/snap/bin
 
 #=== Terminal
-export TERM=screen-256color
+# export TERM=screen-256color
 
 #=== VI Mode
 export KEYTIMEOUT=1
