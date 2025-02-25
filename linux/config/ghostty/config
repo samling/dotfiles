@@ -1,5 +1,17 @@
+#=== Theme
 theme = catppuccin-mocha.conf
 
+#=== Font
+# Get available fonts:
+#   /Applications/Ghostty.app/Contents/MacOS/ghostty +list-fonts
+font-family = "IosevkaTerm Nerd Font Mono"
+
+# Fallbacks
+font-family = "FiraCode Nerd Font Mono"
+font-family = "Fira Code"
+
+font-size = 16
+
+#=== MacOS Options
 macos-titlebar-style = hidden
 macos-option-as-alt = true
-
