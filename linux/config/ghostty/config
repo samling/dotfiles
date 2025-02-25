@@ -1,3 +1,10 @@
+#=== General
+mouse-hide-while-typing = true
+scrollback-limit = 10000000
+shell-integration = zsh
+shell-integration-features = no-cursor
+window-theme = system
+
 #=== Theme
 theme = catppuccin-mocha.conf
 
@@ -13,5 +20,6 @@ font-family = "Fira Code"
 font-size = 16
 
 #=== MacOS Options
-macos-titlebar-style = hidden
+macos-non-native-fullscreen = true
 macos-option-as-alt = true
+macos-titlebar-style = hidden
