@@ -122,6 +122,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/icons.yaml ${HOME}/.config/lsd/icons.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/colors.yaml ${HOME}/.config/lsd/colors.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/starship/starship.toml ${HOME}/.config/starship.toml
+	ln -sf ${HOME}/dotfiles/macos/SwiftBar ~/.config/
 
 #################
 #     BREW     #
