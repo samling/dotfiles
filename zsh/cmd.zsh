@@ -21,6 +21,9 @@ command -v flux >/dev/null && source <(flux completion zsh)
 #=== Direnv
 eval "$(direnv hook zsh)"
 
+#=== fzf
+eval "$(fzf --zsh)"
+
 #=== Starship prompt
 # eval "$(starship init zsh)"
 
