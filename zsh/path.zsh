@@ -4,15 +4,21 @@ unset PATH
 
 # Essential paths
 #
-PATH=$PATH:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+PATH=/usr/local
+PATH=/usr/local/bin:$PATH
+PATH=/usr/local/sbin:$PATH
+PATH=/usr/bin:$PATH
+PATH=/bin:$PATH
+PATH=/usr/sbin:$PATH
+PATH=/sbin:$PATH
+
+# Local paths
+#
+PATH=$PATH:${HOME}/.local/bin
 
 # Homebrew
 #
-PATH=/opt/homebrew/sbin:/opt/homebrew/bin:$PATH
-
-# pip
-#
-PATH=$PATH:${HOME}/.local/bin
+PATH=$PATH:/opt/homebrew/sbin:/opt/homebrew/bin
 
 # fzf
 #
