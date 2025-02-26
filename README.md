@@ -11,6 +11,7 @@ My ever-growing collection of dotfiles and configs.
 
 1. Copy `.envrc.example` to `.envrc`
 1. Add `GITHUB_TOKEN`
+1. Enable direnv with `eval "$(direnv hook bash)"
 1. `direnv allow`
 1. `source ./install.sh | tee log` # `tee` also avoids the shell exiting if there is an error
 
