@@ -335,7 +335,6 @@ install_go:
 	tar xzvf /tmp/go.tar.gz -C /tmp/go
 	sudo cp -r /tmp/go/go /usr/local
 	rm -rf /tmp/go.tar.gz /tmp/go
-	endif
 
 install_helm:
 	@echo "Installing helm"
