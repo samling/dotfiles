@@ -33,9 +33,9 @@ source <(kubectl completion zsh)
 prompt pure
 
 #=== pyenv
-if command -v pyenv &> /dev/null; then
+# if command -v pyenv &> /dev/null; then
   # Activate pyenv
-  eval "$(pyenv init -)"
+  # eval "$(pyenv init - zsh)"
 
   # Activate pyenv-virtualenv only on directory changes
   # https://github.com/pyenv/pyenv-virtualenv/issues/259#issuecomment-173112392
@@ -44,7 +44,7 @@ if command -v pyenv &> /dev/null; then
   #
   #eval "$(pyenv virtualenv-init - | sed s/precmd/chpwd/g)"
   #_pyenv_virtualenv_hook
-fi
+# fi
 
 #=== starship prompt
 # eval "$(starship init zsh)"

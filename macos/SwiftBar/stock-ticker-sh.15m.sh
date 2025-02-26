@@ -16,10 +16,13 @@ if [ -f "$SCRIPT_DIR/.python-version" ]; then
         # echo "pyenv found" >> "$LOGFILE"
         eval "$(/opt/homebrew/bin/pyenv init -)"
 
-        /opt/homebrew/bin/pyenv shell "$PYTHON_VERSION"
+        # /opt/homebrew/bin/pyenv shell "$PYTHON_VERSION"
+        export PYENV_VERSION="$PYTHON_VERSION"
         # echo "pyenv shell $PYTHON_VERSION" >> "$LOGFILE"
 
         echo "$(python3 $SCRIPT_DIR/$SCRIPT_PATH)"
+
+        unset PYENV_VERSION
     else
         echo "pyenv not found"
     fi
