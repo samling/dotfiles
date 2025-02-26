@@ -163,6 +163,7 @@ install_pacman_tools:
 		neovim \
 		pyenv \
 		ripgrep \
+		rofi-wayland \
 		terraform \
 		terragrunt \
 		tmux \
