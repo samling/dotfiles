@@ -14,23 +14,25 @@ bashcompinit
 
 autoload -U promptinit; promptinit
 
-#=== completions
-source <(kubectl completion zsh)
-command -v flux >/dev/null && source <(flux completion zsh)
+#=== colima
+command -v colima >/dev/null && source <(colima completion zsh)
 
-#=== Direnv
+#=== direnv
 eval "$(direnv hook zsh)"
+
+#=== flux
+command -v flux >/dev/null && source <(flux completion zsh)
 
 #=== fzf
 eval "$(fzf --zsh)"
 
-#=== Starship prompt
-# eval "$(starship init zsh)"
+#=== kubectl
+source <(kubectl completion zsh)
 
-#=== Pure prompt
+#=== pure prompt
 prompt pure
 
-#=== Pyenv
+#=== pyenv
 if command -v pyenv &> /dev/null; then
   # Activate pyenv
   eval "$(pyenv init -)"
@@ -44,5 +46,8 @@ if command -v pyenv &> /dev/null; then
   #_pyenv_virtualenv_hook
 fi
 
-#=== Zoxide
+#=== starship prompt
+# eval "$(starship init zsh)"
+
+#=== zoxide
 eval "$(zoxide init zsh --cmd cd)"
