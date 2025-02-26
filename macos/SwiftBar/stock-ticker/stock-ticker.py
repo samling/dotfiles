@@ -68,7 +68,10 @@ try:
     change, change_str = stock_data.get_change()
     color_code = 'lime' if change > 0 else 'red' if change < 0 else 'white' # green for positive, red for negative
 
-    print(f"{ticker} ${stock_data.last_price} ({change_str})|color={color_code}")
+    print(f"""{ticker} ${stock_data.last_price} ({change_str})|color={color_code}
+---
+Test
+""")
 except Exception as e:
     print(f"{e}")
     print("---")

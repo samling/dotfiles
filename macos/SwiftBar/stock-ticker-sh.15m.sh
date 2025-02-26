@@ -19,7 +19,7 @@ if [ -f "$SCRIPT_DIR/.python-version" ]; then
         /opt/homebrew/bin/pyenv shell "$PYTHON_VERSION"
         # echo "pyenv shell $PYTHON_VERSION" >> "$LOGFILE"
 
-        echo "$(python3 $SCRIPT_DIR/$SCRIPT_PATH) | md=True"
+        echo "$(python3 $SCRIPT_DIR/$SCRIPT_PATH)"
     else
         echo "pyenv not found"
     fi
