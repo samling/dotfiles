@@ -71,6 +71,8 @@ install_prereqs:
 		automake \
 		base-devel \
 		bison \
+		cmake \
+		cpio \
 		curl \
 		dialog \
 		direnv \
@@ -82,8 +84,10 @@ install_prereqs:
 		jq \
 		xmlsec \
 		llvm \
+		meson \
 		nmap \
 		pavucontrol \
+		pkg-config \
 		p7zip \
 		smbclient \
 		traceroute \

@@ -31,6 +31,9 @@ alias lg="lazygit"
 # alias tldr="tealdeer"
 alias yless="jless --yaml"
 
+#=== Hyprland
+alias hyprctl="hyprctl --instance 0" # avoids tmux-inside-hyprland issues
+
 #=== Kubectl
 alias k="kubectl"
 alias kubectx="FZF_DEFAULT_OPTS='--reverse' kubectl ctx"
