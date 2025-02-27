@@ -549,6 +549,7 @@ install_fnm:
 
 install_npm:
 	@echo "Installing latest npm"
+	PATH="~/.local/share/fnm:${PATH}" && \
 	fnm install --lts
 
 #################
