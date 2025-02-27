@@ -141,6 +141,7 @@ install_pacman_tools:
 		btop \
 		git-delta \
 		direnv \
+		dolphin \
 		duf \
 		eza \
 		fzf \
