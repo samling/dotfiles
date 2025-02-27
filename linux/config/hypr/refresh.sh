@@ -4,6 +4,7 @@
 
 # Kill and restart waybar whenever its config files change
 CONFIG_FILE="$HOME/.config/waybar/config.jsonc"
+STYLE_FILE="$HOME/.config/waybar/style.css"
 LOCK_FILE="/tmp/waybar_watchdog.lock"
 
 # Clean up lockfile when this script exits
@@ -28,6 +29,6 @@ restart_waybar() {
 }
 
 while true; do
-  inotifywait -e modify "${CONFIG_FILE}"
+  inotifywait -e modify "${CONFIG_FILE}" "${STYLE_FILE}"
   restart_waybar
 done
