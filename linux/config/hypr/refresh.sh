@@ -29,6 +29,6 @@ restart_waybar() {
 }
 
 while true; do
-  inotifywait -e modify "${CONFIG_FILE}" "${STYLE_FILE}"
+  inotifywait -e modify "${CONFIG_FILE}"
   restart_waybar
 done

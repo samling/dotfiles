@@ -48,15 +48,15 @@ tooltip {
 
 #workspaces button {
     all: initial;
-    min-width: 0;
+    min-width: 18px;
     box-shadow: inset 0 -3px transparent;
-    padding: 2px 4px;
+    padding: 4px 4px;
     color: #cdd6f4; /* Text (Lavender) */
 }
 
 #workspaces button.active {
-    color: #f5c2e7; /* Pink */
-    box-shadow: inset 0 -3px #f5c2e7; /* Pink underline for active workspace */
+    color: #000; /* Pink */
+    background-color: #89b4fa;
 }
 
 #workspaces button.urgent {
