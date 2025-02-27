@@ -127,14 +127,6 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/ripgrep/.ripgreprc	${HOME}
 	ln -sf ${HOME}/dotfiles/linux/config/starship/starship.toml ${HOME}/.config
 
-################
-#     APPS     #
-################
-
-install_google_chrome:
-	@echo "Installing Google Chrome"
-	yay -S --noconfirm google-chrome
-	
 #################
 #     TOOLS     #
 #################
@@ -174,8 +166,10 @@ install_aur_tools:
 	@echo "Installing tools from AUR"
 	yay -S --noconfirm \
 		gitmux \
+		google-chrome \
 		nvm \
 		tealdeer \
+		tlpui \
 		vendir \
 		viddy \
 		ytt
