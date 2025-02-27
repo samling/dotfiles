@@ -72,11 +72,12 @@
     },
 
     "network": {
-        "format-wifi" : "wifi {bandwidthDownBits}",
-        "format-ethernet": "enth {bandwidthDownBits}",
+        "format-wifi" : "{essid} {bandwidthDownBits}",
+        "format-ethernet": "{ipaddr} {bandwidthDownBits}",
+        "tooltip-format": "{ifname} via {gwaddr}",
         "format-disconnected" : "no network",
-        "interval": 5,
-        "tooltip": false
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "interval": 5
     },
 
     "pulseaudio": {
