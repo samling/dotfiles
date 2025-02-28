@@ -3,3 +3,4 @@ log
 .aider*
 .env
 .envrc
+*.code-workspace
