@@ -219,8 +219,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}/.gitmux.conf
 	ln -sf ${HOME}/dotfiles/linux/config/bat/themes ${HOME}/.config/bat
 	ln -sf ${HOME}/dotfiles/linux/config/git/gitconfig ${HOME}/.gitconfig
-	ln -sf ${HOME}/dotfiles/linux/config/ghostty/themes ${HOME}/.config/ghostty
-	ln -sf ${HOME}/dotfiles/linux/config/ghostty/config ${HOME}/.config/ghostty
+	ln -sf ${HOME}/dotfiles/linux/config/ghostty ${HOME}/.config
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/theme.conf ${HOME}/.config/kitty/theme.conf
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/config.yaml ${HOME}/.config/lsd/config.yaml
