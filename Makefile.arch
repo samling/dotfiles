@@ -149,6 +149,7 @@ install_pacman_tools:
 		dolphin \
 		duf \
 		eza \
+		fd \
 		fzf \
 		go \
 		grc \
