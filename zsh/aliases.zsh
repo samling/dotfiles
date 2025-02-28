@@ -24,6 +24,7 @@ alias mv='mv -iv' # Prevent clobbering
 
 #=== Extra tools
 alias ai="aichat"
+alias feh="feh --scale-down"
 alias gpt-"aichat -m openai:gpt-4o-2024-11-20"
 alias claude="aichat -m claude:claude-3-5-sonnet-latest"
 alias jinaai="curl https://r.jina.ai -H \"Authorization: Bearer ${JINA_AI_API_KEY}\""
