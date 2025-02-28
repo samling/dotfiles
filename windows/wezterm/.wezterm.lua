@@ -14,7 +14,7 @@ local config = {
       },
   },
   -- webgpu_preferred_adapter = gpus[1],
-  -- front_end = 'WebGpu',
+  front_end = 'OpenGL', -- WebGpu or OpenGL
   default_domain = "WSL:Ubuntu",
   enable_tab_bar = false,
   font = wezterm.font('Iosevka Nerd Font Mono'),
