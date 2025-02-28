@@ -1,0 +1,15 @@
+general.live_config_reload = true
+general.import = [
+    "catppuccin-mocha.toml"
+]
+
+[window]
+opacity = 1
+padding = { x = 10, y = 1 }
+
+[font]
+normal = { family = "Iosevka Nerd Font Mono" }
+size = 12
+
+[terminal]
+shell =  { program = "C:\\Windows\\System32\\wsl.exe ~" }
