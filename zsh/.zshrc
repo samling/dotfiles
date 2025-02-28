@@ -7,22 +7,22 @@
 export ZSH_VERSION=$ZSH_VERSION
 [ -f "${HOME}/dotfiles-private/github-token" ] && export GITHUB_TOKEN
 
-# Source global config
-#
+# Source config files
+# Note: Be careful when changing the order.
 source ~/dotfiles/zsh/path.zsh
 source ~/dotfiles/zsh/env.zsh
+source ~/dotfiles/zsh/prompt.zsh
 source ~/dotfiles/zsh/cmd.zsh
 source ~/dotfiles/zsh/opt.zsh
 source ~/dotfiles/zsh/aliases.zsh
-source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/functions.zsh
-source ~/dotfiles/zsh/prompt.zsh
+source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/fnm.zsh
 source ~/dotfiles/zsh/plugins.zsh
 
 ## Plugins
 #
-plugins=(git-auto-fetch)
+#plugins=(git-auto-fetch)
 
 # Source ${HOME}/dotfiles-private/zshrc.*.local files
 #
@@ -43,11 +43,6 @@ if [[ ! -z ${LOCAL_DOTFILES} && ${LOCAL_DOTFILES} != "${HOME}/.zshrc.*" ]]; then
         source $dotfile
     done
 fi
-
-# Enable fuzzy finder
-#
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source <(fzf --zsh)
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -71,12 +66,5 @@ unset __conda_setup
 FNM_PATH="/home/sboynton/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="/home/sboynton/.local/share/fnm:$PATH"
-  eval "`fnm env`"
-fi
-
-# fnm
-FNM_PATH="/Users/sboynton/Library/Application Support/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="/Users/sboynton/Library/Application Support/fnm:$PATH"
   eval "`fnm env`"
 fi

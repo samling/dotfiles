@@ -24,6 +24,8 @@ eval "$(direnv hook zsh)"
 command -v flux >/dev/null && source <(flux completion zsh)
 
 #=== fzf
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#source "$(fzf --zsh)"
 eval "$(fzf --zsh)"
 
 #=== kubectl
