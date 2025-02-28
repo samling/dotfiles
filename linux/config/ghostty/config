@@ -1,5 +1,5 @@
 # set fish as the interactive shell while keeping zsh as the login shell
-command = command -v fish >/dev/null && fish --login --interactive || zsh
+command = bash ~/dotfiles/linux/config/ghostty/launch-fish.sh
 
 #=== General
 mouse-hide-while-typing = true
