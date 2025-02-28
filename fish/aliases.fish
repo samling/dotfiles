@@ -1,3 +1,14 @@
+# Dot-based `cd` functions
+function .; cd .; end # up 0
+function ..; cd ..; end # up 1
+function ...; cd ../..; end # up 2
+function ....; cd ../../..; end # up 3
+function .....; cd ../../../..; end # up 4
+function ......; cd ../../../../..; end # up 5
+function .......; cd ../../../../../..; end # up 6
+function ........; cd ../../../../../../../; end # up 7
+function .........; cd ../../../../../../../../; end # up 8
+
 # Builtin Replacements
 function cat
     bat -pp $argv
