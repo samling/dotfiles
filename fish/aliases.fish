@@ -28,5 +28,6 @@ alias claude "aichat -m claude:claude-3-sonnet-20240229"
 # Other aliases
 alias lg "lazygit"
 alias yless "jless --yaml"
-alias R "source ~/.config/fish/config.fish"
+#alias R "source ~/.config/fish/config.fish"
+alias R "exec $SHELL -l" # this seems to mitigate issues with various invocations being stacked multiple times from sourcing the config again
 alias tmux "direnv exec / tmux" 
