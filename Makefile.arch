@@ -275,10 +275,11 @@ install_python311:
 
 define FINAL_STEPS
 Done! Remember to do the following:
-	1. Run neovim to finish LazyVim configuration
-	2. Install tmux plugins with ctrl-A + I
-	3. Make sure bat cache is built: bat cache --build
-	4. (Optional) Reboot!
+	1. Symlink fish to /usr/local/bin/fish
+	2. Run neovim to finish LazyVim configuration
+	3. Install tmux plugins with ctrl-A + I
+	4. Make sure bat cache is built: bat cache --build
+	5. (Optional) Reboot!
 endef
 export FINAL_STEPS
 echo_final_steps:

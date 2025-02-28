@@ -275,7 +275,7 @@ install_nvim_conf:
 #################
 install_python310:
 	@echo "Installing latest python3 with pyenv"
-	pyenv install -f 3.10
+	pyenv install -f 3.11
 
 #################
 #      END      #
@@ -283,9 +283,11 @@ install_python310:
 
 define FINAL_STEPS
 Done! Remember to do the following:
-	1. Run neovim to finish LazyVim configuration
-	2. Install tmux plugins with ctrl-A + I
-	3. (Optional) Reboot!
+	1. Symlink fish to /usr/local/bin/fish
+	2. Run neovim to finish LazyVim configuration
+	3. Install tmux plugins with ctrl-A + I
+	4. Make sure bat cache is built: bat cache --build
+	5. (Optional) Reboot!
 endef
 export FINAL_STEPS
 echo_final_steps:
