@@ -24,6 +24,7 @@ preconfigure: \
 install_tools: \
 	install_pacman_tools \
 	install_aur_tools \
+	install_k8s_tools \
 	install_vkv
 
 install_k8s_tools: \

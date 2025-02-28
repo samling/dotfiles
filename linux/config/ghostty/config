@@ -1,7 +1,9 @@
+# set fish as the interactive shell while keeping zsh as the login shell
+command = command -v fish >/dev/null && fish --login --interactive || zsh
+
 #=== General
 mouse-hide-while-typing = true
 scrollback-limit = 10000000
-shell-integration = zsh
 shell-integration-features = no-cursor
 window-theme = system
 window-padding-balance = true
@@ -14,9 +16,9 @@ theme = catppuccin-mocha.conf
 #=== Font
 # Get available fonts:
 #   /Applications/Ghostty.app/Contents/MacOS/ghostty +list-fonts
-# font-family = "Iosevka NFM"
-font-family = "IosevkaTerm Nerd Font Mono"
-font-size = 16
+font-family = "Iosevka NFM"
+# font-family = "IosevkaTerm Nerd Font Mono"
+font-size = 12
 
 # Fallbacks
 #font-family = "FiraCode Nerd Font Mono"
