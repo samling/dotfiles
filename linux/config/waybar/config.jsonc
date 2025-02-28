@@ -63,12 +63,19 @@
 
     "battery": {
         "format": "bat {capacity}% ({time})",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ({time}) ",
+        "format-plugged": "{capacity}% ",
+        "format-time": "{H}h{M}m",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""],
         "interval": 5,
         "states": {
             "warning": 20,
             "critical": 10
         },
-        "tooltip": true
+        "tooltip": false,
+        "on-click": "gnome-power-statistics"
     },
 
     "network": {
