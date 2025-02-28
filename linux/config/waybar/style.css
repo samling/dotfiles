@@ -79,7 +79,8 @@ tooltip {
 #battery {
     background-color: #a6e3a1; /* Green */
     border: 2px solid #cba6f7; /* Mauve */
-    color: #6c7086; /* Overlay 2 */
+    color: #1e1e2e; /* Base */
+    /*color: #6c7086; Overlay 2 */
 }
 
 #cpu,
@@ -103,5 +104,6 @@ tooltip {
 #battery.urgent {
     background-color: #fab387; /* Peach */
     border: 2px solid #f5c2e7; /* Pink */
-    color: #f38ba8; /* Red */
+    color: #1e1e2e; /* Base */
+    /*color: #f38ba8; Red */
 }
