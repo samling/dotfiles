@@ -153,6 +153,7 @@ install_pacman_tools:
 		fzf \
 		go \
 		grc \
+		grim \
 		helm \
 		inotify-tools \
 		jc \
@@ -164,6 +165,7 @@ install_pacman_tools:
 		pyenv \
 		ripgrep \
 		rofi-wayland \
+		slurp \
 		terraform \
 		terragrunt \
 		tmux \
