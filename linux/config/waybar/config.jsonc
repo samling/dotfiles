@@ -62,7 +62,7 @@
     },
 
     "battery": {
-        "format": "bat {capacity}%",
+        "format": "bat {capacity}% ({time})",
         "interval": 5,
         "states": {
             "warning": 20,
