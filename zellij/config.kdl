@@ -8,32 +8,31 @@ keybinds clear-defaults=true {
     //=== Global bindings
     //
     shared {
+        // Movement
         bind "Ctrl left" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "Ctrl down" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "Ctrl up" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "Ctrl right" { MoveFocus "right"; SwitchToMode "normal"; }
-
-        // Movement
         bind "Ctrl h" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "Ctrl j" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "Ctrl k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "Ctrl l" { MoveFocus "right"; SwitchToMode "normal"; }
-        bind "Ctrl left" { MoveFocus "left"; SwitchToMode "normal"; }
-        bind "Ctrl down" { MoveFocus "down"; SwitchToMode "normal"; }
-        bind "Ctrl up" { MoveFocus "up"; SwitchToMode "normal"; }
-        bind "Ctrl right" { MoveFocus "right"; SwitchToMode "normal"; }
 
         // Tabs
         bind "Ctrl p" { GoToPreviousTab; SwitchToMode "normal"; }
         bind "Ctrl n" { GoToNextTab; SwitchToMode "normal"; }
 
+        // Locked mode...just in case
         bind "Ctrl g" { SwitchToMode "locked"; }
 
+        // Quit
         bind "Ctrl q" { Quit; }
     }
 
     shared_except "normal" "locked" {
+      // Get us back to normal mode
       bind "esc" { SwitchToMode "normal"; }
+      bind "Ctrl c" { SwitchToMode "normal"; }
     }
 
     //=== Switch between modes
@@ -95,6 +94,7 @@ keybinds clear-defaults=true {
 
         // Scrolling
         bind "[" { SwitchToMode "scroll"; }
+        bind "Ctrl [" { SwitchToMode "scroll"; } // handle occasional misfires on key rollover
 
         // Session
         bind "s" {
