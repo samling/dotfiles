@@ -4,4 +4,5 @@ source ~/dotfiles/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # Note: Seems like zsh-history-substring-search needs to at least come before autosuggestions
 source ~/dotfiles/zsh/plugins/zsh-history-substring-search.zsh
 
-source ~/dotfiles/zsh/plugins/zsh-autosuggestions.zsh
+# Disabling as this seems to cause some weird issues
+#source ~/dotfiles/zsh/plugins/zsh-autosuggestions.zsh
