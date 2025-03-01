@@ -24,6 +24,7 @@ tooltip {
 #cpu,
 #memory,
 #battery,
+#backlight,
 #network,
 #pulseaudio {
     margin: 6px 6px 6px 0px;
@@ -86,6 +87,7 @@ tooltip {
 #cpu,
 #memory,
 #network,
+#backlight,
 #pulseaudio {
     background-color: #89b4fa; /* Blue */
     border: 2px solid #cba6f7; /* Mauve */

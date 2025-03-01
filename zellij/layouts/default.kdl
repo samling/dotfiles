@@ -8,9 +8,9 @@ layout {
                 command_test_interval "10"
                 command_test_rendermode "static"
 
-                format_left   "{mode} #[fg=#89B4FA,bold]{session} {tabs}"
+                format_left   "{mode} {tabs}"
                 format_center "{command_test}"
-                format_right  "{command_git_branch} {datetime}"
+                format_right  "{command_git_branch} {datetime} #[fg=#89B4FA,bold]{session}"
                 format_space  ""
 
                 border_enabled  "false"
@@ -22,7 +22,7 @@ layout {
                 mode_tmux    "#[bg=#ffc387] "
 
                 tab_normal   "#[fg=#6C7086] {name} "
-                tab_active   "#[fg=#9399B2,bold,italic] {name} "
+                tab_active   "#[fg=#000000,bg=#89B4FA,bold,italic] {name} "
 
                 command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
                 command_git_branch_format      "#[fg=blue] {stdout} "

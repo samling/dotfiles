@@ -3,16 +3,14 @@ fpath=($HOME/dotfiles/zsh $fpath)
 fpath+=($HOME/dotfiles/zsh/pure)
 
 #=== compinit
-autoload -U +X compinit && compinit
-
-autoload -Uz compinit bashcompinit
+autoload -U compinit bashcompinit promptinit
+compinit
+promptinit
+bashcompinit
 
 for dump in ~/.zcompdump(N.mh+24);do
   compinit
 done
-bashcompinit
-
-autoload -U promptinit; promptinit
 
 #=== colima
 command -v colima >/dev/null && source <(colima completion zsh)
@@ -35,9 +33,9 @@ source <(kubectl completion zsh)
 prompt pure
 
 #=== pyenv
-# if command -v pyenv &> /dev/null; then
+if command -v pyenv &> /dev/null; then
   # Activate pyenv
-  # eval "$(pyenv init - zsh)"
+  eval "$(pyenv init - zsh)"
 
   # Activate pyenv-virtualenv only on directory changes
   # https://github.com/pyenv/pyenv-virtualenv/issues/259#issuecomment-173112392
@@ -46,10 +44,13 @@ prompt pure
   #
   #eval "$(pyenv virtualenv-init - | sed s/precmd/chpwd/g)"
   #_pyenv_virtualenv_hook
-# fi
+fi
 
 #=== starship prompt
 # eval "$(starship init zsh)"
+
+#=== zellij
+source <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
 
 #=== zoxide
 eval "$(zoxide init zsh --cmd cd)"

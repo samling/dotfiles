@@ -21,6 +21,7 @@
         "cpu_text",
         "cpu",
         "memory",
+        "backlight",
         "battery",
         "network",
         "pulseaudio",
@@ -76,6 +77,13 @@
         },
         "tooltip": false,
         "on-click": "gnome-power-statistics"
+    },
+
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "tooltip": false
     },
 
     "network": {
