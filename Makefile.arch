@@ -90,6 +90,7 @@ install_prereqs:
 		pavucontrol \
 		pkg-config \
 		p7zip \
+		qt6ct \
 		smbclient \
 		traceroute \
 		tk \
