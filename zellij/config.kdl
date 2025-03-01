@@ -32,7 +32,7 @@ keybinds clear-defaults=true {
         bind "Ctrl q" { Quit; }
     }
 
-    shared_except "normal" "locked": {
+    shared_except "normal" "locked" {
       bind "esc" { SwitchToMode "normal"; }
     }
 
@@ -95,6 +95,15 @@ keybinds clear-defaults=true {
 
         // Scrolling
         bind "[" { SwitchToMode "scroll"; }
+
+        // Session
+        bind "s" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "normal"
+        }
 
         // Search
         bind "?" { SwitchToMode "search"; }
