@@ -3,8 +3,13 @@ layout {
         children
         pane size=1 borderless=true {
             plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
+                command_test_command "echo \"test\""
+                command_test_format "{stdout}"
+                command_test_interval "10"
+                command_test_rendermode "static"
+
                 format_left   "{mode} #[fg=#89B4FA,bold]{session} {tabs}"
-                format_center ""
+                format_center "{command_test}"
                 format_right  "{command_git_branch} {datetime}"
                 format_space  ""
 
@@ -16,7 +21,7 @@ layout {
                 mode_normal  "#[bg=blue] "
                 mode_tmux    "#[bg=#ffc387] "
 
-                tab_normal   "#[fg=#6C7086] {command} "
+                tab_normal   "#[fg=#6C7086] {name} "
                 tab_active   "#[fg=#9399B2,bold,italic] {name} "
 
                 command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
