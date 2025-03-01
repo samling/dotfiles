@@ -227,6 +227,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/colors.yaml ${HOME}/.config/lsd/colors.yaml
 	ln -sf ${HOME}/dotfiles/linux/config/ripgrep/.ripgreprc	${HOME}
 	ln -sf ${HOME}/dotfiles/linux/config/starship/starship.toml ${HOME}/.config/starship.toml
+	ln -sf ${HOME}/dotfiles/zellij ${HOME}/.config
 
 configure_locale:
 	@echo "Configuring locale"

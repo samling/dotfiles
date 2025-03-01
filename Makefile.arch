@@ -132,6 +132,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/waybar/* ${HOME}/.config/waybar
 	ln -sf ${HOME}/dotfiles/linux/config/ripgrep/.ripgreprc	${HOME}
 	ln -sf ${HOME}/dotfiles/linux/config/starship/starship.toml ${HOME}/.config
+	ln -sf ${HOME}/dotfiles/zellij ${HOME}/.config
 
 #################
 #     TOOLS     #

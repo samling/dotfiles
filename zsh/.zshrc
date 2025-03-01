@@ -19,6 +19,7 @@ source ~/dotfiles/zsh/functions.zsh
 source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/fnm.zsh
 source ~/dotfiles/zsh/plugins.zsh
+source ~/dotfiles/zsh/zellij.zsh
 
 ## Plugins
 #
