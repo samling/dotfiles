@@ -29,7 +29,7 @@ alias gpt-"aichat -m openai:gpt-4o-2024-11-20"
 alias claude="aichat -m claude:claude-3-5-sonnet-latest"
 alias jinaai="curl https://r.jina.ai -H \"Authorization: Bearer ${JINA_AI_API_KEY}\""
 alias lg="lazygit"
-# alias tldr="tealdeer"
+alias piper="pyenv local system && pyenv exec piper"
 alias yless="jless --yaml"
 
 #=== Hyprland
