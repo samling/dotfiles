@@ -16,7 +16,7 @@ return {
     notifier = { enabled = true },
     notify = { enabled = true },
     profiler = { enabled = true },
-    scroll = { enabled = true },
+    -- scroll = { enabled = true },
     statuscolumn = { enabled = true },
     toggle = { enabled = true },
     util = { enabled = true },
