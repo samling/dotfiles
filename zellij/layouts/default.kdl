@@ -21,21 +21,24 @@ layout {
                 mode_normal  "#[bg=blue] "
                 mode_tmux    "#[bg=#ffc387] "
 
-                tab_normal   "#[fg=#6C7086] {name} "
-                tab_active   "#[fg=#000000,bg=#89B4FA,bold,italic] {name} "
+                //tab_normal   "#[fg=#6C7086] {name} "
+                //tab_active   "#[fg=#000000,bg=#89B4FA,bold,italic] {name} "
 
                 // formatting for inactive tabs
-                tab_normal              "#[fg=#6C7086] {index} :: {name} "
-                tab_normal_fullscreen   "#[fg=#6C7086] {index} :: {name} [FULLSCREEN] "
-                tab_normal_sync         "#[fg=#6C7086] {index} :: {name} <SYNC> "
+                //tab_normal              "#[fg=#6C7086] {index} :: {name} "
+                //tab_normal_fullscreen   "#[fg=#6C7086] {index} :: {name} [FULLSCREEN] "
+                //tab_normal_sync         "#[fg=#6C7086] {index} :: {name} <SYNC> "
+                tab_normal              "#[fg=#6C7086] #[bold]{index} {name} "
+                tab_normal_fullscreen   "#[fg=#6C7086] #[bold]{index} {name} [FULLSCREEN] "
+                tab_normal_sync         "#[fg=#6C7086] #[bold]{index} {name} <SYNC> "
 
                 // formatting for the current active tab
-                tab_active              "#[fg=#9399B2,bold,italic] {name} {floating_indicator}"
-                tab_active_fullscreen   "#[fg=#9399B2,bold,italic] {name} {fullscreen_indicator}"
-                tab_active_sync         "#[fg=#9399B2,bold,italic] {name} {sync_indicator}"
+                tab_active              "#[fg=#000000,bg=#89B4FA,bold,italic] {index} {name} {floating_indicator}"
+                tab_active_fullscreen   "#[fg=#000000,bg=#89B4FA,bold,italic] {index} {name} {fullscreen_indicator}"
+                tab_active_sync         "#[fg=#000000,bg=#89B4FA,bold,italic] {index} {name} {sync_indicator}"
 
                 // separator between the tabs
-                tab_separator           "#[fg=#6C7086,bg=#181825] | "
+                tab_separator           "#[fg=#6C7086] | "
 
                 // format when renaming a tab
                 tab_rename              "#[fg=#eba0ac,bg=#181825] {index} {name} {floating_indicator} "

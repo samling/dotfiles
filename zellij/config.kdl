@@ -143,7 +143,9 @@ keybinds clear-defaults=true {
         bind "b" { BreakPane; SwitchToMode "normal"; }
 
         bind "t" { NewTab; SwitchToMode "normal"; }
-        bind "T" { SwitchToMode "renametab"; TabNameInput 0; SwitchToMode "normal"; }
+        bind "T" { NewTab; SwitchToMode "Normal"; SwitchToMode "RenameTab"; TabNameInput 0; }
+        //bind "T" { SwitchToMode "renametab"; TabNameInput 0; SwitchToMode "normal"; }
+        //bind "T" { SwitchToMode "renametab"; TabNameInput 0; }
 
         bind "s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
 
@@ -246,6 +248,7 @@ keybinds clear-defaults=true {
     }
     renametab {
         bind "esc" { UndoRenameTab; SwitchToMode "tab"; }
+        bind "Enter" { SwitchToMode "Normal"; }
     }
 
     renamepane {
