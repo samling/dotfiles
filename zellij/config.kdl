@@ -191,8 +191,8 @@ keybinds clear-defaults=true {
         bind "j" { ScrollDown; }
         bind "k" { ScrollUp; }
 
-        bind "Ctrl u" { PageScrollUp; }
-        bind "Ctrl d" { PageScrollDown; }
+        bind "Ctrl u" { HalfPageScrollUp; }
+        bind "Ctrl d" { HalfPageScrollDown; }
         bind "q" { SwitchToMode "normal"; }
         bind "?" { SwitchToMode "entersearch"; SearchInput 0; }
 
@@ -205,6 +205,8 @@ keybinds clear-defaults=true {
         bind "o" { SearchToggleOption "WholeWord"; }
         bind "p" { Search "up"; }
         bind "w" { SearchToggleOption "Wrap"; }
+
+        bind "q" { SwitchToMode "normal"; }
     }
 
     session {
@@ -237,7 +239,7 @@ keybinds clear-defaults=true {
     entersearch {
         //bind "Ctrl c" { SwitchToMode "scroll"; }
         //bind "esc" { SwitchToMode "scroll"; }
-        //bind "enter" { SwitchToMode "search"; }
+        bind "enter" { SwitchToMode "search"; }
     }
     renametab {
         bind "esc" { UndoRenameTab; SwitchToMode "tab"; }
