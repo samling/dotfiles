@@ -72,8 +72,11 @@ keybinds clear-defaults=true {
         //bind "e" { EditScrollback; SwitchToMode "normal"; } --> shared_among
 
         // Floating
-        bind "f" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
-        bind "F" { ToggleFloatingPanes; SwitchToMode "normal"; }
+        bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
+        bind "F" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
+
+        // Layout
+        bind "Space" { NextSwapLayout; }
 
         // Movement
         bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
