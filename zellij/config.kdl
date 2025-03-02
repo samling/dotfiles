@@ -29,8 +29,8 @@ keybinds clear-defaults=true {
         bind "Ctrl q" { Quit; }
     }
 
+    // Get us back to normal mode
     shared_except "normal" "locked" {
-      // Get us back to normal mode
       bind "esc" { SwitchToMode "normal"; }
       bind "Ctrl c" { SwitchToMode "normal"; }
     }
@@ -53,6 +53,10 @@ keybinds clear-defaults=true {
         bind "Ctrl m" { SwitchToMode "move"; }
     }
 
+    shared_among "scroll" "pane" {
+        bind "e" { EditScrollback; SwitchToMode "normal"; }
+    }
+
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
@@ -65,11 +69,11 @@ keybinds clear-defaults=true {
 
         // Panes
         bind "w" { CloseFocus; SwitchToMode "normal"; }
+        //bind "e" { EditScrollback; SwitchToMode "normal"; } --> shared_among
 
         // Floating
         bind "f" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
         bind "F" { ToggleFloatingPanes; SwitchToMode "normal"; }
-
 
         // Movement
         bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
@@ -192,7 +196,7 @@ keybinds clear-defaults=true {
         bind "q" { SwitchToMode "normal"; }
         bind "?" { SwitchToMode "entersearch"; SearchInput 0; }
 
-        bind "e" { EditScrollback; SwitchToMode "normal"; }
+        //bind "e" { EditScrollback; SwitchToMode "normal"; } --> shared_among
     }
 
     search {
