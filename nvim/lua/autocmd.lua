@@ -38,19 +38,7 @@ vim.api.nvim_create_autocmd({ "BufNew", "BufReadPost", "BufNewFile" }, {
       }
     elseif is_unix == 1 or is_wsl == 1 then
       print "Using Linux clipboard."
-      if vim.fn.executable "wl-copy" == 1 then
-        vim.g.clipboard = {
-          copy = {
-            ["+"] = "wl-copy -n",
-            ["*"] = "wl-copy -n",
-          },
-          paste = {
-            ["+"] = "wl-paste",
-            ["*"] = "wl-paste",
-          },
-          cache_enabled = 0,
-        }
-      elseif vim.fn.executable "xclip" == 1 then
+      if vim.fn.executable "xclip" == 1 then
         vim.g.clipboard = {
           copy = {
             ["+"] = "xclip -selection clipboard",
@@ -71,6 +59,18 @@ vim.api.nvim_create_autocmd({ "BufNew", "BufReadPost", "BufNewFile" }, {
           paste = {
             ["+"] = "xsel --clipboard --output",
             ["*"] = "xsel --clipboard --output",
+          },
+          cache_enabled = 0,
+        }
+      elseif vim.fn.executable "wl-copy" == 1 then
+        vim.g.clipboard = {
+          copy = {
+            ["+"] = "wl-copy -n",
+            ["*"] = "wl-copy -n",
+          },
+          paste = {
+            ["+"] = "wl-paste",
+            ["*"] = "wl-paste",
           },
           cache_enabled = 0,
         }

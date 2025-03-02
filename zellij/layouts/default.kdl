@@ -67,25 +67,20 @@ layout {
                 // F0B4CE - Light pastel pink
                 // D4BDFE - Lavender (pastel purple)
                 // 89B4FA - Slightly bolder pastel blue
-                // A6DFF0 - Light pastel blue
-                // B7E5E0 - Pastel teal
-                // F5EAC3 - Light pastel yellow
-                // F5D1C8 - Pastel peach
-                // FFC387 - Pastel orange
                 // FFC387 - Pastel orange
 
                 mode_normal        "#[fg=#000000,bg=#89B4FA] {name} "
                 mode_locked        "#[fg=#000000,bg=#89B4FA] {name} "
                 mode_resize        "#[fg=#000000,bg=#A6DFF0] {name} "
-                mode_pane          "#[fg=#000000,bg=#89B4FA] {name} "
-                mode_tab           "#[fg=#000000,bg=#89B4FA] {name} "
-                mode_scroll        "#[fg=#000000,bg=#89B4FA] {name} "
-                mode_enter_search  "#[fg=#000000,bg=#89B4FA] {name} "
-                mode_search        "#[fg=#000000,bg=#89B4FA] {name} "
+                mode_pane          "#[fg=#000000,bg=#B7E5E0] {name} "
+                mode_tab           "#[fg=#000000,bg=#F5EAC3] {name} "
+                mode_scroll        "#[fg=#000000,bg=#F5D1C8] {name} "
+                mode_enter_search  "#[fg=#000000,bg=#F0B4CE] {name} "
+                mode_search        "#[fg=#000000,bg=#D4BDFE] {name} "
                 mode_rename_tab    "#[fg=#000000,bg=#89B4FA] {name} "
                 mode_rename_pane   "#[fg=#000000,bg=#89B4FA] {name} "
-                mode_session       "#[fg=#000000,bg=#89B4FA] {name} "
-                mode_move          "#[fg=#000000,bg=#89B4FA] {name} "
+                mode_session       "#[fg=#000000,bg=#F5EAC3] {name} "
+                mode_move          "#[fg=#000000,bg=#FFC387] {name} "
                 mode_prompt        "#[fg=#000000,bg=#89B4FA] {name} "
                 mode_tmux          "#[fg=#000000,bg=#ffc387] {name} "
 
