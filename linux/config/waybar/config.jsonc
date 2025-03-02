@@ -88,11 +88,11 @@
     },
 
     "network": {
-        "format-wifi" : "{essid} {bandwidthDownBits}",
-        "format-ethernet": "{ipaddr} {bandwidthDownBits}",
+        "format-wifi" : "↓{bandwidthDownBits} ↑{bandwidthUpBits}",
+        "format-ethernet": "{ipaddr} ↓{bandwidthDownBits} ↑{bandwidthUpBits}",
         "tooltip-format": "{ifname} via {gwaddr}",
         "format-disconnected" : "no network",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "format-alt": "{essid} ({signalStrength}%): {ipaddr}/{cidr}",
         "interval": 5
     },
 

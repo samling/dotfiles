@@ -3,7 +3,8 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 #=== Colorized man pages
-export MANPAGER="sh -c 'col -bx | bat -l man -p --paging always'"
+export MANROFFOPT="-P -o"
+export MANPAGER="bat -plman"
 
 #=== Default editor
 export EDITOR="vim"
