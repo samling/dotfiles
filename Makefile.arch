@@ -142,6 +142,7 @@ install_pacman_tools:
 	@echo "Installing tools via pacman"
 	sudo pacman -S --noconfirm \
 		aichat \
+		alsa-utils \
 		aws-cli \
 		azure-cli \
 		bat \
@@ -153,10 +154,13 @@ install_pacman_tools:
 		eza \
 		fd \
 		fzf \
+		gnome-power-manager \
 		go \
 		grc \
 		grim \
 		helm \
+		hyprland \
+		hyprswitch \
 		inotify-tools \
 		jc \
 		kubectl \
@@ -164,9 +168,16 @@ install_pacman_tools:
 		lazygit \
 		lsd \
 		neovim \
+		piper \
+		pipewire \
+		wireplumber \
+		pipewire-pulse \
+		pipewire-alsa \
 		pyenv \
+		qt6ct \
 		ripgrep \
 		rofi-wayland \
+		signal-desktop \
 		slurp \
 		terraform \
 		terragrunt \
@@ -178,6 +189,8 @@ install_aur_tools:
 	yay -S --noconfirm \
 		gitmux \
 		google-chrome \
+		insync \
+		hyprswitch \
 		nvm \
 		tealdeer \
 		tlpui \
