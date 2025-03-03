@@ -156,6 +156,7 @@ install_pacman_tools:
 		eza \
 		fd \
 		fzf \
+		geoclue \
 		gnome-power-manager \
 		go \
 		grc \
@@ -177,6 +178,7 @@ install_pacman_tools:
 		pipewire-alsa \
 		pyenv \
 		qt6ct \
+		redshift \
 		ripgrep \
 		rofi-wayland \
 		signal-desktop \
