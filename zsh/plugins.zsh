@@ -5,4 +5,4 @@ source ~/dotfiles/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source ~/dotfiles/zsh/plugins/zsh-history-substring-search.zsh
 
 # Disabling as this seems to cause some weird issues
-#source ~/dotfiles/zsh/plugins/zsh-autosuggestions.zsh
+source ~/dotfiles/zsh/plugins/zsh-autosuggestions.zsh
