@@ -49,13 +49,9 @@ keybinds clear-defaults=true {
 
     //=== shared_except - binds that are shared everywhere except the listed modes
     //
-    shared_except "locked" "tab" {
-        bind "Ctrl t" { SwitchToMode "tab"; }
-    }
-
-    shared_except "locked" "move" {
-        bind "Ctrl m" { SwitchToMode "move"; }
-    }
+    // shared_except "locked" "tab" {
+    //     bind "Ctrl t" { SwitchToMode "tab"; }
+    // }
 
     //=== shared_among - binds that are shared only among the listed modes
     //
