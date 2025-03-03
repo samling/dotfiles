@@ -75,7 +75,7 @@ keybinds clear-defaults=true {
         bind "F" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
 
         // Layout
-        bind "Space" { NextSwapLayout; }
+        bind "space" { NextSwapLayout; }
 
         // Movement
         bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
@@ -84,6 +84,7 @@ keybinds clear-defaults=true {
         bind "l" { MoveFocus "right"; SwitchToMode "normal"; }
 
         // Panes
+        bind "n" { NewPane; SwitchToMode "normal"; }
         bind "w" { CloseFocus; SwitchToMode "normal"; }
 
         // Resize
