@@ -24,6 +24,8 @@ preconfigure: \
 install_tools: \
 	install_pacman_tools \
 	install_aur_tools \
+	install_hyprland_tools \
+	install_sway_tools \
 	install_k8s_tools \
 	install_vkv
 
@@ -182,7 +184,25 @@ install_pacman_tools:
 		terraform \
 		terragrunt \
 		tmux \
+		wezterm \
 		zoxide
+
+install_hyprland_tools:
+	@echo "Installing Hyprland and accompanying utilities"
+	sudo pacman -S --noconfirm \
+		hyprland \
+		hypridle \
+		hyprpaper \
+		hyprlock \
+		hyprpolkitagent
+
+install_sway_tools:
+	@echo "Installing Sway and accompanying utilities"
+	sudo pacman -S --noconfirm \
+		sway \
+		swayidle \
+		swaylock \
+		swaybg
 
 install_aur_tools:
 	@echo "Installing tools from AUR"

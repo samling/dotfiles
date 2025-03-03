@@ -33,7 +33,7 @@ tooltip {
     border: 2px solid #6c7086; /* Overlay 2 */
     color: #cdd6f4; /* Text (Lavender) */
 }
-
+/*hyprland's "mode"*/
 #submap {
     background-color: #313244; /* Overlay 0 */
     margin: 6px 0px 6px 6px;
@@ -41,6 +41,13 @@ tooltip {
     color: #cba6f7; /* Mauve */
 }
 
+/*sway's "submap"*/
+#mode {
+    background-color: #313244; /* Overlay 0 */
+    margin: 6px 0px 6px 6px;
+    border: 2px solid #45475a; /* Surface 2 */
+    color: #cba6f7; /* Mauve */
+}
 #workspaces {
     background-color: #313244; /* Overlay 0 */
     margin: 6px 0px 6px 6px;
@@ -55,8 +62,15 @@ tooltip {
     color: #cdd6f4; /* Text (Lavender) */
 }
 
+/* in hyprland focused=>active */
 #workspaces button.active {
-    color: #000; /* Pink */
+    color: #000;
+    background-color: #89b4fa;
+}
+
+/* in sway active=>focused */
+#workspaces button.focused {
+    color: #000;
     background-color: #89b4fa;
 }
 

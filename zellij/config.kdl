@@ -29,7 +29,8 @@ keybinds clear-defaults=true {
         bind "Ctrl q" { Quit; }
     }
 
-    // Get us back to normal mode
+    //=== Get us back to normal mode
+    //
     shared_except "normal" "locked" {
       bind "esc" { SwitchToMode "normal"; }
       bind "Ctrl c" { SwitchToMode "normal"; }
@@ -38,13 +39,16 @@ keybinds clear-defaults=true {
     //=== Switch between modes
     //
     // ctrl +
-    //   a -> pane
+    //   a -> tmux
     //   t -> tab
+    //   m -> move
     //   s -> session
-    shared_except "locked" "pane" {
-        bind "Ctrl a" { SwitchToMode "pane"; }
+    shared_except "locked" "tmux" {
+        bind "Ctrl a" { SwitchToMode "tmux"; }
     }
 
+    //=== shared_except - binds that are shared everywhere except the listed modes
+    //
     shared_except "locked" "tab" {
         bind "Ctrl t" { SwitchToMode "tab"; }
     }
@@ -53,7 +57,9 @@ keybinds clear-defaults=true {
         bind "Ctrl m" { SwitchToMode "move"; }
     }
 
-    shared_among "scroll" "pane" {
+    //=== shared_among - binds that are shared only among the listed modes
+    //
+    shared_among "tmux" "scroll" {
         bind "e" { EditScrollback; SwitchToMode "normal"; }
     }
 
@@ -61,16 +67,9 @@ keybinds clear-defaults=true {
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
 
-    // de-facto "leader" mode
-    pane {
-        // Splits
-        bind "d" { NewPane "right"; SwitchToMode "normal"; }
-        bind "D" { NewPane "down"; SwitchToMode "normal"; }
-
-        // Panes
-        bind "w" { CloseFocus; SwitchToMode "normal"; }
-        //bind "e" { EditScrollback; SwitchToMode "normal"; } --> shared_among
-
+    //=== single entry point
+    //
+    tmux {
         // Floating
         bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "F" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
@@ -84,11 +83,16 @@ keybinds clear-defaults=true {
         bind "k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "l" { MoveFocus "right"; SwitchToMode "normal"; }
 
-        // Scrolling
-        bind "[" { SwitchToMode "scroll"; }
-        bind "Ctrl [" { SwitchToMode "scroll"; } // handle occasional misfires on key rollover
+        // Panes
+        bind "w" { CloseFocus; SwitchToMode "normal"; }
 
-        // Session
+        // Resize
+        bind "Shift h" { Resize "Increase left"; }
+        bind "Shift j" { Resize "Increase down"; }
+        bind "Shift k" { Resize "Increase up"; }
+        bind "Shift l" { Resize "Increase right"; }
+
+        // Session manager
         bind "s" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
@@ -97,8 +101,19 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
 
-        // Search
+        // Splits
+        bind "d" { NewPane "right"; SwitchToMode "normal"; }
+        bind "D" { NewPane "down"; SwitchToMode "normal"; }
+
+        // Switch to other modes
         bind "?" { SwitchToMode "entersearch"; }
+        bind "r" { SwitchToMode "resize"; }
+        bind "m" { SwitchToMode "move"; }
+        bind "[" { SwitchToMode "scroll"; }
+        bind "Ctrl [" { SwitchToMode "scroll"; } // handle occasional misfires on key rollover
+
+        // Sync tabs
+        bind "Z" { ToggleActiveSyncTab; SwitchToMode "normal"; }
 
         // Tabs
         bind "t" { NewTab; SwitchToMode "normal"; }
@@ -113,12 +128,6 @@ keybinds clear-defaults=true {
         bind "7" { GoToTab 7; SwitchToMode "normal"; }
         bind "8" { GoToTab 8; SwitchToMode "normal"; }
         bind "9" { GoToTab 9; SwitchToMode "normal"; }
-
-        // Emulate leader+r to enter resizing mode
-        bind "r" { SwitchToMode "resize"; }
-
-        // Switch to move mode
-        bind "m" { SwitchToMode "move"; }
 
         // Zoom
         bind "z" { ToggleFocusFullscreen; SwitchToMode "normal"; }
@@ -418,14 +427,14 @@ scrollback_editor "nvim"
 //   - true (default)
 //   - false
 // 
-// session_serialization false
+session_serialization true
  
 // Whether pane viewports are serialized along with the session, default is false
 // Options:
 //   - true
 //   - false (default)
 // 
-// serialize_pane_viewport false
+// serialize_pane_viewport true
  
 // Scrollback lines to serialize along with the pane viewport when serializing sessions, 0
 // defaults to the scrollback size. If this number is higher than the scrollback size, it will
