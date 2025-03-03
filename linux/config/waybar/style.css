@@ -26,6 +26,7 @@ tooltip {
 #battery,
 #backlight,
 #network,
+#custom-tailscale,
 #pulseaudio {
     margin: 6px 6px 6px 0px;
     padding: 2px 8px;
