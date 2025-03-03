@@ -39,12 +39,12 @@ keybinds clear-defaults=true {
     //=== Switch between modes
     //
     // ctrl +
-    //   a -> tmux
+    //   a -> pane
     //   t -> tab
     //   m -> move
     //   s -> session
-    shared_except "locked" "tmux" {
-        bind "Ctrl a" { SwitchToMode "tmux"; }
+    shared_except "locked" "pane" {
+        bind "Ctrl a" { SwitchToMode "pane"; }
     }
 
     //=== shared_except - binds that are shared everywhere except the listed modes
@@ -55,7 +55,7 @@ keybinds clear-defaults=true {
 
     //=== shared_among - binds that are shared only among the listed modes
     //
-    shared_among "tmux" "scroll" {
+    shared_among "pane" "scroll" {
         bind "e" { EditScrollback; SwitchToMode "normal"; }
     }
 
@@ -65,13 +65,18 @@ keybinds clear-defaults=true {
 
     //=== single entry point
     //
-    tmux {
+    pane {
         // Floating
         bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "F" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
 
+        // Frames
+        bind "'" { TogglePaneFrames; SwitchToMode "normal"; }
+
         // Layout
-        bind "space" { NextSwapLayout; }
+        bind "Alt [" { PreviousSwapLayout; SwitchToMode "normal"; }
+        bind "Alt ]" { NextSwapLayout; SwitchToMode "normal"; }
+        bind "Space" { NextSwapLayout; SwitchToMode "normal"; }
 
         // Movement
         bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
