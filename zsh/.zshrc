@@ -16,9 +16,9 @@ source ~/dotfiles/zsh/completions.zsh
 source ~/dotfiles/zsh/opt.zsh
 source ~/dotfiles/zsh/aliases.zsh
 source ~/dotfiles/zsh/functions.zsh
-source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/fnm.zsh
 source ~/dotfiles/zsh/plugins.zsh
+source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/zellij.zsh
 
 ## Plugins
