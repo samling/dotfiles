@@ -10,4 +10,4 @@ kubectl_context () {
 
 CURRENT_CONTEXT=$(kubectl_context)
 
-echo $CURRENT_CONTEXT
+echo "{\"text\": \"${CURRENT_CONTEXT}\"}"
