@@ -171,6 +171,7 @@ install_pacman_tools:
 		lazygit \
 		lsd \
 		neovim \
+		noto-fonts-emoji \
 		piper \
 		pipewire \
 		wireplumber \
@@ -185,6 +186,7 @@ install_pacman_tools:
 		slurp \
 		terraform \
 		terragrunt \
+		ttf-nerd-fonts-symbols-mono \
 		tmux \
 		wezterm \
 		zoxide

@@ -20,14 +20,14 @@
     ],
 
     "modules-right": [
-        "cpu_text",
         "cpu",
         "memory",
-        "backlight",
-        "battery",
         "network",
-        "pulseaudio",
+        //"pulseaudio",
+        //"backlight",
+        "custom/kubectx",
         "custom/tailscale",
+        "battery",
         "tray"
     ],
 
@@ -42,7 +42,18 @@
       },
       "tooltip": true,
       "return-type": "json",
-      "interval": 3,
+      "interval": 3
+    },
+
+    "custom/kubectx" : {
+        "exec": "~/.config/waybar/scripts/waybar-kubectx/waybar-kubectx.sh",
+        "on-click": "",
+        "exec-on-event": true,
+        "format": "⎈ {icon}",
+        "format-icons": {},
+        "tooltip": false,
+        "return-type": "json",
+        "interval": 3
     },
 
     "hyprland/workspaces": {
@@ -101,7 +112,7 @@
         "format-charging": "{capacity}% ({time}) ",
         "format-plugged": "{capacity}% ",
         "format-time": "{H}h{M}m",
-        "format-alt": "{time} {icon}",
+        //"format-alt": "{time} {icon}",
         "format-icons": ["", "", "", "", ""],
         "interval": 5,
         "states": {
@@ -120,8 +131,8 @@
     },
 
     "network": {
-        "format-wifi" : "↓{bandwidthDownBits} ↑{bandwidthUpBits}",
-        "format-ethernet": "{ipaddr} ↓{bandwidthDownBits} ↑{bandwidthUpBits}",
+        "format-wifi" : "↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
+        "format-ethernet": "{ipaddr} ↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
         "tooltip-format": "{ifname} via {gwaddr}",
         "format-disconnected" : "no network",
         "format-alt": "{essid} ({signalStrength}%): {ipaddr}/{cidr}",
@@ -133,7 +144,7 @@
         "max-volume": 150,
         "format": "vol {volume}%",
         "format-bluetooth": "vol {volume}%",
-        "format-muted": "  Muted",
+        "format-muted": " ",
         "nospacing": 1,
         "on-click": "pavucontrol",
         "tooltip": false

@@ -32,7 +32,7 @@ keybinds clear-defaults=true {
     //=== Get us back to normal mode
     //
     shared_except "normal" "locked" {
-      bind "esc" { SwitchToMode "normal"; }
+      bind "Esc" { SwitchToMode "normal"; }
       bind "Ctrl c" { SwitchToMode "normal"; }
     }
 

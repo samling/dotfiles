@@ -1,0 +1,10 @@
+"custom/kubectx" : {
+    "exec": "~/.config/waybar/scripts/waybar-kubectx/waybar-kubectx.sh",
+    "on-click": "",
+    "exec-on-event": true,
+    "format": "⎈ {icon}",
+    "format-icons": {},
+    "tooltip": false,
+    "return-type": "json",
+    "interval": 3,
+}

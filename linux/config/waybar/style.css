@@ -29,6 +29,7 @@ tooltip {
 #backlight,
 #network,
 #custom-tailscale,
+#custom-kubectx,
 #pulseaudio {
     margin: 6px 6px 6px 0px;
     padding: 2px 8px;
