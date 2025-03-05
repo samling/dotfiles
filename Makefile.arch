@@ -79,6 +79,7 @@ install_prereqs:
 		curl \
 		dialog \
 		direnv \
+		dnsutils \
 		evolution \
 		gcc \
 		gnupg \
