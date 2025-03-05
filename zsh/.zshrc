@@ -21,10 +21,6 @@ source ~/dotfiles/zsh/plugins.zsh
 source ~/dotfiles/zsh/keys.zsh
 source ~/dotfiles/zsh/zellij.zsh
 
-## Plugins
-#
-#plugins=(git-auto-fetch)
-
 # Source ${HOME}/dotfiles-private/zshrc.*.local files
 #
 LOCAL_DOTFILES_GIT=(${HOME}/dotfiles-private/zsh/zshrc.*.local)

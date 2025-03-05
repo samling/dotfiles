@@ -30,7 +30,7 @@ eval "$(fzf --zsh)"
 source <(kubectl completion zsh)
 
 #=== pure prompt
-prompt pure
+#prompt pure
 
 #=== pyenv
 if command -v pyenv &> /dev/null; then
@@ -47,7 +47,7 @@ if command -v pyenv &> /dev/null; then
 fi
 
 #=== starship prompt
-# eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 
 #=== zellij
 source <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )

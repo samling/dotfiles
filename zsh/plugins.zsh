@@ -6,3 +6,6 @@ source ~/dotfiles/zsh/plugins/zsh-history-substring-search.zsh
 
 # Disabling as this seems to cause some weird issues
 source ~/dotfiles/zsh/plugins/zsh-autosuggestions.zsh
+
+# Enable git auto fetch
+source ~/dotfiles/zsh/plugins/git-auto-fetch.plugin.zsh
