@@ -184,6 +184,7 @@ install_pacman_tools:
 		rofi-wayland \
 		signal-desktop \
 		slurp \
+		starship \
 		terraform \
 		terragrunt \
 		ttf-nerd-fonts-symbols-mono \
