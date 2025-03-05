@@ -10,6 +10,10 @@ $line_break\
 $python\
 $character"""
 
+right_format = """
+$kubernetes
+"""
+
 [directory]
 style = "blue"
 truncation_length = 8
@@ -39,6 +43,10 @@ stashed = "≡"
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "242"
+
+[kubernetes]
+format = '[⎈ $context](dimmed green) '
+disabled = false
 
 [cmd_duration]
 format = "[$duration]($style) "
