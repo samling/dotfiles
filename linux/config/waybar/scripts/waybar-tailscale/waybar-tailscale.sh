@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# NOTE:This script operates in user mode, which is set with `sudo tailscale set --operator=$USER`
+# Running tailscale with `sudo` will _revert_ that, i.e. the above command will need to be run again
+# to put tailscale back in user mode. If this script isn't working, try that.
+
 STATUS_KEY="BackendState"
 RUNNING="Running"
 
@@ -15,7 +19,7 @@ toggle_status () {
     if tailscale_status; then
         tailscale down
     else
-        tailscale up
+        tailscale up --accept-routes
     fi
     sleep 5
 }
