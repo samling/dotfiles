@@ -25,7 +25,7 @@
         "network",
         //"pulseaudio",
         //"backlight",
-        "custom/kubectx",
+        // "custom/kubectx",
         "custom/tailscale",
         "battery",
         "tray"
