@@ -10,9 +10,9 @@ $line_break\
 $python\
 $character"""
 
-right_format = """
-$kubernetes
-"""
+# right_format = """
+# $kubernetes
+# """
 
 [directory]
 style = "blue"
