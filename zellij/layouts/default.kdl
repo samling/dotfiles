@@ -5,7 +5,7 @@ layout {
           plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
               format_left   "{mode} {tabs}"
               format_center ""
-              format_right  "{command_git_branch} {datetime} #[fg=#89B4FA,bold]{command_k8s_cfg} "
+              format_right  "{datetime} #[fg=#89B4FA,bold]{command_k8s_cfg} "
               format_space  ""
 
               border_enabled  "false"
@@ -20,9 +20,6 @@ layout {
               //tab_active   "#[fg=#000000,bg=#89B4FA,bold,italic] {name} "
 
               // formatting for inactive tabs
-              //tab_normal              "#[fg=#6C7086] {index} :: {name} "
-              //tab_normal_fullscreen   "#[fg=#6C7086] {index} :: {name} [FULLSCREEN] "
-              //tab_normal_sync         "#[fg=#6C7086] {index} :: {name} <SYNC> "
               tab_normal              "#[fg=#6C7086] #[bold]{index} {name} "
               tab_normal_fullscreen   "#[fg=#6C7086] #[bold]{index} {name} [FULLSCREEN] "
               tab_normal_sync         "#[fg=#6C7086] #[bold]{index} {name} <SYNC> "
@@ -43,20 +40,11 @@ layout {
               tab_fullscreen_indicator "[FULLSCREEN] "
               tab_floating_indicator   "⬚ "
 
-              // limit tab display count
-              //tab_display_count         "3"  // limit to showing 3 tabs
-              //tab_truncate_start_format "#[fg=red,bg=#181825] < +{count} ..."
-              //tab_truncate_end_format   "#[fg=red,bg=#181825] ... +{count} >"
+              // command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
+              // command_git_branch_format      "#[fg=blue] {stdout} "
+              // command_git_branch_interval    "10"
+              // command_git_branch_rendermode  "static"
 
-              command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
-              command_git_branch_format      "#[fg=blue] {stdout} "
-              command_git_branch_interval    "10"
-              command_git_branch_rendermode  "static"
-
-              //command_test_command "cat ~/.kube/config | grep current-context | cut -d':' -f2 | awk '{$1=$1;print}'"
-              //command_test_format "{stdout}"
-              //command_test_interval "3"
-              //command_test_rendermode "static"
               command_k8s_cfg_command "kubectl config current-context"
               command_k8s_cfg_format "⎈ {stdout}"
               command_k8s_cfg_interval "3"

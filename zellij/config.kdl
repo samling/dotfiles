@@ -18,6 +18,7 @@ keybinds clear-defaults=true {
         bind "Ctrl k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "Ctrl l" { MoveFocus "right"; SwitchToMode "normal"; }
 
+
         // Tabs
         bind "Ctrl p" { GoToPreviousTab; SwitchToMode "normal"; }
         bind "Ctrl n" { GoToNextTab; SwitchToMode "normal"; }
@@ -83,6 +84,9 @@ keybinds clear-defaults=true {
         bind "j" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "l" { MoveFocus "right"; SwitchToMode "normal"; }
+
+        bind "y" { TogglePaneFrames; SwitchToMode "normal"; }
+
 
         // Panes
         bind "n" { NewPane; SwitchToMode "normal"; }
