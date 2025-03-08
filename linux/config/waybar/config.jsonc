@@ -60,7 +60,20 @@
         "disable-scroll": true,
         "all-outputs": true,
         "tooltip": false,
-        "show-special": true
+        "show-special": true,
+        "format": "{name} <big>{windows}</big>",
+        "format-window-separator": "",
+        "window-rewrite-default": " ",
+        "window-rewrite": {
+          // https://www.nerdfonts.com/cheat-sheet
+          "title<.*youtube.*>": " ", // Windows whose titles contain "youtube"
+          "class<google-chrome>": " ", // Windows whose classes are "firefox"
+          "wezterm": " ", // Windows that contain "foot" in either class or title. For optimization reasons, it will only match against a title if at least one other window explicitly matches against a title.
+          "Cursor": "󰨞 ",
+          "Signal": "󰭹 ",
+          "Discord": " ",
+          "Obsidian": " "
+        }
     },
 
     "sway/workspaces": {

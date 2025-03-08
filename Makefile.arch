@@ -164,7 +164,6 @@ install_pacman_tools:
 		grim \
 		helm \
 		hyprland \
-		hyprswitch \
 		inotify-tools \
 		jc \
 		kubectl \
@@ -200,6 +199,8 @@ install_hyprland_tools:
 		hypridle \
 		hyprpaper \
 		hyprlock \
+		hyprswitch \
+		hyprshade \
 		hyprpolkitagent
 
 install_sway_tools:
