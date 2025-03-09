@@ -21,25 +21,20 @@ keybinds clear-defaults=true {
         bind "Ctrl p" { GoToPreviousTab; SwitchToMode "normal"; }
         bind "Ctrl n" { GoToNextTab; SwitchToMode "normal"; }
 
+        // Plugins
+        // bind "Ctrl y" {
+        //   LaunchOrFocusPlugin "file:~/dotfiles/zellij/plugins/zellij_forgot.wasm" {
+        //     "LOAD_ZELLIJ_BINDINGS" "true"
+        //     floating true
+        //   }
+        // }
+
         // Locked mode...just in case
         bind "Ctrl g" { SwitchToMode "locked"; }
 
         // Quit
         bind "Ctrl q" { Quit; }
     }
-
-    //=== zellij-forgot
-    // shared_except "locked" {
-    //   bind "Ctrl y" {
-    //       LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
-    //           "LOAD_ZELLIJ_BINDINGS" "false"
-    //           "buy eggs" "5x"
-    //           "learn rust" "5h"
-    //           "clean up code" "tomorrow"
-    //           floating true
-    //       }
-    //    }
-    // }
 
     //=== Get us back to normal mode
     //
@@ -96,7 +91,7 @@ keybinds clear-defaults=true {
         bind "k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "l" { MoveFocus "right"; SwitchToMode "normal"; }
 
-        bind "y" { TogglePaneFrames; SwitchToMode "normal"; }
+        //bind "y" { TogglePaneFrames; SwitchToMode "normal"; }
 
         bind "Shift p" {
             LaunchOrFocusPlugin "plugin-manager" {
