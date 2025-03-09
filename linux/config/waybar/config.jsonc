@@ -62,18 +62,18 @@
         "tooltip": false,
         "show-special": true,
         "format": "{name} <big>{windows}</big>",
-        "format-window-separator": "",
-        "window-rewrite-default": " ",
+        "format-window-separator": " ",
+        "window-rewrite-default": "",
         "window-rewrite": {
           // https://www.nerdfonts.com/cheat-sheet
-          "title<.*youtube.*>": " ",
-          "class<google-chrome>": " ",
-          "wezterm": " ",
-          "ghostty": "󰊠 ",
-          "Cursor": "󰨞 ",
-          "Signal": "󰭹 ",
-          "Discord": " ",
-          "Obsidian": " ",
+          "title<.*youtube.*>": "",
+          "class<google-chrome>": "",
+          "wezterm": "",
+          "ghostty": "󰊠",
+          "Cursor": "󰨞",
+          "Signal": "󰭹",
+          "Discord": "",
+          "Obsidian": "",
           "Thunar": "",
           "Dolphin": ""
         }
