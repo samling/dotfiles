@@ -52,7 +52,7 @@ layout {
               datetime_timezone "America/Los_Angeles"
 
               // color reference: https://github.com/catppuccin/catppuccin
-              mode_locked        "#[fg=#F38BA8]#[fg=#000000,bg=#F38BA8]{name}#[fg=#F38BA8] "
+              mode_locked        "#[fg=#F38BA8]#[fg=#000000,bg=#F38BA8] {name}#[fg=#F38BA8] "
               mode_normal        "#[fg=#89B4FA]#[fg=#000000,bg=#89B4FA]{name}#[fg=#89B4FA] "
 
               mode_tmux          "#[fg=#FFC387]#[fg=#000000,bg=#FFC387]{name}#[fg=#FFC387] "
