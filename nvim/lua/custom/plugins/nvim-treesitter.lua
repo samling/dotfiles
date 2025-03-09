@@ -15,6 +15,7 @@ return { -- Highlight, edit, and navigate code
         'devicetree',
         'hcl',
         'html',
+        'hyprlang',
         'lua',
         'markdown',
         'query',

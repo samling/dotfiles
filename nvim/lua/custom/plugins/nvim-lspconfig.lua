@@ -55,6 +55,7 @@ return {
           },
         },
       },
+      hyprls = {},
       jqls = {},
       jsonls = {},
       lua_ls = {
@@ -101,6 +102,11 @@ return {
       yamlls = {},
       yq = {},
     }
+
+    -- Add filetypes
+    vim.filetype.add({
+      pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+    })
 
     -- lsp.basedpyright.setup {}
 
