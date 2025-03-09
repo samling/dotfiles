@@ -37,6 +37,7 @@ install_k8s_tools: \
 configure: \
 	configure_zsh \
 	configure_tmux \
+	configure_zellij \
 	configure_npm \
 	configure_nvim \
 	configure_pyenv
@@ -54,6 +55,9 @@ configure_pyenv: \
 
 configure_tmux: \
 	install_tmux_tpm
+
+configure_zellij: \
+	install_zellij_plugins
 
 configure_zsh: \
 	install_gitstatus \
@@ -100,6 +104,7 @@ install_prereqs:
 		unzip \
 		xclip \
 		xdotool \
+		wget \
 		zsh
 
 create_folders:
@@ -236,6 +241,16 @@ install_vkv:
 install_tmux_tpm:
 	@echo "Installing tpm"
 	if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm; else echo "tpm is already installed; skipping..."; fi
+
+##################
+# ZELLIJ PLUGINS #
+##################
+
+install_zellij_plugins:
+	@echo "Installing zellij plugins"
+	# TODO: Get latest zellij_forgot version
+	wget -O ~/dotfiles/zellij/plugins/zjstatus.wasm https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm
+	wget -O ~/dotfiles/zellij/plugins/zellij_forgot.wasm https://github.com/karimould/zellij-forgot/releases/download/0.4.1/zellij_forgot.wasm
 
 ###############
 # ZSH PLUGINS #

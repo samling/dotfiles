@@ -2,10 +2,10 @@ layout {
   default_tab_template {
       children
       pane size=1 borderless=true {
-          plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
+          plugin location="file:~/dotfiles/zellij/plugins/zjstatus.wasm" {
               format_left   "{mode} {tabs}"
               format_center ""
-              format_right  "{datetime} #[fg=#89B4FA,bold]{command_k8s_cfg} "
+              format_right  "{datetime} #[fg=#89B4FA,bold]{command_kubectx}#[fg=#fff]:#[fg=#cba6f7,bold]{command_kubens} #[fg=#cba6f7]#[fg=#181825,bg=#cba6f7]{session}#[fg=#cba6f7] "
               format_space  ""
 
               border_enabled  "false"
@@ -13,21 +13,15 @@ layout {
               border_format   "#[fg=#6C7086]{char}"
               border_position "top"
 
-              mode_normal  "#[bg=blue] "
-              mode_tmux    "#[bg=#ffc387] "
-
-              //tab_normal   "#[fg=#6C7086] {name} "
-              //tab_active   "#[fg=#000000,bg=#89B4FA,bold,italic] {name} "
-
               // formatting for inactive tabs
               tab_normal              "#[fg=#6C7086] #[bold]{index} {name} "
               tab_normal_fullscreen   "#[fg=#6C7086] #[bold]{index} {name} [FULLSCREEN] "
               tab_normal_sync         "#[fg=#6C7086] #[bold]{index} {name} <SYNC> "
 
               // formatting for the current active tab
-              tab_active              "#[fg=#000000,bg=#89B4FA,bold,italic] {index} {name} {floating_indicator}"
-              tab_active_fullscreen   "#[fg=#000000,bg=#89B4FA,bold,italic] {index} {name} {fullscreen_indicator}"
-              tab_active_sync         "#[fg=#000000,bg=#89B4FA,bold,italic] {index} {name} {sync_indicator}"
+              tab_active              "#[fg=#89B4FA]#[fg=#181825,bg=#89B4FA,bold,italic] {index} {name} {floating_indicator}#[fg=#89B4FA]"
+              tab_active_fullscreen   "#[fg=#89B4FA]#[fg=#181825,bg=#89B4FA,bold,italic] {index} {name} {fullscreen_indicator}#[fg=#89B4FA]"
+              tab_active_sync         "#[fg=#89B4FA]#[fg=#181825,bg=#89B4FA,bold,italic] {index} {name} {sync_indicator}#[fg=#89B4FA]"
 
               // separator between the tabs
               tab_separator           "#[fg=#6C7086] "
@@ -45,39 +39,37 @@ layout {
               // command_git_branch_interval    "10"
               // command_git_branch_rendermode  "static"
 
-              command_k8s_cfg_command "kubectl config current-context"
-              command_k8s_cfg_format "⎈ {stdout}"
-              command_k8s_cfg_interval "3"
-              command_k8s_cfg_rendermode "static"
+              command_kubectx_command "kubectl ctx -c"
+              command_kubectx_format "⎈ {stdout}"
+              command_kubectx_interval "3"
+
+              command_kubens_command "kubectl-ns -c"
+              command_kubens_format "{stdout}"
+              command_kubens_interval "3"
 
               datetime        "#[fg=#6C7086,bold] {format} "
               datetime_format "%A, %d %b %Y %H:%M"
               datetime_timezone "America/Los_Angeles"
 
-              // A6DFF0 - light pastel blue
-              // B7E5E0 - pastel teal
-              // CBE6CC - Pastel green
-              // F5EAC3 - Light pastel yellow
-              // F5D1C8 - Pastel peach
-              // F0B4CE - Light pastel pink
-              // D4BDFE - Lavender (pastel purple)
-              // 89B4FA - Slightly bolder pastel blue
-              // FFC387 - Pastel orange
+              // color reference: https://github.com/catppuccin/catppuccin
+              mode_locked        "#[fg=#F38BA8]#[fg=#000000,bg=#F38BA8]{name}#[fg=#F38BA8] "
+              mode_normal        "#[fg=#89B4FA]#[fg=#000000,bg=#89B4FA]{name}#[fg=#89B4FA] "
 
-              mode_normal        "#[fg=#000000,bg=#89B4FA] {name} "
-              mode_locked        "#[fg=#000000,bg=#89B4FA] {name} "
-              mode_resize        "#[fg=#000000,bg=#A6DFF0] {name} "
-              mode_pane          "#[fg=#000000,bg=#B7E5E0] {name} "
-              mode_tab           "#[fg=#000000,bg=#F5EAC3] {name} "
-              mode_scroll        "#[fg=#000000,bg=#F5D1C8] {name} "
-              mode_enter_search  "#[fg=#000000,bg=#F0B4CE] {name} "
-              mode_search        "#[fg=#000000,bg=#D4BDFE] {name} "
-              mode_rename_tab    "#[fg=#000000,bg=#89B4FA] {name} "
-              mode_rename_pane   "#[fg=#000000,bg=#89B4FA] {name} "
-              mode_session       "#[fg=#000000,bg=#F5EAC3] {name} "
-              mode_move          "#[fg=#000000,bg=#FFC387] {name} "
-              mode_prompt        "#[fg=#000000,bg=#89B4FA] {name} "
-              mode_tmux          "#[fg=#000000,bg=#ffc387] {name} "
+              mode_tmux          "#[fg=#FFC387]#[fg=#000000,bg=#FFC387]{name}#[fg=#FFC387] "
+
+              mode_pane          "#[fg=#B7E5E0]#[fg=#000000,bg=#B7E5E0]{name}#[fg=#B7E5E0] "
+              mode_rename_pane   "#[fg=#89B4FA]#[fg=#000000,bg=#89B4FA]{name}#[fg=#89B4FA] "
+              mode_resize        "#[fg=#A6DFF0]#[fg=#000000,bg=#A6DFF0]{name}#[fg=#A6DFF0] "
+              mode_scroll        "#[fg=#F5D1C8]#[fg=#000000,bg=#F5D1C8]{name}#[fg=#F5D1C8] "
+              mode_move          "#[fg=#FFC387]#[fg=#000000,bg=#FFC387]{name}#[fg=#FFC387] "
+
+              mode_tab           "#[fg=#F5EAC3]#[fg=#000000,bg=#F5EAC3]{name}#[fg=#F5EAC3] "
+              mode_rename_tab    "#[fg=#89B4FA]#[fg=#000000,bg=#89B4FA]{name}#[fg=#89B4FA] "
+
+              mode_enter_search  "#[fg=#F0B4CE]#[fg=#000000,bg=#F0B4CE]{name}#[fg=#F0B4CE] "
+              mode_search        "#[fg=#D4BDFE]#[fg=#000000,bg=#D4BDFE]{name}#[fg=#D4BDFE] "
+
+              mode_session       "#[fg=#F5EAC3]#[fg=#000000,bg=#F5EAC3]{name}#[fg=#F5EAC3] "
 
               mode_default_to_mode "normal"
           }

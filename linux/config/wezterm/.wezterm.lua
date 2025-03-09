@@ -9,6 +9,10 @@ config.enable_tab_bar = false
 config.font = wezterm.font 'Iosevka Nerd Font'
 config.font_size = 12
 
+config.window_padding = {
+  bottom = 0,
+}
+
 config.color_scheme = "Catppuccin Mocha"
 
 config.keys = {
