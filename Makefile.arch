@@ -86,6 +86,7 @@ install_prereqs:
 		dnsutils \
 		evolution \
 		gcc \
+		gnome-themes-extra \
 		gnupg \
 		flex \
 		inetutils \
@@ -94,6 +95,7 @@ install_prereqs:
 		llvm \
 		meson \
 		nmap \
+		nwg-look \
 		pavucontrol \
 		pkg-config \
 		p7zip \
