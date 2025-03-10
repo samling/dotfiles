@@ -8,7 +8,7 @@ shell-integration-features = no-cursor
 window-theme = system
 window-padding-balance = true
 window-padding-x = 5 
-window-padding-y = 10 
+window-padding-y = 5
 
 #=== Theme
 theme = catppuccin-mocha.conf
