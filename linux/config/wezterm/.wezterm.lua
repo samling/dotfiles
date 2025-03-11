@@ -6,6 +6,8 @@ config.enable_wayland = false
 config.animation_fps = 120
 config.enable_tab_bar = false
 
+config.enable_kitty_keyboard = true
+
 config.font = wezterm.font 'Iosevka Nerd Font'
 config.font_size = 12
 

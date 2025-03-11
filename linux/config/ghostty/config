@@ -16,8 +16,7 @@ theme = catppuccin-mocha.conf
 #=== Font
 # Get available fonts:
 #   /Applications/Ghostty.app/Contents/MacOS/ghostty +list-fonts
-font-family = "Iosevka NFM"
-font-family = "IosevkaTerm Nerd Font Mono"
+font-family = "Iosevka NFP"
 # font-size => define this in config-local
 
 # Fallbacks
