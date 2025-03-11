@@ -56,6 +56,10 @@
         "interval": 1
     },
 
+    "hyprland/window": {
+      "format": "{initialClass}"
+    },
+
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -63,6 +67,8 @@
         "show-special": true,
         "format": "{name} <big>{windows}</big>",
         "format-window-separator": " ",
+        "format-icons": {
+        },
         "window-rewrite-default": "",
         "window-rewrite": {
           // https://www.nerdfonts.com/cheat-sheet
