@@ -29,9 +29,11 @@ keybinds clear-defaults=true {
         //   }
         // }
         bind "Ctrl y" {
-            LaunchOrFocusPlugin "file:~/Documents/Projects/z-confirm-before/target/wasm32-wasip1/debug/rust-plugin-example.wasm" {
-              test_key "t"
+            LaunchOrFocusPlugin "file:~/Documents/Programming/z-confirm-before/target/wasm32-wasip1/debug/rust-plugin-example.wasm" {
+              //move_to_focused_tab true // will prefer to focus the plugin if it exists rather than opening it, moving it to the focused tab
+              floating true
             }
+            SwitchToMode "normal"
         }
 
         // Locked mode...just in case
