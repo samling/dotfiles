@@ -18,21 +18,27 @@ config.window_padding = {
 config.color_scheme = "Catppuccin Mocha"
 config.warn_about_missing_glyphs=false
 
+config.disable_default_key_bindings=true
 config.keys = {
   -- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
   {key="LeftArrow", mods="OPT", action=wezterm.action{SendString="\x1bb"}},
   -- Make Option-Right equivalent to Alt-f; forward-word
   {key="RightArrow", mods="OPT", action=wezterm.action{SendString="\x1bf"}},
   {
-     key = 'r',
-     mods = 'CMD|SHIFT',
-     action = wezterm.action.DisableDefaultAssignment,
+    key = "P",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.ActivateCommandPalette,
   },
   {
-     key = 'r',
-     mods = 'CTRL|SHIFT',
-     action = wezterm.action.DisableDefaultAssignment,
+    key = "C",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.CopyTo('Clipboard'),
   },
+  {
+    key = "V",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.PasteFrom('Clipboard'),
+  }
 }
 
 return config
