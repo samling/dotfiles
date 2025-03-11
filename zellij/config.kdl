@@ -29,10 +29,8 @@ keybinds clear-defaults=true {
         //   }
         // }
         bind "Ctrl y" {
-            LaunchOrFocusPlugin "https://github.com/zellij-org/create-rust-plugin/releases/latest/download/create-rust-plugin.wasm" {
-                project_dir "/home/sboynton/Documents/Projects"
-                floating true // will open the tool in a new floating pane
-                move_to_focused_tab true // will prefer to focus the plugin if it exists rather than opening it, moving it to the focused tab
+            LaunchOrFocusPlugin "file:~/Documents/Projects/z-confirm-before/target/wasm32-wasip1/debug/rust-plugin-example.wasm" {
+              test_key "t"
             }
         }
 
