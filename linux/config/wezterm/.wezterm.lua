@@ -8,7 +8,7 @@ config.enable_tab_bar = false
 
 config.enable_kitty_keyboard = true
 
-config.font = wezterm.font 'IosevkaTerm'
+config.font = wezterm.font 'Iosevka Medium'
 config.font_size = 12
 
 config.window_padding = {
