@@ -5,7 +5,7 @@ layout {
           plugin location="file:~/dotfiles/zellij/plugins/zjstatus.wasm" {
               format_left   "{mode} {tabs}"
               format_center ""
-              format_right  "{datetime} #[fg=#89B4FA,bold]{command_kubectx}#[fg=#fff]:#[fg=#cba6f7,bold]{command_kubens} #[fg=#cba6f7]#[fg=#181825,bg=#cba6f7]{session}#[fg=#cba6f7] "
+              format_right  "{datetime} #[fg=#cba6f7]#[fg=#181825,bg=#cba6f7]{session}#[fg=#cba6f7] #[fg=#89B4FA,bold]{command_kubectx}#[fg=#fff]:#[fg=#cba6f7,bold]{command_kubens} "
               format_space  ""
 
               border_enabled  "false"
