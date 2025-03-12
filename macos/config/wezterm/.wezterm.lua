@@ -6,8 +6,8 @@ config.enable_wayland = false
 config.animation_fps = 120
 config.enable_tab_bar = false
 
-config.font = wezterm.font('IosevkaTerm NFM')
-config.font_size = 14
+config.font = wezterm.font('Iosevka')
+config.font_size = 16
 
 config.color_scheme = "Catppuccin Mocha"
 
