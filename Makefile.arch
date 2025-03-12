@@ -101,6 +101,7 @@ install_prereqs:
 		p7zip \
 		qt6ct \
 		smbclient \
+		ttc-iosevka \
 		traceroute \
 		tk \
 		unzip \
