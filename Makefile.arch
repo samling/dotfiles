@@ -91,8 +91,8 @@ install_prereqs:
 		flex \
 		inetutils \
 		jq \
-		xmlsec \
 		llvm \
+		luarocks \
 		meson \
 		nmap \
 		nwg-look \
@@ -107,6 +107,7 @@ install_prereqs:
 		unzip \
 		xclip \
 		xdotool \
+		xmlsec \
 		wget \
 		zsh
 
