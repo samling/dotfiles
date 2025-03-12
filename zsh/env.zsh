@@ -4,8 +4,7 @@ export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 #=== Colorized man pages
-#export MANROFFOPT="-P -o"
-#export MANPAGER="bat -plman"
+export MANPAGER="sh -c 'col -bx | bat -l man -p"
 
 #=== Default editor
 export EDITOR="vim"
