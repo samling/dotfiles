@@ -13,4 +13,10 @@ done <<< "$current_sessions"
 
 next_session=$((max_numeric + 1))
 
-zellij -s "${next_session}" $@ 2>&1
+if [ -n "ZELLIJ" ]; then
+  # we're already in a zellij session
+  zellij $@
+else
+  # we aren't in a zellij session yet; start a new one
+  zellij -s "${next_session}" $@ 2>&1
+fi
