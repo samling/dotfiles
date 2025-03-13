@@ -4,7 +4,7 @@ export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 #=== Colorized man pages
-export MANPAGER="sh -c 'col -bx | bat -l man -p"
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 
 #=== Default editor
 export EDITOR="vim"
