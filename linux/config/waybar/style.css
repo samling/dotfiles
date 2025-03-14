@@ -1,6 +1,5 @@
 * {
     border: none;
-    border-radius: 4px; /* Slightly rounded for soft edges */
     min-height: 0;
     font-family: "Iosevka Nerd Font Propo";
     font-weight: 500;
@@ -31,17 +30,15 @@ tooltip {
 #custom-tailscale,
 #custom-kubectx,
 #pulseaudio {
-    margin: 6px 6px 6px 0px;
+    margin: 0px 6px;
     padding: 0px 8px;
-    background-color: #313244; /* Overlay 0 */
-    border: 2px solid #6c7086; /* Overlay 2 */
+    background: transparent;
     color: #cdd6f4; /* Text (Lavender) */
 }
 /*hyprland's "mode"*/
 #submap {
     background-color: #313244; /* Overlay 0 */
-    margin: 6px 0px 6px 6px;
-    border: 2px solid #45475a; /* Surface 2 */
+    margin: 0px;
     color: #cba6f7; /* Mauve */
 }
 
@@ -49,23 +46,20 @@ tooltip {
 #mode {
     background-color: #313244; /* Overlay 0 */
     margin: 6px 0px 6px 6px;
-    border: 2px solid #45475a; /* Surface 2 */
     color: #cba6f7; /* Mauve */
 }
 #workspaces {
     /*background-color: #313244;*/ /* Overlay 0 */
     background-color: transparent; /* Overlay 0 */
-    margin: 6px 0px 6px 6px;
-    /*border: 2px solid #45475a;*/ /* Surface 2 */
+    margin: 0px;
     border: none;
 }
 
 #workspaces button {
     all: initial; 
     min-width: 18px;
-    border-radius: 4px; /* Slightly rounded for soft edges */
     box-shadow: inset 0 -3px transparent;
-    padding: 2px 4px;
+    padding: 0px 4px;
     margin: 0px 4px;
     color: #cdd6f4; /* Text (Lavender) */
 }
@@ -73,7 +67,6 @@ tooltip {
 /* in hyprland focused=>active */
 #workspaces button.active {
     color: #000;
-    border: 2px solid #cba6f7; /* Mauve */
     background-color: #89b4fa;
 }
 
@@ -89,20 +82,17 @@ tooltip {
 }
 
 #clock {
-    background-color: #313244; /* Overlay 0 */
-    border: 2px solid #45475a; /* Surface 2 */
+    background: transparent; /* Overlay 0 */
     color: #cba6f7; /* Mauve */
 }
 
 #tray {
-    background-color: #f5c2e7; /* Pink */
-    border: 2px solid #cba6f7; /* Mauve */
+    background: transparent; /* Pink */
     color: #1e1e2e; /* Base */
 }
 
 #battery {
     background-color: #a6e3a1; /* Green */
-    border: 2px solid #cba6f7; /* Mauve */
     color: #1e1e2e; /* Base */
     /*color: #6c7086; Overlay 2 */
 }
@@ -112,23 +102,20 @@ tooltip {
 #network,
 #backlight,
 #pulseaudio {
-    background-color: #89b4fa; /* Blue */
-    border: 2px solid #cba6f7; /* Mauve */
-    color: #1e1e2e; /* Base */
+    background: transparent;
+    color: #FFF; /* Base */
 }
 
 #cpu.critical,
 #memory.critical {
-    background-color: #f38ba8; /* Red */
-    border: 2px solid #f5c2e7; /* Pink */
+    background: transparent;
     color: #ff4444; /* Bright Red */
 }
 
 #battery.warning,
 #battery.critical,
 #battery.urgent {
-    background-color: #fab387; /* Peach */
-    border: 2px solid #f5c2e7; /* Pink */
-    color: #1e1e2e; /* Base */
+    background: transparent;
+    color: #FFF; /* Base */
     /*color: #f38ba8; Red */
 }
