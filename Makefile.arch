@@ -96,6 +96,7 @@ install_prereqs:
 		meson \
 		nmap \
 		nwg-look \
+		pacman-contrib \
 		pavucontrol \
 		pkg-config \
 		p7zip \
