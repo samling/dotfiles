@@ -3,7 +3,7 @@ function reload-zsh-configuration() {
 
   # If we're in hyprland, update the instance signature to prevent
   # issues with stale signatures from restored tmux sessions
-  if command -v hyprctl >/dev/null && command -v jq >/dev/null; then
+  if command -v -p hyprctl >/dev/null && command -v -p jq >/dev/null; then
     # echo "Updating HYPRLAND_INSTANCE_SIGNATURE"
     export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl instances -j | jq -r '.[0].instance')
   fi
