@@ -174,7 +174,6 @@ install_pacman_tools:
 		grim \
 		helm \
 		hyprland \
-		i3-wm \
 		inotify-tools \
 		jc \
 		kubectl \

@@ -4,7 +4,7 @@ return { -- Autoformat
   'stevearc/conform.nvim',
   keys = {
     {
-      '<leader>f',
+      '<leader>p',
       function()
         require('conform').format { async = true, lsp_fallback = true }
       end,
