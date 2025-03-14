@@ -224,6 +224,7 @@ install_sway_tools:
 install_aur_tools:
 	@echo "Installing tools from AUR"
 	yay -S --noconfirm \
+		aylurs-gtk-shell-git \
 		gitmux \
 		google-chrome \
 		insync \
