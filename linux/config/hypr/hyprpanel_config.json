@@ -1,5 +1,5 @@
 {
-  "bar.customModules.updates.pollingInterval": 21600000,
+  "bar.customModules.updates.pollingInterval": 1440000,
   "theme.font.size": "1rem",
   "theme.font.name": "Iosevka Term",
   "theme.font.label": "Iosevka Term",
@@ -10,5 +10,21 @@
   "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Google Chrome",
   "menus.dashboard.shortcuts.left.shortcut4.command": "fuzzel",
   "menus.dashboard.shortcuts.left.shortcut1.icon": "",
-  "menus.transitionTime": 175
+  "menus.transitionTime": 175,
+  "bar.launcher.autoDetectIcon": false,
+  "theme.bar.buttons.workspaces.enableBorder": false,
+  "bar.workspaces.show_icons": false,
+  "bar.workspaces.show_numbered": false,
+  "bar.workspaces.showWsIcons": true,
+  "bar.workspaces.showApplicationIcons": true,
+  "bar.workspaces.applicationIconOncePerWorkspace": false,
+  "bar.workspaces.numbered_active_indicator": "underline",
+  "theme.bar.buttons.workspaces.smartHighlight": false,
+  "bar.workspaces.scroll_speed": 8,
+  "bar.workspaces.workspaceMask": false,
+  "bar.workspaces.monitorSpecific": true,
+  "tear": true,
+  "bar.workspaces.applicationIconMap": {
+    "Cursor": "󰨞"
+  }
 }
