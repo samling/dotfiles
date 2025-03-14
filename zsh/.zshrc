@@ -31,6 +31,16 @@ if [[ ! -z ${LOCAL_DOTFILES_GIT} && ${LOCAL_DOTFILES_GIT} != "${HOME}/dotfiles-p
     done
 fi
 
+# Source ${HOME}/nv-dotfiles/zshrc.*.local files
+#
+NV_DOTFILES_GIT=(${HOME}/nv-dotfiles/zsh/zshrc.*.local)
+if [[ ! -z ${NV_DOTFILES_GIT} && ${NV_DOTFILES_GIT} != "${HOME}/nv-dotfiles/zsh/zshrc.*.local" ]]; then
+    for dotfile in ${NV_DOTFILES_GIT}; do
+        #echo -e "Sourced NV dotfile from git repo: $dotfile"
+        source $dotfile
+    done
+fi
+
 # Source ${HOME}/.zshrc.* files
 #
 LOCAL_DOTFILES=(${HOME}/.zshrc.*)
