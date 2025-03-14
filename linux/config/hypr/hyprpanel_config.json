@@ -1,0 +1,14 @@
+{
+  "bar.customModules.updates.pollingInterval": 21600000,
+  "theme.font.size": "1rem",
+  "theme.font.name": "Iosevka Term",
+  "theme.font.label": "Iosevka Term",
+  "terminal": "wezterm",
+  "bar.network.showWifiInfo": true,
+  "bar.network.truncation_size": 12,
+  "menus.dashboard.shortcuts.left.shortcut1.command": "google-chrome-stable",
+  "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Google Chrome",
+  "menus.dashboard.shortcuts.left.shortcut4.command": "fuzzel",
+  "menus.dashboard.shortcuts.left.shortcut1.icon": "",
+  "menus.transitionTime": 175
+}
