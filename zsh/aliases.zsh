@@ -53,7 +53,8 @@ alias lll="ls -lahg --blocks permission,user,group,size,date,name"
 alias b64='base64'
 alias o="open"
 alias v="clear" # clear terminal
-alias R='cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"' # reload zsh
+#alias R='cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"' # reload zsh
+alias R=reload-zsh-configuration
 alias which='type -a'
 
 #=== Tmux

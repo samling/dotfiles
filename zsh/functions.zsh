@@ -1,3 +1,14 @@
+function reload-zsh-configuration() {
+  cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"
+
+  # If we're in hyprland, update the instance signature to prevent
+  # issues with stale signatures from restored tmux sessions
+  if command -v hyprctl >/dev/null && command -v jq >/dev/null; then
+    # echo "Updating HYPRLAND_INSTANCE_SIGNATURE"
+    export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl instances -j | jq -r '.[0].instance')
+  fi
+
+}
 # show status of subdirectories that are git repositories
 function git-status {
     "find" . -type d -name '.git' | while read dir ; do sh -c "cd $dir/../ && git status -s | grep -q [azAZ09] && echo '\n\033[1m [ ${dir//\.git/} ]\n\033[m' && git status -s" ; done

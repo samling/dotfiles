@@ -81,6 +81,7 @@ install_prereqs:
 		cmake \
 		cpio \
 		curl \
+		devtools \
 		dialog \
 		direnv \
 		dnsutils \
