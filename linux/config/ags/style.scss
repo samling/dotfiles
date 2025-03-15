@@ -49,30 +49,48 @@ window.Bar {
         margin: 0 8px;
     }
 
+    button {
+        all: unset;
+        background-color: transparent;
+    }
+
     .Workspaces  {
         button {
             all: unset;
             background-color: transparent;
+            margin: 2px;
 
-            &:hover label {
+            &:hover .workspace-container {
                 background-color: color.adjust($overlay0, $alpha: -0.4);
                 border-color: color.adjust($accent, $alpha: -0.4);
             }
 
-            &:active label {
+            &:active .workspace-container {
                 background-color: color.adjust($overlay1, $alpha: -0.4);
             }
         }
 
-        label {
+        .workspace-container {
             transition: 200ms;
             padding: 0 8px;
-            margin: 2px;
             border-radius: $radius;
             border: 1pt solid transparent;
         }
 
-        .focused label {
+        .workspace-number {
+            margin-right: 4px;
+        }
+
+        .app-icons {
+            margin-left: 4px;
+        }
+
+        .app-icon {
+            margin: 0 2px;
+            font-size: 0.9em;
+        }
+
+        .focused .workspace-container {
             color: $accent;
             border-color: $accent;
         }

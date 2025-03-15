@@ -19,14 +19,14 @@ export default function Bar(monitor: Gdk.Monitor) {
         <centerbox>
             <box hexpand halign={Gtk.Align.START}>
                 <Workspaces />
+            </box>
+            <box>
+                {/* <Media /> */}
                 <FocusedClient 
                     useCustomTitle={true}
                     useClassName={true}
                     maxTitleLength={50}
                 />
-            </box>
-            <box>
-                <Media />
             </box>
             <box hexpand halign={Gtk.Align.END} >
                 <SysTray />

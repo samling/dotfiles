@@ -4,7 +4,7 @@ import Battery from "gi://AstalBattery"
 
 const apps = new Apps.Apps({
     nameMultiplier: 2,
-    entryMultiplier: 0,
+    entryMultiplier: 2,
     executableMultiplier: 2,
 })
 
@@ -54,11 +54,7 @@ export default function BatteryLevel() {
 
     const button = <button
         onClick={() => {
-            const matchingApps = apps.fuzzy_query("Power Statistics")
-            console.log("found apps: ", matchingApps)
-            if (matchingApps.length > 0) {
-                execAsync(matchingApps[0].executable)
-            }
+            execAsync("gnome-power-statistics")
         }}
     >
         {component}

@@ -107,6 +107,7 @@ install_prereqs:
 		traceroute \
 		tk \
 		unzip \
+		uwsm \
 		xclip \
 		xdotool \
 		xmlsec \
