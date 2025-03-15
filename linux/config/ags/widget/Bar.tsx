@@ -7,6 +7,8 @@ import Battery from "gi://AstalBattery"
 import Wp from "gi://AstalWp"
 import Network from "gi://AstalNetwork"
 import Tray from "gi://AstalTray"
+import { getWindowMatch, getTitle, truncateTitle } from "./helpers/WindowUtils"
+import { windowTitle } from "../config"
 
 function SysTray() {
     const tray = Tray.get_default()
@@ -129,20 +131,31 @@ function Workspaces() {
     </box>
 }
 
-function FocusedClient() {
+function FocusedClient({ useCustomTitle = false, useClassName = false, maxTitleLength = 50 }) {
     const hypr = Hyprland.get_default()
     const focused = bind(hypr, "focusedClient")
 
     return <box
         className="Focused"
         visible={focused.as(Boolean)}>
-        {focused.as(client => (
-            client && <label label={bind(client, "title").as(String)} />
-        ))}
+        {focused.as(client => {
+            if (!client) return null;
+            
+            const windowMatch = getWindowMatch(client);
+            const title = getTitle(client, useCustomTitle, useClassName);
+            const truncatedTitle = truncateTitle(title, maxTitleLength);
+            
+            return (
+                <box spacing={4}>
+                    <label label={windowMatch.icon} />
+                    <label label={truncatedTitle} />
+                </box>
+            );
+        })}
     </box>
 }
 
-function Time({ format = "%H:%M - %A %e." }) {
+function Time({ format = "%H:%M - %A %e. %B" }) {
     const time = Variable<string>("").poll(1000, () =>
         GLib.DateTime.new_now_local().format(format)!)
 
@@ -164,7 +177,11 @@ export default function Bar(monitor: Gdk.Monitor) {
         <centerbox>
             <box hexpand halign={Gtk.Align.START}>
                 <Workspaces />
-                <FocusedClient />
+                <FocusedClient 
+                    useCustomTitle={true}
+                    useClassName={true}
+                    maxTitleLength={50}
+                />
             </box>
             <box>
                 <Media />

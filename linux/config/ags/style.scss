@@ -1,8 +1,39 @@
 @use "sass:color";
 
-$bg: #212223;
-$fg: #f1f1f1;
-$accent: #378DF7;
+// Catppuccin Mocha color palette
+$base: #1e1e2e;
+$mantle: #181825;
+$crust: #11111b;
+
+$text: #cdd6f4;
+$subtext1: #bac2de;
+$subtext0: #a6adc8;
+$overlay2: #9399b2;
+$overlay1: #7f849c;
+$overlay0: #6c7086;
+$surface2: #585b70;
+$surface1: #45475a;
+$surface0: #313244;
+
+$rosewater: #f5e0dc;
+$flamingo: #f2cdcd;
+$pink: #f5c2e7;
+$mauve: #cba6f7;
+$red: #f38ba8;
+$maroon: #eba0ac;
+$peach: #fab387;
+$yellow: #f9e2af;
+$green: #a6e3a1;
+$teal: #94e2d5;
+$sky: #89dceb;
+$sapphire: #74c7ec;
+$blue: #89b4fa;
+$lavender: #b4befe;
+
+// Main theme variables
+$bg: $base;
+$fg: $text;
+$accent: $blue;
 $radius: 7px;
 
 window.Bar {
@@ -10,6 +41,7 @@ window.Bar {
     box-shadow: none;
     background-color: $bg;
     color: $fg;
+    font-family: "Iosevka Term", "Iosevka Nerd Font Propo", "Symbols Nerd Font Mono";
     font-size: 1.1em;
     font-weight: bold;
 
@@ -23,12 +55,12 @@ window.Bar {
             background-color: transparent;
 
             &:hover label {
-                background-color: color.adjust($fg, $alpha: -0.84);
-                border-color: color.adjust($accent, $alpha: -0.8);
+                background-color: color.adjust($overlay0, $alpha: -0.4);
+                border-color: color.adjust($accent, $alpha: -0.4);
             }
 
             &:active label {
-                background-color: color.adjust($fg, $alpha: -0.8)
+                background-color: color.adjust($overlay1, $alpha: -0.4);
             }
         }
 
@@ -55,7 +87,7 @@ window.Bar {
     }
 
     .FocusedClient {
-        color: $accent;
+        color: $mauve;
     }
 
     .Media .Cover {
@@ -85,7 +117,7 @@ window.Bar {
         }
 
         trough {
-            background-color: color.adjust($fg, $alpha: -0.8);
+            background-color: $surface0;
             border-radius: $radius;
         }
 
@@ -96,7 +128,7 @@ window.Bar {
         }
 
         slider {
-            background-color: $fg;
+            background-color: $text;
             border-radius: $radius;
             min-height: 1em;
             min-width: 1em;
