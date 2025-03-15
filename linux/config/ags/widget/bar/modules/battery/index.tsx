@@ -1,5 +1,12 @@
+import { execAsync, bind, Variable } from "astal"
+import Apps from "gi://AstalApps"
 import Battery from "gi://AstalBattery"
-import { bind, Variable } from "astal"
+
+const apps = new Apps.Apps({
+    nameMultiplier: 2,
+    entryMultiplier: 0,
+    executableMultiplier: 2,
+})
 
 const batteryService = Battery.get_default();
 
@@ -34,7 +41,7 @@ const componentTooltip = Variable.derive(
 export default function BatteryLevel() {
     const bat = Battery.get_default()
 
-    return <box
+    const component = <box
         className="Battery"
         visible={bind(bat, "isPresent")}
         tooltipText={componentTooltip()}
@@ -44,4 +51,18 @@ export default function BatteryLevel() {
             `${Math.floor(p * 100)} %`
         )} />
     </box>
+
+    const button = <button
+        onClick={() => {
+            const matchingApps = apps.fuzzy_query("Power Statistics")
+            console.log("found apps: ", matchingApps)
+            if (matchingApps.length > 0) {
+                execAsync(matchingApps[0].executable)
+            }
+        }}
+    >
+        {component}
+    </button>
+
+    return button
 }
