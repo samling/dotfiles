@@ -85,6 +85,7 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
         // Development Tools
         ['code', '󰨞', 'Visual Studio Code'],
         ['vscode', '󰨞', 'VS Code'],
+        ['cursor', '󰨞', 'Cursor'],
         ['sublime-text', '', 'Sublime Text'],
         ['atom', '', 'Atom'],
         ['android-studio', '󰀴', 'Android Studio'],

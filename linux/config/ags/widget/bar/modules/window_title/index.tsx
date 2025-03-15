@@ -1,6 +1,6 @@
 import { bind } from "astal"
 import Hyprland from "gi://AstalHyprland"
-import { getWindowMatch, getTitle, truncateTitle } from "../workspaces/helpers/title"
+import { getWindowMatch, getTitle, truncateTitle } from "./helpers/title"
 
 export default function FocusedClient({ useCustomTitle = false, useClassName = false, maxTitleLength = 50 }) {
     const hypr = Hyprland.get_default()
