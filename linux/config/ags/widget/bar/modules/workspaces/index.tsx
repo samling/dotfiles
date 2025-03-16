@@ -1,4 +1,4 @@
-import { Variable, bind } from "astal"
+import { Variable, bind, timeout } from "astal"
 import Hyprland from "gi://AstalHyprland"
 
 // Import the getWindowMatch function from the window_title helper
@@ -7,12 +7,69 @@ import { getWindowMatch } from "../window_title/helpers/title"
 export default function Workspaces() {
     const hypr = Hyprland.get_default()
     const activespecial = Variable(null as Hyprland.Workspace | null)
+    
+    // Create a variable to trigger updates when windows move between workspaces
+    const windowMoveTrigger = Variable(0)
+    
+    // Create a variable to store the latest client data
+    const clientsData = Variable<Hyprland.Client[]>([])
+    
+    // Function to force refresh the clients data
+    const refreshClientsData = () => {
+        // Get the current clients
+        const currentClients = hypr.clients
+        
+        // Force a refresh by creating a new array
+        clientsData.set([...currentClients])
+        
+        console.log(`Refreshed clients data, count: ${currentClients.length}`)
+    }
+    
+    // Initial clients data
+    refreshClientsData()
+    
+    // Listen for Hyprland events
     hypr.connect("event", (h, event, data) => {
         if (event == "activespecial") {
             const [name, monitor] = data.split(",")
             const maybeWs = name ? (h.workspaces.find(ws => ws.name == name) || null) : null
             activespecial.set(maybeWs)
         }
+        
+        // Handle movewindow event specifically
+        if (event === "movewindow") {
+            console.log(`Move window event: ${data}`)
+            
+            // Force a refresh of clients data
+            refreshClientsData()
+            
+            // Increment the trigger to force UI updates
+            windowMoveTrigger.set(windowMoveTrigger.get() + 1)
+            
+            // Add a small delay and refresh again to ensure we catch any delayed updates
+            timeout(100, () => {
+                refreshClientsData()
+                windowMoveTrigger.set(windowMoveTrigger.get() + 1)
+            })
+        }
+        
+        // Handle other window-related events
+        if (["openwindow", "closewindow", "windowtitle", "workspace"].includes(event)) {
+            // Refresh clients data
+            refreshClientsData()
+            
+            // Increment the trigger value to force updates
+            windowMoveTrigger.set(windowMoveTrigger.get() + 1)
+        }
+    })
+
+    // Connect to the clients property change
+    hypr.connect("notify::clients", () => {
+        // Refresh clients data
+        refreshClientsData()
+        
+        // Force an update when clients change
+        windowMoveTrigger.set(windowMoveTrigger.get() + 1)
     })
 
     const activeWorkspaces = Variable.derive(
@@ -25,18 +82,21 @@ export default function Workspaces() {
         }
     )
 
-    // Function to get clients grouped by workspace
+    // Function to get clients grouped by workspace - using our cached clients data
     const getClientsForWorkspace = (ws: Hyprland.Workspace) => {
-        return bind(hypr, "clients").as(clients => 
-            // Filter clients by workspace ID
-            clients.filter(client => {
-                // The workspace property might be a number or an object with an id
-                const clientWs = typeof client.workspace === 'number' 
-                    ? client.workspace 
-                    : client.workspace?.id
-                return clientWs === ws.id
-            })
-        )
+        return bind(Variable.derive(
+            [clientsData, windowMoveTrigger], 
+            (clients: Hyprland.Client[]) => {
+                // Filter clients by workspace ID
+                return clients.filter(client => {
+                    // The workspace property might be a number or an object with an id
+                    const clientWs = typeof client.workspace === 'number' 
+                        ? client.workspace 
+                        : client.workspace?.id
+                    return clientWs === ws.id
+                })
+            }
+        ))
     }
 
     // Function to get unique app icons for a workspace
@@ -57,34 +117,35 @@ export default function Workspaces() {
     }
 
     return <box className="Workspaces">
-        {bind(hypr, "workspaces").as(wss => wss
-            //.filter(ws => !(ws.id >= -99 && ws.id <= -2)) // filter out special workspaces
-            .sort((a, b) => a.id - b.id)
-            .map(ws => {
-                return (
-                    <button
-                        className={bind(activeWorkspaces).as((activeSet: Set<Hyprland.Workspace>) => 
-                            activeSet.has(ws) ? "workspace-button focused" : "workspace-button")}
-                        onClicked={() => ws.focus()}>
-                        {getClientsForWorkspace(ws).as(clients => {
-                            const icons = getUniqueAppIcons(clients)
-                            return (
-                                <box className="workspace-container">
-                                    <label className="workspace-number" label={ws.id === -98 ? "Magic" : `${ws.id}`} />
-                                    {icons.length > 0 && (
-                                        <box className="app-icons">
-                                            {icons.map(icon => (
-                                                <label className="app-icon" label={icon} />
-                                            ))}
-                                        </box>
-                                    )}
-                                </box>
-                            )
-                        })}
-                    </button>
-                )
-            })
-        )}
+        {bind(Variable.derive(
+            [bind(hypr, "workspaces"), windowMoveTrigger, clientsData], 
+            (wss: Hyprland.Workspace[]) => wss
+                .sort((a, b) => a.id - b.id)
+                .map(ws => {
+                    return (
+                        <button
+                            className={bind(activeWorkspaces).as((activeSet: Set<Hyprland.Workspace>) => 
+                                activeSet.has(ws) ? "workspace-button focused" : "workspace-button")}
+                            onClicked={() => ws.focus()}>
+                            {getClientsForWorkspace(ws).as(clients => {
+                                const icons = getUniqueAppIcons(clients)
+                                return (
+                                    <box className="workspace-container">
+                                        <label className="workspace-number" label={ws.id === -98 ? "Magic" : `${ws.id}`} />
+                                        {icons.length > 0 && (
+                                            <box className="app-icons">
+                                                {icons.map(icon => (
+                                                    <label className="app-icon" label={icon} />
+                                                ))}
+                                            </box>
+                                        )}
+                                    </box>
+                                )
+                            })}
+                        </button>
+                    )
+                })
+        ))}
     </box>
 }
 
