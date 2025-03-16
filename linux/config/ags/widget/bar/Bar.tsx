@@ -1,7 +1,7 @@
 import { Astal, Gtk, Gdk } from "astal/gtk3"
 import AudioSlider from "./modules/audio"
 import BatteryLevel from "./modules/battery"
-import FocusedClient from "./modules/window_title"
+import FocusedClient from "./modules/focused_client"
 import Media from "./modules/media"
 import SysTray from "./modules/systray"
 import Time from "./modules/clock"
@@ -21,7 +21,6 @@ export default function Bar(monitor: Gdk.Monitor) {
                 <Workspaces />
             </box>
             <box>
-                {/* <Media /> */}
                 <FocusedClient 
                     useCustomTitle={true}
                     useClassName={true}

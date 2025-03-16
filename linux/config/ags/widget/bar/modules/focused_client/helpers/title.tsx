@@ -1,4 +1,4 @@
-import Hyprland from 'gi://AstalHyprland';
+import Hyprland from "gi://AstalHyprland"
 import { bind, Variable } from 'astal';
 
 const hyprlandService = Hyprland.get_default();

@@ -34,7 +34,7 @@ $lavender: #b4befe;
 $bg: $base;
 $fg: $text;
 $accent: $blue;
-$radius: 7px;
+$radius: 12px;
 
 window.Bar {
     border: none;
@@ -44,6 +44,11 @@ window.Bar {
     font-family: "Iosevka Term", "Iosevka Nerd Font Propo", "Symbols Nerd Font Mono";
     font-size: 1.1em;
     font-weight: bold;
+    padding: 8px;
+    
+    // box {
+    //     padding: 4px 0;
+    // }
 
     label {
         margin: 0 8px;
@@ -61,19 +66,27 @@ window.Bar {
             margin: 2px;
 
             &:hover .workspace-container {
-                background-color: color.adjust($overlay0, $alpha: -0.4);
+                background-color: $accent;
                 border-color: color.adjust($accent, $alpha: -0.4);
+                color: $base;
             }
 
             &:active .workspace-container {
-                background-color: color.adjust($overlay1, $alpha: -0.4);
+                background-color: $accent;
+                color: $base;
             }
+        }
+
+        .focused .workspace-container {
+            background-color: $accent;
+            color: $base;
+            border-color: $accent;
+            border-radius: $radius;
         }
 
         .workspace-container {
             transition: 200ms;
-            padding: 0 8px;
-            border-radius: $radius;
+            padding: 0 4px;
             border: 1pt solid transparent;
         }
 
@@ -89,11 +102,6 @@ window.Bar {
             margin: 0 2px;
             font-size: 0.9em;
         }
-
-        .focused .workspace-container {
-            color: $accent;
-            border-color: $accent;
-        }
     }
 
     .SysTray {
@@ -104,8 +112,10 @@ window.Bar {
         }
     }
 
-    .FocusedClient {
-        color: $mauve;
+    .Focused {
+        background-color: $mauve;
+        border-radius: $radius;
+        color: $base;
     }
 
     .Media .Cover {

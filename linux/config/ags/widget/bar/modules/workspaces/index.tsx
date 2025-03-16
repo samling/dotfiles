@@ -2,7 +2,7 @@ import { Variable, bind, timeout } from "astal"
 import Hyprland from "gi://AstalHyprland"
 
 // Import the getWindowMatch function from the window_title helper
-import { getWindowMatch } from "../window_title/helpers/title"
+import { getWindowMatch } from "../focused_client/helpers/title"
 
 export default function Workspaces() {
     const hypr = Hyprland.get_default()
@@ -111,7 +111,7 @@ export default function Workspaces() {
                                 const icons = getUniqueAppIcons(clients)
                                 return (
                                     <box className="workspace-container">
-                                        <label className="workspace-number" label={ws.id === -98 ? "Magic" : `${ws.id}`} />
+                                        <label className="workspace-number" label={ws.id === -98 ? "scratch" : `${ws.id}`} />
                                         {icons.length > 0 && (
                                             <box className="app-icons">
                                                 {icons.map(icon => (
