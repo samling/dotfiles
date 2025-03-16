@@ -8,19 +8,17 @@ export default function Workspaces() {
     const hypr = Hyprland.get_default()
     const activespecial = Variable(null as Hyprland.Workspace | null)
     
-    // Create a variable to trigger updates when windows move between workspaces
-    const windowMoveTrigger = Variable(0)
-    
     // Create a variable to store the latest client data
-    const clientsData = Variable<Hyprland.Client[]>([])
+    // Using an object wrapper to avoid the need for a counter
+    const clientsData = Variable<{ clients: Hyprland.Client[] }>({ clients: [] })
     
     // Function to force refresh the clients data
     const refreshClientsData = () => {
         // Get the current clients
         const currentClients = hypr.clients
         
-        // Force a refresh by creating a new array
-        clientsData.set([...currentClients])
+        // Force a refresh by creating a new object reference
+        clientsData.set({ clients: [...currentClients] })
         
         console.log(`Refreshed clients data, count: ${currentClients.length}`)
     }
@@ -43,34 +41,19 @@ export default function Workspaces() {
             // Force a refresh of clients data
             refreshClientsData()
             
-            // Increment the trigger to force UI updates
-            windowMoveTrigger.set(windowMoveTrigger.get() + 1)
-            
             // Add a small delay and refresh again to ensure we catch any delayed updates
-            timeout(100, () => {
-                refreshClientsData()
-                windowMoveTrigger.set(windowMoveTrigger.get() + 1)
-            })
+            timeout(100, refreshClientsData)
         }
         
         // Handle other window-related events
         if (["openwindow", "closewindow", "windowtitle", "workspace"].includes(event)) {
             // Refresh clients data
             refreshClientsData()
-            
-            // Increment the trigger value to force updates
-            windowMoveTrigger.set(windowMoveTrigger.get() + 1)
         }
     })
 
     // Connect to the clients property change
-    hypr.connect("notify::clients", () => {
-        // Refresh clients data
-        refreshClientsData()
-        
-        // Force an update when clients change
-        windowMoveTrigger.set(windowMoveTrigger.get() + 1)
-    })
+    hypr.connect("notify::clients", refreshClientsData)
 
     const activeWorkspaces = Variable.derive(
         [bind(hypr, "focusedWorkspace"), activespecial],
@@ -84,19 +67,16 @@ export default function Workspaces() {
 
     // Function to get clients grouped by workspace - using our cached clients data
     const getClientsForWorkspace = (ws: Hyprland.Workspace) => {
-        return bind(Variable.derive(
-            [clientsData, windowMoveTrigger], 
-            (clients: Hyprland.Client[]) => {
-                // Filter clients by workspace ID
-                return clients.filter(client => {
-                    // The workspace property might be a number or an object with an id
-                    const clientWs = typeof client.workspace === 'number' 
-                        ? client.workspace 
-                        : client.workspace?.id
-                    return clientWs === ws.id
-                })
-            }
-        ))
+        return bind(clientsData).as(data => {
+            // Filter clients by workspace ID
+            return data.clients.filter(client => {
+                // The workspace property might be a number or an object with an id
+                const clientWs = typeof client.workspace === 'number' 
+                    ? client.workspace 
+                    : client.workspace?.id
+                return clientWs === ws.id
+            })
+        })
     }
 
     // Function to get unique app icons for a workspace
@@ -118,7 +98,7 @@ export default function Workspaces() {
 
     return <box className="Workspaces">
         {bind(Variable.derive(
-            [bind(hypr, "workspaces"), windowMoveTrigger, clientsData], 
+            [bind(hypr, "workspaces"), clientsData], 
             (wss: Hyprland.Workspace[]) => wss
                 .sort((a, b) => a.id - b.id)
                 .map(ws => {
