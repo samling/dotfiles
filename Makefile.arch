@@ -231,6 +231,7 @@ install_aur_tools:
 		google-chrome \
 		insync \
 		hyprswitch \
+		localsend-bin \
 		nvm \
 		tealdeer \
 		tlpui \
