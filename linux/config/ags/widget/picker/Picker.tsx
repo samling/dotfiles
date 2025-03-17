@@ -10,6 +10,7 @@ export default function Picker(monitor: Gdk.Monitor) {
     const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}`
     const selectedIndex = new Variable(0)
     const wasAltPressed = new Variable(false)
+    let pickerWindow: Gtk.Window | null = null
 
     const hl = Hyprland.get_default()
     const workspaces = hl.get_workspaces().sort((a, b) => a.id - b.id)
@@ -19,78 +20,81 @@ export default function Picker(monitor: Gdk.Monitor) {
         return clients.filter(client => client.workspace.get_id() === workspace.id)
     })
 
+    // Listen for Hyprland events
+    hl.connect("event", (_, event, data) => {
+        if (pickerWindow?.is_visible()) {
+            console.log("Hyprland event:", event, "data:", data)
+            if (event === "submap") {
+                const numWorkspaces = workspaces.length
+                if (data === "next") {
+                    selectedIndex.set((selectedIndex.get() + 1) % numWorkspaces)
+                    console.log("Next workspace:", selectedIndex.get())
+                } else if (data === "prev") {
+                    selectedIndex.set((selectedIndex.get() - 1 + numWorkspaces) % numWorkspaces)
+                    console.log("Previous workspace:", selectedIndex.get())
+                }
+            }
+        }
+    })
+
+    const closeWindow = () => {
+        if (pickerWindow) {
+            selectedIndex.set(0)
+            wasAltPressed.set(false)
+            pickerWindow.hide()
+        }
+    }
+
+    // Try to remove any existing window with this name first
+    try {
+        const existingWindow = App.get_window(windowName)
+        if (existingWindow) {
+            existingWindow.hide()
+        }
+    } catch (e) {
+        console.log("No existing window found, creating new one")
+    }
+
     const handleKeyPress = (_: any, event: Gdk.Event) => {
         const key = event.get_keyval()[1]
         const numWorkspaces = workspaces.length
         const modifiers = event.get_state()[1]
-        
-        console.log("Key pressed:", key)
-        console.log("Modifiers:", modifiers)
-        console.log("MOD1_MASK:", Gdk.ModifierType.MOD1_MASK)
-        console.log("SHIFT_MASK:", Gdk.ModifierType.SHIFT_MASK)
-
-        const isAlt = (modifiers & Gdk.ModifierType.MOD1_MASK) !== 0
         const isShift = (modifiers & Gdk.ModifierType.SHIFT_MASK) !== 0
-
-        console.log("isAlt:", isAlt)
-        console.log("isShift:", isShift)
 
         // Track Alt key press
         if (key === Gdk.KEY_Alt_L || key === Gdk.KEY_Alt_R) {
             wasAltPressed.set(true)
+            return true
         }
 
+        // Handle navigation
         switch (key) {
             case Gdk.KEY_ISO_Left_Tab:
-                if (isAlt) {
-                    selectedIndex.set((selectedIndex.get() - 1 + numWorkspaces) % numWorkspaces)
-                    console.log("Alt+Shift+Tab pressed, new index: ", selectedIndex.get())
-                }
-                break
             case Gdk.KEY_Tab:
-                if (isAlt) {
+                console.log("Key pressed:", key)
+                if (isShift) {
+                    selectedIndex.set((selectedIndex.get() - 1 + numWorkspaces) % numWorkspaces)
+                } else {
                     selectedIndex.set((selectedIndex.get() + 1) % numWorkspaces)
-                    console.log("Alt+Tab pressed, new index: ", selectedIndex.get())
                 }
-                break
-            case Gdk.KEY_Left:
-            case Gdk.KEY_h:
-                selectedIndex.set((selectedIndex.get() - 1 + numWorkspaces) % numWorkspaces)
-                console.log("Left pressed, new index: ", selectedIndex.get())
-                break
-            case Gdk.KEY_Right:
-            case Gdk.KEY_l:
-                selectedIndex.set((selectedIndex.get() + 1) % numWorkspaces)
-                console.log("Right pressed, new index: ", selectedIndex.get())
-                break
-            case Gdk.KEY_Return:
-                const targetWorkspace = workspaces[selectedIndex.get()]
-                if (targetWorkspace) {
-                    hl.message(`dispatch workspace ${targetWorkspace.id}`)
-                    App.quit()
-                }
-                break
+                return true
             case Gdk.KEY_Escape:
-                App.quit()
-                break
-
+                closeWindow()
+                return true
             default:
-                console.log("Received keypress event")
+                return true
         }
-        return true
     }
 
     const handleKeyRelease = (_: any, event: Gdk.Event) => {
         const key = event.get_keyval()[1]
         
-        // Check if this is an Alt key release and we previously saw it pressed
-        if ((key === Gdk.KEY_Alt_L || key === Gdk.KEY_Alt_R) && wasAltPressed.get()) {
-            console.log("Alt key release detected, switching to workspace", selectedIndex.get())
+        // Any Alt key release should trigger selection
+        if (key === Gdk.KEY_Alt_L || key === Gdk.KEY_Alt_R) {
             const targetWorkspace = workspaces[selectedIndex.get()]
             if (targetWorkspace) {
-                wasAltPressed.set(false)
                 hl.message(`dispatch workspace ${targetWorkspace.id}`)
-                App.quit()
+                closeWindow()
             }
         }
         return true
@@ -118,11 +122,19 @@ export default function Picker(monitor: Gdk.Monitor) {
         setup={self => {
             App.add_window(self)
             self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.KEY_RELEASE_MASK)
+            pickerWindow = self
+            // Start hidden
+            self.set_visible(false)
+            // Set wasAltPressed to true when window is shown
+            self.connect('show', () => {
+                wasAltPressed.set(true)
+                console.log("Window shown, wasAltPressed set to true")
+            })
         }}
         gdkmonitor={monitor}
         visible={true}
-        exclusivity={Astal.Exclusivity.IGNORE}
-        keymode={Astal.Keymode.ON_DEMAND} // TODO: This should be EXCLUSIVE once everything is working
+        exclusivity={Astal.Exclusivity.EXCLUSIVE}
+        keymode={Astal.Keymode.EXCLUSIVE}
         onKeyPressEvent={handleKeyPress}
         onKeyReleaseEvent={handleKeyRelease}
         application={App}>
