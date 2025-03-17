@@ -157,3 +157,37 @@ window.Bar {
         }
     }
 }
+
+window.Picker {
+    background-color: $bg;
+    color: $fg;
+    font-family: "Iosevka Term", "Iosevka Nerd Font Propo", "Symbols Nerd Font Mono";
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 1em;
+
+    .workspace-container {
+        padding: 0.5em;
+        margin: 0.25em;
+        border-radius: $radius;
+        transition: all 200ms ease;
+
+        &.selected {
+            background-color: $accent;
+            color: $base;
+        }
+    }
+
+    .workspace-label {
+        font-weight: bold;
+        margin-bottom: 0.5em;
+    }
+
+    .clients-container {
+        margin-left: 1em;
+    }
+
+    .client-item {
+        padding: 0.25em;
+    }
+}

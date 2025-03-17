@@ -1,4 +1,4 @@
-import { Astal, Gtk, Gdk } from "astal/gtk3"
+import { App, Astal, Gtk, Gdk } from "astal/gtk3"
 import AudioSlider from "./modules/audio"
 import BatteryLevel from "./modules/battery"
 import FocusedClient from "./modules/focused_client"
@@ -7,13 +7,19 @@ import SysTray from "./modules/systray"
 import Time from "./modules/clock"
 import Wifi from "./modules/wifi"
 import Workspaces from "./modules/workspaces"
+import { getMonitorName } from "../../utils/monitor"
 
 export default function Bar(monitor: Gdk.Monitor) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
 
+    const windowName = `topbar-${getMonitorName(monitor.get_display(), monitor)}`
+
     return <window
         className="Bar"
+        name={windowName}
+        setup={self=>App.add_window(self)}
         gdkmonitor={monitor}
+        visible={true}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         anchor={TOP | LEFT | RIGHT}>
         <centerbox>
