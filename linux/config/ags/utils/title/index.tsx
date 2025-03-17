@@ -110,6 +110,7 @@ const windowTitleMap = [
     ['whatsapp', '󰖣', 'WhatsApp'],
     ['teams', '󰊻', 'Microsoft Teams'],
     ['skype', '󰒯', 'Skype'],
+    ['signal', '󰭹', 'Signal'],
     ['thunderbird', '', 'Thunderbird'],
 
     // File Managers
