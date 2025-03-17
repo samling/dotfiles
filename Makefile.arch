@@ -138,6 +138,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/tmux/.tmux ${HOME}
 	ln -sf ${HOME}/dotfiles/tmux/.tmux.conf	${HOME}
 	ln -sf ${HOME}/dotfiles/tmux/.gitmux.conf	${HOME}
+	ln -sf ${HOME}/dotfiles/linux/config/ags ${HOME}/.config
 	ln -sf ${HOME}/dotfiles/linux/config/bat/* ${HOME}/.config/bat
 	ln -sf ${HOME}/dotfiles/linux/config/git/gitconfig ${HOME}/.gitconfig
 	ln -sf ${HOME}/dotfiles/linux/config/ghostty ${HOME}/.config
