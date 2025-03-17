@@ -2,14 +2,39 @@
 import { App } from "astal/gtk3"
 import style from "./style.scss"
 import Bar from "./widget/bar/Bar"
-import Picker from "./widget/picker/Picker"
+import Picker, { cycleWorkspace, pickerInstances } from "./widget/picker/Picker"
 
 App.start({
     css: style,
     // instanceName: "js",
     requestHandler(request, res) {
-        print(request)
-        res("ok")
+        // ags -c "cycle-workspace"
+        // astal cycle-workspace
+        // ags -c "cycle-workspace backward"
+        // ags -c "cycle-workspace forward picker-monitor-0"
+        if (request.startsWith('cycle-workspace')) {
+            const parts = request.split(' ')
+            const isShift = parts[1] === 'backward'
+            const monitorName = parts[2] || 'all'
+            
+            if (monitorName === 'all') {
+                // Cycle on all monitors
+                let success = false
+                for (const [name, _] of pickerInstances.entries()) {
+                    if (cycleWorkspace(name, isShift)) {
+                        success = true
+                    }
+                }
+                res(success ? "Cycled workspaces on all monitors" : "No pickers available")
+            } else {
+                // Cycle on specific monitor
+                const success = cycleWorkspace(monitorName, isShift)
+                res(success ? `Cycled workspaces on ${monitorName}` : `No picker found for ${monitorName}`)
+            }
+        } else {
+            print(request)
+            res("ok")
+        }
     },
     main: () => {
         const monitors = App.get_monitors()

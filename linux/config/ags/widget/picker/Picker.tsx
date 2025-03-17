@@ -4,43 +4,54 @@ import Hyprland from "gi://AstalHyprland"
 import { Variable } from "astal"
 import { bind } from "astal"
 
-export default function Picker(monitor: Gdk.Monitor) {
-    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
+// Create a map to store picker instances by monitor name
+export const pickerInstances = new Map()
 
+// Export the cycle workspace function
+export function cycleWorkspace(monitorName: string, isShift: boolean = false) {
+    const picker = pickerInstances.get(monitorName)
+    if (!picker) return false
+    
+    const { selectedIndex, numWorkspaces } = picker
+    
+    if (isShift) {
+        selectedIndex.set((selectedIndex.get() - 1 + numWorkspaces) % numWorkspaces)
+    } else {
+        selectedIndex.set((selectedIndex.get() + 1) % numWorkspaces)
+    }
+    
+    return true
+}
+
+export default function Picker(monitor: Gdk.Monitor) {
     const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}`
     const selectedIndex = new Variable(0)
     const wasAltPressed = new Variable(false)
+
     let pickerWindow: Gtk.Window | null = null
 
     const hl = Hyprland.get_default()
     const workspaces = hl.get_workspaces().sort((a, b) => a.id - b.id)
     const clients = hl.get_clients()
+    const numWorkspaces = workspaces.length
+
+    // Store this picker instance in the global map
+    pickerInstances.set(windowName, {
+        selectedIndex,
+        numWorkspaces,
+        window: null // Will be set later
+    })
 
     const clientsByWorkspace = workspaces.map(workspace => {
         return clients.filter(client => client.workspace.get_id() === workspace.id)
-    })
-
-    // Listen for Hyprland events
-    hl.connect("event", (_, event, data) => {
-        if (pickerWindow?.is_visible()) {
-            console.log("Hyprland event:", event, "data:", data)
-            if (event === "submap") {
-                const numWorkspaces = workspaces.length
-                if (data === "next") {
-                    selectedIndex.set((selectedIndex.get() + 1) % numWorkspaces)
-                    console.log("Next workspace:", selectedIndex.get())
-                } else if (data === "prev") {
-                    selectedIndex.set((selectedIndex.get() - 1 + numWorkspaces) % numWorkspaces)
-                    console.log("Previous workspace:", selectedIndex.get())
-                }
-            }
-        }
     })
 
     const closeWindow = () => {
         if (pickerWindow) {
             selectedIndex.set(0)
             wasAltPressed.set(false)
+            // Exit any submap before hiding the window
+            hl.message('dispatch submap reset')
             pickerWindow.hide()
         }
     }
@@ -57,7 +68,6 @@ export default function Picker(monitor: Gdk.Monitor) {
 
     const handleKeyPress = (_: any, event: Gdk.Event) => {
         const key = event.get_keyval()[1]
-        const numWorkspaces = workspaces.length
         const modifiers = event.get_state()[1]
         const isShift = (modifiers & Gdk.ModifierType.SHIFT_MASK) !== 0
 
@@ -71,12 +81,11 @@ export default function Picker(monitor: Gdk.Monitor) {
         switch (key) {
             case Gdk.KEY_ISO_Left_Tab:
             case Gdk.KEY_Tab:
+            case Gdk.KEY_l:
+            case Gdk.KEY_h:
                 console.log("Key pressed:", key)
-                if (isShift) {
-                    selectedIndex.set((selectedIndex.get() - 1 + numWorkspaces) % numWorkspaces)
-                } else {
-                    selectedIndex.set((selectedIndex.get() + 1) % numWorkspaces)
-                }
+                // Use the exported function
+                cycleWorkspace(windowName, isShift)
                 return true
             case Gdk.KEY_Escape:
                 closeWindow()
@@ -88,6 +97,11 @@ export default function Picker(monitor: Gdk.Monitor) {
 
     const handleKeyRelease = (_: any, event: Gdk.Event) => {
         const key = event.get_keyval()[1]
+        
+        // Log Tab key release
+        if (key === Gdk.KEY_Tab || key === Gdk.KEY_ISO_Left_Tab) {
+            console.log("Tab key released")
+        }
         
         // Any Alt key release should trigger selection
         if (key === Gdk.KEY_Alt_L || key === Gdk.KEY_Alt_R) {
@@ -123,6 +137,8 @@ export default function Picker(monitor: Gdk.Monitor) {
             App.add_window(self)
             self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.KEY_RELEASE_MASK)
             pickerWindow = self
+            // Update the window reference in our map
+            pickerInstances.get(windowName).window = self
             // Start hidden
             self.set_visible(false)
             // Set wasAltPressed to true when window is shown
