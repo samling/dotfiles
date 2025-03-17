@@ -2,7 +2,7 @@ import { Variable, bind, timeout } from "astal"
 import Hyprland from "gi://AstalHyprland"
 
 // Import the getWindowMatch function from the window_title helper
-import { getWindowMatch } from "../focused_client/helpers/title"
+import { getWindowMatch } from "../../../../utils/title"
 
 export default function Workspaces() {
     const hypr = Hyprland.get_default()

@@ -189,5 +189,21 @@ window.Picker {
 
     .client-item {
         padding: 0.25em;
+        
+        label {
+            font-family: "Iosevka Term", "Iosevka Nerd Font Propo", "Symbols Nerd Font Mono";
+        }
+        
+        &.empty {
+            font-style: italic;
+            opacity: 0.7;
+        }
+        
+        &.more-clients {
+            font-style: italic;
+            opacity: 0.7;
+            font-size: 0.9em;
+            margin-top: 0.2em;
+        }
     }
 }

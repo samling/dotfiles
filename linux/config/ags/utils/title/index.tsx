@@ -154,7 +154,8 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
         ['(.+)', '󰣆', `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`],
     ];
 
-    if (!client?.class) {
+    // Special case for empty class or title (likely Desktop)
+    if (!client?.class || client.class.trim() === "" || client.class.toLowerCase() === "desktop") {
         return {
             icon: '󰇄',
             label: 'Desktop',

@@ -4,6 +4,7 @@ import style from "./style.scss"
 import Bar from "./widget/bar/Bar"
 import Picker, { cycleWorkspace, pickerInstances, updateWorkspaceHistory, truncateText } from "./widget/picker/Picker"
 import Hyprland from "gi://AstalHyprland"
+import { getTitle, getWindowMatch } from "./utils/title"
 
 // Function to clean up resources when the app exits
 const cleanupResources = () => {
