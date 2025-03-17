@@ -40,27 +40,24 @@ export function updateWorkspaceHistory(monitorName: string, workspaceId: number)
     if (workspaceId < 0) return;
     
     if (!lastAccessedWorkspaces.has(monitorName)) {
-        lastAccessedWorkspaces.set(monitorName, [])
+        lastAccessedWorkspaces.set(monitorName, []);
     }
     
-    const history = lastAccessedWorkspaces.get(monitorName) || []
+    const history = lastAccessedWorkspaces.get(monitorName) || [];
     
     // Remove the workspace from its current position
-    const index = history.indexOf(workspaceId)
+    const index = history.indexOf(workspaceId);
     if (index !== -1) {
-        history.splice(index, 1)
+        history.splice(index, 1);
     }
     
     // Add it to the front of the array
-    history.unshift(workspaceId)
+    history.unshift(workspaceId);
     
     // Limit history size to prevent memory leaks
-    // Only keep the 20 most recently used workspaces
     if (history.length > 20) {
-        history.length = 20
+        history.length = 20;
     }
-    
-    console.log(`Updated workspace history for ${monitorName}:`, history)
 }
 
 export default function Picker(monitor: Gdk.Monitor) {
@@ -87,13 +84,11 @@ export default function Picker(monitor: Gdk.Monitor) {
             .sort((a, b) => a.id - b.id)
     )
     
-    // Make clients reactive with a setter function
-    const clientsVar = new Variable(hl.get_clients())
-    
-    // Function to update clients
-    const updateClients = () => {
-        clientsVar.set(hl.get_clients())
-    }
+    // Make clients reactive
+    const clients = Variable.derive(
+        [bind(hl, "clients")],
+        () => hl.get_clients()
+    )
     
     // Initialize workspace history for this monitor if it doesn't exist
     if (!lastAccessedWorkspaces.has(windowName)) {
@@ -138,7 +133,6 @@ export default function Picker(monitor: Gdk.Monitor) {
     // Store this picker instance in the global map
     pickerInstances.set(windowName, {
         selectedIndex,
-        window: null, // Will be set later
         orderedWorkspaces
     })
     
@@ -150,7 +144,7 @@ export default function Picker(monitor: Gdk.Monitor) {
         updateWorkspaceHistory(windowName, activeWorkspace.id)
     }
     
-    // Listen for workspace changes and client events
+    // Listen for workspace changes
     const eventSignal = hl.connect("event", (_, event, data) => {
         // Handle workspace changes
         if (event === "workspace") {
@@ -160,21 +154,8 @@ export default function Picker(monitor: Gdk.Monitor) {
                 updateWorkspaceHistory(windowName, workspaceId)
             }
         }
-        
-        // Always update clients for these events, regardless of window visibility
-        // This ensures the data is fresh when the window becomes visible
-        if (["openwindow", "closewindow", "movewindow", "windowtitle", 
-             "createworkspace", "destroyworkspace"].includes(event)) {
-            updateClients()
-        }
     })
     signals.push({ obj: hl, id: eventSignal })
-    
-    // Connect to client changes - always update
-    const clientsSignal = hl.connect("notify::clients", () => {
-        updateClients()
-    })
-    signals.push({ obj: hl, id: clientsSignal })
 
     const closeWindow = () => {
         if (pickerWindow) {
@@ -202,12 +183,6 @@ export default function Picker(monitor: Gdk.Monitor) {
         // Remove this picker from the global map
         pickerInstances.delete(windowName)
         
-        // Limit the workspace history to prevent memory leaks
-        const history = lastAccessedWorkspaces.get(windowName)
-        if (history && history.length > 20) {
-            history.length = 20
-        }
-        
         // Clear references
         pickerWindow = null
     }
@@ -219,7 +194,7 @@ export default function Picker(monitor: Gdk.Monitor) {
             existingWindow.hide()
         }
     } catch (e) {
-        console.log("No existing window found, creating new one")
+        // Silently ignore errors
     }
 
     const handleKeyPress = (_: any, event: Gdk.Event) => {
@@ -280,6 +255,7 @@ export default function Picker(monitor: Gdk.Monitor) {
         return true
     }
 
+    // Box component for displaying workspace and its clients
     const Box = ({ index, workspace }: { index: number, workspace: any }) => {
         return (
             <box 
@@ -288,9 +264,9 @@ export default function Picker(monitor: Gdk.Monitor) {
                 hexpand={true}>
                 <label className="workspace-label" label={`Workspace ${workspace.id}`} />
                 <box className="clients-container">
-                    {bind(clientsVar).as(clients => {
-                        // Filter out clients with empty class names or those that match the Desktop pattern
-                        const wsClients = clients.filter(client => 
+                    {bind(clients).as(allClients => {
+                        // Filter clients for this workspace
+                        const wsClients = allClients.filter(client => 
                             client.workspace.get_id() === workspace.id && 
                             client.class && 
                             client.class.trim() !== "" && 
@@ -298,39 +274,29 @@ export default function Picker(monitor: Gdk.Monitor) {
                             getWindowMatch(client).label !== "Desktop"
                         );
                         
+                        if (wsClients.length === 0) {
+                            return <box className="client-item empty"><label label="No applications" /></box>;
+                        }
+                        
                         // Limit to showing 3 clients max
                         const maxClientsToShow = 3;
                         const visibleClients = wsClients.slice(0, maxClientsToShow);
                         const hiddenClientCount = Math.max(0, wsClients.length - maxClientsToShow);
                         
-                        if (wsClients.length > 0) {
-                            return (
-                                <box orientation={Gtk.Orientation.VERTICAL}>
-                                    {visibleClients.map(client => {
-                                        // Get the friendly app name using the title utilities
-                                        const appName = getTitle(client, true);
-                                        const appIcon = getWindowMatch(client).icon;
-                                        
-                                        return (
-                                            <box className="client-item">
-                                                <label label={`${appIcon} ${truncateText(appName)}`} />
-                                            </box>
-                                        );
-                                    })}
-                                    {hiddenClientCount > 0 && (
-                                        <box className="client-item more-clients">
-                                            <label label={`+${hiddenClientCount} more...`} />
-                                        </box>
-                                    )}
-                                </box>
-                            );
-                        } else {
-                            return (
-                                <box className="client-item empty">
-                                    <label label="No applications" />
-                                </box>
-                            );
-                        }
+                        return (
+                            <box orientation={Gtk.Orientation.VERTICAL}>
+                                {visibleClients.map(client => (
+                                    <box className="client-item">
+                                        <label label={`${getWindowMatch(client).icon} ${truncateText(getTitle(client, true))}`} />
+                                    </box>
+                                ))}
+                                {hiddenClientCount > 0 && (
+                                    <box className="client-item more-clients">
+                                        <label label={`+${hiddenClientCount} more...`} />
+                                    </box>
+                                )}
+                            </box>
+                        );
                     })}
                 </box>
             </box>
@@ -344,31 +310,24 @@ export default function Picker(monitor: Gdk.Monitor) {
             App.add_window(self)
             self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.KEY_RELEASE_MASK)
             pickerWindow = self
-            // Update the window reference in our map
-            pickerInstances.get(windowName).window = self
+            
             // Start hidden
             self.set_visible(false)
-            // Set wasAltPressed to true when window is shown
+            
+            // Set up window signals
             const showSignal = self.connect('show', () => {
                 wasAltPressed.set(true)
                 
-                // Automatically select the previous workspace (index 1 in the ordered list)
-                // Index 0 is the current workspace, index 1 is the previous one
+                // Select previous workspace if available
                 if (orderedWorkspaces.get().length > 1) {
                     selectedIndex.set(1)
                 }
-                
-                // Update clients when window is shown
-                updateClients()
-            })
-            signals.push({ obj: self, id: showSignal })
+            });
             
-            // Connect to the destroy signal for cleanup
-            const destroySignal = self.connect('destroy', () => {
-                // Run the cleanup function
-                cleanup()
-            })
-            signals.push({ obj: self, id: destroySignal })
+            const destroySignal = self.connect('destroy', cleanup);
+            
+            signals.push({ obj: self, id: showSignal });
+            signals.push({ obj: self, id: destroySignal });
         }}
         gdkmonitor={monitor}
         visible={true}
