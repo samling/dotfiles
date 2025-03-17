@@ -29,8 +29,8 @@ export default function Bar(monitor: Gdk.Monitor) {
             <box>
                 <FocusedClient 
                     useCustomTitle={true}
-                    useClassName={true}
-                    maxTitleLength={50}
+                    useClassName={false}
+                    maxTitleLength={30}
                 />
             </box>
             <box hexpand halign={Gtk.Align.END} >

@@ -4,6 +4,9 @@ import Hyprland from "gi://AstalHyprland"
 // Import the getWindowMatch function from the window_title helper
 import { getWindowMatch } from "../../../../utils/title"
 
+// Cache for window icons to avoid repeated processing
+const windowIconCache = new Map();
+
 export default function Workspaces() {
     const hypr = Hyprland.get_default()
     const activespecial = Variable(null as Hyprland.Workspace | null)
@@ -19,8 +22,6 @@ export default function Workspaces() {
         
         // Force a refresh by creating a new object reference
         clientsData.set({ clients: [...currentClients] })
-        
-        console.log(`Refreshed clients data, count: ${currentClients.length}`)
     }
     
     // Initial clients data
@@ -36,13 +37,8 @@ export default function Workspaces() {
         
         // Handle movewindow event specifically
         if (event === "movewindow") {
-            console.log(`Move window event: ${data}`)
-            
             // Force a refresh of clients data
             refreshClientsData()
-            
-            // Add a small delay and refresh again to ensure we catch any delayed updates
-            timeout(100, refreshClientsData)
         }
         
         // Handle other window-related events
@@ -87,8 +83,22 @@ export default function Workspaces() {
         clients.forEach(client => {
             if (!client.class || uniqueClasses.has(client.class)) return
             uniqueClasses.add(client.class)
+            
+            // Special case for WezTerm to avoid performance issues
+            if (client.class === "wezterm") {
+                icons.push("");  // WezTerm icon
+                return;
+            }
+            
+            // Check cache first
+            if (windowIconCache.has(client.class)) {
+                icons.push(windowIconCache.get(client.class));
+                return;
+            }
+            
             const match = getWindowMatch(client)
             if (match && match.icon) {
+                windowIconCache.set(client.class, match.icon);
                 icons.push(match.icon)
             }
         })

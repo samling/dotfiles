@@ -5,6 +5,9 @@ const hyprlandService = Hyprland.get_default();
 export const clientTitle = Variable('');
 let clientBinding: Variable<void> | undefined;
 
+// Cache for window matches to avoid repeated regex testing
+const windowMatchCache = new Map();
+
 /**
  * Capitalizes the first letter of a string.
  * 
@@ -43,7 +46,6 @@ Variable.derive([bind(hyprlandService, 'focusedClient')], (client) => {
  *
  * @returns An object containing the icon and label for the window.
  */
-export const getWindowMatch = (client: Hyprland.Client): Record<string, string> => {
     const windowTitleMap = [
         // Original Entries
         ['kitty', '󰄛', 'Kitty Terminal'],
@@ -133,27 +135,47 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
         // Video Editing
         ['kdenlive', '', 'Kdenlive'],
 
-        // Games and Gaming Platforms
-        ['lutris', '󰺵', 'Lutris'],
-        ['heroic', '󰺵', 'Heroic Games Launcher'],
-        ['minecraft', '󰍳', 'Minecraft'],
-        ['csgo', '󰺵', 'CS:GO'],
-        ['dota2', '󰺵', 'Dota 2'],
+    // Games and Gaming Platforms
+    ['lutris', '󰺵', 'Lutris'],
+    ['heroic', '󰺵', 'Heroic Games Launcher'],
+    ['minecraft', '󰍳', 'Minecraft'],
+    ['csgo', '󰺵', 'CS:GO'],
+    ['dota2', '󰺵', 'Dota 2'],
 
         // Office and Productivity
         ['evernote', '', 'Evernote'],
         ['sioyek', '', 'Sioyek'],
 
-        // Cloud Services and Sync
-        ['dropbox', '󰇣', 'Dropbox'],
+    // Cloud Services and Sync
+    ['dropbox', '󰇣', 'Dropbox'],
 
         // Desktop
         ['^$', '󰇄', 'Desktop'],
 
-        // Fallback icon
-        ['(.+)', '󰣆', `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`],
-    ];
+    // Fallback icon
+    ['(.+)', '󰣆', 'Unknown'],
+];
 
+// Precompile exact match map for faster lookups
+const exactMatchMap = new Map();
+windowTitleMap.forEach(([className, icon, label]) => {
+    // Only add exact matches (no regex)
+    if (!className.includes('(') && !className.includes('^') && !className.includes('$')) {
+        exactMatchMap.set(className, { icon, label });
+    }
+});
+
+/**
+ * Retrieves the matching window title details for a given window.
+ *
+ * This function searches for a matching window title in the predefined `windowTitleMap` based on the class of the provided window.
+ * If a match is found, it returns an object containing the icon and label for the window. If no match is found, it returns a default icon and label.
+ *
+ * @param client The window object containing the class information.
+ *
+ * @returns An object containing the icon and label for the window.
+ */
+export const getWindowMatch = (client: Hyprland.Client): Record<string, string> => {
     // Special case for empty class or title (likely Desktop)
     if (!client?.class || client.class.trim() === "" || client.class.toLowerCase() === "desktop") {
         return {
@@ -161,20 +183,46 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
             label: 'Desktop',
         };
     }
-
-    const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(client?.class.toLowerCase()));
+    
+    // Check cache first
+    if (windowMatchCache.has(client.class)) {
+        return windowMatchCache.get(client.class);
+    }
+    
+    const clientClass = client.class.toLowerCase();
+    
+    // Fast path: check exact matches first
+    if (exactMatchMap.has(clientClass)) {
+        const match = exactMatchMap.get(clientClass);
+        windowMatchCache.set(client.class, match);
+        return match;
+    }
+    
+    // Slow path: check regex matches
+    const foundMatch = windowTitleMap.find((wt) => {
+        try {
+            return RegExp(wt[0]).test(clientClass);
+        } catch (e) {
+            return false;
+        }
+    });
 
     if (!foundMatch || foundMatch.length !== 3) {
-        return {
-            icon: windowTitleMap[windowTitleMap.length - 1][1],
-            label: windowTitleMap[windowTitleMap.length - 1][2],
+        const fallback = {
+            icon: '󰣆',
+            label: capitalizeFirstLetter(client.class),
         };
+        windowMatchCache.set(client.class, fallback);
+        return fallback;
     }
 
-    return {
+    const result = {
         icon: foundMatch[1],
         label: foundMatch[2],
     };
+    
+    windowMatchCache.set(client.class, result);
+    return result;
 };
 
 /**
@@ -190,7 +238,14 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
  * @returns The title of the window as a string.
  */
 export const getTitle = (client: Hyprland.Client, useCustomTitle: boolean = false, useClassName: boolean = false): string => {
-    if (client === null || useCustomTitle) return getWindowMatch(client).label;
+    if (client === null) return "Unknown";
+    
+    // Special case for WezTerm to avoid performance issues
+    if (client.class === "wezterm") {
+        return "WezTerm";
+    }
+    
+    if (useCustomTitle) return getWindowMatch(client).label;
 
     const title = client.title;
 
@@ -214,6 +269,7 @@ export const getTitle = (client: Hyprland.Client, useCustomTitle: boolean = fals
  * @returns The truncated title as a string. If the title is within the maximum size, returns the original title.
  */
 export const truncateTitle = (title: string, max_size: number): string => {
+    if (!title) return "";
     if (max_size > 0 && title.length > max_size) {
         return title.substring(0, max_size).trim() + '...';
     }
