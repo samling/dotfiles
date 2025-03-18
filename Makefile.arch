@@ -203,6 +203,7 @@ install_pacman_tools:
 		ttf-nerd-fonts-symbols-mono \
 		tmux \
 		wezterm \
+		yazu \
 		zoxide
 
 install_hyprland_tools:
