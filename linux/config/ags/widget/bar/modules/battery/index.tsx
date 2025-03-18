@@ -48,7 +48,10 @@ export default function BatteryLevel() {
     >
         <icon icon={bind(bat, "batteryIconName")} />
         <label label={bind(bat, "percentage").as(p =>
-            `${Math.floor(p * 100)} %`
+            `${Math.floor(p * 100)}%`
+        )} />
+        <label label={bind(bat, "energyRate").as(p =>
+            `(${p.toFixed(1)}W)`
         )} />
     </box>
 
