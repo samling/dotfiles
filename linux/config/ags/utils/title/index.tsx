@@ -132,6 +132,7 @@ const windowTitleMap = [
     ['inkscape', '', 'Inkscape'],
     ['krita', '', 'Krita'],
     ['blender', '󰂫', 'Blender'],
+    ['feh', '', 'Feh'],
 
     // Video Editing
     ['kdenlive', '', 'Kdenlive'],
