@@ -22,7 +22,7 @@ vim.cmd [[
     cnoreabbrev Qall qall
 ]]
 
--- Clear search highlihgt on pressing <Esc> in normal mode
+-- Clear search highlight on pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
@@ -38,6 +38,10 @@ end, { noremap = true, expr = true })
 vim.keymap.set({ 'n', 'x' }, 'k', function()
   return vim.v.count > 0 and 'k' or 'gk'
 end, { noremap = true, expr = true })
+
+-- Go to beginning and end of lines with gh and gl
+vim.keymap.set('n', 'gh', '^')
+vim.keymap.set('n', 'gl', '$')
 
 -- Buffers
 vim.keymap.set('n', '<leader>bb', function()
