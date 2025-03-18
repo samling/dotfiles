@@ -1,5 +1,5 @@
 import { App, Astal, Gtk, Gdk } from "astal/gtk3"
-import AudioSlider from "./modules/audio"
+import AudioWidget from "./modules/audio"
 import BatteryLevel from "./modules/battery"
 import FocusedClient from "./modules/focused_client"
 import Media from "./modules/media"
@@ -36,7 +36,7 @@ export default function Bar(monitor: Gdk.Monitor) {
             <box hexpand halign={Gtk.Align.END} >
                 <SysTray />
                 <Wifi />
-                <AudioSlider />
+                <AudioWidget />
                 <BatteryLevel />
                 <Time />
             </box>

@@ -169,7 +169,7 @@ window.Picker {
     .workspace-container {
         padding: 0.5em;
         margin: 0.25em;
-        border-radius: $radius;
+        // border-radius: $radius;
         transition: all 200ms ease;
 
         &.selected {
