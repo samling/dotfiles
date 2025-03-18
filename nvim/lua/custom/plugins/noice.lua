@@ -4,6 +4,12 @@ return {
   'folke/noice.nvim',
   event = 'VeryLazy',
   opts = {
+    views = {
+      hover = {
+        border = { style = "rounded" },
+        size = { max_width = 80 },
+      }
+    },
     cmdline = {
       enabled = true, -- enables Noice cmdline UI
       view = 'cmdline_popup', -- view for rendering the cmdline. Change to 'cmdline' to get a classic cmdline at the bottom
