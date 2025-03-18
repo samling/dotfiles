@@ -51,7 +51,7 @@ export default function BatteryLevel() {
             `${Math.floor(p * 100)}%`
         )} />
         <label label={bind(bat, "energyRate").as(p =>
-            `(${p.toFixed(1)}W)`
+            p > 0 ?`(${p.toFixed(1)}W)` : ""
         )} />
     </box>
 
