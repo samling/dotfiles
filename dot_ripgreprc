@@ -1,7 +1,32 @@
-# don't search .git dirs
---glob
-!.git/*
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
 
-# don't search vendor dirs
---glob
-!vendor/*
+# Smart defaults
+--smart-case
+--hidden
+--column
+--line-number
+
+# Exclude folders and files
+--glob=!vendor/*
+--glob=!*.cache
+--glob=!.Trash/*
+--glob=!.elixir_ls/*
+--glob=!.git/*
+--glob=!.hg/*
+--glob=!.jj/*
+--glob=!.licenses/*
+--glob=!.sass-cache/*
+--glob=!.svn/*
+--glob=!_build/*
+--glob=!bower_components/*
+--glob=!coverage/*
+--glob=!deps/*
+--glob=!node_modules/*
+--glob=!priv/static/*
+--glob=!public/*
+--glob=!storage/*
+--glob=!tags
+--glob=!TAGS
+--glob=!tmp/*
