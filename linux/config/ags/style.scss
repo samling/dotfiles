@@ -111,6 +111,40 @@ window.Bar {
         color: $base;
     }
 
+    .client {
+        /* Base styles for all clients */
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin: 0 2px;
+    }
+    
+    .focused-client {
+        /* Styles for the focused client */
+        background-color: rgba(255, 255, 255, 0.2);
+        font-weight: bold;
+    }
+
+    .pinned-client {
+        /* Styles for pinned clients */
+        border-left: 2px solid #DF8E1D; /* Same color as the pinned window border in your Hyprland config */
+        padding-left: 6px; /* Add some padding to account for the border */
+    }
+    
+    /* You can also style a client that is both focused and pinned */
+    .focused-client.pinned-client {
+        background-color: rgba(223, 142, 29, 0.2); /* Blend of focused and pinned colors */
+    }
+
+    /* Fullscreen client styling */
+    .fullscreen-client {
+        border-right: 2px solid $peach; /* A distinctive border color */
+        padding-right: 6px; /* Add some padding to account for the border */
+    }
+    
+    .focused-client.fullscreen-client {
+        background-color: rgba(250, 179, 135, 0.2); /* Using peach color with transparency */
+    }
+
     .Media .Cover {
         min-height: 1.2em;
         min-width: 1.2em;

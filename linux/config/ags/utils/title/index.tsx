@@ -180,18 +180,27 @@ windowTitleMap.forEach(([className, icon, label]) => {
 export const getWindowMatch = (client: Hyprland.Client): Record<string, string> => {
     // Special case for empty class or title (likely Desktop)
     if (!client?.class || client.class.trim() === "" || client.class.toLowerCase() === "desktop") {
+        // Special case for Picture in picture which often has empty class but specific title
+        if (client.title === "Picture in picture" || client.title.includes("pip") || client.title.includes("PiP")) {
+            return {
+                icon: '󰐊',  // Video/PiP icon
+                label: 'P-in-P',
+            };
+        }
+        
         return {
             icon: '󰇄',
             label: 'Desktop',
         };
     }
-    
+
     // Check cache first
     if (windowMatchCache.has(client.class)) {
         return windowMatchCache.get(client.class);
     }
     
     const clientClass = client.class.toLowerCase();
+    const title = client.title.toLowerCase();
     
     // Fast path: check exact matches first
     if (exactMatchMap.has(clientClass)) {
