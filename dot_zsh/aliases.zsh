@@ -61,4 +61,4 @@ alias which='type -a'
 alias tmux="direnv exec / tmux"
 
 #=== Zellij
-alias zellij="bash ~/dotfiles/zellij/scripts/new-zellij-session.sh"
+#alias zellij="bash ~/dotfiles/zellij/scripts/new-zellij-session.sh"
