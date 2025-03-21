@@ -9,6 +9,26 @@ function truncateText(text: string, maxLength: number = 15) {
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
 
+// Interface for storing client state
+interface ClientState {
+    // Basic window properties
+    id: string;
+    address: string;
+    className: string;
+    title: string;
+    truncatedTitle: string;
+    
+    // Status flags
+    isFocused: boolean;
+    isPinned: boolean;
+    isFullscreen: boolean;
+    
+    // Display properties
+    icon: string;
+    label: string;
+    cssClass: string;
+}
+
 export default function FocusedClient({ useCustomTitle = false, useClassName = false, maxTitleLength = 50 }) {
     const hypr = Hyprland.get_default()
     const focused = bind(hypr, "focusedClient")
@@ -54,10 +74,10 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
     signals.push({ obj: hypr, id: notifyId });
     
     // Create a single derived variable that will be reused
-    // This prevents creating a new one on each render cycle
+    // This prevents creating a new one on each render cycle and reduces object creation
     const workspaceData = Variable.derive(
-        [focusedWorkspace, clientsData],
-        (workspace, data) => {
+        [focusedWorkspace, clientsData, focused],
+        (workspace, data, focusedClient) => {
             if (!workspace) return { workspace, clients: [] }
             
             // Filter clients for the focused workspace
@@ -78,7 +98,42 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
                 return 0;
             });
             
-            return { workspace, clients: sortedClients }
+            // Pre-process all client data to avoid doing it in the render loop
+            const processedClients = sortedClients.map(client => {
+                const windowMatch = getWindowMatch(client);
+                const title = getTitle(client, useCustomTitle, useClassName);
+                const truncatedTitle = truncateText(title, maxTitleLength);
+                
+                // Pre-compute all the state needed for rendering
+                const isFocused = focusedClient && client.address === focusedClient.address;
+                const isPinned = client.pinned;
+                const isFullscreen = Boolean(client.fullscreen || (client as any).fullscreen === 1);
+                
+                // Compute CSS class ahead of time
+                const cssClass = [
+                    'client',
+                    isFocused ? 'focused-client' : '',
+                    isPinned ? 'pinned-client' : '',
+                    isFullscreen ? 'fullscreen-client' : ''
+                ].filter(Boolean).join(' ');
+                
+                // Return a flat, ready-to-use object that requires no further processing
+                return {
+                    id: client.address,
+                    address: client.address,
+                    className: client.class || '',
+                    title,
+                    truncatedTitle,
+                    isFocused,
+                    isPinned,
+                    isFullscreen,
+                    icon: windowMatch.icon,
+                    label: windowMatch.label,
+                    cssClass
+                } as ClientState;
+            });
+            
+            return { workspace, clients: processedClients }
         }
     )
     
@@ -116,33 +171,12 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
                 }
                 
                 return <box>
-                    {clients.map(client => {
-                        const windowMatch = getWindowMatch(client)
-                        const title = getTitle(client, useCustomTitle, useClassName)
-                        const truncatedTitle = truncateText(title, maxTitleLength)
-                        
-                        return focused.as(focusedClient => {
-                            const isFocused = focusedClient && client.address === focusedClient.address
-                            const isPinned = client.pinned
-                            
-                            // Access fullscreen property correctly - it might be a number (1/0) instead of boolean
-                            // Type cast to ensure we get the right value
-                            const isFullscreen = Boolean(client.fullscreen || (client as any).fullscreen === 1)
-                            
-                            // Add classes for styling
-                            const classes = [
-                                'client',
-                                isFocused ? 'focused-client' : '',
-                                isPinned ? 'pinned-client' : '',
-                                isFullscreen ? 'fullscreen-client' : ''
-                            ].filter(Boolean).join(' ')
-                            
-                            return <box className={classes}>
-                                <label label={windowMatch.icon} />
-                                <label label={truncatedTitle} />
-                            </box>
-                        })
-                    })}
+                    {clients.map(client => (
+                        <box className={client.cssClass}>
+                            <label label={client.icon} />
+                            <label label={client.truncatedTitle} />
+                        </box>
+                    ))}
                 </box>
             })}
         </box>

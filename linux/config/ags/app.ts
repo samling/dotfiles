@@ -3,6 +3,29 @@ import { App } from "astal/gtk3"
 import style from "./style.scss"
 import Bar from "./widget/bar/Bar"
 import Picker, { cycleWorkspace, pickerInstances } from "./widget/picker/Picker"
+import { cleanupTitleResources } from "./utils/title"
+
+// Limit memory usage by clearing caches periodically
+const MEMORY_CLEANUP_INTERVAL = 60000; // 1 minute
+
+// Setup periodic garbage collection reminders
+const setupMemoryManagement = () => {
+    // Force garbage collection periodically
+    const gc = imports.system.gc;
+    
+    // Schedule garbage collection
+    const interval = setInterval(() => {
+        gc();
+    }, MEMORY_CLEANUP_INTERVAL);
+    
+    // Clean up interval on exit
+    App.connect("shutdown", () => {
+        clearInterval(interval);
+        
+        // Also clean up any other resources
+        cleanupTitleResources();
+    });
+};
 
 App.start({
     css: style,
@@ -40,6 +63,10 @@ App.start({
         const monitors = App.get_monitors()
         const bar = monitors.map(Bar)
         const picker = monitors.map(Picker)
+        
+        // Set up memory management
+        setupMemoryManagement();
+        
         return [...bar, ...picker]
     }
 })

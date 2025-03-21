@@ -7,10 +7,27 @@ import { getWindowMatch } from "../../../../utils/title"
 // Cache for window icons to avoid repeated processing
 const windowIconCache = new Map();
 
-// Interface for workspace client data
-interface WorkspaceClientData {
-    workspace: Hyprland.Workspace;
-    clients: Hyprland.Client[];
+// Maximum size for the window icon cache
+const MAX_ICON_CACHE_SIZE = 100;
+
+// Function to limit cache size
+const limitIconCacheSize = () => {
+    if (windowIconCache.size > MAX_ICON_CACHE_SIZE) {
+        // Delete oldest entries (convert to array, slice, and recreate the map)
+        const entries = Array.from(windowIconCache.entries());
+        const newEntries = entries.slice(entries.length - MAX_ICON_CACHE_SIZE);
+        windowIconCache.clear();
+        for (const [key, value] of newEntries) {
+            windowIconCache.set(key, value);
+        }
+    }
+};
+
+// Interface for workspace data
+interface WorkspaceData {
+    id: number;
+    name: string;
+    isActive: boolean;
     icons: string[];
 }
 
@@ -93,6 +110,7 @@ export default function Workspaces() {
             const match = getWindowMatch(client)
             if (match && match.icon) {
                 windowIconCache.set(client.class, match.icon);
+                limitIconCacheSize(); // Ensure cache doesn't grow too large
                 icons.push(match.icon)
             }
         })
@@ -133,12 +151,13 @@ export default function Workspaces() {
                     // Track if this workspace is active
                     const isActive = activeSet.has(ws)
                     
+                    // Return a flat, pre-computed object for rendering
                     return {
-                        workspace: ws,
-                        clients: wsClients,
-                        icons,
-                        isActive
-                    }
+                        id: ws.id,
+                        name: ws.name,
+                        isActive,
+                        icons
+                    } as WorkspaceData
                 })
         }
     )
@@ -161,6 +180,9 @@ export default function Workspaces() {
         activeWorkspaces.drop();
         workspacesData.drop();
         activespecial.drop();
+        
+        // Also clear caches
+        windowIconCache.clear();
     };
 
     return <box 
@@ -170,16 +192,16 @@ export default function Workspaces() {
             widget.connect('destroy', cleanup);
         }}>
         {bind(workspacesData).as(workspaces => {
-            return workspaces.map(({ workspace: ws, icons, isActive }) => {
+            return workspaces.map(ws => {
                 return (
                     <button
-                        className={isActive ? "workspace-button focused" : "workspace-button"}
-                        onClicked={() => ws.focus()}>
+                        className={ws.isActive ? "workspace-button focused" : "workspace-button"}
+                        onClicked={() => hypr.message(`dispatch workspace ${ws.id}`)}>
                         <box className="workspace-container">
                             <label className="workspace-number" label={ws.id === -98 ? "scratch" : `${ws.id}`} />
-                            {icons.length > 0 && (
+                            {ws.icons.length > 0 && (
                                 <box className="app-icons">
-                                    {icons.map(icon => (
+                                    {ws.icons.map(icon => (
                                         <label className="app-icon" label={icon} />
                                     ))}
                                 </box>

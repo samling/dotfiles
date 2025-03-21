@@ -4,9 +4,25 @@ import { bind, Variable } from 'astal';
 const hyprlandService = Hyprland.get_default();
 export const clientTitle = Variable('');
 let clientBinding: Variable<void> | undefined;
+let focusedClientBinding: Variable<void> | undefined;
 
 // Cache for window matches to avoid repeated regex testing
-const windowMatchCache = new Map();
+// Limit cache size to prevent unbounded growth
+const MAX_CACHE_SIZE = 200;
+const windowMatchCache = new Map<string, {icon: string, label: string}>();
+
+// Function to limit cache size
+const limitCacheSize = () => {
+    if (windowMatchCache.size > MAX_CACHE_SIZE) {
+        // Delete oldest entries (convert to array, slice, and recreate the map)
+        const entries = Array.from(windowMatchCache.entries());
+        const newEntries = entries.slice(entries.length - MAX_CACHE_SIZE);
+        windowMatchCache.clear();
+        for (const [key, value] of newEntries) {
+            windowMatchCache.set(key, value);
+        }
+    }
+};
 
 /**
  * Capitalizes the first letter of a string.
@@ -20,21 +36,53 @@ export const capitalizeFirstLetter = (str: string): string => {
 };
 
 function trackClientUpdates(client: Hyprland.Client): void {
-    clientBinding?.drop();
-    clientBinding = undefined;
+    // Clean up previous binding to avoid memory leaks
+    if (clientBinding) {
+        clientBinding.drop();
+        clientBinding = undefined;
+    }
 
     if (!client) {
         return;
     }
 
+    // Create new binding
     clientBinding = Variable.derive([bind(client, 'title')], (currentTitle) => {
         clientTitle.set(currentTitle);
     });
 }
 
-Variable.derive([bind(hyprlandService, 'focusedClient')], (client) => {
+// Track focused client updates but ensure proper cleanup
+if (focusedClientBinding) {
+    focusedClientBinding.drop();
+}
+
+focusedClientBinding = Variable.derive([bind(hyprlandService, 'focusedClient')], (client) => {
     trackClientUpdates(client);
 });
+
+// Export a cleanup function that can be called by components
+export const cleanupTitleResources = () => {
+    // Clean up bindings
+    if (clientBinding) {
+        clientBinding.drop();
+        clientBinding = undefined;
+    }
+    
+    if (focusedClientBinding) {
+        focusedClientBinding.drop();
+        focusedClientBinding = undefined;
+    }
+    
+    // Clear the cache
+    windowMatchCache.clear();
+};
+
+// Call limitCacheSize whenever we add to the cache
+const addToWindowMatchCache = (key: string, value: {icon: string, label: string}) => {
+    windowMatchCache.set(key, value);
+    limitCacheSize();
+};
 
 /**
  * Retrieves the matching window title details for a given window.
@@ -177,7 +225,7 @@ windowTitleMap.forEach(([className, icon, label]) => {
  *
  * @returns An object containing the icon and label for the window.
  */
-export const getWindowMatch = (client: Hyprland.Client): Record<string, string> => {
+export const getWindowMatch = (client: Hyprland.Client): {icon: string, label: string} => {
     // Special case for empty class or title (likely Desktop)
     if (!client?.class || client.class.trim() === "" || client.class.toLowerCase() === "desktop") {
         // Special case for Picture in picture which often has empty class but specific title
@@ -196,7 +244,7 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
 
     // Check cache first
     if (windowMatchCache.has(client.class)) {
-        return windowMatchCache.get(client.class);
+        return windowMatchCache.get(client.class)!;
     }
     
     const clientClass = client.class.toLowerCase();
@@ -204,8 +252,8 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
     
     // Fast path: check exact matches first
     if (exactMatchMap.has(clientClass)) {
-        const match = exactMatchMap.get(clientClass);
-        windowMatchCache.set(client.class, match);
+        const match = exactMatchMap.get(clientClass)!;
+        addToWindowMatchCache(client.class, match);
         return match;
     }
     
@@ -223,7 +271,7 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
             icon: '󰣆',
             label: capitalizeFirstLetter(client.class),
         };
-        windowMatchCache.set(client.class, fallback);
+        addToWindowMatchCache(client.class, fallback);
         return fallback;
     }
 
@@ -232,7 +280,7 @@ export const getWindowMatch = (client: Hyprland.Client): Record<string, string> 
         label: foundMatch[2],
     };
     
-    windowMatchCache.set(client.class, result);
+    addToWindowMatchCache(client.class, result);
     return result;
 };
 
