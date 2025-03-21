@@ -25,9 +25,9 @@ install_tools: \
 	install_pacman_tools \
 	install_aur_tools \
 	install_hyprland_tools \
-	install_sway_tools \
 	install_k8s_tools \
 	install_vkv
+	#install_sway_tools \
 
 install_k8s_tools: \
 	install_krew \
@@ -37,10 +37,10 @@ install_k8s_tools: \
 configure: \
 	configure_zsh \
 	configure_tmux \
-	configure_zellij \
 	configure_npm \
 	configure_nvim \
 	configure_pyenv
+	#configure_zellij \
 
 configure_npm: \
 	install_fnm \
@@ -78,6 +78,8 @@ install_prereqs:
 		automake \
 		base-devel \
 		bison \
+		blueman \
+		bluez-utils \
 		cmake \
 		cpio \
 		curl \
@@ -86,9 +88,12 @@ install_prereqs:
 		direnv \
 		dnsutils \
 		evolution \
+		feh \
 		gcc \
+		gnome-keyring \
 		gnome-themes-extra \
 		gnupg \
+		go-yq \
 		flex \
 		inetutils \
 		jq \
@@ -111,6 +116,7 @@ install_prereqs:
 		xclip \
 		xdotool \
 		xmlsec \
+		xsel \
 		wget \
 		zsh
 
@@ -141,7 +147,7 @@ create_symlinks:
 	ln -sf ${HOME}/dotfiles/linux/config/ags ${HOME}/.config
 	ln -sf ${HOME}/dotfiles/linux/config/bat/* ${HOME}/.config/bat
 	ln -sf ${HOME}/dotfiles/linux/config/git/gitconfig ${HOME}/.gitconfig
-	ln -sf ${HOME}/dotfiles/linux/config/ghostty ${HOME}/.config
+	#ln -sf ${HOME}/dotfiles/linux/config/ghostty ${HOME}/.config
 	ln -sf ${HOME}/dotfiles/linux/config/hypr/* ${HOME}/.config/hypr
 	ln -sf ${HOME}/dotfiles/linux/config/kitty/* ${HOME}/.config/kitty
 	ln -sf ${HOME}/dotfiles/linux/config/lsd/* ${HOME}/.config/lsd
@@ -163,15 +169,18 @@ install_pacman_tools:
 		azure-cli \
 		bat \
 		btop \
+		copyq \
 		git-delta \
 		direnv \
+		docker \
+		docker-buildx \
 		dolphin \
 		duf \
 		eza \
 		fd \
+		fuzzel \
 		fzf \
 		geoclue \
-		gnome-power-manager \
 		go \
 		grc \
 		grim \
@@ -185,6 +194,7 @@ install_pacman_tools:
 		lsd \
 		neovim \
 		noto-fonts-emoji \
+		obsidian \
 		piper \
 		pipewire \
 		wireplumber \
@@ -203,7 +213,8 @@ install_pacman_tools:
 		ttf-nerd-fonts-symbols-mono \
 		tmux \
 		wezterm \
-		yazu \
+		yazi \
+		zellij \
 		zoxide
 
 install_hyprland_tools:
@@ -213,9 +224,10 @@ install_hyprland_tools:
 		hypridle \
 		hyprpaper \
 		hyprlock \
-		hyprswitch \
-		hyprshade \
-		hyprpolkitagent
+		hyprpolkitagent \
+		xdg-desktop-portal-hyprland
+		#hyprswitch \
+		#hyprshade \
 
 install_sway_tools:
 	@echo "Installing Sway and accompanying utilities"
@@ -235,11 +247,11 @@ install_aur_tools:
 		hyprswitch \
 		localsend-bin \
 		nvm \
-		tealdeer \
-		tlpui \
 		vendir \
+		vesktop \
 		viddy \
 		ytt
+		#tlpui \
 
 install_vkv:
 	@echo "Installing vkv"

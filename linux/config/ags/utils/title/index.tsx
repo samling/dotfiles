@@ -150,6 +150,7 @@ const windowTitleMap = [
     ['neovim', '', 'Neovim'],
     ['neovide', '', 'Neovide'],
     ['emacs', '', 'Emacs'],
+    ['postman', '󰶎', 'Postman'],
 
     // Communication Tools
     ['slack', '󰒱', 'Slack'],

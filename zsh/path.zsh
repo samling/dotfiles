@@ -16,6 +16,9 @@ PATH=/sbin:$PATH
 #
 PATH=$PATH:${HOME}/.local/bin
 
+#=== XDG
+export XDG_DATA_DIRS=/usr/share:/usr/local/share:$XDG_DATA_DIRS
+
 # Homebrew
 #
 PATH=$PATH:/opt/homebrew/sbin:/opt/homebrew/bin
