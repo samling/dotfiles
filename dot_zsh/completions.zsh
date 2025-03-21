@@ -1,6 +1,6 @@
 #=== fpath (must be at top)
-fpath=($HOME/dotfiles/zsh $fpath)
-fpath+=($HOME/dotfiles/zsh/pure)
+fpath=($HOME/.zsh $fpath)
+fpath+=($HOME/.zsh/pure)
 
 #=== compinit
 autoload -U compinit bashcompinit promptinit
