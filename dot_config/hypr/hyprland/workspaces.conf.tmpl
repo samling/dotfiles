@@ -2,6 +2,7 @@
 # WORKSPACES #
 ##############
 
+{{ if eq .chassis.type "desktop" }}
 # Bind workspaces to specific monitors
 workspace = 1,monitor:DP-3
 workspace = 2,monitor:DP-3
@@ -13,3 +14,4 @@ workspace = 7,monitor:DP-2
 workspace = 8,monitor:DP-2
 workspace = 9,monitor:DP-2
 workspace = 0,monitor:HDMI-A-1
+{{ end }}

@@ -34,6 +34,11 @@ exec = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # 
 exec-once = gsettings set org.gnome.desktop.interface cursor-theme BreezeX-RosePine
 exec-once = gsettings set org.gnome.desktop.interface cursor-size 24 
 
+{{ if eq .chassis.type "laptop" }}
+# Desktop portals
+exec-once = ~/.config/hypr/scripts/desktop-portals.sh
+{{ end }}
+
 # Start hypridle
 exec-once = hypridle
 
