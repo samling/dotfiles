@@ -9,17 +9,17 @@ export ZSH_VERSION=$ZSH_VERSION
 
 # Source config files
 # Note: Be careful when changing the order.
-source ~/dotfiles/zsh/path.zsh
-source ~/dotfiles/zsh/env.zsh
-source ~/dotfiles/zsh/prompt.zsh
-source ~/dotfiles/zsh/completions.zsh
-source ~/dotfiles/zsh/opt.zsh
-source ~/dotfiles/zsh/aliases.zsh
-source ~/dotfiles/zsh/functions.zsh
-source ~/dotfiles/zsh/fnm.zsh
-source ~/dotfiles/zsh/plugins.zsh
-source ~/dotfiles/zsh/keys.zsh
-source ~/dotfiles/zsh/zellij.zsh
+source .zsh/path.zsh
+source .zsh/env.zsh
+source .zsh/prompt.zsh
+source .zsh/completions.zsh
+source .zsh/opt.zsh
+source .zsh/aliases.zsh
+source .zsh/functions.zsh
+source .zsh/fnm.zsh
+source .zsh/plugins.zsh
+source .zsh/keys.zsh
+source .zsh/zellij.zsh
 
 # Source ${HOME}/dotfiles-private/zshrc.*.local files
 #
