@@ -1,5 +1,6 @@
 import { bind, Variable } from "astal"
 import Hyprland from "gi://AstalHyprland"
+import Gtk from "gi://Gtk"
 import { getWindowMatch, getTitle } from "../../../../utils/title"
 
 // Helper function to truncate text
@@ -29,21 +30,50 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
     // Initial clients data
     refreshClientsData()
     
+    // Define proper interface for signal connections
+    interface SignalConnection {
+        obj: any;
+        id: number;
+    }
+    
+    // Track all signal connections for cleanup
+    const signals: SignalConnection[] = [];
+    
     // Listen for Hyprland events
-    hypr.connect("event", (_, event, data) => {
+    const eventId = hypr.connect("event", (_, event: string) => {
         // Handle window-related events
         if (["openwindow", "closewindow", "movewindow", "windowtitle", "workspace", "fullscreen"].includes(event)) {
             // Refresh clients data
             refreshClientsData()
         }
-    })
+    });
+    signals.push({ obj: hypr, id: eventId });
 
     // Connect to the clients property change
-    hypr.connect("notify::clients", refreshClientsData)
-
+    const notifyId = hypr.connect("notify::clients", refreshClientsData);
+    signals.push({ obj: hypr, id: notifyId });
+    
+    // Set up cleanup function
+    const cleanup = () => {
+        // Disconnect all signals
+        for (const signal of signals) {
+            if (signal.obj && signal.id) {
+                try {
+                    signal.obj.disconnect(signal.id);
+                } catch (e) {
+                    console.log(`Error disconnecting signal: ${e}`);
+                }
+            }
+        }
+    };
+    
     return <box
         className="FocusedClient"
-        visible={focusedWorkspace.as(Boolean)}>
+        visible={focusedWorkspace.as(Boolean)}
+        setup={widget => {
+            // Register destroy signal on the actual widget instance
+            widget.connect('destroy', cleanup);
+        }}>
         <box className="Workspace">
             {bind(Variable.derive(
                 [focusedWorkspace, clientsData],
