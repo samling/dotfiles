@@ -1,0 +1,14 @@
+# Global ignores
+install.sh
+Makefile*
+README*
+
+# Ignore non-config directories
+windows
+macos
+linux
+tmux
+
+# Ignore directories
+dot_tmux/plugins/**
+.tmux/plugins/**

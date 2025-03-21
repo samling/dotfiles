@@ -1,0 +1,22 @@
+####################
+### APPLICATIONS ###
+####################
+
+# Start applications
+{{ if eq .chassis.type "laptop" }}
+exec-once = [workspace 1 silent] google-chrome-stable
+exec-once = [workspace 2 silent] wezterm
+exec-once = [workspace 3 silent] gtk-launch cursor
+exec-once = [workspace 4 silent] vesktop
+exec-once = [workspace 5 silent] signal-desktop
+exec-once = [workspace 6 silent] obsidian
+{{ else }}
+exec-once = [workspace 1 silent] google-chrome-stable
+exec-once = [workspace 1 silent] firefox
+exec-once = [workspace 2 silent] wezterm
+exec-once = [workspace 3 silent] gtk-launch cursor
+exec-once = [workspace 4 silent] obsidian
+exec-once = [workspace 7 silent] vesktop
+exec-once = [workspace 7 silent] slack
+exec-once = [workspace 7 silent] signal-desktop
+{{ end }}

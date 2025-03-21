@@ -1,0 +1,65 @@
+#################
+### AUTOSTART ###
+#################
+
+# System essentials
+#env = XDG_CURRENT_DESKTOP,Hyprland
+#env = XDG_SESSION_TYPE,wayland
+#exec-once = systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP
+exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = dbus-update-activation-environment --systemd HYPRLAND_INSTANCE_SIGNATURE
+#exec-once = export ($dbus-launch)
+#exec-once = sudo /usr/local/bin/powertune.sh
+
+# Desktop portals
+#exec-once = ~/dotfiles/linux/config/hypr/scripts/desktop-portals.sh
+
+# Start daemons
+exec-once = nm-applet &
+
+# Top bar
+exec-once = ags run
+exec-once = hyprpaper &
+exec-once = swayosd-server &
+exec-once = systemctl --user start hyprpolkitagent
+
+# Start hyprswitch
+exec-once = SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
+
+# Enable dark mode
+# NOTE: Handled by nwg-look instead
+env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
+exec = gsettings set org.gnome.desktop.interface gtk-theme "adwaita-dark"   # for GTK3 apps # TODO Exec once?
+exec = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps # TODO exec once?
+exec-once = gsettings set org.gnome.desktop.interface cursor-theme BreezeX-RosePine
+exec-once = gsettings set org.gnome.desktop.interface cursor-size 24 
+
+{{ if eq .chassis.type "laptop" }}
+# Desktop portals
+exec-once = ~/.config/hypr/scripts/desktop-portals.sh
+{{ end }}
+
+# Start hypridle
+exec-once = hypridle
+
+# Start pipewire etc.
+# This *should* be handled by systemd
+# systemctl --user enable {pipewire|pipewire-pulse|wireplumber}
+#exec-once = pipewire
+#exec-once = wireplumber
+#exec-once = pipewire-pulse
+
+# Load plugins
+exec-once = hyprpm reload -n
+exec-once = $HOME/.local/lib/import_env tmux # https://github.com/hyprwm/Hyprland/issues/3134
+# Run `hyprpm update` to properly load plugins
+#exec-once = hyprctl plugin load ~/Documents/hypr-plugins/Hyprspace.so
+
+# Start app services
+exec-once = copyq --start-server
+exec-once = insync start
+
+# Waybar live reloading
+# exec-once = "$HOME/.config/hypr/refresh.sh"
+
+
