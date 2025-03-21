@@ -62,7 +62,6 @@ function updateLocalWorkspaceHistory(monitorName: string, workspaceId: number) {
 }
 
 export default function Picker(monitor: Gdk.Monitor) {
-    const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}`
     const selectedIndex = new Variable(0)
     const wasAltPressed = new Variable(false)
     const currentWorkspaceId = new Variable(0)
@@ -76,6 +75,15 @@ export default function Picker(monitor: Gdk.Monitor) {
     const signals: SignalConnection[] = []
 
     const hl = Hyprland.get_default()
+    hl.monitors.forEach((monitor) => {
+      console.log(monitor.id)
+      console.log(monitor.model)
+  })
+    const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}`
+    console.log(monitor)
+    console.log(monitor.get_display())
+    console.log(getMonitorName(monitor.get_display()))
+
     
     // Make workspaces reactive
     const workspaces = Variable.derive(
