@@ -1,6 +1,12 @@
 [core]
         pager = delta
 
+[pager]
+        diff = delta
+        log = delta
+        reflog = delta
+        show = delta
+
 [interactive]
         diffFilter = delta --color-only
 
@@ -9,7 +15,8 @@
 
 [delta]
         navigate = true
-        features = catppuccin-macchiato
+        features = catppuccin-macchiato side-by-side line-numbers decorations
+        whitespace-error-style = 22 reverse
 
 [merge]
         conflictstyle = diff3
