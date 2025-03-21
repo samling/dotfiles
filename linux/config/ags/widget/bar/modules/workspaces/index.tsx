@@ -7,6 +7,13 @@ import { getWindowMatch } from "../../../../utils/title"
 // Cache for window icons to avoid repeated processing
 const windowIconCache = new Map();
 
+// Interface for workspace client data
+interface WorkspaceClientData {
+    workspace: Hyprland.Workspace;
+    clients: Hyprland.Client[];
+    icons: string[];
+}
+
 export default function Workspaces() {
     const hypr = Hyprland.get_default()
     const activespecial = Variable(null as Hyprland.Workspace | null)
@@ -27,8 +34,17 @@ export default function Workspaces() {
     // Initial clients data
     refreshClientsData()
     
+    // Define proper interface for signal connections
+    interface SignalConnection {
+        obj: any;
+        id: number;
+    }
+    
+    // Track all signal connections for cleanup
+    const signals: SignalConnection[] = [];
+    
     // Listen for Hyprland events
-    hypr.connect("event", (h, event, data) => {
+    const eventId = hypr.connect("event", (h, event, data) => {
         if (event == "activespecial") {
             const [name, monitor] = data.split(",")
             const maybeWs = name ? (h.workspaces.find(ws => ws.name == name) || null) : null
@@ -46,35 +62,13 @@ export default function Workspaces() {
             // Refresh clients data
             refreshClientsData()
         }
-    })
+    });
+    signals.push({ obj: hypr, id: eventId });
 
     // Connect to the clients property change
-    hypr.connect("notify::clients", refreshClientsData)
-
-    const activeWorkspaces = Variable.derive(
-        [bind(hypr, "focusedWorkspace"), activespecial],
-        (focused, maybeSpecial) => {
-            const set = new Set<Hyprland.Workspace>()
-            focused && set.add(focused)
-            maybeSpecial && set.add(maybeSpecial)
-            return set
-        }
-    )
-
-    // Function to get clients grouped by workspace - using our cached clients data
-    const getClientsForWorkspace = (ws: Hyprland.Workspace) => {
-        return bind(clientsData).as(data => {
-            // Filter clients by workspace ID
-            return data.clients.filter(client => {
-                // The workspace property might be a number or an object with an id
-                const clientWs = typeof client.workspace === 'number' 
-                    ? client.workspace 
-                    : client.workspace?.id
-                return clientWs === ws.id
-            })
-        })
-    }
-
+    const notifyId = hypr.connect("notify::clients", refreshClientsData);
+    signals.push({ obj: hypr, id: notifyId });
+    
     // Function to get unique app icons for a workspace
     const getUniqueAppIcons = (clients: Hyprland.Client[]) => {
         const uniqueClasses = new Set<string>()
@@ -105,37 +99,96 @@ export default function Workspaces() {
         
         return icons
     }
-
-    return <box className="Workspaces">
-        {bind(Variable.derive(
-            [bind(hypr, "workspaces"), clientsData], 
-            (wss: Hyprland.Workspace[]) => wss
+    
+    // Create the active workspaces tracking variable
+    const activeWorkspaces = Variable.derive(
+        [bind(hypr, "focusedWorkspace"), activespecial],
+        (focused, maybeSpecial) => {
+            const set = new Set<Hyprland.Workspace>()
+            focused && set.add(focused)
+            maybeSpecial && set.add(maybeSpecial)
+            return set
+        }
+    )
+    
+    // Create a derived variable for all workspace data including clients
+    const workspacesData = Variable.derive(
+        [bind(hypr, "workspaces"), clientsData, activeWorkspaces],
+        (workspaces, clientData, activeSet) => {
+            // Sort workspaces by ID
+            return workspaces
                 .sort((a, b) => a.id - b.id)
                 .map(ws => {
-                    return (
-                        <button
-                            className={bind(activeWorkspaces).as((activeSet: Set<Hyprland.Workspace>) => 
-                                activeSet.has(ws) ? "workspace-button focused" : "workspace-button")}
-                            onClicked={() => ws.focus()}>
-                            {getClientsForWorkspace(ws).as(clients => {
-                                const icons = getUniqueAppIcons(clients)
-                                return (
-                                    <box className="workspace-container">
-                                        <label className="workspace-number" label={ws.id === -98 ? "scratch" : `${ws.id}`} />
-                                        {icons.length > 0 && (
-                                            <box className="app-icons">
-                                                {icons.map(icon => (
-                                                    <label className="app-icon" label={icon} />
-                                                ))}
-                                            </box>
-                                        )}
-                                    </box>
-                                )
-                            })}
-                        </button>
-                    )
+                    // Filter clients for this workspace
+                    const wsClients = clientData.clients.filter(client => {
+                        const clientWs = typeof client.workspace === 'number' 
+                            ? client.workspace 
+                            : client.workspace?.id
+                        return clientWs === ws.id
+                    })
+                    
+                    // Get icons for these clients
+                    const icons = getUniqueAppIcons(wsClients)
+                    
+                    // Track if this workspace is active
+                    const isActive = activeSet.has(ws)
+                    
+                    return {
+                        workspace: ws,
+                        clients: wsClients,
+                        icons,
+                        isActive
+                    }
                 })
-        ))}
+        }
+    )
+    
+    // Set up cleanup function
+    const cleanup = () => {
+        // Disconnect all signals
+        for (const signal of signals) {
+            if (signal.obj && signal.id) {
+                try {
+                    signal.obj.disconnect(signal.id);
+                } catch (e) {
+                    console.log(`Error disconnecting signal: ${e}`);
+                }
+            }
+        }
+        
+        // Release all variables
+        clientsData.drop();
+        activeWorkspaces.drop();
+        workspacesData.drop();
+        activespecial.drop();
+    };
+
+    return <box 
+        className="Workspaces"
+        setup={widget => {
+            // Register destroy signal on the actual widget instance
+            widget.connect('destroy', cleanup);
+        }}>
+        {bind(workspacesData).as(workspaces => {
+            return workspaces.map(({ workspace: ws, icons, isActive }) => {
+                return (
+                    <button
+                        className={isActive ? "workspace-button focused" : "workspace-button"}
+                        onClicked={() => ws.focus()}>
+                        <box className="workspace-container">
+                            <label className="workspace-number" label={ws.id === -98 ? "scratch" : `${ws.id}`} />
+                            {icons.length > 0 && (
+                                <box className="app-icons">
+                                    {icons.map(icon => (
+                                        <label className="app-icon" label={icon} />
+                                    ))}
+                                </box>
+                            )}
+                        </box>
+                    </button>
+                )
+            })
+        })}
     </box>
 }
 

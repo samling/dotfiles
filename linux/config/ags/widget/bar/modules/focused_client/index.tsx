@@ -53,6 +53,35 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
     const notifyId = hypr.connect("notify::clients", refreshClientsData);
     signals.push({ obj: hypr, id: notifyId });
     
+    // Create a single derived variable that will be reused
+    // This prevents creating a new one on each render cycle
+    const workspaceData = Variable.derive(
+        [focusedWorkspace, clientsData],
+        (workspace, data) => {
+            if (!workspace) return { workspace, clients: [] }
+            
+            // Filter clients for the focused workspace
+            const workspaceClients = data.clients.filter(client => {
+                const clientWs = typeof client.workspace === 'number' 
+                    ? client.workspace 
+                    : client.workspace?.id
+                return clientWs === workspace.id
+            })
+            
+            // Only sort by pinned status, preserving natural order otherwise
+            const sortedClients = [...workspaceClients].sort((a, b) => {
+                // Pinned clients first
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                
+                // Otherwise keep original order
+                return 0;
+            });
+            
+            return { workspace, clients: sortedClients }
+        }
+    )
+    
     // Set up cleanup function
     const cleanup = () => {
         // Disconnect all signals
@@ -65,6 +94,10 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
                 }
             }
         }
+        
+        // Release all variables
+        clientsData.drop();
+        workspaceData.drop();
     };
     
     return <box
@@ -75,36 +108,15 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
             widget.connect('destroy', cleanup);
         }}>
         <box className="Workspace">
-            {bind(Variable.derive(
-                [focusedWorkspace, clientsData],
-                (workspace, data) => ({ workspace, clients: data.clients })
-            )).as(({ workspace, clients }) => {
+            {bind(workspaceData).as(({ workspace, clients }) => {
                 if (!workspace) return null
                 
-                // Filter clients for the focused workspace
-                const workspaceClients = clients.filter(client => {
-                    const clientWs = typeof client.workspace === 'number' 
-                        ? client.workspace 
-                        : client.workspace?.id
-                    return clientWs === workspace.id
-                })
-                
-                // Only sort by pinned status, preserving natural order otherwise
-                const sortedClients = [...workspaceClients].sort((a, b) => {
-                    // Pinned clients first
-                    if (a.pinned && !b.pinned) return -1;
-                    if (!a.pinned && b.pinned) return 1;
-                    
-                    // Otherwise keep original order
-                    return 0;
-                });
-                
-                if (sortedClients.length === 0) {
+                if (clients.length === 0) {
                     return <box>No clients in workspace</box>
                 }
                 
                 return <box>
-                    {sortedClients.map(client => {
+                    {clients.map(client => {
                         const windowMatch = getWindowMatch(client)
                         const title = getTitle(client, useCustomTitle, useClassName)
                         const truncatedTitle = truncateText(title, maxTitleLength)
