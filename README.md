@@ -8,6 +8,20 @@ My ever-growing collection of dotfiles and configs.
 * `direnv`
 * [chezmoi](https://github.com/twpayne/chezmoi)
 
+### Chezmoi tl;dr
+```
+chezmoi init <repo>
+chezmoi apply {-n}          # Apply changes to ~ {Dry run}
+chezmoi archive             # Create an archive of the dotfiles
+chezmoi cd                  # cd to chosmoi source path
+chezmoi merge               # Merge changes made to local copy with chezmoi managed
+chezmoi update              # Pull latest version from git and apply changes
+
+chezmoi add ~/.my_file      # Manage new file
+chezmoi forget ~/.my_file   # Stop managing a file
+chezmoi managed             # View managed files
+```
+
 ### Installation
 
 1. Copy `.envrc.example` to `.envrc`

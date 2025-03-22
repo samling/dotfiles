@@ -191,7 +191,7 @@ install_brew_tools:
 		zellij \
 		zlib \
 		zoxide
-	brew install --cask weztern
+	brew install --cask wezterm
 
 ################
 # CARVEL TOOLS #
