@@ -1,16 +1,25 @@
 -- Completion engine.
 --
-return { -- Autocompletion
+local function border(hl_name)
+  return {
+    { "┌", hl_name },
+    { "─", hl_name },
+    { "┐", hl_name },
+    { "│", hl_name },
+    { "┘", hl_name },
+    { "─", hl_name },
+    { "└", hl_name },
+    { "│", hl_name },
+  }
+end
+
+return {
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
-    -- Snippet Engine & its associated nvim-cmp source
     {
       'L3MON4D3/LuaSnip',
       build = (function()
-        -- Build Step is needed for regex support in snippets
-        -- This step is not supported in many windows environments
-        -- Remove the below condition to re-enable on windows
         if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
           return
         end
@@ -18,31 +27,23 @@ return { -- Autocompletion
       end)(),
     },
     'saadparwaiz1/cmp_luasnip',
-
-    -- Adds other completion capabilities.
-    --  nvim-cmp does not ship with all sources by default. They are split
-    --  into multiple repos for maintenance purposes.
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
-    -- 'garyhurtz/cmp_kitty',
-    -- 'tamago324/cmp-zsh',
-    -- 'andersevenrud/cmp-tmux',
-    -- 'petertriho/cmp-git',
-
-    -- If you want to add a bunch of pre-configured snippets,
-    --    you can use this plugin to help you. It even has snippets
-    --    for various frameworks/libraries/etc. but you will have to
-    --    set up the ones that are useful for you.
-    -- 'rafamadriz/friendly-snippets',
+    'rafamadriz/friendly-snippets',
   },
   config = function()
     -- See `:help cmp`
+    vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+
+    require('luasnip.loaders.from_vscode').lazy_load()
+
     local cmp = require 'cmp'
     local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
     local luasnip = require 'luasnip'
-    luasnip.config.setup {}
+
+    local select_opts = {behavior = cmp.SelectBehavior.Select}
 
     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
@@ -52,61 +53,85 @@ return { -- Autocompletion
           luasnip.lsp_expand(args.body)
         end,
       },
-      -- https://github.com/hrsh7th/cmp-cmdline/issues/96
-      completion = { completeopt = 'menu,menuone,noselect' },
-
-      -- For an understanding of why these mappings were
-      -- chosen, you will need to read `:help ins-completion`
-      --
-      -- No, but seriously. Please read `:help ins-completion`, it is really good!
-      mapping = cmp.mapping.preset.insert {
-        -- Select the [n]ext item
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        -- Select the [p]revious item
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-
-        -- Accept ([y]es) the completion.
-        --  This will auto-import if your LSP supports it.
-        --  This will expand snippets if the LSP sent a snippet.
-        ['<CR>'] = cmp.mapping.confirm { select = true },
-        ['<Tab>'] = cmp.mapping.confirm { select = true },
-
-        -- Manually trigger a completion from nvim-cmp.
-        --  Generally you don't need this, because nvim-cmp will display
-        --  completions whenever it has completion options available.
-        ['<C-Space>'] = cmp.mapping.complete {},
-
-        -- Think of <c-l> as moving to the right of your snippet expansion.
-        --  So if you have a snippet that's like:
-        --  function $name($args)
-        --    $body
-        --  end
-        --
-        -- <c-l> will move you to the right of each of the expansion locations.
-        -- <c-h> is similar, except moving you backwards.
-        ['<C-l>'] = cmp.mapping(function()
-          if luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          end
-        end, { 'i', 's' }),
-        ['<C-h>'] = cmp.mapping(function()
-          if luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          end
-        end, { 'i', 's' }),
-      },
       sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
         { name = 'path' },
-        { name = 'buffer' },
-        -- { name = 'kitty' },
-        -- { name = 'zsh' },
-        -- { name = 'tmux' },
-        -- { name = 'git' },
+        { name = 'nvim_lsp', keyword_length = 1 },
+        { name = 'buffer', keyword_length = 3 },
+        { name = 'luasnip', keyword_length = 2 },
+      },
+      window = {
+        completion = {
+          border = border("CmpMenuBorder"),
+        },
+        documentation = {
+          border = border("CmpDocBorder"),
+        },
+      },
+      formatting = {
+        fields = {'menu', 'abbr', 'kind'},
+        format = function(entry, item)
+          local menu_icon = {
+            nvim_lsp = 'λ',
+            luasnip = '⋗',
+            buffer = 'Ω',
+            path = '🖫',
+          }
+
+          item.menu = menu_icon[entry.source.name]
+          return item
+        end,
+      },
+      mapping = {
+        ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+        ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+
+        ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
+        ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<C-y>'] = cmp.mapping.confirm({select = true}),
+        ['<CR>'] = cmp.mapping.confirm({select = false}),
+
+        ['<C-f>'] = cmp.mapping(function(fallback)
+          if luasnip.jumpable(1) then
+            luasnip.jump(1)
+          else
+            fallback()
+          end
+        end, {'i', 's'}),
+
+        ['<C-b>'] = cmp.mapping(function(fallback)
+          if luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, {'i', 's'}),
+
+        ['<Tab>'] = cmp.mapping(function(fallback)
+          local col = vim.fn.col('.') - 1
+
+          if cmp.visible() then
+            cmp.select_next_item(select_opts)
+          elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+            fallback()
+          else
+            cmp.complete()
+          end
+        end, {'i', 's'}),
+
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item(select_opts)
+          else
+            fallback()
+          end
+        end, {'i', 's'}),
       },
     }
-
     cmp.setup.cmdline('/', {
       mapping = cmp.mapping.preset.cmdline(),
       source = {

@@ -4,12 +4,6 @@ return {
   'folke/noice.nvim',
   event = 'VeryLazy',
   opts = {
-    views = {
-      hover = {
-        border = { style = "rounded" },
-        size = { max_width = 80 },
-      }
-    },
     cmdline = {
       enabled = true, -- enables Noice cmdline UI
       view = 'cmdline_popup', -- view for rendering the cmdline. Change to 'cmdline' to get a classic cmdline at the bottom
@@ -36,6 +30,31 @@ return {
         ['vim.lsp.util.stylize_markdown'] = true,
         ['cmp.entry.get_documentation'] = true,
       },
+    },
+    views = {
+      hover = {
+        border = { style = "rounded" },
+        size = { max_width = 80 },
+        },
+      -- Clean cmdline_popup + palette
+      -- cmdline_popup = {
+      --   position = {
+      --     row = 10,
+      --     col = "50%",
+      --   },
+      --   border = {
+      --     style = "none",
+      --     padding = { 2, 3 },
+      --   },
+      --   size = {
+      --     min_width = 60,
+      --     width = "auto",
+      --     height = "auto",
+      --   },
+      --   win_options = {
+      --     winhighlight = { NormalFloat = "NormalFloat", FloatBorder = "FloatBorder" },
+      --   },
+      -- },
     },
     routes = {
       {

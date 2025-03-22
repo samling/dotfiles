@@ -12,8 +12,35 @@ return {
   config = function()
     local lsp = require("lspconfig");
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    local border = {
+      { '┌', 'FloatBorder' },
+      { '─', 'FloatBorder' },
+      { '┐', 'FloatBorder' },
+      { '│', 'FloatBorder' },
+      { '┘', 'FloatBorder' },
+      { '─', 'FloatBorder' },
+      { '└', 'FloatBorder' },
+      { '│', 'FloatBorder' },
+    }
+
+    local noice = require("noice")
+
+    local handlers = {
+      ['textDocument/hover'] = vim.lsp.with(noice.hover, { border = border }),
+      ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+  }
+
+    vim.diagnostic.config({
+        virtual_text = {
+            prefix = '■ ', -- Could be '●', '▎', 'x', '■', , 
+        },
+        float = { border = border },
+    })
+
     lsp.lua_ls.setup({
       capabilities = capabilities,
+      handlers = handlers,
       settings = {
         Lua = {
           workspace = { checkThirdParty = false },
@@ -124,6 +151,7 @@ return {
           local server = servers[server_name] or {}
           lsp[server_name].setup {
             cmd = server.cmd,
+            handlers = handlers,
             settings = server.settings,
             filetypes = server.filetypes,
             capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),

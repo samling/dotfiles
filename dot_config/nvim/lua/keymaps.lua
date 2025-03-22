@@ -50,9 +50,14 @@ vim.keymap.set('n', '<leader>bb', function()
 end, { desc = 'Current buffers' })
 vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = 'Create a new buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Move to the previous buffer' })
+vim.keymap.set('n', '[b', ':bprev<CR>', { desc = 'Move to the previous buffer' })
+vim.keymap.set('n', 'b[', ':bprev<CR>', { desc = 'Move to the previous buffer' })
 vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Move to the next buffer' })
+vim.keymap.set('n', ']b', ':bnext<CR>', { desc = 'Move to the next buffer' })
+vim.keymap.set('n', 'b]', ':bnext<CR>', { desc = 'Move to the next buffer' })
 vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
 vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
+vim.keymap.set('n', '<leader>bq', ':bdelete<CR>', { desc = 'Close the current buffer' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -70,4 +75,3 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 -- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 -- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
