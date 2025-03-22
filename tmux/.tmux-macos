@@ -1,3 +1,0 @@
-# macos-specific tmux options
-
-set -g @thumbs-command 'echo -n {} | pbcopy'

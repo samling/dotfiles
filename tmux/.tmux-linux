@@ -1,3 +1,0 @@
-# linux-specific tmux options
-
-set -g @fingers-copy-command 'xclip -sel clip'
