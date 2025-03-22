@@ -2,17 +2,17 @@
 {{- if eq .chassis.type "laptop" -}}
 {{- $primaryMonitor = "eDP-1" -}}
 {{- else -}}
-{{- $primaryMonitor = "DP-1" -}}
+{{- $primaryMonitor = "DP-3" -}}
 {{- end -}}
 background {
-  monitor={{ $primaryMonitor }}
+  monitor=DP-1
   blur_passes=1
   blur_size=7
   noise=0.011700
   path=screenshot
 }
 
-{{- if eq .chassis.type "desktop" -}}
+{{- if eq .chassis.type "desktop" }}
 background {
   monitor=DP-2
   blur_passes=1
@@ -22,7 +22,7 @@ background {
 }
 
 background {
-  monitor=DP-3
+  monitor={{ $primaryMonitor }}
   blur_passes=1
   blur_size=7
   noise=0.011700
@@ -36,7 +36,7 @@ background {
   noise=0.011700
   path=screenshot
 }
-{{- end -}}
+{{- end }}
 
 input-field {
   monitor={{ $primaryMonitor }}
