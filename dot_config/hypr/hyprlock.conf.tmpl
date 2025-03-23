@@ -5,7 +5,7 @@
 {{- $primaryMonitor = "DP-3" -}}
 {{- end -}}
 background {
-  monitor=DP-1
+  monitor={{ $primaryMonitor }}
   blur_passes=1
   blur_size=7
   noise=0.011700
