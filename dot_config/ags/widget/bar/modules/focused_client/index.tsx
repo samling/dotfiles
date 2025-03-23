@@ -162,15 +162,15 @@ export default function FocusedClient({ useCustomTitle = false, useClassName = f
             // Register destroy signal on the actual widget instance
             widget.connect('destroy', cleanup);
         }}>
-        <box className="Workspace">
+        <box className="clients-wrapper">
             {bind(workspaceData).as(({ workspace, clients }) => {
                 if (!workspace) return null
                 
                 if (clients.length === 0) {
-                    return <box>No clients in workspace</box>
+                    return <box className="empty-workspace-message">No clients in workspace</box>
                 }
                 
-                return <box>
+                return <box className="clients-container">
                     {clients.map(client => (
                         <box className={client.cssClass}>
                             <label label={client.icon} />

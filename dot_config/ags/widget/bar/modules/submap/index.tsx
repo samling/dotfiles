@@ -12,16 +12,25 @@ export default function Submap() {
         submapName.set(name)
     })
 
+    // Set up cleanup function
+    const cleanup = () => {
+        hypr.disconnect(submapId)
+        submapName.drop()
+    }
+
     return <box
+        className="SubmapModule"
         setup={widget => {
-            widget.connect('destroy', () => {
-                hypr.disconnect(submapId)
-                submapName.drop()
-            })
+            // Register destroy signal on the actual widget instance
+            widget.connect('destroy', cleanup)
         }}>
         {bind(submapName).as(name => name ? (
-            <box className="submap">
-                <label>{name}</label>
+            <box className="submap-wrapper">
+                <box className="submap-container">
+                    <box className="submap">
+                        <label label={name} />
+                    </box>
+                </box>
             </box>
         ) : "")}
     </box>

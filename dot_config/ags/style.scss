@@ -61,6 +61,21 @@ window.Bar {
         border-radius: 4px;
         margin: 0 2px;
     }
+    
+    .SubmapModule {
+        margin: 2px;
+    }
+    
+    .submap-wrapper {
+        margin: 0 2px;
+    }
+    
+    .submap-container {
+        transition: 200ms;
+        padding: 0 8px;
+        border-radius: 4px;
+        margin: 0 2px;
+    }
 
     .Workspaces  {
         button {
@@ -70,7 +85,6 @@ window.Bar {
 
             &:hover .workspace-container {
                 background-color: $accent;
-                border-color: color.adjust($accent, $alpha: -0.4);
                 color: $base;
             }
 
@@ -83,13 +97,13 @@ window.Bar {
         .focused .workspace-container {
             background-color: $accent;
             color: $base;
-            border-color: $accent;
         }
 
         .workspace-container {
             transition: 200ms;
-            padding: 0 4px;
-            border: 1pt solid transparent;
+            padding: 0 8px;
+            border-radius: 4px;
+            margin: 0 2px;
         }
 
         .workspace-number {
@@ -117,40 +131,7 @@ window.Bar {
     .Focused {
         background-color: $mauve;
         color: $base;
-    }
-
-    .client {
-        /* Base styles for all clients */
-        padding: 4px 8px;
         border-radius: 4px;
-        margin: 0 2px;
-    }
-    
-    .focused-client {
-        /* Styles for the focused client */
-        background-color: rgba(255, 255, 255, 0.2);
-        font-weight: bold;
-    }
-
-    .pinned-client {
-        /* Styles for pinned clients */
-        border-left: 2px solid #DF8E1D; /* Same color as the pinned window border in your Hyprland config */
-        padding-left: 6px; /* Add some padding to account for the border */
-    }
-    
-    /* You can also style a client that is both focused and pinned */
-    .focused-client.pinned-client {
-        background-color: rgba(223, 142, 29, 0.2); /* Blend of focused and pinned colors */
-    }
-
-    /* Fullscreen client styling */
-    .fullscreen-client {
-        border-right: 2px solid $peach; /* A distinctive border color */
-        padding-right: 6px; /* Add some padding to account for the border */
-    }
-    
-    .focused-client.fullscreen-client {
-        background-color: rgba(250, 179, 135, 0.2); /* Using peach color with transparency */
     }
 
     .Media .Cover {
@@ -197,6 +178,54 @@ window.Bar {
             min-width: 1em;
             margin: -.2em;
         }
+    }
+
+    /* Client styles */
+    .FocusedClient {
+        margin: 2px;
+    }
+    
+    .clients-wrapper {
+        margin: 0 2px;
+    }
+    
+    .clients-container {
+        transition: 200ms;
+        border-radius: 4px;
+    }
+    
+    .client {
+        /* Base styles for all clients */
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin: 0 2px;
+    }
+    
+    .focused-client {
+        /* Styles for the focused client */
+        background-color: rgba(255, 255, 255, 0.2);
+        font-weight: bold;
+    }
+
+    .pinned-client {
+        /* Styles for pinned clients */
+        border-left: 2px solid #DF8E1D; /* Same color as the pinned window border in your Hyprland config */
+        padding-left: 6px; /* Add some padding to account for the border */
+    }
+    
+    /* You can also style a client that is both focused and pinned */
+    .focused-client.pinned-client {
+        background-color: rgba(223, 142, 29, 0.2); /* Blend of focused and pinned colors */
+    }
+
+    /* Fullscreen client styling */
+    .fullscreen-client {
+        border-right: 2px solid $peach; /* A distinctive border color */
+        padding-right: 6px; /* Add some padding to account for the border */
+    }
+    
+    .focused-client.fullscreen-client {
+        background-color: rgba(250, 179, 135, 0.2); /* Using peach color with transparency */
     }
 }
 
