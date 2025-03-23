@@ -7,15 +7,22 @@ export default function Submap() {
 
     const submapName = Variable<string>("")
 
-    const submap = hypr.connect("submap", (_h, submap) => {
+    const submapId = hypr.connect("submap", (_h, submap) => {
         const [name, id] = submap.split(",")
         submapName.set(name)
     })
 
-    return <box>
+    return <box
+        setup={widget => {
+            widget.connect('destroy', () => {
+                hypr.disconnect(submapId)
+                submapName.drop()
+            })
+        }}>
         {bind(submapName).as(name => name ? (
-        <box className="submap">
-            <label>{name}</label>
-        </box>) : "")}
+            <box className="submap">
+                <label>{name}</label>
+            </box>
+        ) : "")}
     </box>
 }
