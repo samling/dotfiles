@@ -82,7 +82,7 @@ export default function Picker(monitor: Gdk.Monitor) {
     const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}`
     console.log(monitor)
     console.log(monitor.get_display())
-    console.log(getMonitorName(monitor.get_display()))
+    console.log(getMonitorName(monitor.get_display(), monitor))
 
     
     // Make workspaces reactive

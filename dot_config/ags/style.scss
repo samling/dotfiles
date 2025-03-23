@@ -54,6 +54,14 @@ window.Bar {
         background-color: transparent;
     }
 
+    .submap {
+        background-color: $peach;
+        color: $base;
+        padding: 0 8px;
+        border-radius: 4px;
+        margin: 0 2px;
+    }
+
     .Workspaces  {
         button {
             all: unset;

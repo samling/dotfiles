@@ -3,6 +3,7 @@ import AudioWidget from "./modules/audio"
 import BatteryLevel from "./modules/battery"
 import FocusedClient from "./modules/focused_client"
 import Media from "./modules/media"
+import Submap from "./modules/submap"
 import SysTray from "./modules/systray"
 import Time from "./modules/clock"
 import Wifi from "./modules/wifi"
@@ -25,6 +26,7 @@ export default function Bar(monitor: Gdk.Monitor) {
         <centerbox>
             <box hexpand halign={Gtk.Align.START}>
                 <Workspaces />
+                <Submap />
             </box>
             <box>
                 <FocusedClient 
