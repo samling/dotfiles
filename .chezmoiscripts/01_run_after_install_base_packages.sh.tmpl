@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+{{- $osName := .chezmoi.osRelease.prettyName }}
+{{- $osID := $osName | lower | replace " " "_" }}
+{{- $basePackages := .packages.base }}
+
+# Iterate over base packages
+{{- range $basePackageName, $basePackageData := .packages.base -}}
+
+# Check if the package has an entry for the current OS
+{{- if and (index $basePackageData $osID) (index $basePackageData $osID "name") }}
+
+# Install the package for the current OS
+{{- if eq $osID "arch_linux" }}
+{{- $archPackageName := $basePackageData.arch_linux.name }}
+sudo pacman -S {{ $archPackageName }}
+
+{{- end }} # End of install the package for the current OS
+
+{{- end }} # End of check if the package has an entry for the current OS
+
+{{- end }} # End of range over base packages
