@@ -69,14 +69,14 @@ window.Bar {
         .submap {
             background-color: $peach;
             color: $base;
-            padding: 0 8px;
-            border-radius: 4px;
-            margin: 0 2px;
+            @include container-style;
         }
     }
 
     // Workspaces module styles
     .Workspaces {
+        margin: 2px;
+        
         button {
             all: unset;
             background-color: transparent;
@@ -98,10 +98,7 @@ window.Bar {
         }
 
         .workspace-container {
-            transition: 200ms;
-            padding: 0 8px;
-            border-radius: 4px;
-            margin: 0 2px;
+            @include container-style;
         }
 
         .workspace-number {
@@ -182,10 +179,7 @@ window.Bar {
     }
     
     .clients-container {
-        transition: 200ms;
-        border-radius: 4px;
-        margin: 0 2px;
-        padding: 0 8px;
+        @include container-style;
         background-color: $mauve;
         color: $base;
     }
