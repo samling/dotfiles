@@ -150,6 +150,12 @@ packages:
         name: luarocks
       ubuntu:
         name: luarocks
+    lua-language-server:
+      arch:
+        name: lua-language-server
+    mardownlint:
+      arch:
+        name: markdownlint
     meson:
       arch:
         name: meson
