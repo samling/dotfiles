@@ -14,7 +14,7 @@
 {{- if and ($hyprPackageData) (index $hyprPackageData $osID) (index $hyprPackageData $osID "name") -}}
 {{- $packageList = printf "%s %s" $packageList (index $hyprPackageData $osID "name") -}}
 {{- end -}}
-{{- end -}}
+{{- end }}
 
 {{- if eq $osID "arch" }}
 echo "Installing Hyprland packages for {{ $osID }}..."

@@ -14,7 +14,7 @@
 {{- if and ($aurPackageData) (index $aurPackageData $osID) (index $aurPackageData $osID "name") -}}
 {{- $packageList = printf "%s %s" $packageList (index $aurPackageData $osID "name") -}}
 {{- end -}}
-{{- end -}}
+{{- end }}
 
 {{- if eq $osID "arch" }}
 echo "Installing AUR packages for {{ $osID }}..."
