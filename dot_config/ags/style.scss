@@ -36,6 +36,14 @@ $fg: $text;
 $accent: $blue;
 $radius: 12px;
 
+// Common styles that can be reused
+@mixin container-style {
+    transition: 200ms;
+    padding: 0 8px;
+    border-radius: 4px;
+    margin: 0 2px;
+}
+
 window.Bar {
     border: none;
     box-shadow: none;
@@ -46,7 +54,7 @@ window.Bar {
     font-weight: bold;
 
     label {
-        margin: 0 8px;
+        margin: 0 2px;
     }
 
     button {
@@ -54,34 +62,24 @@ window.Bar {
         background-color: transparent;
     }
 
-    .submap {
-        background-color: $peach;
-        color: $base;
-        padding: 0 8px;
-        border-radius: 4px;
-        margin: 0 2px;
-    }
-    
+    // Submap module styles
     .SubmapModule {
         margin: 2px;
-    }
     
-    .submap-wrapper {
-        margin: 0 2px;
-    }
-    
-    .submap-container {
-        transition: 200ms;
-        padding: 0 8px;
-        border-radius: 4px;
-        margin: 0 2px;
+        .submap {
+            background-color: $peach;
+            color: $base;
+            padding: 0 8px;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
     }
 
-    .Workspaces  {
+    // Workspaces module styles
+    .Workspaces {
         button {
             all: unset;
             background-color: transparent;
-            margin: 2px;
 
             &:hover .workspace-container {
                 background-color: $accent;
@@ -107,7 +105,7 @@ window.Bar {
         }
 
         .workspace-number {
-            margin-right: 4px;
+            margin-right: 2px;
         }
 
         .app-icons {
@@ -120,6 +118,7 @@ window.Bar {
         }
     }
 
+    // SysTray module styles
     .SysTray {
         margin-right: 8px;
 
@@ -128,12 +127,7 @@ window.Bar {
         }
     }
 
-    .Focused {
-        background-color: $mauve;
-        color: $base;
-        border-radius: 4px;
-    }
-
+    // Media module styles
     .Media .Cover {
         min-height: 1.2em;
         min-width: 1.2em;
@@ -142,11 +136,13 @@ window.Bar {
         background-size: contain;
     }
 
+    // Battery module styles
     .Battery label {
         padding-left: 0;
         margin-left: 0;
     }
 
+    // Audio slider styles
     .AudioSlider {
         * {
             all: unset;
@@ -180,52 +176,18 @@ window.Bar {
         }
     }
 
-    /* Client styles */
+    // Focused client module styles
     .FocusedClient {
         margin: 2px;
-    }
-    
-    .clients-wrapper {
-        margin: 0 2px;
     }
     
     .clients-container {
         transition: 200ms;
         border-radius: 4px;
-    }
-    
-    .client {
-        /* Base styles for all clients */
-        padding: 4px 8px;
-        border-radius: 4px;
         margin: 0 2px;
-    }
-    
-    .focused-client {
-        /* Styles for the focused client */
-        background-color: rgba(255, 255, 255, 0.2);
-        font-weight: bold;
-    }
-
-    .pinned-client {
-        /* Styles for pinned clients */
-        border-left: 2px solid #DF8E1D; /* Same color as the pinned window border in your Hyprland config */
-        padding-left: 6px; /* Add some padding to account for the border */
-    }
-    
-    /* You can also style a client that is both focused and pinned */
-    .focused-client.pinned-client {
-        background-color: rgba(223, 142, 29, 0.2); /* Blend of focused and pinned colors */
-    }
-
-    /* Fullscreen client styling */
-    .fullscreen-client {
-        border-right: 2px solid $peach; /* A distinctive border color */
-        padding-right: 6px; /* Add some padding to account for the border */
-    }
-    
-    .focused-client.fullscreen-client {
-        background-color: rgba(250, 179, 135, 0.2); /* Using peach color with transparency */
+        padding: 0 8px;
+        background-color: $mauve;
+        color: $base;
     }
 }
 
@@ -239,8 +201,6 @@ window.Picker {
 
     .workspace-container {
         padding: 0.5em;
-        margin: 0.25em;
-        // border-radius: $radius;
         transition: all 200ms ease;
 
         &.selected {
@@ -251,11 +211,6 @@ window.Picker {
 
     .workspace-label {
         font-weight: bold;
-        margin-bottom: 0.5em;
-    }
-
-    .clients-container {
-        margin-left: 1em;
     }
 
     .client-item {
@@ -274,7 +229,6 @@ window.Picker {
             font-style: italic;
             opacity: 0.7;
             font-size: 0.9em;
-            margin-top: 0.2em;
         }
     }
 }

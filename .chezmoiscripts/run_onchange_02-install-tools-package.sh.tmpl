@@ -7,16 +7,16 @@
 {{-   $osID = "darwin" -}}
 {{- end -}}
 
-{{- $basePackages := .packages.base -}}
+{{- $toolsPackages := .packages.tools -}}
 {{- $packageList := "" -}}
 
-{{- range $basePackageName, $basePackageData := .packages.base -}}
-{{- if and ($basePackageData) (index $basePackageData $osID) (index $basePackageData $osID "name") -}}
-{{- $packageList = printf "%s %s" $packageList (index $basePackageData $osID "name") -}}
+{{- range $toolPackageName, $toolPackageData := .packages.tools -}}
+{{- if and ($toolPackageData) (index $toolPackageData $osID) (index $toolPackageData $osID "name") -}}
+{{- $packageList = printf "%s %s" $packageList (index $toolPackageData $osID "name") -}}
 {{- end -}}
 {{- end }}
 
-echo "Installing base packages for {{ $osID }}..."
+echo "Installing tools packages for {{ $osID }}..."
 
 {{- if eq $osID "arch" }}
 sudo pacman -S --needed --noconfirm {{ $packageList | trim }}

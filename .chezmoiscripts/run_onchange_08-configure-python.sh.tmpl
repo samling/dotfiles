@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end }}
+
+echo "Configuring Python with pyenv for {{ $osID }}..."
+
+# Check if pyenv is installed
+if ! command -v pyenv &> /dev/null; then
+    echo "pyenv is not installed. Please install pyenv first."
+    exit 1
+fi
+
+# Install Python 3.11
+echo "Installing Python 3.11 with pyenv"
+pyenv install -f 3.11 --skip-existing
+
+# Set as default for the user
+pyenv global 3.11 

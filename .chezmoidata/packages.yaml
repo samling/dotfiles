@@ -1,5 +1,693 @@
 packages:
   base:
+    autoconf:
+      arch:
+        name: autoconf
+      darwin:
+        name: autoconf
+      ubuntu:
+        name: autotools-dev
+    automake:
+      arch:
+        name: automake
+      darwin:
+        name: automake
+      ubuntu:
+        name: automake
+    base-devel:
+      arch:
+        name: base-devel
+      ubuntu:
+        name: build-essential
+    bison:
+      arch:
+        name: bison
+      darwin:
+        name: bison
+      ubuntu:
+        name: bison
+    blueman:
+      arch:
+        name: blueman
+    bluez-utils:
+      arch:
+        name: bluez-utils
+    cmake:
+      arch:
+        name: cmake
+      darwin:
+        name: cmake
+      ubuntu:
+        name: cmake
+    cpio:
+      arch:
+        name: cpio
+      darwin:
+        name: cpio
+      ubuntu:
+        name: cpio
     curl:
-      arch_linux:
+      arch:
         name: curl
+      darwin:
+        name: curl
+      ubuntu:
+        name: curl
+    devtools:
+      arch:
+        name: devtools
+    dialog:
+      arch:
+        name: dialog
+      darwin:
+        name: dialog
+      ubuntu:
+        name: dialog
+    direnv:
+      arch:
+        name: direnv
+      darwin:
+        name: direnv
+      ubuntu:
+        name: direnv
+    dnsutils:
+      arch:
+        name: dnsutils
+      ubuntu:
+        name: dnsutils
+    evolution:
+      arch:
+        name: evolution
+      ubuntu:
+        name: evolution
+    feh:
+      arch:
+        name: feh
+      ubuntu:
+        name: feh
+    gcc:
+      arch:
+        name: gcc
+      darwin:
+        name: gcc
+      ubuntu:
+        name: gcc
+    gnome-keyring:
+      arch:
+        name: gnome-keyring
+      ubuntu:
+        name: gnome-keyring
+    gnome-themes-extra:
+      arch:
+        name: gnome-themes-extra
+      ubuntu:
+        name: gnome-themes-extra
+    gnupg:
+      arch:
+        name: gnupg
+      darwin:
+        name: gnupg
+      ubuntu:
+        name: gnupg
+    go-yq:
+      arch:
+        name: go-yq
+      darwin:
+        name: yq
+    flex:
+      arch:
+        name: flex
+      darwin:
+        name: flex
+      ubuntu:
+        name: flex
+    inetutils:
+      arch:
+        name: inetutils
+      ubuntu:
+        name: inetutils-telnet
+    jq:
+      arch:
+        name: jq
+      darwin:
+        name: jq
+      ubuntu:
+        name: jq
+    llvm:
+      arch:
+        name: llvm
+      darwin:
+        name: llvm
+      ubuntu:
+        name: llvm
+    luarocks:
+      arch:
+        name: luarocks
+      darwin:
+        name: luarocks
+      ubuntu:
+        name: luarocks
+    meson:
+      arch:
+        name: meson
+      ubuntu:
+        name: meson
+    nmap:
+      arch:
+        name: nmap
+      darwin:
+        name: nmap
+      ubuntu:
+        name: nmap
+    nwg-look:
+      arch:
+        name: nwg-look
+    pacman-contrib:
+      arch:
+        name: pacman-contrib
+    pavucontrol:
+      arch:
+        name: pavucontrol
+      ubuntu:
+        name: pavucontrol
+    pkg-config:
+      arch:
+        name: pkg-config
+      darwin:
+        name: pkg-config
+      ubuntu:
+        name: pkg-config
+    p7zip:
+      arch:
+        name: p7zip
+      darwin:
+        name: p7zip
+      ubuntu:
+        name: p7zip
+    qt6ct:
+      arch:
+        name: qt6ct
+      ubuntu:
+        name: qt6ct
+    smbclient:
+      arch:
+        name: smbclient
+      ubuntu:
+        name: smbclient
+    traceroute:
+      arch:
+        name: traceroute
+      darwin:
+        name: tcptraceroute
+      ubuntu:
+        name: traceroute
+    tk:
+      arch:
+        name: tk
+      darwin:
+        name: tcl-tk@8
+      ubuntu:
+        name: tk-dev
+    unzip:
+      arch:
+        name: unzip
+      darwin:
+        name: unzip
+      ubuntu:
+        name: unzip
+    xclip:
+      arch:
+        name: xclip
+      ubuntu:
+        name: xclip
+    xdotool:
+      arch:
+        name: xdotool
+      ubuntu:
+        name: xdotool
+    xmlsec:
+      arch:
+        name: xmlsec
+      ubuntu:
+        name: libxmlsec1-dev
+    xsel:
+      arch:
+        name: xsel
+      ubuntu:
+        name: xsel
+    wget:
+      arch:
+        name: wget
+      darwin:
+        name: wget
+      ubuntu:
+        name: wget
+    zsh:
+      arch:
+        name: zsh
+      darwin:
+        name: zsh
+      ubuntu:
+        name: zsh
+
+  tools:
+    aichat:
+      arch:
+        name: aichat
+      darwin:
+        name: aichat
+      ubuntu:
+        name: aichat
+    alsa-utils:
+      arch:
+        name: alsa-utils
+      ubuntu:
+        name: alsa-utils
+    aws-cli:
+      arch:
+        name: aws-cli
+      darwin:
+        name: awscli
+      ubuntu:
+        name: awscli
+    azure-cli:
+      arch:
+        name: azure-cli
+      darwin:
+        name: azure-cli
+      ubuntu:
+        name: azure-cli
+    bat:
+      arch:
+        name: bat
+      darwin:
+        name: bat
+      ubuntu:
+        name: bat
+    btop:
+      arch:
+        name: btop
+      darwin:
+        name: btop
+      ubuntu:
+        name: btop
+    copyq:
+      arch:
+        name: copyq
+      ubuntu:
+        name: copyq
+    git-delta:
+      arch:
+        name: git-delta
+      darwin:
+        name: delta
+      ubuntu:
+        name: git-delta
+    direnv:
+      arch:
+        name: direnv
+      darwin:
+        name: direnv
+      ubuntu:
+        name: direnv
+    docker:
+      arch:
+        name: docker
+      darwin:
+        name: docker
+      ubuntu:
+        name: docker.io
+    docker-buildx:
+      arch:
+        name: docker-buildx
+      ubuntu:
+        name: docker-buildx
+    duf:
+      arch:
+        name: duf
+      darwin:
+        name: duf
+      ubuntu:
+        name: duf
+    eza:
+      arch:
+        name: eza
+      darwin:
+        name: eza
+      ubuntu:
+        name: eza
+    fd:
+      arch:
+        name: fd
+      darwin:
+        name: fd
+      ubuntu:
+        name: fd-find
+    fzf:
+      arch:
+        name: fzf
+      darwin:
+        name: fzf
+      ubuntu:
+        name: fzf
+    go:
+      arch:
+        name: go
+      darwin:
+        name: go
+      ubuntu:
+        name: golang-go
+    grc:
+      arch:
+        name: grc
+      darwin:
+        name: grc
+      ubuntu:
+        name: grc
+    helm:
+      arch:
+        name: helm
+      darwin:
+        name: helm
+      ubuntu:
+        name: helm
+    jc:
+      arch:
+        name: jc
+      darwin:
+        name: jc
+      ubuntu:
+        name: jc
+    kubectl:
+      arch:
+        name: kubectl
+      darwin:
+        name: kubectl
+      ubuntu:
+        name: kubectl
+    k9s:
+      arch:
+        name: k9s
+      darwin:
+        name: derailed/k9s/k9s
+      ubuntu:
+        name: k9s
+    lazygit:
+      arch:
+        name: lazygit
+      darwin:
+        name: jesseduffield/lazygit/lazygit
+      ubuntu:
+        name: lazygit
+    lsd:
+      arch:
+        name: lsd
+      darwin:
+        name: lsd
+      ubuntu:
+        name: lsd
+    neovim:
+      arch:
+        name: neovim
+      darwin:
+        name: nvim
+      ubuntu:
+        name: neovim
+    pyenv:
+      arch:
+        name: pyenv
+      darwin:
+        name: pyenv
+      ubuntu:
+        name: pyenv
+    ripgrep:
+      arch:
+        name: ripgrep
+      darwin:
+        name: rg
+      ubuntu:
+        name: ripgrep
+    terraform:
+      arch:
+        name: terraform
+      darwin:
+        name: hashicorp/tap/terraform
+      ubuntu:
+        name: terraform
+    terragrunt:
+      arch:
+        name: terragrunt
+      darwin:
+        name: terragrunt
+      ubuntu:
+        name: terragrunt
+    tmux:
+      arch:
+        name: tmux
+      darwin:
+        name: tmux
+      ubuntu:
+        name: tmux
+    zellij:
+      arch:
+        name: zellij
+      darwin:
+        name: zellij
+      ubuntu:
+        name: zellij
+    zoxide:
+      arch:
+        name: zoxide
+      darwin:
+        name: zoxide
+      ubuntu:
+        name: zoxide
+
+  hyprland:
+    hyprland:
+      arch:
+        name: hyprland
+      ubuntu:
+        name: hyprland
+    hypridle:
+      arch:
+        name: hypridle
+      ubuntu:
+        name: hypridle
+    hyprpaper:
+      arch:
+        name: hyprpaper
+      ubuntu:
+        name: hyprpaper
+    hyprlock:
+      arch:
+        name: hyprlock
+      ubuntu:
+        name: hyprlock
+    hyprpolkitagent:
+      arch:
+        name: hyprpolkitagent
+      ubuntu:
+        name: hyprpolkitagent
+    xdg-desktop-portal-hyprland:
+      arch:
+        name: xdg-desktop-portal-hyprland
+      ubuntu:
+        name: xdg-desktop-portal-hyprland
+
+  sway:
+    sway:
+      arch:
+        name: sway
+      ubuntu:
+        name: sway
+    swayidle:
+      arch:
+        name: swayidle
+      ubuntu:
+        name: swayidle
+    swaylock:
+      arch:
+        name: swaylock
+      ubuntu:
+        name: swaylock
+    swaybg:
+      arch:
+        name: swaybg
+      ubuntu:
+        name: swaybg
+    swaytest:
+      arch:
+        name: swaytest
+      ubuntu:
+        name: swaytest
+
+  aur:
+    aylurs-gtk-shell-git:
+      arch:
+        name: aylurs-gtk-shell-git
+    gitmux:
+      arch:
+        name: gitmux
+      darwin:
+        name: gitmux
+      ubuntu:
+        name: gitmux
+    google-chrome:
+      arch:
+        name: google-chrome
+      darwin:
+        name: google-chrome
+      ubuntu:
+        name: google-chrome-stable
+    insync:
+      arch:
+        name: insync
+      darwin:
+        name: insync
+      ubuntu:
+        name: insync
+    hyprswitch:
+      arch:
+        name: hyprswitch
+    localsend-bin:
+      arch:
+        name: localsend-bin
+      darwin:
+        name: localsend
+      ubuntu:
+        name: localsend
+    nvm:
+      arch:
+        name: nvm
+      darwin:
+        name: nvm
+      ubuntu:
+        name: nvm
+    vendir:
+      arch:
+        name: vendir
+      darwin:
+        name: vendir
+      ubuntu:
+        name: vendir
+    vesktop:
+      arch:
+        name: vesktop
+      darwin:
+        name: vesktop
+      ubuntu:
+        name: vesktop
+    viddy:
+      arch:
+        name: viddy
+      darwin:
+        name: viddy
+      ubuntu:
+        name: viddy
+    ytt:
+      arch:
+        name: ytt
+      darwin:
+        name: ytt
+      ubuntu:
+        name: ytt
+
+  # macOS specific packages
+  macos:
+    arl:
+      darwin:
+        name: arl/arl
+    felixkratz:
+      darwin:
+        name: FelixKratz/formulae
+    hashicorp:
+      darwin:
+        name: hashicorp/tap
+    asdf:
+      darwin:
+        name: asdf
+    bruno:
+      darwin:
+        name: bruno
+    derailed-k9s:
+      darwin:
+        name: derailed/k9s/k9s
+    falcosuessgott-vkv:
+      darwin:
+        name: falcosuessgott/tap/vkv
+    ffmpeg:
+      darwin:
+        name: ffmpeg
+    imagemagick:
+      darwin:
+        name: imagemagick
+    lastpass-cli:
+      darwin:
+        name: lastpass-cli
+    openssl:
+      darwin:
+        name: openssl
+    readline:
+      darwin:
+        name: readline
+    rename:
+      darwin:
+        name: rename
+    sketchybar:
+      darwin:
+        name: sketchybar
+    sqlite3:
+      darwin:
+        name: sqlite3
+    tealdeer:
+      darwin:
+        name: tealdeer
+    wezterm:
+      darwin:
+        name: wezterm
+    xz:
+      darwin:
+        name: xz
+    zlib:
+      darwin:
+        name: zlib
+    
+  # Ubuntu additional system libs
+  ubuntu_libs:
+    libevent-core:
+      ubuntu:
+        name: libevent-core-2.1-7
+    libbz2-dev:
+      ubuntu:
+        name: libbz2-dev
+    libffi-dev:
+      ubuntu:
+        name: libffi-dev
+    libfuse2:
+      ubuntu:
+        name: libfuse2
+    liblzma-dev:
+      ubuntu:
+        name: liblzma-dev
+    libncurses6:
+      ubuntu:
+        name: libncurses6
+    libreadline-dev:
+      ubuntu:
+        name: libreadline-dev
+    libsqlite3-dev:
+      ubuntu:
+        name: libsqlite3-dev
+    libssl-dev:
+      ubuntu:
+        name: libssl-dev
+    libxml2-dev:
+      ubuntu:
+        name: libxml2-dev
+    software-properties-common:
+      ubuntu:
+        name: software-properties-common
+    zlib1g-dev:
+      ubuntu:
+        name: zlib1g-dev

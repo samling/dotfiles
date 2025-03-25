@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end }}
+
+echo "Installing vkv for {{ $osID }}..."
+
+# Check if go is installed
+if ! command -v go &> /dev/null; then
+    echo "Go is required to install vkv. Please install go first."
+    exit 1
+fi
+
+{{- if eq $osID "darwin" }}
+# On macOS, use Homebrew if available
+if command -v brew &> /dev/null; then
+    brew install falcosuessgott/tap/vkv
+else
+    go install github.com/FalcoSuessgott/vkv@latest
+fi
+{{- else }}
+# For Linux systems, use go install
+go install github.com/FalcoSuessgott/vkv@latest
+{{- end }} 

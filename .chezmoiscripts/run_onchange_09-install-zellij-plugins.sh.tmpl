@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end }}
+
+echo "Installing Zellij plugins for {{ $osID }}..."
+
+# Check if zellij is installed
+if ! command -v zellij &> /dev/null; then
+    echo "Zellij is not installed. Please install zellij first."
+    exit 1
+fi
+
+# Create plugins directory if it doesn't exist
+mkdir -p "${HOME}/.config/zellij/plugins"
+
+# List of plugins to install
+# You can customize this list as needed
+PLUGINS=(
+  "zellij:compact-bar"
+  "zellij:status-bar"
+  "zellij:tab-bar"
+  "dj95:zjstatus"
+  "karimould:zellij_forgot"
+)
+
+# Install each plugin
+for plugin in "${PLUGINS[@]}"; do
+  IFS=':' read -r -a parts <<< "$plugin"
+  repo="${parts[0]}"
+  name="${parts[1]}"
+  
+  echo "Installing $name plugin..."
+  curl -sL "https://github.com/$repo/$name/releases/latest/download/$name.wasm" -o "${HOME}/.config/zellij/plugins/$name.wasm"
+done
+
+echo "Zellij plugins installation complete!" 
