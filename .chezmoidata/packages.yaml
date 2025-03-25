@@ -1,4 +1,7 @@
 packages:
+  #########
+  # BASE #
+  #########
   base:
     autoconf:
       arch:
@@ -250,6 +253,10 @@ packages:
       ubuntu:
         name: zsh
 
+
+  #########
+  # TOOLS #
+  #########
   tools:
     aichat:
       arch:
@@ -463,6 +470,9 @@ packages:
       ubuntu:
         name: zoxide
 
+  ############
+  # HYPRLAND #
+  ############
   hyprland:
     hyprland:
       arch:
@@ -495,6 +505,9 @@ packages:
       ubuntu:
         name: xdg-desktop-portal-hyprland
 
+  ########
+  # SWAY #
+  ########
   sway:
     sway:
       arch:
@@ -522,6 +535,9 @@ packages:
       ubuntu:
         name: swaytest
 
+  #######
+  # AUR #
+  #######
   aur:
     aylurs-gtk-shell-git:
       arch:
@@ -593,7 +609,9 @@ packages:
       ubuntu:
         name: ytt
 
-  # macOS specific packages
+  #########
+  # MACOS #
+  #########
   macos:
     arl:
       darwin:
@@ -653,7 +671,9 @@ packages:
       darwin:
         name: zlib
     
-  # Ubuntu additional system libs
+  ###############
+  # UBUNTU LIBS #
+  ###############
   ubuntu_libs:
     libevent-core:
       ubuntu:
