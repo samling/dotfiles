@@ -27,13 +27,13 @@ export default function Bar(monitor: Gdk.Monitor) {
             <box hexpand halign={Gtk.Align.START}>
                 <Workspaces />
                 <Submap />
-            </box>
-            <box>
                 <FocusedClient 
                     useCustomTitle={true}
                     useClassName={false}
                     maxTitleLength={30}
                 />
+            </box>
+            <box>
             </box>
             <box hexpand halign={Gtk.Align.END} >
                 <SysTray />

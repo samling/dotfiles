@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end }}
+
+{{ if eq $osID "ubuntu" }}
+echo "Installing Ubuntu system libraries..."
+
+{{- $libsList := "" -}}
+{{- range $libName, $libData := .packages.ubuntu_libs -}}
+{{- if and ($libData) (index $libData $osID) (index $libData $osID "name") -}}
+{{- $libsList = printf "%s %s" $libsList (index $libData $osID "name") -}}
+{{- end -}}
+{{- end -}}
+
+# Update package lists
+sudo apt update
+
+# Install Ubuntu-specific libraries
+sudo apt install -y {{ $libsList | trim }}
+
+# Configure locale
+echo "Configuring locale"
+sudo locale-gen en_US.UTF-8
+sudo locale-gen en_US.ISO-8859-15
+{{- end }} 

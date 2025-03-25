@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end -}}
+
+{{- $hyprlandPackages := .packages.hyprland -}}
+{{- $packageList := "" -}}
+
+{{- range $hyprPackageName, $hyprPackageData := .packages.hyprland -}}
+{{- if and ($hyprPackageData) (index $hyprPackageData $osID) (index $hyprPackageData $osID "name") -}}
+{{- $packageList = printf "%s %s" $packageList (index $hyprPackageData $osID "name") -}}
+{{- end -}}
+{{- end -}}
+
+{{- if eq $osID "arch" }}
+echo "Installing Hyprland packages for {{ $osID }}..."
+sudo pacman -S --needed --noconfirm {{ $packageList | trim }}
+{{- else if eq $osID "darwin" }}
+echo "Hyprland is not supported on macOS. Skipping..."
+{{- else if eq $osID "ubuntu" }}
+echo "Installing Hyprland packages for {{ $osID }}..."
+# PPA might be needed for Ubuntu
+sudo add-apt-repository ppa:hyprwm/hyprland -y
+sudo apt update
+sudo apt install -y {{ $packageList | trim }}
+{{- end }} 

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end }}
+
+echo "Setup completed for {{ $osID }}!"
+
+cat << EOF
+Done! Remember to do the following:
+  1. Symlink fish to /usr/local/bin/fish
+  2. Run neovim to finish LazyVim configuration
+  3. Install tmux plugins with ctrl-A + I
+  4. Make sure bat cache is built: bat cache --build
+  5. (Optional) Reboot!
+EOF
+
+{{- if eq $osID "arch" }}
+# Arch-specific final steps
+echo "Arch Linux-specific reminders:"
+echo "  - Consider enabling essential services with systemctl"
+
+{{- else if eq $osID "darwin" }}
+# macOS-specific final steps
+echo "macOS-specific reminders:"
+echo "  - Consider installing Homebrew services: brew services list"
+
+{{- else if eq $osID "ubuntu" }}
+# Ubuntu-specific final steps
+echo "Ubuntu-specific reminders:"
+echo "  - Consider enabling essential services with systemctl"
+{{- end }} 

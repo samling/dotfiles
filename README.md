@@ -33,3 +33,48 @@ chezmoi managed             # View managed files
 
 ### Notes
 - See [this page](https://www.cyberciti.biz/faq/linux-unix-macos-fix-error-cant-open-display-null-with-ssh-xclip-command-in-headless/) to configure X11 forwarding over ssh
+
+# Chezmoi Scripts
+
+This directory contains scripts that are executed by chezmoi during apply operations.
+
+## Package Installation
+
+Packages are installed via `run_onchange_install-packages.sh.tmpl`. This script:
+
+1. Determines the operating system
+2. Builds lists of packages for each category from `.chezmoidata/packages.yaml`
+3. Installs packages using the appropriate package manager (pacman for Arch, apt for Ubuntu, etc.)
+
+### Package Categories
+
+- **base**: Essential system packages (build tools, core utilities)
+- **tools**: Common development and productivity tools
+- **hyprland**: Packages for the Hyprland window manager (installed only if desktop.environment = "hyprland")
+- **sway**: Packages for the Sway window manager (installed only if desktop.environment = "sway")
+- **aur**: Arch User Repository packages (Arch Linux only, installed with yay)
+
+### Adding New Packages
+
+To add a new package, update `.chezmoidata/packages.yaml` following the template in `.chezmoitemplates/package_template.yaml`.
+
+Example:
+```yaml
+tools:
+  new-tool:
+    arch_linux:
+      name: new-tool
+    ubuntu:
+      name: new-tool
+    macos:
+      name: new-tool
+```
+
+### Configuration
+
+To enable desktop environment-specific packages, add to your `chezmoi.yaml`:
+
+```yaml
+desktop:
+  environment: hyprland  # or "sway"
+``` 

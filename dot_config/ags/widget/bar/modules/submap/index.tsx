@@ -25,12 +25,8 @@ export default function Submap() {
             widget.connect('destroy', cleanup)
         }}>
         {bind(submapName).as(name => name ? (
-            <box className="submap-wrapper">
-                <box className="submap-container">
-                    <box className="submap">
-                        <label label={name} />
-                    </box>
-                </box>
+            <box className="submap">
+                <label label={name} />
             </box>
         ) : "")}
     </box>

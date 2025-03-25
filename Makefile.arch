@@ -10,24 +10,12 @@ SHELL := /bin/bash
 
 .PHONY: all
 all: \
-	preconfigure \
 	install_tools \
 	configure \
 	postconfigure
 
-preconfigure: \
-	install_prereqs \
-	create_folders \
-	create_files \
-	create_symlinks
-
 install_tools: \
-	install_pacman_tools \
-	install_aur_tools \
-	install_hyprland_tools \
-	install_k8s_tools \
 	install_vkv
-	#install_sway_tools \
 
 install_k8s_tools: \
 	install_krew \
@@ -35,7 +23,6 @@ install_k8s_tools: \
 	install_krew_plugins
 
 configure: \
-	configure_zsh \
 	configure_npm \
 	configure_nvim \
 	configure_pyenv
@@ -55,206 +42,16 @@ configure_pyenv: \
 configure_zellij: \
 	install_zellij_plugins
 
-configure_zsh: \
-	install_gitstatus \
-	install_zsh_pure \
-	install_zsh_plugins
-
 postconfigure: \
 	echo_final_steps
-
-#################
-#    PREREQS    #
-#################
-
-install_prereqs:
-	@echo "Downloading prereqs"
-	sudo pacman -S --noconfirm \
-		autoconf \
-		automake \
-		base-devel \
-		bison \
-		blueman \
-		bluez-utils \
-		cmake \
-		cpio \
-		curl \
-		devtools \
-		dialog \
-		direnv \
-		dnsutils \
-		evolution \
-		feh \
-		gcc \
-		gnome-keyring \
-		gnome-themes-extra \
-		gnupg \
-		go-yq \
-		flex \
-		inetutils \
-		jq \
-		llvm \
-		luarocks \
-		meson \
-		nmap \
-		nwg-look \
-		pacman-contrib \
-		pavucontrol \
-		pkg-config \
-		p7zip \
-		qt6ct \
-		smbclient \
-		ttc-iosevka \
-		traceroute \
-		tk \
-		unzip \
-		uwsm \
-		xclip \
-		xdotool \
-		xmlsec \
-		xsel \
-		wget \
-		zsh
-
-create_folders:
-	@echo "Creating required folders"
-
-create_files:
-	@echo "Creating required files and stubs"
-	touch ${HOME}/.kube/config
-
-create_symlinks:
-	@echo "Creating symlinks"
 
 #################
 #     TOOLS     #
 #################
 
-install_pacman_tools:
-	@echo "Installing tools via pacman"
-	sudo pacman -S --noconfirm \
-		aichat \
-		alsa-utils \
-		aws-cli \
-		azure-cli \
-		bat \
-		btop \
-		copyq \
-		git-delta \
-		direnv \
-		docker \
-		docker-buildx \
-		dolphin \
-		duf \
-		eza \
-		fd \
-		fuzzel \
-		fzf \
-		geoclue \
-		go \
-		grc \
-		grim \
-		helm \
-		hyprland \
-		inotify-tools \
-		jc \
-		kubectl \
-		k9s \
-		lazygit \
-		lsd \
-		neovim \
-		noto-fonts-emoji \
-		obsidian \
-		piper \
-		pipewire \
-		wireplumber \
-		pipewire-pulse \
-		pipewire-alsa \
-		pyenv \
-		qt6ct \
-		redshift \
-		ripgrep \
-		rofi-wayland \
-		signal-desktop \
-		slurp \
-		swww \
-		terraform \
-		terragrunt \
-		ttf-nerd-fonts-symbols-mono \
-		tmux \
-		wezterm \
-		yazi \
-		zellij \
-		zoxide
-
-install_hyprland_tools:
-	@echo "Installing Hyprland and accompanying utilities"
-	sudo pacman -S --noconfirm \
-		hyprland \
-		hypridle \
-		hyprpaper \
-		hyprlock \
-		hyprpolkitagent \
-		xdg-desktop-portal-hyprland
-		#hyprswitch \
-		#hyprshade \
-
-install_sway_tools:
-	@echo "Installing Sway and accompanying utilities"
-	sudo pacman -S --noconfirm \
-		sway \
-		swayidle \
-		swaylock \
-		swaybg
-
-install_aur_tools:
-	@echo "Installing tools from AUR"
-	yay -S --noconfirm \
-		aylurs-gtk-shell-git \
-		gitmux \
-		google-chrome \
-		insync \
-		hyprswitch \
-		localsend-bin \
-		nvm \
-		vendir \
-		vesktop \
-		viddy \
-		ytt
-		#tlpui \
-
 install_vkv:
 	@echo "Installing vkv"
 	go install github.com/FalcoSuessgott/vkv@latest
-
-##################
-# ZELLIJ PLUGINS #
-##################
-
-install_zellij_plugins:
-	@echo "Installing zellij plugins"
-	# TODO: Get latest zellij_forgot version
-	wget -O ~/dotfiles/zellij/plugins/zjstatus.wasm https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm
-	wget -O ~/dotfiles/zellij/plugins/zellij_forgot.wasm https://github.com/karimould/zellij-forgot/releases/download/0.4.1/zellij_forgot.wasm
-
-###############
-# ZSH PLUGINS #
-###############
-
-install_gitstatus:
-	@echo "Installing gitstatus"
-	if [ ! -d "${HOME}/dotfiles/zsh/gitstatus" ] || [ -n "$(find "$HOME/dotfiles/zsh/gitstatus" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone --depth=1 https://github.com/romkatv/gitstatus.git "${HOME}/dotfiles/zsh/gitstatus"; else echo "Gitstatus already cloned"; fi
-
-install_zsh_pure:
-	@echo "Installing zsh pure prompt"
-	if [ ! -d "${HOME}/dotfiles/zsh/pure" ] || [ -n "$(find "$HOME/dotfiles/zsh/pure" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone https://github.com/sindresorhus/pure.git "${HOME}/dotfiles/zsh/pure"; else echo "Zsh Pure already cloned"; fi
-
-install_zsh_plugins:
-	@echo "Installing zsh plugins"
-	@echo "  Installing zsh-syntax-highlighting"
-	if [ ! -d "${HOME}/dotfiles/zsh/plugins/zsh-syntax-highlighting" ] || [ -n "$(find "$HOME/dotfiles/zsh/plugins/zsh-syntax-highlighting" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/dotfiles/zsh/plugins/zsh-syntax-highlighting"; else echo "Zsh Syntax Highlighting already cloned"; fi
-	# @echo "  Installing zsh-autosuggestions"
-	# if [ ! -d "${HOME}/dotfiles/zsh/plugins/zsh-autosuggestions" ] || [ -n "$(find "$HOME/dotfiles/zsh/plugins/zsh-autosuggestions" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then git clone https://github.com/zsh-users/zsh-autosuggestions.git "${HOME}/dotfiles/zsh/plugins/zsh-autosuggestions"; else echo "Zsh Syntax Highlighting already cloned"; fi
 
 #################
 #   K8S-TOOLS   #

@@ -1,0 +1,50 @@
+# Template for adding new packages to packages.yaml
+# Copy and paste this structure when adding new packages
+
+# For example, to add a new tool:
+# tools:
+#   new-tool-name:
+#     arch_linux:
+#       name: package-name-in-arch
+#     ubuntu:
+#       name: package-name-in-ubuntu
+#     macos:
+#       name: package-name-in-homebrew
+
+# Category structure examples:
+base:
+  package-name:
+    arch_linux:
+      name: arch-package-name
+    ubuntu:
+      name: ubuntu-package-name
+    macos:
+      name: homebrew-package-name
+
+tools:
+  package-name:
+    arch_linux:
+      name: arch-package-name
+    ubuntu:
+      name: ubuntu-package-name
+    macos:
+      name: homebrew-package-name
+
+hyprland:
+  package-name:
+    arch_linux:
+      name: arch-package-name
+    ubuntu:
+      name: ubuntu-package-name
+
+sway:
+  package-name:
+    arch_linux:
+      name: arch-package-name
+    ubuntu:
+      name: ubuntu-package-name
+
+aur:
+  package-name:
+    arch_linux:
+      name: aur-package-name 
