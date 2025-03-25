@@ -173,6 +173,19 @@ window.Bar {
         }
     }
 
+    // Audio icon for the bar
+    .AudioIcon {
+        padding: 0 8px;
+        margin: 0 2px;
+        border-radius: 4px;
+        transition: all 200ms ease;
+        
+        &:hover {
+            background-color: $accent;
+            color: $base;
+        }
+    }
+
     // Focused client module styles
     .FocusedClient {
         margin: 2px;
@@ -225,4 +238,9 @@ window.Picker {
             font-size: 0.9em;
         }
     }
+}
+
+// AudioWindow styling is now handled with inline CSS in the component
+.AudioWindow {
+    background-color: transparent;
 }
