@@ -8,21 +8,12 @@ import { getTitle, getWindowMatch, truncateTitle } from "../../utils/title"
 // Create a map to store picker instances by monitor name
 export const pickerInstances = new Map()
 
-// Track last accessed workspaces by monitor name
-// This is our own tracking to ensure consistent behavior
-export const localWorkspaceHistory = new Map<string, number[]>()
-
-// Helper function to truncate text
-export function truncateText(text: string, maxLength: number = 15) {
-    if (!text) return "";
-    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-}
-
-// Export the cycle workspace function
+// Export the cycle workspace function that uses Hyprland's built-in history
 export function cycleWorkspace(monitorName: string, isShift: boolean = false) {
     const picker = pickerInstances.get(monitorName)
     if (!picker) return false
     
+    // Instead of using Hyprland's built-in command, cycle through options in UI order
     const { selectedIndex, orderedWorkspaces } = picker
     const numWorkspaces = orderedWorkspaces.get().length
     
@@ -35,39 +26,13 @@ export function cycleWorkspace(monitorName: string, isShift: boolean = false) {
     return true
 }
 
-// Update local workspace history
-function updateLocalWorkspaceHistory(monitorName: string, workspaceId: number) {
-    // Skip negative workspace IDs
-    if (workspaceId < 0) return;
-    
-    if (!localWorkspaceHistory.has(monitorName)) {
-        localWorkspaceHistory.set(monitorName, []);
-    }
-    
-    const history = localWorkspaceHistory.get(monitorName) || [];
-    
-    // Remove the workspace from its current position
-    const index = history.indexOf(workspaceId);
-    if (index !== -1) {
-        history.splice(index, 1);
-    }
-    
-    // Add it to the front of the array
-    history.unshift(workspaceId);
-    
-    // Limit history size to prevent memory leaks
-    if (history.length > 20) {
-        history.length = 20;
-    }
-}
-
 export default function Picker(monitor: Gdk.Monitor) {
     const selectedIndex = new Variable(0)
     const wasAltPressed = new Variable(false)
     const currentWorkspaceId = new Variable(0)
     
     let pickerWindow: Gtk.Window | null = null
-    // Track signal connections for cleanup
+
     interface SignalConnection {
         obj: any;
         id: number;
@@ -75,15 +40,7 @@ export default function Picker(monitor: Gdk.Monitor) {
     const signals: SignalConnection[] = []
 
     const hl = Hyprland.get_default()
-    hl.monitors.forEach((monitor) => {
-      console.log(monitor.id)
-      console.log(monitor.model)
-  })
     const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}`
-    console.log(monitor)
-    console.log(monitor.get_display())
-    console.log(getMonitorName(monitor.get_display(), monitor))
-
     
     // Make workspaces reactive
     const workspaces = Variable.derive(
@@ -99,39 +56,14 @@ export default function Picker(monitor: Gdk.Monitor) {
         () => hl.get_clients()
     )
 
-    // Initialize local workspace history if needed
-    if (!localWorkspaceHistory.has(windowName)) {
-        localWorkspaceHistory.set(windowName, workspaces.get().map(ws => ws.id));
-    }
-
-    // Order workspaces using the local workspace history, with hyprland focusHistoryId as fallback
+    // Order workspaces using Hyprland's focus history
     const orderedWorkspaces = Variable.derive(
         [currentWorkspaceId, workspaces, clients],
         (currentId, wss, allClients) => {
             // Create a copy of workspaces
             const ordered = [...wss];
             
-            // Get local history
-            const localHistory = localWorkspaceHistory.get(windowName) || [];
-            
-            // Create workspace ID set for quick lookups
-            const workspaceIds = new Set(wss.map(ws => ws.id));
-            
-            // Filter history to only include existing workspaces
-            const filteredHistory = localHistory.filter(id => workspaceIds.has(id));
-            
-            // Add any missing workspaces to the history
-            const missingWorkspaceIds = wss
-                .map(ws => ws.id)
-                .filter(id => !filteredHistory.includes(id));
-                
-            // Append missing workspaces
-            const updatedHistory = [...filteredHistory, ...missingWorkspaceIds];
-            
-            // Update the local history
-            localWorkspaceHistory.set(windowName, updatedHistory);
-            
-            // For workspaces not in the history, fall back to focusHistoryId sorting
+            // For sorting based on Hyprland's focusHistoryId
             const workspaceToMinFocusId = new Map<number, number>();
             
             // Get minimum focusHistoryId for each workspace
@@ -146,7 +78,7 @@ export default function Picker(monitor: Gdk.Monitor) {
                     return wsId === ws.id;
                 });
                 
-                // Find minimum focusHistoryId
+                // Find minimum focusHistoryId (lower values are more recent)
                 if (wsClients.length > 0) {
                     const minFocusId = Math.min(
                         ...wsClients.map(client => client.focusHistoryId)
@@ -155,21 +87,8 @@ export default function Picker(monitor: Gdk.Monitor) {
                 }
             }
             
-            // Sort workspaces first by local history, then by hyprland focus history
+            // Sort workspaces by Hyprland's focus history
             ordered.sort((a, b) => {
-                const aHistoryIndex = updatedHistory.indexOf(a.id);
-                const bHistoryIndex = updatedHistory.indexOf(b.id);
-                
-                // If both are in history, sort by history index
-                if (aHistoryIndex !== -1 && bHistoryIndex !== -1) {
-                    return aHistoryIndex - bHistoryIndex;
-                }
-                
-                // If only one is in history, it comes first
-                if (aHistoryIndex !== -1) return -1;
-                if (bHistoryIndex !== -1) return 1;
-                
-                // Fall back to focusHistoryId sorting
                 const aFocusId = workspaceToMinFocusId.get(a.id) || Number.MAX_SAFE_INTEGER;
                 const bFocusId = workspaceToMinFocusId.get(b.id) || Number.MAX_SAFE_INTEGER;
                 
@@ -201,8 +120,6 @@ export default function Picker(monitor: Gdk.Monitor) {
     const activeWorkspace = hl.focusedWorkspace
     if (activeWorkspace) {
         currentWorkspaceId.set(activeWorkspace.id)
-        // Update local history when picker is created
-        updateLocalWorkspaceHistory(windowName, activeWorkspace.id)
     }
     
     // Listen for workspace changes
@@ -212,8 +129,6 @@ export default function Picker(monitor: Gdk.Monitor) {
             const workspaceId = parseInt(data)
             if (!isNaN(workspaceId)) {
                 currentWorkspaceId.set(workspaceId)
-                // Update local history on workspace change
-                updateLocalWorkspaceHistory(windowName, workspaceId)
             }
         }
     })
@@ -276,6 +191,7 @@ export default function Picker(monitor: Gdk.Monitor) {
             case Gdk.KEY_Tab:
             case Gdk.KEY_l:
             case Gdk.KEY_h:
+                // Cycle through options in UI order
                 const wss = orderedWorkspaces.get()
                 const numWorkspaces = wss.length
                 const current = selectedIndex.get()
@@ -306,8 +222,6 @@ export default function Picker(monitor: Gdk.Monitor) {
                 if (ordered.length > index) {
                     const targetWorkspace = ordered[index]
                     if (targetWorkspace) {
-                        // Update local workspace history before switching
-                        updateLocalWorkspaceHistory(windowName, targetWorkspace.id)
                         hl.message(`dispatch workspace ${targetWorkspace.id}`)
                     }
                 }
@@ -349,7 +263,7 @@ export default function Picker(monitor: Gdk.Monitor) {
                             <box orientation={Gtk.Orientation.VERTICAL}>
                                 {visibleClients.map(client => (
                                     <box className="client-item">
-                                        <label label={`${getWindowMatch(client).icon} ${truncateText(getTitle(client, true))}`} />
+                                        <label label={`${getWindowMatch(client).icon} ${truncateTitle(getTitle(client, true), 15)}`} />
                                     </box>
                                 ))}
                                 {hiddenClientCount > 0 && (
