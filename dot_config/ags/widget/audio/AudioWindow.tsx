@@ -6,32 +6,15 @@ import { bind } from "astal"
 // If we check if the window exists before showing/hiding it
 
 export default function AudioWindow() {
-    console.log("AudioWindow component initialization started")
-    
     const speaker = Wp.get_default()?.audio.defaultSpeaker!
+    const windowName = "audio-control-window"
     
     interface SignalConnection {
         obj: any;
         id: number;
     }
     const signals: SignalConnection[] = []
-    
-    const windowName = "audio-control-window"
-    
-    // Try to remove any existing window with this name first
-    try {
-        const existingWindow = App.get_window(windowName)
-        if (existingWindow) {
-            console.log("Found existing window, hiding it")
-            existingWindow.hide()
-        }
-    } catch (e) {
-        console.log(`Error with existing window: ${e}`)
-    }
-    
-    // Cleanup function to disconnect signals
     const cleanup = () => {
-        console.log("AudioWindow cleanup called")
         for (const signal of signals) {
             if (signal.obj && signal.id) {
                 try {
@@ -53,6 +36,7 @@ export default function AudioWindow() {
         visible={false}
         layer={Astal.Layer.TOP}
         anchor={TOP | RIGHT}
+        marginRight={500}
         keymode={Astal.Keymode.ON_DEMAND}
         onKeyPressEvent={(_, event) => {
             const key = event.get_keyval()[1]
@@ -63,8 +47,6 @@ export default function AudioWindow() {
             return false
         }}
         setup={self => {
-            console.log("AudioWindow setup started")
-            
             // Add the window to the App
             App.add_window(self)
             
@@ -78,8 +60,6 @@ export default function AudioWindow() {
             // Set up cleanup on destroy
             const destroySignal = self.connect('destroy', cleanup)
             signals.push({ obj: self, id: destroySignal })
-            
-            console.log("AudioWindow setup completed")
         }}
         application={App}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}>
