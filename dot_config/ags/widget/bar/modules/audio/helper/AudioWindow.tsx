@@ -2,23 +2,7 @@ import { App, Astal, Gtk, Gdk, Widget } from "astal/gtk3"
 import Wp from "gi://AstalWp"
 import { bind } from "astal"
 import Variable from "astal/variable"
-
-type PopoverProps = Pick<
-    Widget.WindowProps,
-    | "name"
-    | "namespace"
-    | "className"
-    | "visible"
-    | "child"
-    | "marginBottom"
-    | "marginTop"
-    | "marginLeft"
-    | "marginRight"
-    | "halign"
-    | "valign"
-> & {
-    onClose?(self: Widget.Window): void
-}
+import { PopoverProps } from "../../../../../shared/popover/popover"
 
 export default function Popover({
     child,
