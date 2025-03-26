@@ -1,104 +1,381 @@
 #!/usr/bin/env bash
 
-# {{- $osID := "" -}}
-# {{- if (hasKey .chezmoi.osRelease "id") -}}
-# {{-   $osID = .chezmoi.osRelease.id -}}
-# {{- else if eq .chezmoi.os "darwin" -}}
-# {{-   $osID = "darwin" -}}
-# {{- end -}}
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end }}
 
-# {{- $packageList := "" -}}
+# Only proceed on Linux platforms
+{{- if ne $osID "ubuntu" }}
+echo "Skipping GitHub installations for {{ $osID }}"
+exit 0
+{{- end }}
 
-# {{- if eq $osID "arch" }}
-# echo "Installing AUR packages for {{ $osID }}..."
+# Check for required dependencies
+if ! command -v jq &> /dev/null; then
+    echo "jq not found, installing..."
+    sudo apt update && sudo apt install -y jq
+fi
 
-# # Check if yay is installed
-# if ! command -v yay &> /dev/null; then
-#     echo "yay not found, installing..."
-#     git clone https://aur.archlinux.org/yay.git /tmp/yay
-#     (cd /tmp/yay && makepkg -si --noconfirm)
-#     rm -rf /tmp/yay
-# fi
+if ! command -v curl &> /dev/null; then
+    echo "curl not found, installing..."
+    sudo apt update && sudo apt install -y curl
+fi
 
-# yay -S --needed --noconfirm {{ $packageList | trim }}
-# {{- else if eq $osID "darwin" }}
-# echo "Installing additional packages for {{ $osID }}..."
-# # On macOS, these would typically be installed through homebrew casks or taps
-# brew install {{ $packageList | trim }}
-# {{- else if eq $osID "ubuntu" }}
-# echo "Installing PPA/additional packages for {{ $osID }}..."
+if ! command -v wget &> /dev/null; then
+    echo "wget not found, installing..."
+    sudo apt update && sudo apt install -y wget
+fi
 
-# # Handle specific Ubuntu packages
-# for package in {{ $packageList }}; do
-#     case $package in
-#         "google-chrome-stable")
-#             if ! dpkg -l | grep -q google-chrome-stable; then
-#                 echo "Installing Google Chrome..."
-#                 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb
-#                 sudo dpkg -i /tmp/google-chrome.deb || sudo apt-get install -f -y
-#                 rm -rf /tmp/google-chrome.deb
-#             else
-#                 echo "Google Chrome already installed, skipping."
-#             fi
-#             ;;
-#         "gitmux")
-#             if ! command -v gitmux &> /dev/null; then
-#                 echo "Installing gitmux..."
-#                 LATEST_GITMUX=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value')
-#                 wget "${LATEST_GITMUX}" -O /tmp/gitmux.tar.gz
-#                 mkdir -p /tmp/gitmux
-#                 tar xzvf /tmp/gitmux.tar.gz -C /tmp/gitmux
-#                 sudo cp -f /tmp/gitmux/gitmux /usr/local/bin/gitmux
-#                 rm -rf /tmp/gitmux.tar.gz /tmp/gitmux
-#             else
-#                 echo "gitmux already installed, skipping."
-#             fi
-#             ;;
-#         "viddy")
-#             if ! command -v viddy &> /dev/null; then
-#                 echo "Installing viddy..."
-#                 LATEST_VIDDY=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64.tar.gz")).value')
-#                 wget "${LATEST_VIDDY}" -O /tmp/viddy.tar.gz
-#                 mkdir -p /tmp/viddy
-#                 tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
-#                 sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
-#                 rm -rf /tmp/viddy.tar.gz /tmp/viddy
-#             else
-#                 echo "viddy already installed, skipping."
-#             fi
-#             ;;
-#         "vendir")
-#             if ! command -v vendir &> /dev/null; then
-#                 echo "Installing vendir..."
-#                 LATEST_VENDIR=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/vendir/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value')
-#                 wget "${LATEST_VENDIR}" -O /tmp/vendir
-#                 sudo mv /tmp/vendir /usr/local/bin && chmod +x /usr/local/bin/vendir
-#             else
-#                 echo "vendir already installed, skipping."
-#             fi
-#             ;;
-#         "ytt")
-#             if ! command -v ytt &> /dev/null; then
-#                 echo "Installing ytt..."
-#                 LATEST_YTT=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/ytt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value')
-#                 wget "${LATEST_YTT}" -O /tmp/ytt
-#                 sudo mv /tmp/ytt /usr/local/bin && chmod +x /usr/local/bin/ytt
-#             else
-#                 echo "ytt already installed, skipping."
-#             fi
-#             ;;
-#         "nvm")
-#             if [ ! -d "${HOME}/.nvm" ]; then
-#                 echo "Installing nvm..."
-#                 LATEST_NVM=$(curl -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name')
-#                 (unset ZSH_VERSION && curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${LATEST_NVM}/install.sh" | bash)
-#             else
-#                 echo "nvm already installed, skipping."
-#             fi
-#             ;;
-#         *)
-#             echo "No specific installation method for $package, skipping."
-#             ;;
-#     esac
-# done
-# {{- end }} 
+echo "Installing GitHub-based tools for {{ $osID }}..."
+
+install_aichat() {
+    if ! command -v aichat &> /dev/null; then
+        echo "Installing aichat..."
+        LATEST_AICHAT=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sigoden/aichat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-unknown-linux-musl.tar.gz"))'.value)
+        wget ${LATEST_AICHAT} -O /tmp/aichat.tar.gz
+        mkdir -p /tmp/aichat
+        tar xzvf /tmp/aichat.tar.gz -C /tmp/aichat
+        sudo cp -f /tmp/aichat/aichat /usr/local/bin/aichat
+        rm -rf /tmp/aichat.tar.gz /tmp/aichat
+    else
+        echo "aichat is already installed, skipping..."
+    fi
+}
+
+install_bat() {
+    if ! command -v bat &> /dev/null; then
+        echo "Installing bat..."
+        LATEST_BAT=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and (contains("musl") | not)))'.value)
+        wget ${LATEST_BAT} -O /tmp/bat.deb
+        sudo dpkg -i /tmp/bat.deb || sudo apt-get install -f -y
+        rm -rf /tmp/bat.deb
+    else
+        echo "bat is already installed, skipping..."
+    fi
+}
+
+install_btop() {
+    if ! command -v btop &> /dev/null; then
+        echo "Installing btop..."
+        LATEST_BTOP=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/aristocratos/btop/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("x86_64-linux-musl.tbz")).value')
+        wget ${LATEST_BTOP} -O /tmp/btop.tbz
+        mkdir -p /tmp/btop
+        tar xjf /tmp/btop.tbz -C /tmp/btop
+        cd /tmp/btop/btop/ && sudo make install
+        rm -rf /tmp/btop.tbz /tmp/btop
+    else
+        echo "btop is already installed, skipping..."
+    fi
+}
+
+install_delta() {
+    if ! command -v delta &> /dev/null; then
+        echo "Installing delta..."
+        LATEST_DELTA=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/dandavison/delta/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value')
+        wget ${LATEST_DELTA} -O /tmp/delta.deb
+        sudo dpkg -i /tmp/delta.deb || sudo apt-get install -f -y
+        rm -rf /tmp/delta.deb
+    else
+        echo "delta is already installed, skipping..."
+    fi
+}
+
+install_duf() {
+    if ! command -v duf &> /dev/null; then
+        echo "Installing duf..."
+        LATEST_DUF=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/muesli/duf/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_amd64.deb")).value')
+        wget ${LATEST_DUF} -O /tmp/duf.deb
+        sudo dpkg -i /tmp/duf.deb || sudo apt-get install -f -y
+        rm -rf /tmp/duf.deb
+    else
+        echo "duf is already installed, skipping..."
+    fi
+}
+
+install_eza() {
+    if ! command -v eza &> /dev/null; then
+        echo "Installing eza..."
+        LATEST_EZA=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/eza-community/eza/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("_linux_amd64.deb")).value')
+        wget ${LATEST_EZA} -O /tmp/eza.deb
+        sudo dpkg -i /tmp/eza.deb || sudo apt-get install -f -y
+        rm -rf /tmp/eza.deb
+    else
+        echo "eza is already installed, skipping..."
+    fi
+}
+
+install_fd() {
+    if ! command -v fd &> /dev/null; then
+        echo "Installing fd..."
+        LATEST_FD=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value)
+        wget ${LATEST_FD} -O /tmp/fd.deb
+        sudo dpkg -i /tmp/fd.deb || sudo apt-get install -f -y
+        rm -rf /tmp/fd.deb
+    else
+        echo "fd is already installed, skipping..."
+    fi
+}
+
+install_gitmux() {
+    if ! command -v gitmux &> /dev/null; then
+        echo "Installing gitmux..."
+        LATEST_GITMUX=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/arl/gitmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64")).value')
+        wget ${LATEST_GITMUX} -O /tmp/gitmux.tar.gz
+        mkdir -p /tmp/gitmux
+        tar xzvf /tmp/gitmux.tar.gz -C /tmp/gitmux
+        sudo cp -f /tmp/gitmux/gitmux /usr/local/bin/gitmux
+        rm -rf /tmp/gitmux.tar.gz /tmp/gitmux
+    else
+        echo "gitmux is already installed, skipping..."
+    fi
+}
+
+install_grc() {
+    if ! command -v grc &> /dev/null; then
+        echo "Installing grc..."
+        LATEST_GRC=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/garabik/grc/releases/latest | jq -r '.zipball_url')
+        wget ${LATEST_GRC} -O /tmp/grc.zip
+        mkdir -p /tmp/grc
+        unzip -d /tmp/grc -o /tmp/grc.zip
+        cd /tmp/grc/garabik-* && sudo sh install.sh
+        rm -rf /tmp/grc.zip /tmp/grc
+    else
+        echo "grc is already installed, skipping..."
+    fi
+}
+
+install_helm() {
+    if ! command -v helm &> /dev/null; then
+        echo "Installing helm..."
+        LATEST_HELM=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name')
+        wget "https://get.helm.sh/helm-${LATEST_HELM}-linux-amd64.tar.gz" -O /tmp/helm.tar.gz
+        mkdir -p /tmp/helm
+        tar xzvf /tmp/helm.tar.gz -C /tmp/helm
+        sudo cp -f /tmp/helm/linux-amd64/helm /usr/local/bin/helm
+        rm -rf /tmp/helm.tar.gz /tmp/helm
+    else
+        echo "helm is already installed, skipping..."
+    fi
+}
+
+install_jc() {
+    if ! command -v jc &> /dev/null; then
+        echo "Installing jc..."
+        LATEST_JC=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/kellyjonbrazil/jc/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".deb")).value')
+        wget ${LATEST_JC} -O /tmp/jc.deb
+        sudo dpkg -i /tmp/jc.deb || sudo apt-get install -f -y
+        rm -rf /tmp/jc.deb
+    else
+        echo "jc is already installed, skipping..."
+    fi
+}
+
+install_k9s() {
+    if ! command -v k9s &> /dev/null; then
+        echo "Installing k9s..."
+        LATEST_K9S=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/derailed/k9s/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux_amd64.deb")).value')
+        wget ${LATEST_K9S} -O /tmp/k9s.deb
+        sudo dpkg -i /tmp/k9s.deb || sudo apt-get install -f -y
+        rm -rf /tmp/k9s.deb
+    else
+        echo "k9s is already installed, skipping..."
+    fi
+}
+
+install_lazygit() {
+    if ! command -v lazygit &> /dev/null; then
+        echo "Installing lazygit..."
+        LATEST_LAZYGIT=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+        curl -Lo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LATEST_LAZYGIT}_Linux_x86_64.tar.gz"
+        mkdir -p /tmp/lazygit
+        tar xzvf /tmp/lazygit.tar.gz -C /tmp/lazygit
+        sudo mv /tmp/lazygit/lazygit /usr/local/bin
+        rm -rf /tmp/lazygit /tmp/lazygit.tar.gz
+    else
+        echo "lazygit is already installed, skipping..."
+    fi
+}
+
+install_lsd() {
+    if ! command -v lsd &> /dev/null; then
+        echo "Installing lsd..."
+        LATEST_LSD=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/lsd-rs/lsd/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|(contains("amd64.deb") and contains("musl")))'.value)
+        wget ${LATEST_LSD} -O /tmp/lsd.deb
+        sudo dpkg -i /tmp/lsd.deb || sudo apt-get install -f -y
+        rm -rf /tmp/lsd.deb
+    else
+        echo "lsd is already installed, skipping..."
+    fi
+}
+
+install_nvim() {
+    if ! command -v nvim &> /dev/null; then
+        echo "Installing nvim..."
+        LATEST_NVIM=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/neovim/neovim/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("linux-x86_64.appimage")).value')
+        wget ${LATEST_NVIM} -O /tmp/nvim.appimage
+        chmod +x /tmp/nvim.appimage && sudo mv /tmp/nvim.appimage /usr/local/bin/nvim
+    else
+        echo "nvim is already installed, skipping..."
+    fi
+}
+
+install_nvm() {
+    if [ ! -d "${HOME}/.nvm" ]; then
+        echo "Installing nvm..."
+        LATEST_NVM=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r '.name')
+        (unset ZSH_VERSION && curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${LATEST_NVM}/install.sh" | bash)
+    else
+        echo "nvm is already installed, skipping..."
+    fi
+}
+
+install_ripgrep() {
+    if ! command -v rg &> /dev/null; then
+        echo "Installing ripgrep..."
+        LATEST_RG=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value')
+        wget ${LATEST_RG} -O /tmp/rg.deb
+        sudo dpkg -i /tmp/rg.deb || sudo apt-get install -f -y
+        rm -rf /tmp/rg.deb
+    else
+        echo "ripgrep is already installed, skipping..."
+    fi
+}
+
+install_tealdeer() {
+    if ! command -v tealdeer &> /dev/null; then
+        echo "Installing tealdeer..."
+        LATEST_TEALDEER=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tealdeer-rs/tealdeer/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("-linux-x86_64-musl")).value')
+        wget ${LATEST_TEALDEER} -O /tmp/tealdeer
+        sudo mv /tmp/tealdeer /usr/local/bin/tealdeer && sudo chmod +x /usr/local/bin/tealdeer
+        # Create a symlink to maintain compatibility with tldr
+        sudo ln -sf /usr/local/bin/tealdeer /usr/local/bin/tldr
+    else
+        echo "tealdeer is already installed, skipping..."
+    fi
+}
+
+install_terragrunt() {
+    if ! command -v terragrunt &> /dev/null; then
+        echo "Installing terragrunt..."
+        LATEST_TERRAGRUNT=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith("_linux_amd64")).value')
+        wget ${LATEST_TERRAGRUNT} -O /tmp/terragrunt
+        sudo mv /tmp/terragrunt /usr/local/bin && sudo chmod +x /usr/local/bin/terragrunt
+    else
+        echo "terragrunt is already installed, skipping..."
+    fi
+}
+
+install_tmux() {
+    if ! command -v tmux &> /dev/null; then
+        echo "Installing tmux..."
+        echo "Installing prereq: libevent"
+        LATEST_LIBEVENT=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/libevent/libevent/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|endswith(".tar.gz")).value')
+        wget ${LATEST_LIBEVENT} -O /tmp/libevent.tar.gz
+        mkdir -p /tmp/libevent
+        tar xzvf /tmp/libevent.tar.gz -C /tmp/libevent
+        cd /tmp/libevent/libevent-* && sh configure --disable-openssl && make && sudo make install
+        rm -rf /tmp/libevent.tar.gz /tmp/libevent
+        
+        echo "Installing tmux"
+        LATEST_TMUX=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/tmux/tmux/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")).value')
+        wget ${LATEST_TMUX} -O /tmp/tmux.tar.gz
+        mkdir -p /tmp/tmux
+        tar xzvf /tmp/tmux.tar.gz -C /tmp/tmux
+        cd /tmp/tmux/tmux-* && sh configure && make && sudo make install
+        rm -rf /tmp/tmux.tar.gz /tmp/tmux
+    else
+        echo "tmux is already installed, skipping..."
+    fi
+}
+
+install_vendir() {
+    if ! command -v vendir &> /dev/null; then
+        echo "Installing vendir..."
+        LATEST_VENDIR=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/vendir/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value')
+        wget ${LATEST_VENDIR} -O /tmp/vendir
+        sudo mv /tmp/vendir /usr/local/bin && sudo chmod +x /usr/local/bin/vendir
+    else
+        echo "vendir is already installed, skipping..."
+    fi
+}
+
+install_viddy() {
+    if ! command -v viddy &> /dev/null; then
+        echo "Installing viddy..."
+        LATEST_VIDDY=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/sachaos/viddy/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-x86_64.tar.gz")).value')
+        wget ${LATEST_VIDDY} -O /tmp/viddy.tar.gz
+        mkdir -p /tmp/viddy
+        tar xzvf /tmp/viddy.tar.gz -C /tmp/viddy
+        sudo cp -f /tmp/viddy/viddy /usr/local/bin/viddy
+        rm -rf /tmp/viddy.tar.gz /tmp/viddy
+    else
+        echo "viddy is already installed, skipping..."
+    fi
+}
+
+install_ytt() {
+    if ! command -v ytt &> /dev/null; then
+        echo "Installing ytt..."
+        LATEST_YTT=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/carvel-dev/ytt/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("linux-amd64")).value')
+        wget ${LATEST_YTT} -O /tmp/ytt
+        sudo mv /tmp/ytt /usr/local/bin && sudo chmod +x /usr/local/bin/ytt
+    else
+        echo "ytt is already installed, skipping..."
+    fi
+}
+
+install_zellij() {
+    if ! command -v zellij &> /dev/null; then
+        echo "Installing zellij..."
+        LATEST_ZELLIJ=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/zellij-org/zellij/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("x86_64-unknown-linux-musl.tar.gz")).value')
+        wget ${LATEST_ZELLIJ} -O /tmp/zellij.tar.gz
+        mkdir -p /tmp/zellij
+        tar xzvf /tmp/zellij.tar.gz -C /tmp/zellij
+        sudo cp -f /tmp/zellij/zellij /usr/local/bin/zellij
+        rm -rf /tmp/zellij.tar.gz /tmp/zellij
+    else
+        echo "zellij is already installed, skipping..."
+    fi
+}
+
+install_zoxide() {
+    if ! command -v zoxide &> /dev/null; then
+        echo "Installing zoxide..."
+        LATEST_ZOXIDE=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jq -r '.assets[] | to_entries[] | select(.key|startswith("browser_download_url")) | select(.value|contains("amd64.deb")).value')
+        wget ${LATEST_ZOXIDE} -O /tmp/zoxide.deb
+        sudo dpkg -i /tmp/zoxide.deb || sudo apt-get install -f -y
+        rm -rf /tmp/zoxide.deb
+    else
+        echo "zoxide is already installed, skipping..."
+    fi
+}
+
+# Install the tools
+install_aichat
+install_bat
+install_btop
+install_delta
+install_duf
+install_eza
+install_fd
+install_gitmux
+install_grc
+install_helm
+install_jc
+install_k9s
+install_lazygit
+install_lsd
+install_nvim
+install_nvm
+install_ripgrep
+install_tealdeer
+install_terragrunt
+install_tmux
+install_vendir
+install_viddy
+install_ytt
+install_zellij
+install_zoxide 

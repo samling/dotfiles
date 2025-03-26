@@ -269,8 +269,6 @@ packages:
         name: aichat
       darwin:
         name: aichat
-      ubuntu:
-        name: aichat
     arl:
       darwin:
         name: arl/arl
@@ -282,8 +280,6 @@ packages:
         name: aws-cli
       darwin:
         name: awscli
-      ubuntu:
-        name: awscli
     aylurs-gtk-shell-git:
       arch:
         aur:
@@ -293,14 +289,10 @@ packages:
         name: azure-cli
       darwin:
         name: azure-cli
-      ubuntu:
-        name: azure-cli
     bat:
       arch:
         name: bat
       darwin:
-        name: bat
-      ubuntu:
         name: bat
     bruno:
       darwin:
@@ -309,8 +301,6 @@ packages:
       arch:
         name: btop
       darwin:
-        name: btop
-      ubuntu:
         name: btop
     copyq:
       arch:
@@ -344,14 +334,10 @@ packages:
         name: duf
       darwin:
         name: duf
-      ubuntu:
-        name: duf
     eza:
       arch:
         name: eza
       darwin:
-        name: eza
-      ubuntu:
         name: eza
     falcosuessgott-vkv:
       darwin:
@@ -361,8 +347,6 @@ packages:
         name: fd
       darwin:
         name: fd
-      ubuntu:
-        name: fd-find
     felixkratz:
       darwin:
         name: FelixKratz/formulae
@@ -381,15 +365,11 @@ packages:
         name: git-delta
       darwin:
         name: delta
-      ubuntu:
-        name: git-delta
     gitmux:
       arch:
         aur:
           name: gitmux
       darwin:
-        name: gitmux
-      ubuntu:
         name: gitmux
     go:
       arch:
@@ -411,8 +391,6 @@ packages:
         name: grc
       darwin:
         name: grc
-      ubuntu:
-        name: grc
     hashicorp:
       darwin:
         name: hashicorp/tap
@@ -420,8 +398,6 @@ packages:
       arch:
         name: helm
       darwin:
-        name: helm
-      ubuntu:
         name: helm
     hyprswitch:
       arch:
@@ -443,15 +419,11 @@ packages:
         name: jc
       darwin:
         name: jc
-      ubuntu:
-        name: jc
     k9s:
       arch:
         name: k9s
       darwin:
         name: derailed/k9s/k9s
-      ubuntu:
-        name: k9s
     kubectl:
       arch:
         name: kubectl
@@ -467,8 +439,6 @@ packages:
         name: lazygit
       darwin:
         name: jesseduffield/lazygit/lazygit
-      ubuntu:
-        name: lazygit
     libbz2-dev:
       ubuntu:
         name: libbz2-dev
@@ -512,22 +482,16 @@ packages:
         name: lsd
       darwin:
         name: lsd
-      ubuntu:
-        name: lsd
     neovim:
       arch:
         name: neovim
       darwin:
         name: nvim
-      ubuntu:
-        name: neovim
     nvm:
       arch:
         aur:
           name: nvm
       darwin:
-        name: nvm
-      ubuntu:
         name: nvm
     openssl:
       darwin:
@@ -550,8 +514,6 @@ packages:
         name: ripgrep
       darwin:
         name: rg
-      ubuntu:
-        name: ripgrep
     sketchybar:
       darwin:
         name: sketchybar
@@ -576,22 +538,16 @@ packages:
         name: terragrunt
       darwin:
         name: terragrunt
-      ubuntu:
-        name: terragrunt
     tmux:
       arch:
         name: tmux
       darwin:
-        name: tmux
-      ubuntu:
         name: tmux
     vendir:
       arch:
         aur:
           name: vendir
       darwin:
-        name: vendir
-      ubuntu:
         name: vendir
     vesktop:
       arch:
@@ -607,8 +563,6 @@ packages:
           name: viddy
       darwin:
         name: viddy
-      ubuntu:
-        name: viddy
     wezterm:
       darwin:
         name: wezterm
@@ -621,14 +575,10 @@ packages:
           name: ytt
       darwin:
         name: ytt
-      ubuntu:
-        name: ytt
     zellij:
       arch:
         name: zellij
       darwin:
-        name: zellij
-      ubuntu:
         name: zellij
     zlib:
       darwin:
@@ -640,8 +590,6 @@ packages:
       arch:
         name: zoxide
       darwin:
-        name: zoxide
-      ubuntu:
         name: zoxide
 
   ############
