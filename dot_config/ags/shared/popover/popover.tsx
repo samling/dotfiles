@@ -19,12 +19,8 @@ export type PopoverProps = Pick<
 
 export default function Popover({
     child,
-    marginBottom,
-    marginTop,
-    marginLeft,
-    marginRight,
-    halign = Gtk.Align.CENTER,
-    valign = Gtk.Align.CENTER,
+    marginTop = 10,
+    marginRight = 10,
     onClose,
     ...props
 }: PopoverProps) {
@@ -36,6 +32,8 @@ export default function Popover({
         keymode={Astal.Keymode.EXCLUSIVE}
         anchor={TOP | RIGHT | BOTTOM | LEFT}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
+        marginTop={marginTop}
+        marginRight={marginRight}
         onNotifyVisible={(self) => {
             if (!self.visible) {
                 onClose?.(self)
