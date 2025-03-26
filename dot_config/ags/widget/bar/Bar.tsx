@@ -36,10 +36,10 @@ export default function Bar(monitor: Gdk.Monitor) {
             <box>
             </box>
             <box hexpand halign={Gtk.Align.END} >
-                <SysTray />
-                <AudioSlider />
                 <BatteryLevel />
+                <AudioSlider />
                 <Time />
+                <SysTray />
             </box>
         </centerbox>
     </window>
