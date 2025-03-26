@@ -15,14 +15,10 @@ export default function Popover({
     onClose,
     ...props
 }: PopoverProps) {
-    const speaker = Wp.get_default()?.audio.defaultSpeaker!
-    const windowName = "audio-control-window"
     const { TOP, RIGHT, BOTTOM, LEFT } = Astal.WindowAnchor
     
     return <window
         {...props}
-        name={windowName}
-        className="AudioWindow"
         css="background-color: transparent;"
         keymode={Astal.Keymode.EXCLUSIVE}
         anchor={TOP | RIGHT | BOTTOM | LEFT}
@@ -51,33 +47,6 @@ export default function Popover({
                 self.visible = false
             }
         }}>
-        <box
-            halign={Gtk.Align.END}
-            valign={Gtk.Align.START}
-            marginBottom={marginBottom}
-            marginTop={marginTop}
-            marginLeft={marginLeft}
-            marginRight={marginRight}
-            onButtonPressEvent={() => true}
-        >
-            <box className="audio-container">
-                <box className="audio-control-content">
-                    <button 
-                        className="volume-icon-button"
-                        onClick={() => {
-                            speaker.mute = !speaker.mute
-                        }}>
-                        <icon icon={bind(speaker, "volumeIcon")} css="font-size: 1.2em;" />
-                    </button>
-                    
-                    <slider
-                        className="AudioSlider"
-                        hexpand
-                        onDragged={({ value }) => speaker.volume = value}
-                        value={bind(speaker, "volume")}
-                    />
-                </box>
-            </box>
-        </box>
+        {child}
     </window>
 } 
