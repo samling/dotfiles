@@ -1,7 +1,7 @@
 #
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="$HOME/.local/share/fnm:$PATH"
+  export PATH="$PATH:$HOME/.local/share/fnm"
   eval "`fnm env`"
 fi
 

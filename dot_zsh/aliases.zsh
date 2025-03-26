@@ -5,8 +5,10 @@ alias df="duf -hide special,fuse"
 alias grep="rg -u"
 alias top="btop"
 alias watch="viddy -d"
-alias vi=nvim-maybe-profile
-alias vim=nvim-maybe-profile
+#alias vi=nvim-maybe-profile
+#alias vim=nvim-maybe-profile
+alias vi=nvim
+alias vim=nvim
 
 #=== cd
 # Create aliases for up to 15 directories (offset by 1: '..'='cd ../', '...'='cd ../../', etc.)

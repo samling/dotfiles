@@ -4,13 +4,13 @@ unset PATH
 
 # Essential paths
 #
-PATH=/usr/local
-PATH=/usr/local/bin:$PATH
-PATH=/usr/local/sbin:$PATH
-PATH=/usr/bin:$PATH
-PATH=/bin:$PATH
-PATH=/usr/sbin:$PATH
-PATH=/sbin:$PATH
+PATH=$PATH:/usr/local
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/local/sbin
+PATH=$PATH:/usr/bin
+PATH=$PATH:/bin
+PATH=$PATH:/usr/sbin
+PATH=$PATH:/sbin
 
 # Local paths
 #

@@ -260,6 +260,9 @@ window.Picker {
     .volume-icon-button {
         background: none;
         border: none;
+        outline: none;
+        box-shadow: none;
+        color: $text;
         padding: 0.2em;
         margin-right: 0.6em;
         border-radius: 4px;
