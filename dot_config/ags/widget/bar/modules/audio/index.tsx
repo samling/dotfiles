@@ -1,7 +1,7 @@
 import Wp from "gi://AstalWp"
 import { bind } from "astal"
 import { App, Gtk } from "astal/gtk3"
-import AudioWindow from "../../../audio/AudioWindow"
+import AudioWindow from "./helper/AudioWindow"
 
 export default function AudioSlider() {
     const speaker = Wp.get_default()?.audio.defaultSpeaker!
