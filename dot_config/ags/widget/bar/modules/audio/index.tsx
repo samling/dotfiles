@@ -1,8 +1,7 @@
 import Wp from "gi://AstalWp"
 import { bind, Variable } from "astal"
 import { App, Gtk } from "astal/gtk3"
-import AudioWindow from "./helper/AudioWindow"
-import Popover from "./helper/AudioWindow"
+import Popover from "../../../../shared/popover/popover"
 
 export default function AudioSlider() {
     const speaker = Wp.get_default()?.audio.defaultSpeaker!
