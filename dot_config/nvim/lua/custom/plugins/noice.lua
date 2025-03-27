@@ -86,6 +86,12 @@ return {
       desc = 'Redirect Cmdline',
     },
     {
+      '<leader>n',
+      '<nop>',
+      desc = 'Noice',
+    },
+
+    {
       '<leader>nl',
       function()
         require('noice').cmd 'last'
