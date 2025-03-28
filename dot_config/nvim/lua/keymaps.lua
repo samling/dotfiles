@@ -48,6 +48,7 @@ vim.keymap.set('n', '<leader>bb', function()
   local builtin = require 'telescope.builtin'
   builtin.buffers { sort_mru = true, ignore_current_buffer = false }
 end, { desc = 'Current buffers' })
+vim.keymap.set('n', '<leader>b', '<nop>', { desc = 'Buffers' })
 vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = 'Create a new buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Move to the previous buffer' })
 vim.keymap.set('n', '[b', ':bprev<CR>', { desc = 'Move to the previous buffer' })

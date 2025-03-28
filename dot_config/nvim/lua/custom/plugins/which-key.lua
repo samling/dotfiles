@@ -1,53 +1,72 @@
 -- Provides a pop-up with a map of configured keybindings.
 --
-local M = {
-  'folke/which-key.nvim',
-  -- "VeryLazy" hides splash screen
-  -- event = {'BufNewFile', 'BufReadPost'},
+return {
+  "folke/which-key.nvim",
+  event = "VeryLazy",
   opts = {
-    preset = "modern",
-    keys = {
-      scroll_down = "<c-d>",
-      sroll_up = "<c-u>",
+    icons = {
+      separator = "",
+      group = "",
+    }
+  },
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "Buffer Local Keymaps (which-key)",
     },
-    layout = {
-      height = { min = 4, max = 25 },
-      width = { min = 20, max = 50 },
-      spacing = 3,
-      align = "center",
-    },
-    win = {
-      title = false,
-    },
-    replace = {
-      key = {
-        function(key)
-          return require("which-key.view").format(key)
-        end,
-        -- { "<Space>", "SPC" },
-      },
-      desc = {
-        { "<Plug>%(?(.*)%)?", "%1" },
-        { "^%+", "" },
-        { "<[cC]md>", "" },
-        { "<[cC][rR]>", "" },
-        { "<[sS]ilent>", "" },
-        { "^lua%s+", "" },
-        { "^call%s+", "" },
-        { "^:%s*", "" },
-      },
-    },
-    show_help = false,
-    show_keys = false,
   },
 }
-
-M.init = function()
-  vim.o.timeout = true
-  vim.o.timeoutlen = 300
-end
-
-return M
+-- local M = {
+--   'folke/which-key.nvim',
+--   -- "VeryLazy" hides splash screen
+--   -- event = {'BufNewFile', 'BufReadPost'},
+--   opts = {
+--     preset = "modern",
+--     keys = {
+--       scroll_down = "<c-d>",
+--       sroll_up = "<c-u>",
+--     },
+--     layout = {
+--       height = { min = 4, max = 25 },
+--       width = { min = 20, max = 50 },
+--       spacing = 3,
+--       align = "center",
+--     },
+--     win = {
+--       title = false,
+--     },
+--     replace = {
+--       key = {
+--         function(key)
+--           return require("which-key.view").format(key)
+--         end,
+--         -- { "<Space>", "SPC" },
+--       },
+--       desc = {
+--         { "<Plug>%(?(.*)%)?", "%1" },
+--         { "^%+", "" },
+--         { "<[cC]md>", "" },
+--         { "<[cC][rR]>", "" },
+--         { "<[sS]ilent>", "" },
+--         { "^lua%s+", "" },
+--         { "^call%s+", "" },
+--         { "^:%s*", "" },
+--       },
+--     },
+--     show_help = false,
+--     show_keys = false,
+--   },
+-- }
+--
+-- M.init = function()
+--   vim.o.timeout = true
+--   vim.o.timeoutlen = 300
+-- end
+--
+-- return M
 
 -- M.init = function()
 --   vim.o.timeout = true

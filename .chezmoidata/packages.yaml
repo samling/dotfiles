@@ -269,53 +269,47 @@ packages:
         name: aichat
       darwin:
         name: aichat
-      ubuntu:
-        name: aichat
-    alsa-utils:
-      arch:
-        name: alsa-utils
-      ubuntu:
-        name: alsa-utils
+    arl:
+      darwin:
+        name: arl/arl
+    asdf:
+      darwin:
+        name: asdf
     aws-cli:
       arch:
         name: aws-cli
       darwin:
         name: awscli
-      ubuntu:
-        name: awscli
+    aylurs-gtk-shell-git:
+      arch:
+        aur:
+          name: aylurs-gtk-shell-git
     azure-cli:
       arch:
         name: azure-cli
       darwin:
-        name: azure-cli
-      ubuntu:
         name: azure-cli
     bat:
       arch:
         name: bat
       darwin:
         name: bat
-      ubuntu:
-        name: bat
+    bruno:
+      darwin:
+        name: bruno
     btop:
       arch:
         name: btop
       darwin:
-        name: btop
-      ubuntu:
         name: btop
     copyq:
       arch:
         name: copyq
       ubuntu:
         name: copyq
-    git-delta:
-      arch:
-        name: git-delta
+    derailed-k9s:
       darwin:
-        name: delta
-      ubuntu:
-        name: git-delta
+        name: derailed/k9s/k9s
     direnv:
       arch:
         name: direnv
@@ -340,22 +334,25 @@ packages:
         name: duf
       darwin:
         name: duf
-      ubuntu:
-        name: duf
     eza:
       arch:
         name: eza
       darwin:
         name: eza
-      ubuntu:
-        name: eza
+    falcosuessgott-vkv:
+      darwin:
+        name: falcosuessgott/tap/vkv
     fd:
       arch:
         name: fd
       darwin:
         name: fd
-      ubuntu:
-        name: fd-find
+    felixkratz:
+      darwin:
+        name: FelixKratz/formulae
+    ffmpeg:
+      darwin:
+        name: ffmpeg
     fzf:
       arch:
         name: fzf
@@ -363,6 +360,17 @@ packages:
         name: fzf
       ubuntu:
         name: fzf
+    git-delta:
+      arch:
+        name: git-delta
+      darwin:
+        name: delta
+    gitmux:
+      arch:
+        aur:
+          name: gitmux
+      darwin:
+        name: gitmux
     go:
       arch:
         name: go
@@ -370,27 +378,52 @@ packages:
         name: go
       ubuntu:
         name: golang-go
+    google-chrome:
+      arch:
+        aur:
+          name: google-chrome
+      darwin:
+        name: google-chrome
+      ubuntu:
+        name: google-chrome-stable
     grc:
       arch:
         name: grc
       darwin:
         name: grc
-      ubuntu:
-        name: grc
+    hashicorp:
+      darwin:
+        name: hashicorp/tap
     helm:
       arch:
         name: helm
       darwin:
         name: helm
+    hyprswitch:
+      arch:
+        aur:
+          name: hyprswitch
+    imagemagick:
+      darwin:
+        name: imagemagick
+    insync:
+      arch:
+        aur:
+          name: insync
+      darwin:
+        name: insync
       ubuntu:
-        name: helm
+        name: insync
     jc:
       arch:
         name: jc
       darwin:
         name: jc
-      ubuntu:
-        name: jc
+    k9s:
+      arch:
+        name: k9s
+      darwin:
+        name: derailed/k9s/k9s
     kubectl:
       arch:
         name: kubectl
@@ -398,34 +431,71 @@ packages:
         name: kubectl
       ubuntu:
         name: kubectl
-    k9s:
-      arch:
-        name: k9s
+    lastpass-cli:
       darwin:
-        name: derailed/k9s/k9s
-      ubuntu:
-        name: k9s
+        name: lastpass-cli
     lazygit:
       arch:
         name: lazygit
       darwin:
         name: jesseduffield/lazygit/lazygit
+    libbz2-dev:
       ubuntu:
-        name: lazygit
+        name: libbz2-dev
+    libevent-core:
+      ubuntu:
+        name: libevent-core-2.1-7
+    libffi-dev:
+      ubuntu:
+        name: libffi-dev
+    libfuse2:
+      ubuntu:
+        name: libfuse2
+    liblzma-dev:
+      ubuntu:
+        name: liblzma-dev
+    libncurses6:
+      ubuntu:
+        name: libncurses6
+    libreadline-dev:
+      ubuntu:
+        name: libreadline-dev
+    libsqlite3-dev:
+      ubuntu:
+        name: libsqlite3-dev
+    libssl-dev:
+      ubuntu:
+        name: libssl-dev
+    libxml2-dev:
+      ubuntu:
+        name: libxml2-dev
+    localsend-bin:
+      arch:
+        aur:
+          name: localsend-bin
+      darwin:
+        name: localsend
+      ubuntu:
+        name: localsend
     lsd:
       arch:
         name: lsd
       darwin:
-        name: lsd
-      ubuntu:
         name: lsd
     neovim:
       arch:
         name: neovim
       darwin:
         name: nvim
-      ubuntu:
-        name: neovim
+    nvm:
+      arch:
+        aur:
+          name: nvm
+      darwin:
+        name: nvm
+    openssl:
+      darwin:
+        name: openssl
     pyenv:
       arch:
         name: pyenv
@@ -433,13 +503,29 @@ packages:
         name: pyenv
       ubuntu:
         name: pyenv
+    readline:
+      darwin:
+        name: readline
+    rename:
+      darwin:
+        name: rename
     ripgrep:
       arch:
         name: ripgrep
       darwin:
         name: rg
+    sketchybar:
+      darwin:
+        name: sketchybar
+    software-properties-common:
       ubuntu:
-        name: ripgrep
+        name: software-properties-common
+    sqlite3:
+      darwin:
+        name: sqlite3
+    tealdeer:
+      darwin:
+        name: tealdeer
     terraform:
       arch:
         name: terraform
@@ -452,28 +538,58 @@ packages:
         name: terragrunt
       darwin:
         name: terragrunt
-      ubuntu:
-        name: terragrunt
     tmux:
       arch:
         name: tmux
       darwin:
         name: tmux
+    vendir:
+      arch:
+        aur:
+          name: vendir
+      darwin:
+        name: vendir
+    vesktop:
+      arch:
+        aur:
+          name: vesktop
+      darwin:
+        name: vesktop
       ubuntu:
-        name: tmux
+        name: vesktop
+    viddy:
+      arch:
+        aur:
+          name: viddy
+      darwin:
+        name: viddy
+    wezterm:
+      darwin:
+        name: wezterm
+    xz:
+      darwin:
+        name: xz
+    ytt:
+      arch:
+        aur:
+          name: ytt
+      darwin:
+        name: ytt
     zellij:
       arch:
         name: zellij
       darwin:
         name: zellij
+    zlib:
+      darwin:
+        name: zlib
+    zlib1g-dev:
       ubuntu:
-        name: zellij
+        name: zlib1g-dev
     zoxide:
       arch:
         name: zoxide
       darwin:
-        name: zoxide
-      ubuntu:
         name: zoxide
 
   ############
@@ -540,180 +656,3 @@ packages:
         name: swaytest
       ubuntu:
         name: swaytest
-
-  #######
-  # AUR #
-  #######
-  aur:
-    aylurs-gtk-shell-git:
-      arch:
-        name: aylurs-gtk-shell-git
-    gitmux:
-      arch:
-        name: gitmux
-      darwin:
-        name: gitmux
-      ubuntu:
-        name: gitmux
-    google-chrome:
-      arch:
-        name: google-chrome
-      darwin:
-        name: google-chrome
-      ubuntu:
-        name: google-chrome-stable
-    insync:
-      arch:
-        name: insync
-      darwin:
-        name: insync
-      ubuntu:
-        name: insync
-    hyprswitch:
-      arch:
-        name: hyprswitch
-    localsend-bin:
-      arch:
-        name: localsend-bin
-      darwin:
-        name: localsend
-      ubuntu:
-        name: localsend
-    nvm:
-      arch:
-        name: nvm
-      darwin:
-        name: nvm
-      ubuntu:
-        name: nvm
-    vendir:
-      arch:
-        name: vendir
-      darwin:
-        name: vendir
-      ubuntu:
-        name: vendir
-    vesktop:
-      arch:
-        name: vesktop
-      darwin:
-        name: vesktop
-      ubuntu:
-        name: vesktop
-    viddy:
-      arch:
-        name: viddy
-      darwin:
-        name: viddy
-      ubuntu:
-        name: viddy
-    ytt:
-      arch:
-        name: ytt
-      darwin:
-        name: ytt
-      ubuntu:
-        name: ytt
-
-  #########
-  # MACOS #
-  #########
-  macos:
-    arl:
-      darwin:
-        name: arl/arl
-    felixkratz:
-      darwin:
-        name: FelixKratz/formulae
-    hashicorp:
-      darwin:
-        name: hashicorp/tap
-    asdf:
-      darwin:
-        name: asdf
-    bruno:
-      darwin:
-        name: bruno
-    derailed-k9s:
-      darwin:
-        name: derailed/k9s/k9s
-    falcosuessgott-vkv:
-      darwin:
-        name: falcosuessgott/tap/vkv
-    ffmpeg:
-      darwin:
-        name: ffmpeg
-    imagemagick:
-      darwin:
-        name: imagemagick
-    lastpass-cli:
-      darwin:
-        name: lastpass-cli
-    openssl:
-      darwin:
-        name: openssl
-    readline:
-      darwin:
-        name: readline
-    rename:
-      darwin:
-        name: rename
-    sketchybar:
-      darwin:
-        name: sketchybar
-    sqlite3:
-      darwin:
-        name: sqlite3
-    tealdeer:
-      darwin:
-        name: tealdeer
-    wezterm:
-      darwin:
-        name: wezterm
-    xz:
-      darwin:
-        name: xz
-    zlib:
-      darwin:
-        name: zlib
-    
-  ###############
-  # UBUNTU LIBS #
-  ###############
-  ubuntu_libs:
-    libevent-core:
-      ubuntu:
-        name: libevent-core-2.1-7
-    libbz2-dev:
-      ubuntu:
-        name: libbz2-dev
-    libffi-dev:
-      ubuntu:
-        name: libffi-dev
-    libfuse2:
-      ubuntu:
-        name: libfuse2
-    liblzma-dev:
-      ubuntu:
-        name: liblzma-dev
-    libncurses6:
-      ubuntu:
-        name: libncurses6
-    libreadline-dev:
-      ubuntu:
-        name: libreadline-dev
-    libsqlite3-dev:
-      ubuntu:
-        name: libsqlite3-dev
-    libssl-dev:
-      ubuntu:
-        name: libssl-dev
-    libxml2-dev:
-      ubuntu:
-        name: libxml2-dev
-    software-properties-common:
-      ubuntu:
-        name: software-properties-common
-    zlib1g-dev:
-      ubuntu:
-        name: zlib1g-dev

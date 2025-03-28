@@ -85,10 +85,15 @@ vim.api.nvim_create_autocmd({ "BufNew", "BufReadPost", "BufNewFile" }, {
 -- https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
-  callback = function()
+  callback = function(ev)
     local bufmap = function(mode, lhs, rhs)
       local opts = {buffer = true}
       vim.keymap.set(mode, lhs, rhs, opts)
+
+      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+      if client:supports_method('textDocument/completion') then
+        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
+      end
     end
 
     -- Displays hover information about the symbol under the cursor

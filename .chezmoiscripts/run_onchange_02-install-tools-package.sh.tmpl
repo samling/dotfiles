@@ -9,17 +9,35 @@
 
 {{- $toolsPackages := .packages.tools -}}
 {{- $packageList := "" -}}
+{{- $aurPackageList := "" -}}
 
 {{- range $toolPackageName, $toolPackageData := .packages.tools -}}
+
 {{- if and ($toolPackageData) (index $toolPackageData $osID) (index $toolPackageData $osID "name") -}}
 {{- $packageList = printf "%s %s" $packageList (index $toolPackageData $osID "name") -}}
 {{- end -}}
+
+{{- if and ($toolPackageData) (index $toolPackageData $osID) (index $toolPackageData $osID "aur") (index $toolPackageData $osID "aur" "name") -}}
+{{- $aurPackageList = printf "%s %s" $aurPackageList (index $toolPackageData $osID "aur" "name") -}}
+{{- end -}}
+
 {{- end }}
 
 echo "Installing tools packages for {{ $osID }}..."
 
 {{- if eq $osID "arch" }}
 sudo pacman -S --needed --noconfirm {{ $packageList | trim }}
+{{- if $aurPackageList }}
+# Check if yay is installed
+if ! command -v yay &> /dev/null; then
+    echo "yay not found, installing..."
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    (cd /tmp/yay && makepkg -si --noconfirm)
+    rm -rf /tmp/yay
+fi
+
+yay -S --needed --noconfirm {{ $aurPackageList | trim }}
+{{- end }}
 {{- else if eq $osID "darwin" }}
 brew install {{ $packageList | trim }}
 {{- else if eq $osID "ubuntu" }}

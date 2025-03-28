@@ -2,8 +2,13 @@ return {
   "folke/trouble.nvim",
   opts = {}, -- for default options, refer to the configuration section for custom setup.
   cmd = "Trouble",
-  keys = {
-    {
+  key = {
+     {
+      "<leader>x",
+      "<nop>",
+      desc = "Trouble",
+    },
+     {
       "<leader>xx",
       "<cmd>Trouble diagnostics toggle<cr>",
       desc = "Diagnostics (Trouble)",
