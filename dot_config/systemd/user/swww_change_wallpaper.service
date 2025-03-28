@@ -1,0 +1,9 @@
+[Unit]
+Description=Change wallpaper using SWWW
+After=swww.service
+
+[Service]
+ExecStart=/bin/bash -c '/home/sboynton/.config/swww/swww_randomize_multi.sh "/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr"'
+
+[Install]
+WantedBy=default.target

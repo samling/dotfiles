@@ -1,4 +1,5 @@
 #!/usr/bin/env -S ags run
+
 import { App } from "astal/gtk3"
 import style from "./style.scss"
 import Bar from "./widget/bar/Bar"
