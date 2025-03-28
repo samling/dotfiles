@@ -1,8 +1,19 @@
 packages:
   #########
-  # BASE #
+  # PACKAGES #
   #########
   base:
+    aichat:
+      arch:
+        name: aichat
+      darwin:
+        name: aichat
+    arl:
+      darwin:
+        name: arl/arl
+    asdf:
+      darwin:
+        name: asdf
     autoconf:
       arch:
         name: autoconf
@@ -17,11 +28,30 @@ packages:
         name: automake
       ubuntu:
         name: automake
+    aws-cli:
+      arch:
+        name: aws-cli
+      darwin:
+        name: awscli
+    aylurs-gtk-shell-git:
+      arch:
+        aur:
+          name: aylurs-gtk-shell-git
+    azure-cli:
+      arch:
+        name: azure-cli
+      darwin:
+        name: azure-cli
     base-devel:
       arch:
         name: base-devel
       ubuntu:
         name: build-essential
+    bat:
+      arch:
+        name: bat
+      darwin:
+        name: bat
     bison:
       arch:
         name: bison
@@ -35,6 +65,14 @@ packages:
     bluez-utils:
       arch:
         name: bluez-utils
+    bruno:
+      darwin:
+        name: bruno
+    btop:
+      arch:
+        name: btop
+      darwin:
+        name: btop
     cmake:
       arch:
         name: cmake
@@ -42,6 +80,11 @@ packages:
         name: cmake
       ubuntu:
         name: cmake
+    copyq:
+      arch:
+        name: copyq
+      ubuntu:
+        name: copyq
     cpio:
       arch:
         name: cpio
@@ -56,6 +99,9 @@ packages:
         name: curl
       ubuntu:
         name: curl
+    derailed-k9s:
+      darwin:
+        name: derailed/k9s/k9s
     devtools:
       arch:
         name: devtools
@@ -78,245 +124,6 @@ packages:
         name: dnsutils
       ubuntu:
         name: dnsutils
-    evolution:
-      arch:
-        name: evolution
-      ubuntu:
-        name: evolution
-    feh:
-      arch:
-        name: feh
-      ubuntu:
-        name: feh
-    gcc:
-      arch:
-        name: gcc
-      darwin:
-        name: gcc
-      ubuntu:
-        name: gcc
-    gnome-keyring:
-      arch:
-        name: gnome-keyring
-      ubuntu:
-        name: gnome-keyring
-    gnome-themes-extra:
-      arch:
-        name: gnome-themes-extra
-      ubuntu:
-        name: gnome-themes-extra
-    gnupg:
-      arch:
-        name: gnupg
-      darwin:
-        name: gnupg
-      ubuntu:
-        name: gnupg
-    go-yq:
-      arch:
-        name: go-yq
-      darwin:
-        name: yq
-    flex:
-      arch:
-        name: flex
-      darwin:
-        name: flex
-      ubuntu:
-        name: flex
-    inetutils:
-      arch:
-        name: inetutils
-      ubuntu:
-        name: inetutils-telnet
-    jq:
-      arch:
-        name: jq
-      darwin:
-        name: jq
-      ubuntu:
-        name: jq
-    llvm:
-      arch:
-        name: llvm
-      darwin:
-        name: llvm
-      ubuntu:
-        name: llvm
-    luarocks:
-      arch:
-        name: luarocks
-      darwin:
-        name: luarocks
-      ubuntu:
-        name: luarocks
-    lua-language-server:
-      arch:
-        name: lua-language-server
-    mardownlint:
-      arch:
-        name: markdownlint
-    meson:
-      arch:
-        name: meson
-      ubuntu:
-        name: meson
-    nmap:
-      arch:
-        name: nmap
-      darwin:
-        name: nmap
-      ubuntu:
-        name: nmap
-    nwg-look:
-      arch:
-        name: nwg-look
-    pacman-contrib:
-      arch:
-        name: pacman-contrib
-    pavucontrol:
-      arch:
-        name: pavucontrol
-      ubuntu:
-        name: pavucontrol
-    pkg-config:
-      arch:
-        name: pkg-config
-      darwin:
-        name: pkg-config
-      ubuntu:
-        name: pkg-config
-    p7zip:
-      arch:
-        name: p7zip
-      darwin:
-        name: p7zip
-      ubuntu:
-        name: p7zip
-    qt6ct:
-      arch:
-        name: qt6ct
-      ubuntu:
-        name: qt6ct
-    smbclient:
-      arch:
-        name: smbclient
-      ubuntu:
-        name: smbclient
-    traceroute:
-      arch:
-        name: traceroute
-      darwin:
-        name: tcptraceroute
-      ubuntu:
-        name: traceroute
-    tk:
-      arch:
-        name: tk
-      darwin:
-        name: tcl-tk@8
-      ubuntu:
-        name: tk-dev
-    unzip:
-      arch:
-        name: unzip
-      darwin:
-        name: unzip
-      ubuntu:
-        name: unzip
-    xclip:
-      arch:
-        name: xclip
-      ubuntu:
-        name: xclip
-    xdotool:
-      arch:
-        name: xdotool
-      ubuntu:
-        name: xdotool
-    xmlsec:
-      arch:
-        name: xmlsec
-      ubuntu:
-        name: libxmlsec1-dev
-    xsel:
-      arch:
-        name: xsel
-      ubuntu:
-        name: xsel
-    wget:
-      arch:
-        name: wget
-      darwin:
-        name: wget
-      ubuntu:
-        name: wget
-    zsh:
-      arch:
-        name: zsh
-      darwin:
-        name: zsh
-      ubuntu:
-        name: zsh
-
-
-  #########
-  # TOOLS #
-  #########
-  tools:
-    aichat:
-      arch:
-        name: aichat
-      darwin:
-        name: aichat
-    arl:
-      darwin:
-        name: arl/arl
-    asdf:
-      darwin:
-        name: asdf
-    aws-cli:
-      arch:
-        name: aws-cli
-      darwin:
-        name: awscli
-    aylurs-gtk-shell-git:
-      arch:
-        aur:
-          name: aylurs-gtk-shell-git
-    azure-cli:
-      arch:
-        name: azure-cli
-      darwin:
-        name: azure-cli
-    bat:
-      arch:
-        name: bat
-      darwin:
-        name: bat
-    bruno:
-      darwin:
-        name: bruno
-    btop:
-      arch:
-        name: btop
-      darwin:
-        name: btop
-    copyq:
-      arch:
-        name: copyq
-      ubuntu:
-        name: copyq
-    derailed-k9s:
-      darwin:
-        name: derailed/k9s/k9s
-    direnv:
-      arch:
-        name: direnv
-      darwin:
-        name: direnv
-      ubuntu:
-        name: direnv
     docker:
       arch:
         name: docker
@@ -334,6 +141,11 @@ packages:
         name: duf
       darwin:
         name: duf
+    evolution:
+      arch:
+        name: evolution
+      ubuntu:
+        name: evolution
     eza:
       arch:
         name: eza
@@ -347,12 +159,24 @@ packages:
         name: fd
       darwin:
         name: fd
+    feh:
+      arch:
+        name: feh
+      ubuntu:
+        name: feh
     felixkratz:
       darwin:
         name: FelixKratz/formulae
     ffmpeg:
       darwin:
         name: ffmpeg
+    flex:
+      arch:
+        name: flex
+      darwin:
+        name: flex
+      ubuntu:
+        name: flex
     fzf:
       arch:
         name: fzf
@@ -360,6 +184,13 @@ packages:
         name: fzf
       ubuntu:
         name: fzf
+    gcc:
+      arch:
+        name: gcc
+      darwin:
+        name: gcc
+      ubuntu:
+        name: gcc
     git-delta:
       arch:
         name: git-delta
@@ -371,6 +202,23 @@ packages:
           name: gitmux
       darwin:
         name: gitmux
+    gnome-keyring:
+      arch:
+        name: gnome-keyring
+      ubuntu:
+        name: gnome-keyring
+    gnome-themes-extra:
+      arch:
+        name: gnome-themes-extra
+      ubuntu:
+        name: gnome-themes-extra
+    gnupg:
+      arch:
+        name: gnupg
+      darwin:
+        name: gnupg
+      ubuntu:
+        name: gnupg
     go:
       arch:
         name: go
@@ -378,6 +226,11 @@ packages:
         name: go
       ubuntu:
         name: golang-go
+    go-yq:
+      arch:
+        name: go-yq
+      darwin:
+        name: yq
     google-chrome:
       arch:
         aur:
@@ -419,6 +272,13 @@ packages:
         name: jc
       darwin:
         name: jc
+    jq:
+      arch:
+        name: jq
+      darwin:
+        name: jq
+      ubuntu:
+        name: jq
     k9s:
       arch:
         name: k9s
@@ -469,6 +329,13 @@ packages:
     libxml2-dev:
       ubuntu:
         name: libxml2-dev
+    llvm:
+      arch:
+        name: llvm
+      darwin:
+        name: llvm
+      ubuntu:
+        name: llvm
     localsend-bin:
       arch:
         aur:
@@ -482,6 +349,24 @@ packages:
         name: lsd
       darwin:
         name: lsd
+    lua-language-server:
+      arch:
+        name: lua-language-server
+    luarocks:
+      arch:
+        name: luarocks
+      darwin:
+        name: luarocks
+      ubuntu:
+        name: luarocks
+    mardownlint:
+      arch:
+        name: markdownlint
+    meson:
+      arch:
+        name: meson
+      ubuntu:
+        name: meson
     neovim:
       arch:
         name: neovim
@@ -489,12 +374,28 @@ packages:
         name: nvim
       ubuntu:
         name: nvim
+    networkmanager:
+      arch:
+        name: networkmanager
+    nm-connection-editor:
+      arch:
+        name: nm-connection-editor
+    nmap:
+      arch:
+        name: nmap
+      darwin:
+        name: nmap
+      ubuntu:
+        name: nmap
     nvm:
       arch:
         aur:
           name: nvm
       darwin:
         name: nvm
+    nwg-look:
+      arch:
+        name: nwg-look
     openssl:
       arch:
         name: openssl
@@ -502,6 +403,28 @@ packages:
         name: openssl
       ubuntu:
         name: openssl
+    p7zip:
+      arch:
+        name: p7zip
+      darwin:
+        name: p7zip
+      ubuntu:
+        name: p7zip
+    pacman-contrib:
+      arch:
+        name: pacman-contrib
+    pavucontrol:
+      arch:
+        name: pavucontrol
+      ubuntu:
+        name: pavucontrol
+    pkg-config:
+      arch:
+        name: pkg-config
+      darwin:
+        name: pkg-config
+      ubuntu:
+        name: pkg-config
     pyenv:
       arch:
         name: pyenv
@@ -509,6 +432,11 @@ packages:
         name: pyenv
       ubuntu:
         name: pyenv
+    qt6ct:
+      arch:
+        name: qt6ct
+      ubuntu:
+        name: qt6ct
     readline:
       darwin:
         name: readline
@@ -523,6 +451,11 @@ packages:
     sketchybar:
       darwin:
         name: sketchybar
+    smbclient:
+      arch:
+        name: smbclient
+      ubuntu:
+        name: smbclient
     software-properties-common:
       ubuntu:
         name: software-properties-common
@@ -553,6 +486,20 @@ packages:
         name: tmux
       darwin:
         name: tmux
+    traceroute:
+      arch:
+        name: traceroute
+      darwin:
+        name: tcptraceroute
+      ubuntu:
+        name: traceroute
+    unzip:
+      arch:
+        name: unzip
+      darwin:
+        name: unzip
+      ubuntu:
+        name: unzip
     vendir:
       arch:
         aur:
@@ -580,6 +527,33 @@ packages:
         name: wezterm
       ubuntu:
         name: wezterm
+    wget:
+      arch:
+        name: wget
+      darwin:
+        name: wget
+      ubuntu:
+        name: wget
+    xclip:
+      arch:
+        name: xclip
+      ubuntu:
+        name: xclip
+    xdotool:
+      arch:
+        name: xdotool
+      ubuntu:
+        name: xdotool
+    xmlsec:
+      arch:
+        name: xmlsec
+      ubuntu:
+        name: libxmlsec1-dev
+    xsel:
+      arch:
+        name: xsel
+      ubuntu:
+        name: xsel
     xz:
       arch:
         name: xz
@@ -609,6 +583,30 @@ packages:
         name: zoxide
       darwin:
         name: zoxide
+    zsh:
+      arch:
+        name: zsh
+      darwin:
+        name: zsh
+      ubuntu:
+        name: zsh
+
+  ##########
+  # LAPTOP #
+  ##########
+  laptop:
+    impala:
+      arch:
+        name: impala
+    inetutils:
+      arch:
+        name: inetutils
+      ubuntu:
+        name: inetutils-telnet
+    iwd:
+      arch:
+        name: iwd
+
 
   ############
   # HYPRLAND #
