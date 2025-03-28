@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+{{- $osID := "" -}}
+{{- if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end -}}
+
+{{- $laptopPackages := .packages.laptop -}}
+{{- $packageList := "" -}}
+{{- $aurPackageList := "" -}}
+
+{{- range $laptopPackageName, $laptopPackageData := .packages.laptop -}}
+
+{{- if and ($laptopPackageData) (index $laptopPackageData $osID) (index $laptopPackageData $osID "name") -}}
+{{- $packageList = printf "%s %s" $packageList (index $laptopPackageData $osID "name") -}}
+{{- end -}}
+
+{{- if and ($laptopPackageData) (index $laptopPackageData $osID) (index $laptopPackageData $osID "aur") (index $laptopPackageData $osID "aur" "name") -}}
+{{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData $osID "aur" "name") -}}
+{{- end -}}
+
+{{- end }}
+
+{{- if eq .chassis.type "laptop" }}
+echo "Installing laptop packages for {{ $osID }}..."
+
+{{- if eq $osID "arch" }}
+sudo pacman -S --needed {{ $packageList | trim }}
+{{- if $aurPackageList }}
+# Check if yay is installed
+if ! command -v yay &> /dev/null; then
+    echo "yay not found, installing..."
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    (cd /tmp/yay && makepkg -si --noconfirm)
+    rm -rf /tmp/yay
+fi
+
+yay -S --needed {{ $aurPackageList | trim }}
+{{- end }}
+{{- else if eq $osID "darwin" }}
+brew install {{ $packageList | trim }}
+{{- else if eq $osID "ubuntu" }}
+sudo apt update
+sudo apt install -y {{ $packageList | trim }}
+{{- end }} 
+
+{{ else }}
+echo "Skipping laptop package installation for {{ .chezmoi.os }} as it's not a laptop..."
+{{ end }}
