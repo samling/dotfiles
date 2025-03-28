@@ -14,6 +14,14 @@ background {
 
 {{- if eq .chassis.type "desktop" }}
 background {
+  monitor=DP-1
+  blur_passes=1
+  blur_size=7
+  noise=0.011700
+  path=screenshot
+}
+
+background {
   monitor=DP-2
   blur_passes=1
   blur_size=7
@@ -22,7 +30,7 @@ background {
 }
 
 background {
-  monitor={{ $primaryMonitor }}
+  monitor=DP-3
   blur_passes=1
   blur_size=7
   noise=0.011700
