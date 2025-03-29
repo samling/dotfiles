@@ -40,7 +40,7 @@ return {
       hyprls = {},
       jqls = {},
       jsonls = {},
-      -- lua_ls = {}, -- handled by lazydev
+      lua_ls = {}, -- handled by lazydev
       pylsp = {
         settings = {
           pylsp = {

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Define source and target directories
+SOURCE_DIR="{{ .chezmoi.sourceDir }}/dot_config/nvim/lua/custom/plugins"
+TARGET_DIR="$HOME/.config/nvim/lua/custom/plugins"
+
+# First, make sure the source directory exists
+if [ ! -d "$SOURCE_DIR" ]; then
+  echo "[sync-nvim-plugins] ERROR: Source directory $SOURCE_DIR does not exist!"
+  exit 1
+fi
+
+found=0
+
+# Find all regular files in the target directory
+find "$TARGET_DIR" -maxdepth 1 -type f | while read -r target_file; do
+  # Get the relative path of the file within the target directory
+  rel_path=$(realpath --relative-to="$TARGET_DIR" "$target_file")
+  
+  # Construct the corresponding path in the source directory
+  source_file="$SOURCE_DIR/$rel_path"
+  
+  # If the file doesn't exist in the source directory, remove it from the target
+  if [ ! -f "$source_file" ]; then
+    echo "[sync-nvim-plugins] File $target_file not in source, remove?"
+    rm -iv $target_file
+    found=$((found + 1))
+  fi
+done
+
+if [ $found -gt 0 ]; then
+  echo "[sync-nvim-plugins] Syncing complete."
+fi
+
