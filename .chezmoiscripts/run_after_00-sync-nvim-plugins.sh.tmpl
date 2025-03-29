@@ -22,8 +22,8 @@ find "$TARGET_DIR" -maxdepth 1 -type f | while read -r target_file; do
   
   # If the file doesn't exist in the source directory, remove it from the target
   if [ ! -f "$source_file" ]; then
-    echo "[sync-nvim-plugins] File $target_file not in source, remove?"
-    rm -iv $target_file
+    echo "[sync-nvim-plugins] File $target_file not in source, removing..."
+    rm -fv $target_file
     found=$((found + 1))
   fi
 done
