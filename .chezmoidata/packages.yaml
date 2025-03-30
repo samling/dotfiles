@@ -141,6 +141,9 @@ packages:
         name: duf
       darwin:
         name: duf
+    dunst:
+      arch:
+        name: dunst
     evolution:
       arch:
         name: evolution
