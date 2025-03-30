@@ -21,7 +21,7 @@ exec-once = nm-applet &
 #exec-once = swww-daemon # systemctl --user {start/enable} swww.service
 exec-once = swayosd-server &
 exec-once = systemctl --user start hyprpolkitagent
-exec-once = ~/.config/swww/swww_randomize_multi.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
+exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
 
 # Start hyprswitch
 exec-once = SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
