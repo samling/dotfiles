@@ -79,3 +79,6 @@ vim.opt.shiftwidth = 2
 
 -- Set highlight on search
 vim.opt.hlsearch = true
+
+-- Show a border around hovers
+--vim.o.winborder = 'single'
