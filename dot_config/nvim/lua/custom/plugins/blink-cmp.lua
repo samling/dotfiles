@@ -23,11 +23,14 @@ return {
 
       ['<Tab>'] = {
         function(cmp)
-          if cmp.snippet_active() then return cmp.accept()
-          else return cmp.select_and_accept() end
+          if cmp.snippet_active() then
+            return cmp.accept()
+          else
+            return cmp.select_and_accept()
+          end
         end,
         'snippet_forward',
-        'fallback'
+        'fallback',
       },
       ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
 
@@ -46,32 +49,59 @@ return {
       ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
     },
     appearance = {
-      nerd_font_variant = 'mono'
+      nerd_font_variant = 'mono',
     },
-
     cmdline = {
       enabled = true,
       keymap = {
         -- optionally, inherit the mappings from the top level `keymap`
         -- instead of using the neovim defaults
         -- preset = 'inherit',
-        preset = 'cmdline'
-      }
+        preset = 'cmdline',
+      },
     },
 
     -- (Default) Only show the documentation popup when manually triggered
     completion = {
       ghost_text = {
-        enabled = true
+        enabled = true,
       },
       documentation = {
         auto_show = true,
         window = {
-          border = "single",
-        }
+          border = 'rounded',
+        },
       },
       menu = {
-        border = "single",
+        border = 'rounded',
+        draw = {
+          padding = 0,
+          columns = { { 'kind_icon', gap = 1 }, { gap = 1, 'label' }, { 'kind', gap = 2 } },
+          components = {
+            kind_icon = {
+              text = function(ctx)
+                return ' ' .. ctx.kind_icon .. ' '
+              end,
+              highlight = function(ctx)
+                return 'BlinkCmpKindIcon' .. ctx.kind
+              end,
+            },
+            kind = {
+              text = function(ctx)
+                return ' ' .. ctx.kind .. ' '
+              end,
+            },
+          },
+        },
+      },
+      list = {
+        selection = {
+          preselect = true,
+          auto_insert = false,
+        },
+      },
+      trigger = {
+        show_on_trigger_character = true,
       },
     },
 
@@ -81,7 +111,7 @@ return {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
 
-    fuzzy = { implementation = "prefer_rust_with_warning" }
+    fuzzy = { implementation = 'prefer_rust_with_warning' },
   },
-  opts_extend = { "sources.default" }
+  opts_extend = { 'sources.default' },
 }
