@@ -10,14 +10,16 @@
 echo "Configuring npm using fnm for {{ $osID }}..."
 
 # Install fnm if not already installed
+FNM_BIN=""
 if ! command -v fnm &> /dev/null; then
     echo "Installing fnm"
     curl -fsSL https://fnm.vercel.app/install | bash
     
     # Source fnm in current shell
-    eval "$(${HOME}/.local/share/fnm/fnm env --use-on-cd)"
+    FNM_BIN=$(which fnm)
+    eval "$(${FNM_BIN} env --use-on-cd)"
 fi
 
 # Install latest LTS version of Node.js
 echo "Installing latest npm"
-${HOME}/.local/share/fnm/fnm install --lts 
+fnm install --lts 

@@ -21,6 +21,10 @@ echo "Installing base packages for {{ $osID }}..."
 {{- if eq $osID "arch" }}
 sudo pacman -S --needed --noconfirm {{ $packageList | trim }}
 {{- else if eq $osID "darwin" }}
+{{- range $tap := .packages.taps.darwin }}
+echo "Tapping {{ $tap }}"
+brew tap {{ $tap }}
+{{- end }}
 brew install {{ $packageList | trim }}
 {{- else if eq $osID "ubuntu" }}
 sudo apt update

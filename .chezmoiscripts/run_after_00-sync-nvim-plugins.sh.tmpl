@@ -15,7 +15,7 @@ found=0
 # Find all regular files in the target directory
 find "$TARGET_DIR" -maxdepth 1 -type f | while read -r target_file; do
   # Get the relative path of the file within the target directory
-  rel_path=$(realpath --relative-to="$TARGET_DIR" "$target_file")
+  rel_path=$(basename "$target_file")
   
   # Construct the corresponding path in the source directory
   source_file="$SOURCE_DIR/$rel_path"

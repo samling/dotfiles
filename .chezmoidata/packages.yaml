@@ -1,16 +1,16 @@
 packages:
-  #########
+  ############
   # PACKAGES #
-  #########
+  ############
+  taps:
+    darwin:
+      - carvel-dev/carvel
   base:
     aichat:
       arch:
         name: aichat
       darwin:
         name: aichat
-    arl:
-      darwin:
-        name: arl/arl
     asdf:
       darwin:
         name: asdf
@@ -154,7 +154,7 @@ packages:
         name: eza
       darwin:
         name: eza
-    falcosuessgott-vkv:
+    vkv:
       darwin:
         name: falcosuessgott/tap/vkv
     fd:
@@ -167,9 +167,6 @@ packages:
         name: feh
       ubuntu:
         name: feh
-    felixkratz:
-      darwin:
-        name: FelixKratz/formulae
     ffmpeg:
       darwin:
         name: ffmpeg
@@ -204,7 +201,7 @@ packages:
         aur:
           name: gitmux
       darwin:
-        name: gitmux
+        name: arl/arl/gitmux
     gnome-keyring:
       arch:
         name: gnome-keyring
@@ -238,8 +235,6 @@ packages:
       arch:
         aur:
           name: google-chrome
-      darwin:
-        name: google-chrome
       ubuntu:
         name: google-chrome-stable
     grc:
@@ -247,9 +242,6 @@ packages:
         name: grc
       darwin:
         name: grc
-    hashicorp:
-      darwin:
-        name: hashicorp/tap
     helm:
       arch:
         name: helm
@@ -266,8 +258,6 @@ packages:
       arch:
         aur:
           name: insync
-      darwin:
-        name: insync
       ubuntu:
         name: insync
     jc:
@@ -334,8 +324,6 @@ packages:
         name: libxml2-dev
     llvm:
       arch:
-        name: llvm
-      darwin:
         name: llvm
       ubuntu:
         name: llvm
@@ -453,7 +441,7 @@ packages:
         name: rg
     sketchybar:
       darwin:
-        name: sketchybar
+        name: FelixKratz/formulae/sketchybar
     smbclient:
       arch:
         name: smbclient
@@ -513,8 +501,6 @@ packages:
       arch:
         aur:
           name: vesktop
-      darwin:
-        name: vesktop
       ubuntu:
         name: vesktop
     viddy:
