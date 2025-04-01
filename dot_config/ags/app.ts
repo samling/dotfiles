@@ -62,12 +62,13 @@ App.start({
     },
     main: () => {
         const monitors = App.get_monitors()
-        const bar = monitors.map(Bar)
+        //const bar = monitors.map(Bar)
         const picker = monitors.map(Picker)
         
         // Set up memory management
         setupMemoryManagement();
         
-        return [...bar, ...picker]
+        //return [...bar, ...picker]
+        return [...picker]
     }
 })
