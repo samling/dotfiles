@@ -509,6 +509,9 @@ packages:
           name: viddy
       darwin:
         name: viddy
+    waybar:
+      arch:
+        name: waybar
     wezterm:
       arch:
         name: wezterm
