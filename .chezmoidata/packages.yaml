@@ -203,12 +203,18 @@ packages:
         name: git-delta
       darwin:
         name: delta
+    github-cli:
+      arch:
+        name: github-cli
     gitmux:
       arch:
         aur:
           name: gitmux
       darwin:
         name: arl/arl/gitmux
+    glib2:
+      arch:
+        name: glib2
     gnome-keyring:
       arch:
         name: gnome-keyring
@@ -299,6 +305,9 @@ packages:
         name: lazygit
       darwin:
         name: jesseduffield/lazygit/lazygit
+    libconfig:
+      arch:
+        name: libconfig
     libbz2-dev:
       ubuntu:
         name: libbz2-dev
@@ -464,6 +473,9 @@ packages:
         name: sqlite3
       ubuntu:
         name: sqlite3
+    systemd-libs:
+      arch:
+        name: systemd-libs
     tealdeer:
       darwin:
         name: tealdeer
