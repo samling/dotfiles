@@ -170,6 +170,9 @@ packages:
     ffmpeg:
       darwin:
         name: ffmpeg
+    ffmpegthumbnailer:
+      arch:
+        name: ffmpegthumbnailer
     flex:
       arch:
         name: flex
@@ -472,6 +475,9 @@ packages:
         name: terragrunt
       darwin:
         name: terragrunt
+    thunar:
+      arch:
+        name: thunar
     tmux:
       arch:
         name: tmux
@@ -484,6 +490,9 @@ packages:
         name: tcptraceroute
       ubuntu:
         name: traceroute
+    tumbler:
+      arch:
+        name: tumbler
     unzip:
       arch:
         name: unzip
