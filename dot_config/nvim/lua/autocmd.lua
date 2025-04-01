@@ -37,42 +37,44 @@ vim.api.nvim_create_autocmd({ "BufNew", "BufReadPost", "BufNewFile" }, {
         cache_enabled = 0,
       }
     elseif is_unix == 1 or is_wsl == 1 then
-      print "Using Linux clipboard."
-      -- if vim.fn.executable "wl-copy" == 1 then
-      --   vim.g.clipboard = {
-      --     copy = {
-      --       ["+"] = "wl-copy -n",
-      --       ["*"] = "wl-copy -n",
-      --     },
-      --     paste = {
-      --       ["+"] = "wl-paste -n",
-      --       ["*"] = "wl-paste -n",
-      --     },
-      --     cache_enabled = 0,
-      --   }
-      if vim.fn.executable "xsel" == 1 then
+      print "Using Linux clipboard with wl-clipboard."
+      if vim.fn.executable "wl-copy" == 1 then
         vim.g.clipboard = {
           copy = {
-            ["+"] = "xsel --clipboard --input",
-            ["*"] = "xsel --clipboard --input",
+            ["+"] = "wl-copy -n",
+            ["*"] = "wl-copy -n",
           },
           paste = {
-            ["+"] = "xsel --clipboard --output",
-            ["*"] = "xsel --clipboard --output",
-          },
-          cache_enabled = 0,
-        }      elseif vim.fn.executable "xclip" == 1 then
-        vim.g.clipboard = {
-          copy = {
-            ["+"] = "xclip -selection clipboard",
-            ["*"] = "xclip -selection clipboard",
-          },
-          paste = {
-            ["+"] = "xclip -selection clipboard -o",
-            ["*"] = "xclip -selection clipboard -o",
+            ["+"] = "wl-paste -n",
+            ["*"] = "wl-paste -n",
           },
           cache_enabled = 0,
         }
+      -- elseif vim.fn.executable "xsel" == 1 then
+      --   print "Using Linux clipboard with xsel."
+      --   vim.g.clipboard = {
+      --     copy = {
+      --       ["+"] = "xsel --clipboard --input",
+      --       ["*"] = "xsel --clipboard --input",
+      --     },
+      --     paste = {
+      --       ["+"] = "xsel --clipboard --output",
+      --       ["*"] = "xsel --clipboard --output",
+      --     },
+      --     cache_enabled = 0,
+      --   }
+      -- elseif vim.fn.executable "xclip" == 1 then
+      --   vim.g.clipboard = {
+      --     copy = {
+      --       ["+"] = "xclip -selection clipboard",
+      --       ["*"] = "xclip -selection clipboard",
+      --     },
+      --     paste = {
+      --       ["+"] = "xclip -selection clipboard -o",
+      --       ["*"] = "xclip -selection clipboard -o",
+      --     },
+      --     cache_enabled = 0,
+      --   }
       end
     end
 

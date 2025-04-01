@@ -535,6 +535,9 @@ packages:
         name: wget
       ubuntu:
         name: wget
+    wl-clipboard:
+      arch:
+        name: wl-clipboard
     xclip:
       arch:
         name: xclip

@@ -1,8 +1,10 @@
+#=== TMUX
 [".config/tmux/plugins/tpm"]
   type = "git-repo"
   url = "https://github.com/tmux-plugins/tpm"
   refreshPeriod = "168h"
 
+#=== ZSH
 [".zsh/pure"]
   type = "git-repo"
   url = "https://github.com/sindresorhus/pure"
@@ -26,4 +28,10 @@
 [".zsh/plugins/zsh-vi-mode"]
   type = "git-repo"
   url = "https://github.com/jeffreytse/zsh-vi-mode"
+  refreshPeriod = "168h"
+
+#=== THEMES
+["Themes/catppuccin/fuzzel"]
+  type = "git-repo"
+  url = "https://github.com/catppuccin/fuzzel"
   refreshPeriod = "168h"
