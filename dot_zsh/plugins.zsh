@@ -9,3 +9,6 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Enable git auto fetch
 source ~/.zsh/plugins/git-auto-fetch.plugin.zsh
+
+# Enable zsh vi mode
+#source ~/.zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh

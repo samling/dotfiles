@@ -1,5 +1,6 @@
 function reload-zsh-configuration() {
-  cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"
+  #cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"
+  exec zsh && echo ".zshrc reloaded"
 
   # If we're in hyprland, update the instance signature to prevent
   # issues with stale signatures from restored tmux sessions

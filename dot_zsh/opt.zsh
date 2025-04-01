@@ -55,6 +55,13 @@ setopt GLOB_DOTS                # Include dotfiles in globbing
 zle -N zle-line-init
 zle -N zle-keymap-select
 
+#========= C-x C-e to edit the current command in $EDITOR
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
+
 # ======== TERMINAL BEHAVIOR
 
 setopt IGNORE_EOF               # Prevent ZSH from quitting with ctrl-d
