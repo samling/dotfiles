@@ -27,7 +27,7 @@ export FZF_ALT_C_OPTS="--height 50% --preview 'ls {1..} | bat --color=always -pl
 export FZF_CTRL_R_OPTS="--height 100% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
 
 # Ctrl-T opts
-export FZF_CTRL_T_OPTS="--height 100% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,25' --bind '?:toggle-preview'"
+export FZF_CTRL_T_OPTS="--height 100% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,15' --bind '?:toggle-preview'"
 
 # Catppuccin theme
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
