@@ -223,7 +223,7 @@
           // Development Tools
           "code": "󰨞",
           "vscode": "󰨞",
-          "cursor": "󰨞",
+          "class<cursor>": "󰨞",
           "sublime-text": "",
           "atom": "",
           "android-studio": "󰀴",

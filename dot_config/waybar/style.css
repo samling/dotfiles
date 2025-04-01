@@ -75,6 +75,7 @@ tooltip {
     padding: 0px 8px;
     margin: 0px 2px;
     color: #cdd6f4;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 /* in hyprland focused=>active */
@@ -85,6 +86,11 @@ tooltip {
 
 /* in sway active=>focused */
 #workspaces button.focused {
+    color: #000;
+    background-color: #89b4fa;
+}
+
+#workspaces button:hover {
     color: #000;
     background-color: #89b4fa;
 }
