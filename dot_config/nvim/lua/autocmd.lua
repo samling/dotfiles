@@ -41,8 +41,8 @@ vim.api.nvim_create_autocmd({ "BufNew", "BufReadPost", "BufNewFile" }, {
       if vim.fn.executable "wl-copy" == 1 then
         vim.g.clipboard = {
           copy = {
-            ["+"] = "wl-copy -n",
-            ["*"] = "wl-copy -n",
+            ["+"] = "wl-copy",
+            ["*"] = "wl-copy",
           },
           paste = {
             ["+"] = "wl-paste -n",

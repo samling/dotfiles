@@ -73,6 +73,10 @@ packages:
         name: btop
       darwin:
         name: btop
+    catppuccin-gtk-theme-mocha:
+      arch:
+        aur:
+          name: catppuccin-gtk-theme-mocha
     cmake:
       arch:
         name: cmake
