@@ -41,10 +41,10 @@ alias reload-waybar="pkill waybar && hyprctl dispatch exec waybar"
 
 #=== Kubectl
 alias k="kubectl"
-alias kubectx="FZF_DEFAULT_OPTS='--reverse' kubectl ctx"
-alias kx="FZF_DEFAULT_OPTS='--reverse' kubectl ctx"
-alias kubens="FZF_DEFAULT_OPTS='--reverse' kubectl-ns"
-alias kn="FZF_DEFAULT_OPTS='--reverse' kubectl-ns"
+alias kubectx="FZF_DEFAULT_OPTS=\"${FZF_DEFAULT_OPTS} --reverse\" kubectl ctx"
+alias kx="FZF_DEFAULT_OPTS=\"${FZF_DEFAULT_OPTS} --reverse\" kubectl ctx"
+alias kubens="FZF_DEFAULT_OPTS=\"${FZF_DEFAULT_OPTS} --reverse\" kubectl-ns"
+alias kn="FZF_DEFAULT_OPTS=\"${FZF_DEFAULT_OPTS} --reverse\" kubectl-ns"
 
 #=== ls
 alias ls="lsd"

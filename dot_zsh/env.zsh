@@ -29,6 +29,13 @@ export FZF_CTRL_R_OPTS="--height 100% --preview 'echo {2..} | bat --color=always
 # Ctrl-T opts
 export FZF_CTRL_T_OPTS="--height 100% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,25' --bind '?:toggle-preview'"
 
+# Catppuccin theme
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--color=border:#313244,label:#cdd6f4"
+
 # Exact-match rather than fuzzy matching by default (use ' to negate)
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact"
 
