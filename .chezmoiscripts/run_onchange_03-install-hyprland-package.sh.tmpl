@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 {{- $osID := "" -}}
-{{- if (hasKey .chezmoi.osRelease "id") -}}
-{{-   $osID = .chezmoi.osRelease.id -}}
+{{- if (hasKey .chezmoi.osRelease "idLike") -}}
+{{-   $osID = .chezmoi.osRelease.idLike -}}
 {{- else if eq .chezmoi.os "darwin" -}}
 {{-   $osID = "darwin" -}}
 {{- end -}}

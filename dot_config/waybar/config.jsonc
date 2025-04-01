@@ -29,7 +29,7 @@
         // "custom/kubectx",
         "custom/tailscale",
         "battery",
-        "tray"
+        "tray",
     ],
 
     "custom/tailscale" : {
@@ -182,7 +182,7 @@
 
           // Original Entries
           "kitty": "󰄛",
-          "firefox": "󰈹",
+          "class<firefox>": "󰈹",
           "microsoft-edge": "󰇩",
           "discord": "",
           "vesktop": "",

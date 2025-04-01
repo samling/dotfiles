@@ -2,39 +2,99 @@
 # packages hash: {{ .packages | toJson | sha256sum }}
 
 {{- $osID := "" -}}
-{{- if (hasKey .chezmoi.osRelease "id") -}}
-{{-   $osID = .chezmoi.osRelease.id -}}
+{{- if (hasKey .chezmoi.osRelease "idLike") -}}
+{{-   $osID = .chezmoi.osRelease.idLike -}}
 {{- else if eq .chezmoi.os "darwin" -}}
 {{-   $osID = "darwin" -}}
 {{- end -}}
 
-{{- $basePackages := .packages.base -}}
 {{- $packageList := "" -}}
+{{- $aurPackageList := "" -}}
 
+{{- /* Process Base Packages */}}
 {{- range $basePackageName, $basePackageData := .packages.base -}}
-  {{- $packageKey := $osID -}} {{/* Start with the actual osID */}}
-  {{- /* If osID is endeavouros and no endeavouros specific entry exists, try arch */}}
-  {{- if and (eq $osID "endeavouros") (not (index $basePackageData "endeavouros")) (index $basePackageData "arch") -}}
-    {{- $packageKey = "arch" -}}
+  {{- /* Find package name for the current OS */}}
+  {{- if and ($basePackageData) (index $basePackageData $osID) (index $basePackageData $osID "name") -}}
+    {{- $packageList = printf "%s %s" $packageList (index $basePackageData $osID "name") -}}
   {{- end -}}
-
-  {{- /* Check if we found a valid package definition for the determined key */}}
-  {{- if and ($basePackageData) (index $basePackageData $packageKey) (index $basePackageData $packageKey "name") -}}
-    {{- $packageList = printf "%s %s" $packageList (index $basePackageData $packageKey "name") -}}
+  {{- /* Add Arch AUR packages if applicable */}}
+  {{- if and (eq $osID "arch") ($basePackageData) (index $basePackageData $osID) (index $basePackageData $osID "aur") (index $basePackageData $osID "aur" "name") -}}
+    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $basePackageData $osID "aur" "name") -}}
   {{- end -}}
 {{- end }}
 
-echo "Installing base packages for {{ $osID }}..."
+{{- /* Process Laptop Packages if chassis type is laptop */}}
+{{- if eq .chezmoi.config.data.chassis.type "laptop" }}
+  {{- range $laptopPackageName, $laptopPackageData := .packages.laptop -}}
+    {{- /* Find package name for the current OS */}}
+    {{- if and ($laptopPackageData) (index $laptopPackageData $osID) (index $laptopPackageData $osID "name") -}}
+      {{- $packageList = printf "%s %s" $packageList (index $laptopPackageData $osID "name") -}}
+    {{- end -}}
+    {{- /* Add Arch AUR packages if applicable */}}
+    {{- if and (eq $osID "arch") ($laptopPackageData) (index $laptopPackageData $osID) (index $laptopPackageData $osID "aur") (index $laptopPackageData $osID "aur" "name") -}}
+      {{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData $osID "aur" "name") -}}
+    {{- end -}}
+  {{- end }}
+{{- end }}
 
-{{- if or (eq $osID "arch") (eq $osID "endeavouros") }}
-sudo pacman -S --needed --noconfirm {{ $packageList | trim }}
+echo "Processing packages for {{ $osID }}..."
+
+{{- $packageList = $packageList | trim -}}
+{{- $aurPackageList = $aurPackageList | trim -}}
+
+{{- if eq $osID "arch" }}
+  {{- if $packageList }}
+    echo "Installing Arch packages: {{ $packageList }}"
+    sudo pacman -S --needed --noconfirm {{ $packageList }}
+  {{- else }}
+    echo "No Arch packages to install."
+  {{- end }}
+
+  {{- if $aurPackageList }}
+    echo "Installing AUR packages: {{ $aurPackageList }}"
+    # Check if yay is installed
+    if ! command -v yay &> /dev/null; then
+      echo "yay not found. Attempting to install yay-bin..."
+      TEMP_DIR=$(mktemp -d)
+      git clone https://aur.archlinux.org/yay-bin.git "$TEMP_DIR"
+      (cd "$TEMP_DIR" && makepkg -si --noconfirm)
+      rm -rf "$TEMP_DIR"
+      if ! command -v yay &> /dev/null; then
+        echo "Failed to install yay. Please install an AUR helper manually."
+        exit 1
+      fi
+      echo "yay installed successfully."
+    fi
+    yay -S --needed --noconfirm {{ $aurPackageList }}
+  {{- else }}
+    echo "No AUR packages to install."
+  {{- end }}
+
 {{- else if eq $osID "darwin" }}
-{{- range $tap := .packages.taps.darwin }}
-echo "Tapping {{ $tap }}"
-brew tap {{ $tap }}
-{{- end }}
-brew install {{ $packageList | trim }}
+  {{- if .packages.taps.darwin }}
+    {{- range $tap := .packages.taps.darwin }}
+      echo "Tapping {{ $tap }}"
+      brew tap {{ $tap }}
+    {{- end }}
+  {{- end }}
+  {{- if $packageList }}
+    echo "Installing Darwin (Homebrew) packages: {{ $packageList }}"
+    brew install {{ $packageList }}
+  {{- else }}
+    echo "No Darwin (Homebrew) packages to install."
+  {{- end }}
+
 {{- else if eq $osID "ubuntu" }}
-sudo apt update
-sudo apt install -y {{ $packageList | trim }}
-{{- end }} 
+  {{- if $packageList }}
+    echo "Installing Ubuntu (APT) packages: {{ $packageList }}"
+    sudo apt update
+    sudo apt install -y {{ $packageList }}
+  {{- else }}
+    echo "No Ubuntu (APT) packages to install."
+  {{- end }}
+
+{{- else }}
+  echo "Unsupported OS ID: {{ $osID }}. Cannot install packages."
+{{- end }}
+
+echo "Package processing finished." 

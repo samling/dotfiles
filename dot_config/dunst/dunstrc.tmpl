@@ -1,0 +1,47 @@
+[global]
+{{- if eq .chezmoi.fqdnHostname "endeavor" }}
+monitor = 0
+{{- end }}
+
+frame_color = "#89b4fa"
+separator_color= frame
+highlight = "#89b4fa"
+
+font = Iosevka 12
+gap_size = 8
+width = 400
+offset = (20, 20)
+
+icon_theme = "Adwaita, Papirus"
+enable_recursive_icon_lookup = true
+text_icon_padding = 8
+
+enable_posix_regex = true
+
+markup = full
+format = "<b>(%a) %s</b>\n%b"
+
+[urgency_low]
+background = "#1e1e2e"
+foreground = "#ffffff"
+
+[urgency_normal]
+background = "#1e1e2e"
+foreground = "#ffffff"
+
+[urgency_critical]
+background = "#1e1e2e"
+foreground = "#ffffff"
+frame_color = "#fab387"
+
+#############
+### RULES ###
+#############
+
+[slack]
+desktop_entry=(S|s)lack
+new_icon = slack
+
+[vesktop]
+desktop_entry=(V|v)esktop
+new_icon = discord

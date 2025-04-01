@@ -55,11 +55,12 @@ tooltip {
 #network,
 #custom-tailscale,
 #custom-kubectx,
+#custom-notification,
 #pulseaudio {
     margin: 0px 6px;
     padding: 0px 4px;
     background: transparent;
-    color: #cdd6f4; /* Text (Lavender) */
+    color: #FFF; /* Base */
 }
 #workspaces {
     /*background-color: #313244;*/ /* Overlay 0 */
@@ -138,6 +139,10 @@ tooltip {
     color: #FFF; /* Base */
 }
 
+#custom-notification {
+  font-family: "Iosevka";
+}
+
 /* Add this new rule for universal bottom padding */
 #submap,
 #clock,
@@ -148,6 +153,7 @@ tooltip {
 #network,
 #custom-tailscale,
 #custom-kubectx,
+#custom-notification,
 #pulseaudio,
 #workspaces {
     padding-bottom: 2px;

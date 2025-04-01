@@ -420,6 +420,10 @@ packages:
     pacman-contrib:
       arch:
         name: pacman-contrib
+    papirus-icon-theme:
+      arch:
+        aur:
+          name: papirus-icon-theme
     pavucontrol:
       arch:
         name: pavucontrol
