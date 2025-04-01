@@ -18,3 +18,11 @@ bindkey '^[^?' backward-kill-word
 # Unbind ctrl-p/ctrl-n
 bindkey -r "^p"
 bindkey -r "^n"
+
+#========= C-x C-e to edit the current command in $EDITOR
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
+
