@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# packages hash: {{ .packages | toJson | sha256sum }}
 
 {{- $osID := "" -}}
 {{- if (hasKey .chezmoi.osRelease "id") -}}
@@ -11,14 +12,21 @@
 {{- $packageList := "" -}}
 
 {{- range $basePackageName, $basePackageData := .packages.base -}}
-{{- if and ($basePackageData) (index $basePackageData $osID) (index $basePackageData $osID "name") -}}
-{{- $packageList = printf "%s %s" $packageList (index $basePackageData $osID "name") -}}
-{{- end -}}
+  {{- $packageKey := $osID -}} {{/* Start with the actual osID */}}
+  {{- /* If osID is endeavouros and no endeavouros specific entry exists, try arch */}}
+  {{- if and (eq $osID "endeavouros") (not (index $basePackageData "endeavouros")) (index $basePackageData "arch") -}}
+    {{- $packageKey = "arch" -}}
+  {{- end -}}
+
+  {{- /* Check if we found a valid package definition for the determined key */}}
+  {{- if and ($basePackageData) (index $basePackageData $packageKey) (index $basePackageData $packageKey "name") -}}
+    {{- $packageList = printf "%s %s" $packageList (index $basePackageData $packageKey "name") -}}
+  {{- end -}}
 {{- end }}
 
 echo "Installing base packages for {{ $osID }}..."
 
-{{- if eq $osID "arch" }}
+{{- if or (eq $osID "arch") (eq $osID "endeavouros") }}
 sudo pacman -S --needed --noconfirm {{ $packageList | trim }}
 {{- else if eq $osID "darwin" }}
 {{- range $tap := .packages.taps.darwin }}
