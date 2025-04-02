@@ -510,6 +510,9 @@ packages:
         name: tcptraceroute
       ubuntu:
         name: traceroute
+    ttf-iosevka-nerd:
+      arch:
+        name: ttf-iosevka-nerd
     tumbler:
       arch:
         name: tumbler

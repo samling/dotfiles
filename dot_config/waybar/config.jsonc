@@ -59,111 +59,64 @@
 
     "hyprland/window": {
       "format": "{class}",
+      "icon": true,
       "rewrite": {
           // Original Entries
-          "kitty": "󰄛 Kitty Terminal",
-          "firefox": "󰈹 Firefox",
-          "microsoft-edge": "󰇩 Edge",
-          "discord": " Discord",
-          "vesktop": " Vesktop",
-          "org.kde.dolphin": " Dolphin",
-          "plex": "󰚺 Plex",
-          "steam": " Steam",
-          "spotify": "󰓇 Spotify",
-          "ristretto": "󰋩 Ristretto",
-          "obsidian": "󱓧 Obsidian",
 
           // Browsers
-          "google-chrome": " Google Chrome",
-          "brave-browser": "󰖟 Brave Browser",
-          "chromium": " Chromium",
-          "opera": " Opera",
-          "vivaldi": "󰖟 Vivaldi",
-          "waterfox": "󰖟 Waterfox",
-          "thorium": "󰖟 Thorium",
-          "tor-browser": " Tor Browser",
-          "floorp": "󰈹 Floorp",
-          "zen": " Zen Browser",
+          "firefox": "Firefox",
+          "microsoft-edge": "Edge",
+          "google-chrome": "Google Chrome",
+          "chromium": "Chromium",
+          "tor-browser": "Tor Browser",
 
           // Terminals
-          "gnome-terminal": " GNOME Terminal",
-          "konsole": " Konsole",
-          "alacritty": " Alacritty",
-          "org.wezfurlong.wezterm": " Wezterm",
-          "foot": "󰽒 Foot Terminal",
-          "tilix": " Tilix",
-          "xterm": " XTerm",
-          "urxvt": " URxvt",
-          "com.mitchellh.ghostty": "󰊠 Ghostty",
-          "st": " st Terminal",
+          "kitty": "Kitty Terminal",
+          "gnome-terminal": "GNOME Terminal",
+          "konsole": "Konsole",
+          "alacritty": "Alacritty",
+          "org.wezfurlong.wezterm": "Wezterm",
+          "foot": "Foot Terminal",
+          "xterm": "XTerm",
+          "com.mitchellh.ghostty": "Ghostty",
 
           // Development Tools
-          "code": "󰨞 Visual Studio Code",
-          "vscode": "󰨞 VS Code",
-          "cursor": "󰨞 Cursor",
-          "sublime-text": " Sublime Text",
-          "atom": " Atom",
-          "android-studio": "󰀴 Android Studio",
-          "intellij-idea": " IntelliJ IDEA",
-          "pycharm": "󱃖 PyCharm",
-          "webstorm": "󱃖 WebStorm",
-          "phpstorm": "󱃖 PhpStorm",
-          "eclipse": " Eclipse",
-          "netbeans": " NetBeans",
-          "docker": " Docker",
-          "vim": " Vim",
-          "neovim": " Neovim",
-          "neovide": " Neovide",
-          "emacs": " Emacs",
-          "postman": "󰶎 Postman",
+          "code": "Visual Studio Code",
+          "vscode": "VS Code",
+          "cursor": "Cursor",
+          "docker": "Docker",
+          "vim": "Vim",
+          "neovim": "Neovim",
+          "postman": "Postman",
 
           // Communication Tools
-          "slack": "󰒱 Slack",
-          "telegram-desktop": " Telegram",
-          "org.telegram.desktop": " Telegram",
-          "whatsapp": "󰖣 WhatsApp",
-          "teams": "󰊻 Microsoft Teams",
-          "skype": "󰒯 Skype",
-          "signal": "󰭹 Signal",
-          "thunderbird": " Thunderbird",
+          "discord": "Discord",
+          "vesktop": "Vesktop",
+          "slack": "Slack",
+          "whatsapp": "WhatsApp",
+          "teams": "Microsoft Teams",
+          "signal": "Signal",
+          "thunderbird": "Thunderbird",
 
           // File Managers
-          "nautilus": "󰝰 Files (Nautilus)",
-          "thunar": "󰝰 Thunar",
-          "pcmanfm": "󰝰 PCManFM",
-          "nemo": "󰝰 Nemo",
-          "ranger": "󰝰 Ranger",
-          "doublecmd": "󰝰 Double Commander",
-          "krusader": "󰝰 Krusader",
+          "org.kde.dolphin": "Dolphin",
+          "nautilus": "Files (Nautilus)",
+          "thunar": "Thunar",
+          "krusader": "Krusader",
 
           // Media Players
-          "vlc": "󰕼 VLC Media Player",
-          "mpv": " MPV",
-          "rhythmbox": "󰓃 Rhythmbox",
+          "plex": "Plex",
+          "spotify": "Spotify",
+          "vlc": "VLC Media Player",
+          "mpv": "MPV",
+          "feh": "Feh",
+          "ristretto": "Ristretto",
 
-          // Graphics Tools
-          "gimp": " GIMP",
-          "inkscape": " Inkscape",
-          "krita": " Krita",
-          "blender": "󰂫 Blender",
-          "feh": " Feh",
+          // Gaming
+          "steam": "Steam",
 
-          // Video Editing
-          "kdenlive": " Kdenlive",
-
-          // Games and Gaming Platforms
-          "lutris": "󰺵 Lutris",
-          "heroic": "󰺵 Heroic Games Launcher",
-          "minecraft": "󰍳 Minecraft",
-          "csgo": "󰺵 CS:GO",
-          "dota2": "󰺵 Dota 2",
-
-          // Office and Productivity
-          "evernote": " Evernote",
-          "sioyek": " Sioyek",
-
-          // Cloud Services and Sync
-          "dropbox": "󰇣 Dropbox"
+          // Witing Tools
+          "obsidian": "Obsidian"
         }
     },
 
@@ -180,111 +133,61 @@
           // Specific titles
           "title<.*youtube.*>": "",
 
-          // Original Entries
-          "kitty": "󰄛",
+          // Browsers
           "class<firefox>": "󰈹",
           "microsoft-edge": "󰇩",
-          "discord": "",
-          "vesktop": "",
-          "org.kde.dolphin": "",
-          "plex": "󰚺",
-          "steam": "",
-          "spotify": "󰓇",
-          "ristretto": "󰋩",
-          "class<obsidian>": "󱓧",
-
-          // Browsers
           "google-chrome": "",
           "class<google-chrome>": "",
-          "brave-browser": "󰖟",
           "chromium": "",
-          "opera": "",
-          "vivaldi": "󰖟",
-          "waterfox": "󰖟",
-          "thorium": "󰖟",
           "tor-browser": "",
-          "floorp": "󰈹",
-          "zen": "",
 
           // Terminals
+          "kitty": "󰄛",
           "gnome-terminal": "",
           "konsole": "",
           "alacritty": "",
           "class<org.wezfurlong.wezterm>": "",
           "foot": "󰽒",
-          "tilix": "",
           "xterm": "",
-          "urxvt": "",
           "class<com.mitchellh.ghostty>": "󰊠",
-          "st": "",
 
           // Development Tools
           "code": "󰨞",
           "vscode": "󰨞",
           "class<cursor>": "󰨞",
-          "sublime-text": "",
-          "atom": "",
-          "android-studio": "󰀴",
-          "intellij-idea": "",
-          "pycharm": "󱃖",
-          "webstorm": "󱃖",
-          "phpstorm": "󱃖",
-          "eclipse": "",
-          "netbeans": "",
           "docker": "",
           "vim": "",
           "neovim": "",
-          "neovide": "",
-          "emacs": "",
           "postman": "󰶎",
 
           // Communication Tools
+          "discord": "",
+          "vesktop": "",
           "slack": "󰒱",
-          "telegram-desktop": "",
-          "class<org.telegram.desktop>": "",
           "whatsapp": "󰖣",
           "teams": "󰊻",
-          "skype": "󰒯",
           "signal": "󰭹",
           "thunderbird": "",
 
           // File Managers
+          "org.kde.dolphin": "",
           "nautilus": "󰝰",
           "thunar": "󰝰",
-          "pcmanfm": "󰝰",
-          "nemo": "󰝰",
-          "ranger": "󰝰",
-          "doublecmd": "󰝰",
           "krusader": "󰝰",
 
           // Media Players
+          "plex": "󰚺",
+          "spotify": "󰓇",
           "vlc": "󰕼",
           "mpv": "",
-          "rhythmbox": "󰓃",
-
-          // Graphics Tools
-          "gimp": "",
-          "inkscape": "",
-          "krita": "",
-          "blender": "󰂫",
           "feh": "",
+          "ristretto": "󰋩",
 
-          // Video Editing
-          "kdenlive": "",
+          // Gaming
+          "steam": "",
 
-          // Games and Gaming Platforms
-          "lutris": "󰺵",
-          "heroic": "󰺵",
-          "minecraft": "󰍳",
-          "csgo": "󰺵",
-          "dota2": "󰺵",
-
-          // Office and Productivity
-          "evernote": "",
-          "sioyek": "",
-
-          // Cloud Services and Sync
-          "dropbox": "󰇣",
+          // Writing Tools
+          "class<obsidian>": "󱓧",
 
           // Other
           "Picture in picture": ""

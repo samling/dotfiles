@@ -1,0 +1,37 @@
+{{- if eq .chezmoi.fqdnHostname "endeavor" }}
+output=DP-3
+{{- end }}
+
+font=Iosevka 11
+format=<b>%a ⏵</b> %s\n%b
+sort=-time
+default-timeout=5000
+
+layer=overlay
+anchor=top-right
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-size=2
+border-color=#b4befe
+border-radius=10
+
+width=300
+height=110
+margin=5
+padding=0,5,10
+
+icons=1
+icon-path=/usr/share/icons/Papirus/
+max-icon-size=48
+
+progress-color=over #313244
+
+[urgency=low]
+border-color=#cdd6f4
+
+[urgency=normal]
+border-color=#b4befe
+
+[urgency=high]
+border-color=#fab387
+default-timeout=0

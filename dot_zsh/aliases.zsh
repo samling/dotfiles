@@ -37,6 +37,7 @@ alias yless="jless --yaml"
 
 #=== Hyprland
 alias hyprctl="hyprctl --instance 0" # avoids tmux-inside-hyprland issues
+alias hc="hyprctl --instance 0"
 alias reload-waybar="pkill waybar && hyprctl dispatch exec waybar"
 
 #=== Kubectl
