@@ -4,7 +4,7 @@
 {{- $primaryMonitor = "eDP-1" -}}
 {{- else if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .chezmoi.config.data.host "endeavor") }}
 {{- $primaryMonitor = .chezmoi.config.data.host.endeavor.monitor0.name -}}
-{{- end -}}
+{{- end }}
 background {
   monitor={{ $primaryMonitor }}
   blur_passes=1
