@@ -14,6 +14,28 @@ return { -- You can easily change to a different colorscheme.
     require('catppuccin').setup {
       flavour = 'mocha',
       transparent_background = true,
+      integrations = {
+        blink_cmp = true,
+        cmp = true,
+        flash = true,
+        fzf = true,
+        mini = {
+          enabled = true,
+          indentscope_color = "lavender",
+        },
+        noice = true,
+        notify = true,
+        snacks = {
+          enabled = true,
+          indent_scope_color = "lavender",
+        },
+        telescope = {
+          enabled = true,
+        },
+        lsp_trouble = true,
+        treesitter = true,
+        which_key = true
+      }
     }
     -- Load the colorscheme here
     vim.cmd.colorscheme 'catppuccin'
