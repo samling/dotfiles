@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 # packages hash: {{ .packages | toJson | sha256sum }}
 
-{{- $osID := "" -}}
-{{- if (hasKey .chezmoi.osRelease "idLike") -}}
-{{-   $osID = .chezmoi.osRelease.idLike -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{-   $osID = "darwin" -}}
-{{- end -}}
+{{- $osID := .chezmoi.config.data.calculated.os_type -}}
 
 {{- $packageList := "" -}}
 {{- $aurPackageList := "" -}}

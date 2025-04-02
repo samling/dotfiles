@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
-{{- $osID := "" -}}
-{{- if (hasKey .chezmoi.osRelease "idLike") -}}
-{{-   $osID = .chezmoi.osRelease.idLike -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{-   $osID = "darwin" -}}
-{{- end }}
+{{- $osID := .chezmoi.config.data.calculated.os_type }}
 
 echo "Configuring npm using fnm for {{ $osID }}..."
 
