@@ -1,4 +1,8 @@
 [main]
 include=~/Themes/catppuccin/fuzzel/themes/catppuccin-macchiato/lavender.ini
+{{- if eq .chezmoi.fqdnHostname "endeavor" }}
 font=Iosevka:size=16
+{{- else }}
+font=Iosevka:size=10
+{{- end }}
 use-bold=yes
