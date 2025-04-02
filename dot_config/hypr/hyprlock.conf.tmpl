@@ -1,8 +1,9 @@
+# TODO: Make a laptop host profile
 {{- $primaryMonitor := "" -}}
 {{- if eq .chassis.type "laptop" -}}
 {{- $primaryMonitor = "eDP-1" -}}
-{{- else -}}
-{{- $primaryMonitor = "DP-3" -}}
+{{- else if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .chezmoi.config.data.host "endeavor") }}
+{{- $primaryMonitor = .chezmoi.config.data.host.endeavor.monitor0.name -}}
 {{- end -}}
 background {
   monitor={{ $primaryMonitor }}

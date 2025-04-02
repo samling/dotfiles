@@ -17,7 +17,7 @@ exec-once = dbus-update-activation-environment --systemd HYPRLAND_INSTANCE_SIGNA
 # Start daemons
 exec-once = nm-applet --indicator
 exec-once = swayosd-server
-exec-once = mako # alternatively: dunst, swaync
+exec-once = dunst # alternatively: mako, swaync
 exec-once = systemctl --user start hyprpolkitagent
 exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
 #exec-once = swww-daemon # systemctl --user {start/enable} swww.service

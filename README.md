@@ -28,8 +28,8 @@ chezmoi managed             # View managed files
 1. Add `GITHUB_TOKEN`
 1. Enable direnv with `eval "$(direnv hook bash)"
 1. `direnv allow`
-1. `chezmoi apply --refresh-externals`
-1. `source ./install.sh | tee log` # `tee` also avoids the shell exiting if there is an error
+1. `chezmoi init`
+1. `chezmoi apply {--refresh-externals}`
 
 ### Notes
 - See [this page](https://www.cyberciti.biz/faq/linux-unix-macos-fix-error-cant-open-display-null-with-ssh-xclip-command-in-headless/) to configure X11 forwarding over ssh
@@ -40,19 +40,22 @@ This directory contains scripts that are executed by chezmoi during apply operat
 
 ## Package Installation
 
-Packages are installed via `run_onchange_install-packages.sh.tmpl`. This script:
+Packages are installed via scripts in `.chezmoiscripts`. These scripts:
 
-1. Determines the operating system
-2. Builds lists of packages for each category from `.chezmoidata/packages.yaml`
-3. Installs packages using the appropriate package manager (pacman for Arch, apt for Ubuntu, etc.)
+1. Determine the operating system (or which OS it is most like, e.g. EndeavourOS will return `arch`)
+1. Build a list of packages for each category from `.chezmoidata/packages.yaml`
+1. Installs packages using the appropriate package manager (pacman for Arch, apt for Ubuntu, etc.)
+1. Configure tools (nvim, zsh, tmux, etc.)
+1. Download plugins for above tools
+1. Put `.config` files in place
+1. And more!
 
 ### Package Categories
 
-- **base**: Essential system packages (build tools, core utilities)
-- **tools**: Common development and productivity tools
+- **base**: Essential system packages, user tools, fonts, libraries, etc.
+- **laptop**: System packages that only make sense for laptops
 - **hyprland**: Packages for the Hyprland window manager (installed only if desktop.environment = "hyprland")
 - **sway**: Packages for the Sway window manager (installed only if desktop.environment = "sway")
-- **aur**: Arch User Repository packages (Arch Linux only, installed with yay)
 
 ### Adding New Packages
 
@@ -60,21 +63,19 @@ To add a new package, update `.chezmoidata/packages.yaml` following the template
 
 Example:
 ```yaml
-tools:
-  new-tool:
-    arch_linux:
-      name: new-tool
-    ubuntu:
-      name: new-tool
-    macos:
-      name: new-tool
+packages:
+  taps:
+    darwin:
+      - tap/name            # for homebrew taps
+  base:
+    new-tool:
+      arch:               # for Pacman packages
+        name: new-tool
+      arch:
+        aur:              # for AUR packages
+          name: new-tool
+      ubuntu:
+        name: new-tool
+      darwin:
+        name: new-tool
 ```
-
-### Configuration
-
-To enable desktop environment-specific packages, add to your `chezmoi.yaml`:
-
-```yaml
-desktop:
-  environment: hyprland  # or "sway"
-``` 

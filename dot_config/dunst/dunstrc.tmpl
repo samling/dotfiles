@@ -1,6 +1,6 @@
 [global]
 {{- if eq .chezmoi.fqdnHostname "endeavor" }}
-monitor = 0
+monitor = 1
 {{- end }}
 
 frame_color = "#89b4fa"
@@ -19,7 +19,7 @@ text_icon_padding = 8
 enable_posix_regex = true
 
 markup = full
-format = "<b>(%a) %s</b>\n%b"
+format = <b>%a ⏵</b> %s\n%b
 
 [urgency_low]
 background = "#1e1e2e"

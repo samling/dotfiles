@@ -2,16 +2,16 @@
 # WORKSPACES #
 ##############
 
-{{ if eq .chassis.type "desktop" }}
+{{- if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .chezmoi.config.data.host "endeavor") }}
 # Bind workspaces to specific monitors
-workspace = 1,monitor:DP-3
-workspace = 2,monitor:DP-3
-workspace = 3,monitor:DP-3
-workspace = 4,monitor:DP-3
-workspace = 5,monitor:DP-3
-workspace = 6,monitor:DP-3
-workspace = 7,monitor:DP-2
-workspace = 8,monitor:DP-2
-workspace = 9,monitor:DP-1
-workspace = 0,monitor:HDMI-A-1
-{{ end }}
+workspace = 1,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
+workspace = 2,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
+workspace = 3,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
+workspace = 4,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
+workspace = 5,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
+workspace = 6,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
+workspace = 7,monitor:{{ .chezmoi.config.data.host.endeavor.monitor1.desc }}
+workspace = 8,monitor:{{ .chezmoi.config.data.host.endeavor.monitor1.desc }}
+workspace = 9,monitor:{{ .chezmoi.config.data.host.endeavor.monitor2.desc }}
+workspace = 0,monitor:{{ .chezmoi.config.data.host.endeavor.monitor3.desc }}
+{{- end }}

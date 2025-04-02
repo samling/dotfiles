@@ -374,6 +374,9 @@ packages:
         name: meson
       ubuntu:
         name: meson
+    mako:
+      arch:
+        name: mako
     neovim:
       arch:
         name: neovim
