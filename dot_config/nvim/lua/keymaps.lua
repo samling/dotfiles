@@ -42,6 +42,8 @@ end, { noremap = true, expr = true })
 -- Go to beginning and end of lines with gh and gl
 vim.keymap.set('n', 'gh', '^')
 vim.keymap.set('n', 'gl', '$')
+vim.keymap.set('n', 'H', '^')
+vim.keymap.set('n', 'L', '$')
 
 -- Buffers
 vim.keymap.set('n', '<leader>bb', function()

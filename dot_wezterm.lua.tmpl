@@ -87,8 +87,18 @@ config.keys = {
     action = wezterm.action.CopyTo('Clipboard'),
   },
   {
+    key = "C",
+    mods = "CMD",
+    action = wezterm.action.CopyTo('Clipboard'),
+  },
+  {
     key = "V",
     mods = "CMD|SHIFT",
+    action = wezterm.action.PasteFrom('Clipboard'),
+  },
+  {
+    key = "V",
+    mods = "CMD",
     action = wezterm.action.PasteFrom('Clipboard'),
   },
   {{ end }}
