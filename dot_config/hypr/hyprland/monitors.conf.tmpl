@@ -4,10 +4,10 @@
 
 {{- if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .chezmoi.config.data.host "endeavor") }}
 # See https://wiki.hyprland.org/Configuring/Monitors/
-monitor={{ .chezmoi.config.data.host.endeavor.monitor0.desc }},3440x1440@143,0x0,1 # lg ultragear
-monitor={{ .chezmoi.config.data.host.endeavor.monitor1.desc }},2560x1440@59.95,3440x-640,1,transform,3 # dell
-monitor={{ .chezmoi.config.data.host.endeavor.monitor2.desc }},3840x2160@60,4880x0,2 # wacom
-monitor={{ .chezmoi.config.data.host.endeavor.monitor3.desc }},2560x1440@120,480x-1440,1 # lg tv
+monitor={{ .chezmoi.config.data.host.endeavor.monitor0.desc }},3440x1440@143,0x0,1
+monitor={{ .chezmoi.config.data.host.endeavor.monitor1.desc }},2560x1440@59.95,3440x-640,1,transform,3
+monitor={{ .chezmoi.config.data.host.endeavor.monitor2.desc }},3840x2160@60,4880x0,2
+monitor={{ .chezmoi.config.data.host.endeavor.monitor3.desc }},2560x1440@120,480x-1440,1
 {{- else }}
 monitor=,preferred,auto,1
 {{- end }}
