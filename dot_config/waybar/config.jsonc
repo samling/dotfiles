@@ -240,7 +240,7 @@
     "battery": {
         "format": "bat {capacity}% ({time} - {power}W)",
         "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ({time}) ",
+        "format-charging": "{capacity}% ({time}) 󱐋",
         "format-plugged": "{capacity}% ",
         "format-time": "{H}h{M}m",
         //"format-alt": "{time} {icon}",

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+INIT_SYSTEM=$(ps --no-headers -o comm 1)
+
+if [ $INIT_SYSTEM == "systemd" ]; then
+  #=== System
+  sudo systemctl enable --now keyd
+  sudo systemctl enable --now swayosd-libinput-backend
+
+  #=== User
+fi

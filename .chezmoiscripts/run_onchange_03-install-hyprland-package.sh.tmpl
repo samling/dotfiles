@@ -2,8 +2,8 @@
 
 {{- $osID := .chezmoi.config.data.calculated.os_type }}
 
-{{- $hyprlandPackages := .packages.hyprland -}}
 {{- $packageList := "" -}}
+{{- $aurPackageList := "" -}}
 
 {{- range $hyprPackageName, $hyprPackageData := .packages.hyprland -}}
 {{- if and ($hyprPackageData) (index $hyprPackageData $osID) (index $hyprPackageData $osID "name") -}}
@@ -11,9 +11,20 @@
 {{- end -}}
 {{- end }}
 
+{{- range $swayPackageName, $swayPackageData := .packages.sway -}}
+{{- if and ($swayPackageData) (index $swayPackageData $osID) (index $swayPackageData $osID "name") -}}
+{{- $packageList = printf "%s %s" $packageList (index $swayPackageData $osID "name") -}}
+{{- end -}}
+  {{- /* Add Arch AUR packages if applicable */}}
+  {{- if and (eq $osID "arch") ($swayPackageData) (index $swayPackageData $osID) (index $swayPackageData $osID "aur") (index $swayPackageData $osID "aur" "name") -}}
+    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $swayPackageData $osID "aur" "name") -}}
+  {{- end -}}
+{{- end }}
+
 {{- if eq $osID "arch" }}
-echo "Installing Hyprland packages for {{ $osID }}..."
+echo "Installing Hyprland and Sway packages for {{ $osID }}..."
 sudo pacman -S --needed --noconfirm {{ $packageList | trim }}
+yay -S --needed --noconfirm {{ $aurPackageList | trim }}
 {{- else }}
 echo "Hyprland is not supported on {{ $osID }}. Skipping..."
 {{- end }} 

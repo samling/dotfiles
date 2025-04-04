@@ -17,4 +17,8 @@ fi
 
 # Install latest LTS version of Node.js
 echo "Installing latest npm"
-fnm install --lts 
+{{- if eq $osID "darwin" }}
+/opt/homebrew/bin/fnm install --lts
+{{- else }}
+/home/sboynton/.local/share/fnm/fnm install --lts 
+{{- end }}
