@@ -509,6 +509,9 @@ packages:
     systemd-libs:
       arch:
         name: systemd-libs
+    tailscale:
+      arch:
+        name: tailscale
     tealdeer:
       darwin:
         name: tealdeer
