@@ -1,6 +1,6 @@
 # Reset PATH
 #
-unset PATH
+#unset PATH
 
 # Essential paths
 #
