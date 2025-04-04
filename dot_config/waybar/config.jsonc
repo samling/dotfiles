@@ -24,11 +24,11 @@
         "cpu",
         "memory",
         "network",
-        //"pulseaudio",
         //"backlight",
         // "custom/kubectx",
         "custom/tailscale",
         "battery",
+        "pulseaudio",
         "tray"
     ],
 
@@ -273,9 +273,9 @@
     "pulseaudio": {
         "scroll-step": 5,
         "max-volume": 150,
-        "format": "vol {volume}%",
-        "format-bluetooth": "vol {volume}%",
-        "format-muted": " ",
+        "format": " {volume}%",
+        "format-bluetooth": "󰂰 {volume}%",
+        "format-muted": "󰝟",
         "nospacing": 1,
         "on-click": "pavucontrol",
         "tooltip": false
