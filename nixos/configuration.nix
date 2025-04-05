@@ -140,9 +140,9 @@
   #   enableSSHSupport = true;
   # };
   programs = {
-    hyprland = {
-      enable = true;
-    };
+    #hyprland = {
+    #  enable = true;
+    #};
     thunar = {
       enable = true;
     };
