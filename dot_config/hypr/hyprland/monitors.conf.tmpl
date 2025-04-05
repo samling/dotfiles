@@ -9,10 +9,12 @@ monitor={{ .chezmoi.config.data.host.endeavor.monitor1.desc }},2560x1440@59.95,3
 monitor={{ .chezmoi.config.data.host.endeavor.monitor2.desc }},3840x2160@60,4880x0,2
 monitor={{ .chezmoi.config.data.host.endeavor.monitor3.desc }},2560x1440@120,480x-1440,1
 {{- else }}
-monitor=,preferred,auto,2
+monitor=,highres,auto,2
 {{- end }}
 
 # Unscale xwayland
 xwayland {
   force_zero_scaling = true
 }
+
+env = GDK_SCALE,2

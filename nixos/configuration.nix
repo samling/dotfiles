@@ -74,6 +74,7 @@
       delta
       direnv
       duf
+      fd
       fnm
       fuzzel
       fzf
@@ -81,6 +82,7 @@
       google-chrome
       k3s
       kubectl
+      lm_sensors
       lsd
       neovim
       ripgrep
@@ -120,6 +122,7 @@
     pkgs.kitty
     wget
   ];
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -158,8 +161,9 @@
 
   # Load nvidia drivers for xorg and wayland
   hardware.nvidia = {
+    gsp.enable = true;
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     powerManagement.finegrained = false; 
     open = true;
     nvidiaSettings = true;
