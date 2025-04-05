@@ -37,9 +37,9 @@
   ];
 
   wayland.windowManager.hyprland = {
-    settings = {
-      "$mod" = "SUPER";
-    };
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.hostPlatform.system}.xdg-desktop-portal-hyprland;
     extraConfig = ''
       # https://wiki.hyprland.org/Configuring/
 

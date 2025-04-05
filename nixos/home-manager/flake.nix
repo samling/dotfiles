@@ -8,9 +8,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
+    hy3 = {
+      url = "github:outfoxxed/hy3";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, hyprland, hy3, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -20,7 +25,17 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          hyprland.homeManagerModules.default
+          {
+            wayland.windowManager.hyprland = {
+              enable = true;
+              plugins = [ hy3.packages.x86_64-linux.hy3 ];
+            };
+          }
+          ./home.nix
+        ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
