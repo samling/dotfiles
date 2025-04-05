@@ -70,6 +70,8 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
+      acpi
+      bat
       chezmoi
       delta
       direnv
@@ -123,6 +125,12 @@
     wget
   ];
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  fonts.packages = with pkgs; [
+    noto-fonts
+    iosevka
+    nerd-fonts.iosevka
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
