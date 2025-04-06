@@ -230,6 +230,9 @@ packages:
         name: gnome-keyring
       ubuntu:
         name: gnome-keyring
+    gnome-power-manager:
+      arch:
+        name: gnome-power-manager
     gnome-themes-extra:
       arch:
         name: gnome-themes-extra
