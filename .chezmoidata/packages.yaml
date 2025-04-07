@@ -286,6 +286,9 @@ packages:
           name: insync
       ubuntu:
         name: insync
+    ipcalc:
+      arch:
+        name: ipcalc
     jc:
       arch:
         name: jc
