@@ -1,4 +1,4 @@
-import { Astal, Gtk, Gdk } from "astal/gtk3"
+import { Astal, Gtk, Gdk } from "astal/gtk4"
 import Notifd from "gi://AstalNotifd"
 import Notification from "./Notification"
 import { type Subscribable } from "astal/binding"
@@ -48,32 +48,35 @@ class NotifiationMap implements Subscribable {
                 // notifd by default does not close notifications
                 // until user input or the timeout specified by sender
                 // which we set to ignore above
-                setup: () => timeout(TIMEOUT_DELAY, () => {
-                    /**
-                     * uncomment this if you want to "hide" the notifications
-                     * after TIMEOUT_DELAY
-                     */
-                    this.delete(id)
-                })
+                setup: () => {
+                    // console.log(`setup called for id: ${id}`)
+                    timeout(TIMEOUT_DELAY, () => {
+                        // console.log(`Timeout reached for id: ${id}`)
+                        this.delete(id)
+                    })
+                }
             }))
         })
 
         // notifications can be closed by the outside before
         // any user input, which have to be handled too
         notifd.connect("resolved", (_, id) => {
+            // console.log(`Notification resolved, deleting id: ${id}`)
             this.delete(id)
         })
     }
 
     private set(key: number, value: Gtk.Widget) {
+        // console.log(`Setting notification with id: ${key}`)
         // in case of replacecment destroy previous widget
-        this.map.get(key)?.destroy()
+        this.map.get(key) //?.destroy()
         this.map.set(key, value)
         this.notifiy()
     }
 
     private delete(key: number) {
-        this.map.get(key)?.destroy()
+        // console.log(`Deleting notification with id: ${key}`)
+        this.map.get(key) //?.destroy()
         this.map.delete(key)
         this.notifiy()
     }
@@ -89,16 +92,20 @@ class NotifiationMap implements Subscribable {
     }
 }
 
+// Create a single instance of NotifiationMap
+const notifs = new NotifiationMap()
+
 export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
     const { TOP, RIGHT } = Astal.WindowAnchor
-    const notifs = new NotifiationMap()
+    // Use the shared instance
+    // const notifs = new NotifiationMap()
 
     return <window
-        className="NotificationPopups"
+        cssName="NotificationPopups"
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         anchor={TOP | RIGHT}>
-        <box vertical noImplicitDestroy>
+        <box vertical>
             {bind(notifs)}
         </box>
     </window>

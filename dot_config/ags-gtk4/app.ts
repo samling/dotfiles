@@ -1,10 +1,8 @@
 #!/usr/bin/env -S ags run
 
-import { App, Gdk } from "astal/gtk3"
-import GLib from "gi://GLib"
-import AstalHyprland from "gi://AstalHyprland?version=0.1"
+import { App } from "astal/gtk4"
+import { Gdk as Gdk4, Gtk } from "astal/gtk4"; // Import GTK4 Gdk and Gtk
 import style from "./style.scss"
-import Bar from "./widget/bar/Bar"
 import Picker, { cycleWorkspace, pickerInstances } from "./widget/picker/Picker"
 import NotificationPopups from "./widget/notifications/NotificationPopups"
 import { cleanupTitleResources } from "./utils/title"
@@ -29,21 +27,6 @@ const setupMemoryManagement = () => {
         // Also clean up any other resources
         cleanupTitleResources();
     });
-};
-
-const parseAgsArgs = (argv: string[]): Record<string, string> => {
-    const args: Record<string, string> = {};
-
-    // Assume argv directly contains "key=value" strings from --arg
-    for (const pair of argv) {
-        const [key, ...valueParts] = pair.split('=');
-        if (key && valueParts.length > 0) {
-            args[key] = valueParts.join('='); // Re-join in case value has '='
-        } else if (key) {
-            args[key] = "true"; // Handle flags without values if needed
-        }
-    }
-    return args;
 };
 
 App.start({
@@ -79,34 +62,27 @@ App.start({
         }
     },
     main: () => {
-        const hypr = AstalHyprland.get_default()
-        const argv = imports.system.programArgs
-        const userArgs = parseAgsArgs(argv)
-        const userPrimaryMonitor = userArgs.primaryMonitor ?? null
-        const monitors = App.get_monitors()
-        const picker = monitors.map(Picker)
-        //const bar = monitors.map(Bar)
+        // Get GTK4 Display and Monitors
+        const display = Gdk4.Display.get_default();
+        if (!display) {
+            throw new Error("Could not get default Gdk4 display");
+        }
+        const gtk4MonitorsModel = display.get_monitors();
+        const monitors: Gdk4.Monitor[] = [];
+        for (let i = 0; i < gtk4MonitorsModel.get_n_items(); i++) {
+            monitors.push(gtk4MonitorsModel.get_item(i) as Gdk4.Monitor);
+        }
 
-        let monitorId = null
-        if (userPrimaryMonitor) {
-            const monitor = hypr.get_monitor_by_name(userPrimaryMonitor)
-            monitorId = monitor?.id ?? null
-        }
-        
-        // Get the primary monitor
-        let notifications: Array<any> = []
-        if (monitorId !== null) {
-            // If a specific monitor ID is found, show notifications only on that monitor
-            notifications = [NotificationPopups(monitors[monitorId])]
-        } else {
-            // Fallback to showing notifications on all monitors if no primary is identified
-            notifications = monitors.map(NotificationPopups)
-        }
+        // Cast result to Gtk.Window[] as linter struggles with inference
+        const picker = monitors.map(Picker) as Gtk.Window[];
+
+        // Revert to creating one NotificationPopups instance per monitor for testing
+        const notifications = monitors.map(NotificationPopups);
 
         // Set up memory management
         setupMemoryManagement();
         
-        //return [...bar, ...picker]
-        return [...picker, ...notifications]
+        // Return all picker and notification windows
+        return [...picker, ...notifications];
     }
 })
