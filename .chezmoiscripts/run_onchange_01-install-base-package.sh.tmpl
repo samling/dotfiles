@@ -40,7 +40,7 @@ echo "Processing packages for {{ $osID }}..."
 {{- if eq $osID "arch" }}
   {{- if $packageList }}
     echo "Installing Arch packages: {{ $packageList }}"
-    sudo pacman -S --needed --noconfirm {{ $packageList }}
+    sudo pacman -S --needed --noconfirm --ask=4 {{ $packageList }}
   {{- else }}
     echo "No Arch packages to install."
   {{- end }}
@@ -60,7 +60,7 @@ echo "Processing packages for {{ $osID }}..."
       fi
       echo "yay installed successfully."
     fi
-    yay -S --needed --noconfirm {{ $aurPackageList }}
+    yay -S --needed --noconfirm --ask=4 {{ $aurPackageList }}
   {{- else }}
     echo "No AUR packages to install."
   {{- end }}

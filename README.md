@@ -6,7 +6,13 @@ My ever-growing collection of dotfiles and configs.
 * `git`
 * `make`
 * `direnv`
+* [bitwarden-cli](https://bitwarden.com/help/cli/)
 * [chezmoi](https://github.com/twpayne/chezmoi)
+
+### Bitwarden-cli tl;dr
+
+1. Create `~/.bwpass` with password
+1. export BW_SESSION=$(bw unlock --raw --passwordfile=/home/$USERNAME/.bwpass)
 
 ### Chezmoi tl;dr
 ```

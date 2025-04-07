@@ -488,6 +488,9 @@ packages:
         name: ripgrep
       darwin:
         name: rg
+    serie:
+      arch:
+        name: serie
     signal-desktop:
       arch:
         name: signal-desktop
