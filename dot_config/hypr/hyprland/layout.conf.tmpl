@@ -37,9 +37,11 @@ decoration {
 
     shadow {
         enabled = {{ if eq .chassis.type "laptop" }}false{{ else }}true{{ end }}
-        range = 4
-        render_power = 3
-        color = rgba(1a1a1aee)
+        range = 300 
+        render_power = 4
+        color = rgba(1a1a1aaf)
+        offset = 0 40
+        scale = 0.9
     }
 
     # https://wiki.hyprland.org/Configuring/Variables/#blur

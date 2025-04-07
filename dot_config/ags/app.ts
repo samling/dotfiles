@@ -4,6 +4,7 @@ import { App } from "astal/gtk3"
 import style from "./style.scss"
 import Bar from "./widget/bar/Bar"
 import Picker, { cycleWorkspace, pickerInstances } from "./widget/picker/Picker"
+import NotificationPopups from "./widget/notifications/NotificationPopups"
 import { cleanupTitleResources } from "./utils/title"
 
 // Limit memory usage by clearing caches periodically
@@ -64,11 +65,12 @@ App.start({
         const monitors = App.get_monitors()
         //const bar = monitors.map(Bar)
         const picker = monitors.map(Picker)
-        
+        const notifications = monitors.map(NotificationPopups)
+
         // Set up memory management
         setupMemoryManagement();
         
         //return [...bar, ...picker]
-        return [...picker]
+        return [...picker, ...notifications]
     }
 })

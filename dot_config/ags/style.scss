@@ -36,6 +36,8 @@ $fg: $text;
 $accent: $blue;
 $radius: 12px;
 
+@use "./widget/notifications/Notification.scss";
+
 // Common styles that can be reused
 @mixin container-style {
     transition: 200ms;
