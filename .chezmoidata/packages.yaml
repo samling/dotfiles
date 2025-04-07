@@ -103,6 +103,9 @@ packages:
         name: cpio
       ubuntu:
         name: cpio
+    crosshair:
+      arch:
+        name: crosshair
     curl:
       arch:
         name: curl
@@ -598,6 +601,10 @@ packages:
     waybar:
       arch:
         name: waybar
+    waybar-module-pacman-updates:
+      arch:
+        aur:
+          name: waybar-module-pacman-updates-git
     wezterm:
       arch:
         name: wezterm
@@ -615,6 +622,10 @@ packages:
     wl-clipboard:
       arch:
         name: wl-clipboard
+    wofi-emoji:
+      arch:
+        aur:
+          name: wofi-emoji
     xclip:
       arch:
         name: xclip
@@ -710,6 +721,10 @@ packages:
     hyprpolkitagent:
       arch:
         name: hyprpolkitagent
+    hyprshot:
+      arch:
+        aur:
+          name: hyprshot
     swww:
       arch:
         name: swww

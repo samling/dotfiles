@@ -46,6 +46,16 @@ tooltip {
     color: #cba6f7; /* Mauve */
 }
 
+#custom-menu {
+  padding-right: 8px;
+  padding-left: 8px;
+  color: #0fa9d8;
+}
+
+#custom-screenshot {
+  padding-right: 1px;
+}
+
 #clock,
 #tray,
 #cpu,

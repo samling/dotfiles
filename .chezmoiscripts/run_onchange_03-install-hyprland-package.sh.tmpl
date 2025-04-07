@@ -9,6 +9,10 @@
 {{- if and ($hyprPackageData) (index $hyprPackageData $osID) (index $hyprPackageData $osID "name") -}}
 {{- $packageList = printf "%s %s" $packageList (index $hyprPackageData $osID "name") -}}
 {{- end -}}
+  {{- /* Add Arch AUR packages if applicable */}}
+  {{- if and (eq $osID "arch") ($hyprPackageData) (index $hyprPackageData $osID) (index $hyprPackageData $osID "aur") (index $hyprPackageData $osID "aur" "name") -}}
+    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $hyprPackageData $osID "aur" "name") -}}
+  {{- end -}}
 {{- end }}
 
 {{- range $swayPackageName, $swayPackageData := .packages.sway -}}
