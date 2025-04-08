@@ -42,3 +42,8 @@
   exact = true
   stripComponents = 1
   refreshPeriod = "168h"
+
+[".config/delta/themes/catppuccin"]
+  type = "git-repo"
+  url = "https://github.com/catppuccin/delta"
+  refreshPeriod = "168h"
