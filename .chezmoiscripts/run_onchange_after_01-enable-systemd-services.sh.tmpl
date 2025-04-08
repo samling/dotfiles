@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+{{- $osID := .host.os_type -}}
+{{- if ne $osID "darwin" }}
 INIT_SYSTEM=$(ps --no-headers -o comm 1)
 
 if [ $INIT_SYSTEM == "systemd" ]; then
@@ -10,3 +12,4 @@ if [ $INIT_SYSTEM == "systemd" ]; then
 
   #=== User
 fi
+{{- end }}
