@@ -98,6 +98,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         anchor={TOP | RIGHT}>
+        {/* @ts-expect-error Linter might not recognize Gdk types correctly */}
         <box vertical noImplicitDestroy>
             {bind(notifs)}
         </box>

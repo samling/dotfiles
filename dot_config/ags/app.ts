@@ -31,6 +31,7 @@ const setupMemoryManagement = () => {
     });
 };
 
+
 const parseAgsArgs = (argv: string[]): Record<string, string> => {
     const args: Record<string, string> = {};
 
@@ -84,20 +85,35 @@ App.start({
         const userArgs = parseAgsArgs(argv)
         const userPrimaryMonitor = userArgs.primaryMonitor ?? null
         const monitors = App.get_monitors()
+
+
+        const display = Gdk.Display.get_default();
+        function getMonitorName(gdkmonitor: Gdk.Monitor) {
+          const screen = display.get_default_screen();
+          for(let i = 0; i < display.get_n_monitors(); ++i) {
+            if(gdkmonitor === display.get_monitor(i))
+              return screen.get_monitor_plug_name(i);
+          }
+        }
+
         const picker = monitors.map(Picker)
-        //const bar = monitors.map(Bar)
 
         let monitorId = null
+        //const bar = monitors.map(Bar)
         if (userPrimaryMonitor) {
-            const monitor = hypr.get_monitor_by_name(userPrimaryMonitor)
-            monitorId = monitor?.id ?? null
+            for (const monitor of monitors) {
+                if (getMonitorName(monitor) === userPrimaryMonitor) {
+                    monitorId = monitor
+                    break
+                }
+            }
         }
         
         // Get the primary monitor
         let notifications: Array<any> = []
         if (monitorId !== null) {
             // If a specific monitor ID is found, show notifications only on that monitor
-            notifications = [NotificationPopups(monitors[monitorId])]
+            notifications = [NotificationPopups(monitorId)]
         } else {
             // Fallback to showing notifications on all monitors if no primary is identified
             notifications = monitors.map(NotificationPopups)
