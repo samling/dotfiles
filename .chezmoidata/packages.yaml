@@ -728,6 +728,10 @@ packages:
     hyprpicker:
       arch:
         name: hyprpicker
+    hyprsysteminfo:
+      arch:
+        aur:
+          name: hyprsysteminfo
     swww:
       arch:
         name: swww

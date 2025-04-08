@@ -57,11 +57,11 @@ eventbox.Notification {
     // eventboxes can not take margins so we style its inner box instead
     >box {
         min-width: 400px;
-        border-radius: 13px;
+        border-radius: 0px;
         background-color: $bg-color;
         margin: .5rem 1rem .5rem 1rem;
         box-shadow: 2px 3px 8px 0 gtkalpha(#000000, .4); // Using black for shadow, adjust alpha if needed
-        border: 2pt solid gtkalpha($surface1, .5); // Use surface1 for border
+        border: 2pt solid gtkalpha($blue, .8); // Use surface1 for border
     }
 
     &.critical>box {
@@ -129,7 +129,7 @@ eventbox.Notification {
         .image {
             border: 2px solid gtkalpha($surface0, .3); // Use surface0 for image border
             margin-right: .5rem;
-            border-radius: 9px;
+            border-radius: 0px;
             min-width: 100px;
             min-height: 100px;
             background-size: cover;
