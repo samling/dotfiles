@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # packages hash: {{ .packages | toJson | sha256sum }}
 
-{{- $osID := .chezmoi.config.data.calculated.os_type -}}
+{{- $osID := .host.os_type -}}
 
 {{- $packageList := "" -}}
 {{- $aurPackageList := "" -}}

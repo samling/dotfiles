@@ -320,7 +320,7 @@
         "tooltip": false
     },
 
-    {{- if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .chezmoi.config.data.host "endeavor") }}
-    "output": "{{ .chezmoi.config.data.host.endeavor.monitor0.name }}",
+    {{- if and .host.primaryMonitor (hasKey .host.primaryMonitor "name") }}
+    "output": "{{ .host.primaryMonitor.name }}",
     {{- end }}
 }

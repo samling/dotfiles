@@ -12,7 +12,7 @@ $surface2: #585b70;
 $overlay0: #6c7086;
 $overlay1: #7f849c;
 $overlay2: #9399b2;
-$text: #cdd6f4;
+$text: #eff1f5;
 $subtext1: #bac2de;
 $subtext0: #a6adc8;
 $crust: #11111b;
@@ -120,10 +120,11 @@ eventbox.Notification {
         .summary {
             font-size: 1.2em;
             color: $fg-color;
+            margin-bottom: .5rem;
         }
 
         .body {
-            color: gtkalpha($subtext1, 0.9); // Use subtext1 for body
+            color: gtkalpha($text, 0.9);
         }
 
         .image {

@@ -3,6 +3,7 @@ alias cat="bat -pp"
 alias df="duf -hide special,fuse"
 # alias find="fd" # use find and fd separately
 alias grep="rg -u"
+alias grepall="rg -uu --no-ignore"
 alias top="btop"
 alias watch="viddy -d"
 #alias vi=nvim-maybe-profile

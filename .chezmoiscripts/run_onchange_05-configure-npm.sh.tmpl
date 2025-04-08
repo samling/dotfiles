@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-{{- $osID := .chezmoi.config.data.calculated.os_type }}
+{{- $osID := .host.os_type }}
 
 echo "Configuring npm using fnm for {{ $osID }}..."
 

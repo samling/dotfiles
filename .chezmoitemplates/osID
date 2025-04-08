@@ -1,0 +1,9 @@
+{{- $osID := "" }}
+{{- if (hasKey .chezmoi.osRelease "idLike") -}}
+{{-   $osID = .chezmoi.osRelease.idLike -}}
+{{- else if (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = .chezmoi.osRelease.id -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{-   $osID = "darwin" -}}
+{{- end }}
+{{- $osID -}}

@@ -3,47 +3,20 @@
   #exclude = "scripts"
 
 #=== Determine if we're on a desktop or laptop
-{{- $chassisType := "desktop" }}
-{{- if eq .chezmoi.os "darwin" }}
-{{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
-{{-     $chassisType = "laptop" }}
-{{-   else }}
-{{-     $chassisType = "desktop" }}
-{{-   end }}
-{{- else if eq .chezmoi.os "linux" }}
-{{-   $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
-{{- else if eq .chezmoi.os "windows" }}
-{{-   $chassisType = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim }}
-{{- end }}
+{{- $chassisType := includeTemplate "chassis" . }}
 [data.chassis]
   type = "{{ $chassisType }}"
 
-#=== Determine which OS we're on (or are closest to, e.g. endeavouros => arch)
-{{- $osID := "" }}
-{{- if (hasKey .chezmoi.osRelease "idLike") -}}
-{{-   $osID = .chezmoi.osRelease.idLike -}}
-{{- else if (hasKey .chezmoi.osRelease "id") -}}
-{{-   $osID = .chezmoi.osRelease.id -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{-   $osID = "darwin" -}}
-{{- end }}
+#=== Calculated information
 [data.calculated]
-  os_type = "{{ $osID }}"
 
 #=== Host-specific configuration
 [data.host]
-{{- if eq .chezmoi.fqdnHostname "endeavor" }}
-[data.host.endeavor]
-  [data.host.endeavor.monitor0]
-    name = "DP-3" 
-    desc = "desc:LG Electronics LG ULTRAGEAR 201NTMX84123"
-  [data.host.endeavor.monitor1]
-    name = "DP-2"
-    desc = "desc:Dell Inc. DELL U2719DX 3TQSPS2"
-  [data.host.endeavor.monitor2]
-    name = "HDMI-A-1"
-    desc = "desc:Wacom Tech Cintiq Pro_16 3KQ0191000641"
-  [data.host.endeavor.monitor3]
-    name = "DP-1"
-    desc = "desc:LG Electronics LG TV SSCR2 0x01010101"
-{{- end }}
+  os_type = "{{ includeTemplate "osID" . }}"
+
+#=== Find the primary monitor for the current host
+  [data.host.primaryMonitor]
+    name = "{{ includeTemplate "primaryMonitor" . }}"
+
+#=== Hostname-specific configuration
+{{ includeTemplate "hosts/endeavor" . }}

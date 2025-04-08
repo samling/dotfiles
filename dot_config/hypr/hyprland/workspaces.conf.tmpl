@@ -1,17 +1,29 @@
 ##############
 # WORKSPACES #
 ##############
-
-{{- if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .chezmoi.config.data.host "endeavor") }}
 # Bind workspaces to specific monitors
-workspace = 1,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
-workspace = 2,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
-workspace = 3,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
-workspace = 4,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
-workspace = 5,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
-workspace = 6,monitor:{{ .chezmoi.config.data.host.endeavor.monitor0.desc }}
-workspace = 7,monitor:{{ .chezmoi.config.data.host.endeavor.monitor1.desc }}
-workspace = 8,monitor:{{ .chezmoi.config.data.host.endeavor.monitor1.desc }}
-workspace = 9,monitor:{{ .chezmoi.config.data.host.endeavor.monitor2.desc }}
-workspace = 0,monitor:{{ .chezmoi.config.data.host.endeavor.monitor3.desc }}
+{{- /* Get host data if available */}}
+{{- $hostname := .chezmoi.fqdnHostname }}
+{{- $hostData := "" }}
+{{- if (hasKey .host $hostname) }}
+{{-   $hostData = index .host $hostname }}
 {{- end }}
+
+{{- /* Check if monitors are defined for the host */}}
+{{- if and $hostData (hasKey $hostData "monitors") $hostData.monitors }}
+
+  {{- /* Loop through each monitor */}}
+  {{- range $monitor := $hostData.monitors }}
+    {{- /* Check if workspaces array exists for this monitor */}}
+    {{- if and (hasKey $monitor "workspaces") $monitor.workspaces }}
+      {{- $monitorDesc := $monitor.desc }}
+      {{- range $wsNum := $monitor.workspaces }}
+workspace = {{ $wsNum }},monitor:{{ $monitorDesc }}
+      {{- end }} {{- /* End range workspaces */}}
+    {{- else }}
+# Monitor "{{ $monitor.desc | default $monitor.name }}" does not have a 'workspaces' array definition.
+    {{- end }} {{- /* End if monitor has workspaces */}}
+  {{- end }} {{- /* End range monitors */}}
+{{- else }}
+# No monitor configuration found for host: {{ $hostname }}
+{{- end }} {{- /* End if hostData and hostData.monitors */}}

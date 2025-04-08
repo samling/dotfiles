@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-{{- $osID := .chezmoi.config.data.calculated.os_type }}
+{{- $osID := .host.os_type }}
 
 # Only proceed on Linux platforms
 {{- if ne $osID "ubuntu" }}

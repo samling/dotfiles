@@ -1,10 +1,8 @@
-# TODO: Make a laptop host profile
 {{- $primaryMonitor := "" -}}
-{{- if eq .chassis.type "laptop" -}}
-{{- $primaryMonitor = "eDP-1" -}}
-{{- else if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .chezmoi.config.data.host "endeavor") }}
-{{- $primaryMonitor = .chezmoi.config.data.host.endeavor.monitor0.name -}}
+{{- if .host.primaryMonitor }}
+{{- $primaryMonitor = .host.primaryMonitor.name }}
 {{- end }}
+
 background {
   monitor={{ $primaryMonitor }}
   blur_passes=1
@@ -13,39 +11,13 @@ background {
   path=screenshot
 }
 
-{{- if eq .chassis.type "desktop" }}
 background {
-  monitor=DP-1
+  monitor=
   blur_passes=1
   blur_size=7
   noise=0.011700
   path=screenshot
 }
-
-background {
-  monitor=DP-2
-  blur_passes=1
-  blur_size=7
-  noise=0.011700
-  path=screenshot
-}
-
-background {
-  monitor=DP-3
-  blur_passes=1
-  blur_size=7
-  noise=0.011700
-  path=screenshot
-}
-
-background {
-  monitor=HDMI-A-1
-  blur_passes=1
-  blur_size=7
-  noise=0.011700
-  path=screenshot
-}
-{{- end }}
 
 input-field {
   monitor={{ $primaryMonitor }}

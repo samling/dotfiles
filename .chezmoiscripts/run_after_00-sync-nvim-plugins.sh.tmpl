@@ -16,10 +16,8 @@ found=0
 find "$TARGET_DIR" -maxdepth 1 -type f | while read -r target_file; do
   # Get the relative path of the file within the target directory
   rel_path=$(basename "$target_file")
-  
   # Construct the corresponding path in the source directory
   source_file="$SOURCE_DIR/$rel_path"
-  
   # If the file doesn't exist in the source directory, remove it from the target
   if [ ! -f "$source_file" ]; then
     echo "[sync-nvim-plugins] File $target_file not in source, removing..."

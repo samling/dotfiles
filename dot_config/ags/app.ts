@@ -114,21 +114,21 @@ App.start({
         
         // Set up notifications
         let notifications: Array<any> = []
+        let pickers: Array<any> = []
         if (gtkMonitorId !== null) {
             // If a specific monitor ID is found, show notifications only on that monitor
             notifications = [NotificationPopups(gtkMonitorId)]
+            pickers = [Picker(gtkMonitorId)]
         } else {
             // Fallback to showing notifications on all monitors if no primary is identified
             notifications = monitors.map(NotificationPopups)
+            pickers = monitors.map(Picker)
         }
-
-        // Set up the picker
-        const picker = monitors.map(Picker)
 
         // Set up memory management
         setupMemoryManagement();
         
         //return [...bar, ...picker]
-        return [...picker, ...notifications]
+        return [...pickers, ...notifications]
     }
 })

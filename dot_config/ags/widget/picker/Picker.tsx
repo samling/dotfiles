@@ -80,7 +80,8 @@ export default function Picker(monitor: Gdk.Monitor) {
     const signals: SignalConnection[] = []
 
     const hl = Hyprland.get_default()
-    const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}`
+    // const windowName = `picker-${getMonitorName(monitor.get_display(), monitor)}` // TODO: Get rid of all the stuff around multiple picker instances
+    const windowName = `picker`
     
     // Make workspaces reactive
     const workspaces = Variable.derive(
