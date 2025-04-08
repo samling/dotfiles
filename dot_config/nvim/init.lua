@@ -3,6 +3,11 @@ require 'options'
 require 'keymaps'
 require 'diagnostics'
 
+-- Disable netrw
+-- https://github.com/nvim-tree/nvim-tree.lua?tab=readme-ov-file#setup
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

@@ -4,13 +4,23 @@
 
 echo "Setup completed for {{ $osID }}!"
 
+echo -n "Building bat cache..."
+if command -v bat > /dev/null; then
+  echo "done."
+  bat cache --build > /dev/null
+fi
+
+echo -n "Installing tmux plugins..."
+if [ -d "$HOME/.config/tmux/plugins/tpm" ]; then
+  sh ~/.config/tmux/plugins/tpm/bin/install_plugins > /dev/null
+  echo "done."
+  echo ""
+fi
+
 cat << EOF
 Done! Remember to do the following:
-  1. Symlink fish to /usr/local/bin/fish
-  2. Run neovim to finish LazyVim configuration
-  3. Install tmux plugins with ctrl-A + I
-  4. Make sure bat cache is built: bat cache --build
-  5. (Optional) Reboot!
+  - Run neovim to finish LazyVim configuration
+  - (Optional) Reboot!
 EOF
 
 {{- if eq $osID "arch" }}
