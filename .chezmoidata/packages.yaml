@@ -165,9 +165,9 @@ packages:
         name: eza
       darwin:
         name: eza
-    vkv:
-      darwin:
-        name: falcosuessgott/tap/vkv
+    fastfetch:
+      arch:
+        name: fastfetch
     fd:
       arch:
         name: fd
@@ -598,6 +598,9 @@ packages:
       arch:
         aur:
           name: visual-studio-code-bin
+    vkv:
+      darwin:
+        name: falcosuessgott/tap/vkv
     waybar:
       arch:
         name: waybar

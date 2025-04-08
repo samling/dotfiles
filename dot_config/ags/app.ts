@@ -8,6 +8,7 @@ import Bar from "./widget/bar/Bar"
 import Picker, { cycleWorkspace, pickerInstances } from "./widget/picker/Picker"
 import NotificationPopups from "./widget/notifications/NotificationPopups"
 import { cleanupTitleResources } from "./utils/title"
+import { getMonitorName } from "./utils/monitor"
 
 // Limit memory usage by clearing caches periodically
 const MEMORY_CLEANUP_INTERVAL = 60000; // 1 minute
@@ -80,44 +81,49 @@ App.start({
         }
     },
     main: () => {
-        const hypr = AstalHyprland.get_default()
+        // (Optional) These are user-defined arguments passed to the app
+        // e.g. ags run --arg="primaryMonitor=DP-1"
         const argv = imports.system.programArgs
         const userArgs = parseAgsArgs(argv)
+
+        // (Optional) This is the user-defined primary monitor name (e.g. "DP-1")
         const userPrimaryMonitor = userArgs.primaryMonitor ?? null
+
         const monitors = App.get_monitors()
-
-
-        const display = Gdk.Display.get_default();
-        function getMonitorName(gdkmonitor: Gdk.Monitor) {
-          const screen = display.get_default_screen();
-          for(let i = 0; i < display.get_n_monitors(); ++i) {
-            if(gdkmonitor === display.get_monitor(i))
-              return screen.get_monitor_plug_name(i);
+        const gtkDisplay = Gdk.Display.get_default();
+        // Get the monitor name (e.g. "DP-1") from the GTK monitor
+        // This relies on possibly deprecated GTK3 methods; see https://github.com/Aylur/ags/issues/363
+        function getGtkMonitorName(gdkmonitor: Gdk.Monitor) {
+          const screen = gtkDisplay?.get_default_screen();
+          for(let i = 0; i < (gtkDisplay?.get_n_monitors() ?? 0); ++i) {
+            if(gdkmonitor === gtkDisplay?.get_monitor(i))
+              return screen?.get_monitor_plug_name(i);
           }
         }
 
-        const picker = monitors.map(Picker)
-
-        let monitorId = null
-        //const bar = monitors.map(Bar)
+        // If the user defined a primary monitor, find the GTK monitor ID for it
+        let gtkMonitorId = null
         if (userPrimaryMonitor) {
             for (const monitor of monitors) {
-                if (getMonitorName(monitor) === userPrimaryMonitor) {
-                    monitorId = monitor
+                if (getGtkMonitorName(monitor) === userPrimaryMonitor) {
+                    gtkMonitorId = monitor
                     break
                 }
             }
         }
         
-        // Get the primary monitor
+        // Set up notifications
         let notifications: Array<any> = []
-        if (monitorId !== null) {
+        if (gtkMonitorId !== null) {
             // If a specific monitor ID is found, show notifications only on that monitor
-            notifications = [NotificationPopups(monitorId)]
+            notifications = [NotificationPopups(gtkMonitorId)]
         } else {
             // Fallback to showing notifications on all monitors if no primary is identified
             notifications = monitors.map(NotificationPopups)
         }
+
+        // Set up the picker
+        const picker = monitors.map(Picker)
 
         // Set up memory management
         setupMemoryManagement();
