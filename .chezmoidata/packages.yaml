@@ -511,6 +511,9 @@ packages:
         name: smbclient
       ubuntu:
         name: smbclient
+    socat:
+      arch:
+        name: socat
     software-properties-common:
       ubuntu:
         name: software-properties-common
