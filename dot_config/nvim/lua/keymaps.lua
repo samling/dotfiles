@@ -59,6 +59,7 @@ vim.keymap.set('n', ']b', ':bnext<CR>', { desc = 'Move to the next buffer' })
 vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
 vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
 vim.keymap.set('n', '<leader>bq', ':bdelete<CR>', { desc = 'Close the current buffer' })
+vim.keymap.set('n', '<leader>bw', ':bdelete<CR>', { desc = 'Close the current buffer' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
