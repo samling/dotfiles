@@ -36,16 +36,12 @@
     ],
 
     "custom/menu": {
-      "format" : "<span font=\"16px\">󰣇</span>",
+      "format" : "<span font=\"18px\">󰣇</span>",
       "tooltip": false,
       "menu": "on-click",
       "menu-file": "$HOME/.config/waybar/menu.xml",
       "menu-actions": {
-        "exit": "wlogout -m 260px 70px",
         "emojisearch": "wofi-emoji",
-        "malarchive": "$HOME/.config/hypr/scripts/animelist-archive",
-        "videodl": "$HOME/.config/hypr/scripts/video-download",
-        "musicdl": "$HOME/.config/hypr/scripts/song-download",
         "colorpicker": "$HOME/.config/hypr/scripts/colorpick",
         "killapp": "XCURSOR_THEME=crosshair XCURSOR_SIZE=24 hyprctl kill"
       }

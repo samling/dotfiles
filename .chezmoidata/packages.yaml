@@ -725,6 +725,9 @@ packages:
       arch:
         aur:
           name: hyprshot
+    hyprpicker:
+      arch:
+        name: hyprpicker
     swww:
       arch:
         name: swww
