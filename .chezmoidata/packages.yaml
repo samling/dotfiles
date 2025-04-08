@@ -103,9 +103,6 @@ packages:
         name: cpio
       ubuntu:
         name: cpio
-    crosshair:
-      arch:
-        name: crosshair
     curl:
       arch:
         name: curl
@@ -426,6 +423,9 @@ packages:
         name: nmap
       ubuntu:
         name: nmap
+    nvidia-settings:
+      arch:
+        name: nvidia-settings
     nvm:
       arch:
         aur:
