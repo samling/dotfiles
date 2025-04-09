@@ -40,11 +40,12 @@ alias yless="jless --yaml"
 alias hyprctl="hyprctl --instance 0" # avoids tmux-inside-hyprland issues
 alias hc="hyprctl --instance 0"
 alias reload-waybar="pkill waybar; hyprctl dispatch exec waybar"
-{{- $agsArgs := "" }}
+
 {{- if .host.primaryMonitor.name }}
-{{- $agsArgs = " --arg=\"primaryMonitor={{ .host.primaryMonitor.name }}\"" -}}
+alias reload-ags="pkill gjs; hyprctl dispatch exec 'ags run --arg=\"primaryMonitor={{ .host.primaryMonitor.name }}\"'"
+{{- else }}
+alias reload-ags="pkill gjs; hyprctl dispatch exec 'ags run"
 {{- end }}
-alias reload-ags="pkill gjs; hyprctl dispatch exec 'ags run{{ $agsArgs }}'"
 
 #=== Kubectl
 alias k="kubectl"
