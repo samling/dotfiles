@@ -3,27 +3,21 @@
 #################
 
 # System essentials
-#env = XDG_CURRENT_DESKTOP,Hyprland
-#env = XDG_SESSION_TYPE,wayland
-#exec-once = systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP
-exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec-once = dbus-update-activation-environment --systemd HYPRLAND_INSTANCE_SIGNATURE
-#exec-once = export ($dbus-launch)
-#exec-once = sudo /usr/local/bin/powertune.sh
-
-# Desktop portals
-#exec-once = ~/dotfiles/linux/config/hypr/scripts/desktop-portals.sh
+exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
 
 # Start daemons
+#   Some daemons are started by systemd; I don't know when it's appropriate to launch them
+#   this way and when to use systemd, so it's a mix of both for now.
+#   Systemd:
+#     swww-daemon - systemctl --user enable --now swww.service
+#     swww-daemon - systemctl --user enable --now hyprpolkitagent
 exec-once = nm-applet --indicator
+exec-once = copyq --start-server
+exec-once = insync start
 exec-once = swayosd-server
-exec-once = systemctl --user start hyprpolkitagent
-exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
-#exec-once = dunst # alternatively: mako, swaync # deprecating in favor of ags
-#exec-once = swww-daemon # systemctl --user {start/enable} swww.service
-
-# Start hyprswitch
+exec-once = hypridle
 exec-once = SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
+exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
 
 # Enable dark mode
 # NOTE: Handled by nwg-look instead
@@ -38,26 +32,6 @@ exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
 exec-once = ~/.config/hypr/scripts/desktop-portals.sh
 {{ end }}
 
-# Start hypridle
-exec-once = hypridle
-
-# Start pipewire etc.
-# This *should* be handled by systemd
-# systemctl --user enable {pipewire|pipewire-pulse|wireplumber}
-#exec-once = pipewire
-#exec-once = wireplumber
-#exec-once = pipewire-pulse
-
 # Load plugins
 exec-once = hyprpm reload -n
 exec-once = $HOME/.local/lib/import_env tmux # https://github.com/hyprwm/Hyprland/issues/3134
-# Run `hyprpm update` to properly load plugins
-#exec-once = hyprctl plugin load ~/Documents/hypr-plugins/Hyprspace.so
-
-# Start app services
-exec-once = copyq --start-server
-exec-once = insync start
-
-# Waybar live reloading
-# exec-once = "$HOME/.config/hypr/refresh.sh"
-
