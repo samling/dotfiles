@@ -14,7 +14,7 @@ exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 exec-once = nm-applet --indicator
 exec-once = QT_QPA_PLATFORM=xcb copyq --start-server
 exec-once = insync start
-exec-once = swayosd-server
+exec-once = swayosd-server # TODO: Make systemd unit for this
 exec-once = hypridle
 exec-once = SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
 exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
