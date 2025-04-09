@@ -93,14 +93,14 @@ tooltip {
     background-color: transparent; /* Overlay 0 */
     margin: 0px;
     border: none;
-    margin-right: 4px;
+    margin-right: 8px;
 }
 
 #workspaces button {
     all: initial; 
     min-width: 18px;
     box-shadow: inset 0 -3px transparent;
-    padding: 0px 8px;
+    padding: 0px 0px;
     margin: 0px 2px;
     color: #cdd6f4;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;

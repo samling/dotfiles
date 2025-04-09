@@ -426,6 +426,10 @@ packages:
         name: nmap
       ubuntu:
         name: nmap
+    numix-circle-icon-theme:
+      arch:
+        aur:
+          name: numix-circle-icon-theme-git
     nvidia-settings:
       arch:
         name: nvidia-settings

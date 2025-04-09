@@ -13,8 +13,9 @@
         "custom/menu",
         "custom/screenshot",
         "hyprland/workspaces",
-        "hyprland/window",
-        "hyprland/submap"
+        // "hyprland/window",
+        "hyprland/submap",
+        "wlr/taskbar"
     ],
 
     "modules-center": [
@@ -33,6 +34,24 @@
         "tray",
         "custom/updates"
     ],
+
+    "wlr/taskbar": {
+      "format": "{icon}",
+      "icon-size": 24,
+      "icon-theme": "Numix-Circle",
+      "tooltip-format": "{title}",
+      "on-click": "activate",
+      // "on-click-middle": "close",
+      "on-scroll-up": "switch-prev",
+      "on-scroll-down": "switch-next",
+      "ignore-list": [
+        "kitty"
+      ],
+      "app_ids-mapping": {
+        "Cursor": "cursor",
+        "Obsidian": "obsidian"
+      },
+    },
 
     "custom/menu": {
       "format" : "<span font=\"18px\">󰣇 </span>",
@@ -164,7 +183,8 @@
         "all-outputs": true,
         "tooltip": false,
         "show-special": true,
-        "format": "{name} <big>{windows}</big>",
+        // "format": "{name} <big>{windows}</big>",
+        "format": "{name}",
         "format-window-separator": " ",
         "window-rewrite-default": " ",
         "window-rewrite": {
