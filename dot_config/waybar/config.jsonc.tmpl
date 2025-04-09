@@ -35,7 +35,7 @@
     ],
 
     "custom/menu": {
-      "format" : "<span font=\"18px\">󰣇</span>",
+      "format" : "<span font=\"18px\">󰣇 </span>",
       "tooltip": false,
       "menu": "on-click",
       "menu-file": "$HOME/.config/waybar/menu.xml",
@@ -47,7 +47,7 @@
     },
 
     "custom/screenshot": {
-      "format" : "<span font=\"Font Awesome 6 Free\"> </span>",
+      "format" : "<span font=\"Font Awesome 6 Free\">  </span>",
       "tooltip-format": "Take a screenshot",
       //"on-click": "$HOME/.config/hypr/scripts/screenshot ss",
       "menu": "on-click", // on-click-right
@@ -64,7 +64,7 @@
       "exec": "~/.config/waybar/scripts/waybar-tailscale/waybar-tailscale.sh --status",
       "on-click": "exec ~/.config/waybar/scripts/waybar-tailscale/waybar-tailscale.sh --toggle",
       "exec-on-event": true,
-      "format": " {icon}",
+      "format": "  {icon}",
       "format-icons": {
           "connected": "on",
           "stopped": "off"
@@ -78,7 +78,7 @@
         "exec": "~/.config/waybar/scripts/waybar-kubectx/waybar-kubectx.sh",
         "on-click": "",
         "exec-on-event": true,
-        "format": "⎈ {text}",
+        "format": "⎈  {text}",
         "format-icons": {},
         "tooltip": false,
         "return-type": "json",
@@ -89,8 +89,8 @@
       "format": "{} {icon}",
       "return-type": "json",
       "format-icons": {
-          "has-updates": "󱍷",
-          "updated": "󰂪"
+          "has-updates": "󱍷 ",
+          "updated": "󰂪 "
       },
       "exec-if": "which waybar-module-pacman-updates",
       "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 3600"
@@ -166,67 +166,67 @@
         "show-special": true,
         "format": "{name} <big>{windows}</big>",
         "format-window-separator": " ",
-        "window-rewrite-default": "",
+        "window-rewrite-default": " ",
         "window-rewrite": {
           // https://www.nerdfonts.com/cheat-sheet
           // Specific titles
-          "title<.*youtube.*>": "",
+          "title<.*youtube.*>": " ",
 
           // Browsers
-          "class<firefox>": "󰈹",
-          "microsoft-edge": "󰇩",
-          "google-chrome": "",
-          "class<google-chrome>": "",
-          "chromium": "",
-          "tor-browser": "",
+          "class<firefox>": "󰈹 ",
+          "microsoft-edge": "󰇩 ",
+          "google-chrome": " ",
+          "class<google-chrome>": " ",
+          "chromium": " ",
+          "tor-browser": " ",
 
           // Terminals
-          "kitty": "󰄛",
-          "gnome-terminal": "",
-          "konsole": "",
-          "alacritty": "",
-          "class<org.wezfurlong.wezterm>": "",
-          "foot": "󰽒",
-          "xterm": "",
-          "class<com.mitchellh.ghostty>": "󰊠",
+          "kitty": "󰄛 ",
+          "gnome-terminal": " ",
+          "konsole": " ",
+          "alacritty": " ",
+          "class<org.wezfurlong.wezterm>": " ",
+          "foot": "󰽒 ",
+          "xterm": " ",
+          "class<com.mitchellh.ghostty>": "󰊠 ",
 
           // Development Tools
-          "code": "󰨞",
-          "vscode": "󰨞",
-          "class<cursor>": "󰨞",
-          "docker": "",
-          "vim": "",
-          "neovim": "",
-          "postman": "󰶎",
+          "code": "󰨞 ",
+          "vscode": "󰨞 ",
+          "class<cursor>": "󰨞 ",
+          "docker": " ",
+          "vim": " ",
+          "neovim": " ",
+          "postman": "󰶎 ",
 
           // Communication Tools
-          "discord": "",
-          "vesktop": "",
-          "slack": "󰒱",
-          "whatsapp": "󰖣",
-          "teams": "󰊻",
-          "signal": "󰭹",
-          "thunderbird": "",
+          "discord": " ",
+          "vesktop": " ",
+          "slack": "󰒱 ",
+          "whatsapp": "󰖣 ",
+          "teams": "󰊻 ",
+          "signal": "󰭹 ",
+          "thunderbird": " ",
 
           // File Managers
-          "org.kde.dolphin": "",
-          "nautilus": "󰝰",
-          "thunar": "󰝰",
-          "krusader": "󰝰",
+          "org.kde.dolphin": " ",
+          "nautilus": "󰝰 ",
+          "thunar": "󰝰 ",
+          "krusader": "󰝰 ",
 
           // Media Players
-          "plex": "󰚺",
-          "spotify": "󰓇",
-          "vlc": "󰕼",
-          "mpv": "",
-          "feh": "",
-          "ristretto": "󰋩",
+          "plex": "󰚺 ",
+          "spotify": "󰓇 ",
+          "vlc": "󰕼 ",
+          "mpv": " ",
+          "feh": " ",
+          "ristretto": "󰋩 ",
 
           // Gaming
-          "steam": "",
+          "steam": " ",
 
           // Writing Tools
-          "class<obsidian>": "󱓧",
+          "class<obsidian>": "󱓧 ",
 
           // Other
           "Picture in picture": ""
@@ -254,12 +254,12 @@
     },
 
     "clock": {
-        "format": " {:%H:%M 󰃭 %a, %d %b %Y}",
+        "format": "  {:%H:%M 󰃭  %a, %d %b %Y}",
         "tooltip": false
     },
 
     "cpu": {
-        "format": " {usage}%",
+        "format": "  {usage}%",
         "interval": 2,
 
         "states": {
@@ -268,7 +268,7 @@
     },
 
     "memory": {
-        "format": " {percentage}%",
+        "format": "  {percentage}%",
         "interval": 2,
 
         "states": {
@@ -279,11 +279,11 @@
     "battery": {
         "format": "bat {capacity}% ({time} - {power}W)",
         "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ({time}) 󱐋",
-        "format-plugged": "{capacity}% ",
+        "format-charging": "{capacity}% ({time}) 󱐋 ",
+        "format-plugged": "{capacity}%  ",
         "format-time": "{H}h{M}m",
         //"format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""],
+        "format-icons": [" ", " ", " ", " ", " "],
         "interval": 5,
         "states": {
             "warning": 20,
@@ -296,13 +296,13 @@
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "format-icons": [" ", " ", " ", " ", " ", " ", " ", " ", " "],
         "tooltip": false
     },
 
     "network": {
-        "format-wifi" : "↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
-        "format-ethernet": "{ipaddr} ↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
+        "format-wifi" : "↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}",
+        "format-ethernet": "{ipaddr} ↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}",
         "tooltip-format": "{ifname} via {gwaddr}",
         "format-disconnected" : "no network",
         "format-alt": "{essid} ({signalStrength}%): {ipaddr}/{cidr}",
@@ -312,9 +312,9 @@
     "pulseaudio": {
         "scroll-step": 5,
         "max-volume": 150,
-        "format": " {volume}%",
-        "format-bluetooth": "󰂰 {volume}%",
-        "format-muted": "󰝟",
+        "format": "  {volume}%",
+        "format-bluetooth": "󰂰  {volume}%",
+        "format-muted": "󰝟 ",
         "nospacing": 1,
         "on-click": "pavucontrol",
         "tooltip": false

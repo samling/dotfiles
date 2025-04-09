@@ -11,6 +11,7 @@ input {
     kb_rules =
 
     follow_mouse = 1
+    mouse_refocus = 0
 
     accel_profile = {{ if eq .chassis.type "laptop" }}adaptive{{ else }}flat{{ end }}
     sensitivity = {{ if eq .chassis.type "laptop" }}-0.5{{ else }}0{{ end }} # -1.0 - 1.0, 0 means no modification.

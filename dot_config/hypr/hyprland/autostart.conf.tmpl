@@ -12,7 +12,7 @@ exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 #     swww-daemon - systemctl --user enable --now swww.service
 #     swww-daemon - systemctl --user enable --now hyprpolkitagent
 exec-once = nm-applet --indicator
-exec-once = copyq --start-server
+exec-once = QT_QPA_PLATFORM=xcb copyq --start-server
 exec-once = insync start
 exec-once = swayosd-server
 exec-once = hypridle
