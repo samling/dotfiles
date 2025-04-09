@@ -11,5 +11,7 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   sudo systemctl enable --now tailscaled
 
   #=== User
+  systemctl --user enable --now hyprpolkitagent
+  systemctl --user enable --now swww
 fi
 {{- end }}
