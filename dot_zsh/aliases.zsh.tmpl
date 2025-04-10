@@ -44,7 +44,7 @@ alias reload-waybar="systemctl --user restart waybar"
 {{- if .host.primaryMonitor.name }}
 alias reload-ags="pkill gjs; hyprctl dispatch exec 'uwsm app -- ags run --arg=\"primaryMonitor={{ .host.primaryMonitor.name }}\"'"
 {{- else }}
-alias reload-ags="pkill gjs; hyprctl dispatch exec 'uwsm app -- ags run"
+alias reload-ags="pkill gjs; hyprctl dispatch exec 'uwsm app -- ags run'"
 {{- end }}
 
 #=== Kubectl
