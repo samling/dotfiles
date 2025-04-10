@@ -1,0 +1,11 @@
+[Unit]
+Description=Aylur's GTK Shell
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c 'ags run --arg=\"primaryMonitor={{ .host.primaryMonitor.name }}\"'
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=default.target
