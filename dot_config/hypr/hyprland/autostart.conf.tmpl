@@ -11,17 +11,16 @@ exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 #   Systemd:
 #     swww-daemon - systemctl --user enable --now swww.service
 #     swww-daemon - systemctl --user enable --now hyprpolkitagent
-exec-once = nm-applet --indicator
-exec-once = QT_QPA_PLATFORM=xcb copyq --start-server
-exec-once = insync start
-#exec-once = swayosd-server # TODO: Make systemd unit for this
-exec-once = hypridle
-exec-once = SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
-exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
+exec-once = uwsm app -- nm-applet --indicator
+exec-once = uwsm app -- QT_QPA_PLATFORM=xcb copyq --start-server
+exec-once = uwsm app -- insync start
+exec-once = uwsm app -- hypridle
+exec-once = uwsm app -- SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
+exec-once = uwsm app -- ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
 
 # Enable dark mode
 # NOTE: Handled by nwg-look instead
-env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
+#env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
 exec = gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard+default"   # for GTK3 apps # TODO Exec once?
 exec = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps # TODO exec once?
 exec-once = gsettings set org.gnome.desktop.interface cursor-theme BreezeX-RosePine

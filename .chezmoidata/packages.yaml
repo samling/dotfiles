@@ -581,6 +581,9 @@ packages:
         name: unzip
       ubuntu:
         name: unzip
+    uwsm:
+      arch:
+        name: uwsm
     vendir:
       arch:
         aur:

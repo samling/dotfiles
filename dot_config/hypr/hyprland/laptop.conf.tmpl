@@ -1,4 +1,4 @@
 # placeholder
 {{ if eq .chassis.type "laptop" }}
-exec-once = sudo /usr/local/bin/powertune.sh
+exec-once = uwsm app -- sudo /usr/local/bin/powertune.sh
 {{ end }}

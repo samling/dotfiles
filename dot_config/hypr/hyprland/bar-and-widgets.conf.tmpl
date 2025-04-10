@@ -1,11 +1,11 @@
 # Top bar
-exec-once = waybar
+exec-once = uwsm app -- waybar
 
 # Ags widgets
 {{- if and .host.primaryMonitor (hasKey .host.primaryMonitor "name") }}
 # See https://wiki.hyprland.org/Configuring/Monitors/
-exec-once = ags run --arg="primaryMonitor={{ .host.primaryMonitor.name }}" 2> /tmp/ags.log
+exec-once = uwsm app -- ags run --arg="primaryMonitor={{ .host.primaryMonitor.name }}" 2> /tmp/ags.log
 {{- else }}
-exec-once = ags run 2> /tmp/ags.log
+exec-once = uwsm app -- ags run 2> /tmp/ags.log
 {{- end }}
 
