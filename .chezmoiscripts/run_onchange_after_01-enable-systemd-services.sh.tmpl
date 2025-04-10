@@ -13,5 +13,6 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   #=== User
   systemctl --user enable --now hyprpolkitagent
   systemctl --user enable --now swww
+  systemctl --user enable --now swayosd-server
 fi
 {{- end }}
