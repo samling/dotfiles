@@ -471,6 +471,9 @@ packages:
         name: pavucontrol
       ubuntu:
         name: pavucontrol
+    perl-file-mimeinfo:
+      arch:
+        name: perl-file-mimeinfo
     pkg-config:
       arch:
         name: pkg-config
