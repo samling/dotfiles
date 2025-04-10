@@ -4,6 +4,9 @@
 
 # System essentials
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
+exec-once = uwsm app -- /usr/lib/xdg-desktop-portal-hyprland
+exec-once = uwsm app -- /usr/lib/xdg-desktop-portal-gtk
+exec-once = uwsm app -- /usr/lib/xdg-desktop-portal
 
 # Start daemons
 #   Some daemons are started by systemd; I don't know when it's appropriate to launch them
@@ -28,7 +31,7 @@ exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
 
 {{ if eq .chassis.type "laptop" }}
 # Desktop portals
-exec-once = ~/.config/hypr/scripts/desktop-portals.sh
+#exec-once = ~/.config/hypr/scripts/desktop-portals.sh
 {{ end }}
 
 # Load plugins
