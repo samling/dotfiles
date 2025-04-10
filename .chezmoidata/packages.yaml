@@ -396,9 +396,6 @@ packages:
         name: meson
       ubuntu:
         name: meson
-    mako:
-      arch:
-        name: mako
     nerd-fonts:
       arch:
         aur:
