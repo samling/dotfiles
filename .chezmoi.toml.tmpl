@@ -19,7 +19,7 @@
     name = "{{ includeTemplate "primaryMonitor" . }}"
 
 #=== Hostname-specific configuration
-{{- $hostTemplate := joinPath "hosts" .chezmoi.fqdnHostname }}
-{{- if $hostTemplate }}
+{{- $hostTemplate := joinPath .chezmoi.homeDir ".chezmoitemplates" "hosts" .chezmoi.fqdnHostname }}
+{{- if stat $hostTemplate }}
 {{ includeTemplate $hostTemplate . }}
 {{- end }}
