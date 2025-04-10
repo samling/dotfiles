@@ -271,6 +271,9 @@ packages:
         name: grc
       darwin:
         name: grc
+    gvfs:
+      arch:
+        name: gvfs
     helm:
       arch:
         name: helm
@@ -552,6 +555,9 @@ packages:
     thunar:
       arch:
         name: thunar
+    thunar-volman:
+      arch:
+        name: thunar-volman
     tmux:
       arch:
         name: tmux
