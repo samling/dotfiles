@@ -1,0 +1,10 @@
+
+[Default Applications]
+x-scheme-handler/discord=vesktop.desktop
+
+{{- $defaultBrowser := includeTemplate "defaultBrowser" . }}
+{{- if $defaultBrowser }}
+application/x-chrome-extension={{ $defaultBrowser }}.desktop
+x-scheme-handler/http={{ $defaultBrowser }}.desktop
+x-scheme-handler/https={{ $defaultBrowser }}.desktop
+{{- end }}
