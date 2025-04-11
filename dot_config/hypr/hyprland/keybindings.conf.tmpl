@@ -19,7 +19,7 @@ bind = $mainMod, W, killactive,
 bind = $mainMod, E, exec, $fileManager
 
 # Launch application launcher
-bind = $mainMod, space, exec, $launcher
+bind = $mainMod, space, exec, $launcher -show drun
 
 # Maximize window
 bind = $mainMod, F, fullscreenstate, 1,
@@ -40,7 +40,7 @@ bind = $mainMod SHIFT, R, exec, ~/.config/swww/swww_randomize_multi.sh '/home/sb
 bind = $mainMod SHIFT, bracketleft, exec, hyprshade toggle blue-light-filter
 
 # Super-Tab to switch back and forth between two workspaces
-bind = $mainMod, Tab, workspace, previous
+bind = $mainMod, Tab, exec, $launcher -show window
 
 # Reload Waybar
 bind = $mainMod SHIFT, W, exec, pkill waybar && hyprctl dispatch exec waybar
