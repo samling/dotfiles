@@ -13,12 +13,19 @@ exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 #     swww-daemon - systemctl --user enable --now hyprpolkitagent
 exec-once = nm-applet --indicator
 exec-once = blueman-applet
-exec-once = QT_QPA_PLATFORM=xcb copyq --start-server
 exec-once = insync start
-#exec-once = swayosd-server # TODO: Make systemd unit for this
 exec-once = hypridle
 exec-once = SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
 exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
+
+# Clipboard history
+#=== clipse
+exec-once = clipse -listen
+#=== cliphist
+#exec-once = wl-paste --type text --watch cliphist store # Stores only text data
+#exec-once = wl-paste --type image --watch cliphist store # Stores only image data
+#=== copyq
+#exec-once = QT_QPA_PLATFORM=xcb copyq --start-server
 
 # Enable dark mode
 # NOTE: Handled by nwg-look instead

@@ -1,6 +1,7 @@
 configuration {
 	modes: [ window, drun, ssh ];
   show-icons:                 false;
+  terminal:                   "wezterm -e --class='rofi-terminal'";
   display-drun:               " ";
   display-run:                " ";
   display-filebrowser:        " ";

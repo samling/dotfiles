@@ -84,6 +84,13 @@ packages:
       arch:
         aur:
           name: catppuccin-gtk-theme-mocha
+    cliphist:
+      arch:
+        name: cliphist
+    clipse:
+      arch:
+        aur:
+          name: clipse
     cmake:
       arch:
         name: cmake
@@ -184,6 +191,9 @@ packages:
     ffmpegthumbnailer:
       arch:
         name: ffmpegthumbnailer
+    fira-sans:
+      arch:
+        name: ttf-fira-sans
     flex:
       arch:
         name: flex
@@ -191,9 +201,9 @@ packages:
         name: flex
       ubuntu:
         name: flex
-    fira-sans:
+    font-manager:
       arch:
-        name: ttf-fira-sans
+        name: font-manager
     fuzzel:
       arch:
         name: fuzzel

@@ -18,8 +18,8 @@ bind = $mainMod, W, killactive,
 # Launch file manager (dolphin)
 bind = $mainMod, E, exec, $fileManager
 
-# Launch application launcher (fuzzel)
-bind = $mainMod, space, exec, $menu
+# Launch application launcher
+bind = $mainMod, space, exec, $launcher
 
 # Maximize window
 bind = $mainMod, F, fullscreenstate, 1,
@@ -45,8 +45,9 @@ bind = $mainMod, Tab, workspace, previous
 # Reload Waybar
 bind = $mainMod SHIFT, W, exec, pkill waybar && hyprctl dispatch exec waybar
 
-# Toggle CopyQ
-bind = $mainMod SHIFT, C, exec, copyq toggle
+# Toggle cliphist in fuzzel
+# bind = $mainMod, C, exec, cliphist list | fuzzel -w 120 --dmenu | cliphist decode | wl-copy
+bind = $mainMod, c, exec, $copyMenu
 
 # Hyprexpo
 $key = tab

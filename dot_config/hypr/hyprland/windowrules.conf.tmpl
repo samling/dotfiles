@@ -32,6 +32,12 @@ windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned
 # Highlight pinned windows
 windowrule = bordercolor rgb(DF8E1D), pinned:1,
 
+# Configure floating clipse window
+windowrulev2 = plugin:hyprbars:nobar,class:(clipse) # disable hyprbars for clipse
+windowrulev2 = float,class:(clipse) # ensure you have a floating window class set if you want this behavior
+windowrulev2 = center,class:(clipse) # ensure you have a floating window class set if you want this behavior
+windowrulev2 = size 622 652,class:(clipse) # set the size of the window as necessary
+
 # Always start certain applications as floats
 windowrule = float,title:(Bitwarden),class:(chrome-.*)
 windowrule = float,class:(blueman-manager)
