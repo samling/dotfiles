@@ -31,6 +31,7 @@
         "custom/tailscale",
         "battery",
         "pulseaudio",
+        "pulseaudio/slider",
         "tray",
         "custom/updates"
     ],
@@ -341,6 +342,11 @@
         "nospacing": 1,
         "on-click": "pavucontrol",
         "tooltip": false
+    },
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
     },
 
     {{- if and .host.primaryMonitor (hasKey .host.primaryMonitor "name") }}
