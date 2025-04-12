@@ -184,14 +184,9 @@ tooltip {
 #workspaces {
     padding-bottom: 2px;
 }
-
-#pulseaudio-slider slider {
-    min-height: 0px;
-    min-width: 0px;
-    opacity: 0;
-    background-image: none;
-    border: none;
-    box-shadow: none;
+#pulseaudio-slider {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 #pulseaudio-slider trough {
     min-height: 10px;
@@ -202,5 +197,4 @@ tooltip {
 #pulseaudio-slider highlight {
     min-width: 10px;
     border-radius: 5px;
-    background-color: green;
 }

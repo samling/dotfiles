@@ -29,12 +29,24 @@
         //"backlight",
         // "custom/kubectx",
         "custom/tailscale",
-        "battery",
+        // "group/pulseaudio",
         "pulseaudio",
         "pulseaudio/slider",
+        "battery",
         "tray",
         "custom/updates"
     ],
+
+    "group/pulseaudio": {
+      "modules": [
+        "pulseaudio",
+        "pulseaudio/slider",
+      ],
+      "orientation": "horizontal",
+      "drawer": {
+        "transition-left-to-right": true
+      }
+    },
 
     "wlr/taskbar": {
       "format": "{icon}",
@@ -340,7 +352,8 @@
         "format-bluetooth": "󰂰  {volume}%",
         "format-muted": "󰝟 ",
         "nospacing": 1,
-        "on-click": "pavucontrol",
+        "on-click": "amixer -q -D pulse sset Master toggle", // toggle mute
+        "on-click-right": "pavucontrol",
         "tooltip": false
     },
     "pulseaudio/slider": {
