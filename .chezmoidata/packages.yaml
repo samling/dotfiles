@@ -91,6 +91,10 @@ packages:
       arch:
         aur:
           name: clipse
+    clipse-gui:
+      arch:
+        aur:
+          name: clipse-gui
     cmake:
       arch:
         name: cmake
