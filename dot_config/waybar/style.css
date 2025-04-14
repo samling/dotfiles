@@ -1,8 +1,8 @@
 * {
     border: none;
     min-height: 0;
-    font-family: "Noto Sans";
-    font-weight: 500;
+    font-family: "Fira Sans";
+    /* font-weight: 500; */
     font-size: 14px;
     padding: 0;
 }
@@ -25,9 +25,15 @@ window#waybar {
 }
 
 tooltip {
+    background-color: transparent;
+    border: none;
+}
+
+tooltip label {
     background-color: #1e1e2e; /* Base */
     border: 2px solid #6c7086; /* Overlay 2 */
     color: #cdd6f4; /* Text (Lavender) */
+    padding: 8px;
 }
 
 #window {
@@ -163,10 +169,6 @@ tooltip {
 #battery.urgent {
     background: transparent;
     color: #FFF; /* Base */
-}
-
-#custom-notification {
-  font-family: "Iosevka";
 }
 
 /* Add this new rule for universal bottom padding */

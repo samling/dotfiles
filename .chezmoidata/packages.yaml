@@ -18,6 +18,10 @@ packages:
       arch:
         aur:
           name: appimagelauncher
+    apple-fonts:
+      arch:
+        aur:
+          name: apple-fonts
     autoconf:
       arch:
         name: autoconf

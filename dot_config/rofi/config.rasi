@@ -6,6 +6,7 @@ configuration {
   display-run:                " ";
   display-filebrowser:        " ";
   display-window:             " ";
+  font:                       "Fira Sans 12";
 	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
 	window-format:              "{w} · {c} · {t}";
   timeout {
@@ -27,7 +28,7 @@ configuration {
   separatorcolor:              @foreground;
 
   background-color:            @base;
-  border-color:                @foreground;
+  border-color:                @mauve;
 
   foreground:                  @text;
   normal-foreground:           @foreground;
@@ -69,7 +70,7 @@ window {
     margin:                      0px;
     padding:                     0px;
     border:                      2px solid;
-    border-radius:               8px;
+    border-radius:               0px;
     border-color:                @border-color;
     cursor:                      "default";
     background-color:            @background-color;
