@@ -66,6 +66,10 @@ tooltip label {
   padding-right: 1px;
 }
 
+#custom-recording {
+  color: #ff4444;
+}
+
 #clock,
 #tray,
 #cpu,

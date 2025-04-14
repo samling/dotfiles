@@ -598,6 +598,10 @@ packages:
     ttf-iosevka-nerd:
       arch:
         name: ttf-iosevka-nerd
+    ttf-ms-win11-auto:
+      arch:
+        aur:
+          name: ttf-ms-win11-auto
     tumbler:
       arch:
         name: tumbler
@@ -652,6 +656,9 @@ packages:
         name: wezterm
       ubuntu:
         name: wezterm
+    wf-recorder:
+      arch:
+        name: wf-recorder
     wget:
       arch:
         name: wget

@@ -12,6 +12,8 @@
     "modules-left": [
         "custom/menu",
         "custom/screenshot",
+        "custom/screenrecording",
+        "custom/recording",
         "hyprland/workspaces",
         // "hyprland/window",
         "hyprland/submap",
@@ -93,6 +95,29 @@
           "areassclipboard": "$HOME/.config/hypr/scripts/screenshot areasscb",
           "ssdir": "hyprctl dispatch exec [floating] thunar \"~/Pictures/Screenshots\""
         }
+    },
+
+    "custom/screenrecording": {
+      "format" : "<span font=\"Font Awesome 6 Free\">  </span>",
+      "interval": "once",
+      "menu": "on-click",
+      "menu-file": "$HOME/.config/waybar/screenrecording_menu.xml",
+      "menu-actions": {
+          "sr": "$HOME/.config/hypr/scripts/screenrecording sr",
+          "interactivesr": "$HOME/.config/hypr/scripts/screenrecording interactivesr",
+          "areasr": "$HOME/.config/hypr/scripts/screenrecording areasr",
+          "srdir": "hyprctl dispatch exec [floating] thunar \"~/Pictures/Recordings\""
+        }
+    },
+
+    "custom/recording": {
+      "format": "⬤ ",
+      "toltip": "false",
+      "return-type": "json",
+      "exec": "echo '{\"class\": \"recording\"}'",
+      "exec-if": "pgrep wf-recorder",
+      "interval": 1,
+      "on-click": "pkill wf-recorder && notify-send 'Stopped screen recording'"
     },
 
     "custom/tailscale" : {

@@ -1,0 +1,36 @@
+#!/bin/env bash
+
+EXITBIND="ALT-MOD-P"
+OUTPUT_DIR=~/Pictures/Recordings
+TIMESTAMP=$(date +'%Y-%m-%d-%H%M%S')
+OUTPUT=${OUTPUT_DIR}/recording_${TIMESTAMP}.mkv
+
+if [ ! -d $OUTPUT_DIR ]; then
+  mkdir -p ~/Pictures/Recordings
+fi
+
+if [ "$1" == "sr" ]; then
+  MONITOR=$(hyprctl activeworkspace -j | jq -r '.monitor')
+
+  # There's some weird quirk to wf-recorder where your active workspace needs to be
+  # on the monitor being recorded, or else wf-recorder takes an unusually long time
+  # to start/stop recording.
+  notify-send "Started screen recording" "Press $EXITBIND to end"
+
+  # Learned about this from https://github.com/davatorium/rofi/blob/next/doc/rofi-script.5.markdown#executing-external-program
+  coproc (wf-recorder -o $MONITOR -f $OUTPUT > /dev/null 2>&1)
+elif [ "$1" == "interactivesr" ]; then
+  MONITOR=$(hyprctl monitors -j | jq -r '.[] | [.name, .description] | @tsv' | rofi -dmenu -p "Choose window to record")
+  MONITORNAME=$(echo ${MONITOR} | awk '{print $1}')
+  MONITORDESC=$(echo ${MONITOR} | cut -d ' ' -f2-)
+
+  # There's some weird quirk to wf-recorder where your active workspace needs to be
+  # on the monitor being recorded, or else wf-recorder takes an unusually long time
+  # to start/stop recording.
+  notify-send "Started screen recording" "Capturing monitor $MONITORNAME ($MONITORDESC)\n\nPress $EXITBIND to end"
+  (wf-recorder -o $MONITORNAME -f $OUTPUT &)
+elif [ "$1" == "areasr" ]; then
+  notify-send "Started screen area recording" "Press $EXITBIND to end"
+  (wf-recorder -g "$(slurp)" -f $OUTPUT &)
+fi
+

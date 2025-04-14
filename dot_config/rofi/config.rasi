@@ -1,5 +1,10 @@
 configuration {
-	modes: [ window, drun, ssh ];
+  modes: [
+    window,
+    drun,
+    ssh
+    // "recording:~/.config/rofi/screenrecording.sh"
+  ];
   show-icons:                 false;
   terminal:                   "wezterm -e --class='rofi-terminal'";
   display-drun:               " ";
