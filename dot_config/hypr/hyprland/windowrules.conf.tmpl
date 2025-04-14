@@ -11,11 +11,6 @@ windowrule = bordercolor rgb(CBA6F7), fullscreen:1,
 # Ref https://wiki.hyprland.org/Configuring/Workspace-Rules/
 # "Smart gaps" / "No gaps when only"
 # dwindle (for hy3 see plugin configuration)
-{{- if eq .chassis.type "laptop" }}
-#workspace = w[tv1], gapsout:0, gapsin:0 # no gaps for a single (visible) tiled window
-#windowrule = bordersize 0, floating:0, onworkspace:w[tv1] # no borders for a single (visible) tiled window
-#windowrule = rounding 0, floating:0, onworkspace:w[tv1] # no rounding for a single (visible) tiled window
-{{- end }}
 workspace = f[1], gapsout:0, gapsin:0 # no gaps when in fullscreen
 windowrule = bordersize 2, floating:0, onworkspace:f[1] # add border when in fullscreen
 windowrule = rounding 0, floating:0, onworkspace:f[1] # no rounding when in fullscreen
