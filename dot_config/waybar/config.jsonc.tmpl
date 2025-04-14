@@ -358,11 +358,11 @@
     },
 
     "network": {
-        "format-wifi" : "↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}",
-        "format-ethernet": "{ipaddr} ↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}",
+        "format-wifi" : "{essid} ({signalStrength}%)↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}",
+        "format-ethernet": "↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}",
         "tooltip-format": "{ifname} via {gwaddr}",
         "format-disconnected" : "no network",
-        "format-alt": "{essid} ({signalStrength}%): {ipaddr}/{cidr}",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "interval": 5
     },
 
