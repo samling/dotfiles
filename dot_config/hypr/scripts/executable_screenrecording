@@ -28,9 +28,9 @@ elif [ "$1" == "interactivesr" ]; then
   # on the monitor being recorded, or else wf-recorder takes an unusually long time
   # to start/stop recording.
   notify-send "Started screen recording" "Capturing monitor $MONITORNAME ($MONITORDESC)\n\nPress $EXITBIND to end"
-  (wf-recorder -o $MONITORNAME -f $OUTPUT &)
+  coproc (wf-recorder -o $MONITORNAME -f $OUTPUT > /dev/null 2>&1)
 elif [ "$1" == "areasr" ]; then
   notify-send "Started screen area recording" "Press $EXITBIND to end"
-  (wf-recorder -g "$(slurp)" -f $OUTPUT &)
+  coproc (wf-recorder -g "$(slurp)" -f $OUTPUT > /dev/null 2>&1)
 fi
 
