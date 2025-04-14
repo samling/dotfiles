@@ -27,17 +27,19 @@ const urgency = (n: Notifd.Notification) => {
 type Props = {
     setup(self: EventBox): void
     onHoverLost(self: EventBox): void
+    onClick(self: Astal.ClickEvent): void
     notification: Notifd.Notification
 }
 
 export default function Notification(props: Props) {
-    const { notification: n, onHoverLost, setup } = props
+    const { notification: n, onHoverLost, onClick, setup } = props
     const { START, CENTER, END } = Gtk.Align
 
     return <eventbox
         className={`Notification ${urgency(n)}`}
-        setup={setup}
-        onHoverLost={onHoverLost}>
+        onClick={(_, event) => onClick(event)}
+        setup={setup}>
+        {/* onHoverLost={onHoverLost}> */}
         <box vertical>
             <box className="header">
                 {(n.appIcon || n.desktopEntry) && <icon
