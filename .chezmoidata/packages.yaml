@@ -476,6 +476,9 @@ packages:
       arch:
         aur:
           name: papirus-icon-theme
+    patchelf:
+      arch:
+        name: patchelf
     pavucontrol:
       arch:
         name: pavucontrol
