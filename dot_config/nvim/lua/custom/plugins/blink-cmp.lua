@@ -78,7 +78,12 @@ return {
         border = 'rounded',
         draw = {
           padding = 0,
-          columns = { { 'kind_icon', gap = 1 }, { gap = 1, 'label' }, { 'kind', gap = 2 } },
+          treesitter = { 'lsp', 'inline', 'copilot' },
+          columns = {
+            { 'kind_icon', 'kind', gap = 1 },
+            { 'label', 'label_description', gap = 1 },
+            { 'source_name' },
+          },
           components = {
             kind_icon = {
               text = function(ctx)

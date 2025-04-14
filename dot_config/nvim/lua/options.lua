@@ -15,6 +15,9 @@ vim.g.mapleader = ' '
 -- Use term gui colors
 vim.opt.termguicolors = true
 
+-- Read external changes
+vim.opt.autoread = true
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, for help with jumping.
@@ -56,7 +59,14 @@ vim.opt.splitbelow = true
 --  See :help 'list'
 --  and :help 'listchars'
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars:append({
+    tab = '  ',
+    trail = '·',
+    extends = '',
+    precedes = '',
+    nbsp = '␣'
+})
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
