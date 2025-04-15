@@ -15,7 +15,6 @@ menu {
 
 menuitem {
   border-radius: 0px;
-  margin-bottom: 2px;
 }
 
 window#waybar {
@@ -100,10 +99,10 @@ tooltip label {
 
 #workspaces button {
     all: initial; 
-    min-width: 24px;
+    min-width: 20px;
     box-shadow: inset 0 -3px transparent;
     border-radius: 0px;
-    padding: 0px 0px;
+    padding: 0px 2px;
     margin: 0px 2px;
     color: #cdd6f4;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
