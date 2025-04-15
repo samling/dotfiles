@@ -145,6 +145,9 @@ packages:
         name: direnv
       ubuntu:
         name: direnv
+    discord:
+      arch:
+        name: discord
     dnsutils:
       arch:
         name: dnsutils
