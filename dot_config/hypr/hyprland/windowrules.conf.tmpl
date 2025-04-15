@@ -36,9 +36,18 @@ windowrule = size 600 800,title:(Clipse GUI)
 windowrule = center, title:(Clipse GUI)
 windowrule = float, title:(Clipse GUI)
 
+# Configure blueman-manager
+windowrule = float,class:(blueman-manager)
+windowrule = size 600 300,class:(blueman-manager)
+windowrule = move 100%-w-10 5%,class:(blueman-manager)
+
+# Configure pavucontrol
+windowrule = float,class:(org.pulseaudio.pavucontrol)
+windowrule = size 600 300,class:(org.pulseaudio.pavucontrol)
+windowrule = move 100%-w-10 5%,class:(org.pulseaudio.pavucontrol)
+
 # Always start certain applications as floats
 windowrule = float,title:(Bitwarden),class:(chrome-.*)
-windowrule = float,class:(blueman-manager)
 windowrule = float,class:(com.github.hluk.copyq)
 windowrule = float,class:(copyq)
 windowrule = float,class:(feh)
@@ -51,7 +60,6 @@ windowrule = float,class:(nm-openconnect-auth-dialog)
 windowrule = float,class:(nwg-look)
 windowrule = float,class:(org.gnome.*)
 windowrule = float,class:(org.kde.dolphin)
-windowrule = float,class:(org.pulseaudio.pavucontrol)
 windowrule = float,title:(Picture in picture)
 windowrule = float,class:(piper)
 windowrule = float,class:(thunar)
