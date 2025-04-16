@@ -13,7 +13,7 @@ configuration {
   display-window:             " ";
   font:                       "Fira Sans 12";
 	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
-	window-format:              "{w} · {c} · {t}";
+	window-format:              "{w}{c}{t}";
   timeout {
       action: "kb-cancel";
       delay:  0;
@@ -33,7 +33,7 @@ configuration {
   separatorcolor:              @foreground;
 
   background-color:            @base;
-  border-color:                @foreground;
+  border-color:                @lavender;
 
   foreground:                  @text;
   normal-foreground:           @foreground;
