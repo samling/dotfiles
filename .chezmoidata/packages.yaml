@@ -84,6 +84,9 @@ packages:
         name: btop
       darwin:
         name: btop
+    cage:
+      arch:
+        name: cage
     catppuccin-gtk-theme-mocha:
       arch:
         aur:
@@ -289,6 +292,18 @@ packages:
         name: grc
       darwin:
         name: grc
+    greetd:
+      arch:
+        name: greetd
+    greetd-regreet:
+      arch:
+        name: greetd-regreet
+    gtk3:
+      arch:
+        name: gtk3
+    gtk4:
+      arch:
+        name: gtk4
     gvfs:
       arch:
         name: gvfs
