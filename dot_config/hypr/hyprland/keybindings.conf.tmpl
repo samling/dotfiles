@@ -16,11 +16,11 @@ $mainMod = SUPER # Sets "Windows" key as main modifier
 bind = $mainMod, W, killactive,
 
 # Launch file manager (dolphin)
-bind = $mainMod, E, exec, $fileManager
+bind = $mainMod, E, exec, uwsm app -- $fileManager
 
 # Launch application launcher
-bind = $mainMod, space, exec, $rofi -show drun
-#bind = $mainMod, space, exec, $fuzzel
+bind = $mainMod, space, exec, $rofi -show drun -run-command "uwsm app -- {cmd}"
+#bind = $mainMod, space, exec, $fuzzel --launch-prefix='uwsm app -- '
 
 # Maximize window
 bind = $mainMod, F, fullscreenstate, 1,
@@ -81,7 +81,7 @@ bind = CTRL $mainMod, 4, exec, grim -g "$(slurp)" $(xdg-user-dir)/Pictures/Scree
 #bind = CTRL SHIFT, print, exec, grim -g "$(slurp)" $(xdg-user-dir)/Pictures/Screenshots/$(date +'%s_grim.png')
 
 # Exit hyprland
-bind = $mainMod CONTROL ALT, M, exit
+bind = $mainMod CONTROL ALT, M, exec, uwsm stop
 
 # Lock hyprland
 bind = $mainMod CONTROL ALT, L, exec, $hyprlock
