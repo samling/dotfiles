@@ -5,40 +5,41 @@
 # System essentials
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
 
+# Desktop portals
+exec-once = uwsm app -- /usr/lib/xdg-desktop-portal-hyprland
+exec-once = uwsm app -- /usr/lib/xdg-desktop-portal-gtk
+exec-once = uwsm app -- /usr/lib/xdg-desktop-portal
+
 # Start daemons
 #   Some daemons are started by systemd; I don't know when it's appropriate to launch them
 #   this way and when to use systemd, so it's a mix of both for now.
 #   Systemd:
 #     swww-daemon - systemctl --user enable --now swww.service
 #     swww-daemon - systemctl --user enable --now hyprpolkitagent
-exec-once = nm-applet --indicator
-exec-once = blueman-applet
-exec-once = insync start
-exec-once = hypridle
-exec-once = SHOW_DEFAULT_ICON=true hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5 &
-exec-once = ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
+exec-once = uwsm app -- nm-applet --indicator
+exec-once = uwsm app -- insync start
+exec-once = uwsm app -- blueman-applet
+exec-once = uwsm app -- hypridle
+# note that passing in env vars this way *does* work
+exec-once = SHOW_DEFAULT_ICON=true uwsm app -- hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5
+exec-once = uwsm app -- ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
 
 # Clipboard history
 #=== clipse
-exec-once = clipse -listen
+exec-once = uwsm app -- clipse -listen
 #=== cliphist
-#exec-once = wl-paste --type text --watch cliphist store # Stores only text data
-#exec-once = wl-paste --type image --watch cliphist store # Stores only image data
+#exec-once = uwsm app -- wl-paste --type text --watch cliphist store # Stores only text data
+#exec-once = uwsm app -- wl-paste --type image --watch cliphist store # Stores only image data
 #=== copyq
-#exec-once = QT_QPA_PLATFORM=xcb copyq --start-server
+#exec-once = QT_QPA_PLATFORM=xcb uwsm app -- copyq --start-server
 
 # Enable dark mode
 # NOTE: Handled by nwg-look instead
-env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
+#env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
 exec = gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard+default"   # for GTK3 apps # TODO Exec once?
 exec = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps # TODO exec once?
 exec-once = gsettings set org.gnome.desktop.interface cursor-theme BreezeX-RosePine
 exec-once = gsettings set org.gnome.desktop.interface cursor-size 24 
-
-{{ if eq .chassis.type "laptop" }}
-# Desktop portals
-exec-once = ~/.config/hypr/scripts/desktop-portals.sh
-{{ end }}
 
 # Load plugins
 exec-once = hyprpm reload -n
