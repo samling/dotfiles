@@ -12,6 +12,7 @@ export EDITOR="nvim"
 #=== fzf
 # Enable separate tmux pane for fzf
 export FZF_TMUX=0
+export FZF_TMUX_OPTS="-p"
 
 # Set ag to be the default grep tool for fzf
 export FZF_DEFAULT_COMMAND='ag -g ""'
