@@ -1,14 +1,12 @@
-# Note: zsh-syntax-highlighting *must* be first, or at least before autosuggestions and zsh-history-substring-search, otherwise there's some funky recursion going on
+# Must be before zsh-history-substring-search; see https://github.com/zsh-users/zsh-history-substring-search?tab=readme-ov-file#usage
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Note: Seems like zsh-history-substring-search needs to at least come before autosuggestions
-source ~/.zsh/plugins/zsh-history-substring-search.zsh
+source ~/.zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
-# Disabling as this seems to cause some weird issues
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# Enable git auto fetch
 source ~/.zsh/plugins/git-auto-fetch.plugin.zsh
 
-# Enable zsh vi mode
+source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+
 #source ~/.zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh

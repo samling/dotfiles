@@ -20,6 +20,11 @@
   url = "https://github.com/zsh-users/zsh-syntax-highlighting"
   refreshperiod = "168h"
 
+[".zsh/plugins/zsh-history-substring-search"]
+  type = "git-repo"
+  url = "https://github.com/zsh-users/zsh-history-substring-search"
+  refreshperiod = "168h"
+
 [".zsh/plugins/zsh-autosuggestions"]
   type = "git-repo"
   url = "https://github.com/zsh-users/zsh-autosuggestions"
@@ -28,6 +33,11 @@
 [".zsh/plugins/zsh-vi-mode"]
   type = "git-repo"
   url = "https://github.com/jeffreytse/zsh-vi-mode"
+  refreshPeriod = "168h"
+
+[".zsh/plugins/fzf-tab"]
+  type = "git-repo"
+  url = "https://github.com/Aloxaf/fzf-tab"
   refreshPeriod = "168h"
 
 #=== THEMES
