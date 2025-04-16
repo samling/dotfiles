@@ -12,7 +12,8 @@ export EDITOR="nvim"
 #=== fzf
 # Enable separate tmux pane for fzf
 export FZF_TMUX=0
-export FZF_TMUX_OPTS="-p"
+export FZF_TMUX_OPTS=""
+#export FZF_TMUX_OPTS="-p" # enables floating pane for ctrl-T/R commands
 
 # Set ag to be the default grep tool for fzf
 export FZF_DEFAULT_COMMAND='ag -g ""'
@@ -25,10 +26,11 @@ unset FZF_ALT_C_OPTS FZF_CTRL_R_OPTS FZF_DEFAULT_OPTS
 export FZF_ALT_C_OPTS="--height 50% --preview 'ls {1..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
 
 # Ctrl-R opts
-export FZF_CTRL_R_OPTS="--height 100% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
+export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
 
 # Ctrl-T opts
-export FZF_CTRL_T_OPTS="--height 100% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,15' --bind '?:toggle-preview'"
+# export FZF_CTRL_T_OPTS="--height 75% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,15' --bind '?:toggle-preview'"
+export FZF_CTRL_T_OPTS="--height 50%"
 
 # Catppuccin theme
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
