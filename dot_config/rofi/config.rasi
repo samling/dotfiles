@@ -37,10 +37,10 @@ configuration {
 
   foreground:                  @text;
   normal-foreground:           @foreground;
-  active-foreground:           @blue;
+  active-foreground:           @foreground;
   urgent-foreground:           @red;
   alternate-normal-foreground: @foreground;
-  alternate-active-foreground: @blue;
+  alternate-active-foreground: @foreground;
   alternate-urgent-foreground: @red;
   selected-active-foreground:  @background;
   selected-normal-foreground:  @lightbg;
@@ -51,13 +51,13 @@ configuration {
   active-background:           @background;
   urgent-background:           @background;
   selected-normal-background:  @lightfg;
-  selected-active-background:  @blue;
+  selected-active-background:  @foreground;
   selected-urgent-background:  @red;
-  alternate-normal-background: @lightbg;
-  alternate-active-background: @lightbg;
-  alternate-urgent-background: @lightbg;
+  alternate-normal-background: @background;
+  alternate-active-background: @background;
+  alternate-urgent-background: @background;
 
-  handle-color:                @blue;
+  handle-color:                @foreground;
 }
 
 window {
