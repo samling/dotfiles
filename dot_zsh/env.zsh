@@ -11,9 +11,9 @@ export EDITOR="nvim"
 
 #=== fzf
 # Enable separate tmux pane for fzf
-export FZF_TMUX=0
+export FZF_TMUX=0 # '1' will open a new tmux pane for fzf completion
 export FZF_TMUX_OPTS=""
-#export FZF_TMUX_OPTS="-p" # enables floating pane for ctrl-T/R commands
+# export FZF_TMUX_OPTS="-p" # enables floating pane for ctrl-T/R commands
 
 # Set ag to be the default grep tool for fzf
 export FZF_DEFAULT_COMMAND='ag -g ""'
@@ -29,7 +29,7 @@ export FZF_ALT_C_OPTS="--height 50% --preview 'ls {1..} | bat --color=always -pl
 export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
 
 # Ctrl-T opts
-# export FZF_CTRL_T_OPTS="--height 75% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,15' --bind '?:toggle-preview'"
+# export FZF_CTRL_T_OPTS="--height 50% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,10' --bind '?:toggle-preview'"
 export FZF_CTRL_T_OPTS="--height 50%"
 
 # Catppuccin theme
@@ -37,7 +37,10 @@ export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}--color=bg+:#3132
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
 --color=selected-bg:#45475a \
---color=border:#313244,label:#cdd6f4"
+--color=border:#313244,label:#cdd6f4 \
+--info=inline \
+--pointer ▶ \
+--marker ⇒"
 
 # Exact-match rather than fuzzy matching by default (use ' to negate)
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact"
