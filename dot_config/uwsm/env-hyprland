@@ -1,2 +1,6 @@
 export HYPRCURSOR_SIZE=24
 export HYPRCURSOR_THEME=rose-pine-hyprcursor
+
+export XDG_CURRENT_DESKTOP="Hyprland"
+export XDG_SESSION_TYPE="wayland"
+export XDG_SESSION_DESKTOP="Hyprland"
