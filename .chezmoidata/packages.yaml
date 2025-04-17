@@ -3,824 +3,507 @@ packages:
   # PACKAGES #
   ############
   taps:
-    darwin:
+    brew:
       - carvel-dev/carvel
   base:
     aichat:
-      arch:
-        name: aichat
-      darwin:
-        name: aichat
+      pacman: aichat
+      brew: aichat
     asdf:
-      darwin:
-        name: asdf
+      brew: asdf
     appimagelauncher:
-      arch:
-        aur:
-          name: appimagelauncher
+      aur: appimagelauncher
     apple-fonts:
-      arch:
-        aur:
-          name: apple-fonts
+      aur: apple-fonts
     autoconf:
-      arch:
-        name: autoconf
-      darwin:
-        name: autoconf
-      ubuntu:
-        name: autotools-dev
+      pacman: autoconf
+      brew: autoconf
+      apt: autotools-dev
     automake:
-      arch:
-        name: automake
-      darwin:
-        name: automake
-      ubuntu:
-        name: automake
+      pacman: automake
+      brew: automake
+      apt: automake
     aws-cli:
-      arch:
-        name: aws-cli
-      darwin:
-        name: awscli
+      pacman: aws-cli
+      brew: awscli
     aylurs-gtk-shell-git:
-      arch:
-        aur:
-          name: aylurs-gtk-shell-git
+      aur: aylurs-gtk-shell-git
     azure-cli:
-      arch:
-        name: azure-cli
-      darwin:
-        name: azure-cli
+      pacman: azure-cli
+      brew: azure-cli
     base-devel:
-      arch:
-        name: base-devel
-      ubuntu:
-        name: build-essential
+      pacman: base-devel
+      apt: build-essential
     bat:
-      arch:
-        name: bat
-      darwin:
-        name: bat
+      pacman: bat
+      brew: bat
     bison:
-      arch:
-        name: bison
-      darwin:
-        name: bison
-      ubuntu:
-        name: bison
+      pacman: bison
+      brew: bison
+      apt: bison
     blueman:
-      arch:
-        name: blueman
+      pacman: blueman
     bluez-utils:
-      arch:
-        name: bluez-utils
+      pacman: bluez-utils
     brightnessctl:
-      arch:
-        name: brightnessctl
+      pacman: brightnessctl
     bruno:
-      darwin:
-        name: bruno
+      brew: bruno
     btop:
-      arch:
-        name: btop
-      darwin:
-        name: btop
+      pacman: btop
+      brew: btop
     cage:
-      arch:
-        name: cage
+      pacman: cage
     catppuccin-gtk-theme-mocha:
-      arch:
-        aur:
-          name: catppuccin-gtk-theme-mocha
+      aur: catppuccin-gtk-theme-mocha
     cliphist:
-      arch:
-        name: cliphist
+      pacman: cliphist
     clipse:
-      arch:
-        aur:
-          name: clipse
+      aur: clipse
     clipse-gui:
-      arch:
-        aur:
-          name: clipse-gui
+      aur: clipse-gui
     cmake:
-      arch:
-        name: cmake
-      darwin:
-        name: cmake
-      ubuntu:
-        name: cmake
+      pacman: cmake
+      brew: cmake
+      apt: cmake
     copyq:
-      arch:
-        name: copyq
-      ubuntu:
-        name: copyq
+      pacman: copyq
+      apt: copyq
     cpio:
-      arch:
-        name: cpio
-      darwin:
-        name: cpio
-      ubuntu:
-        name: cpio
+      pacman: cpio
+      brew: cpio
+      apt: cpio
     curl:
-      arch:
-        name: curl
-      darwin:
-        name: curl
-      ubuntu:
-        name: curl
+      pacman: curl
+      brew: curl
+      apt: curl
     derailed-k9s:
-      darwin:
-        name: derailed/k9s/k9s
+      brew: derailed/k9s/k9s
     devtools:
-      arch:
-        name: devtools
+      pacman: devtools
     dialog:
-      arch:
-        name: dialog
-      darwin:
-        name: dialog
-      ubuntu:
-        name: dialog
+      pacman: dialog
+      brew: dialog
+      apt: dialog
     direnv:
-      arch:
-        name: direnv
-      darwin:
-        name: direnv
-      ubuntu:
-        name: direnv
+      pacman: direnv
+      brew: direnv
+      apt: direnv
     discord:
-      arch:
-        name: discord
+      pacman: discord
     dnsutils:
-      arch:
-        name: dnsutils
-      ubuntu:
-        name: dnsutils
+      pacman: dnsutils
+      apt: dnsutils
     docker:
-      arch:
-        name: docker
-      darwin:
-        name: docker
-      ubuntu:
-        name: docker.io
+      pacman: docker
+      brew: docker
+      apt: docker.io
     docker-buildx:
-      arch:
-        name: docker-buildx
-      ubuntu:
-        name: docker-buildx
+      pacman: docker-buildx
+      apt: docker-buildx
     duf:
-      arch:
-        name: duf
-      darwin:
-        name: duf
+      pacman: duf
+      brew: duf
     evolution:
-      arch:
-        name: evolution
-      ubuntu:
-        name: evolution
+      pacman: evolution
+      apt: evolution
     eza:
-      arch:
-        name: eza
-      darwin:
-        name: eza
+      pacman: eza
+      brew: eza
     fastfetch:
-      arch:
-        name: fastfetch
+      pacman: fastfetch
     fd:
-      arch:
-        name: fd
-      darwin:
-        name: fd
+      pacman: fd
+      brew: fd
     feh:
-      arch:
-        name: feh
-      ubuntu:
-        name: feh
+      pacman: feh
+      apt: feh
     ffmpeg:
-      darwin:
-        name: ffmpeg
+      brew: ffmpeg
     ffmpegthumbnailer:
-      arch:
-        name: ffmpegthumbnailer
+      pacman: ffmpegthumbnailer
     fira-sans:
-      arch:
-        name: ttf-fira-sans
+      pacman: ttf-fira-sans
     flex:
-      arch:
-        name: flex
-      darwin:
-        name: flex
-      ubuntu:
-        name: flex
+      pacman: flex
+      brew: flex
+      apt: flex
     font-manager:
-      arch:
-        name: font-manager
+      pacman: font-manager
+    fumon:
+      pacman: fumon
     fuzzel:
-      arch:
-        name: fuzzel
+      pacman: fuzzel
     fzf:
-      arch:
-        name: fzf
-      darwin:
-        name: fzf
-      ubuntu:
-        name: fzf
+      pacman: fzf
+      brew: fzf
+      apt: fzf
     gcc:
-      arch:
-        name: gcc
-      darwin:
-        name: gcc
-      ubuntu:
-        name: gcc
+      pacman: gcc
+      brew: gcc
+      apt: gcc
     git-delta:
-      arch:
-        name: git-delta
-      darwin:
-        name: delta
+      pacman: git-delta
+      brew: delta
     github-cli:
-      arch:
-        name: github-cli
+      pacman: github-cli
     gitmux:
-      arch:
-        aur:
-          name: gitmux
-      darwin:
-        name: arl/arl/gitmux
+      aur: gitmux
+      brew: arl/arl/gitmux
     glib2:
-      arch:
-        name: glib2
+      pacman: glib2
     gnome-keyring:
-      arch:
-        name: gnome-keyring
-      ubuntu:
-        name: gnome-keyring
+      pacman: gnome-keyring
+      apt: gnome-keyring
     gnome-power-manager:
-      arch:
-        name: gnome-power-manager
+      pacman: gnome-power-manager
     gnome-themes-extra:
-      arch:
-        name: gnome-themes-extra
-      ubuntu:
-        name: gnome-themes-extra
+      pacman: gnome-themes-extra
+      apt: gnome-themes-extra
     gnupg:
-      arch:
-        name: gnupg
-      darwin:
-        name: gnupg
-      ubuntu:
-        name: gnupg
+      pacman: gnupg
+      brew: gnupg
+      apt: gnupg
     go:
-      arch:
-        name: go
-      darwin:
-        name: go
-      ubuntu:
-        name: golang-go
+      pacman: go
+      brew: go
+      apt: golang-go
     go-yq:
-      arch:
-        name: go-yq
-      darwin:
-        name: yq
+      pacman: go-yq
+      brew: yq
     google-chrome:
-      arch:
-        aur:
-          name: google-chrome
-      ubuntu:
-        name: google-chrome-stable
+      aur: google-chrome
+      apt: google-chrome-stable
     grc:
-      arch:
-        name: grc
-      darwin:
-        name: grc
+      pacman: grc
+      brew: grc
     greetd:
-      arch:
-        name: greetd
+      pacman: greetd
     greetd-regreet:
-      arch:
-        name: greetd-regreet
+      pacman: greetd-regreet
     gtk3:
-      arch:
-        name: gtk3
+      pacman: gtk3
     gtk4:
-      arch:
-        name: gtk4
+      pacman: gtk4
     gvfs:
-      arch:
-        name: gvfs
+      pacman: gvfs
     helm:
-      arch:
-        name: helm
-      darwin:
-        name: helm
+      pacman: helm
+      brew: helm
     hyprswitch:
-      arch:
-        aur:
-          name: hyprswitch
+      aur: hyprswitch
     imagemagick:
-      darwin:
-        name: imagemagick
+      brew: imagemagick
     insync:
-      arch:
-        aur:
-          name: insync
-      ubuntu:
-        name: insync
+      aur: insync
+      apt: insync
     ipcalc:
-      arch:
-        name: ipcalc
+      pacman: ipcalc
     jc:
-      arch:
-        name: jc
-      darwin:
-        name: jc
+      pacman: jc
+      brew: jc
     jq:
-      arch:
-        name: jq
-      darwin:
-        name: jq
-      ubuntu:
-        name: jq
+      pacman: jq
+      brew: jq
+      apt: jq
     keyd:
-      arch:
-        name: keyd
+      pacman: keyd
     k9s:
-      arch:
-        name: k9s
-      darwin:
-        name: derailed/k9s/k9s
+      pacman: k9s
+      brew: derailed/k9s/k9s
     kubectl:
-      arch:
-        name: kubectl
-      darwin:
-        name: kubectl
-      ubuntu:
-        name: kubectl
+      pacman: kubectl
+      brew: kubectl
+      apt: kubectl
     lastpass-cli:
-      darwin:
-        name: lastpass-cli
+      brew: lastpass-cli
     lazygit:
-      arch:
-        name: lazygit
-      darwin:
-        name: jesseduffield/lazygit/lazygit
+      pacman: lazygit
+      brew: jesseduffield/lazygit/lazygit
     libconfig:
-      arch:
-        name: libconfig
+      pacman: libconfig
     libbz2-dev:
-      ubuntu:
-        name: libbz2-dev
+      apt: libbz2-dev
     libevent-core:
-      ubuntu:
-        name: libevent-core-2.1-7
+      apt: libevent-core-2.1-7
     libffi-dev:
-      ubuntu:
-        name: libffi-dev
+      apt: libffi-dev
     libfuse2:
-      ubuntu:
-        name: libfuse2
+      apt: libfuse2
     liblzma-dev:
-      ubuntu:
-        name: liblzma-dev
+      apt: liblzma-dev
     libncurses6:
-      ubuntu:
-        name: libncurses6
+      apt: libncurses6
     libreadline-dev:
-      ubuntu:
-        name: libreadline-dev
+      apt: libreadline-dev
     libsqlite3-dev:
-      ubuntu:
-        name: libsqlite3-dev
+      apt: libsqlite3-dev
     libssl-dev:
-      ubuntu:
-        name: libssl-dev
+      apt: libssl-dev
     libxml2-dev:
-      ubuntu:
-        name: libxml2-dev
+      apt: libxml2-dev
     llvm:
-      arch:
-        name: llvm
-      ubuntu:
-        name: llvm
+      pacman: llvm
+      apt: llvm
     localsend-bin:
-      arch:
-        aur:
-          name: localsend-bin
-      darwin:
-        name: localsend
-      ubuntu:
-        name: localsend
+      aur: localsend-bin
+      brew: localsend
+      apt: localsend
     lsd:
-      arch:
-        name: lsd
-      darwin:
-        name: lsd
+      pacman: lsd
+      brew: lsd
     lua-language-server:
-      arch:
-        name: lua-language-server
+      pacman: lua-language-server
     luarocks:
-      arch:
-        name: luarocks
-      darwin:
-        name: luarocks
-      ubuntu:
-        name: luarocks
+      pacman: luarocks
+      brew: luarocks
+      apt: luarocks
     mardownlint:
-      arch:
-        name: markdownlint
+      pacman: markdownlint
     meson:
-      arch:
-        name: meson
-      ubuntu:
-        name: meson
+      pacman: meson
+      apt: meson
     nerd-fonts:
-      arch:
-        aur:
-          name: nerd-fonts
+      aur: nerd-fonts
     neovim:
-      arch:
-        name: neovim
-      darwin:
-        name: nvim
-      ubuntu:
-        name: nvim
+      pacman: neovim
+      brew: nvim
+      apt: nvim
     networkmanager:
-      arch:
-        name: networkmanager
+      pacman: networkmanager
     network-manager-applet:
-      arch:
-        name: network-manager-applet
+      pacman: network-manager-applet
     nm-connection-editor:
-      arch:
-        name: nm-connection-editor
+      pacman: nm-connection-editor
     nmap:
-      arch:
-        name: nmap
-      darwin:
-        name: nmap
-      ubuntu:
-        name: nmap
+      pacman: nmap
+      brew: nmap
+      apt: nmap
     numix-circle-icon-theme:
-      arch:
-        aur:
-          name: numix-circle-icon-theme-git
+      aur: numix-circle-icon-theme-git
     nvidia-settings:
-      arch:
-        name: nvidia-settings
+      pacman: nvidia-settings
     nvm:
-      arch:
-        aur:
-          name: nvm
-      darwin:
-        name: nvm
+      aur: nvm
+      brew: nvm
     nwg-look:
-      arch:
-        name: nwg-look
+      pacman: nwg-look
     obsidian:
-      arch:
-        name: obsidian
+      pacman: obsidian
     openssl:
-      arch:
-        name: openssl
-      darwin:
-        name: openssl
-      ubuntu:
-        name: openssl
+      pacman: openssl
+      brew: openssl
+      apt: openssl
     p7zip:
-      arch:
-        name: p7zip
-      darwin:
-        name: p7zip
-      ubuntu:
-        name: p7zip
+      pacman: p7zip
+      brew: p7zip
+      apt: p7zip
     pacman-contrib:
-      arch:
-        name: pacman-contrib
+      pacman: pacman-contrib
     papirus-icon-theme:
-      arch:
-        aur:
-          name: papirus-icon-theme
+      aur: papirus-icon-theme
     patchelf:
-      arch:
-        name: patchelf
+      pacman: patchelf
     pavucontrol:
-      arch:
-        name: pavucontrol
-      ubuntu:
-        name: pavucontrol
+      pacman: pavucontrol
+      apt: pavucontrol
     perl-file-mimeinfo:
-      arch:
-        name: perl-file-mimeinfo
+      pacman: perl-file-mimeinfo
     pkg-config:
-      arch:
-        name: pkg-config
-      darwin:
-        name: pkg-config
-      ubuntu:
-        name: pkg-config
+      pacman: pkg-config
+      brew: pkg-config
+      apt: pkg-config
     pyenv:
-      arch:
-        name: pyenv
-      darwin:
-        name: pyenv
-      ubuntu:
-        name: pyenv
+      pacman: pyenv
+      brew: pyenv
+      apt: pyenv
     qt6ct:
-      arch:
-        name: qt6ct
-      ubuntu:
-        name: qt6ct
+      pacman: qt6ct
+      apt: qt6ct
     readline:
-      darwin:
-        name: readline
+      brew: readline
     rename:
-      darwin:
-        name: rename
+      brew: rename
     ripgrep:
-      arch:
-        name: ripgrep
-      darwin:
-        name: rg
+      pacman: ripgrep
+      brew: rg
     serie:
-      arch:
-        name: serie
+      pacman: serie
     signal-desktop:
-      arch:
-        name: signal-desktop
+      pacman: signal-desktop
     sketchybar:
-      darwin:
-        name: FelixKratz/formulae/sketchybar
+      brew: FelixKratz/formulae/sketchybar
     smbclient:
-      arch:
-        name: smbclient
-      ubuntu:
-        name: smbclient
+      pacman: smbclient
+      apt: smbclient
     socat:
-      arch:
-        name: socat
+      pacman: socat
     software-properties-common:
-      ubuntu:
-        name: software-properties-common
+      apt: software-properties-common
     sqlite3:
-      arch:
-        name: sqlite3
-      darwin:
-        name: sqlite3
-      ubuntu:
-        name: sqlite3
+      pacman: sqlite3
+      brew: sqlite3
+      apt: sqlite3
+    syshud:
+      aur: syshud
     systemd-libs:
-      arch:
-        name: systemd-libs
+      pacman: systemd-libs
     tailscale:
-      arch:
-        name: tailscale
+      pacman: tailscale
     tealdeer:
-      darwin:
-        name: tealdeer
+      brew: tealdeer
     terraform:
-      arch:
-        name: terraform
-      darwin:
-        name: hashicorp/tap/terraform
-      ubuntu:
-        name: terraform
+      pacman: terraform
+      brew: hashicorp/tap/terraform
+      apt: terraform
     terragrunt:
-      arch:
-        name: terragrunt
-      darwin:
-        name: terragrunt
+      pacman: terragrunt
+      brew: terragrunt
     thunar:
-      arch:
-        name: thunar
+      pacman: thunar
     thunar-volman:
-      arch:
-        name: thunar-volman
+      pacman: thunar-volman
     tmux:
-      arch:
-        name: tmux
-      darwin:
-        name: tmux
+      pacman: tmux
+      brew: tmux
     traceroute:
-      arch:
-        name: traceroute
-      darwin:
-        name: tcptraceroute
-      ubuntu:
-        name: traceroute
+      pacman: traceroute
+      brew: tcptraceroute
+      apt: traceroute
     ttf-iosevka:
-      arch:
-        aur:
-          name: ttf-iosevka
+      aur: ttf-iosevka
     ttf-iosevka-nerd:
-      arch:
-        name: ttf-iosevka-nerd
+      pacman: ttf-iosevka-nerd
     ttf-ms-win11-auto:
-      arch:
-        aur:
-          name: ttf-ms-win11-auto
+      aur: ttf-ms-win11-auto
     tumbler:
-      arch:
-        name: tumbler
+      pacman: tumbler
+    udiskie:
+      pacman: udiskie
     unzip:
-      arch:
-        name: unzip
-      darwin:
-        name: unzip
-      ubuntu:
-        name: unzip
+      pacman: unzip
+      brew: unzip
+      apt: unzip
     uwsm:
-      arch:
-        name: uwsm
+      pacman: uwsm
     vendir:
-      arch:
-        aur:
-          name: vendir
-      darwin:
-        name: vendir
+      aur: vendir
+      brew: vendir
     vesktop:
-      arch:
-        aur:
-          name: vesktop
-      ubuntu:
-        name: vesktop
+      aur: vesktop
+      apt: vesktop
     viddy:
-      arch:
-        aur:
-          name: viddy
-      darwin:
-        name: viddy
+      aur: viddy
+      brew: viddy
     vim:
-      arch:
-        name: vim
-      ubuntu:
-        name: vim
+      pacman: vim
+      apt: vim
     visual-studio-code-bin:
-      arch:
-        aur:
-          name: visual-studio-code-bin
+      aur: visual-studio-code-bin
     vkv:
-      darwin:
-        name: falcosuessgott/tap/vkv
+      brew: falcosuessgott/tap/vkv
     waybar:
-      arch:
-        name: waybar
+      pacman: waybar
     waybar-module-pacman-updates:
-      arch:
-        aur:
-          name: waybar-module-pacman-updates-git
+      aur: waybar-module-pacman-updates-git
     wezterm:
-      arch:
-        name: wezterm
-      darwin:
-        name: wezterm
-      ubuntu:
-        name: wezterm
+      pacman: wezterm
+      brew: wezterm
+      apt: wezterm
     wf-recorder:
-      arch:
-        name: wf-recorder
+      pacman: wf-recorder
     wget:
-      arch:
-        name: wget
-      darwin:
-        name: wget
-      ubuntu:
-        name: wget
+      pacman: wget
+      brew: wget
+      apt: wget
     wl-clipboard:
-      arch:
-        name: wl-clipboard
+      pacman: wl-clipboard
     wofi-emoji:
-      arch:
-        aur:
-          name: wofi-emoji
+      aur: wofi-emoji
     xclip:
-      arch:
-        name: xclip
-      ubuntu:
-        name: xclip
+      pacman: xclip
+      apt: xclip
     xdotool:
-      arch:
-        name: xdotool
-      ubuntu:
-        name: xdotool
+      pacman: xdotool
+      apt: xdotool
     xmlsec:
-      arch:
-        name: xmlsec
-      ubuntu:
-        name: libxmlsec1-dev
+      pacman: xmlsec
+      apt: libxmlsec1-dev
     xsel:
-      arch:
-        name: xsel
-      ubuntu:
-        name: xsel
+      pacman: xsel
+      apt: xsel
     xz:
-      arch:
-        name: xz
-      darwin:
-        name: xz
-      ubuntu:
-        name: xz
+      pacman: xz
+      brew: xz
+      apt: xz
     ytt:
-      arch:
-        aur:
-          name: ytt
-      darwin:
-        name: ytt
+      aur: ytt
+      brew: ytt
     zellij:
-      arch:
-        name: zellij
-      darwin:
-        name: zellij
+      pacman: zellij
+      brew: zellij
     zlib:
-      darwin:
-        name: zlib
+      brew: zlib
     zlib1g-dev:
-      ubuntu:
-        name: zlib1g-dev
+      apt: zlib1g-dev
     zoxide:
-      arch:
-        name: zoxide
-      darwin:
-        name: zoxide
+      pacman: zoxide
+      brew: zoxide
     zsh:
-      arch:
-        name: zsh
-      darwin:
-        name: zsh
-      ubuntu:
-        name: zsh
+      pacman: zsh
+      brew: zsh
+      apt: zsh
 
   ##########
   # LAPTOP #
   ##########
   laptop:
     impala:
-      arch:
-        name: impala
+      pacman: impala
     inetutils:
-      arch:
-        name: inetutils
-      ubuntu:
-        name: inetutils-telnet
+      pacman: inetutils
+      apt: inetutils-telnet
     iwd:
-      arch:
-        name: iwd
+      pacman: iwd
     powertop:
-      arch:
-        name: powertop
+      pacman: powertop
 
   ############
   # HYPRLAND #
   ############
   hyprland:
     hyprland:
-      arch:
-        name: hyprland
+      pacman: hyprland
     hypridle:
-      arch:
-        name: hypridle
+      pacman: hypridle
     hyprpaper:
-      arch:
-        name: hyprpaper
+      pacman: hyprpaper
     hyprlock:
-      arch:
-        name: hyprlock
+      pacman: hyprlock
     hyprpolkitagent:
-      arch:
-        name: hyprpolkitagent
+      pacman: hyprpolkitagent
     hyprshot:
-      arch:
-        aur:
-          name: hyprshot
+      aur: hyprshot
     hyprpicker:
-      arch:
-        name: hyprpicker
+      pacman: hyprpicker
     hyprsysteminfo:
-      arch:
-        aur:
-          name: hyprsysteminfo
+      aur: hyprsysteminfo
     swww:
-      arch:
-        name: swww
+      pacman: swww
     xdg-desktop-portal-hyprland:
-      arch:
-        name: xdg-desktop-portal-hyprland
+      pacman: xdg-desktop-portal-hyprland
 
   ########
   # SWAY #
   ########
   sway:
     sway:
-      arch:
-        name: sway
+      pacman: sway
     swayidle:
-      arch:
-        name: swayidle
+      pacman: swayidle
     swaylock:
-      arch:
-        name: swaylock
+      pacman: swaylock
     swaybg:
-      arch:
-        name: swaybg
+      pacman: swaybg
     swayosd-git:
-      arch:
-        aur:
-          name: swayosd-git
+      aur: swayosd-git

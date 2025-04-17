@@ -3,31 +3,41 @@
 
 {{- $osID := .host.os_type -}}
 
+{{- /* Map OS type to package manager */}}
+{{- $packageManager := "" -}}
+{{- if eq $osID "arch" -}}
+  {{- $packageManager = "pacman" -}}
+{{- else if eq $osID "darwin" -}}
+  {{- $packageManager = "brew" -}}
+{{- else if eq $osID "ubuntu" -}}
+  {{- $packageManager = "apt" -}}
+{{- end -}}
+
 {{- $packageList := "" -}}
 {{- $aurPackageList := "" -}}
 
 {{- /* Process Base Packages */}}
 {{- range $basePackageName, $basePackageData := .packages.base -}}
-  {{- /* Find package name for the current OS */}}
-  {{- if and ($basePackageData) (index $basePackageData $osID) (index $basePackageData $osID "name") -}}
-    {{- $packageList = printf "%s %s" $packageList (index $basePackageData $osID "name") -}}
+  {{- /* Find package name for the current package manager */}}
+  {{- if and ($basePackageData) (index $basePackageData $packageManager) -}}
+    {{- $packageList = printf "%s %s" $packageList (index $basePackageData $packageManager) -}}
   {{- end -}}
   {{- /* Add Arch AUR packages if applicable */}}
-  {{- if and (eq $osID "arch") ($basePackageData) (index $basePackageData $osID) (index $basePackageData $osID "aur") (index $basePackageData $osID "aur" "name") -}}
-    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $basePackageData $osID "aur" "name") -}}
+  {{- if and (eq $osID "arch") ($basePackageData) (index $basePackageData "aur") -}}
+    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $basePackageData "aur") -}}
   {{- end -}}
 {{- end }}
 
 {{- /* Process Laptop Packages if chassis type is laptop */}}
 {{- if eq .chezmoi.config.data.chassis.type "laptop" }}
   {{- range $laptopPackageName, $laptopPackageData := .packages.laptop -}}
-    {{- /* Find package name for the current OS */}}
-    {{- if and ($laptopPackageData) (index $laptopPackageData $osID) (index $laptopPackageData $osID "name") -}}
-      {{- $packageList = printf "%s %s" $packageList (index $laptopPackageData $osID "name") -}}
+    {{- /* Find package name for the current package manager */}}
+    {{- if and ($laptopPackageData) (index $laptopPackageData $packageManager) -}}
+      {{- $packageList = printf "%s %s" $packageList (index $laptopPackageData $packageManager) -}}
     {{- end -}}
     {{- /* Add Arch AUR packages if applicable */}}
-    {{- if and (eq $osID "arch") ($laptopPackageData) (index $laptopPackageData $osID) (index $laptopPackageData $osID "aur") (index $laptopPackageData $osID "aur" "name") -}}
-      {{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData $osID "aur" "name") -}}
+    {{- if and (eq $osID "arch") ($laptopPackageData) (index $laptopPackageData "aur") -}}
+      {{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData "aur") -}}
     {{- end -}}
   {{- end }}
 {{- end }}
