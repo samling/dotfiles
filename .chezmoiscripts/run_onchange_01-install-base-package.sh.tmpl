@@ -23,8 +23,8 @@
     {{- $packageList = printf "%s %s" $packageList (index $basePackageData $packageManager) -}}
   {{- end -}}
   {{- /* Add Arch AUR packages if applicable */}}
-  {{- if and (eq $osID "arch") ($basePackageData) (index $basePackageData "aur") -}}
-    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $basePackageData "aur") -}}
+  {{- if and (eq $osID "arch") ($basePackageData) (index $basePackageData "yay") -}}
+    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $basePackageData "yay") -}}
   {{- end -}}
 {{- end }}
 
@@ -36,8 +36,8 @@
       {{- $packageList = printf "%s %s" $packageList (index $laptopPackageData $packageManager) -}}
     {{- end -}}
     {{- /* Add Arch AUR packages if applicable */}}
-    {{- if and (eq $osID "arch") ($laptopPackageData) (index $laptopPackageData "aur") -}}
-      {{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData "aur") -}}
+    {{- if and (eq $osID "arch") ($laptopPackageData) (index $laptopPackageData "yay") -}}
+      {{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData "yay") -}}
     {{- end -}}
   {{- end }}
 {{- end }}

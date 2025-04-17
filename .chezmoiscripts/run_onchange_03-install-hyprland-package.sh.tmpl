@@ -20,8 +20,8 @@
 {{- $packageList = printf "%s %s" $packageList (index $hyprPackageData $packageManager) -}}
 {{- end -}}
   {{- /* Add Arch AUR packages if applicable */}}
-  {{- if and (eq $osID "arch") ($hyprPackageData) (index $hyprPackageData "aur") -}}
-    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $hyprPackageData "aur") -}}
+  {{- if and (eq $osID "arch") ($hyprPackageData) (index $hyprPackageData "yay") -}}
+    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $hyprPackageData "yay") -}}
   {{- end -}}
 {{- end }}
 
@@ -30,8 +30,8 @@
 {{- $packageList = printf "%s %s" $packageList (index $swayPackageData $packageManager) -}}
 {{- end -}}
   {{- /* Add Arch AUR packages if applicable */}}
-  {{- if and (eq $osID "arch") ($swayPackageData) (index $swayPackageData "aur") -}}
-    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $swayPackageData "aur") -}}
+  {{- if and (eq $osID "arch") ($swayPackageData) (index $swayPackageData "yay") -}}
+    {{- $aurPackageList = printf "%s %s" $aurPackageList (index $swayPackageData "yay") -}}
   {{- end -}}
 {{- end }}
 

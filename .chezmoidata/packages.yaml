@@ -12,9 +12,9 @@ packages:
     asdf:
       brew: asdf
     appimagelauncher:
-      aur: appimagelauncher
+      yay: appimagelauncher
     apple-fonts:
-      aur: apple-fonts
+      yay: apple-fonts
     autoconf:
       pacman: autoconf
       brew: autoconf
@@ -27,7 +27,7 @@ packages:
       pacman: aws-cli
       brew: awscli
     aylurs-gtk-shell-git:
-      aur: aylurs-gtk-shell-git
+      yay: aylurs-gtk-shell-git
     azure-cli:
       pacman: azure-cli
       brew: azure-cli
@@ -55,13 +55,13 @@ packages:
     cage:
       pacman: cage
     catppuccin-gtk-theme-mocha:
-      aur: catppuccin-gtk-theme-mocha
+      yay: catppuccin-gtk-theme-mocha
     cliphist:
       pacman: cliphist
     clipse:
-      aur: clipse
+      yay: clipse
     clipse-gui:
-      aur: clipse-gui
+      yay: clipse-gui
     cmake:
       pacman: cmake
       brew: cmake
@@ -146,7 +146,7 @@ packages:
     github-cli:
       pacman: github-cli
     gitmux:
-      aur: gitmux
+      yay: gitmux
       brew: arl/arl/gitmux
     glib2:
       pacman: glib2
@@ -170,7 +170,7 @@ packages:
       pacman: go-yq
       brew: yq
     google-chrome:
-      aur: google-chrome
+      yay: google-chrome
       apt: google-chrome-stable
     grc:
       pacman: grc
@@ -189,11 +189,11 @@ packages:
       pacman: helm
       brew: helm
     hyprswitch:
-      aur: hyprswitch
+      yay: hyprswitch
     imagemagick:
       brew: imagemagick
     insync:
-      aur: insync
+      yay: insync
       apt: insync
     ipcalc:
       pacman: ipcalc
@@ -244,7 +244,7 @@ packages:
       pacman: llvm
       apt: llvm
     localsend-bin:
-      aur: localsend-bin
+      yay: localsend-bin
       brew: localsend
       apt: localsend
     lsd:
@@ -262,7 +262,7 @@ packages:
       pacman: meson
       apt: meson
     nerd-fonts:
-      aur: nerd-fonts
+      yay: nerd-fonts
     neovim:
       pacman: neovim
       brew: nvim
@@ -278,11 +278,11 @@ packages:
       brew: nmap
       apt: nmap
     numix-circle-icon-theme:
-      aur: numix-circle-icon-theme-git
+      yay: numix-circle-icon-theme-git
     nvidia-settings:
       pacman: nvidia-settings
     nvm:
-      aur: nvm
+      yay: nvm
       brew: nvm
     nwg-look:
       pacman: nwg-look
@@ -299,7 +299,7 @@ packages:
     pacman-contrib:
       pacman: pacman-contrib
     papirus-icon-theme:
-      aur: papirus-icon-theme
+      yay: papirus-icon-theme
     patchelf:
       pacman: patchelf
     pavucontrol:
@@ -343,7 +343,7 @@ packages:
       brew: sqlite3
       apt: sqlite3
     syshud:
-      aur: syshud
+      yay: syshud
     systemd-libs:
       pacman: systemd-libs
     tailscale:
@@ -369,11 +369,11 @@ packages:
       brew: tcptraceroute
       apt: traceroute
     ttf-iosevka:
-      aur: ttf-iosevka
+      yay: ttf-iosevka
     ttf-iosevka-nerd:
       pacman: ttf-iosevka-nerd
     ttf-ms-win11-auto:
-      aur: ttf-ms-win11-auto
+      yay: ttf-ms-win11-auto
     tumbler:
       pacman: tumbler
     udiskie:
@@ -385,25 +385,25 @@ packages:
     uwsm:
       pacman: uwsm
     vendir:
-      aur: vendir
+      yay: vendir
       brew: vendir
     vesktop:
-      aur: vesktop
+      yay: vesktop
       apt: vesktop
     viddy:
-      aur: viddy
+      yay: viddy
       brew: viddy
     vim:
       pacman: vim
       apt: vim
     visual-studio-code-bin:
-      aur: visual-studio-code-bin
+      yay: visual-studio-code-bin
     vkv:
       brew: falcosuessgott/tap/vkv
     waybar:
       pacman: waybar
     waybar-module-pacman-updates:
-      aur: waybar-module-pacman-updates-git
+      yay: waybar-module-pacman-updates-git
     wezterm:
       pacman: wezterm
       brew: wezterm
@@ -416,8 +416,10 @@ packages:
       apt: wget
     wl-clipboard:
       pacman: wl-clipboard
+    wlogout:
+      yay: wlogout
     wofi-emoji:
-      aur: wofi-emoji
+      yay: wofi-emoji
     xclip:
       pacman: xclip
       apt: xclip
@@ -435,7 +437,7 @@ packages:
       brew: xz
       apt: xz
     ytt:
-      aur: ytt
+      yay: ytt
       brew: ytt
     zellij:
       pacman: zellij
@@ -481,11 +483,11 @@ packages:
     hyprpolkitagent:
       pacman: hyprpolkitagent
     hyprshot:
-      aur: hyprshot
+      yay: hyprshot
     hyprpicker:
       pacman: hyprpicker
     hyprsysteminfo:
-      aur: hyprsysteminfo
+      yay: hyprsysteminfo
     swww:
       pacman: swww
     xdg-desktop-portal-hyprland:
@@ -504,4 +506,4 @@ packages:
     swaybg:
       pacman: swaybg
     swayosd-git:
-      aur: swayosd-git
+      yay: swayosd-git
