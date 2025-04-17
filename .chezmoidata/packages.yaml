@@ -11,8 +11,6 @@ packages:
       brew: aichat
     asdf:
       brew: asdf
-    appimagelauncher:
-      yay: appimagelauncher
     apple-fonts:
       yay: apple-fonts
     autoconf:
@@ -140,6 +138,8 @@ packages:
       pacman: gcc
       brew: gcc
       apt: gcc
+    gearlever:
+      yay: gearlever
     git-delta:
       pacman: git-delta
       brew: delta
