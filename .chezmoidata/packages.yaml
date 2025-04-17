@@ -505,6 +505,3 @@ packages:
       pacman: swaylock
     swaybg:
       pacman: swaybg
-    swayosd-git:
-      yay: swayosd-git
-
