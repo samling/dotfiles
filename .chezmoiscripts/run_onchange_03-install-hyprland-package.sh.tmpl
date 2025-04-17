@@ -37,7 +37,7 @@
 
 {{- if eq $osID "arch" }}
 echo "Installing Hyprland and Sway packages for {{ $osID }}..."
-sudo pacman -S --needed --noconfirm --ask=4 {{ $packageList | trim }}
+sudo pacman -Sy --needed --noconfirm --ask=4 {{ $packageList | trim }}
 yay -S --needed --noconfirm {{ $aurPackageList | trim }}
 {{- else }}
 echo "Hyprland is not supported on {{ $osID }}. Skipping..."

@@ -171,12 +171,19 @@ bindm = $mainMod SHIFT, mouse:272, resizewindow
 bindm = $mainMod, mouse:273, resizewindow
 
 # Laptop multimedia keys with visual feedback from swayosd
-bindel = ,XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise
-bindel = ,XF86AudioLowerVolume, exec, swayosd-client --output-volume lower
-bindel = ,XF86AudioMute, exec, swayosd-client --output-volume mute-toggle
-bindel = ,XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle
-bindel = ,XF86MonBrightnessUp, exec, swayosd-client --brightness=+10
-bindel = ,XF86MonBrightnessDown, exec, swayosd-client --brightness=-10
+bind = ,XF86AudioLowerVolume, exec, pactl -- set-sink-volume 0 -10%
+bind = ,XF86AudioRaiseVolume, exec, pactl -- set-sink-volume 0 +10%
+bind = ,XF86AudioMute, exec, pactl -- set-sink-mute 0 toggle
+bind = ,XF86AudioMicMute, exec, pactl -- set-source-mute 0 toggle
+bind = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
+bind = ,XF86MonBrightnessUp, exec, brightnessctl s +10%
+
+#bindel = ,XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise
+#bindel = ,XF86AudioLowerVolume, exec, swayosd-client --output-volume lower
+#bindel = ,XF86AudioMute, exec, swayosd-client --output-volume mute-toggle
+#bindel = ,XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle
+#bindel = ,XF86MonBrightnessUp, exec, swayosd-client --brightness=+10
+#bindel = ,XF86MonBrightnessDown, exec, swayosd-client --brightness=-10
 
 # Requires playerctl
 bindl = , XF86AudioNext, exec, playerctl next

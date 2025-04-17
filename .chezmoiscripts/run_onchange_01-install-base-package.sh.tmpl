@@ -50,7 +50,7 @@ echo "Processing packages for {{ $osID }}..."
 {{- if eq $osID "arch" }}
   {{- if $packageList }}
     echo "Installing Arch packages: {{ $packageList }}"
-    sudo pacman -S --needed --noconfirm --ask=4 {{ $packageList }}
+    sudo pacman -Sy --needed --noconfirm --ask=4 {{ $packageList }}
   {{- else }}
     echo "No Arch packages to install."
   {{- end }}

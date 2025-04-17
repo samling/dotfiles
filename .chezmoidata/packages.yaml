@@ -130,8 +130,6 @@ packages:
       apt: flex
     font-manager:
       pacman: font-manager
-    fumon:
-      pacman: fumon
     fuzzel:
       pacman: fuzzel
     fzf:

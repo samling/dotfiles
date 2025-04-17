@@ -7,11 +7,12 @@ INIT_SYSTEM=$(ps --no-headers -o comm 1)
 if [ $INIT_SYSTEM == "systemd" ]; then
   #=== System
   sudo systemctl enable --now keyd
-  sudo systemctl enable --now swayosd-libinput-backend
+  #sudo systemctl enable --now swayosd-libinput-backend
   sudo systemctl enable --now tailscaled
 
   #=== User
   systemctl --user enable --now ags
+  systemctl --user enable --now fumon
   systemctl --user enable --now hyprpolkitagent
   systemctl --user enable --now swayosd-server
   systemctl --user enable --now swww
