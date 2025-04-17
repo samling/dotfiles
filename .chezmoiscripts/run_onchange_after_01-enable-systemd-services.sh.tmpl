@@ -11,11 +11,12 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   sudo systemctl enable --now tailscaled
 
   #=== User
-  systemctl --user enable --now ags
   systemctl --user enable --now fumon
-  systemctl --user enable --now hyprpolkitagent
-  systemctl --user enable --now swayosd-server
-  systemctl --user enable --now swww
-  systemctl --user enable --now waybar
+
+  # These are started conditionally when running hyprland as we don't really need or want them in KDE
+  #systemctl --user enable --now hyprpolkitagent
+  #systemctl --user enable --now swww
+  #systemctl --user enable --now ags
+  #systemctl --user enable --now waybar
 fi
 {{- end }}
