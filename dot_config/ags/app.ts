@@ -10,7 +10,7 @@ import NotificationPopups from "./widget/Notification"
 App.start({
     css: style,
     main() {
-        const mainMonitor = App.get_monitors()[3]
+        const mainMonitor = App.get_monitors()[2]
 
         Bar(mainMonitor)
         ControlCenter(mainMonitor)

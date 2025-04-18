@@ -5,10 +5,15 @@
 @use "osd";
 @use "calendar";
 @use "notification";
+@use "tray";
 
 * {
+    all: unset;
+}
+
+label {
     font-family: "Fira Sans";
-    font-size: 12pt;
+    font-size: 14pt;
 }
 
 revealer {
