@@ -16,8 +16,8 @@ exec-once = uwsm app -- /usr/lib/xdg-desktop-portal
 #   Systemd:
 #     swww-daemon - systemctl --user enable --now swww.service
 #     swww-daemon - systemctl --user enable --now hyprpolkitagent
-exec-once = systemctl --user start waybar
-exec-once = systemctl --user start ags
+#exec-once = systemctl --user start waybar
+#exec-once = systemctl --user start ags # deprecated for now in favor of swaync
 exec-once = systemctl --user start hyprpolkitagent
 exec-once = systemctl --user start swww
 exec-once = uwsm app -- nm-applet --indicator

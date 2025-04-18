@@ -50,27 +50,6 @@ tooltip label {
     padding: 0px 8px;
 }
 
-#custom-menu {
-  padding-left: 12px;
-  padding-right: 8px;
-}
-
-#custom-updates {
-  padding-right: 12px;
-}
-
-#custom-menu {
-  color: #0fa9d8;
-}
-
-#custom-screenshot {
-  padding-right: 1px;
-}
-
-#custom-recording {
-  color: #ff4444;
-}
-
 #clock,
 #tray,
 #cpu,
@@ -98,6 +77,23 @@ tooltip label {
     margin-right: 0px;
 }
 
+#custom-menu {
+  padding-left: 12px;
+  padding-right: 8px;
+  color: #0fa9d8;
+}
+
+#custom-notification {
+  padding-right: 12px;
+}
+
+#custom-screenshot {
+  padding-right: 1px;
+}
+
+#custom-recording {
+  color: #ff4444;
+}
 
 #workspaces button {
     all: initial; 

@@ -1,0 +1,49 @@
+@use "theme" as *;
+
+.notification {
+	min-width: 300px;
+	min-height: 100px;
+	background-color: $crust;
+	border: 3px solid $mauve;
+    border-radius: 4px;
+    margin-top: 5px;
+    padding: 5px 15px;
+}
+
+// .notif-header {
+//     margin: 5px;
+// }
+
+.notif-img {
+	background-size: cover;
+	min-width: 100px;
+	min-height: 100px;
+	margin-right: 5px;
+}
+
+.notification .notif-summary {
+	font-size: 20px;
+}
+
+.notif-body {
+    font-style: normal;
+    font-size: 15px;
+
+}
+
+.notif-close {
+	font-size: 30px;
+	margin-left: 10px;
+	margin-top: 5px;
+    color: $red;
+	background-color: $surface1;
+	border-radius: 150%
+}
+
+
+.notif-action {
+	background-color: $surface1;
+	padding: 5px 30px;
+	border-radius: 4px;
+    margin: 10px 0;
+}

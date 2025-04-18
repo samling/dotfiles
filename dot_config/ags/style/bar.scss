@@ -1,0 +1,119 @@
+@use "theme" as *;
+
+.bar {
+    background-color: $base;
+    border: 2px solid #6c7086;
+    border-radius: 0px;
+  }
+
+.rightBox {
+    background-color: transparent;
+    color: #ffffff;
+    margin: 2px;
+    padding: 0 12px;
+    border-radius: 24px;
+}
+
+.clock {
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 14px;
+    margin: 6px;
+    padding: 0 12px;
+    border-radius: 24px;
+  }
+
+.focusedTitle {
+    background-color: transparent;
+    color: $mauve;
+    margin: 6px;
+    padding: 0 12px;
+    border-radius: 24px;
+}
+
+.focusedTitle label {
+    font-size: 14px;
+}
+
+.powerButton {
+    color: rgb(242, 143, 173)
+}
+
+.controlCenterButton {
+    font-size: 14pt;
+    margin: 3px 3px;
+}
+
+.controlCenterButton image {
+    transition: -gtk-icon-transform 0.25s ease-in;
+}
+
+.barIcon {
+    font-size: 12pt;
+    margin: 5px 5px;
+}
+
+.volBar {
+    min-width: 60px;
+}
+
+.volBar trough highlight {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    min-height: 6px;
+}
+
+.volBar trough {
+    background-color: #212121;
+    border-radius: 1rem;
+}
+
+
+.workspaces {
+    color: #ffffff;
+    background-color: $crust-transparent;
+    margin: 6px;
+    padding: 0 6px;
+    border-radius: 24px;
+    font-weight: bolder;
+  }
+  
+.workspaces button {
+    padding: 0 0.4rem;
+    border-radius: 24px;
+    margin: 0 5px;
+    background-color: $surface0;
+    transition: background-color 0.25s ease-in;
+}
+
+.workspaces button:hover, .workspaces button.active:hover{
+    background-color: $mauve;
+}
+
+.workspaces button.focused {
+    background-color: $mauve;
+    margin: 0 3.5px;
+    border-radius: 24px;
+}
+
+.workspaces button.active{
+    background-color: $overlay1
+}
+
+.workspaces button.focused label{
+	min-height: 10px;
+	font-size: 1px;
+    transition: min-width 0.25s linear;
+}
+
+.workspaces label{
+	min-width: 1px;
+	min-height: 11px;
+	font-size: 1px;
+    transition: min-width 0.25s linear;
+}
+
+.cava {
+    min-width: 100px;
+    margin-left: 10px;
+}
