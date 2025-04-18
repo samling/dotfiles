@@ -25,15 +25,15 @@ interface RevealerProps {
 
 function PercentLabel({revealChild}: RevealerProps) {
     return (
-        <revealer
-            transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
-            revealChild={revealChild}
-        >
+        // <revealer
+        //     transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
+        //     revealChild={revealChild}
+        // >
             <label
             className="batPercent"
             label={bind(battery, "percentage").as((p) => `${Math.round(p*100)}%`)}
             />
-        </revealer>
+        // </revealer>
     )
 }
 

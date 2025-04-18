@@ -8,6 +8,10 @@
     background-color: $base-transparent;
     padding: 4px;
     margin: 2px;
+
+    .trayButton {
+        padding: 0px 4px;
+    }
     
     popover, 
     menu,
@@ -51,11 +55,12 @@
                 min-height: 16px;
                 background-color: transparent;
                 border: 1px solid #cccccc;
-                border-radius: 3px;
+                border-radius: 24px;
+                margin-right: 8px;
                 
                 &:checked {
-                    background-color: $mauve;
-                    border-color: $mauve;
+                    background-color: $lavender;
+                    border-color: $lavender;
                 }
             }
             

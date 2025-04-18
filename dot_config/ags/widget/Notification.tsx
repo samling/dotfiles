@@ -59,12 +59,15 @@ export function Notification(props: NotificationProps) {
                 visible={notif.get_actions().length !== 0}
                 spacing={5}
                 >
-                    {notif.get_actions().map((action) => 
+                    {notif.get_actions().map(({label, id}) => 
                         <button className="notif-action"
-                        onClick={() => notif.invoke(action.id)}
+                        onClick={() => {
+                            console.log("invoke", id)
+                            notif.invoke(id)}
+                        }
                         hexpand={true}
                         >
-                            <label label={action.label}/>
+                            <label label={label}/>
                         </button>
                     )}
                 </box>

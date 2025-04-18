@@ -16,11 +16,13 @@ exec-once = uwsm app -- /usr/lib/xdg-desktop-portal
 #   Systemd:
 #     swww-daemon - systemctl --user enable --now swww.service
 #     swww-daemon - systemctl --user enable --now hyprpolkitagent
-#exec-once = systemctl --user start waybar
-#exec-once = systemctl --user start ags # deprecated for now in favor of swaync
+#   Deprecated by ags:
+#     exec-once = systemctl --user start waybar
+#     exec-once = uwsm app -s b -- syshud -p top-right -o v
+#     exec-once = uwsm app -- nm-applet --indicator
 exec-once = systemctl --user start hyprpolkitagent
 exec-once = systemctl --user start swww
-exec-once = uwsm app -- nm-applet --indicator
+exec-once = systemctl --user start ags
 exec-once = uwsm app -- insync start
 exec-once = uwsm app -- blueman-applet
 exec-once = uwsm app -- hypridle
@@ -28,7 +30,6 @@ exec-once = uwsm app -- udiskie --no-automount --smart-tray
 # note that passing in env vars this way *does* work
 exec-once = SHOW_DEFAULT_ICON=true uwsm app -- hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5
 exec-once = uwsm app -- ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr'
-exec-once = uwsm app -s b -- syshud -p top-right -o v
 exec-once = uwsm app -s b fumon
 
 # Clipboard history

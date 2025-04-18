@@ -3,7 +3,7 @@ import Clock from "./modules/Clock"
 import Workspaces from "./modules/Workspaces"
 import FocusedWindow from "./modules/focusedWindow"
 import Volume from "./modules/volume"
-import BatteryWidget from "./modules/battery"
+import BatteryWidget from "./modules/Battery"
 import NetworkIndicator from "./modules/Network"
 import PowerButton from "./modules/PowerButton"
 import MediaIndicator from "./modules/Media"
@@ -36,12 +36,12 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
                 <Cava/>
             </box>
             <box halign={Gtk.Align.END}>
-                <ControlCenterButton/>
-                <NotificationIndicator/>
                 <box className="rightBox">
                     <Volume/>
                     <BatteryWidget/>
                     <Systray/>
+                    <ControlCenterButton/>
+                    <NotificationIndicator/>
                 </box>
             </box>
         </centerbox>
