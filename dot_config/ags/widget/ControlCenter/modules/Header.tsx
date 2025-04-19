@@ -64,7 +64,7 @@ export default function Header() {
                     valign={Gtk.Align.CENTER}
                     hexpand={true}
                     halign={Gtk.Align.END}
-                    onClick={() => execAsync(["adios", "--systemd"])}
+                    onClick={() => execAsync(["wlogout"])}
                     >
                         <icon icon="system-shutdown-symbolic"/>
                     </button>

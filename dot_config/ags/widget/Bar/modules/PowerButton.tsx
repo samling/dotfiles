@@ -4,7 +4,7 @@ import { execAsync } from "astal";
 export default function PowerButton() {
 
     const handleClick = () => {
-        execAsync(["adios", "--systemd"]);
+        execAsync(["wlogout"]);
     }
 
     return (
