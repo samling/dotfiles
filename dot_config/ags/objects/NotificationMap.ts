@@ -8,10 +8,10 @@ import { Variable, bind, timeout } from "astal"
 const TIMEOUT_DELAY = 5000
 
 type NotificationMapOpts = {
-    timeout: number,
-    dismissOnTimeout?: boolean,
-    limit?: number,
-    persist?: boolean
+    timeout: number, // the timeout for the notification in milliseconds
+    dismissOnTimeout?: boolean, // if true, the notification will not remain in the notification history after timeout
+    limit?: number, // the maximum number of notifications to display
+    persist?: boolean // seems to make notifications persistent after timeout
 }
 
 const notifd = Notifd.get_default()
@@ -38,7 +38,7 @@ export default class NotificationMap implements Subscribable {
         this.var.set([...this.map.values()].reverse())
     }
 
-    constructor(options: NotificationMapOpts = {timeout: 0, dismissOnTimeout: false, persist: false}) {
+    constructor(options: NotificationMapOpts = {timeout: TIMEOUT_DELAY, dismissOnTimeout: false, persist: false}) {
 
         /**
          * uncomment this if you want to
@@ -46,7 +46,7 @@ export default class NotificationMap implements Subscribable {
          * note that if the notification has any actions
          * they might not work, since the sender already treats them as resolved
          */
-        notifd.ignoreTimeout = true
+        // notifd.ignoreTimeout = true
 
         this.limit = options.limit;
         this.timeout = options.timeout;

@@ -27,6 +27,17 @@ const urgency = (n: Notifd.Notification) => {
     }
 }
 
+// Escape special characters for GTK markup
+const escapeMarkup = (text: string) => {
+    if (!text) return "";
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
 type NotificationProps = {
     setup(self: EventBox): void
     onHoverLost(self: EventBox): void
@@ -94,7 +105,7 @@ export function Notification(props: NotificationProps) {
                         halign={START}
                         xalign={0}
                         // justifyFill
-                        label={n.body}
+                        label={escapeMarkup(n.body)}
                     />}
                 </box>
             </box>

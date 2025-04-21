@@ -1,5 +1,18 @@
 @use "theme" as *;
 
+// General tooltip styling
+tooltip {
+    background-color: $base;
+    border: 1px solid $surface1;
+    border-radius: 6px;
+    
+    label {
+        font-size: 12pt;
+        padding: 6px;
+        color: $text;
+    }
+}
+
 .bar {
     background-color: $base;
     border: 2px solid #6c7086;
@@ -120,4 +133,15 @@
 .cava {
     min-width: 100px;
     margin-left: 10px;
+}
+
+.updates-tooltip-container {
+    padding: 10px;
+    background-color: $base;
+    border: 1px solid $surface1;
+}
+  
+.updates-tooltip {
+    font-size: 11px;
+    color: $text;
 }

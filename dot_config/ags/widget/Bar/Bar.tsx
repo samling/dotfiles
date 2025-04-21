@@ -11,6 +11,7 @@ import ControlCenterButton from "./modules/ControlCenterButton"
 import Cava from "./modules/Cava"
 import NotificationIndicator from "./modules/NotificationIndicator"
 import Systray from "./modules/Systray"
+import Updates from "./modules/Updates"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
     return <window
@@ -42,6 +43,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
                     <Systray/>
                     <ControlCenterButton/>
                     <NotificationIndicator/>
+                    <Updates/>
                 </box>
             </box>
         </centerbox>
