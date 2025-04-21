@@ -1,6 +1,5 @@
 import { App } from "astal/gtk3"
 import Hyprland from "gi://AstalHyprland"
-import Gtk from "gi://Gtk?version=3.0"
 import Gdk from "gi://Gdk?version=3.0"
 import style from "./style/main.scss"
 import Bar from "./widget/Bar/Bar"
@@ -10,6 +9,15 @@ import CalendarWindow from "./widget/Calendar"
 import OSDWindow from "./widget/OSD"
 import NotificationPopups from "./widget/Notification"
 import { ParseAgsArgs, HyprToGdkMonitor, GetGdkMonitorName } from "./utils"
+
+const addMonitorWindows = (monitor: Gdk.Monitor) => {
+    Bar(monitor)
+    ControlCenter(monitor)
+    MediaWindow(monitor)
+    CalendarWindow(monitor)
+    OSDWindow(monitor)
+    NotificationPopups(monitor)
+}
 
 App.start({
     css: style,
@@ -35,14 +43,6 @@ App.start({
                 throw new Error(`Failed to convert monitor ${userPrimaryMonitor} to GdkMonitor`)
             }
 
-            const addMonitorWindows = (monitor: Gdk.Monitor) => {
-                Bar(monitor)
-                ControlCenter(monitor)
-                MediaWindow(monitor)
-                CalendarWindow(monitor)
-                OSDWindow(monitor)
-                NotificationPopups(monitor)
-            }
             addMonitorWindows(gdkMonitor)
 
             // If our target monitor is disconnected and then reconnected,
@@ -64,6 +64,7 @@ App.start({
             const monitors = App.get_monitors()
             for (const monitor of monitors) {
                 const name = GetGdkMonitorName(monitor)
+                addMonitorWindows(monitor)
                 console.log("monitor added: ", name)
             }
         }

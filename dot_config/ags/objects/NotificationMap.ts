@@ -1,6 +1,6 @@
 import { Astal, Gtk, Gdk } from "astal/gtk3"
 import Notifd from "gi://AstalNotifd"
-import { Notification }from "../widget/Notification"
+import { Notification } from "../widget/Notification"
 import { type Subscribable } from "astal/binding"
 import { Variable, bind, timeout } from "astal"
 
@@ -98,7 +98,9 @@ export default class NotificationMap implements Subscribable {
                     }
                     this.delete(id)
                 }
-            })
+            }),
+            onHoverLost: () => {},
+            onClick: () => {}
         }))
     }
 

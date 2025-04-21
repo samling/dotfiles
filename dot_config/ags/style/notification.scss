@@ -9,28 +9,38 @@ window.NotificationPopups {
     all: unset;
 }
 
-.notification {
-    min-width: 400px;
-    background-color: $base;
-    border: 2pt solid gtkalpha($blue, .8);
-    border-radius: 0px;
-    margin: .5rem 1rem;
-    box-shadow: 2px 3px 8px 0 gtkalpha(#000000, .4);
-    padding: 0;
-}
-
-.notification.critical {
-    border: 2pt solid gtkalpha($red, .4);
-    
-    .notif-header {
-        .app-name {
-            color: gtkalpha($red, .8);
-        }
-        
-        .app-icon {
-            color: gtkalpha($red, .6);
-        }
+eventbox.notification {
+    &:first-child>box {
+        margin-top: 1rem;
     }
+
+    &:last-child>box {
+        margin-bottom: 1rem;
+    }
+
+    >box {
+        min-width: 400px;
+        background-color: $base;
+        border: 2pt solid gtkalpha($blue, .8);
+        border-radius: 0px;
+        margin: .5rem 1rem;
+        box-shadow: 2px 3px 8px 0 gtkalpha(#000000, .4);
+        padding: 0;
+    }
+
+    &.critical>box {
+        border: 2pt solid gtkalpha($red, .4);
+        
+        .notif-header {
+            .app-name {
+                color: gtkalpha($red, .8);
+            }
+            
+            .app-icon {
+                color: gtkalpha($red, .6);
+            }
+        }
+}
 }
 
 .notif-header {

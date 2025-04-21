@@ -1,108 +1,128 @@
+import { GLib } from "astal"
+import { Gtk, Astal } from "astal/gtk3"
+import Gdk from "gi://Gdk?version=3.0"
+import { type EventBox } from "astal/gtk3/widget"
 import Notifd from "gi://AstalNotifd"
+import NotificationMap from "../objects/NotificationMap"
 import { bind } from "astal"
-import { App, Astal, Gdk, Gtk } from "astal/gtk3";
-import NotifiationMap from "../objects/NotificationMap";
-import Pango from "gi://Pango?version=1.0";
+
+const isIcon = (icon: string) =>
+    !!Astal.Icon.lookup_icon(icon)
+
+const fileExists = (path: string) =>
+    GLib.file_test(path, GLib.FileTest.EXISTS)
+
+const time = (time: number, format = "%H:%M") => GLib.DateTime
+    .new_from_unix_local(time)
+    .format(format)!
+
+const urgency = (n: Notifd.Notification) => {
+    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency
+    // match operator when?
+    switch (n.urgency) {
+        case LOW: return "low"
+        case CRITICAL: return "critical"
+        case NORMAL:
+        default: return "normal"
+    }
+}
 
 type NotificationProps = {
+    setup(self: EventBox): void
+    onHoverLost(self: EventBox): void
+    onClick(self: Astal.ClickEvent): void
     notification: Notifd.Notification
-    setup: () => void
 }
 
 export function Notification(props: NotificationProps) {
-    const notif = props.notification;
-    const setup = props.setup;
+    const { notification: n, onHoverLost, onClick, setup } = props
+    const { START, CENTER, END } = Gtk.Align
 
-    const time = new Date(0)
-    time.setUTCSeconds(notif.get_time())
-    const timeString = `${time.getHours()}:${time.getMinutes()}`
-
-    return (
-        <box className={"notification"}
-        setup={setup}
-        >
-            <box vertical>
-                <box className="notif-header">
-                    <label label={notif.get_app_name()}/>
-                    <label label={timeString}
-                    halign={Gtk.Align.END}
+    return <eventbox
+        className={`notification ${urgency(n)}`}
+        onClick={(_, event) => onClick(event)}
+        setup={setup}>
+        {/* onHoverLost={onHoverLost}> */}
+        <box vertical>
+            <box className="notif-header">
+                {(n.appIcon || n.desktopEntry) && <icon
+                    className="app-icon"
+                    visible={Boolean(n.appIcon || n.desktopEntry)}
+                    icon={n.appIcon || n.desktopEntry}
+                />}
+                <label
+                    className="app-name"
+                    halign={START}
+                    truncate
+                    label={n.appName || "Unknown"}
+                />
+                <label
+                    className="time"
                     hexpand
-                    css={"font-size: 12px;"}
+                    halign={END}
+                    label={time(n.time)}
+                />
+                <button className="notif-close" onClicked={() => n.dismiss()}>
+                    <icon icon="window-close-symbolic" />
+                </button>
+            </box>
+            <Gtk.Separator visible />
+            <box className="notif-main">
+                {n.image && fileExists(n.image) && <box
+                    valign={START}
+                    className="notif-img"
+                    css={`background-image: url('${n.image}')`}
+                />}
+                {n.image && isIcon(n.image) && <box
+                    expand={false}
+                    valign={START}
+                    className="notif-img">
+                    <icon icon={n.image} expand halign={CENTER} valign={CENTER} />
+                </box>}
+                <box vertical>
+                    <label
+                        className="notif-summary"
+                        halign={START}
+                        xalign={0}
+                        label={n.summary}
+                        truncate
                     />
-                    <button className="notif-close"
-                    onClick={() => notif.dismiss()}
-                    valign={Gtk.Align.START}
-                    halign={Gtk.Align.END}
-                    >
-                        <icon icon="window-close-symbolic"/>
-                    </button>
-                </box>
-                <box className="notif-main">
-                    <box className={"notif-img"}
-                    css={`background-image: url("${notif.get_image()}");`}
-                    visible={notif.get_image() !== null}
-                    />
-                    <box vertical>
-                        <label className={"notif-summary"} 
-                        label={notif.get_summary()}
-                        halign={Gtk.Align.START}
-                        />
-                        <label className={"notif-body"} 
-                        label={notif.get_body()}
-                        halign={Gtk.Align.START}
-                        wrapMode={Pango.WrapMode.CHAR}
+                    {n.body && <label
+                        className="notif-body"
                         wrap
-                        />
-                    </box>
-                </box>
-                <box
-                visible={notif.get_actions().length !== 0}
-                spacing={5}
-                >
-                    {notif.get_actions().map(({label, id}) => 
-                        <button className="notif-action"
-                        onClick={() => {
-                            console.log("invoke", id)
-                            notif.invoke(id)}
-                        }
-                        hexpand={true}
-                        >
-                            <label label={label}/>
-                        </button>
-                    )}
+                        useMarkup
+                        halign={START}
+                        xalign={0}
+                        // justifyFill
+                        label={n.body}
+                    />}
                 </box>
             </box>
+            {n.get_actions().length > 0 && <box className="notif-action">
+                {n.get_actions().map(({ label, id }) => (
+                    <button
+                        hexpand
+                        onClicked={() => n.invoke(id)}>
+                        <label label={label} halign={CENTER} hexpand />
+                    </button>
+                ))}
+            </box>}
         </box>
-    )
+    </eventbox>
 }
 
-export default function NofificationPopups(gdkmonitor: Gdk.Monitor) {
+export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
+    const { TOP, RIGHT } = Astal.WindowAnchor
+    const notifs = new NotificationMap()
 
-    const notifs = new NotifiationMap({timeout: 5000, dismissOnTimeout: false})
-
-    return (
-        <window
-        name="notifications"
-        namespace="notifications"
-        anchor={Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.TOP}
-        visible={true}
+    return <window
+        className="NotificationPopups"
         gdkmonitor={gdkmonitor}
-        application={App}
-        marginRight={25}
-        >
-            {/* <revealer
-            revealChild={false}
-            transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
-            >    */}
-            <box className="notifications-popup"
-            vertical
-            //@ts-ignore
-            noImplicitDestroy
-            >
-                {bind(notifs)}
-
-            </box>
-            {/* </revealer> */}
-        </window>
-    )
+        exclusivity={Astal.Exclusivity.EXCLUSIVE}
+        anchor={TOP | RIGHT}>
+        {/* @ts-expect-error Linter might not recognize Gdk types correctly */}
+        <box vertical noImplicitDestroy>
+            {bind(notifs)}
+        </box>
+    </window>
 }

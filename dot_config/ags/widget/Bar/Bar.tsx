@@ -33,7 +33,6 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             <box>
                 <Clock/>
                 <MediaIndicator/>
-                {/* TODO: Fix Cava */}
                 <Cava/>
             </box>
             <box halign={Gtk.Align.END}>
