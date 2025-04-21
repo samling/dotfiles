@@ -9,31 +9,8 @@ import MediaWindow from "./widget/MediaWindow/Media"
 import CalendarWindow from "./widget/Calendar"
 import OSDWindow from "./widget/OSD"
 import NotificationPopups from "./widget/Notification"
-import { ParseAgsArgs, HyprToGdkMonitor } from "./utils"
+import { ParseAgsArgs, HyprToGdkMonitor, GetGdkMonitorName } from "./utils"
 
-// let hl = Hyprland.get_default()
-
-// hl.connect("monitor-added", (_, monitor) => {
-//     var id = 0
-//     for (var mt of hl.get_monitors()) {
-//         if (mt.id === monitor.id) {
-//             id = mt.id
-//             break
-//         }
-//     }
-
-//     var flag = true
-//     for (var wd of App.get_windows()) {
-//         if (wd.name === `bar${id}`) {
-//             flag = false
-//             break
-//         }
-//     }
-//     if (!flag) {
-//         App.add_window(Bar(id))
-//     }
-    
-// })
 App.start({
     css: style,
     main() {
@@ -43,45 +20,53 @@ App.start({
         const userArgs = ParseAgsArgs(argv)
 
         // (Optional) This is the user-defined primary monitor name (e.g. "DP-1")
-        const userPrimaryMonitor = userArgs.primaryMonitor
+        const userPrimaryMonitor = userArgs.primaryMonitor ?? null
 
         const hyprland = Hyprland.get_default()
-        const hyprMonitor = hyprland.get_monitor_by_name(userPrimaryMonitor)
-        if (hyprMonitor === null) {
-            throw new Error(`Hyprland monitor name ${userPrimaryMonitor} not found`)
-        }
-        const gdkMonitor = HyprToGdkMonitor(hyprMonitor)
-        if (gdkMonitor === undefined) {
-            throw new Error(`Failed to convert monitor ${userPrimaryMonitor} to GdkMonitor`)
-        }
+        if (userPrimaryMonitor != null) {
+            console.log("User specified a primary monitor: ", userPrimaryMonitor)
 
-        const addMonitorWindows = (monitor: Gdk.Monitor) => {
-            Bar(monitor)
-            // ControlCenter(monitor)
-            // MediaWindow(monitor)
-            // CalendarWindow(monitor)
-            // OSDWindow(monitor)
-            // NotificationPopups(monitor)
-        }
-        addMonitorWindows(gdkMonitor)
+            const hyprMonitor = hyprland.get_monitor_by_name(userPrimaryMonitor)
+            if (hyprMonitor === null) {
+                throw new Error(`Hyprland monitor name ${userPrimaryMonitor} not found`)
+            }
+            const gdkMonitor = HyprToGdkMonitor(hyprMonitor)
+            if (gdkMonitor === undefined) {
+                throw new Error(`Failed to convert monitor ${userPrimaryMonitor} to GdkMonitor`)
+            }
 
-        let gdkDisplay = Gdk.Display.get_default()
-        gdkDisplay?.connect("monitor-added", (_, monitor) => {
-            // This works to readd the bar to any monitor when it is connected.
-            // It does not do anything to suppress the "Object DrawingArea has already been disposed" errors.
-            addMonitorWindows(monitor)
-            // TODO: Test components one by one to find out which one is being improperly disposed of.
-            //          It seems to be one of the middle box widgets in the bar.
-            // TODO: Specifically reconnect to the target monitor.
-            // if (monitor === gdkMonitor) {
-            //     addMonitorWindows(monitor)
-            // }
-        })
-        // gdkDisplay?.connect("monitor-removed", (_, monitor) => {
-        //     if (monitor === gdkMonitor) {
-        //         App.remove_window(App.get_windows()[0])
-        //     }
-        // })
+            const addMonitorWindows = (monitor: Gdk.Monitor) => {
+                Bar(monitor)
+                ControlCenter(monitor)
+                MediaWindow(monitor)
+                CalendarWindow(monitor)
+                OSDWindow(monitor)
+                NotificationPopups(monitor)
+            }
+            addMonitorWindows(gdkMonitor)
+
+            // If our target monitor is disconnected and then reconnected,
+            // we need to re-add the windows to the new monitor.
+            hyprland?.connect("monitor-added", (_, monitor) => {
+                console.log("monitor added: ", monitor)
+                let gdkMonitor = HyprToGdkMonitor(monitor)
+                if (gdkMonitor === undefined) {
+                    throw new Error(`Failed to convert monitor ${monitor} to GdkMonitor`)
+                }
+                const name = GetGdkMonitorName(gdkMonitor)
+                console.log("monitor added: ", name)
+                if (name === userPrimaryMonitor) {
+                    addMonitorWindows(gdkMonitor)
+                }
+            })
+        } else {
+            console.log("No primary monitor specified, adding windows to all monitors")
+            const monitors = App.get_monitors()
+            for (const monitor of monitors) {
+                const name = GetGdkMonitorName(monitor)
+                console.log("monitor added: ", name)
+            }
+        }
     }
 })
 

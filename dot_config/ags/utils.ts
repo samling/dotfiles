@@ -59,7 +59,7 @@ export function HyprToGdkMonitor(monitor: Hyprland.Monitor): Gdk.Monitor | undef
     }
 }
 
-export function getGdkMonitorName(gdkmonitor: Gdk.Monitor): string | null | undefined {
+export function GetGdkMonitorName(gdkmonitor: Gdk.Monitor): string | null | undefined {
     const gdkDisplay = Gdk.Display.get_default();
     const screen = gdkDisplay?.get_default_screen();
     for(let i = 0; i < (gdkDisplay?.get_n_monitors() ?? 0); ++i) {
