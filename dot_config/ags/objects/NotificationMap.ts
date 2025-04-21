@@ -46,7 +46,7 @@ export default class NotificationMap implements Subscribable {
          * note that if the notification has any actions
          * they might not work, since the sender already treats them as resolved
          */
-        // notifd.ignoreTimeout = true
+        notifd.ignoreTimeout = true
 
         this.limit = options.limit;
         this.timeout = options.timeout;
