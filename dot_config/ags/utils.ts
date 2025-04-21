@@ -36,6 +36,21 @@ export function hideWindow(windowName: string, delay: number=300) {
     }
 }
 
+export function ParseAgsArgs (argv: string[]): Record<string, string> {
+    const args: Record<string, string> = {};
+
+    // Assume argv directly contains "key=value" strings from --arg
+    for (const pair of argv) {
+        const [key, ...valueParts] = pair.split('=');
+        if (key && valueParts.length > 0) {
+            args[key] = valueParts.join('='); // Re-join in case value has '='
+        } else if (key) {
+            args[key] = "true"; // Handle flags without values if needed
+        }
+    }
+    return args;
+};
+
 export function HyprToGdkMonitor(monitor: Hyprland.Monitor): Gdk.Monitor | undefined {
     try {
         return Gdk.Display?.get_default()?.get_monitor_at_point(monitor.x + 1, monitor.y + 1);
@@ -43,3 +58,12 @@ export function HyprToGdkMonitor(monitor: Hyprland.Monitor): Gdk.Monitor | undef
         return undefined;
     }
 }
+
+export function getGdkMonitorName(gdkmonitor: Gdk.Monitor): string | null | undefined {
+    const gdkDisplay = Gdk.Display.get_default();
+    const screen = gdkDisplay?.get_default_screen();
+    for(let i = 0; i < (gdkDisplay?.get_n_monitors() ?? 0); ++i) {
+      if(gdkmonitor === gdkDisplay?.get_monitor(i))
+        return screen?.get_monitor_plug_name(i);
+    }
+  }
