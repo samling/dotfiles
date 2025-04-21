@@ -135,6 +135,10 @@ tooltip {
     margin-left: 10px;
 }
 
+.updates-count {
+    font-size: 12px;
+}
+
 .updates-tooltip-container {
     padding: 10px;
     background-color: $base;
@@ -142,6 +146,10 @@ tooltip {
 }
   
 .updates-tooltip {
-    font-size: 11px;
+    font-size: 14px;
     color: $text;
+}
+
+.updates-tooltip-small {
+    font-size: 11px;
 }

@@ -61,6 +61,12 @@ export default function UpdatesWidget() {
                     // Add a custom CSS class to the label
                     const styleContext = label.get_style_context();
                     styleContext.add_class("updates-tooltip");
+
+                    // Scale font size based on content length
+                    const lineCount = text.split('\n').length;
+                    if (lineCount > 50) {
+                        styleContext.add_class("updates-tooltip-small");
+                    }
                     
                     // Set the custom widget as tooltip
                     tooltip.set_custom(label);
@@ -71,7 +77,7 @@ export default function UpdatesWidget() {
         >
             <box>
                 <UpdatesIcon/>
-                <label>{bind(updateCount)}</label>
+                <label className="updates-count">{bind(updateCount)}</label>
             </box>
         </button>
     )
