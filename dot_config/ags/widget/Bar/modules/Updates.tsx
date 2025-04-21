@@ -2,8 +2,8 @@ import { bind, Binding, Variable } from "astal";
 import { Gtk } from "astal/gtk3";
 import Pango from "gi://Pango?version=1.0";
 
-// Poll the checkupdates command every 15 minutes (900000ms)
-const packageUpdates = Variable("").poll(900000, ["checkupdates", "--nocolor", "--nosync"]);
+// Poll the checkupdates command every 5 minutes (300000ms)
+const packageUpdates = Variable("").poll(300000, ["checkupdates", "--nocolor", "--nosync"]);
 
 // Store current package list
 let currentPackageList = "";
