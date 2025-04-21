@@ -1,9 +1,8 @@
-import { Widget } from "astal/gtk3";
+import { App, Widget } from "astal/gtk3";
 import { bind, Variable } from "astal";
 import cairo from "cairo";
 import Cava from "gi://AstalCava";
 import { activePlayer } from "./Media";
-
 const cava = Cava.get_default()!;
 
 export default function Visualizer() {
@@ -11,6 +10,8 @@ export default function Visualizer() {
     const values = bind(cava, "values");
 
     const setup = (self: Widget.DrawingArea) => {
+        // Keep track of the signal connection ID to disconnect later
+        let signalId: number;
 
         self.connect("draw", (_, cr: cairo.Context) => {
             
@@ -31,15 +32,34 @@ export default function Visualizer() {
             })
             cr.stroke();
 
-        })
+        });
 
+        // Connect to the destroy signal to clean up
+        self.connect("destroy", () => {
+            if (signalId) {
+                cava.disconnect(signalId);
+            }
+        });
 
-        cava.connect("notify::values", () => self.queue_draw());
-        cava.set_stereo(true);
+        // Store the signal connection ID when connecting
+        signalId = cava.connect("notify::values", () => {
+            // Check if the widget is still valid before queueing draw
+            if (self && !self.get_parent()) {
+                // Widget is not in widget tree anymore, disconnect
+                cava.disconnect(signalId);
+                return;
+            }
+            
+            try {
+                self.queue_draw();
+            } catch (e) {
+                // Widget might be in the process of being destroyed
+                cava.disconnect(signalId);
+            }
+        });
         
+        cava.set_stereo(true);
     }
-
-
 
     return (
         <box className={"cava"} expand={true} visible={bind(activePlayer)}>

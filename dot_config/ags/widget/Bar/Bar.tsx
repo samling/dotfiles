@@ -30,10 +30,10 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
                 <Workspaces/>
                 <FocusedWindow/>
             </box>
-            {/*  TODO: There's something in one of these middle box widgets causing the "drawingarea has been already indisposed" error */}
             <box>
                 <Clock/>
                 <MediaIndicator/>
+                {/* TODO: Fix Cava */}
                 <Cava/>
             </box>
             <box halign={Gtk.Align.END}>
