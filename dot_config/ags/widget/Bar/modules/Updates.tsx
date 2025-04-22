@@ -11,7 +11,7 @@ const packageUpdates = Variable("");
 const checkForUpdates = () => {
     try {
         // Launch the update check asynchronously
-        execAsync(["checkupdates", "--nocolor", "--nosync"])
+        execAsync(["checkupdates", "--nocolor"]) // removing --nosync to force sync
             .then(output => {
                 // Update the variable with the result
                 packageUpdates.set(output || "");
