@@ -58,6 +58,20 @@ tooltip {
     font-size: 1.2em;
 }
 
+/* Recording indicator styling */
+.stopRecordingButton {
+    -gtk-icon-transform: none;
+}
+
+.stopRecordingButton:hover {
+    -gtk-icon-effect: highlight;
+}
+
+.recordingIndicator {
+    margin: 0;
+    padding: 0;
+}
+
 .clock {
     background-color: transparent;
     color: #ffffff;

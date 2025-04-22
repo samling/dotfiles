@@ -64,15 +64,43 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                         
                         <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot areasscb`)}>
                             <box spacing={8}>
-                                <label></label>
+                                <label></label>
                                 <label>Take an area screenshot (clipboard only)</label>
                             </box>
                         </button>
                         
                         <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Pictures/Screenshots`)}>
                             <box spacing={8}>
-                                <label></label>
+                                <label></label>
                                 <label>Open screenshot directory</label>
+                            </box>
+                        </button>
+                        
+                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording sr`)}>
+                            <box spacing={8}>
+                                <label>󰹑</label>
+                                <label>Take a screen recording</label>
+                            </box>
+                        </button>
+                        
+                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording interactivesr`)}>
+                            <box spacing={8}>
+                                <label>󱣴</label>
+                                <label>Take a screen recording of a chosen monitor</label>
+                            </box>
+                        </button>
+                        
+                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording areasr`)}>
+                            <box spacing={8}>
+                                <label>󱣴</label>
+                                <label>Take a screen recording of a selected area</label>
+                            </box>
+                        </button>
+                        
+                        <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Videos/Recordings`)}>
+                            <box spacing={8}>
+                                <label></label>
+                                <label>Open screen recording directory</label>
                             </box>
                         </button>
                     </box>
