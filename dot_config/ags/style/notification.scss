@@ -40,7 +40,22 @@ eventbox.notification {
                 color: gtkalpha($red, .6);
             }
         }
+    }
 }
+
+// Progress bar styling
+.blue-progress-bar {
+    trough {
+        background-color: transparent;
+    }
+    
+    progress {
+        background-color: #89b4fa;
+        border-radius: 2px;
+    }
+    
+    min-height: 4px;
+    border-radius: 2px;
 }
 
 .notif-header {

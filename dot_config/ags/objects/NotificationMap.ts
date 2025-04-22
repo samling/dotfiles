@@ -11,7 +11,8 @@ type NotificationMapOpts = {
     timeout: number, // the timeout for the notification in milliseconds
     dismissOnTimeout?: boolean, // if true, the notification will not remain in the notification history after timeout
     limit?: number, // the maximum number of notifications to display
-    persist?: boolean // seems to make notifications persistent after timeout
+    persist?: boolean, // seems to make notifications persistent after timeout
+    showProgressBar?: boolean // whether to show the progress bar (mainly for popups)
 }
 
 const notifd = Notifd.get_default()
@@ -24,6 +25,7 @@ export default class NotificationMap implements Subscribable {
     private limit: number | undefined = undefined;
     private timeout: number = 0;
     private dismissOnTimeout: boolean | undefined = undefined;
+    private showProgressBar: boolean = false;
     
 
     // the underlying map to keep track of id widget pairs
@@ -38,7 +40,7 @@ export default class NotificationMap implements Subscribable {
         this.var.set([...this.map.values()].reverse())
     }
 
-    constructor(options: NotificationMapOpts = {timeout: TIMEOUT_DELAY, dismissOnTimeout: false, persist: false}) {
+    constructor(options: NotificationMapOpts = {timeout: TIMEOUT_DELAY, dismissOnTimeout: false, persist: false, showProgressBar: false}) {
 
         /**
          * uncomment this if you want to
@@ -51,6 +53,7 @@ export default class NotificationMap implements Subscribable {
         this.limit = options.limit;
         this.timeout = options.timeout;
         this.dismissOnTimeout = options.dismissOnTimeout;
+        this.showProgressBar = options.showProgressBar ?? false;
 
         if (options.persist)
             notifd.get_notifications().forEach((notif) => {
@@ -100,7 +103,9 @@ export default class NotificationMap implements Subscribable {
                 }
             }),
             onHoverLost: () => {},
-            onClick: () => {}
+            onClick: () => {},
+            showProgressBar: this.showProgressBar,
+            onPopupTimeoutDone: this.showProgressBar ? (() => this.delete(id)) : undefined
         }))
     }
 

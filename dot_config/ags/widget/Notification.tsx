@@ -1,10 +1,11 @@
-import { GLib } from "astal"
+import { GLib, Variable, timeout } from "astal"
 import { Gtk, Astal } from "astal/gtk3"
 import Gdk from "gi://Gdk?version=3.0"
 import { type EventBox } from "astal/gtk3/widget"
 import Notifd from "gi://AstalNotifd"
 import NotificationMap from "../objects/NotificationMap"
 import { bind } from "astal"
+import ProgressBar from "./ProgressBar"
 
 const isIcon = (icon: string) =>
     !!Astal.Icon.lookup_icon(icon)
@@ -43,18 +44,43 @@ type NotificationProps = {
     onHoverLost(self: EventBox): void
     onClick(self: Astal.ClickEvent): void
     notification: Notifd.Notification
+    onPopupTimeoutDone?: (remove: () => void) => void
+    showProgressBar?: boolean
 }
 
 export function Notification(props: NotificationProps) {
-    const { notification: n, onHoverLost, onClick, setup } = props
+    const { notification: n, onHoverLost, onClick, setup, onPopupTimeoutDone, showProgressBar = false } = props
     const { START, CENTER, END } = Gtk.Align
+
+    let popupTimeout: Variable<number>|undefined
+    
+    // Set timeout duration in ms
+    const timeoutDuration = 5000
+    const rate = 50
+    const speed = rate / timeoutDuration
+    
+    // Create a variable that goes from 1 to 0 over the timeout duration
+    popupTimeout = Variable(1).poll(rate, (time) => Math.max(time - speed, 0.0))
+    
+    // Set up the timeout to trigger the callback when done
+    if (showProgressBar) {
+        timeout(timeoutDuration, () => {
+            onPopupTimeoutDone?.(() => {
+                // This function will be called to remove the notification
+                n.dismiss()
+            })
+        })
+    }
 
     return <eventbox
         className={`notification ${urgency(n)}`}
         onClick={(_, event) => onClick(event)}
-        setup={setup}>
+        onDestroy={() => popupTimeout?.drop()}
+        setup={setup}
+        css="min-height: 50px">
         {/* onHoverLost={onHoverLost}> */}
-        <box vertical>
+        <box vertical
+            css="min-height: 50px;">
             <box className="notif-header">
                 {(n.appIcon || n.desktopEntry) && <icon
                     className="app-icon"
@@ -118,13 +144,30 @@ export function Notification(props: NotificationProps) {
                     </button>
                 ))}
             </box>}
+            {showProgressBar && (
+                <box
+                    className='popup_timeout'
+                    visible={true}
+                    css="min-height: 6px; margin: 4px 0px; padding: 0px 8px;">
+                    <ProgressBar
+                        className='blue-progress-bar'
+                        fraction={popupTimeout()}
+                        valign={Gtk.Align.CENTER}
+                        hexpand={true}
+                        css="min-height: 4px; border-radius: 2px;"
+                    />
+                </box>
+            )}
         </box>
     </eventbox>
 }
 
 export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
     const { TOP, RIGHT } = Astal.WindowAnchor
-    const notifs = new NotificationMap()
+    const notifs = new NotificationMap({
+        showProgressBar: true,
+        timeout: 5000
+    })
 
     return <window
         className="NotificationPopups"

@@ -64,7 +64,9 @@ export default function Header() {
                     valign={Gtk.Align.CENTER}
                     hexpand={true}
                     halign={Gtk.Align.END}
-                    onClick={() => execAsync(["wlogout"])}
+                    onClick={() => execAsync(["wlogout"]).catch(error => 
+                        console.log(`Failed to execute wlogout: ${error.message}`)
+                    )}
                     >
                         <icon icon="system-shutdown-symbolic"/>
                     </button>

@@ -1,9 +1,48 @@
-import { bind, Binding, Variable } from "astal";
+import { bind, Binding, Variable, execAsync } from "astal";
 import { Gtk } from "astal/gtk3";
 import Pango from "gi://Pango?version=1.0";
+import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 
-// Poll the checkupdates command every 5 minutes (300000ms)
-const packageUpdates = Variable("").poll(300000, ["checkupdates", "--nocolor", "--nosync"]);
+// Create a variable that will be updated with package information
+const packageUpdates = Variable("");
+
+// Function to check for updates asynchronously
+const checkForUpdates = () => {
+    try {
+        // Launch the update check asynchronously
+        execAsync(["checkupdates", "--nocolor", "--nosync"])
+            .then(output => {
+                // Update the variable with the result
+                packageUpdates.set(output || "");
+            })
+            .catch(error => {
+                // Silently handle errors by setting empty output
+                packageUpdates.set(error.message);
+            });
+    } catch (error) {
+        // Handle any other errors
+        packageUpdates.set("");
+    }
+};
+
+// Set up a periodic check using GLib.timeout_add_seconds
+const setupUpdateCheck = () => {
+    // Check immediately on startup (with a small delay to let the system settle)
+    GLib.timeout_add(GLib.PRIORITY_DEFAULT, 2000, () => {
+        checkForUpdates();
+        return false; // Run once
+    });
+    
+    // Check every 5 minutes (300 seconds)
+    GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 300, () => {
+        checkForUpdates();
+        return true; // Return true to keep the timeout active
+    });
+};
+
+// Set up the initial update check
+setupUpdateCheck();
 
 // Store current package list
 let currentPackageList = "";

@@ -68,11 +68,23 @@ export function NotificationMenu() {
                         <icon icon="window-close-symbolic"/>
                     </button>
                 </box>
-                <box className="notifs-recent"
-                //@ts-ignore
-                vertical noImplicitDestroy>
-                    {bind(notifs)}
+                <box className="scrollbox-container" 
+                    vexpand={true}
+                    css="min-height: 200px;">
+                    <box className="notifs-all"
+                        vexpand={true}
+                        //@ts-ignore
+                        vertical noImplicitDestroy>
+                        {bind(notifs)}
+                    </box>
                 </box>
+                <label
+                    label="No Notifications"
+                    visible={bind(notifs).as((notifs) => notifs.length === 0)}
+                    halign={Gtk.Align.CENTER}
+                    hexpand
+                    css={"margin: 15px 0"}
+                />
             </box>
         </Menu>
     )

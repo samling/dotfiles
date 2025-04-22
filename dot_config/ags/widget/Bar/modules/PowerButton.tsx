@@ -4,7 +4,10 @@ import { execAsync } from "astal";
 export default function PowerButton() {
 
     const handleClick = () => {
-        execAsync(["wlogout"]);
+        execAsync(["wlogout"])
+            .catch(error => {
+                console.log(`Failed to execute wlogout: ${error.message}`);
+            });
     }
 
     return (

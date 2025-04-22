@@ -90,8 +90,10 @@ export function WifiMenu() {
                         onClick={() => {
                             if (active !== null && active.ssid === ap.ssid)
                                 execAsync(`nmcli c down ${ap.ssid}`)
+                                    .catch(error => console.log(`Failed to disconnect from ${ap.ssid}: ${error.message}`))
                             else
                                 execAsync(`nmcli d wifi connect ${ap.ssid}`)
+                                    .catch(error => console.log(`Failed to connect to ${ap.ssid}: ${error.message}`))
                         }}
                         >
                             <box>
