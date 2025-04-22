@@ -20,11 +20,12 @@ exec-once = uwsm app -- /usr/lib/xdg-desktop-portal
 #     exec-once = systemctl --user start waybar
 #     exec-once = uwsm app -s b -- syshud -p top-right -o v
 #     exec-once = uwsm app -- nm-applet --indicator
+#   Other:
+#     exec-once = uwsm app -- insync start - starts via xdg-autostart
 exec-once = uwsm app -- astal-tray -d
 exec-once = systemctl --user start hyprpolkitagent
 exec-once = systemctl --user start swww
 exec-once = systemctl --user start ags
-exec-once = uwsm app -- insync start
 exec-once = uwsm app -- blueman-applet
 exec-once = uwsm app -- hypridle
 exec-once = uwsm app -- udiskie --no-automount --smart-tray
