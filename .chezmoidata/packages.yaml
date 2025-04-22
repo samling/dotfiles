@@ -79,6 +79,8 @@ packages:
       pacman: curl
       brew: curl
       apt: curl
+    d-spy: # d-bus inspection tool
+      pacman: d-spy
     derailed-k9s:
       brew: derailed/k9s/k9s
     devtools:
