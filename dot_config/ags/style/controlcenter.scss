@@ -6,7 +6,14 @@
     border: 2px solid #6c7086;
     border-radius: 0px;
     font-weight: bolder;
+}
+
+.controlcenter {
     min-width: 295px;
+}
+
+.menu {
+    min-width: 400px;
 }
 
 .toggles button, .sliders-box button{
@@ -98,8 +105,6 @@
     background-color: $surface1;
     border-radius: 6px;
     min-height: 25px;
-
-
 }
 
 .battery-progress trough block.filled {

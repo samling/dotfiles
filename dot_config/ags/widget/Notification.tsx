@@ -6,6 +6,7 @@ import Notifd from "gi://AstalNotifd"
 import NotificationMap from "../objects/NotificationMap"
 import { bind } from "astal"
 import ProgressBar from "./ProgressBar"
+import Pango from "gi://Pango?version=1.0"
 
 const isIcon = (icon: string) => {
     // Skip checking if icon is undefined/empty
@@ -89,7 +90,7 @@ export function Notification(props: NotificationProps) {
         onClick={(_, event) => onClick(event)}
         onDestroy={() => popupTimeout?.drop()}
         setup={setup}
-        css="min-height: 50px">
+        css="min-height: 50px;">
         {/* onHoverLost={onHoverLost}> */}
         <box vertical
             css="min-height: 50px;">
@@ -128,21 +129,23 @@ export function Notification(props: NotificationProps) {
                     className="notif-img">
                     <icon icon={n.image} expand halign={CENTER} valign={CENTER} />
                 </box>}
-                <box vertical>
+                <box vertical hexpand>
                     <label
                         className="notif-summary"
                         halign={START}
                         xalign={0}
                         label={n.summary}
                         truncate
+                        wrap
                     />
                     {n.body && <label
                         className="notif-body"
                         wrap
+                        wrapMode={Pango.WrapMode.WORD}
+                        ellipsize={Pango.EllipsizeMode.END}
                         useMarkup
                         halign={START}
                         xalign={0}
-                        // justifyFill
                         label={escapeMarkup(n.body)}
                     />}
                 </box>
@@ -150,7 +153,6 @@ export function Notification(props: NotificationProps) {
             {n.get_actions().length > 0 && <box className="notif-action">
                 {n.get_actions().map(({ label, id }) => (
                     <button
-                        hexpand
                         onClicked={() => n.invoke(id)}>
                         <label label={label} halign={CENTER} hexpand />
                     </button>

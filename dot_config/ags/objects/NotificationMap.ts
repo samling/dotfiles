@@ -36,7 +36,7 @@ export default class NotificationMap implements Subscribable {
     private var: Variable<Array<Gtk.Widget>> = Variable([])
 
     // notify subscribers to rerender when state changes
-    private notifiy() {
+    private notify() {
         this.var.set([...this.map.values()].reverse())
     }
 
@@ -84,7 +84,7 @@ export default class NotificationMap implements Subscribable {
         // in case of replacecment destroy previous widget
         this.map.get(key)?.destroy()
         this.map.set(key, value)
-        this.notifiy()
+        this.notify()
     }
 
     private create(id: number) {
@@ -103,7 +103,9 @@ export default class NotificationMap implements Subscribable {
                 }
             }),
             onHoverLost: () => {},
-            onClick: () => {},
+            onClick: (event) => {
+                // Add onclick handler for notification if needed
+            },
             showProgressBar: this.showProgressBar,
             onPopupTimeoutDone: this.showProgressBar ? (() => this.delete(id)) : undefined
         }))
@@ -112,7 +114,7 @@ export default class NotificationMap implements Subscribable {
     private delete(key: number) {
         this.map.get(key)?.destroy()
         this.map.delete(key)
-        this.notifiy()
+        this.notify()
     }
 
     public disposeAll() {

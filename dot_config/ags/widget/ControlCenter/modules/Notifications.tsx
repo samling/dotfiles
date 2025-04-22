@@ -1,15 +1,16 @@
 import { Gtk } from "astal/gtk3"
-import NotifictionMap from "../../../objects/NotificationMap"
+import NotificationMap from "../../../objects/NotificationMap"
 import { bind } from "astal"
 import { Menu } from "./ToggleButton"
 import { controlCenterStackWidget } from "../ControlCenter"
 import Notifd from "gi://AstalNotifd?version=0.1"
+import Pango from "gi://Pango?version=1.0"
 
 const notifd = Notifd.get_default()
 
 export function RecentNotifications() {
 
-    const notifs = new NotifictionMap({timeout: 0, limit: 3, persist: true}) 
+    const notifs = new NotificationMap({timeout: 0, limit: 3, persist: true}) 
 
     return (
 
@@ -35,8 +36,7 @@ export function RecentNotifications() {
             />
             <box className="notifs-recent"
             //@ts-ignore
-            vertical noImplicitDestroy
-            >
+            vertical noImplicitDestroy>
                 {bind(notifs)}
             </box>
         </box>
@@ -46,7 +46,7 @@ export function RecentNotifications() {
 
 export function NotificationMenu() {
 
-    const notifs = new NotifictionMap({timeout: 0, persist: true})
+    const notifs = new NotificationMap({timeout: 0, persist: true})
 
     return (
         <Menu name="notifications"
@@ -68,23 +68,11 @@ export function NotificationMenu() {
                         <icon icon="window-close-symbolic"/>
                     </button>
                 </box>
-                <box className="scrollbox-container" 
-                    vexpand={true}
-                    css="min-height: 200px;">
-                    <box className="notifs-all"
-                        vexpand={true}
-                        //@ts-ignore
-                        vertical noImplicitDestroy>
-                        {bind(notifs)}
-                    </box>
+                <box className="notifs-recent"
+                //@ts-ignore
+                vertical noImplicitDestroy>
+                    {bind(notifs)}
                 </box>
-                <label
-                    label="No Notifications"
-                    visible={bind(notifs).as((notifs) => notifs.length === 0)}
-                    halign={Gtk.Align.CENTER}
-                    hexpand
-                    css={"margin: 15px 0"}
-                />
             </box>
         </Menu>
     )
