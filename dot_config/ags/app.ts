@@ -8,11 +8,13 @@ import MediaWindow from "./widget/MediaWindow/Media"
 import CalendarWindow from "./widget/Calendar"
 import OSDWindow from "./widget/OSD"
 import NotificationPopups from "./widget/Notification"
+import ActionMenu from "./widget/ActionMenu"
 import { ParseAgsArgs, HyprToGdkMonitor, GetGdkMonitorName } from "./utils"
 
 const addMonitorWindows = (monitor: Gdk.Monitor) => {
     Bar(monitor)
     ControlCenter(monitor)
+    ActionMenu(monitor)
     MediaWindow(monitor)
     CalendarWindow(monitor)
     OSDWindow(monitor)

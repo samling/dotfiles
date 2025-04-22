@@ -21,12 +21,12 @@ function TrackInfo({player}: MediaWidgetProps) {
             justify={Gtk.Justification.LEFT}
             xalign={0}
             ellipsize={Pango.EllipsizeMode.END}
-            label={bind(player, "title")}
+            label={bind(player, "title").as(title => title?.length > 0 ? title : "Unknown title")}
             />
             <label className="artist-name"
             justify={Gtk.Justification.LEFT}
             xalign={0}
-            label={bind(player, "artist")}
+            label={bind(player, "artist").as(artist => artist?.length > 0 ? artist : "Unknown artist")}
             />
         </box>
     )

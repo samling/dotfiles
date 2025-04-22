@@ -5,7 +5,7 @@ tooltip {
     background-color: $base;
     border: 1px solid $surface1;
     border-radius: 6px;
-    
+
     label {
         font-size: 12pt;
         padding: 6px;
@@ -17,13 +17,45 @@ tooltip {
     background-color: $base;
     border: 2px solid #6c7086;
     border-radius: 0px;
-  }
+}
 
 .rightBox {
     background-color: transparent;
     color: #ffffff;
     border-radius: 24px;
     margin-right: 10px;
+}
+
+.leftBox {
+    background-color: transparent;
+    color: #ffffff;
+    border-radius: 24px;
+    margin-left: 10px;
+}
+
+.actionMenuBox {
+    background-color: $base;
+    border: 2px solid #6c7086;
+    border-radius: 0px;
+    padding: 10px;
+}
+
+.actionMenuBox button {
+    transition: background-color 0.25s ease-in;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.actionMenuBox button:hover {
+    background-color: #45475a;
+}
+
+.actionMenuBox label {
+    font-size: 1em;
+}
+
+.actionMenuIcon {
+    font-size: 1.2em;
 }
 
 .clock {
@@ -33,7 +65,7 @@ tooltip {
     margin: 6px;
     padding: 0 12px;
     border-radius: 24px;
-  }
+}
 
 .focusedTitle {
     background-color: transparent;
@@ -92,8 +124,8 @@ tooltip {
     padding: 0 6px;
     border-radius: 24px;
     font-weight: bolder;
-  }
-  
+}
+
 .workspaces button {
     all: unset;
     padding: 0 0.4rem;
@@ -103,7 +135,8 @@ tooltip {
     transition: background-color 0.25s ease-in;
 }
 
-.workspaces button:hover, .workspaces button.active:hover{
+.workspaces button:hover,
+.workspaces button.active:hover {
     background-color: $mauve;
 }
 
@@ -120,13 +153,13 @@ tooltip {
     border-radius: 24px;
 }
 
-.workspaces button.active{
+.workspaces button.active {
     background-color: $overlay1
 }
 
-.workspaces button.focused label{
-	min-height: 10px;
-	font-size: 1px;
+.workspaces button.focused label {
+    min-height: 10px;
+    font-size: 1px;
     transition: min-width 0.25s linear;
 }
 
@@ -138,10 +171,10 @@ tooltip {
     transition: min-width 0.25s linear;
 }
 
-.workspaces label{
-	min-width: 1px;
-	min-height: 11px;
-	font-size: 1px;
+.workspaces label {
+    min-width: 1px;
+    min-height: 11px;
+    font-size: 1px;
     transition: min-width 0.25s linear;
 }
 
@@ -159,7 +192,7 @@ tooltip {
     background-color: $base;
     border: 1px solid $surface1;
 }
-  
+
 .updates-tooltip {
     font-size: 14px;
     color: $text;

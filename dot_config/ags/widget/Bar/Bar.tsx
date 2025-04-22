@@ -1,4 +1,5 @@
 import { App, Astal, Gtk, Gdk } from "astal/gtk3"
+import ActionMenuButton from "./modules/ActionMenuButton"
 import Clock from "./modules/Clock"
 import Workspaces from "./modules/Workspaces"
 import FocusedWindow from "./modules/focusedWindow"
@@ -27,7 +28,8 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
         marginBottom={0}
         application={App}>
         <centerbox>
-            <box>
+            <box className="leftBox">
+                <ActionMenuButton/>
                 <Workspaces/>
                 <FocusedWindow/>
             </box>
