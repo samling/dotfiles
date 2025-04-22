@@ -31,7 +31,8 @@ App.start({
         const userPrimaryMonitor = userArgs.primaryMonitor ?? null
 
         const hyprland = Hyprland.get_default()
-        if (userPrimaryMonitor != null) {
+        console.log("userPrimaryMonitor: ", userPrimaryMonitor)
+        if (userPrimaryMonitor != null && userPrimaryMonitor != "") {
             console.log("User specified a primary monitor: ", userPrimaryMonitor)
 
             const hyprMonitor = hyprland.get_monitor_by_name(userPrimaryMonitor)
