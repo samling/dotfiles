@@ -7,8 +7,15 @@ import NotificationMap from "../objects/NotificationMap"
 import { bind } from "astal"
 import ProgressBar from "./ProgressBar"
 
-const isIcon = (icon: string) =>
-    !!Astal.Icon.lookup_icon(icon)
+const isIcon = (icon: string) => {
+    // Skip checking if icon is undefined/empty
+    if (!icon) return false
+    
+    // Provide fallback for common problematic icons
+    if (icon === 'dialog-info') return false
+    
+    return !!Astal.Icon.lookup_icon(icon)
+}
 
 const fileExists = (path: string) =>
     GLib.file_test(path, GLib.FileTest.EXISTS)
@@ -72,6 +79,11 @@ export function Notification(props: NotificationProps) {
         })
     }
 
+    // Check icons before using them
+    const hasValidAppIcon = n.appIcon && isIcon(n.appIcon) || n.desktopEntry && isIcon(n.desktopEntry)
+    const imageIsIcon = n.image && isIcon(n.image)
+    const imageIsFile = n.image && fileExists(n.image)
+
     return <eventbox
         className={`notification ${urgency(n)}`}
         onClick={(_, event) => onClick(event)}
@@ -82,9 +94,9 @@ export function Notification(props: NotificationProps) {
         <box vertical
             css="min-height: 50px;">
             <box className="notif-header">
-                {(n.appIcon || n.desktopEntry) && <icon
+                {hasValidAppIcon && <icon
                     className="app-icon"
-                    visible={Boolean(n.appIcon || n.desktopEntry)}
+                    visible={Boolean(hasValidAppIcon)}
                     icon={n.appIcon || n.desktopEntry}
                 />}
                 <label
@@ -105,12 +117,12 @@ export function Notification(props: NotificationProps) {
             </box>
             <Gtk.Separator visible />
             <box className="notif-main">
-                {n.image && fileExists(n.image) && <box
+                {imageIsFile && <box
                     valign={START}
                     className="notif-img"
                     css={`background-image: url('${n.image}')`}
                 />}
-                {n.image && isIcon(n.image) && <box
+                {imageIsIcon && <box
                     expand={false}
                     valign={START}
                     className="notif-img">
