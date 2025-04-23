@@ -45,7 +45,7 @@ set -g base-index 1
 set -g pane-base-index 1
 
 # Set display-panes timeout to 3000ms
-set -g display-panes-time 3000
+#set -g display-panes-time 3000
 
 # Set repeat timeout to 1000ms
 set -g repeat-time 3000
@@ -127,7 +127,7 @@ sshhostname="#(~/.tmux/scripts/ssh_hostname.sh) "
 prefixhighlight="#{prefix_highlight} "
 gitstatus="#(gitmux -cfg ~/.gitmux.conf #{pane_current_path})#[bold] "
 kubestatus="#[fg=white]#(/bin/bash ~/.tmux/kube-tmux/kube.tmux 250 '#cba6f7' 'colour4') "
-session="#[fg=#cba6f7,bg=default]#[fg=colour0,bg=#cba6f7]☰ #(tmux display-message -p #S#[fg=#cba6f7,bg=default]) "
+session="#[fg=#cba6f7,bg=default]#[fg=colour0,bg=#cba6f7]☰ #(tmux display-message -p #S:#{pane_index}#[fg=#cba6f7,bg=default]) "
 datetime="#(date +%%H:%%M) "
 keytable="#(~/.tmux/scripts/keytable.sh #{client_key_table}) "
 
@@ -236,6 +236,7 @@ bind z setw synchronize-panes;\
     set-option -ag status-right '#{?pane_synchronized, #[fg=yellow]«Synced»#[default],} ';
 
 # Swap any pane with any other pane
+bind v display-panes
 bind V display-panes \; command-prompt -p "Swap pane:, with pane": "swap-pane -s '%1' -t '%2'"
 
 # Swap panes left or right
@@ -279,8 +280,9 @@ bind W confirm-before -p "kill-window #W? (y/n)" kill-window
 # Detach session
 bind x detach
 
-# Interactively switch sessions; open with windows collapsed
-bind s choose-tree -wZ
+# Interactively switch sessions; open with (w)indows or (s)essions collapsed
+bind s choose-tree -sZ
+#bind s choose-tree -wZ
 
 # Rename session
 bind S command-prompt -p "Rename session:" "rename-session '%%'"
