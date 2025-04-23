@@ -11,6 +11,8 @@ packages:
       brew: aichat
     asdf:
       brew: asdf
+    appimagelauncher:
+      yay: appimagelauncher
     apple-fonts:
       yay: apple-fonts
     autoconf:
@@ -50,6 +52,8 @@ packages:
     btop:
       pacman: btop
       brew: btop
+    bustle: # dbus viewer
+      pacman: bustle
     cage:
       pacman: cage
     catppuccin-gtk-theme-mocha:
@@ -75,6 +79,8 @@ packages:
       pacman: curl
       brew: curl
       apt: curl
+    d-spy: # d-bus inspection tool
+      pacman: d-spy
     derailed-k9s:
       brew: derailed/k9s/k9s
     devtools:
@@ -138,8 +144,6 @@ packages:
       pacman: gcc
       brew: gcc
       apt: gcc
-    gearlever:
-      yay: gearlever
     git-delta:
       pacman: git-delta
       brew: delta

@@ -1,12 +1,12 @@
 #!/bin/env bash
 
 EXITBIND="ALT-MOD-P"
-OUTPUT_DIR=~/Pictures/Recordings
+OUTPUT_DIR=~/Videos/Recordings
 TIMESTAMP=$(date +'%Y-%m-%d-%H%M%S')
 OUTPUT=${OUTPUT_DIR}/recording_${TIMESTAMP}.mkv
 
 if [ ! -d $OUTPUT_DIR ]; then
-  mkdir -p ~/Pictures/Recordings
+  mkdir -p ~/Videos/Recordings
 fi
 
 if [ "$1" == "sr" ]; then

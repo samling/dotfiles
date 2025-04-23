@@ -1,0 +1,21 @@
+@use "theme" as *;
+@use "controlcenter";
+@use "bar";
+@use "mediawindow";
+@use "osd";
+@use "calendar";
+@use "notification";
+@use "tray";
+
+* {
+    all: unset;
+}
+
+label {
+    font-family: "Fira Sans";
+    font-size: 14pt;
+}
+
+revealer {
+    padding: 1px;
+}

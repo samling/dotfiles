@@ -46,6 +46,9 @@ windowrule = float,class:(org.pulseaudio.pavucontrol)
 windowrule = size 600 300,class:(org.pulseaudio.pavucontrol)
 windowrule = move 100%-w-10 5%,class:(org.pulseaudio.pavucontrol)
 
+# Force popups for some applications to center
+windowrule = center,class:(Cursor)
+
 # Always start certain applications as floats
 windowrule = float,title:(Bitwarden),class:(chrome-.*)
 windowrule = float,class:(com.github.hluk.copyq)
