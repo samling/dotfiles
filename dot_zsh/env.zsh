@@ -26,7 +26,7 @@ unset FZF_ALT_C_OPTS FZF_CTRL_R_OPTS FZF_DEFAULT_OPTS
 export FZF_ALT_C_OPTS="--height 50% --preview 'ls {1..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview'"
 
 # Ctrl-R opts
-export FZF_CTRL_R_OPTS="--tmux --height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview' --tmux"
+export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview' --tmux"
 
 # Ctrl-T opts
 # export FZF_CTRL_T_OPTS="--height 50% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,10' --bind '?:toggle-preview'"
