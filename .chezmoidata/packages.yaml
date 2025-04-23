@@ -3,7 +3,7 @@ packages:
   # PACKAGES #
   ############
   taps:
-    brew:
+    darwin:
       - carvel-dev/carvel
   base:
     aichat:
