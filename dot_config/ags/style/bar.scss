@@ -215,3 +215,39 @@ tooltip {
 .updates-tooltip-small {
     font-size: 11px;
 }
+
+/* Main menu and submenu styles */
+.mainMenu {
+    min-width: 150px;
+}
+
+.mainMenu button.active {
+    background-color: $mauve;
+}
+
+.submenuContainer {
+    margin-left: 10px;
+}
+
+.submenu {
+    min-width: 200px;
+    background-color: $base;
+    border: 1px solid #6c7086;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Slide-over menu styles */
+.menuPage {
+    min-width: 200px;
+}
+
+.menuArrow {
+    margin-right: 5px;
+}
+
+.backButton {
+    border-bottom: 1px solid #6c7086;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
