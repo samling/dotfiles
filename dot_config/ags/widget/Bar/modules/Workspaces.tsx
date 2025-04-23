@@ -8,9 +8,14 @@ function Workspaces() {
     
     // Variable to track if magic workspace is currently focused
     const isMagicWorkspaceFocused = Variable(false);
+    const isMagicWorkspaceOccupied = Variable(false);
     
     // Listen for Hyprland events
     hyprland.connect("event", (_, event, data) => {
+        const clients = hyprland.get_clients();
+        const isMagicOccupied = clients.some(c => c.get_workspace().id == -98);
+        isMagicWorkspaceOccupied.set(isMagicOccupied);
+
         // Check for special workspace activation/deactivation events
         if (event === "activespecial" || event === "activespecialv2") {
             // For activespecialv2 format is: "-98,special:magic,monitor" when active
@@ -22,11 +27,11 @@ function Workspaces() {
     });
 
     const getButtonClass = (i: number) => {
-        const className = Variable.derive([bind(hyprland, "focusedWorkspace"), bind(hyprland, "workspaces"), bind(isMagicWorkspaceFocused)], 
-            (currentWorkspace, workspaces, magicFocused) => {
-                // Handle magic workspace specially when its ID is -98
-                if (i === -98) {
-                    return magicFocused ? "magic-focused" : "";
+        const className = Variable.derive([bind(hyprland, "focusedWorkspace"), bind(hyprland, "workspaces"), bind(isMagicWorkspaceFocused), bind(isMagicWorkspaceOccupied)], 
+            (currentWorkspace, workspaces, magicFocused, magicOccupied) => {
+                if (i === -98) { // Magic workspace
+                    if (magicFocused) return "magic-focused";
+                    return magicOccupied ? "active" : "";
                 }
                 
                 if (currentWorkspace === null)
