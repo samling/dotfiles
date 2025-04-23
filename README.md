@@ -72,16 +72,13 @@ Example:
 packages:
   taps:
     darwin:
-      - tap/name            # for homebrew taps
+      - tap/name
   base:
     new-tool:
-      arch:               # for Pacman packages
-        name: new-tool
-      arch:
-        aur:              # for AUR packages
-          name: new-tool
-      ubuntu:
-        name: new-tool
-      darwin:
-        name: new-tool
+      # add package names per package manager tool here
+      # omissions will simply be skipped for that OS
+      pacman: new-tool
+      yay: new-tool
+      apt: new-tool
+      brew: new-tool
 ```
