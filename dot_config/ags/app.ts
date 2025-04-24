@@ -11,7 +11,7 @@ import NotificationPopups from "./widget/Notification"
 import ActionMenu from "./widget/ActionMenu"
 import { ParseAgsArgs, HyprToGdkMonitor, GetGdkMonitorName } from "./utils"
 
-const addMonitorWindows = (monitor: Gdk.Monitor) => {
+const addMonitorWidgets = (monitor: Gdk.Monitor) => {
     Bar(monitor)
     ControlCenter(monitor)
     ActionMenu(monitor)
@@ -46,10 +46,10 @@ App.start({
                 throw new Error(`Failed to convert monitor ${userPrimaryMonitor} to GdkMonitor`)
             }
 
-            addMonitorWindows(gdkMonitor)
+            addMonitorWidgets(gdkMonitor)
 
             // If our target monitor is disconnected and then reconnected,
-            // we need to re-add the windows to the new monitor.
+            // we need to re-add the widgets to the new monitor.
             hyprland?.connect("monitor-added", (_, monitor) => {
                 console.log("monitor added: ", monitor)
                 let gdkMonitor = HyprToGdkMonitor(monitor)
@@ -59,15 +59,15 @@ App.start({
                 const name = GetGdkMonitorName(gdkMonitor)
                 console.log("monitor added: ", name)
                 if (name === userPrimaryMonitor) {
-                    addMonitorWindows(gdkMonitor)
+                    addMonitorWidgets(gdkMonitor)
                 }
             })
         } else {
-            console.log("No primary monitor specified, adding windows to all monitors")
+            console.log("No primary monitor specified, adding widgets to all monitors")
             const monitors = App.get_monitors()
             for (const monitor of monitors) {
                 const name = GetGdkMonitorName(monitor)
-                addMonitorWindows(monitor)
+                addMonitorWidgets(monitor)
                 console.log("monitor added: ", name)
             }
         }
