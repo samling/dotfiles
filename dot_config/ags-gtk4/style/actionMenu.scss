@@ -1,0 +1,24 @@
+@use "theme" as *;
+
+.stopRecordingButton {
+    padding: 0;
+    margin-left: 2px;
+    min-height: 0;
+    min-width: 0;
+    background: none;
+    box-shadow: none;
+}
+
+.recordingIndicator {
+    color: #ff0000;
+    font-size: 14px;
+}
+
+menubutton {
+    .actionMenuPopover {
+        contents {
+            background-color: $base;
+            border: none;
+        }
+    }
+}

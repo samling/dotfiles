@@ -1,0 +1,155 @@
+@use "theme" as *;
+@use "sass:string";
+
+@function gtkalpha($c, $a) {
+    @return string.unquote("alpha(#{$c},#{$a})");
+}
+
+.notification-container {
+    all: unset;
+}
+
+.notification-container {
+    min-height: 50px;
+
+    &:first-child>box {
+        margin-top: 1rem;
+    }
+
+    &:last-child>box {
+        margin-bottom: 1rem;
+    }
+
+    >box {
+        min-width: 400px;
+        background-color: $base;
+        border: 2pt solid gtkalpha($blue, .8);
+        border-radius: 0px;
+        margin: .5rem 1rem;
+        box-shadow: 2px 3px 8px 0 gtkalpha(#000000, .4);
+        padding: 0;
+    }
+
+    &.critical>box {
+        border: 2pt solid gtkalpha($red, .4);
+        
+        .notif-header {
+            .app-name {
+                color: gtkalpha($red, .8);
+            }
+            
+            .app-icon {
+                color: gtkalpha($red, .6);
+            }
+        }
+    }
+}
+
+// Progress bar styling - direct and unambiguous
+progressbar {
+    background-color: transparent;
+    min-height: 4px;
+    
+    trough {
+        background-color: gtkalpha($surface0, .3);
+        min-height: 4px;
+        border-radius: 2px;
+    }
+    
+    progress {
+        background-color: #89b4fa;
+        min-height: 4px;
+        border-radius: 2px;
+    }
+}
+
+// Container for progress bar
+.notification-progress-bar {
+    margin: 10px;
+    padding: 0;
+}
+
+.notif-header {
+    padding: .5rem;
+    color: gtkalpha($text, 0.7);
+    
+    .app-icon {
+        margin: 0 .4rem;
+    }
+    
+    .app-name {
+        margin-right: .3rem;
+        font-weight: bold;
+        
+        &:first-child {
+            margin-left: .4rem;
+        }
+    }
+    
+    .time {
+        margin: 0 .4rem;
+    }
+}
+
+.notif-close {
+    padding: .2rem;
+    min-width: 0;
+    min-height: 0;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 0;
+    color: $red;
+    background-color: transparent;
+    border-radius: 150%;
+}
+
+separator {
+    margin: 0 .4rem;
+    background-color: gtkalpha($surface0, .5);
+}
+
+.notif-main {
+    margin: 1rem;
+    margin-top: .5rem;
+}
+
+.notif-summary {
+    font-size: 1.2em;
+    color: $text;
+    margin-bottom: .5rem;
+}
+
+.notif-body {
+    font-style: normal;
+    font-size: 15px;
+    color: gtkalpha($text, 0.9);
+}
+
+.notif-img {
+    border: 2px solid gtkalpha($surface0, .3);
+    margin-right: .5rem;
+    border-radius: 0px;
+    min-width: 100px;
+    min-height: 100px;
+    background-size: cover;
+    background-position: center;
+}
+
+.notifications-popup {
+    margin: 1rem;
+}
+
+.notif-action {
+    background-color: $surface1;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 0 .3rem;
+    
+    &:first-child {
+        margin-left: 0;
+    }
+    
+    &:last-child {
+        margin-right: 0;
+    }
+}
