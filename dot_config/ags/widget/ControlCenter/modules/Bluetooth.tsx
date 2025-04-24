@@ -6,6 +6,18 @@ import Pango from "gi://Pango";
 
 const bluetooth = Bluetooth.get_default();
 
+function powerOffBluetoothDevice(adapters: Bluetooth.Adapter[]) {
+    adapters.forEach((adapter) => {
+        adapter.set_powered(false);
+    });
+}
+
+function powerOnBluetoothDevice(adapters: Bluetooth.Adapter[]) {
+    adapters.forEach((adapter) => {
+        adapter.set_powered(true);
+    });
+}
+
 export default function BluetoothToggle() {
 
     const icon = <icon
@@ -41,8 +53,8 @@ export default function BluetoothToggle() {
         name="bluetooth"
         icon={icon}
         label={label}
-        activate={() => bluetooth.get_adapter()?.set_powered(true)}
-        deactivate={() => bluetooth.get_adapter()?.set_powered(false)}
+        activate={() => powerOnBluetoothDevice(bluetooth.get_adapters())}
+        deactivate={() => powerOffBluetoothDevice(bluetooth.get_adapters())}
         condition={bind(bluetooth, "isPowered")}
         />
     )
