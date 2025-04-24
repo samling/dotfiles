@@ -124,14 +124,14 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                             
                             <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot areasscb`)}>
                                 <box spacing={8}>
-                                    <label></label>
+                                    <label></label>
                                     <label>Area to clipboard</label>
                                 </box>
                             </button>
                             
                             <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Pictures/Screenshots`)}>
                                 <box spacing={8}>
-                                    <label></label>
+                                    <label></label>
                                     <label>Open screenshot directory</label>
                                 </box>
                             </button>
@@ -155,7 +155,7 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                             
                             <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording interactivesr`)}>
                                 <box spacing={8}>
-                                    <label>󱣴</label>
+                                    <label>󰹑</label>
                                     <label>Choose monitor</label>
                                 </box>
                             </button>
@@ -169,7 +169,7 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                             
                             <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Videos/Recordings`)}>
                                 <box spacing={8}>
-                                    <label></label>
+                                    <label></label>
                                     <label>Open recordings directory</label>
                                 </box>
                             </button>
