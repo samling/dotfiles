@@ -7,6 +7,7 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
     // References to store widgets
     let windowRef: any = null;
     let stackRef: any = null;
+    let mainRevealerRef: any = null;
     
     // Get home directory path
     const HOME = GLib.get_home_dir();
@@ -15,12 +16,19 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
     const executeAction = (command: string) => {
         // Hide the window first
         if (windowRef) {
-            const revealer = windowRef.get_child() as Widget.Revealer;
-            revealer.revealChild = false;
+            if (mainRevealerRef) {
+                mainRevealerRef.revealChild = false;
+            }
             
             // Use a small delay to ensure animation completes before closing
             GLib.timeout_add(GLib.PRIORITY_DEFAULT, 300, () => {
                 windowRef.set_visible(false);
+                
+                // Reset to main menu for next time
+                if (stackRef) {
+                    stackRef.set_visible_child_name('main');
+                }
+                
                 // Execute command with a small additional delay
                 GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
                     GLib.spawn_command_line_async(command);
@@ -53,6 +61,16 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                 transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
                 revealChild={false}
                 transitionDuration={300}
+                setup={rev => {
+                    mainRevealerRef = rev;
+                    
+                    // Add signal to reset menu state when hiding completes
+                    rev.connect('notify::child-revealed', () => {
+                        if (!rev.child_revealed && stackRef) {
+                            stackRef.set_visible_child_name('main');
+                        }
+                    });
+                }}
             >
                 <box className="actionMenuBox" vertical spacing={10}>
                     <stack 
