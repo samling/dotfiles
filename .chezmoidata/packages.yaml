@@ -374,6 +374,8 @@ packages:
       apt: traceroute
     ttf-iosevka:
       yay: ttf-iosevka
+    ttf-iosevka-term:
+      yay: ttf-iosevka-term
     ttf-iosevka-nerd:
       pacman: ttf-iosevka-nerd
     ttf-ms-win11-auto:
