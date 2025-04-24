@@ -19,8 +19,8 @@ My ever-growing collection of dotfiles and configs.
 chezmoi init <repo>
 chezmoi apply {-n}          # Apply changes to ~ {Dry run}
 chezmoi archive             # Create an archive of the dotfiles
-chezmoi cd                  # cd to chosmoi source path
-chezmoi merge               # Merge changes made to local copy with chezmoi managed
+chezmoi cd                  # cd to chezmoi source path
+chezmoi merge               # Merge changes made to local copy with chezmoi-managed file
 chezmoi update              # Pull latest version from git and apply changes
 
 chezmoi add ~/.my_file      # Manage new file
@@ -71,7 +71,7 @@ Example:
 ```yaml
 packages:
   taps:
-    darwin:
+    brew:
       - tap/name
   base:
     new-tool:
