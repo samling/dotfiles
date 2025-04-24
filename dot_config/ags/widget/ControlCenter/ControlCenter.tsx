@@ -9,11 +9,6 @@ import Governors from "./modules/Governors";
 import AudioMenu from "./modules/AudioMenu";
 import { NotificationMenu, RecentNotifications } from "./modules/Notifications";
 
-export const visible = Variable(false);
-let windowRef: any = null;
-let stackRef: any = null;
-let mainRevealerRef: any = null;
-
 function Row(toggles: Gtk.Widget[]=[], menus: Gtk.Widget[]=[]) {
     return (
         <box vertical={true}>
@@ -68,37 +63,12 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
         name="controlcenter"
         namespace="controlcenter"
         gdkmonitor={monitor}
-        anchor={ Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT}
-        marginTop={10}
-        marginRight={10}
-        marginBottom={10}
-        marginLeft={10}
-        visible={bind(visible)}
+        anchor={ Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
+        visible={false}
         application={App}
-        setup={win => windowRef = win}
-        css="background-color: transparent;"
-        onButtonPressEvent={(self, event) => {
-            const [, _x, _y] = event.get_coords()
-            const allocation = mainRevealerRef?.get_child()?.get_allocation()
-            
-            if (allocation) {
-                const { x, y, width, height } = allocation
-                const xOut = _x < x || _x > x + width
-                const yOut = _y < y || _y > y + height
-                
-                // clicked outside
-                if (xOut || yOut) {
-                    visible.set(false)
-                }
-            }
-        }}
         >
-        <box halign={Gtk.Align.END} valign={Gtk.Align.START}>
             <revealer
             transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
-            revealChild={bind(visible)}
-            transitionDuration={300}
-            setup={rev => mainRevealerRef = rev}
             >
 
                 <stack shown={controlCenterStackWidget()}
@@ -111,7 +81,6 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
                     <NotificationMenu/>
                 </stack>
             </revealer>
-            </box>
         </window>
     )
 }
