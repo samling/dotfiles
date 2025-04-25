@@ -151,9 +151,14 @@ export default class NotificationMap implements Subscribable {
             return Notification({
                 n: notification,
                 showActions: true,
-                showProgressBar: false  // Never show progress bar in notification lists
+                showProgressBar: this.showProgressBar  // Use the class setting
             });
         }).filter(Boolean) as Gtk.Widget[];
+    }
+
+    // Check if there are any notifications
+    public hasNotifications() {
+        return this.notificationIds.get().length > 0;
     }
 
     // Subscribe to changes in the notification list

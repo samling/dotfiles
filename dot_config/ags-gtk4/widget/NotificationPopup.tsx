@@ -1,106 +1,57 @@
-import { timeout } from "astal";
-import { App, Astal, hook, Gdk, Gtk } from "astal/gtk4";
-import AstalNotifd from "gi://AstalNotifd";
-import Notification from "./Notification";
+import { App, Astal } from "astal/gtk4";
+import { Gdk, Gtk } from "astal/gtk4";
+import NotificationMap from "../objects/NotificationMap";
 
 export default function NotificationPopup(gdkmonitor: Gdk.Monitor) {
   const { TOP, RIGHT } = Astal.WindowAnchor;
-  const notifd = AstalNotifd.get_default();
+  
+  // Create notification map with progress bar enabled
+  const notifs = new NotificationMap({
+    showProgressBar: true,
+    timeout: 5000
+  });
 
   return (
     <window
       namespace={"notification-popup"}
       setup={(self) => {
-        const activeNotifications = new Map();
+        // Initially hide the window
+        self.visible = false;
         
-        // Handle new notifications
-        hook(self, notifd, "notified", (_, id: number) => {
-          // Skip if do-not-disturb is on (except for critical notifications)
-          if (
-            notifd.dont_disturb &&
-            notifd.get_notification(id).urgency != AstalNotifd.Urgency.CRITICAL
-          ) {
-            return;
-          }
+        // Subscribe to changes in the notification list
+        notifs.subscribe((widgets) => {
+          // Show window only when there are notifications
+          self.visible = widgets.length > 0;
           
-          // Create container for this notification if it doesn't exist
-          if (!activeNotifications.has(id)) {
-            const notification = notifd.get_notification(id);
-            if (!notification) return;
+          if (widgets.length > 0) {
+            // Create or update the main container
+            let mainBox: Gtk.Box;
             
-            // Create notification container
-            const container = new Gtk.Box();
-            container.set_orientation(Gtk.Orientation.VERTICAL);
-            
-            // Add notification widget
-            const content = Notification({ 
-              n: notification,
-              showProgressBar: true
-            });
-            container.append(content);
-            
-            // Add to window if not already visible
-            if (!self.visible) {
-              // Create main container if this is the first notification
-              const mainBox = new Gtk.Box();
+            if (!self.get_child()) {
+              mainBox = new Gtk.Box();
               mainBox.set_orientation(Gtk.Orientation.VERTICAL);
-              mainBox.append(container);
               self.set_child(mainBox);
-              self.visible = true;
             } else {
-              // Add to existing container
-              const mainBox = self.get_child() as Gtk.Box;
-              if (mainBox) {
-                mainBox.append(container);
+              mainBox = self.get_child() as Gtk.Box;
+              
+              // Clear existing content
+              while (mainBox.get_first_child()) {
+                mainBox.remove(mainBox.get_first_child()!);
               }
             }
             
-            // Store reference to container
-            activeNotifications.set(id, container);
-            
-            // Auto-remove after 5 seconds
-            timeout(5000, () => {
-              removeNotification(id);
+            // Add each notification widget to the box
+            widgets.forEach(widget => {
+              mainBox.append(widget);
             });
           }
         });
-        
-        // Handle resolved notifications
-        hook(self, notifd, "resolved", (_, id) => {
-          removeNotification(id);
-        });
-        
-        // Function to remove a notification
-        function removeNotification(id: number) {
-          const container = activeNotifications.get(id);
-          if (container) {
-            // Get the parent of the container
-            const parent = container.get_parent();
-            if (parent) {
-              // Remove the container from its parent
-              parent.remove(container);
-              
-              // If using a main container, check if it's now empty
-              const mainBox = self.get_child();
-              if (mainBox) {
-                if (mainBox.get_first_child() === null) {
-                  // Hide window if no more notifications
-                  self.visible = false;
-                }
-              } else {
-                // If we removed the last/only child, hide the window
-                self.visible = false;
-              }
-            }
-            
-            // Remove from active notifications
-            activeNotifications.delete(id);
-          }
-        }
       }}
       gdkmonitor={gdkmonitor}
       application={App}
       anchor={TOP | RIGHT}
-    ></window>
+    >
+      {/* Content is managed in the setup function */}
+    </window>
   );
 }
