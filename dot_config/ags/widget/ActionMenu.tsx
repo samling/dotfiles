@@ -3,7 +3,7 @@ import { App, Widget, Gtk } from "astal/gtk3"
 import Astal from "gi://Astal?version=3.0"
 import Gdk from "gi://Gdk?version=3.0"
 import GLib from "gi://GLib?version=2.0"
-import Popover from "../utils/popover";
+import Popover from "../objects/Popover";
 
 export const visible = Variable(false);
 

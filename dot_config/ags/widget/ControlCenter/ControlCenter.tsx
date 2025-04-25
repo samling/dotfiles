@@ -8,7 +8,7 @@ import BluetoothToggle, { BluetoothMenu } from "./modules/Bluetooth";
 import Governors from "./modules/Governors";
 import AudioMenu from "./modules/AudioMenu";
 import { NotificationMenu, RecentNotifications } from "./modules/Notifications";
-import Popover from "../../utils/popover";
+import Popover from "../../objects/Popover";
 
 function Row(toggles: Gtk.Widget[]=[], menus: Gtk.Widget[]=[]) {
     return (
