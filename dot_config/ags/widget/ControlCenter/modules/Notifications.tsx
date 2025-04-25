@@ -1,19 +1,97 @@
 import { Gtk } from "astal/gtk3"
 import NotificationMap from "../../../objects/NotificationMap"
-import { bind } from "astal"
+import { bind, Variable } from "astal"
 import { Menu } from "./ToggleButton"
 import { controlCenterStackWidget } from "../ControlCenter"
 import Notifd from "gi://AstalNotifd?version=0.1"
 import Pango from "gi://Pango?version=1.0"
+import { Notification } from "../../../widget/Notification"
 
 const notifd = Notifd.get_default()
 
+// Store a list of all notification IDs
+const allNotificationIds = Variable<number[]>([]);
+
+// Initialize with existing notifications
+const initNotifications = () => {
+    const existingNotifs = notifd.get_notifications()
+        .map(notif => notif.id)
+        .reverse(); // Reverse to show newest first
+    
+    allNotificationIds.set(existingNotifs);
+};
+
+// Run initialization
+initNotifications();
+
+// Listen for new notifications
+notifd.connect("notified", (_, id) => {
+    if (notifd.get_dont_disturb()) {
+        return;
+    }
+    
+    // Add to the front of the list (newest first)
+    const currentIds = allNotificationIds.get();
+    const newIds = [id, ...currentIds.filter(existingId => existingId !== id)];
+    allNotificationIds.set(newIds);
+});
+
+// Listen for notifications being resolved
+notifd.connect("resolved", (_, id) => {
+    const currentIds = allNotificationIds.get();
+    const newIds = currentIds.filter(existingId => existingId !== id);
+    allNotificationIds.set(newIds);
+});
+
+// Helper to create notification widgets from IDs
+const createNotificationWidgets = (ids: number[]) => {
+    return ids.map(id => {
+        const notification = notifd.get_notification(id);
+        if (!notification) return null;
+        
+        return Notification({
+            notification: notification,
+            showProgressBar: false,
+            onHoverLost: () => {}, 
+            onClick: (event) => {
+                // Add onclick handler for notification if needed
+            },
+            setup: () => {}
+        });
+    }).filter(Boolean) as Gtk.Widget[];
+};
+
+// Variable to track recent notifications (limited to 3)
+const recentNotifications = Variable<Gtk.Widget[]>([]);
+
+// When all notification IDs change, update the recent notifications
+allNotificationIds.subscribe(() => {
+    const ids = allNotificationIds.get().slice(0, 3);
+    recentNotifications.set(createNotificationWidgets(ids));
+});
+
+// Variable to track all notifications
+const allNotifications = Variable<Gtk.Widget[]>([]);
+
+// When all notification IDs change, update all notifications
+allNotificationIds.subscribe(() => {
+    const ids = allNotificationIds.get();
+    allNotifications.set(createNotificationWidgets(ids));
+});
+
+// Function to dismiss all notifications
+const dismissAll = () => {
+    const ids = [...allNotificationIds.get()];
+    ids.forEach(id => {
+        const notification = notifd.get_notification(id);
+        if (notification) {
+            notification.dismiss();
+        }
+    });
+};
+
 export function RecentNotifications() {
-
-    const notifs = new NotificationMap({timeout: 0, limit: 3, persist: true}) 
-
     return (
-
         <box vertical>
             <box className="notifs-recent-header">
                 <label label="Notifications"/>
@@ -29,7 +107,7 @@ export function RecentNotifications() {
             </box>
             <label
             label="No Recent Notifications"
-            visible={bind(notifs).as((notifs) => notifs.length === 0)}
+            visible={bind(allNotificationIds).as((ids) => ids.length === 0)}
             halign={Gtk.Align.CENTER}
             hexpand
             css={"margin-top: 15px"}
@@ -37,17 +115,13 @@ export function RecentNotifications() {
             <box className="notifs-recent"
             //@ts-ignore
             vertical noImplicitDestroy>
-                {bind(notifs)}
+                {bind(recentNotifications)}
             </box>
         </box>
     )
-
 }
 
 export function NotificationMenu() {
-
-    const notifs = new NotificationMap({timeout: 0, persist: true})
-
     return (
         <Menu name="notifications"
         title="Notifications"
@@ -63,7 +137,7 @@ export function NotificationMenu() {
                         </stack>
                     </button>
                     <button className="notifs-close-all"
-                    onClick={() => notifs.disposeAll()}
+                    onClick={dismissAll}
                     >
                         <icon icon="window-close-symbolic"/>
                     </button>
@@ -71,7 +145,7 @@ export function NotificationMenu() {
                 <box className="notifs-recent"
                 //@ts-ignore
                 vertical noImplicitDestroy>
-                    {bind(notifs)}
+                    {bind(allNotifications)}
                 </box>
             </box>
         </Menu>
