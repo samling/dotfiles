@@ -1,53 +1,71 @@
-import { GObject, register, property } from "astal/gobject";
-import { exec, execAsync, monitorFile } from "astal";
+import GObject, { register, property } from "astal/gobject";
+import { monitorFile, readFileAsync } from "astal/file";
+import { exec, execAsync } from "astal/process";
 
-@register({GTypeName: "Brightness"})
-class Brightness extends GObject.Object {
+const get = (args: string) => Number(exec(`brightnessctl ${args}`));
+const screen = exec(`bash -c "ls -w1 /sys/class/backlight | head -1"`);
+const kbd = exec(`bash -c "ls -w1 /sys/class/leds | head -1"`);
 
-    static instance: Brightness
-    static get_default() {
-        if (!this.instance)
-            this.instance = new Brightness();
+@register({ GTypeName: "Brightness" })
+export default class Brightness extends GObject.Object {
+  static instance: Brightness;
+  static get_default() {
+    if (!this.instance) this.instance = new Brightness();
 
-        return this.instance;
-    }
+    return this.instance;
+  }
 
-    #screen = 0;
+  #kbdMax = get(`--device ${kbd} max`);
+  #kbd = get(`--device ${kbd} get`);
+  #screenMax = get("max");
+  #screen = get("get") / (get("max") || 1);
 
-    #interface = exec("sh -c 'ls -w1 /sys/class/backlight | head -1'");
-    #max = Number(exec('brightnessctl max'));
+  @property(Number)
+  get kbd() {
+    return this.#kbd;
+  }
 
-    @property(Number)
-    get screen() { return this.#screen; }
+  set kbd(value) {
+    if (value < 0 || value > this.#kbdMax) return;
 
-    set screen(percent) {
-        if (percent < 0)
-            percent = 0;
+    execAsync(`brightnessctl -d ${kbd} s ${value} -q`).then(() => {
+      this.#kbd = value;
+      this.notify("kbd");
+    });
+  }
 
-        if (percent > 1)
-            percent = 1;
+  @property(Number)
+  get screen() {
+    return this.#screen;
+  }
 
-        execAsync(`brightnessctl s ${percent * 100}% -q`)
-            .then(() => {
-                this.#screen = percent;
-                this.notify('screen');
-            })
-            .catch(console.error);
-    }
+  set screen(percent) {
+    if (percent < 0) percent = 0;
 
-    constructor() {
-        super();
-        const brightness = `/sys/class/backlight/${this.#interface}/brightness`;
-        monitorFile(brightness, () => this.#onChange());
+    if (percent > 1) percent = 1;
 
-        // initialize
-        this.#onChange();
-    }
+    execAsync(`brightnessctl set ${Math.floor(percent * 100)}% -q`).then(() => {
+      this.#screen = percent;
+      this.notify("screen");
+    });
+  }
 
-    #onChange() {
-        this.#screen = Number(exec('brightnessctl get')) / this.#max;
-        this.notify('screen');
-    }
+  constructor() {
+    super();
+
+    const screenPath = `/sys/class/backlight/${screen}/brightness`;
+    const kbdPath = `/sys/class/leds/${kbd}/brightness`;
+
+    monitorFile(screenPath, async (f) => {
+      const v = await readFileAsync(f);
+      this.#screen = Number(v) / this.#screenMax;
+      this.notify("screen");
+    });
+
+    monitorFile(kbdPath, async (f) => {
+      const v = await readFileAsync(f);
+      this.#kbd = Number(v) / this.#kbdMax;
+      this.notify("kbd");
+    });
+  }
 }
-
-export default Brightness;

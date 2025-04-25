@@ -91,12 +91,7 @@ menubutton {
     color: $red;
 	font-size: 25px;
 	margin-right: 10px;
-    transition: -gtk-icon-effect 0.25s ease-in;
     border-radius: 6px;
-}
-
-.controlcenter .powerButton-CC:hover {
-    -gtk-icon-effect: highlight;
 }
 
 .sliders-box {

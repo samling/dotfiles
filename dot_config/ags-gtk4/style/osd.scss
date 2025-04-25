@@ -1,50 +1,32 @@
-@use "./variables.scss" as *;
-
-// $fgColor: #{"@theme_fg_color"};
-// $bgColor: #{"@theme_bg_color"};
+@use "theme" as *;
 
 window.OSD {
+    padding: 3rem;
+
     box.OSD {
-        min-width: $osdMinWidth;
-        min-height: $osdMinWidth;
-
-        border-radius: $radius;
-        background-color: $osd;
+        border-radius: 100px;
+        background-color: $base;
         padding: 13px 16px;
-        margin: 13px;
-        box-shadow: 3px 3px 7px 0 rgba(0,0,0,0.4);
+        min-width: 15rem;
+        border: 1px solid $crust;
     }
 
-    icon {
-        font-size: 4rem;
-
-        &.muted {
-            color: $bgColor;
-        }
-    }
-
-    label {
-        font-size: 2.4rem;
+    image {
+        all: unset;
+        padding: 7px;
+        color: $base;
     }
 
     levelbar {
-        trough {
-            border-radius: $radius;
-            background-color: $black;
-            margin: 1px 0;
-
-            .filled {
-                background-color: $shadowColor;
-            }
-
-            .low {
-                min-width: $osdLevelbarLowWidth;
-            }
+        min-width: 15rem;
+        block.filled {
+            min-height: 2rem;
+            background-color: $mauve;
         }
 
-        block {
-            min-height: $osdLevelbarHeight;
-            border-radius: $radius;
+        block.empty {
+            min-height: 2rem;
+            background-color: $surface0;
         }
     }
 }

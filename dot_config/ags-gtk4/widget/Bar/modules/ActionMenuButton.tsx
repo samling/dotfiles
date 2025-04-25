@@ -1,7 +1,7 @@
 import { Variable, bind } from "astal";
 import GLib from "gi://GLib?version=2.0";
 import { Gtk } from "astal/gtk4";
-import ActionMenu from "../../ActionMenu";
+import ActionMenu from "./ActionMenu";
 
 export default function ActionMenuButton() {
     // Store recording state using Variable

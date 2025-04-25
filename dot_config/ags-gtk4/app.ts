@@ -2,7 +2,7 @@ import { App, type Astal, Gdk, Gtk } from "astal/gtk4"
 import { Gio, timeout, GLib } from "astal"
 import Hyprland from "gi://AstalHyprland"
 import style from "./style/main.scss"
-import OSD from "./widget/OSD"
+import OSD from "./widget/OSD/OSD"
 import Bar from "./widget/Bar/Bar"
 import NotificationPopup from "./widget/Notifications/NotificationPopup"
 

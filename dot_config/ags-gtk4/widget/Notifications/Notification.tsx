@@ -87,7 +87,14 @@ export default function Notification({
         <box cssClasses={["notif-main"]} spacing={10}>
           {n.image && fileExists(n.image) && (
             <box valign={Gtk.Align.START} cssClasses={["notif-img"]}>
-              <image file={n.image} overflow={Gtk.Overflow.HIDDEN} />
+              <image 
+                file={n.image} 
+                overflow={Gtk.Overflow.HIDDEN}
+                hexpand={true}
+                vexpand={true}
+                halign={Gtk.Align.FILL}
+                valign={Gtk.Align.FILL}
+              />
             </box>
           )}
           {n.image && isIcon(n.image) && (
@@ -95,8 +102,10 @@ export default function Notification({
               <image
                 iconName={n.image}
                 iconSize={Gtk.IconSize.LARGE}
-                halign={Gtk.Align.END}
-                valign={Gtk.Align.START}
+                hexpand={true}
+                vexpand={true}
+                halign={Gtk.Align.FILL}
+                valign={Gtk.Align.FILL}
               />
             </box>
           )}
