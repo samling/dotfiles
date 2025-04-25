@@ -1,10 +1,6 @@
-// Astal
-import { bind } from "astal";
-
-// Libraries
+import { bind, Variable } from "astal";
 import Tray from "gi://AstalTray"
-import Gtk from "gi://Gtk";
-import GLib from "gi://GLib";
+import GLib from "gi://GLib"
 
 const itemMap = (item: Tray.TrayItem) => {
     const menuModel = bind(item, "menuModel");
@@ -33,4 +29,22 @@ const itemMap = (item: Tray.TrayItem) => {
     )
 }
 
-export default itemMap;
+const SystemTray = () => {
+    const tray = Tray.get_default()
+
+    const isVisible = Variable(true);
+
+    return (
+        <box cssClasses={["widgetBox"]} visible={bind(isVisible)}>
+            <box spacing={8}>
+                {bind(tray, "items").as((items) => {
+                    isVisible.set(!(items.length === 0));
+
+                    return items.map(itemMap);
+                })}
+            </box>
+        </box>
+    )
+}
+
+export default SystemTray;

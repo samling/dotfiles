@@ -7,7 +7,7 @@ import ActionMenu from "../ActionMenu"
 import Clock from "./modules/Clock"
 import ControlCenterButton from "./modules/ControlCenterButton"
 import FocusedWindow from "./modules/focusedWindow"
-import Systray from "./modules/Systray/Systray"
+import Systray from "./modules/Systray"
 
 export default function Bar(monitor: Gdk.Monitor) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
