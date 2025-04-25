@@ -1,11 +1,8 @@
 import { GLib, Variable, timeout } from "astal"
 import { Gtk, Astal } from "astal/gtk3"
-import Gdk from "gi://Gdk?version=3.0"
 import { type EventBox } from "astal/gtk3/widget"
 import Notifd from "gi://AstalNotifd"
-import NotificationMap from "../objects/NotificationMap"
-import { bind } from "astal"
-import ProgressBar from "./ProgressBar"
+import ProgressBar from "../../lib/ProgressBar"
 import Pango from "gi://Pango?version=1.0"
 
 const isIcon = (icon: string) => {
@@ -174,23 +171,4 @@ export function Notification(props: NotificationProps) {
             )}
         </box>
     </eventbox>
-}
-
-export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
-    const { TOP, RIGHT } = Astal.WindowAnchor
-    const notifs = new NotificationMap({
-        showProgressBar: true,
-        timeout: 5000
-    })
-
-    return <window
-        className="NotificationPopups"
-        gdkmonitor={gdkmonitor}
-        exclusivity={Astal.Exclusivity.EXCLUSIVE}
-        anchor={TOP | RIGHT}>
-        {/* @ts-expect-error Linter might not recognize Gdk types correctly */}
-        <box vertical noImplicitDestroy>
-            {bind(notifs)}
-        </box>
-    </window>
 }

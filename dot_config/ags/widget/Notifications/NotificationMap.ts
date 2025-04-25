@@ -1,8 +1,8 @@
-import { Astal, Gtk, Gdk } from "astal/gtk3"
+import { Gtk } from "astal/gtk3"
 import Notifd from "gi://AstalNotifd"
-import { Notification } from "../widget/Notification"
+import { Notification } from "./Notification"
 import { type Subscribable } from "astal/binding"
-import { Variable, bind, timeout } from "astal"
+import { Variable, timeout } from "astal"
 import GLib from "gi://GLib"
 
 // see comment below in constructor

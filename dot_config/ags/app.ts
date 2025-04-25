@@ -7,8 +7,8 @@ import ControlCenter from "./widget/ControlCenter/ControlCenter"
 import MediaWindow from "./widget/MediaWindow/Media"
 import CalendarWindow from "./widget/Calendar"
 import OSDWindow from "./widget/OSD"
-import NotificationPopups from "./widget/Notification"
-import ActionMenu from "./widget/ActionMenu"
+import NotificationPopups from "./widget/Notifications/NotificationPopups"
+import ActionMenu from "./widget/Bar/modules/ActionMenu"
 import { ParseAgsArgs, HyprToGdkMonitor, GetGdkMonitorName } from "./utils"
 
 const addMonitorWidgets = (monitor: Gdk.Monitor) => {

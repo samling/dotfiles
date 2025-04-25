@@ -1,11 +1,9 @@
 import { Gtk } from "astal/gtk3"
-import NotificationMap from "../../../objects/NotificationMap"
 import { bind, Variable } from "astal"
 import { Menu } from "./ToggleButton"
 import { controlCenterStackWidget } from "../ControlCenter"
 import Notifd from "gi://AstalNotifd?version=0.1"
-import Pango from "gi://Pango?version=1.0"
-import { Notification } from "../../../widget/Notification"
+import { Notification } from "../../Notifications/Notification"
 
 const notifd = Notifd.get_default()
 

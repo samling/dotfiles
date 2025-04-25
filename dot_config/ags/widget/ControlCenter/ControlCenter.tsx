@@ -1,5 +1,5 @@
-import { Astal, Gtk, Widget, App, Gdk} from "astal/gtk3";
-import { bind, Variable } from "astal";
+import { Gtk, Gdk} from "astal/gtk3";
+import { Variable } from "astal";
 import Header from "./modules/Header";
 import Volume from "./modules/Volume";
 import BrightnessWidget from "./modules/Brightness";
@@ -8,7 +8,7 @@ import BluetoothToggle, { BluetoothMenu } from "./modules/Bluetooth";
 import Governors from "./modules/Governors";
 import AudioMenu from "./modules/AudioMenu";
 import { NotificationMenu, RecentNotifications } from "./modules/Notifications";
-import Popover from "../../objects/Popover";
+import Popover from "../../lib/Popover";
 
 function Row(toggles: Gtk.Widget[]=[], menus: Gtk.Widget[]=[]) {
     return (
@@ -62,15 +62,6 @@ export const visible = Variable(false);
 export default function ControlCenter(monitor: Gdk.Monitor) {
 
     return (
-        // <window
-        // name="controlcenter"
-        // namespace="controlcenter"
-        // gdkmonitor={monitor}
-        // anchor={ Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-        // visible={visible()}
-        // application={App}
-        // >
-
         <Popover
         className="controlcenter"
         name="controlcenter"
@@ -97,6 +88,5 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
                 </stack>
             {/* </revealer> */}
         </Popover>
-        // </window>
     )
 }

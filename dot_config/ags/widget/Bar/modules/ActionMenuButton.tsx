@@ -5,7 +5,7 @@ import GLib from "gi://GLib?version=2.0";
 import Gtk from "gi://Gtk?version=3.0";
 import Gdk from "gi://Gdk?version=3.0";
 import { Astal } from "astal/gtk3";
-import { visible } from "../../ActionMenu"
+import { visible } from "./ActionMenu";
 
 export default function ActionMenuButton() {
     // Store recording state using Variable

@@ -2,7 +2,7 @@ import { Astal, Gdk, App, Gtk, Widget } from "astal/gtk3";
 import { bind, Binding, timeout, Variable } from "astal";
 import Wp from "gi://AstalWp";
 import { hideWindow, toggleWindow } from "../utils";
-import Brightness from "../objects/Brightness";
+import Brightness from "../lib/Brightness";
 
 const audio = Wp.get_default()!;
 const brightness = Brightness.get_default();
@@ -35,6 +35,7 @@ function showOSD(name: string, changed: number) {
 }
 
 function OSDItem({name, icon, property, callback}: OSDItemProps) {
+    const iconName = Variable(icon);
 
     const setup = () => {
         property.subscribe((value) => {
@@ -42,13 +43,33 @@ function OSDItem({name, icon, property, callback}: OSDItemProps) {
             lastChanged.set(time);
             showOSD(name, time);
         })
+
+        // For volume, update icon based on mute state and volume level
+        if (name === "volume" && audio.defaultSpeaker) {
+            audio.defaultSpeaker.connect("notify", (speaker) => {
+                if (speaker.get_mute()) {
+                    iconName.set("audio-volume-muted-symbolic");
+                } else {
+                    const vol = speaker.volume * 100;
+                    if (vol > 67) {
+                        iconName.set("audio-volume-high-symbolic");
+                    } else if (vol > 34) {
+                        iconName.set("audio-volume-medium-symbolic");
+                    } else if (vol > 0) {
+                        iconName.set("audio-volume-low-symbolic");
+                    } else {
+                        iconName.set("audio-volume-muted-symbolic");
+                    }
+                }
+            });
+        }
     }
 
     return (
         <box name={name} className="osd-container" 
         vertical={true} 
         setup={setup}>
-            <icon className="osd-icon" icon={icon}/>
+            <icon className="osd-icon" icon={name === "volume" ? bind(iconName) : icon}/>
             <slider className="osd-slider"
             vertical={true}
             inverted={true}

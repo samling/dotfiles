@@ -1,5 +1,5 @@
 import { Gdk, App, Astal, Gtk }  from "astal/gtk3";
-import Calendar from "../objects/Calendar";
+import Calendar from "../lib/Calendar";
 import { Variable } from "astal";
 
 

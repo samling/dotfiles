@@ -1,5 +1,5 @@
 import { bind } from "astal";
-import Autocpufreq from "../../../objects/Autocpufreq";
+import Autocpufreq from "../../../lib/Autocpufreq";
 
 interface GovernorButtonProps {
     name: string,
