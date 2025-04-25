@@ -116,7 +116,7 @@ export default function ActionMenuButton() {
                     return "";
                 })}
             </box>
-            <popover cssClasses={["actionMenuPopover"]}>
+            <popover autohide={true} cssClasses={["actionMenuPopover"]}>
                 <ActionMenu />
             </popover>
         </menubutton>

@@ -25,24 +25,24 @@ export default function Bar(monitor: Gdk.Monitor) {
         application={App}>
         <centerbox>
             <box cssClasses={["leftBox"]}>
-                <ActionMenuButton />
+                {/* <ActionMenuButton />
                 <Workspaces />
-                <FocusedWindow />
+                <FocusedWindow /> */}
             </box>
             <box cssClasses={["centerBox"]}>
                 <menubutton
                     hexpand
                     halign={Gtk.Align.CENTER}
                 >
-                    <Clock />
+                    {/* <Clock /> */}
                     <popover>
-                        <Gtk.Calendar />
+                        {/* <Gtk.Calendar /> */}
                     </popover>
                 </menubutton>
             </box>
             <box cssClasses={["rightBox"]}>
-                <Systray />
-                <ControlCenterButton />
+                {/* <Systray />
+                <ControlCenterButton /> */}
             </box>
         </centerbox>
     </window>

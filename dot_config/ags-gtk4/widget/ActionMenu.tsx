@@ -1,5 +1,5 @@
 import { Gtk } from "astal/gtk4"
-import { GLib } from "astal";
+import { GLib, bind, Variable } from "astal";
 
 export default function ActionMenu() {
     // References to store widgets
@@ -7,7 +7,9 @@ export default function ActionMenu() {
     
     // Get home directory path
     const HOME = GLib.get_home_dir();
-    
+
+    const show = Variable<boolean>(false);
+
     // Function to hide menu and execute command
     const executeAction = (command: string) => {
         // Use a small delay to ensure animation completes before closing
@@ -35,6 +37,11 @@ export default function ActionMenu() {
     };
 
     return (
+        <revealer
+            transitionDuration={200}
+            revealChild={true}
+            transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
+        >
             <box cssName="actionMenuBox" vertical spacing={10}>
                 <stack 
                     transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
@@ -138,5 +145,6 @@ export default function ActionMenu() {
                     </box>
                 </stack>
             </box>
+        </revealer>
     );
 }
