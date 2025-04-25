@@ -42,7 +42,7 @@ export default function Popover({
     return (
         <window
             {...props}
-            css="background-color: transparent"
+            css="background-color: transparent; border: 0px;"
             keymode={Astal.Keymode.EXCLUSIVE}
             anchor={TOP | BOTTOM | LEFT | RIGHT}
             exclusivity={Astal.Exclusivity.IGNORE}
