@@ -4,6 +4,7 @@ import Hyprland from "gi://AstalHyprland"
 import style from "./style/main.scss"
 import BarWindow from "./widget/Bar/BarWindow"
 import OSD from "./widget/OSD"
+import Bar from "./widget/Bar/Bar"
 import NotificationPopup from "./widget/NotificationPopup"
 
 function getGdkMonitorFromHyprland(hyprMonitorName: string, hyprMonitor: Hyprland.Monitor, gdkMonitors: Gio.ListModel): Gdk.Monitor | null {
@@ -92,7 +93,7 @@ App.start({
                     // Both are ready, create the window with a small delay
                     console.log("Both monitors ready, creating window")
                     timeout(100, () => {
-                        barWindow = BarWindow(gdkMonitor);
+                        barWindow = Bar(gdkMonitor);
                         App.add_window(barWindow);
                     });
                 });
