@@ -5,6 +5,7 @@ import GLib from "gi://GLib?version=2.0";
 import Gtk from "gi://Gtk?version=3.0";
 import Gdk from "gi://Gdk?version=3.0";
 import { Astal } from "astal/gtk3";
+import { visible } from "../../ActionMenu"
 
 export default function ActionMenuButton() {
     // Store recording state using Variable
@@ -86,7 +87,11 @@ export default function ActionMenuButton() {
     
     return (
         <button className="actionMenuButton"
-        onClick={() => toggleWindow("actionmenu")}
+        onClick={() => {
+            const currentValue = visible.get();
+            const newValue = !currentValue;
+            visible.set(newValue);
+        }}
         >
             <box>
                 <icon icon="archlinux-logo"

@@ -1,6 +1,7 @@
 import { App, Widget } from "astal/gtk3";
 import { bind } from "astal";
 import { toggleWindow } from "../../../utils";
+import { visible } from "../../ControlCenter/ControlCenter"
 
 
 export default function ControlCenterButton() {
@@ -14,7 +15,11 @@ export default function ControlCenterButton() {
 
     return (
         <button className="controlCenterButton"
-        onClick={() => toggleWindow("controlcenter")}
+        onClick={() => {
+            const currentValue = visible.get();
+            const newValue = !currentValue;
+            visible.set(newValue);
+        }}
         >
             <icon icon="pan-end-symbolic"
             className="controlCenterIcon"

@@ -1,7 +1,11 @@
+import { Variable } from "astal";
 import { App, Widget, Gtk } from "astal/gtk3"
 import Astal from "gi://Astal?version=3.0"
 import Gdk from "gi://Gdk?version=3.0"
 import GLib from "gi://GLib?version=2.0"
+import Popover from "../utils/popover";
+
+export const visible = Variable(false);
 
 export default function ActionMenu(monitor: Gdk.Monitor) {
     // References to store widgets
@@ -47,17 +51,18 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
     };
 
     return (
-        <window
+        <Popover
+            className="actionmenu"
             name="actionmenu"
             namespace="actionmenu"
-            gdkmonitor={monitor}
-            anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT}
+            visible={visible()}
+            halign={Gtk.Align.START}
+            valign={Gtk.Align.START}
+            marginTop={40}
             marginLeft={10}
-            visible={false}
-            application={App}
-            setup={win => windowRef = win}
+            onClose={() => visible.set(false)}
         >
-            <revealer
+            {/* <revealer
                 transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
                 revealChild={false}
                 transitionDuration={300}
@@ -71,7 +76,7 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                         }
                     });
                 }}
-            >
+            > */}
                 <box className="actionMenuBox" vertical spacing={10}>
                     <stack 
                         transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
@@ -176,7 +181,7 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                         </box>
                     </stack>
                 </box>
-            </revealer>
-        </window>
+            {/* </revealer> */}
+        </Popover>
     );
 }

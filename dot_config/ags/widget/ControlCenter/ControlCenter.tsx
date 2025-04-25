@@ -8,6 +8,7 @@ import BluetoothToggle, { BluetoothMenu } from "./modules/Bluetooth";
 import Governors from "./modules/Governors";
 import AudioMenu from "./modules/AudioMenu";
 import { NotificationMenu, RecentNotifications } from "./modules/Notifications";
+import Popover from "../../utils/popover";
 
 function Row(toggles: Gtk.Widget[]=[], menus: Gtk.Widget[]=[]) {
     return (
@@ -56,21 +57,35 @@ function MainContainer() {
 
 export const controlCenterStackWidget = Variable("controlcenter");
 
+export const visible = Variable(false);
+
 export default function ControlCenter(monitor: Gdk.Monitor) {
 
     return (
-        <window
+        // <window
+        // name="controlcenter"
+        // namespace="controlcenter"
+        // gdkmonitor={monitor}
+        // anchor={ Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
+        // visible={visible()}
+        // application={App}
+        // >
+
+        <Popover
+        className="controlcenter"
         name="controlcenter"
         namespace="controlcenter"
-        gdkmonitor={monitor}
-        anchor={ Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-        visible={false}
-        application={App}
+        visible={visible()}
+        halign={Gtk.Align.END}
+        valign={Gtk.Align.START}
+        marginTop={40}
+        marginRight={10}
+        onClose={() => visible.set(false)}
         >
-            <revealer
+            {/* <revealer
             transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
-            >
-
+            revealChild={visible()}
+            > */}
                 <stack shown={controlCenterStackWidget()}
                 transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
                 >
@@ -80,7 +95,8 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
                     <AudioMenu/>
                     <NotificationMenu/>
                 </stack>
-            </revealer>
-        </window>
+            {/* </revealer> */}
+        </Popover>
+        // </window>
     )
 }
