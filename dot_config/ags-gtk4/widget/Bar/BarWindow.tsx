@@ -8,13 +8,14 @@ import Clock from "./modules/Clock"
 import ControlCenterButton from "./modules/ControlCenterButton"
 import FocusedWindow from "./modules/focusedWindow"
 import Systray from "./modules/Systray"
+import { Popover } from "astal/gtk4/widget"
 
 export default function BarWindow(gdkmonitor: Gdk.Monitor) {
     return Widget.Window({
        gdkmonitor,
        name: "bar",
        namespace: "bar0",
-       cssClasses: ["bar-window"],
+       cssClasses: ["bar"],
        exclusivity: Astal.Exclusivity.EXCLUSIVE,
        visible: true,
  
@@ -22,47 +23,48 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
           Astal.WindowAnchor.TOP |
           Astal.WindowAnchor.LEFT |
           Astal.WindowAnchor.RIGHT,
+
+      margin: 10,
+      marginBottom: 0,
+      child: Widget.CenterBox({
+         startWidget: Widget.Box({
+            hexpand: true,
+            cssClasses: ["leftBox"],
+            halign: Gtk.Align.START,
  
-       child: Widget.CenterBox({
-          cssClasses: ["bar-center-box"],
+            children: [
+               Widget.Box({
+                  children: [
+                   ActionMenuButton(),
+                   Workspaces(),
+                   FocusedWindow(),
+                  ],
+               }),
+            ],
+         }),
  
-          startWidget: Widget.Box({
-             hexpand: true,
-             halign: Gtk.Align.START,
+         centerWidget: Widget.CenterBox({
+            halign: Gtk.Align.CENTER,
+            cssClasses: ["centerBox"],
+            centerWidget: Widget.Box({
+               children: [
+                  Clock(),
+                  Popover({
+                     child: new Gtk.Calendar(),
+                  }),
+               ],
+            }),
+         }),
  
-             children: [
-                Widget.Box({
-                   children: [
-                    Workspaces(),
-                    //   AppLauncherButton(),
-                    //   WorkspacesBox(),
-                    //   TaskbarBox(),
-                   ],
-                }),
-             ],
-          }),
- 
-          centerWidget: Widget.CenterBox({
-             halign: Gtk.Align.CENTER,
- 
-             centerWidget: Widget.Box({
-                // children: [NotificationsButton(), TimeLabel()],
-             }),
-          }),
- 
-          endWidget: Widget.Box({
-             hexpand: true,
-             halign: Gtk.Align.END,
- 
-             children: [
-                // TrayBox(),
-                // IndicatorsButton(),
-                // RamButton(),
-                // CpuButton(),
-                // BatteryBox(),
-                // PowerButton(),
-             ],
-          }),
+         endWidget: Widget.Box({
+            hexpand: true,
+            halign: Gtk.Align.END,
+            cssClasses: ["rightBox"],
+            children: [
+               Systray(),
+               ControlCenterButton(),
+            ],
+         }),
        }),
     });
  }
