@@ -10,6 +10,15 @@ menubutton {
     
 }
 
+menubutton {
+    .controlCenterPopover {
+        contents {
+            background-color: $base;
+            border: none;
+        }
+    }
+}
+
 .controlcenter, .menu {
     color: #ffffff;
     background-color: $base;
@@ -222,4 +231,8 @@ menubutton {
 .dnd {
     font-size: 25px;
     padding: 5px;
+}
+
+.min-height-30 {
+    min-height: 30px;
 }  

@@ -1,6 +1,6 @@
 import { Astal, Gtk } from "astal/gtk4"
 import Notifd from "gi://AstalNotifd"
-import Notification from "../widget/Notification"
+import Notification from "./Notification"
 import { type Subscribable } from "astal/binding"
 import { Variable, bind } from "astal"
 import GLib from "gi://GLib"

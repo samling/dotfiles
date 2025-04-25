@@ -2,13 +2,7 @@ import { Astal, Gtk, Widget, App, Gdk} from "astal/gtk4";
 import { bind, Variable } from "astal";
 import { Stack } from "astal/gtk4/widget";
 import Header from "./modules/Header"
-// import Volume from "./modules/Volume";
-// import BrightnessWidget from "./modules/Brightness";
-// import NetworkToggle, { WifiMenu } from "./modules/Network";
-// import BluetoothToggle, { BluetoothMenu } from "./modules/Bluetooth";
-// import Governors from "./modules/Governors";
-// import AudioMenu from "./modules/AudioMenu";
-import { NotificationMenu, RecentNotifications } from "./modules/Notifications";
+import { RecentNotifications, NotificationMenu } from "./modules/Notifications";
 
 function Row(toggles: Gtk.Widget[]=[], menus: Gtk.Widget[]=[]) {
     return (
@@ -42,13 +36,10 @@ function MainContainer() {
             <box cssClasses={["sliders-box"]}
             vertical={true}
             >
-                {/* <Volume/>
-                <BrightnessWidget/> */}
+                <label label="Volume Controls" />
             </box>
             <box cssClasses={["toggles"]}>
-                {/* {
-                    Row([Homogeneous([Row([Homogeneous([NetworkToggle(), BluetoothToggle()], true)]), Governors()])])
-                } */}
+                <label label="Quick Settings" />
             </box>
             <RecentNotifications/>
         </box>
@@ -69,10 +60,8 @@ export default function ControlCenter() {
             transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
             >
                 <MainContainer></MainContainer>
-                {/* <WifiMenu/>
-                <BluetoothMenu/>
-                <AudioMenu/>
-                <NotificationMenu/> */}
+                <Header />
+                <NotificationMenu />
             </stack>
         </box>
     )

@@ -49,7 +49,7 @@ export function Arrow(name: string, activate: () => void) {
     
     return (
         <button
-        onClick={() => {
+        onClicked={() => {
             opened.set(opened.get() === name ? "" : name)
             activate();
         }}
@@ -102,7 +102,7 @@ export function Menu({name, title, child}: MenuProps) {
     return (
         <box name={name} vertical={true} cssClasses={["menu"]}>
                 <button
-                onClick={() => controlCenterStackWidget.set("controlcenter")}
+                onClicked={() => controlCenterStackWidget.set("controlcenter")}
                 halign={Gtk.Align.START}
                 cssClasses={["menu-back"]}
                 >

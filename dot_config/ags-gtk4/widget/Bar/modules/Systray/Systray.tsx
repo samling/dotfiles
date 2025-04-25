@@ -1,11 +1,5 @@
-// Astal
 import { bind, Variable } from "astal";
-
-// Libraries
 import Tray from "gi://AstalTray"
-
-// Components
-import WidgetBox from "../components/box"
 import itemComponent from "./systrayItem"
 
 
@@ -15,7 +9,7 @@ const SystemTray = () => {
     const isVisible = Variable(true);
 
     return (
-        <WidgetBox visible={bind(isVisible)}>
+        <box cssClasses={["widgetBox"]} visible={bind(isVisible)}>
             <box spacing={8}>
                 {bind(tray, "items").as((items) => {
                     isVisible.set(!(items.length === 0));
@@ -23,7 +17,7 @@ const SystemTray = () => {
                     return items.map(itemComponent);
                 })}
             </box>
-        </WidgetBox>
+        </box>
     )
 }
 

@@ -2,10 +2,9 @@ import { App, type Astal, Gdk, Gtk } from "astal/gtk4"
 import { Gio, timeout, GLib } from "astal"
 import Hyprland from "gi://AstalHyprland"
 import style from "./style/main.scss"
-import BarWindow from "./widget/Bar/BarWindow"
 import OSD from "./widget/OSD"
 import Bar from "./widget/Bar/Bar"
-import NotificationPopup from "./widget/NotificationPopup"
+import NotificationPopup from "./widget/Notifications/NotificationPopup"
 
 function getGdkMonitorFromHyprland(hyprMonitorName: string, hyprMonitor: Hyprland.Monitor, gdkMonitors: Gio.ListModel): Gdk.Monitor | null {
     console.log("Finding gdk monitor for hyprland monitor", hyprMonitorName)
@@ -49,6 +48,9 @@ App.start({
         const gdkMonitors = gdkDisplay.get_monitors()
 
         let barWindow: Astal.Window | null = null;
+        let osdWindow: Astal.Window | null = null;
+        let notificationPopup: Astal.Window | null = null;
+
         const hyprland = Hyprland.get_default()
         const hyprMonitorName = "DP-3"
         
@@ -70,6 +72,16 @@ App.start({
                     console.log("destroying existing bar window")
                     barWindow.destroy();
                     barWindow = null;
+                }
+                if (osdWindow != null) {
+                    console.log("destroying existing osd window")
+                    osdWindow.destroy();
+                    osdWindow = null;
+                }
+                if (notificationPopup != null) {
+                    console.log("destroying existing notification popup")
+                    notificationPopup.destroy();
+                    notificationPopup = null;
                 }
                 
                 // Sync both monitor systems before checking
@@ -94,7 +106,11 @@ App.start({
                     console.log("Both monitors ready, creating window")
                     timeout(100, () => {
                         barWindow = Bar(gdkMonitor);
+                        osdWindow = OSD(gdkMonitor);
+                        notificationPopup = NotificationPopup(gdkMonitor);
                         App.add_window(barWindow);
+                        App.add_window(osdWindow);
+                        App.add_window(notificationPopup);
                     });
                 });
             });

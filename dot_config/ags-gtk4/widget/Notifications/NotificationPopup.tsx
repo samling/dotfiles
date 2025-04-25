@@ -1,6 +1,6 @@
 import { App, Astal } from "astal/gtk4";
 import { Gdk, Gtk } from "astal/gtk4";
-import NotificationMap from "../objects/NotificationMap";
+import NotificationMap from "./NotificationMap";
 
 export default function NotificationPopup(gdkmonitor: Gdk.Monitor) {
   const { TOP, RIGHT } = Astal.WindowAnchor;
@@ -53,5 +53,5 @@ export default function NotificationPopup(gdkmonitor: Gdk.Monitor) {
     >
       {/* Content is managed in the setup function */}
     </window>
-  );
+  ) as Astal.Window;
 }

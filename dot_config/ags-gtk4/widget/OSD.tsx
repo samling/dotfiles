@@ -1,7 +1,7 @@
 import { App, Astal, Gdk, Gtk, hook } from "astal/gtk4";
 import { timeout } from "astal/time";
 import { Variable, bind } from "astal";
-import Brightness from "../objects/Brightness";
+import Brightness from "../lib/Brightness";
 import Wp from "gi://AstalWp";
 
 const osdLevelbarWidth = 100;
@@ -87,5 +87,5 @@ export default function OSD(monitor: Gdk.Monitor) {
                 <OnScreenProgress visible={visible} />
             </box>
         </window>
-    )
+    ) as Astal.Window
 }

@@ -29,6 +29,10 @@ export default function ControlCenterButton() {
                 // Reset to main view when closing
                 navigateToControlCenter("controlcenter");
             });
+            
+            // Make sure popover is visible
+            popover.autohide = true;
+            popover.position = Gtk.PositionType.BOTTOM;
         }
     };
 
