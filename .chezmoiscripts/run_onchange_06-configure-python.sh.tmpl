@@ -2,17 +2,23 @@
 
 {{- $osID := .host.os_type }}
 
-echo "Configuring Python with pyenv for {{ $osID }}..."
+echo "Configuring Python with uv for {{ $osID }}..."
+#echo "Configuring Python with pyenv for {{ $osID }}..."
 
 # Check if pyenv is installed
-if ! command -v pyenv &> /dev/null; then
-    echo "pyenv is not installed. Please install pyenv first."
-    exit 1
-fi
+#if ! command -v pyenv &> /dev/null; then
+#    echo "pyenv is not installed. Please install pyenv first."
+#    exit 1
+#fi
+
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install Python 3.11
-echo "Installing Python 3.11 with pyenv"
-pyenv install -f 3.11 --skip-existing
+#echo "Installing Python 3.11 with pyenv"
+echo "Installing Python 3.11 with uv"
+#pyenv install -f 3.11 --skip-existing
+uv python install 3.11
 
 # Set as default for the user
-pyenv global 3.11 
+#pyenv global 3.11 

@@ -79,8 +79,8 @@ export PATH="$HOME/.pulumi/bin:$PATH"
 
 #=== Pyenv
 # export PATH="$HOME/.pyenv/bin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+#export PYENV_ROOT="$HOME/.pyenv"
+#[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
 #=== Rust
 export PATH=$PATH:$HOME/.cargo/bin
