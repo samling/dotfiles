@@ -12,9 +12,9 @@ PATH=$PATH:/bin
 PATH=$PATH:/usr/sbin
 PATH=$PATH:/sbin
 
-# Local paths
+# Local paths (put first in order to take precedence)
 #
-PATH=$PATH:${HOME}/.local/bin
+PATH=${HOME}/.local/bin:$PATH
 
 #=== XDG
 export XDG_DATA_DIRS=/usr/share:/usr/local/share:$XDG_DATA_DIRS

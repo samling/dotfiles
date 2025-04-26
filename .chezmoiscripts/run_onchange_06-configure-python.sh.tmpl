@@ -14,11 +14,11 @@ echo "Configuring Python with uv for {{ $osID }}..."
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install Python 3.11
+# Install Python
+PYTHON_VERSION="3.13"
 #echo "Installing Python 3.11 with pyenv"
-echo "Installing Python 3.11 with uv"
-#pyenv install -f 3.11 --skip-existing
-uv python install 3.11
+echo "Installing Python ${PYTHON_VERSION} with uv"
+uv python install ${PYTHON_VERSION} --default --preview
 
 # Set as default for the user
 #pyenv global 3.11 
