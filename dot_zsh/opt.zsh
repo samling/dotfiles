@@ -66,3 +66,6 @@ setopt IGNORE_EOF               # Prevent ZSH from quitting with ctrl-d
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion
 #zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion only if there are no case-sensitive matches
+
+# fzf-zsh
+zstyle ':fzf-tab:*' fzf-flags '--tmux'

@@ -43,7 +43,7 @@ export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}--color=bg+:#3132
 --marker ⇒"
 
 # Exact-match rather than fuzzy matching by default (use ' to negate)
-export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact"
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact --tmux"
 
 # Prevent fzf from reducing height to 40% by default
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--no-height"
@@ -98,4 +98,5 @@ export KEYTIMEOUT=1
 export XAUTHORITY=$HOME/.Xauthority
 
 #=== Zoxide
+export _ZO_FZF_OPTS="--tmux"
 # export _ZO_FZF_OPTS="--exact --no-sort --bind=ctrl-z:ignore,btab:up,tab:down --cycle --keep-right --border=sharp --height=45% --info=inline --layout=reverse --tabstop=1 --exit-0 --preview='command -p ls {2..}'"
