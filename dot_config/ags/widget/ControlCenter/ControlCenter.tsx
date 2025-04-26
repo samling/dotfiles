@@ -7,7 +7,7 @@ import { NetworkToggle, WifiMenu } from "./modules/Network";
 import BluetoothToggle, { BluetoothMenu } from "./modules/Bluetooth";
 import Governors from "./modules/Governors";
 import AudioMenu from "./modules/AudioMenu";
-import { NotificationMenu, RecentNotifications } from "./modules/Notifications";
+import { NotificationMenu, RecentNotifications, refreshNotificationList } from "./modules/Notifications";
 import Popover from "../../lib/Popover";
 import GLib from "gi://GLib?version=2.0";
 
@@ -87,6 +87,9 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
         onClose={closeControlCenter}
         onNotifyVisible={(self) => {
             if (self.visible) {
+                // When control center becomes visible, refresh notifications
+                refreshNotificationList();
+                
                 GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
                     revealed.set(true);
                     return false;

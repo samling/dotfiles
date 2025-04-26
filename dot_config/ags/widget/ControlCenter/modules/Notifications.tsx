@@ -19,6 +19,11 @@ const initNotifications = () => {
     allNotificationIds.set(existingNotifs);
 };
 
+// Export a function to manually refresh the notification list
+export const refreshNotificationList = () => {
+    initNotifications();
+};
+
 // Run initialization
 initNotifications();
 

@@ -22,9 +22,8 @@ export default function ControlCenterButton() {
                 // If control center is visible, start closing animation
                 closeControlCenter();
             } else {
-                // If control center is hidden, show it first, then reveal content
+                // If control center is hidden, show it
                 visible.set(true);
-                toggleWindow("controlcenter");
                 // The reveal animation will be triggered by onNotifyVisible in ControlCenter
             }
         }}
