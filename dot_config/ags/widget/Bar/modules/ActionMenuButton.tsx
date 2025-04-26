@@ -45,6 +45,12 @@ export default function ActionMenuButton() {
     const stopRecording = () => {
         // Use a shell to run both commands
         GLib.spawn_command_line_async("bash -c \"pkill -x wf-recorder && notify-send 'Stopped screen recording'\"");
+        
+        // Reset cursor after stopping recording
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 300, () => {
+            GLib.spawn_command_line_async("xsetroot -cursor_name left_ptr");
+            return false; // Don't repeat
+        });
     };
     
     // Set up interval to check recording status every second
