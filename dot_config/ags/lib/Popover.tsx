@@ -17,6 +17,7 @@ type PopoverProps = Pick<
     | "valign"
 > & {
     onClose?(self: Widget.Window): void
+    onNotifyVisible?(self: Widget.Window): void
 }
 
 /**
@@ -37,6 +38,7 @@ export default function Popover({
     halign = Gtk.Align.CENTER,
     valign = Gtk.Align.CENTER,
     onClose,
+    onNotifyVisible,
     ...props
 }: PopoverProps) {
     return (
@@ -48,6 +50,7 @@ export default function Popover({
             exclusivity={Astal.Exclusivity.IGNORE}
             onNotifyVisible={(self) => {
                 if (!self.visible) onClose?.(self)
+                onNotifyVisible?.(self)
             }}
             // close when click occurs otside of child
             onButtonPressEvent={(self, event) => {

@@ -1,8 +1,8 @@
 import { App, Widget } from "astal/gtk3";
 import { bind, Variable } from "astal";
 import { toggleWindow } from "../../../utils";
-import { visible } from "../../ControlCenter/ControlCenter"
-
+import { visible, revealed, closeControlCenter } from "../../ControlCenter/ControlCenter"
+import GLib from "gi://GLib?version=2.0";
 
 export default function ControlCenterButton() {
     const rotated = Variable(false);
@@ -17,9 +17,16 @@ export default function ControlCenterButton() {
     return (
         <button className="controlCenterButton"
         onClick={() => {
-            const newValue = !visible.get();
-            visible.set(newValue);
-            toggleWindow("controlcenter");
+            const currentValue = visible.get();
+            if (currentValue) {
+                // If control center is visible, start closing animation
+                closeControlCenter();
+            } else {
+                // If control center is hidden, show it first, then reveal content
+                visible.set(true);
+                toggleWindow("controlcenter");
+                // The reveal animation will be triggered by onNotifyVisible in ControlCenter
+            }
         }}
         setup={setupButton}
         >

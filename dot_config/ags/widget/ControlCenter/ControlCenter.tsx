@@ -9,6 +9,7 @@ import Governors from "./modules/Governors";
 import AudioMenu from "./modules/AudioMenu";
 import { NotificationMenu, RecentNotifications } from "./modules/Notifications";
 import Popover from "../../lib/Popover";
+import GLib from "gi://GLib?version=2.0";
 
 function Row(toggles: Gtk.Widget[]=[], menus: Gtk.Widget[]=[]) {
     return (
@@ -58,6 +59,18 @@ function MainContainer() {
 export const controlCenterStackWidget = Variable("controlcenter");
 
 export const visible = Variable(false);
+export const revealed = Variable(false);
+
+// Function to handle closing the control center with animation
+export const closeControlCenter = () => {
+    revealed.set(false);
+    
+    // Set a timeout to hide the window after animation completes
+    GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+        visible.set(false);
+        return false; // Don't repeat the timeout
+    });
+};
 
 export default function ControlCenter(monitor: Gdk.Monitor) {
 
@@ -71,12 +84,21 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
         valign={Gtk.Align.START}
         marginTop={40}
         marginRight={10}
-        onClose={() => visible.set(false)}
+        onClose={closeControlCenter}
+        onNotifyVisible={(self) => {
+            if (self.visible) {
+                GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
+                    revealed.set(true);
+                    return false;
+                });
+            }
+        }}
         >
-            {/* <revealer
+            <revealer
             transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
-            revealChild={visible()}
-            > */}
+            transitionDuration={250}
+            revealChild={revealed()}
+            >
                 <stack shown={controlCenterStackWidget()}
                 transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
                 >
@@ -86,7 +108,7 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
                     <AudioMenu/>
                     <NotificationMenu/>
                 </stack>
-            {/* </revealer> */}
+            </revealer>
         </Popover>
     )
 }

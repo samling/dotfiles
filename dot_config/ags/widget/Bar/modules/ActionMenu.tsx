@@ -6,6 +6,7 @@ import GLib from "gi://GLib?version=2.0"
 import Popover from "../../../lib/Popover";
 
 export const visible = Variable(false);
+export const revealed = Variable(false);
 
 export default function ActionMenu(monitor: Gdk.Monitor) {
     // Get home directory path
@@ -14,10 +15,16 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
     // Function to hide menu and execute command
     const executeAction = (command: string) => {
         // Hide the window
-        visible.set(false);
+        revealed.set(false);
+        
+        // Set a timeout to hide the window after animation completes
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+            visible.set(false);
+            return false; // Don't repeat the timeout
+        });
         
         // Execute command
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 300, () => {
             GLib.spawn_command_line_async(command);
             return false; // Don't repeat the timeout
         });
@@ -35,7 +42,14 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
 
     // Close handler to reset menu state
     const handleClose = () => {
-        visible.set(false);
+        revealed.set(false);
+        
+        // Set a timeout to hide the window after animation completes
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+            visible.set(false);
+            return false; // Don't repeat the timeout
+        });
+        
         // Reset to main menu
         if (stackRef) {
             stackRef.set_visible_child_name('main');
@@ -53,109 +67,123 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
             marginTop={40}
             marginLeft={10}
             onClose={handleClose}
+            onNotifyVisible={(self) => {
+                if (self.visible) {
+                    GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
+                        revealed.set(true);
+                        return false;
+                    });
+                }
+            }}
         >
-            <box className="actionMenuBox" vertical spacing={10}>
-                <stack 
-                    transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
-                    transitionDuration={200}
-                    interpolateSize={false}
-                    homogeneous={false}
-                    setup={stack => stackRef = stack}
-                >
-                    {/* Main Menu */}
-                    <box name="main" vertical spacing={5} className="menuPage">
-                        <button onClick={() => navigateTo('screenshots')}>
-                            <box spacing={8}>
-                                <label>󰹑</label>
-                                <label>Screenshots</label>
-                            </box>
-                        </button>
+            <revealer
+                revealChild={revealed()}
+                transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
+                transitionDuration={250}
+            >
+                <box className="actionMenuBox" vertical spacing={10}>
+                    <stack 
+                        transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
+                        transitionDuration={200}
+                        interpolateSize={false}
+                        homogeneous={false}
+                        setup={stack => stackRef = stack}
+                    >
+                        {/* Main Menu */}
+                        <box name="main" vertical spacing={5} className="menuPage">
+                            <button onClick={() => navigateTo('screenshots')}>
+                                <box spacing={8}>
+                                    <label>󰹑</label>
+                                    <label>Screenshots</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => navigateTo('screenrecording')}>
+                                <box spacing={8}>
+                                    <label>󰻃</label>
+                                    <label>Screen Recording</label>
+                                </box>
+                            </button>
+                        </box>
                         
-                        <button onClick={() => navigateTo('screenrecording')}>
-                            <box spacing={8}>
-                                <label>󰻃</label>
-                                <label>Screen Recording</label>
-                            </box>
-                        </button>
-                    </box>
-                    
-                    {/* Screenshots Submenu */}
-                    <box name="screenshots" vertical spacing={5} className="menuPage">
-                        <button onClick={() => navigateTo('main')} className="backButton">
-                            <box spacing={8}>
-                                <label>󰜲</label>
-                                <label>Back</label>
-                            </box>
-                        </button>
+                        {/* Screenshots Submenu */}
+                        <box name="screenshots" vertical spacing={5} className="menuPage">
+                            <button onClick={() => navigateTo('main')} className="backButton">
+                                <box spacing={8}>
+                                    <label>󰜲</label>
+                                    <label>Back</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot ss`)}>
+                                <box spacing={8}>
+                                    <label>󰹑</label>
+                                    <label>Take a screenshot</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot areass`)}>
+                                <box spacing={8}>
+                                    <label>󱣴</label>
+                                    <label>Area screenshot</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot areasscb`)}>
+                                <box spacing={8}>
+                                    <label></label>
+                                    <label>Area to clipboard</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Pictures/Screenshots`)}>
+                                <box spacing={8}>
+                                    <label></label>
+                                    <label>Open screenshot directory</label>
+                                </box>
+                            </button>
+                        </box>
                         
-                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot ss`)}>
-                            <box spacing={8}>
-                                <label>󰹑</label>
-                                <label>Take a screenshot</label>
-                            </box>
-                        </button>
-                        
-                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot areass`)}>
-                            <box spacing={8}>
-                                <label>󱣴</label>
-                                <label>Area screenshot</label>
-                            </box>
-                        </button>
-                        
-                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenshot areasscb`)}>
-                            <box spacing={8}>
-                                <label></label>
-                                <label>Area to clipboard</label>
-                            </box>
-                        </button>
-                        
-                        <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Pictures/Screenshots`)}>
-                            <box spacing={8}>
-                                <label></label>
-                                <label>Open screenshot directory</label>
-                            </box>
-                        </button>
-                    </box>
-                    
-                    {/* Screen Recording Submenu */}
-                    <box name="screenrecording" vertical spacing={5} className="menuPage">
-                        <button onClick={() => navigateTo('main')} className="backButton">
-                            <box spacing={8}>
-                                <label>󰜲</label>
-                                <label>Back</label>
-                            </box>
-                        </button>
-                        
-                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording sr`)}>
-                            <box spacing={8}>
-                                <label>󰹑</label>
-                                <label>Full screen recording</label>
-                            </box>
-                        </button>
-                        
-                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording interactivesr`)}>
-                            <box spacing={8}>
-                                <label>󰹑</label>
-                                <label>Choose monitor</label>
-                            </box>
-                        </button>
-                        
-                        <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording areasr`)}>
-                            <box spacing={8}>
-                                <label>󱣴</label>
-                                <label>Select area</label>
-                            </box>
-                        </button>
-                        
-                        <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Videos/Recordings`)}>
-                            <box spacing={8}>
-                                <label></label>
-                                <label>Open recordings directory</label>
-                            </box>
-                        </button>
-                    </box>
-                </stack>
-            </box>
+                        {/* Screen Recording Submenu */}
+                        <box name="screenrecording" vertical spacing={5} className="menuPage">
+                            <button onClick={() => navigateTo('main')} className="backButton">
+                                <box spacing={8}>
+                                    <label>󰜲</label>
+                                    <label>Back</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording sr`)}>
+                                <box spacing={8}>
+                                    <label>󰹑</label>
+                                    <label>Full screen recording</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording interactivesr`)}>
+                                <box spacing={8}>
+                                    <label>󰹑</label>
+                                    <label>Choose monitor</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`${HOME}/.config/hypr/scripts/screenrecording areasr`)}>
+                                <box spacing={8}>
+                                    <label>󱣴</label>
+                                    <label>Select area</label>
+                                </box>
+                            </button>
+                            
+                            <button onClick={() => executeAction(`hyprctl dispatch exec [floating] thunar ${HOME}/Videos/Recordings`)}>
+                                <box spacing={8}>
+                                    <label></label>
+                                    <label>Open recordings directory</label>
+                                </box>
+                            </button>
+                        </box>
+                    </stack>
+                </box>
+            </revealer>
         </Popover>
     );
 }

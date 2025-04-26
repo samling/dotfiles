@@ -5,7 +5,7 @@ import GLib from "gi://GLib?version=2.0";
 import Gtk from "gi://Gtk?version=3.0";
 import Gdk from "gi://Gdk?version=3.0";
 import { Astal } from "astal/gtk3";
-import { visible } from "./ActionMenu";
+import { visible, revealed } from "./ActionMenu";
 
 export default function ActionMenuButton() {
     // Store recording state using Variable
@@ -95,8 +95,20 @@ export default function ActionMenuButton() {
         <button className="actionMenuButton"
         onClick={() => {
             const currentValue = visible.get();
-            const newValue = !currentValue;
-            visible.set(newValue);
+            if (currentValue) {
+                // If menu is visible, start closing animation
+                revealed.set(false);
+                
+                // Set a timeout to hide the window after animation completes
+                GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+                    visible.set(false);
+                    return false; // Don't repeat the timeout
+                });
+            } else {
+                // If menu is hidden, show it first, then reveal content
+                visible.set(true);
+                // The reveal animation will be triggered by onNotifyVisible in ActionMenu
+            }
         }}
         >
             <box>
