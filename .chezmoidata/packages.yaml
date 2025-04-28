@@ -374,6 +374,8 @@ packages:
       pacman: traceroute
       brew: tcptraceroute
       apt: traceroute
+    tree:
+      pacman: tree
     ttf-iosevka:
       yay: ttf-iosevka
     ttf-iosevka-term:

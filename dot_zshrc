@@ -10,9 +10,9 @@ export ZSH_VERSION=$ZSH_VERSION
 # Source config files
 # Note: Be careful when changing the order.
 source ~/.zsh/path.zsh
+source ~/.zsh/completions.zsh
 source ~/.zsh/env.zsh
 source ~/.zsh/prompt.zsh
-source ~/.zsh/completions.zsh
 source ~/.zsh/opt.zsh
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
