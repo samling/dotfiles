@@ -183,6 +183,8 @@ packages:
       pacman: greetd
     greetd-regreet:
       pacman: greetd-regreet
+    gron:
+      pacman: gron
     gtk3:
       pacman: gtk3
     gtk4:
