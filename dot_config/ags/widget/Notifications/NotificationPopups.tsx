@@ -9,7 +9,8 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
         timeout: 5000
     })
 
-    return <window
+    return (
+    <window
         className="NotificationPopups"
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
@@ -18,5 +19,6 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
         <box vertical noImplicitDestroy>
             {bind(notifs)}
         </box>
-    </window>
+        </window>
+    ) as Astal.Window
 }

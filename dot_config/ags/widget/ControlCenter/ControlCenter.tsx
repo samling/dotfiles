@@ -1,4 +1,4 @@
-import { Gtk, Gdk} from "astal/gtk3";
+import { Gtk, Gdk, Astal } from "astal/gtk3";
 import { Variable } from "astal";
 import Header from "./modules/Header";
 import Volume from "./modules/Volume";
@@ -112,5 +112,5 @@ export default function ControlCenter(monitor: Gdk.Monitor) {
                 </stack>
             </revealer>
         </Popover>
-    )
+    ) as Astal.Window
 }

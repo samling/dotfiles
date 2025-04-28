@@ -132,5 +132,5 @@ export default function MediaWindow(gdkmonitor: Gdk.Monitor) {
                 </eventbox>
             </revealer>
         </window>
-    )
+    ) as Astal.Window
 }

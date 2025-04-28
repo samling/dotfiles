@@ -185,5 +185,5 @@ export default function ActionMenu(monitor: Gdk.Monitor) {
                 </box>
             </revealer>
         </Popover>
-    );
+    ) as Astal.Window
 }

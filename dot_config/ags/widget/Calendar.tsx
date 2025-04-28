@@ -52,5 +52,5 @@ export default function CalendarWindow(gdkmonitor: Gdk.Monitor) {
                 <CalendarContainer/>
             </revealer>
         </window>
-    )
+    ) as Astal.Window
 }

@@ -15,7 +15,8 @@ import Systray from "./modules/Systray"
 import Updates from "./modules/Updates"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
-    return <window
+    return (
+    <window
         name="bar"
         namespace="bar0"
         className="bar"
@@ -50,4 +51,5 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             </box>
         </centerbox>
     </window>
+    ) as Astal.Window
 }

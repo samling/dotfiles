@@ -121,5 +121,5 @@ export default function OSDWindow(gdkmonitor: Gdk.Monitor) {
                 </eventbox>
             </revealer>
         </window>
-    )
+    ) as Astal.Window
 }
