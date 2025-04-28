@@ -1,4 +1,4 @@
-import { App } from "astal/gtk3"
+import { App, Astal } from "astal/gtk3"
 import Hyprland from "gi://AstalHyprland"
 import Gdk from "gi://Gdk?version=3.0"
 import style from "./style/main.scss"
@@ -11,14 +11,32 @@ import NotificationPopups from "./widget/Notifications/NotificationPopups"
 import ActionMenu from "./widget/Bar/modules/ActionMenu"
 import { ParseAgsArgs, HyprToGdkMonitor, GetGdkMonitorName } from "./utils"
 
+// Store references to widgets (assuming they are Astal.Window or subclasses)
+const monitorWidgets = new Map<Gdk.Monitor, Astal.Window[]>();
+
 const addMonitorWidgets = (monitor: Gdk.Monitor) => {
-    Bar(monitor)
-    ControlCenter(monitor)
-    ActionMenu(monitor)
-    MediaWindow(monitor)
-    CalendarWindow(monitor)
-    OSDWindow(monitor)
-    NotificationPopups(monitor)
+    const widgets = [
+        Bar(monitor),
+        ControlCenter(monitor),
+        ActionMenu(monitor),
+        MediaWindow(monitor),
+        CalendarWindow(monitor),
+        OSDWindow(monitor),
+        NotificationPopups(monitor)
+    ];
+    monitorWidgets.set(monitor, widgets as Astal.Window[]);
+}
+
+const removeMonitorWidgets = (monitor: Gdk.Monitor) => {
+    if (monitorWidgets.has(monitor)) {
+        console.log(`Destroying widgets for monitor: ${GetGdkMonitorName(monitor)}`);
+        monitorWidgets.get(monitor)?.forEach(widget => {
+            if (widget && !widget.destroyed) {
+                widget.destroy();
+            }
+        });
+        monitorWidgets.delete(monitor);
+    }
 }
 
 App.start({
@@ -50,18 +68,42 @@ App.start({
 
             // If our target monitor is disconnected and then reconnected,
             // we need to re-add the widgets to the new monitor.
-            hyprland?.connect("monitor-added", (_, monitor) => {
-                console.log("monitor added: ", monitor)
-                let gdkMonitor = HyprToGdkMonitor(monitor)
-                if (gdkMonitor === undefined) {
-                    throw new Error(`Failed to convert monitor ${monitor} to GdkMonitor`)
+            hyprland?.connect("monitor-added", (_, hyprAddedMonitor: Hyprland.Monitor) => {
+                console.log("monitor added signal received for: ", hyprAddedMonitor.get_name())
+                let gdkAddedMonitor = HyprToGdkMonitor(hyprAddedMonitor)
+                if (gdkAddedMonitor === undefined) {
+                    // Don't throw error, maybe GDK monitor isn't ready yet
+                    console.error(`Failed to convert Hyprland monitor ${hyprAddedMonitor.get_name()} to GdkMonitor`)
+                    return;
                 }
-                const name = GetGdkMonitorName(gdkMonitor)
+                const name = GetGdkMonitorName(gdkAddedMonitor)
                 console.log("monitor added: ", name)
                 if (name === userPrimaryMonitor) {
-                    addMonitorWidgets(gdkMonitor)
+                    console.log("Primary monitor re-added. Recreating widgets.")
+                    // Remove old widgets before adding new ones
+                    removeMonitorWidgets(gdkAddedMonitor) 
+                    addMonitorWidgets(gdkAddedMonitor)
                 }
             })
+
+            // Also handle monitor removal to clean up
+            // Assume hyprRemovedMonitor is the monitor name (string)
+            hyprland?.connect("monitor-removed", (_, hyprRemovedMonitorName: string) => { 
+                console.log("monitor removed signal received for: ", hyprRemovedMonitorName)
+                
+                // Iterate through the stored Gdk.Monitors
+                for (const [gdkMonitor, _] of monitorWidgets.entries()) {
+                    const storedMonitorName = GetGdkMonitorName(gdkMonitor);
+                    
+                    // Check if the name matches the removed name AND the primary monitor name
+                    if (storedMonitorName === hyprRemovedMonitorName && storedMonitorName === userPrimaryMonitor) {
+                        console.log("Primary monitor removed. Destroying widgets.")
+                        removeMonitorWidgets(gdkMonitor); 
+                        break; // Found the monitor, no need to check further
+                    }
+                }
+            });
+
         } else {
             console.log("No primary monitor specified, adding widgets to all monitors")
             const monitors = App.get_monitors()

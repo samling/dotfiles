@@ -64,35 +64,6 @@ const createNotificationWidgets = (ids: number[]) => {
     }).filter(Boolean) as Gtk.Widget[];
 };
 
-// Variable to track recent notifications (limited to 3)
-const recentNotifications = Variable<Gtk.Widget[]>([]);
-
-// When all notification IDs change, update the recent notifications
-allNotificationIds.subscribe(() => {
-    const ids = allNotificationIds.get().slice(0, 3);
-    recentNotifications.set(createNotificationWidgets(ids));
-});
-
-// Variable to track all notifications
-const allNotifications = Variable<Gtk.Widget[]>([]);
-
-// When all notification IDs change, update all notifications
-allNotificationIds.subscribe(() => {
-    const ids = allNotificationIds.get();
-    allNotifications.set(createNotificationWidgets(ids));
-});
-
-// Function to dismiss all notifications
-const dismissAll = () => {
-    const ids = [...allNotificationIds.get()];
-    ids.forEach(id => {
-        const notification = notifd.get_notification(id);
-        if (notification) {
-            notification.dismiss();
-        }
-    });
-};
-
 export function RecentNotifications() {
     return (
         <box vertical>
@@ -118,7 +89,7 @@ export function RecentNotifications() {
             <box className="notifs-recent"
             //@ts-ignore
             vertical noImplicitDestroy>
-                {bind(recentNotifications)}
+                {bind(allNotificationIds).as(ids => createNotificationWidgets(ids.slice(0, 3)))}
             </box>
         </box>
     )
@@ -148,9 +119,20 @@ export function NotificationMenu() {
                 <box className="notifs-recent"
                 //@ts-ignore
                 vertical noImplicitDestroy>
-                    {bind(allNotifications)}
+                    {bind(allNotificationIds).as(ids => createNotificationWidgets(ids))}
                 </box>
             </box>
         </Menu>
     )
 }
+
+// Function to dismiss all notifications
+const dismissAll = () => {
+    const ids = [...allNotificationIds.get()];
+    ids.forEach(id => {
+        const notification = notifd.get_notification(id);
+        if (notification) {
+            notification.dismiss();
+        }
+    });
+};

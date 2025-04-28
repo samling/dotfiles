@@ -73,7 +73,6 @@ export const closeControlCenter = () => {
 };
 
 export default function ControlCenter(monitor: Gdk.Monitor) {
-
     return (
         <Popover
         className="controlcenter"
