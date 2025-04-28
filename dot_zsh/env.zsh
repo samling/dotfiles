@@ -31,12 +31,12 @@ export FZF_ALT_C_OPTS="--height 50% --preview 'ls {1..} | bat --color=always -pl
 
 # Ctrl-R opts
 #export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,5' --bind '?:toggle-preview' --tmux"
-export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap' --bind '?:toggle-preview' --tmux"
+export FZF_CTRL_R_OPTS="--preview 'echo {2..} | bat --color=always -pl sh' --preview-window 'wrap,down,10' --bind 'ctrl-/:change-preview-window(wrap,down,40|)' --color=label:italic --border-label='[C-/] Change Layout' --border-label-pos=0:bottom --tmux=30%,60%"
 
 # Ctrl-T opts
 # export FZF_CTRL_T_OPTS="--height 50% --preview 'less {} | bat --color=always -pl sh' --preview-window 'wrap,down,10' --bind '?:toggle-preview'"
 #export FZF_CTRL_T_OPTS="--height 50% --tmux --preview 'less {} | bat --color=always -pl sh'"
-export FZF_CTRL_T_OPTS="--height 50% --preview '~/.zsh/scripts/preview_all.sh {}' --tmux"
+export FZF_CTRL_T_OPTS="--preview '~/.zsh/scripts/preview_all.sh {}' --preview-window 'down,15' --bind 'ctrl-/:change-preview-window(down,40|)' --color=label:italic --border-label='[C-/] Change Layout' --border-label-pos=0:bottom --tmux=30%,60%"
 
 # Catppuccin theme
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
@@ -49,7 +49,7 @@ export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}--color=bg+:#3132
 --marker ⇒"
 
 # Exact-match rather than fuzzy matching by default (use ' to negate)
-export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact --tmux"
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact --tmux=30%,60%"
 
 # Prevent fzf from reducing height to 40% by default
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--no-height"

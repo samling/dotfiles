@@ -68,15 +68,23 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab
 #zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion only if there are no case-sensitive matches
 
 # fzf-zsh
-zstyle ':fzf-tab:*' fzf-flags '--tmux'
+zstyle ':fzf-tab:*' fzf-flags \
+  --tmux=30%,60% \
+  --preview-window=down,15 \
+  --bind 'ctrl-/:change-preview-window(down,40|)' \
+  --color=label:italic \
+  --border-label='[C-/] Change Layout' \
+  --border-label-pos=0:bottom
+
 
 #zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:*' fzf-preview '~/.zsh/scripts/preview_all.sh $realpath'
+
+#zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 #
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-
-zstyle ':fzf-tab:complete:nvim:*' fzf-preview 'bat --color=always -pl sh ${(Q)realpath}'
-
-zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat --color=always -pl sh ${(Q)realpath}'
+#zstyle ':fzf-tab:complete:nvim:*' fzf-preview 'bat --color=always -pl sh ${(Q)realpath}'
+#
+#zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat --color=always -pl sh ${(Q)realpath}'
 
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
