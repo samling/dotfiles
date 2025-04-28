@@ -344,6 +344,8 @@ packages:
       pacman: socat
     software-properties-common:
       apt: software-properties-common
+    spotify-launcher:
+      pacman: spotify-launcher
     sqlite3:
       pacman: sqlite3
       brew: sqlite3
