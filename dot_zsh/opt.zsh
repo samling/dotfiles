@@ -69,7 +69,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab
 
 # fzf-zsh
 zstyle ':fzf-tab:*' fzf-flags \
-  --tmux=30%,60% \
+  --tmux=35%,60% \
   --preview-window=down,15 \
   --bind 'ctrl-/:change-preview-window(down,40|)' \
   --color=label:italic \
