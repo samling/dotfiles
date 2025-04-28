@@ -69,14 +69,27 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab
 
 # fzf-zsh
 zstyle ':fzf-tab:*' fzf-flags '--tmux'
+
 #zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
+#
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+
 zstyle ':fzf-tab:complete:nvim:*' fzf-preview 'bat --color=always -pl sh ${(Q)realpath}'
+
 zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat --color=always -pl sh ${(Q)realpath}'
+
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+
 zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
 	fzf-preview 'echo ${(P)word}'
-# it is an example. you can change it
+
+# give a preview of commandline arguments when completing `kill`
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
+  '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+
+# git completions
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
 	'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*' fzf-preview \
@@ -94,6 +107,7 @@ zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
 	"recent commit object name") git show --color=always $word | delta ;;
 	*) git log --color=always $word ;;
 	esac'
+
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 #zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 #zstyle ':completion:*' menu no
