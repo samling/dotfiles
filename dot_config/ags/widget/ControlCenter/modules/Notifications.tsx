@@ -54,11 +54,6 @@ const createNotificationWidgets = (ids: number[]) => {
         
         return Notification({
             notification: notification,
-            showProgressBar: false,
-            onHoverLost: () => {}, 
-            onClick: (event) => {
-                // Add onclick handler for notification if needed
-            },
             setup: () => {}
         });
     }).filter(Boolean) as Gtk.Widget[];
