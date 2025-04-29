@@ -7,7 +7,7 @@ import { NetworkToggle, WifiMenu } from "./modules/Network";
 import BluetoothToggle, { BluetoothMenu } from "./modules/Bluetooth";
 import Governors from "./modules/Governors";
 import AudioMenu from "./modules/AudioMenu";
-import { NotificationMenu, RecentNotifications, refreshNotificationList } from "./modules/Notifications";
+import { NotificationMenu, RecentNotifications, refreshNotificationList, debugWidgetStats } from "./modules/Notifications";
 import Popover from "../../lib/Popover";
 import GLib from "gi://GLib?version=2.0";
 
@@ -65,9 +65,18 @@ export const revealed = Variable(false);
 export const closeControlCenter = () => {
     revealed.set(false);
     
+    // Clean up notification widgets before hiding
+    
     // Set a timeout to hide the window after animation completes
     GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
         visible.set(false);
+        
+        // Force cleanup notification widgets after hiding
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
+            debugWidgetStats();
+            return false;
+        });
+        
         return false; // Don't repeat the timeout
     });
 };

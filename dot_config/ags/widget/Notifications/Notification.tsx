@@ -6,7 +6,7 @@ import Pango from "gi://Pango?version=1.0";
 
 type NotificationProps = {
     notification: Notifd.Notification
-    setup: () => void
+    setup: (widget?: Gtk.Widget) => void
 }
 
 export function Notification(props: NotificationProps) {
@@ -19,7 +19,10 @@ export function Notification(props: NotificationProps) {
 
     return (
         <box className={"notification"}
-        setup={setup}
+        setup={(widget) => {
+            // Call the provided setup function with the widget
+            setup(widget);
+        }}
         >
             <box vertical>
                 <box className="notif-header">
