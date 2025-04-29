@@ -4,9 +4,30 @@
     };
  
     .bar-panel-container {
-        margin-top: 0em;
-        margin-bottom: 0em;
-        margin-left: 0em;
-        margin-right: 0em;
+        margin: 0;
+        padding: 5px 8px;
+        background-color: $primary_bg;
     };
+    
+    /* Common styles for bar modules */
+    .bar-button-label {
+        font-size: 14px;
+        margin: 0 2px;
+    };
+    
+    .bar-button-icon {
+        font-size: 16px;
+        margin: 0 2px;
+    };
+    
+    /* Common box styling */
+    box {
+        margin: 0 2px;
+    }
+    
+    /* Spacing between modules */
+    .bar_item_box {
+        margin: 0 2px;
+        padding: 0 2px;
+    }
 };

@@ -1,8 +1,8 @@
 import { Astal, App, Gtk } from "astal/gtk3"
 import { GdkMonitorMapper } from "./utils/GdkMonitorMapper"
 import { Box } from "astal/gtk3/widget";
-import { Workspaces } from "./modules/Workspaces";
-import { Media } from "./modules/Media";
+import { Workspaces } from "./modules/workspaces";
+import { Media } from "./modules/media";
 import { WidgetContainer } from "./shared/WidgetContainer";
 const gdkMonitorMapper = new GdkMonitorMapper();
 

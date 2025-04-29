@@ -1,5 +1,4 @@
-import { MediaTags } from 'src/lib/types/audio.js';
-import { Opt } from 'src/lib/option';
+import { MediaTags } from 'src/lib/types/audio';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { Variable } from 'astal';
 
@@ -73,9 +72,9 @@ const isValidMediaTag = (tag: unknown): tag is keyof MediaTags => {
  * @returns The generated media label as a string.
  */
 export const generateMediaLabel = (
-    truncation_size: Opt<number>,
-    show_label: Opt<boolean>,
-    format: Opt<string>,
+    truncation_size: Variable<number>,
+    show_label: Variable<boolean>,
+    format: Variable<string>,
     songIcon: Variable<string>,
     activePlayer: Variable<AstalMpris.Player | undefined>,
 ): string => {

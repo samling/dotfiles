@@ -3,6 +3,7 @@ import { App, Astal, Gdk, Gtk } from "astal/gtk3";
 import { Revealer } from "astal/gtk3/widget";
 import { DropdownMenuProps } from "src/lib/types/dropdownmenu";
 import { globalEventBoxes } from "src/globals/dropdown";
+import { BarEventMargins } from "./eventBoxes";
 
 export default ({
     name,
@@ -41,7 +42,7 @@ export default ({
                 }}
             >
                 <box className="top-eb" vertical>
-                    {/* margins here */}
+                    <BarEventMargins windowName={name} location="top" />
                     <eventbox
                         className="in-eb menu-event-box"
                         onButtonPressEvent={(_, event) => {
@@ -75,7 +76,7 @@ export default ({
                             </revealer>
                         </box>
                     </eventbox>
-                    {/* margins here */}
+                    <BarEventMargins windowName={name} location="bottom" />
                 </box>
             </eventbox>
         </window>

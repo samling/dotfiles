@@ -1,0 +1,65 @@
+/* Base media container styling */
+.media-container {
+    margin: 0 4px;
+    padding: 0 6px;
+    border-radius: 6px;
+    transition: background-color 0.15s ease-in-out;
+    
+    &:hover {
+        background-color: $overlay0;
+    }
+}
+
+/* Icon and label styling */
+.bar-button-icon.media {
+    font-size: 1.2em;
+    color: $text;
+    padding-right: 4px;
+    
+    &.txt-icon {
+        margin-right: 2px;
+    }
+}
+
+.bar-button-label.media {
+    color: $text;
+    font-size: 0.95em;
+    font-weight: 500;
+    margin-left: 2px;
+}
+
+/* Style variant 2 - more visually distinct */
+.style2 {
+    .media-container {
+        background-color: $surface0;
+        border-radius: 10px;
+        padding: 2px;
+    }
+    
+    .bar-button-icon.media {
+        background: $base;
+        padding: 0px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        color: $text;
+    }
+
+    .bar-button-label.media {
+        padding: 0em;
+        padding-right: 10px;
+        padding-left: 10px;
+        margin-left: 0em;
+    }
+}
+
+/* Container when visible in the bar */
+.bar_item_box_visible.media {
+    border: 2px solid $overlay2;
+    border-radius: 8px;
+    
+    &:hover {
+        border-color: $mauve;
+    }
+}

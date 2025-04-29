@@ -4,10 +4,24 @@ import { Widget, Gtk, App, Gdk } from "astal/gtk3";
 import Pango from "gi://Pango";
 import { Box } from "astal/gtk4/widget";
 import { openMenu } from "../../utils/menu";
-import { onPrimaryClick, onSecondaryClick } from "src/lib/eventHandlers";
+import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from "src/lib/eventHandlers";
 import { BarBoxChild } from "src/lib/types/bar";
 import { generateMediaLabel } from "./helpers";
 import { Astal } from "astal/gtk3";
+import { activePlayer, mediaAlbum, mediaArtist, mediaTitle } from "src/globals/media";
+
+// Simplified helper functions
+const runAsyncCommand = (command: string, context?: any) => {
+    if (!command) return;
+    console.log(`Would run command: ${command}`);
+    // In the real implementation, this would execute the command
+};
+
+const throttledScrollHandler = (interval: number) => {
+    return (cmd: string, context?: any) => {
+        if (cmd) runAsyncCommand(cmd, context);
+    };
+};
 
 const mprisService = AstalMpris.get_default();
 
@@ -23,8 +37,6 @@ const format = Variable('{artist: - }{title}');
 
 const isVis = Variable(!show_active_only);
 
-const activePlayer = Variable<AstalMpris.Player | undefined>(undefined);
-
 Variable.derive([bind(show_active_only), bind(mprisService, 'players')], (showActive, players) => {
     isVis.set(!showActive || players?.length > 0);
 });
@@ -38,6 +50,9 @@ const Media = (): BarBoxChild => {
         bind(truncation_size),
         bind(show_label),
         bind(format),
+        bind(mediaTitle),
+        bind(mediaAlbum),
+        bind(mediaArtist),
     ],
     () => {
             return generateMediaLabel(truncation_size, show_label, format, songIcon, activePlayer);
@@ -76,12 +91,33 @@ const Media = (): BarBoxChild => {
                 () => {
                     disconnectFunctions.forEach((disconnect) => disconnect());
                     disconnectFunctions = [];
-
+                    
                     disconnectFunctions.push(
                         onPrimaryClick(self, (clicked, event) => {
                             openMenu(clicked, event, 'mediamenu');
                         })
-                    ); 
+                    );
+                    
+                    disconnectFunctions.push(
+                        onSecondaryClick(self, (clicked, event) => {
+                            runAsyncCommand(rightClick.get(), { clicked, event });
+                        })
+                    );
+                
+                    disconnectFunctions.push(
+                        onMiddleClick(self, (clicked, event) => {
+                            runAsyncCommand(middleClick.get(), { clicked, event });
+                        })
+                    );
+                    
+                    const scrollHandler = (dir: string) => {
+                        const cmd = dir === 'up' ? scrollUp.get() : scrollDown.get();
+                        if (cmd) runAsyncCommand(cmd);
+                    };
+                    
+                    disconnectFunctions.push(
+                        onScroll(self, scrollHandler, 'up', 'down')
+                    );
                 })
             }
         }

@@ -1,0 +1,42 @@
+/* Dashboard menu styling */
+.bar-menu_label {
+    color: $text;
+    font-size: 1.3em;
+    border-radius: 10px;
+    transition: color 0.2s ease;
+    
+    &:hover {
+        color: $mauve;
+    }
+}
+
+/* Style variant 2 */
+.bar_item_box_visible.style2.dashboard {
+    background: $primary_bg;
+    border-radius: 8px;
+    padding: 2px 6px;
+
+    .bar-menu_label {
+        color: $text;
+        font-weight: 500;
+    }
+    
+    &:hover {
+        background: $surface0;
+    }
+}
+
+.style2 .bar-menu_label {
+    padding: 0px;
+}
+
+/* Container when visible in dashboard mode */
+.bar_item_box_visible.dashboard {
+    border: 2px solid $overlay2;
+    border-radius: 8px;
+    padding: 2px 6px;
+    
+    &:hover {
+        border-color: $mauve;
+    }
+}

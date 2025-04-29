@@ -8,11 +8,32 @@ import { execAsync } from "astal";
 import { forMonitors } from "./src/lib/utils";
 import MediaMenu from 'src/components/menus/media';
 import { GdkMonitorMapper } from "./src/components/bar/utils/GdkMonitorMapper";
+import { DropdownMenus } from "./src/components/menus/exports";
+import { handleRealization } from "./src/components/menus/shared/dropdown/helpers"
+import { isDropdownMenu } from 'src/lib/options';
 
 const hyprland = AstalHyprland.get_default();
 
+const initializeMenus = (): void => {
+    DropdownMenus.forEach((window) => {
+        return window();
+    });
+
+    DropdownMenus.forEach((window) => {
+        const windowName = window.name.replace('_default', '').concat('menu').toLowerCase();
+
+        if (!isDropdownMenu(windowName)) {
+            return;
+        }
+
+        handleRealization(windowName);
+    })
+}
+
 App.start({
     async main() {
+        initializeMenus();
+
         const barsForMonitors = await forMonitors(Bar);
         barsForMonitors.forEach((bar: JSX.Element) => bar);
 

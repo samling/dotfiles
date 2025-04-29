@@ -1,0 +1,95 @@
+/* Base dropdown menu styles */
+.dropdown-menu {
+    background-color: transparent;
+    
+    .dropdown-menu-container {
+        background-color: $crust;
+        border-radius: 12px;
+        border: 2px solid $surface0;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+        margin: 6px;
+        padding: 10px;
+        
+        .dropdown-content {
+            margin: 4px;
+            padding: 8px;
+        }
+    }
+    
+    /* Event box styles */
+    .parent-event {
+        background-color: transparent;
+    }
+    
+    .top-eb {
+        background-color: transparent;
+    }
+    
+    .menu-event-box {
+        background-color: transparent;
+    }
+}
+
+/* Media dropdown menu specific styles */
+.mediamenu {
+    .media-box {
+        padding: 8px 12px;
+        
+        .track-info {
+            margin-bottom: 10px;
+            
+            .track-name {
+                font-size: 1.1em;
+                font-weight: bold;
+                color: $text;
+                margin-bottom: 4px;
+            }
+            
+            .artist-name {
+                font-size: 0.9em;
+                color: $subtext1;
+            }
+        }
+        
+        .media-controls {
+            margin-top: 8px;
+            
+            button {
+                padding: 8px;
+                margin: 0 6px;
+                border-radius: 50%;
+                background-color: $surface0;
+                transition: background-color 0.2s ease;
+                
+                &:hover {
+                    background-color: $surface1;
+                }
+                
+                &:active {
+                    background-color: $surface2;
+                }
+                
+                icon {
+                    font-size: 1.2em;
+                    color: $text;
+                }
+            }
+            
+            .play-button {
+                padding: 10px;
+                background-color: $mauve;
+                
+
+                
+                icon {
+                    color: $base;
+                }
+            }
+        }
+    }
+}
+
+/* Animation for revealer */
+revealer {
+    transition: all 200ms ease;
+} 
