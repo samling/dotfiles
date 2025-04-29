@@ -82,8 +82,8 @@ case "$mime" in
 	*)
 		# Default: show file details
 		if [[ "$source" == "zoxide" ]]; then
-			echo "Original input: $input"
-			echo "Processed: $filepath"
+			# echo "Original input: $input"
+			# echo "Processed: $filepath"
 		fi
 		echo "No preview available for this file type: $mime"
 		;;
