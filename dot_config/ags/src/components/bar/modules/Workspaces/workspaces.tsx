@@ -1,8 +1,9 @@
-import Hyprland from "gi://AstalHyprland"
-import { Gtk } from "astal/gtk3"
-import { bind, Variable } from "astal"
+import { Variable } from "astal";
+import Hyprland from "gi://AstalHyprland";
+import { Gtk } from "astal/gtk3";
+import { bind } from "astal";
 
-const Workspaces = (): JSX.Element => {
+const WorkspaceModule = (): JSX.Element => {
 
     const hyprland = Hyprland.get_default();
     
@@ -63,6 +64,7 @@ const Workspaces = (): JSX.Element => {
             onDestroy={() => {
                 isMagicWorkspaceFocused.drop();
                 isMagicWorkspaceOccupied.drop();
+                getButtonClass(i+1).drop();
             }}
             onClick={() => hyprland.dispatch("workspace", (i+1).toString())}
             >
@@ -92,4 +94,4 @@ const Workspaces = (): JSX.Element => {
     )
 }
 
-export { Workspaces };
+export { WorkspaceModule };

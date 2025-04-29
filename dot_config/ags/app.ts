@@ -7,6 +7,7 @@ import AstalHyprland from "gi://AstalHyprland?version=0.1";
 import { execAsync } from "astal";
 import { forMonitors } from "./src/lib/utils";
 import MediaMenu from 'src/components/menus/media';
+import { GdkMonitorMapper } from "./src/components/bar/utils/GdkMonitorMapper";
 
 const hyprland = AstalHyprland.get_default();
 
@@ -19,10 +20,14 @@ App.start({
     },
 })
 
-hyprland.connect('monitor-added', () => {
-    // restart ags here
-    // astal -q -i <instance>; gjs -m path/to/compiled.js is how hyprpanel does it
-    // TODO: not sure how gjs -m is supposed to work
+hyprland.connect('monitor-added', (_, monitor) => {
     console.log('monitor-added');
-    execAsync('astal -q -i astal; ags run');
+    const gdkMonitorMapper = new GdkMonitorMapper();
+    const hyprlandMonitor = gdkMonitorMapper.mapGdkToHyprland(monitor.id);
+    console.log(hyprlandMonitor);
+    
+    // Create a new bar for the added monitor
+    Bar(monitor.id).then(bar => bar);
+
+    //execAsync('astal -q -i astal; ags run');
 });

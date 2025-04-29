@@ -28,7 +28,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                     className={'bar-panel'}
                     startWidget={
                         <box className={'box-left'} halign={Gtk.Align.START}>
-                            {Workspaces()}
+                            {WidgetContainer(Workspaces(monitor))}
                         </box>
                     }
                     centerWidget={
