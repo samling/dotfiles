@@ -1,5 +1,6 @@
 import { App, Gdk, Gtk } from "astal/gtk3"
 import { timeout, GLib } from "astal"
+import { GetGdkMonitorName, ParseAgsArgs } from "./utils"
 import Hyprland from "gi://AstalHyprland"
 import style from "./style/main.scss"
 import OSD from "./widget/OSD"
@@ -28,20 +29,7 @@ App.start({
         const mediaWindows = new Map<Gdk.Monitor, any>();
         const calendarWindows = new Map<Gdk.Monitor, any>();
         const actionMenus = new Map<Gdk.Monitor, any>();
-        
-        // Target monitor name
-        const targetMonitorName = "DP-3";
-        const hyprland = Hyprland.get_default();
-        
-        // Track our currently active monitor
-        let activeGdkMonitor: Gdk.Monitor | null = null;
-        
-        // Function to check if widgets for a monitor already exist
-        const hasWidgetsForMonitor = (gdkMonitor: Gdk.Monitor): boolean => {
-            return bars.has(gdkMonitor);
-        };
-        
-        // Function to create widgets for the target monitor
+
         const setupWidgets = (gdkMonitor: Gdk.Monitor) => {
             // Create and add bar
             const bar = Bar(gdkMonitor);
@@ -71,6 +59,29 @@ App.start({
             const actionMenu = ActionMenu(gdkMonitor);
             actionMenus.set(gdkMonitor, actionMenu);
             App.add_window(actionMenu);
+        };
+
+        // (Optional) These are user-defined arguments passed to the app
+        // e.g. ags run --arg="primaryMonitor=DP-1"
+        const argv = imports.system.programArgs
+        const userArgs = ParseAgsArgs(argv)
+        let userPrimaryMonitor = userArgs.primaryMonitor ?? null
+        
+        const hyprland = Hyprland.get_default();
+        
+        if (userPrimaryMonitor == null || userPrimaryMonitor == "") {
+            console.log("No primary monitor specified, adding widgets to all monitors")
+            const monitors = App.get_monitors()
+            for (const monitor of monitors) {
+                setupWidgets(monitor)
+            }
+        } else {
+        // Track our currently active monitor
+        let activeGdkMonitor: Gdk.Monitor | null = null;
+        
+        // Function to check if widgets for a monitor already exist
+        const hasWidgetsForMonitor = (gdkMonitor: Gdk.Monitor): boolean => {
+            return bars.has(gdkMonitor);
         };
         
         // Function to destroy widgets for a monitor
@@ -108,9 +119,9 @@ App.start({
         // Check if the target monitor is available and set up widgets
         const checkAndSetupMonitor = () => {
             // Check if the target monitor is available
-            const hyprMonitor = hyprland.get_monitor_by_name(targetMonitorName);
+            const hyprMonitor = hyprland.get_monitor_by_name(userPrimaryMonitor);
             if (hyprMonitor === null) {
-                console.log(`Target monitor ${targetMonitorName} not available`);
+                console.log(`Target monitor ${userPrimaryMonitor} not available`);
                 
                 // If we had an active monitor, destroy its widgets
                 if (activeGdkMonitor) {
@@ -140,7 +151,7 @@ App.start({
             
             // Setup widgets for the new monitor if needed
             if (!hasWidgetsForMonitor(gdkMonitor)) {
-                console.log(`Setting up widgets for monitor ${targetMonitorName}`);
+                console.log(`Setting up widgets for monitor ${userPrimaryMonitor}`);
                 setupWidgets(gdkMonitor);
                 activeGdkMonitor = gdkMonitor;
             }
@@ -176,5 +187,6 @@ App.start({
         hyprland.connect("monitor-added", handleMonitorChange);
         hyprland.connect("monitor-removed", handleMonitorChange);
         Gdk.Screen.get_default()?.connect("monitors-changed", handleMonitorChange);
-    },
+    }
+    }
 })
