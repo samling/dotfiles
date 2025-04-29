@@ -1,0 +1,215 @@
+@use "theme" as *;
+
+.controlcenter, .menu {
+    color: #ffffff;
+    background-color: $base;
+    border: 2px solid #6c7086;
+    border-radius: 0px;
+}
+
+.controlcenter {
+    min-width: 295px;
+}
+
+.menu {
+    min-width: 400px;
+}
+
+.toggles button, .sliders-box button{
+    padding: 6px 6px;
+    margin: 5px 5px;
+    border-radius: 6px;
+    background-color: $surface1;
+    font-size: 16pt;
+    transition: all 0.25s ease-in;
+}
+
+.toggles button:hover, .sliders-box button:hover {
+    background-color: #45475a;
+}
+
+.toggles button:hover label {
+    color: $mauve;
+}
+
+.toggles label{
+    padding: 6px 6px;
+    margin: 5px 5px;
+    font-size: 12pt;
+}
+
+.toggles label:hover {
+    background-color: #45475a;
+}
+
+.system-box {
+    background-color: $crust;
+    color: #ffffff;
+    margin: 6px;
+    padding: 6px 6px;
+    font-weight: bolder;
+}
+
+.system-box label {
+    margin: 5px;
+}
+
+.profile-picture {
+	background-size: cover;
+	min-width: 75px;
+	min-height: 75px;
+	margin: 5px;
+}
+
+.username {
+    color: $mauve;
+    margin-top: 15px;
+    margin-left: -2px;
+    
+}
+
+.controlcenter .powerButton-CC{
+    color: $red;
+	font-size: 25px;
+	margin-right: 10px;
+    transition: -gtk-icon-effect 0.25s ease-in;
+    border-radius: 6px;
+}
+
+.controlcenter .powerButton-CC:hover {
+    -gtk-icon-effect: highlight;
+}
+
+.sliders-box {
+    background-color: $crust;
+    padding: 3px 3px;
+    margin: 6px;
+}
+
+.sliders-box button {
+    background-color: $crust;
+}
+
+.sliders-box trough {
+    background-color: $surface1;
+    min-height: 15px;
+}
+
+.sliders-box trough highlight {
+    background-color: $mauve;
+    min-height: 15px;
+}
+
+.battery-progress {
+    color: #000000;
+    padding: 3px 3px;
+    margin: 5px 5px;
+}
+
+.battery-progress label {
+    background-color: unset;
+    margin: unset;
+}
+
+.battery-progress trough block.empty {
+    background-color: $surface1;
+    min-height: 25px;
+}
+
+.battery-progress trough block.filled {
+    background-color: $mauve;
+    min-height: 25px;
+}
+
+.toggle-button button{
+	background-color: $crust;
+    transition: all 0.25s ease-in;
+}
+
+.toggle-button label{
+	background-color: $crust;
+    transition: all 0.25s ease-in;
+}
+
+.toggle-button.active button, .toggle-button.active label, .toggle-button.active image,
+.governor-button.active, .governor-button.active label{
+	background-color: $mauve;
+    color: #000000;
+    transition: all 0.25s ease-in;
+}
+
+.toggle-button button:hover {
+    background-color: #45475a;
+}
+
+.toggle-button button:hover label {
+    background-color: #45475a;
+    color: $text;
+}
+
+.menu-back {
+	background-color: unset;
+	font-size: 25px;
+    margin: 6px
+}
+
+.menu-title {
+	background: unset;
+	font-size: 20px;
+    padding: 6px 6px;
+    margin: -15px 0  5px 35px;
+}
+
+.menu-item {
+	background-color: $crust;
+	margin: 5px;
+    padding-left: 10px;
+    padding-right: 15px;
+    transition: background-color 0.25s ease-in;
+}
+
+.menu-item:hover {
+    background-color: #45475a;
+}
+
+.menu-item label {
+	background: unset;
+    padding: 6px 6px;
+    margin: 5px 5px;
+    font-size: 12pt
+}
+
+.simple-toggle {
+	font-size: 20px;
+	margin-right: -5px;
+}
+
+.notifs-recent {
+    margin: 15px 10px;
+}
+
+.notifs-recent-header {
+	margin: 10px 25px 0 15px;
+
+}
+
+.notifs-close-all, .dnd {
+	margin-right: 10px;
+	background-color: $surface1;
+    transition: background-color 0.25s ease-in;
+    border-radius: 6px;
+}
+
+.notifs-close-all:hover, .dnd:hover {
+    background-color: #45475a;
+}
+
+.notifs-close-all {
+    font-size: 30px;
+    color: $red;
+}
+
+.dnd {
+    font-size: 25px;
+    padding: 5px;
+}  
