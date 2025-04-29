@@ -1,16 +1,15 @@
 import './src/lib/session';
 import './src/scss/style';
 
-import { App, Gdk } from "astal/gtk3";
+import { App } from "astal/gtk3";
 import { Bar } from "./src/components/bar/index";
 import AstalHyprland from "gi://AstalHyprland?version=0.1";
-import { execAsync } from "astal";
 import { forMonitors } from "./src/lib/utils";
-import MediaMenu from 'src/components/menus/media';
 import { GdkMonitorMapper } from "./src/components/bar/utils/GdkMonitorMapper";
 import { DropdownMenus } from "./src/components/menus/exports";
 import { handleRealization } from "./src/components/menus/shared/dropdown/helpers"
 import { isDropdownMenu } from 'src/lib/options';
+import MediaMenu from 'src/components/menus/media';
 
 const hyprland = AstalHyprland.get_default();
 

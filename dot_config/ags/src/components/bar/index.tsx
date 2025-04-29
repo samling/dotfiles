@@ -1,8 +1,11 @@
 import { Astal, App, Gtk } from "astal/gtk3"
 import { GdkMonitorMapper } from "./utils/GdkMonitorMapper"
 import { Box } from "astal/gtk3/widget";
-import { Workspaces } from "./modules/workspaces";
-import { Media } from "./modules/media";
+import {
+    Workspaces,
+    Media,
+    SysTray,
+} from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
 const gdkMonitorMapper = new GdkMonitorMapper();
 
@@ -38,6 +41,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                     }
                     endWidget={
                         <box className={'box-right'} halign={Gtk.Align.END}>
+                            {WidgetContainer(SysTray())}
                         </box>
                     }
                 />
