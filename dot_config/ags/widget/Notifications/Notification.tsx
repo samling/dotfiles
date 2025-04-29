@@ -29,7 +29,11 @@ export function Notification(props: NotificationProps) {
         >
             <box vertical>
                 <box className="notif-header">
-                    <label label={notif.get_app_name()}/>
+                    {/* Add app icon if available */}
+                    {notif.get_app_icon() && (
+                        <icon className="app-icon" icon={notif.get_app_icon()} />
+                    )}
+                    <label className="app-name" label={notif.get_app_name()}/>
                     <label label={timeString}
                     halign={Gtk.Align.END}
                     hexpand
@@ -44,10 +48,12 @@ export function Notification(props: NotificationProps) {
                     </button>
                 </box>
                 <box className="notif-main">
-                    <box className={"notif-img"}
-                    css={`background-image: url("${notif.get_image()}");`}
-                    visible={notif.get_image() !== null}
-                    />
+                    {/* Only render the image box if there is an image */}
+                    {notif.get_image() ? (
+                        <box className={"notif-img"}
+                        css={`background-image: url("${notif.get_image()}");`}
+                        />
+                    ) : null}
                     <box vertical>
                         <label className={"notif-summary"} 
                         label={notif.get_summary()}

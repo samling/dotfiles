@@ -5,11 +5,12 @@
     @return string.unquote("alpha(#{$c},#{$a})");
 }
 
-window.NotificationPopups {
+// Target window by its name property
+window#notifications {
     all: unset;
 }
 
-eventbox.notification {
+box.notification {
     &:first-child>box {
         margin-top: 1rem;
     }

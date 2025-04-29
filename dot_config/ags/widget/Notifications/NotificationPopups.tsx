@@ -1,6 +1,8 @@
 import { App, Gdk, Astal } from "astal/gtk3"
 import NotificationMap from "./NotificationMap"
 import { bind } from "astal/binding"
+// Import the actual Notification component
+import { Notification } from "./Notification"
 
 /**
  * NotificationPopups - Displays notification popups in the top-right corner
@@ -24,7 +26,6 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
             visible={true}
             gdkmonitor={gdkmonitor}
             application={App}
-            marginRight={25}
             setup={window => {
                 // Handle window destruction
                 window.connect('destroy', () => {
@@ -39,7 +40,12 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
                 //@ts-ignore
                 noImplicitDestroy
             >
-                {bind(notifs)}
+                {/* Bind to the map data and map to Notification components */}
+                {bind(notifs).as(allNotifs => 
+                    allNotifs.map(notifData => 
+                        <Notification notification={notifData} />
+                    )
+                )}
             </box>
         </window>
     ) as Astal.Window

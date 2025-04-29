@@ -4,15 +4,17 @@ import { bind } from "astal"
 import { Menu } from "./ToggleButton"
 import { controlCenterStackWidget } from "../ControlCenter"
 import Notifd from "gi://AstalNotifd?version=0.1"
+// Import the actual Notification component
+import { Notification } from "../../Notifications/Notification"
 
 const notifd = Notifd.get_default()
 
+// Create one map for all persistent notification *data*
+const persistentNotifsMap = new NotifictionMap({timeout: 0, persist: true})
+
 export function RecentNotifications() {
 
-    const notifs = new NotifictionMap({timeout: 0, limit: 3, persist: true}) 
-
     return (
-
         <box vertical>
             <box className="notifs-recent-header">
                 <label label="Notifications"/>
@@ -28,7 +30,8 @@ export function RecentNotifications() {
             </box>
             <label
             label="No Recent Notifications"
-            visible={bind(notifs).as((notifs) => notifs.length === 0)}
+            // Check the length of the *data* array derived from the shared map
+            visible={bind(persistentNotifsMap).as(allNotifs => allNotifs.slice(0, 3).length === 0)}
             halign={Gtk.Align.CENTER}
             hexpand
             css={"margin-top: 15px"}
@@ -37,7 +40,12 @@ export function RecentNotifications() {
             //@ts-ignore
             vertical noImplicitDestroy
             >
-                {bind(notifs)}
+                {/* Bind to the shared map data, slice, and map to Notification components */}
+                {bind(persistentNotifsMap).as(allNotifs => 
+                    allNotifs.slice(0, 3).map(notifData => 
+                        <Notification notification={notifData} />
+                    )
+                )}
             </box>
         </box>
     )
@@ -45,8 +53,6 @@ export function RecentNotifications() {
 }
 
 export function NotificationMenu() {
-
-    const notifs = new NotifictionMap({timeout: 0, persist: true})
 
     return (
         <Menu name="notifications"
@@ -63,15 +69,21 @@ export function NotificationMenu() {
                         </stack>
                     </button>
                     <button className="notifs-close-all"
-                    onClick={() => notifs.disposeAll()}
+                    // Call the map's disposeAll, which now dismisses notifications
+                    onClick={() => persistentNotifsMap.disposeAll()}
                     >
-                        <icon icon="window-close-symbolic"/>
+                        <icon icon="window-close-symbolic" />
                     </button>
                 </box>
                 <box className="notifs-recent"
                 //@ts-ignore
                 vertical noImplicitDestroy>
-                    {bind(notifs)}
+                    {/* Bind directly to the shared map data and map to Notification components */}
+                    {bind(persistentNotifsMap).as(allNotifs => 
+                        allNotifs.map(notifData => 
+                            <Notification notification={notifData} />
+                        )
+                    )}
                 </box>
             </box>
         </Menu>

@@ -1,6 +1,7 @@
 import { Astal, Gtk } from "astal/gtk3"
 import Notifd from "gi://AstalNotifd"
-import { Notification } from "./Notification"
+// Notification component is no longer needed here
+// import { Notification } from "./Notification"
 import { type Subscribable } from "astal/binding"
 import { Variable } from "astal"
 import GLib from "gi://GLib"
@@ -15,17 +16,21 @@ type NotificationMapOpts = {
 const notifd = Notifd.get_default()
 
 /**
- * NotificationMap - Manages notification widgets efficiently by their ID
+ * NotificationMap - Manages notification *data* efficiently by their ID
  * 
- * This class maintains a map of notification IDs to widgets and properly
- * cleans up notifications when they're dismissed or timeout.
+ * This class maintains a map of notification IDs to Notifd.Notification objects
+ * and handles dismissal/timeouts.
  */
 export default class NotificationMap implements Subscribable {
     private limit?: number;
     private timeout: number;
     private dismissOnTimeout: boolean;
-    private map = new Map<number, Gtk.Widget>();
-    private var = Variable<Gtk.Widget[]>([]);
+    // Store Notifd.Notification objects, mapped by ID
+    private map = new Map<number, Notifd.Notification>(); 
+    // Variable now holds an array of Notifd.Notification
+    private var = Variable<Notifd.Notification[]>([]); 
+    // Store timeout source IDs to cancel them later
+    private timeoutSources = new Map<number, number>();
     
     constructor(options: NotificationMapOpts = {}) {
         this.limit = options.limit;
@@ -44,14 +49,14 @@ export default class NotificationMap implements Subscribable {
             }
         });
         
-        // Handle notification dismissal
+        // Handle notification dismissal (from external sources)
         notifd.connect("resolved", (_, id) => {
             this.remove(id);
         });
     }
     
     /**
-     * Add a notification widget by ID
+     * Add notification data by ID
      */
     private add(id: number): void {
         if (notifd.get_dont_disturb()) {
@@ -60,42 +65,43 @@ export default class NotificationMap implements Subscribable {
         
         try {
             const notification = notifd.get_notification(id);
-            if (!notification) return;
+            if (!notification || this.map.has(id)) return; // Already exists?
             
             // Enforce the notification limit
             if (this.limit !== undefined && this.map.size >= this.limit) {
                 const oldestId = Array.from(this.map.keys())[0];
-                this.remove(oldestId);
+                // Dismiss the underlying notification, which triggers 'resolved' signal
+                // which in turn calls this.remove()
+                const oldestNotif = this.map.get(oldestId);
+                if (oldestNotif) oldestNotif.dismiss(); 
+                // Avoid calling remove directly here to prevent potential race conditions
             }
             
-            // Create the notification widget
-            const widget = Notification({
-                notification,
-                onDestroy: () => {
-                    this.remove(id);
-                }
-            });
-            
-            // Store widget reference
-            this.map.set(id, widget);
+            // Store notification data reference
+            this.map.set(id, notification);
             
             // Handle timeout
             if (this.timeout > 0) {
-                GLib.timeout_add(GLib.PRIORITY_DEFAULT, this.timeout, () => {
+                const sourceId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, this.timeout, () => {
+                    this.timeoutSources.delete(id); // Remove source ID before processing
                     if (this.dismissOnTimeout) {
                         try {
-                            const n = notifd.get_notification(id);
-                            if (n) n.dismiss();
+                            // Check if notification still exists in our map before dismissing
+                            const n = this.map.get(id);
+                            if (n) n.dismiss(); // Dismiss triggers 'resolved' -> remove()
                         } catch (e) {
                             // Notification might be gone already
                         }
+                    } else {
+                        // If not dismissing, just remove from our map
+                        this.remove(id); 
                     }
-                    this.remove(id);
-                    return false; // Don't repeat the timeout
+                    return GLib.SOURCE_REMOVE; // Use GLib constant
                 });
+                this.timeoutSources.set(id, sourceId);
             }
             
-            // Update subscribers
+            // Update subscribers with new data
             this.notify();
             
         } catch (e) {
@@ -104,26 +110,25 @@ export default class NotificationMap implements Subscribable {
     }
     
     /**
-     * Remove a notification widget by ID
+     * Remove notification data by ID
      */
     private remove(id: number): void {
-        const widget = this.map.get(id);
-        if (!widget) return;
+        if (!this.map.has(id)) return; // Check if it exists before proceeding
         
         try {
-            // Remove from map first to prevent circular references
+            // Cancel any pending timeout
+            const sourceId = this.timeoutSources.get(id);
+            if (sourceId) {
+                GLib.source_remove(sourceId);
+                this.timeoutSources.delete(id);
+            }
+
+            // Remove from map 
             this.map.delete(id);
             
-            // Properly destroy the widget using container.remove pattern
-            const parent = widget.get_parent();
-            if (parent instanceof Gtk.Container) {
-                parent.remove(widget);
-            }
+            // No widget destruction needed here
             
-            // Now destroy the widget
-            widget.destroy();
-            
-            // Update subscribers
+            // Update subscribers with changed data
             this.notify();
             
         } catch (e) {
@@ -132,39 +137,47 @@ export default class NotificationMap implements Subscribable {
     }
     
     /**
-     * Clean up all notifications and widgets
+     * Dismiss all tracked notifications and clear the map
      */
     public disposeAll(): void {
-        // Create a copy of keys to avoid modification during iteration
-        const ids = Array.from(this.map.keys());
+        // Create a copy of notifications to avoid modification during iteration
+        const notifications = Array.from(this.map.values());
         
-        // Remove each notification
-        ids.forEach(id => this.remove(id));
+        // Dismiss each notification (this will trigger 'resolved' -> remove)
+        notifications.forEach(notif => {
+            try {
+                notif.dismiss();
+            } catch(e) {
+                // Might already be dismissed
+            }
+        });
         
-        // Clear any remaining references
+        // Explicitly clear map and timeouts in case dismiss fails or is slow
         this.map.clear();
+        this.timeoutSources.forEach(sourceId => GLib.source_remove(sourceId));
+        this.timeoutSources.clear();
         this.notify();
     }
     
     /**
-     * Update subscribers with the current list of widgets
+     * Update subscribers with the current list of notification data
      */
     private notify(): void {
-        // Return widgets in reverse order (newest first)
+        // Return notification data in reverse order (newest first)
         this.var.set([...this.map.values()].reverse());
     }
     
     /**
-     * Get the current array of notification widgets
+     * Get the current array of notification data
      */
-    get(): Gtk.Widget[] {
+    get(): Notifd.Notification[] {
         return this.var.get();
     }
     
     /**
-     * Subscribe to changes in the notification list
+     * Subscribe to changes in the notification data list
      */
-    subscribe(callback: (widgets: Gtk.Widget[]) => void): () => void {
+    subscribe(callback: (notifs: Notifd.Notification[]) => void): () => void {
         return this.var.subscribe(callback);
     }
 }
