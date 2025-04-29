@@ -1,192 +1,154 @@
-import { App, Gdk, Gtk } from "astal/gtk3"
-import { timeout, GLib } from "astal"
-import { GetGdkMonitorName, ParseAgsArgs } from "./utils"
+import { App, Gdk } from "astal/gtk3"
+import { Variable, GLib } from "astal"
+import { ParseAgsArgs } from "./utils"
 import Hyprland from "gi://AstalHyprland"
 import style from "./style/main.scss"
 import OSD from "./widget/OSD"
 import Bar from "./widget/Bar/Bar"
 import NotificationPopups from "./widget/Notifications/NotificationPopups"
 import ControlCenter from "./widget/ControlCenter/ControlCenter"
-import { HyprToGdkMonitor } from "./utils"
 import MediaWindow from "./widget/MediaWindow/Media"
 import CalendarWindow from "./widget/Calendar"
 import ActionMenu from "./widget/Bar/modules/ActionMenu"
+
+// Widget type definition
+type WidgetConstructor = (monitor: Gdk.Monitor) => any;
+type WidgetMap = Record<string, any>;
+
+// Define widget types to create for each monitor
+const WIDGET_CONSTRUCTORS: Record<string, WidgetConstructor> = {
+    bar: Bar,
+    osd: OSD,
+    notifications: NotificationPopups,
+    controlCenter: ControlCenter,
+    mediaWindow: MediaWindow,
+    calendarWindow: CalendarWindow,
+    actionMenu: ActionMenu
+};
 
 App.start({
     css: style,
     main() {
         const gdkDisplay = Gdk.Display.get_default()
-        if (gdkDisplay == null) {
-            print("gdkDisplay is null")
+        if (!gdkDisplay) {
+            console.error("gdkDisplay is null")
             return;
         }
 
-        // Maps to store widgets by monitor
-        const bars = new Map<Gdk.Monitor, any>();
-        const osds = new Map<Gdk.Monitor, any>();
-        const notifications = new Map<Gdk.Monitor, any>();
-        const controlCenters = new Map<Gdk.Monitor, any>();
-        const mediaWindows = new Map<Gdk.Monitor, any>();
-        const calendarWindows = new Map<Gdk.Monitor, any>();
-        const actionMenus = new Map<Gdk.Monitor, any>();
-
-        const setupWidgets = (gdkMonitor: Gdk.Monitor) => {
-            // Create and add bar
-            const bar = Bar(gdkMonitor);
-            bars.set(gdkMonitor, bar);
-            App.add_window(bar);
+        // Single map to store all monitor widgets
+        const monitorWidgets = new Map<Gdk.Monitor, WidgetMap>();
+        
+        // Create and manage widgets for a monitor
+        const setupWidgets = (monitor: Gdk.Monitor) => {
+            if (monitorWidgets.has(monitor)) return;
             
-            const osd = OSD(gdkMonitor);
-            osds.set(gdkMonitor, osd);
-            App.add_window(osd);
+            const widgets: WidgetMap = {};
             
-            const notification = NotificationPopups(gdkMonitor);
-            notifications.set(gdkMonitor, notification);
-            App.add_window(notification);
+            // Create all widget types for this monitor
+            Object.entries(WIDGET_CONSTRUCTORS).forEach(([name, constructor]) => {
+                const widget = constructor(monitor);
+                widgets[name] = widget;
+                App.add_window(widget);
+            });
             
-            const controlCenter = ControlCenter(gdkMonitor);
-            controlCenters.set(gdkMonitor, controlCenter);
-            App.add_window(controlCenter);
-            
-            const mediaWindow = MediaWindow(gdkMonitor);
-            mediaWindows.set(gdkMonitor, mediaWindow);
-            App.add_window(mediaWindow);
-            
-            const calendarWindow = CalendarWindow(gdkMonitor);
-            calendarWindows.set(gdkMonitor, calendarWindow);
-            App.add_window(calendarWindow);
-            
-            const actionMenu = ActionMenu(gdkMonitor);
-            actionMenus.set(gdkMonitor, actionMenu);
-            App.add_window(actionMenu);
+            monitorWidgets.set(monitor, widgets);
+            return widgets;
         };
-
-        // (Optional) These are user-defined arguments passed to the app
-        // e.g. ags run --arg="primaryMonitor=DP-1"
-        const argv = imports.system.programArgs
-        const userArgs = ParseAgsArgs(argv)
-        let userPrimaryMonitor = userArgs.primaryMonitor ?? null
+        
+        // Remove widgets for a monitor
+        const destroyWidgets = (monitor: Gdk.Monitor) => {
+            if (!monitorWidgets.has(monitor)) return;
+            
+            const widgets = monitorWidgets.get(monitor)!;
+            Object.values(widgets).forEach(widget => widget?.destroy());
+            monitorWidgets.delete(monitor);
+        };
+        
+        // Parse command line arguments
+        const argv = imports.system.programArgs;
+        const userArgs = ParseAgsArgs(argv);
+        const userPrimaryMonitor = userArgs.primaryMonitor || "";
         
         const hyprland = Hyprland.get_default();
         
-        if (userPrimaryMonitor == null || userPrimaryMonitor == "") {
-            console.log("No primary monitor specified, adding widgets to all monitors")
-            const monitors = App.get_monitors()
-            for (const monitor of monitors) {
-                setupWidgets(monitor)
-            }
+        // Set up reactive monitor tracking
+        const activeMonitor = new Variable<Gdk.Monitor | null>(null);
+        
+        if (!userPrimaryMonitor) {
+            // If no primary monitor specified, set up widgets on all monitors
+            console.log("No primary monitor specified, adding widgets to all monitors");
+            App.get_monitors().forEach(setupWidgets);
         } else {
-        // Track our currently active monitor
-        let activeGdkMonitor: Gdk.Monitor | null = null;
-        
-        // Function to check if widgets for a monitor already exist
-        const hasWidgetsForMonitor = (gdkMonitor: Gdk.Monitor): boolean => {
-            return bars.has(gdkMonitor);
-        };
-        
-        // Function to destroy widgets for a monitor
-        const destroyWidgets = (gdkMonitor: Gdk.Monitor) => {
-            console.log("Destroying widgets for monitor");
+            // Handle monitor changes with debounce
+            let updateTimerId = 0;
             
-            // Using the exact pattern from the example: get -> destroy -> delete
-            bars.get(gdkMonitor)?.destroy();
-            bars.delete(gdkMonitor);
-            
-            osds.get(gdkMonitor)?.destroy();
-            osds.delete(gdkMonitor);
-            
-            notifications.get(gdkMonitor)?.destroy();
-            notifications.delete(gdkMonitor);
-            
-            controlCenters.get(gdkMonitor)?.destroy();
-            controlCenters.delete(gdkMonitor);
-            
-            mediaWindows.get(gdkMonitor)?.destroy();
-            mediaWindows.delete(gdkMonitor);
-            
-            calendarWindows.get(gdkMonitor)?.destroy();
-            calendarWindows.delete(gdkMonitor);
-            
-            actionMenus.get(gdkMonitor)?.destroy();
-            actionMenus.delete(gdkMonitor);
-            
-            // Reset active monitor
-            if (gdkMonitor === activeGdkMonitor) {
-                activeGdkMonitor = null;
-            }
-        };
-        
-        // Check if the target monitor is available and set up widgets
-        const checkAndSetupMonitor = () => {
-            // Check if the target monitor is available
-            const hyprMonitor = hyprland.get_monitor_by_name(userPrimaryMonitor);
-            if (hyprMonitor === null) {
-                console.log(`Target monitor ${userPrimaryMonitor} not available`);
-                
-                // If we had an active monitor, destroy its widgets
-                if (activeGdkMonitor) {
-                    destroyWidgets(activeGdkMonitor);
+            const syncMonitors = () => {
+                // Clear existing timeout to debounce
+                if (updateTimerId) {
+                    GLib.source_remove(updateTimerId);
+                    updateTimerId = 0;
                 }
                 
-                return;
-            }
-            
-            // Get corresponding GDK monitor
-            const gdkMonitor = HyprToGdkMonitor(hyprMonitor);
-            if (gdkMonitor === null || !gdkMonitor) {
-                console.log("GDK monitor not ready yet");
-                
-                // If we had an active monitor, destroy its widgets
-                if (activeGdkMonitor) {
-                    destroyWidgets(activeGdkMonitor);
-                }
-                
-                return;
-            }
-            
-            // If the active monitor changed, clean up the old one
-            if (activeGdkMonitor && activeGdkMonitor !== gdkMonitor) {
-                destroyWidgets(activeGdkMonitor);
-            }
-            
-            // Setup widgets for the new monitor if needed
-            if (!hasWidgetsForMonitor(gdkMonitor)) {
-                console.log(`Setting up widgets for monitor ${userPrimaryMonitor}`);
-                setupWidgets(gdkMonitor);
-                activeGdkMonitor = gdkMonitor;
-            }
-        };
-        
-        // Fix timeout handling to prevent uint32 range errors
-        let updateTimerId = 0;
-        
-        const handleMonitorChange = () => {
-            // Clear any existing timeout
-            if (updateTimerId) {
-                GLib.source_remove(updateTimerId);
-                updateTimerId = 0;
-            }
-            
-            // Set new timeout with proper typing
-            updateTimerId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 300, () => {
-                hyprland.sync_monitors(() => {
-                    if (gdkDisplay) {
+                // Set new timeout
+                updateTimerId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 300, () => {
+                    hyprland.sync_monitors(() => {
+                        if (!gdkDisplay) return GLib.SOURCE_REMOVE;
+                        
                         gdkDisplay.sync();
-                        checkAndSetupMonitor();
-                    }
+                        
+                        // Find the target Hyprland monitor
+                        const hyprMonitor = hyprland.get_monitor_by_name(userPrimaryMonitor);
+                        
+                        // If monitor not available, clean up
+                        if (!hyprMonitor) {
+                            if (activeMonitor.get()) {
+                                destroyWidgets(activeMonitor.get()!);
+                                activeMonitor.set(null);
+                            }
+                            return GLib.SOURCE_REMOVE;
+                        }
+                        
+                        // Convert to GDK monitor
+                        const gdkMonitor = gdkDisplay.get_monitor_at_point(
+                            hyprMonitor.x + 1, 
+                            hyprMonitor.y + 1
+                        );
+                        
+                        // If GDK monitor not ready, clean up
+                        if (!gdkMonitor) {
+                            if (activeMonitor.get()) {
+                                destroyWidgets(activeMonitor.get()!);
+                                activeMonitor.set(null);
+                            }
+                            return GLib.SOURCE_REMOVE;
+                        }
+                        
+                        // Handle monitor change
+                        if (activeMonitor.get() && activeMonitor.get() !== gdkMonitor) {
+                            destroyWidgets(activeMonitor.get()!);
+                        }
+                        
+                        // Setup widgets if needed
+                        if (!monitorWidgets.has(gdkMonitor)) {
+                            setupWidgets(gdkMonitor);
+                            activeMonitor.set(gdkMonitor);
+                        }
+                        
+                        return GLib.SOURCE_REMOVE;
+                    });
+                    
+                    updateTimerId = 0;
+                    return GLib.SOURCE_REMOVE;
                 });
-                updateTimerId = 0;
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-        
-        // Initial setup
-        handleMonitorChange();
-        
-        // Monitor change event handlers
-        hyprland.connect("monitor-added", handleMonitorChange);
-        hyprland.connect("monitor-removed", handleMonitorChange);
-        Gdk.Screen.get_default()?.connect("monitors-changed", handleMonitorChange);
-    }
+            };
+            
+            // Initial setup
+            syncMonitors();
+            
+            // Monitor change event handlers
+            hyprland.connect("monitor-added", syncMonitors);
+            hyprland.connect("monitor-removed", syncMonitors);
+            Gdk.Screen.get_default()?.connect("monitors-changed", syncMonitors);
+        }
     }
 })

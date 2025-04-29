@@ -25,15 +25,6 @@ const initNotifications = () => {
 GLib.timeout_add(GLib.PRIORITY_DEFAULT, 30000, () => {
     console.log("[DEBUG] Running periodic memory cleanup");
     imports.system.gc();
-    
-    // If the discrepancy is too large, reset the counters to prevent
-    // them from growing indefinitely
-    if (widgetCounter.created - widgetCounter.destroyed > 100) {
-        const diff = widgetCounter.created - widgetCounter.destroyed;
-        console.log(`[DEBUG] Large discrepancy detected (${diff}), resetting counters`);
-        widgetCounter.destroyed = widgetCounter.created;
-    }
-    
     return true; // Keep running periodically
 });
 

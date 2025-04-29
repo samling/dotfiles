@@ -210,13 +210,13 @@ export default class NotificationMap implements Subscribable {
             // Create the notification widget directly
             const widget = Notification({
                 notification: notifd.get_notification(id)!,
-                setup: function() {
+                setup: function(widget) {
                     // Generate widget ID
                     const widgetId = `n${id}-w${stats.created++}`;
                     stats.active = stats.created - stats.destroyed;
                     
-                    // Get reference to this widget
-                    const notifWidget = this as unknown as Gtk.Widget;
+                    // Use the passed widget parameter instead of 'this'
+                    const notifWidget = widget as Gtk.Widget;
                     
                     // Add tracking IDs to the widget
                     (notifWidget as any).__uniqueId = widgetId;
