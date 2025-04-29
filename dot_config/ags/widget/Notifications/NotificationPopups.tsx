@@ -1,38 +1,48 @@
 import { App, Gdk, Astal } from "astal/gtk3"
-import Notifd from "gi://AstalNotifd"
-import { Notification } from "./Notification"
-import { type Subscribable } from "astal/binding"
-import { Variable, timeout } from "astal"
-import GLib from "gi://GLib"
 import NotificationMap from "./NotificationMap"
 import { bind } from "astal/binding"
+
+/**
+ * NotificationPopups - Displays notification popups in the top-right corner
+ * 
+ * This component creates a window that displays notification popups
+ * and properly manages their lifecycle to prevent memory leaks.
+ */
 export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
-
-    const notifs = new NotificationMap({timeout: 5000, dismissOnTimeout: false})
-
-    return (
+    // Create notification map with 5-second timeout
+    const notifs = new NotificationMap({
+        timeout: 5000,
+        dismissOnTimeout: false
+    });
+    
+    // Create and return the window
+    const win = (
         <window
-        name="notifications"
-        namespace="notifications"
-        anchor={Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.TOP}
-        visible={true}
-        gdkmonitor={gdkmonitor}
-        application={App}
-        marginRight={25}
+            name="notifications"
+            namespace="notifications"
+            anchor={Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.TOP}
+            visible={true}
+            gdkmonitor={gdkmonitor}
+            application={App}
+            marginRight={25}
+            setup={window => {
+                // Handle window destruction
+                window.connect('destroy', () => {
+                    // Clean up all notifications
+                    notifs.disposeAll();
+                });
+            }}
         >
-            {/* <revealer
-            revealChild={false}
-            transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
-            >    */}
-            <box className="notifications-popup"
-            vertical
-            //@ts-ignore
-            noImplicitDestroy
+            <box 
+                className="notifications-popup"
+                vertical
+                //@ts-ignore
+                noImplicitDestroy
             >
                 {bind(notifs)}
-
             </box>
-            {/* </revealer> */}
         </window>
     ) as Astal.Window
+    
+    return win;
 }

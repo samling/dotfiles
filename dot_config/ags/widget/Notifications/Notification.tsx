@@ -1,17 +1,15 @@
 import Notifd from "gi://AstalNotifd"
-import { bind } from "astal"
-import { App, Astal, Gdk, Gtk } from "astal/gtk3";
-import NotificationMap from "./NotificationMap";
+import { Astal, Gtk } from "astal/gtk3";
 import Pango from "gi://Pango?version=1.0";
 
 type NotificationProps = {
     notification: Notifd.Notification
-    setup: (widget?: Gtk.Widget) => void
+    onDestroy?: () => void
 }
 
 export function Notification(props: NotificationProps) {
     const notif = props.notification;
-    const setup = props.setup;
+    const onDestroy = props.onDestroy;
 
     const time = new Date(0)
     time.setUTCSeconds(notif.get_time())
@@ -20,8 +18,13 @@ export function Notification(props: NotificationProps) {
     return (
         <box className={"notification"}
         setup={(widget) => {
-            // Call the provided setup function with the widget
-            setup(widget);
+            // Show the widget
+            widget.show_all();
+            
+            // Set up destroy handler
+            if (onDestroy) {
+                widget.connect('destroy', onDestroy);
+            }
         }}
         >
             <box vertical>
