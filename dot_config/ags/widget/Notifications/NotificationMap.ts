@@ -10,7 +10,7 @@ type NotificationMapOpts = {
     timeout?: number,
     dismissOnTimeout?: boolean,
     limit?: number,
-    persist?: boolean
+    persist?: boolean,
 }
 
 const notifd = Notifd.get_default()
@@ -36,7 +36,6 @@ export default class NotificationMap implements Subscribable {
         this.limit = options.limit;
         this.timeout = options.timeout ?? 0;
         this.dismissOnTimeout = options.dismissOnTimeout ?? false;
-        
         // Load persistent notifications if required
         if (options.persist) {
             notifd.get_notifications().forEach(notif => this.add(notif.id));

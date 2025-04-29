@@ -1,10 +1,12 @@
 import Notifd from "gi://AstalNotifd"
 import { Astal, Gtk } from "astal/gtk3";
 import Pango from "gi://Pango?version=1.0";
+import ProgressBar from "../../lib/ProgressBar";
 
 type NotificationProps = {
     notification: Notifd.Notification
     onDestroy?: () => void
+    showProgressBar?: boolean
 }
 
 export function Notification(props: NotificationProps) {
@@ -80,6 +82,11 @@ export function Notification(props: NotificationProps) {
                         </button>
                     )}
                 </box>
+                {props.showProgressBar && (
+                <box className="notif-progress-bar">
+                    <ProgressBar />
+                </box>
+                )}
             </box>
         </box>
     )

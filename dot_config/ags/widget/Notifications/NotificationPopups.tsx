@@ -14,7 +14,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
     // Create notification map with 5-second timeout
     const notifs = new NotificationMap({
         timeout: 5000,
-        dismissOnTimeout: false
+        dismissOnTimeout: false,
     });
     
     // Create and return the window
@@ -43,7 +43,7 @@ export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
                 {/* Bind to the map data and map to Notification components */}
                 {bind(notifs).as(allNotifs => 
                     allNotifs.map(notifData => 
-                        <Notification notification={notifData} />
+                        <Notification notification={notifData} showProgressBar={true}/>
                     )
                 )}
             </box>
