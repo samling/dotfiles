@@ -1,0 +1,215 @@
+.notification-menu-content * {
+    font-size: 12px;
+}
+
+.notification-card-container.menu {
+    margin: 0em;
+    min-width: 30.6em;
+    min-height: 300px;
+    background: $primary_bg;
+    border: 1px solid $primary_fg;
+    border-radius: 10px;
+    opacity: 0.8;
+
+    .window-content.notificationsmenu-window {
+        margin-right: 0.5em;
+    }
+
+    .menu-content-container.notifications {
+        margin: 1em;
+        margin-bottom: 0em;
+        min-height: 4em;
+    }
+
+    .notification-menu-controls {
+        background: $primary_bg;
+        margin: 1em 1em;
+        margin-bottom: 0.5em;
+        border-radius: 10px;
+        padding: 0.4em 0.75em;
+    }
+
+    .notification-card.menu {
+        background: $primary_bg;
+        min-width: 0em;
+        min-height: 0em;
+        font-size: 12px;
+        border: 0.15em solid $primary_fg;
+        border-radius: 10px;
+        margin: 0em;
+    }
+
+    .notification-card-content-container {
+        .notification-card {
+            margin-bottom: 0.65em;
+
+            &:last-child {
+                margin-bottom: 1em;
+            }
+        }
+    }
+
+    .notification-card-content {
+        margin-bottom: 0.25em;
+    }
+
+    .menu-label.notifications {
+        margin: 0em;
+        font-size: 12px;
+        color: $primary_fg;
+    }
+
+    .menu-separator.notification-controls {
+        min-width: 0.1em;
+        background-color: $primary_bg;
+        margin: 0em 1em;
+    }
+
+    .menu-switch.notifications {
+        * {
+            font-size: 12px;
+        }
+
+        background-color: $primary_bg;
+
+        &:checked {
+            background: $primary_bg;
+        }
+
+        slider {
+            background-color: $primary_bg;
+        }
+
+        &:hover {
+            trough {
+                background: $primary_bg;
+            }
+
+            slider {
+                background: $primary_bg;
+            }
+        }
+
+        &:active {
+            background: $primary_bg;
+        }
+    }
+
+    .clear-notifications-button {
+        margin-right: 0.3em;
+
+        &:hover label:not(.removing) {
+            color: transparentize(
+                $primary_fg,
+                0.5
+            );
+        }
+    }
+
+    .clear-notifications-label {
+        color: $primary_fg;
+        font-size: 12px;
+
+        &.removing {
+            color: $primary_fg;
+        }
+    }
+
+    scrollbar {
+        margin-right: 0.2em;
+        min-width: 10px;
+        border-radius: 10px;
+        background: transparent;
+
+        slider {
+            min-width: 10px;
+            border-radius: 10px;
+            background: $primary_bg;
+        }
+    }
+
+    .notification-card-header-label {
+        font-size: 0.95em;
+    }
+
+    .notification-card-body-label {
+        font-size: 0.84em;
+    }
+    .notification-icon {
+        font-size: 1.3em;
+    }
+
+    .notification-time {
+        font-size: 0.85em;
+    }
+}
+
+.notification-label-container {
+    margin-bottom: 8em;
+
+    label {
+        color: $primary_fg;
+    }
+
+    .bell {
+        font-size: 10px;
+    }
+
+    .message {
+        font-size: 12px;
+    }
+}
+
+.close-notification-button.menu {
+    background: $primary_bg;
+    color: $primary_fg;
+    min-width: 2.1em;
+    border-radius: 0rem 10px 10px 0em;
+
+    label {
+        font-size: 12px;
+    }
+
+    &:hover {
+        background: transparentize($primary_fg, 0.5);
+    }
+}
+
+.notification-menu-pager {
+    background: $primary_bg;
+    margin-bottom: 0.1em;
+    border-radius: 10px;
+    border-top-left-radius: 0em;
+    border-top-right-radius: 0em;
+
+    .pager-button {
+        margin: 0em;
+        padding: 0.25em 1em;
+        color: $primary_fg;
+
+        .pager-button-label {
+            font-size: 12px;
+        }
+
+        &:hover {
+            .pager-button-label {
+                color: transparentize($primary_fg, 0.4);
+                text-decoration: none;
+            }
+        }
+    }
+
+    .pager-label {
+        color: $primary_fg;
+    }
+
+    .disabled {
+        color: transparentize($primary_fg, 0.8);
+
+        &:hover {
+            .pager-button-label {
+                color: transparentize($primary_fg, 0.8);
+            }
+        }
+    }
+}
