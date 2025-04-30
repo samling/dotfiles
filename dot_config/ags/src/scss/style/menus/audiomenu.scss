@@ -1,0 +1,207 @@
+.menu-items.audio {
+    border-color: $light-background;
+    opacity: 1;
+}
+
+.menu-items-container.audio {
+    min-width: 30em;
+
+    @import './menu.scss';
+
+    * {
+        font-size: 1em;
+    }
+
+    background: $dark-background;
+
+    .menu-dropdown-label.audio {
+        color: $primary-color;
+    }
+
+    .menu-label.audio {
+        color: $primary-color;
+    }
+
+    .menu-active.playback,
+    .menu-active.input {
+        color: $text;
+    }
+
+    .menu-button-isactive.audio {
+        color: $lightblue;
+    }
+
+    .menu-icon-button.volume {
+        color: $lightblue;
+        padding: 0em 1em;
+
+        label {
+            font-size: 1.25em;
+        }
+        &:hover {
+            color: $lightblue;
+        }
+    }
+
+    .menu-slider.playback {
+        trough {
+            background: $dark-background;
+            highlight,
+            progress {
+                background: $lightblue;
+            }
+        }
+
+        &:hover {
+            trough {
+                background: $dark-background;
+            }
+
+            slider {
+                background: $lightblue;
+            }
+        }
+    }
+
+    .menu-slider.input {
+        trough {
+            background: $dark-background;
+
+            highlight,
+            progress {
+                background: $lightblue;
+            }
+        }
+
+        &:hover {
+            trough {
+                background: $dark-background;
+            }
+
+            slider {
+                background: $lightblue;
+            }
+        }
+    }
+
+    .menu-active-percentage.playback,
+    .menu-active-percentage.input {
+        color: $text;
+    }
+
+    .menu-active-button {
+        .menu-active-icon.playback,
+        .menu-active-icon.input {
+            color: $lightblue;
+            opacity: 1;
+        }
+
+        &.muted {
+            .menu-active-icon.playback,
+            .menu-active-icon.input {
+                color: $lightblue;
+                opacity: 1;
+            }
+        }
+
+        &:hover {
+            .menu-active-icon.playback,
+            .menu-active-icon.input {
+                color: $lightblue;
+                opacity: 0.3;
+            }
+        }
+
+        &.muted:hover {
+            .menu-active-icon.playback,
+            .menu-active-icon.input {
+                color: $lightblue;
+                opacity: 1;
+            }
+        }
+    }
+
+    .menu-button-icon.playback,
+    .menu-button-icon.input {
+        color: $lightblue;
+
+        &.active {
+            color: $lightblue;
+        }
+    }
+
+    .menu-button.audio {
+        color: $lightblue;
+
+        .menu-button-name.playback,
+        .menu-button-name.input {
+            color: $text;
+        }
+
+        &:hover {
+            .menu-button-name.playback,
+            .menu-button-name.input {
+                color: $lightblue;
+            }
+        }
+    }
+
+    .menu-section-container.volume {
+        margin-bottom: 0.65em;
+    }
+
+    .menu-section-container.playback {
+        margin-top: 0em;
+        margin-bottom: 1em;
+    }
+
+    .menu-section-container.input {
+        margin-top: 0em;
+    }
+
+    .menu-label-container.input {
+        border-radius: 0em;
+        background: $dark-background;
+    }
+
+    .menu-label-container.playback {
+        background: $dark-background;
+    }
+
+    .menu-items-section.input {
+        background: $dark-background;
+    }
+
+    .menu-items-section.playback {
+        background: $dark-background;
+    }
+
+    .menu-label-container.selected {
+        background: $dark-background;
+    }
+
+    .menu-items-section.selected {
+        background: $dark-background;
+    }
+
+    .menu-items-section.playback {
+        border-radius: 0em;
+    }
+
+    .active-playbacks-scrollable {
+        min-height: 12.5em;
+
+        scrollbar contents trough slider {
+            background: $dark-background;
+        }
+
+        .menu-active-percentage.playback,
+        .menu-active-percentage.input {
+            margin-right: 0.6em;
+        }
+    }
+
+    .no-playbacks.dim {
+        opacity: 0.5;
+    }
+}

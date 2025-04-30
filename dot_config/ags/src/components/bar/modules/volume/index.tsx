@@ -1,0 +1,134 @@
+import { openMenu } from '../../utils/menu.js';
+import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
+import { bind, Variable } from 'astal';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
+import { getIcon } from './helpers/index.js';
+import { BarBoxChild } from 'src/lib/types/bar.js';
+import { Astal } from 'astal/gtk3';
+import AstalWp from 'gi://AstalWp?version=0.1';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber?.audio;
+
+const rightClick = Variable<string>('');
+const middleClick = Variable<string>('');
+const scrollUp = Variable<string>('');
+const scrollDown = Variable<string>('');
+const scrollSpeed = Variable<number>(5);
+
+const showLabel = Variable<boolean>(true);
+
+const Volume = (): BarBoxChild => {
+    const VolumeIcon = ({ isMuted, volume }: VolumeIconProps): JSX.Element => {
+        return <label className={'bar-button-icon volume txt-icon bar'} label={getIcon(isMuted, volume)} />;
+    };
+
+    const VolumeLabel = ({ volume }: VolumeLabelProps): JSX.Element => {
+        return <label className={'bar-button-label volume'} label={`${Math.round(volume * 100)}%`} />;
+    };
+
+    const componentTooltip = Variable.derive(
+        [
+            bind(audioService.defaultSpeaker, 'description'),
+            bind(audioService.defaultSpeaker, 'volume'),
+            bind(audioService.defaultSpeaker, 'mute'),
+        ],
+        (desc, vol, isMuted) => {
+            return `${getIcon(isMuted, vol)} ${desc}`;
+        },
+    );
+    const componentClassName = Variable.derive([bind(showLabel)], (showLabel) => {
+        return `volume-container default ${!showLabel ? 'no-label' : ''}`;
+    });
+    const componentChildren = Variable.derive(
+        [
+            bind(showLabel),
+            bind(audioService.defaultSpeaker, 'volume'),
+            bind(audioService.defaultSpeaker, 'mute'),
+        ],
+        (showLabel, vol, isMuted) => {
+            if (showLabel) {
+                return (
+                    <box>
+                        <VolumeIcon isMuted={isMuted} volume={vol} />
+                        <VolumeLabel volume={vol} />
+                    </box>
+                );
+            }
+
+            return <VolumeIcon isMuted={isMuted} volume={vol} />;
+        },
+    );
+    const component = (
+        <box
+            vexpand
+            tooltipText={componentTooltip()}
+            className={componentClassName()}
+            onDestroy={() => {
+                componentTooltip.drop();
+                componentClassName.drop();
+                componentChildren.drop();
+            }}
+        >
+            {componentChildren()}
+        </box>
+    );
+
+    return {
+        component,
+        isVisible: true,
+        boxClass: 'volume',
+        props: {
+            setup: (self: Astal.Button): void => {
+                let disconnectFunctions: (() => void)[] = [];
+
+                Variable.derive(
+                    [
+                        bind(rightClick),
+                        bind(middleClick),
+                        bind(scrollUp),
+                        bind(scrollDown),
+                        bind(scrollSpeed),
+                    ],
+                    () => {
+                        disconnectFunctions.forEach((disconnect) => disconnect());
+                        disconnectFunctions = [];
+
+                        const throttledHandler = throttledScrollHandler(scrollSpeed.get());
+
+                        disconnectFunctions.push(
+                            onPrimaryClick(self, (clicked, event) => {
+                                openMenu(clicked, event, 'audiomenu');
+                            }),
+                        );
+
+                        disconnectFunctions.push(
+                            onSecondaryClick(self, (clicked, event) => {
+                                runAsyncCommand(rightClick.get(), { clicked, event });
+                            }),
+                        );
+
+                        disconnectFunctions.push(
+                            onMiddleClick(self, (clicked, event) => {
+                                runAsyncCommand(middleClick.get(), { clicked, event });
+                            }),
+                        );
+
+                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                    },
+                );
+            },
+        },
+    };
+};
+
+interface VolumeIconProps {
+    isMuted: boolean;
+    volume: number;
+}
+
+interface VolumeLabelProps {
+    volume: number;
+}
+
+export { Volume };

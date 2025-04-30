@@ -168,6 +168,18 @@ export function lookUpIcon(name?: string, size = 16): Gtk.IconInfo | null {
     return Gtk.IconTheme.get_default().lookup_icon(name, size, Gtk.IconLookupFlags.USE_BUILTIN);
 }
 
+/**
+ * Capitalizes the first letter of a string.
+ *
+ * This function takes a string and returns a new string with the first letter capitalized.
+ *
+ * @param str The string to capitalize.
+ *
+ * @returns The input string with the first letter capitalized.
+ */
+export function capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 /**
  * Maps a notification or OSD anchor position to an Astal window anchor.
