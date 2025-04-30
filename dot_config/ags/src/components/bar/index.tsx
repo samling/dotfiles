@@ -10,6 +10,7 @@ import {
     Clock,
     Volume,
     Updates,
+    ClientTitle,
 } from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
 import { bind, Variable } from "astal";
@@ -47,6 +48,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                     startWidget={
                         <box className={'box-left'} halign={Gtk.Align.START}>
                             {WidgetContainer(Workspaces(monitor))}
+                            {WidgetContainer(ClientTitle())}
                         </box>
                     }
                     centerWidget={

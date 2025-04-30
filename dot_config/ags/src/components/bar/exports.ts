@@ -6,6 +6,7 @@ import { Notifications } from '../../components/bar/modules/notifications/index'
 import { Clock } from '../../components/bar/modules/clock/index';
 import { Volume } from '../../components/bar/modules/volume/index';
 import { Updates } from '../../components/bar/modules/updates/index';
+import { ClientTitle } from '../../components/bar/modules/window_title/index';
 export {
     Workspaces,
     Media,
@@ -15,4 +16,5 @@ export {
     Clock,
     Volume,
     Updates,
+    ClientTitle,
 };

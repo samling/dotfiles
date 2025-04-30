@@ -1,0 +1,16 @@
+.bar-button-icon.windowtitle {
+    color: $mauve;
+}
+
+.bar-button-label.windowtitle {
+    color: $mauve;
+    margin-left: 0;
+
+    &.no-icon {
+        margin-left: 0;
+    }
+}
+
+.bar_item_box_visible.windowtitle {
+    border: 0px solid $text;
+}
