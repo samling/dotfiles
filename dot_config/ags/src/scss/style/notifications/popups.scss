@@ -2,7 +2,7 @@
     color: $text;
     background: $light-background;
     margin: 0.45em;
-    border: 0.15em solid transparentize($overlay0, 0.5);
+    border: 0.15em solid $mauve;
     min-width: 26em;
     min-height: 4em;
     border-radius: 8px;
@@ -71,8 +71,8 @@
 }
 
 .notification-action-buttons {
-    color: $text;
-    background: $dark-background;
+    color: $base;
+    background: $mauve;
     min-width: 4em;
     min-height: 1.65em;
     border-radius: 8px;
@@ -82,7 +82,7 @@
     }
 
     &:hover {
-        background: transparentize($dark-background, 0.6);
+        background: transparentize($mauve, 0.2);
     }
 }
 
@@ -100,8 +100,8 @@
 }
 
 .close-notification-button {
-    background: $dark-background;
-    color: $text;
+    background: $mauve;
+    color: $surface2;
     min-width: 2.1em;
     border-radius: 0rem 8px 8px 0em;
 
@@ -110,6 +110,7 @@
     }
 
     &:hover {
-        background: transparentize($dark-background, 0.5);
+        color: transparentize($base, 0.2);
+        background: transparentize($mauve, 0.2);
     }
 }

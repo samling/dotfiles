@@ -9,10 +9,10 @@
     @import './menu.scss';
 
     * {
-        font-size: 1em;
+        font-size: 16px;
     }
 
-    background: $dark-background;
+    background: $primary_bg;
 
     .menu-dropdown-label.audio {
         color: $primary-color;
@@ -25,21 +25,22 @@
     .menu-active.playback,
     .menu-active.input {
         color: $text;
+        font-weight: normal;
     }
 
     .menu-button-isactive.audio {
-        color: $lightblue;
+        color: $mauve;
     }
 
     .menu-icon-button.volume {
-        color: $lightblue;
+        color: $mauve;
         padding: 0em 1em;
 
         label {
-            font-size: 1.25em;
+            font-size: 1em;
         }
         &:hover {
-            color: $lightblue;
+            color: $mauve;
         }
     }
 
@@ -48,7 +49,7 @@
             background: $dark-background;
             highlight,
             progress {
-                background: $lightblue;
+                background: $mauve;
             }
         }
 
@@ -58,7 +59,7 @@
             }
 
             slider {
-                background: $lightblue;
+                background: transparent;
             }
         }
     }
@@ -69,7 +70,7 @@
 
             highlight,
             progress {
-                background: $lightblue;
+                background: $mauve;
             }
         }
 
@@ -79,7 +80,7 @@
             }
 
             slider {
-                background: $lightblue;
+                background: transparent;
             }
         }
     }
@@ -92,14 +93,14 @@
     .menu-active-button {
         .menu-active-icon.playback,
         .menu-active-icon.input {
-            color: $lightblue;
+            color: $mauve;
             opacity: 1;
         }
 
         &.muted {
             .menu-active-icon.playback,
             .menu-active-icon.input {
-                color: $lightblue;
+                color: $mauve;
                 opacity: 1;
             }
         }
@@ -107,7 +108,7 @@
         &:hover {
             .menu-active-icon.playback,
             .menu-active-icon.input {
-                color: $lightblue;
+                color: $mauve;
                 opacity: 0.3;
             }
         }
@@ -115,7 +116,7 @@
         &.muted:hover {
             .menu-active-icon.playback,
             .menu-active-icon.input {
-                color: $lightblue;
+                color: $mauve;
                 opacity: 1;
             }
         }
@@ -123,25 +124,26 @@
 
     .menu-button-icon.playback,
     .menu-button-icon.input {
-        color: $lightblue;
+        color: $mauve;
 
         &.active {
-            color: $lightblue;
+            color: $mauve;
         }
     }
 
     .menu-button.audio {
-        color: $lightblue;
+        color: $mauve;
 
         .menu-button-name.playback,
         .menu-button-name.input {
             color: $text;
+            font-weight: normal;
         }
 
         &:hover {
             .menu-button-name.playback,
             .menu-button-name.input {
-                color: $lightblue;
+                color: $mauve;
             }
         }
     }
@@ -152,7 +154,7 @@
 
     .menu-section-container.playback {
         margin-top: 0em;
-        margin-bottom: 1em;
+        margin-bottom: 0.65em;
     }
 
     .menu-section-container.input {
@@ -161,27 +163,27 @@
 
     .menu-label-container.input {
         border-radius: 0em;
-        background: $dark-background;
+        background: $primary_bg;
     }
 
     .menu-label-container.playback {
-        background: $dark-background;
+        background: $primary_bg;
     }
 
     .menu-items-section.input {
-        background: $dark-background;
+        background: $primary_bg;
     }
 
     .menu-items-section.playback {
-        background: $dark-background;
+        background: $primary_bg;
     }
 
     .menu-label-container.selected {
-        background: $dark-background;
+        background: $primary_bg;
     }
 
     .menu-items-section.selected {
-        background: $dark-background;
+        background: $primary_bg;
     }
 
     .menu-items-section.playback {
@@ -192,7 +194,7 @@
         min-height: 12.5em;
 
         scrollbar contents trough slider {
-            background: $dark-background;
+            background: $primary_bg;
         }
 
         .menu-active-percentage.playback,

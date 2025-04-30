@@ -1,6 +1,6 @@
 .bar-button-icon.volume {
     font-size: 1.3em;
-    color: $lightblue;
+    color: $text;
 }
 
 .bar-button-label.volume {
@@ -16,7 +16,7 @@
         padding: 0.2em 0em;
         padding-left: 0.4em;
         padding-right: 0.4em;
-        color: $lightblue;
+        color: $text;
     }
 
     .bar-button-label.volume {
@@ -33,5 +33,5 @@
     }
 }
 .bar_item_box_visible.volume {
-    border: 0em solid $lightblue;
+    border: 0em solid $text;
 }
