@@ -10,6 +10,7 @@ import { DropdownMenus } from "./src/components/menus/exports";
 import { handleRealization } from "./src/components/menus/shared/dropdown/helpers"
 import { isDropdownMenu } from 'src/lib/options';
 import MediaMenu from 'src/components/menus/media';
+import Notifications from 'src/components/notifications/index';
 
 const hyprland = AstalHyprland.get_default();
 
@@ -31,12 +32,13 @@ const initializeMenus = (): void => {
 
 App.start({
     async main() {
-        initializeMenus();
+        Notifications();
 
         const barsForMonitors = await forMonitors(Bar);
         barsForMonitors.forEach((bar: JSX.Element) => bar);
 
         MediaMenu();
+        initializeMenus();
     },
 })
 

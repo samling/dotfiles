@@ -1,8 +1,10 @@
-import { Gdk } from "astal/gtk3";
-import { execAsync } from "astal";
+import { Gtk, Gdk } from "astal/gtk3";
+import { execAsync, GLib } from "astal";
 import Astal from "gi://Astal?version=3.0";
 import AstalNotifd from "gi://AstalNotifd?version=0.1";
 import { NotificationArgs } from "./types/notification";
+import { OSDAnchor, NotificationAnchor, PositionAnchor } from "./types/options";
+import GdkPixbuf from 'gi://GdkPixbuf';
 
 const notifdService = AstalNotifd.get_default();
 
@@ -23,6 +25,105 @@ export async function bash(strings: TemplateStringsArray | string, ...values: un
         console.error(cmd, err);
         return '';
     });
+}
+
+/**
+ * Normalize a path to the absolute representation of the path.
+ *
+ * Note: This will only expand '~' if present. Path traversal is not supported.
+ *
+ * @param path The path to normalize.
+ *
+ * @returns The normalized path.
+ */
+export function normalizePath(path: string): string {
+    if (path.charAt(0) == '~') {
+        // Replace will only replace the first match, in this case, the first character
+        return path.replace('~', GLib.get_home_dir());
+    }
+
+    return path;
+}
+
+/**
+ * Checks if the provided filepath is a valid image.
+ *
+ * This function attempts to load an image from the specified filepath using GdkPixbuf.
+ * If the image is successfully loaded, it returns true. Otherwise, it logs an error and returns false.
+ *
+ * Note: Unlike GdkPixbuf, this function will normalize the given path.
+ *
+ * @param imgFilePath The path to the image file.
+ *
+ * @returns True if the filepath is a valid image, false otherwise.
+ */
+export function isAnImage(imgFilePath: string): boolean {
+    try {
+        GdkPixbuf.Pixbuf.new_from_file(normalizePath(imgFilePath));
+        return true;
+    } catch (error) {
+        console.info(error);
+        return false;
+    }
+}
+/**
+ * Handles errors by throwing a new Error with a message.
+ *
+ * This function takes an error object and throws a new Error with the provided message or a default message.
+ * If the error is an instance of Error, it uses the error's message. Otherwise, it converts the error to a string.
+ *
+ * @param error The error to handle.
+ *
+ * @throws Throws a new error with the provided message or a default message.
+ */
+export function errorHandler(error: unknown): never {
+    if (error instanceof Error) {
+        throw new Error(error.message);
+    }
+
+    throw new Error(String(error));
+}
+
+/**
+ * Looks up an icon by name and size.
+ *
+ * This function retrieves an icon from the default icon theme based on the provided name and size.
+ * If the name is not provided, it returns null.
+ *
+ * @param name The name of the icon to look up.
+ * @param size The size of the icon to look up. Defaults to 16.
+ *
+ * @returns The Gtk.IconInfo object if the icon is found, or null if not found.
+ */
+export function lookUpIcon(name?: string, size = 16): Gtk.IconInfo | null {
+    if (!name) return null;
+
+    return Gtk.IconTheme.get_default().lookup_icon(name, size, Gtk.IconLookupFlags.USE_BUILTIN);
+}
+
+
+/**
+ * Maps a notification or OSD anchor position to an Astal window anchor.
+ *
+ * This function converts a position anchor from the notification or OSD settings to the corresponding Astal window anchor.
+ *
+ * @param pos The position anchor to convert.
+ *
+ * @returns The corresponding Astal window anchor.
+ */
+export function getPosition(pos: NotificationAnchor | OSDAnchor): Astal.WindowAnchor {
+    const positionMap: PositionAnchor = {
+        top: Astal.WindowAnchor.TOP,
+        'top right': Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT,
+        'top left': Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT,
+        bottom: Astal.WindowAnchor.BOTTOM,
+        'bottom right': Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT,
+        'bottom left': Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT,
+        right: Astal.WindowAnchor.RIGHT,
+        left: Astal.WindowAnchor.LEFT,
+    };
+
+    return positionMap[pos] || Astal.WindowAnchor.TOP;
 }
 
 /**
