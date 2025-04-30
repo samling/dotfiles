@@ -11,7 +11,7 @@ menu {
         min-height: 20px;
         min-width: 40px;
         padding: 4px 8px;
-        color: #ffffff;
+        color: $text;
         font: initial;
         text-shadow: none;
         border-radius: 6px;
@@ -22,7 +22,7 @@ menu {
         }
 
         &:disabled {
-            color: $secondary_bg;
+            color: $overlay0;
         }
 
         arrow {
@@ -83,14 +83,14 @@ check {
 
 check:hover,
 radio:hover {
-    box-shadow: 0 0 0 4px transparentize($primary_bg, 0.8);
+    box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
     background-color: $primary_bg;
 }
 
 check:active,
 radio:active {
-    box-shadow: 0 0 0 4px transparentize($primary_bg, 0.8);
-    background-color: $primary_bg;
+    box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
+    background-color: $primary_fg;
 }
 
 check:checked,

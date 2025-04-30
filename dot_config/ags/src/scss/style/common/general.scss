@@ -43,6 +43,6 @@ check:not(:checked) {
 }
 
 check:checked {
-    background-color: $dark-background;
+    background-color: $mauve;
     border: 1px solid $dark-background;
 }
