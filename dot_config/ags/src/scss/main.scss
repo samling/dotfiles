@@ -3,8 +3,10 @@
 }
 
 @import 'colors.scss';
+
 @import 'style/common/common.scss';
 @import 'style/common/general.scss';
+
 @import 'style/bar/audio.scss';
 @import 'style/bar/bar.scss';
 @import 'style/bar/battery.scss';
@@ -13,10 +15,14 @@
 @import 'style/bar/menu.scss';
 @import 'style/bar/systray.scss';
 @import 'style/bar/workspaces.scss';
+
 @import 'style/menus/audiomenu.scss';
 @import 'style/menus/calendar.scss';
 @import 'style/menus/dropdown.scss';
+@import 'style/menus/energy.scss';
 @import 'style/menus/menu.scss';
 @import 'style/menus/notifications.scss';
+
 @import 'style/notifications/popups.scss';
+
 @import 'style/osd/index.scss';

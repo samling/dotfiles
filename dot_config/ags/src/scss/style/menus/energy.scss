@@ -1,0 +1,108 @@
+.menu-items-container.energy * {
+  font-size: 16px;
+}
+
+.menu-items.energy {
+  background: $primary_bg;
+  border-color: $mauve;
+  opacity: 1;
+  font-size: 16px;
+}
+
+@import "./menu.scss";
+
+.menu-items-container.energy {
+  min-width: 18em;
+
+  .menu-label {
+    color: $text;
+  }
+
+  .menu-label-container {
+    background: $primary_bg;
+  }
+
+  .uptime {
+    font-size: 0.92em;
+  }
+
+  .menu-items-section {
+    background: $primary_bg;
+  }
+
+  .power-profile-item {
+    color: $text;
+    margin-bottom: 0.5em;
+
+    label {
+      margin-left: 1em;
+    }
+
+    image {
+      font-size: 1.3em;
+      min-width: 1em;
+      min-height: 1em;
+      color: $text;
+    }
+
+    &:hover {
+      color: $overlay0;
+
+      label {
+        color: $overlay0;
+      }
+
+      image {
+        color: $overlay0;
+      }
+    }
+
+    &.active {
+      color: $mauve;
+
+      image {
+        color: $mauve;
+      }
+    }
+  }
+
+  .brightness-container {
+    padding-bottom: 1em;
+  }
+
+  .brightness-slider-icon {
+    font-size: 1.4em;
+    min-width: 1em;
+    min-height: 1em;
+    color: $text;
+  }
+
+  .brightness-slider-label {
+    color: $text;
+    font-size: 0.9em;
+    min-width: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+  }
+
+  .menu-slider.brightness {
+    trough {
+      background: $mauve;
+
+      highlight,
+      progress {
+        background: $mauve;
+      }
+    }
+
+    &:hover {
+      trough {
+        background: $surface0;
+      }
+
+      slider {
+        background: transparent;
+      }
+    }
+  }
+}
