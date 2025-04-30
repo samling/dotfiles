@@ -118,9 +118,9 @@ bind -T locked F12 \
 
 is_ssh_session='#(if [[ -n $SSH_CLIENT ]]; then echo "hello"; fi)'
 
-set-window-option -g window-status-format '#[fg=#FFFFFF]  #I #[fg=#FFFFFF]#W  '
+set-window-option -g window-status-format '#[fg=#FFFFFF] #{?pane_synchronized, 󰓦 ,}#{?window_zoomed_flag, 󰊓 ,} #I #[fg=#FFFFFF]#W  '
 set-window-option -g window-status-style 'bold'
-set-window-option -g window-status-current-format '#[fg=colour4,bg=default]#[fg=#000000,italics,bg=colour4] #I #[fg=#000000]#W #[fg=colour4,bg=default]'
+set-window-option -g window-status-current-format '#[fg=colour4,bg=default]#[fg=#000000,italics,bg=colour4] #{?pane_synchronized, 󰓦 ,}#{?window_zoomed_flag, 󰊓 ,} #I #[fg=#000001]#W #[fg=colour4,bg=default]'
 set-window-option -g window-status-current-style 'bold'
 
 sshhostname="#(~/.tmux/scripts/ssh_hostname.sh) "
@@ -232,8 +232,8 @@ bind D split-window -v -c '#{pane_current_path}'
 bind w confirm-before -p "kill-pane #P? (y/n)" kill-pane
 
 # Sync all panes
-bind z setw synchronize-panes;\
-    set-option -ag status-right '#{?pane_synchronized, #[fg=yellow]«Synced»#[default],} ';
+bind z setw synchronize-panes;#\
+    #set-option -ag status-right '#{?pane_synchronized, #[fg=yellow]«Synced»#[default],} ';
 
 # Swap any pane with any other pane
 bind v display-panes
@@ -245,8 +245,8 @@ bind-key -Tmove -r h swap-pane -d -t -1
 bind-key -Tmove -r l swap-pane -d -t +1
 
 # Toggle maximize single pane
-bind-key Z resize-pane -Z;\
-    set-option -ag status-right '#{?window_zoomed_flag, #[fg=yellow][FULLSCREEN]#[default],} ';
+bind-key Z resize-pane -Z;#\
+    #set-option -ag status-right '#{?window_zoomed_flag, #[fg=yellow][FULLSCREEN]#[default],} ';
 
 ###############
 ### WINDOWS ###
