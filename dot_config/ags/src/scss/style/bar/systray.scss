@@ -1,23 +1,19 @@
 .systray button:not(:first-child) {
-    margin-left: $bar-buttons-systray-spacing;
+    margin-left: 0.375rem;
 }
 
 .systray-icon {
     font-size: 1.3em;
 
     &.txt-icon {
-        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-systray-customIcon);
+        color: $text;
     }
 }
 
 .style2.systray {
-    padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+    padding: 0.2rem 0.7rem;
 }
 
 .bar_item_box_visible.systray {
-    border: if(
-        $bar-buttons-systray-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-systray-border),
-        0em
-    );
+    border: 0.1rem solid $dark-background;
 }

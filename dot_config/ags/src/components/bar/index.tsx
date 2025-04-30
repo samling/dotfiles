@@ -7,6 +7,7 @@ import {
     SysTray,
     BatteryLabel,
     Notifications,
+    Clock,
 } from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
 const gdkMonitorMapper = new GdkMonitorMapper();
@@ -19,6 +20,9 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
         namespace={`bar-${hyprlandMonitor}`}
         className={'bar'}
         application={App}
+        marginTop={10}
+        marginLeft={10}
+        marginRight={10}
         anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT}
         monitor={monitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
@@ -38,6 +42,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                     }
                     centerWidget={
                         <box className={'box-center'} halign={Gtk.Align.CENTER}>
+                            {WidgetContainer(Clock())}
                             {WidgetContainer(Media())}
                         </box>
                     }
