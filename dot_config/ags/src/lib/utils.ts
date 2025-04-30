@@ -8,10 +8,31 @@ import GdkPixbuf from 'gi://GdkPixbuf';
 
 const notifdService = AstalNotifd.get_default();
 
+/**
+ * Creates an array of numbers from a starting value to a specified length.
+ *
+ * This function generates an array of numbers starting from a specified starting value
+ * and extending to a specified length. The default starting value is 1.
+ *
+ * @param length The length of the array to create.
+ * @param start The starting value of the array.
+ *
+ * @returns An array of numbers.
+ */
 export function range(length: number, start = 1): number[] {
     return Array.from({ length }, (_, i) => i + start);
 }
 
+/**
+ * Executes a function for each monitor and returns an array of results.
+ *
+ * This function iterates over the number of monitors and applies the provided function to each monitor.
+ * It returns an array of promises, each resolving to the result of the function applied to the corresponding monitor.
+ *
+ * @param widget The function to apply to each monitor.
+ *
+ * @returns A promise that resolves to an array of results.
+ */
 export async function forMonitors(widget: (monitor: number) => Promise<JSX.Element>): Promise<JSX.Element[]> {
     const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
     return Promise.all(range(n, 0).map(widget));
@@ -34,6 +55,17 @@ export async function sh(cmd: string | string[]): Promise<string> {
     });
 }
 
+/**
+ * Executes a shell command asynchronously.
+ *
+ * This function runs a shell command using `execAsync` and returns the output as a string.
+ * It handles errors by logging them and returning an empty string.
+ *
+ * @param strings The command to execute as a string or an array of strings.
+ * @param values The values to interpolate into the command.
+ *
+ * @returns A promise that resolves to the command output as a string.
+ */
 export async function bash(strings: TemplateStringsArray | string, ...values: unknown[]): Promise<string> {
     const cmd =
         typeof strings === 'string' ? strings : strings.flatMap((str, i) => str + `${values[i] ?? ''}`).join('');
@@ -42,6 +74,24 @@ export async function bash(strings: TemplateStringsArray | string, ...values: un
         console.error(cmd, err);
         return '';
     });
+}
+
+/**
+ * Read an environment variable.
+ *
+ * This function retrieves the value of an environment variable by its name.
+ * If the variable is not found, it logs a warning and returns an empty string.
+ *
+ * @param name The name of the environment variable to read.
+ *
+ */
+export function getEnvVar(name: string): string {
+    const env = GLib.getenv(name);
+    if (!env) {
+        console.warn(`Environment variable ${name} not found`);
+        return '';
+    }
+    return env;
 }
 
 /**
