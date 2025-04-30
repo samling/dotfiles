@@ -17,6 +17,23 @@ export async function forMonitors(widget: (monitor: number) => Promise<JSX.Eleme
     return Promise.all(range(n, 0).map(widget));
 }
 
+/**
+ * Executes a shell command asynchronously.
+ *
+ * This function runs a shell command using `execAsync` and returns the output as a string.
+ * It handles errors by logging them and returning an empty string.
+ *
+ * @param cmd The command to execute as a string or an array of strings.
+ *
+ * @returns A promise that resolves to the command output as a string.
+ */
+export async function sh(cmd: string | string[]): Promise<string> {
+    return execAsync(cmd).catch((err) => {
+        console.error(typeof cmd === 'string' ? cmd : cmd.join(' '), err);
+        return '';
+    });
+}
+
 export async function bash(strings: TemplateStringsArray | string, ...values: unknown[]): Promise<string> {
     const cmd =
         typeof strings === 'string' ? strings : strings.flatMap((str, i) => str + `${values[i] ?? ''}`).join('');

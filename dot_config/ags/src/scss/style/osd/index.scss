@@ -1,0 +1,94 @@
+.indicator {
+    * {
+        font-size: 1em;
+    }
+
+    .osd-container {
+        margin: 1em;
+        opacity: 1;
+        box-shadow: 0 0 0 0;
+        border-radius: 0.5em;
+    }
+
+    .osd-label-container {
+        border-top: 0.1em solid $overlay1;
+        border-bottom: 0em;
+        border-left: 0.1em solid $overlay1;
+        border-right: 0.1em solid $overlay1;
+        background: $dark-background;
+
+        border-radius: 0.5em 0.5em 0em 0em;
+
+        .osd-label {
+            font-size: 1em;
+            padding-top: 1em;
+            padding-right: 0em;
+            color: $text;
+
+            &.overflow {
+                color: $red;
+            }
+        }
+    }
+
+    .osd-icon-container {
+        border-top: 0em;
+        border-bottom: 0.1em solid $overlay1;
+        border-left: 0.1em solid $overlay1;
+        border-right: 0.1em solid $overlay1;
+        background: $dark-background;
+
+        border-radius: 0em 0em 0.5em 0.5em;
+
+        .osd-icon {
+            font-size: 2.1em;
+            padding: 0.2em 0em;
+            color: $text;
+        }
+    }
+
+    .osd-bar-container {
+        border-top: 0em;
+        border-bottom: 0em;
+        border-left: 0.1em solid $overlay1;
+        border-right: 0.1em solid $overlay1;
+        padding: 1.25em;
+        background: $dark-background;
+
+        .osd-bar {
+            levelbar * {
+                transition: 200ms;
+            }
+
+            trough {
+                min-height: 10em;
+                min-width: 0;
+            }
+
+            block {
+                border-radius: 0.5em;
+
+                &.empty {
+                    background: $dark-background;
+                }
+
+                &.filled {
+                    background: $mauve;
+                    padding: 0.45em;
+                }
+            }
+
+            &.overflow {
+                block {
+                    &.empty {
+                        background: $dark-background;
+                    }
+
+                    &.filled {
+                        background: $red;
+                    }
+                }
+            }
+        }
+    }
+}

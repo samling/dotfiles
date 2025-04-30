@@ -11,6 +11,7 @@ import { handleRealization } from "./src/components/menus/shared/dropdown/helper
 import { isDropdownMenu } from 'src/lib/options';
 import MediaMenu from 'src/components/menus/media';
 import Notifications from 'src/components/notifications/index';
+import OSD from 'src/components/osd/index';
 
 const hyprland = AstalHyprland.get_default();
 
@@ -32,6 +33,7 @@ const initializeMenus = (): void => {
 
 App.start({
     async main() {
+        OSD();
         Notifications();
 
         const barsForMonitors = await forMonitors(Bar);

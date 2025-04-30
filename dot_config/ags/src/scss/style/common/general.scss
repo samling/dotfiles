@@ -1,5 +1,3 @@
-@import '../colors.scss';
-
 .txt-icon {
     font-family: 'JetBrainsMono Nerd Font Propo', monospace;
     font-size: 1.5em;
@@ -27,24 +25,24 @@ tooltip {
         all: unset;
     }
 
-    opacity: $bar-menus-opacity * 0.01;
+    opacity: 1;
 
-    font-size: 1.1em * $tooltip-scaling * 0.01;
+    font-size: 1.1em;
 
     > * > * {
         padding: 0.6em;
-        border-radius: $bar-menus-tooltip-radius;
-        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-tooltip-text);
-        background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-tooltip-background);
+        border-radius: 0.5em;
+        color: $text;
+        background: $dark-background;
     }
 }
 
 check:not(:checked) {
-    background-color: $bar-menus-check_radio_button-background;
-    border: 1px solid $bar-menus-check_radio_button-active;
+    background-color: $dark-background;
+    border: 1px solid $dark-background;
 }
 
 check:checked {
-    background-color: $bar-menus-check_radio_button-active;
-    border: 1px solid $bar-menus-check_radio_button-background;
+    background-color: $dark-background;
+    border: 1px solid $dark-background;
 }
