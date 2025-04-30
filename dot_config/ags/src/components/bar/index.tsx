@@ -6,6 +6,7 @@ import {
     Media,
     SysTray,
     BatteryLabel,
+    Notifications,
 } from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
 const gdkMonitorMapper = new GdkMonitorMapper();
@@ -44,6 +45,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                         <box className={'box-right'} halign={Gtk.Align.END}>
                             {WidgetContainer(SysTray())}
                             {WidgetContainer(BatteryLabel())}
+                            {WidgetContainer(Notifications())}
                         </box>
                     }
                 />
