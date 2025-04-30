@@ -12,7 +12,7 @@
     .bar-button-icon.battery {
         border-top-left-radius: 0.5em;
         border-bottom-left-radius: 0.5em;
-        background: $dark-background;
+        background: $primary_bg;
         padding: 0.25em 0em;
         padding-left: 0.5em;
         padding-right: 0.5em;
@@ -40,5 +40,5 @@
 }
 
 .bar_item_box_visible.battery {
-    border: 0.1em solid $dark-background;
+    border: 0.1em solid $primary_bg;
 }

@@ -1,0 +1,40 @@
+.bar-button-label.clock {
+    color: $text;
+    margin-left: 0.375rem;
+}
+
+.bar-button-icon.clock {
+    font-size: 1.2em;
+    color: $text;
+}
+
+.style2 {
+    .bar-button-icon.clock {
+        border-top-left-radius: 0.4em;
+        border-bottom-left-radius: 0.4em;
+        background: $primary_bg;
+        padding: 0.2rem 0em;
+        padding-left: 0.7rem;
+        padding-right: 0.375rem;
+        border-top-left-radius: 0.4em;
+        border-bottom-left-radius: 0.4em;
+        color: $text;
+    }
+
+    .bar-button-label.clock {
+        padding: 0.2rem 0em;
+        padding-right: 0.7rem;
+        padding-left: 0.375rem;
+        margin-left: 0em;
+    }
+    &.no-label.clock-container {
+        .bar-button-icon.clock {
+            border-top-right-radius: 0.4em;
+            border-bottom-right-radius: 0.4em;
+        }
+    }
+}
+
+.bar_item_box_visible.clock {
+    border: 0.1rem solid $primary_bg;
+}
