@@ -9,6 +9,7 @@ import {
     Notifications,
     Clock,
     Volume,
+    Updates,
 } from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
 const gdkMonitorMapper = new GdkMonitorMapper();
@@ -53,6 +54,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                             {WidgetContainer(BatteryLabel())}
                             {WidgetContainer(SysTray())}
                             {WidgetContainer(Notifications())}
+                            {WidgetContainer(Updates())}
                         </box>
                     }
                 />

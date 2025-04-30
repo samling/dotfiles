@@ -48,12 +48,6 @@ const BatteryLabel = (): BarBoxChild => {
     const componentClassName = Variable.derive(
         [bind(show_label)],
         (showLabel) => {
-            const styleMap = {
-                default: 'style1',
-                split: 'style2',
-                wave: 'style3',
-                wave2: 'style3',
-            };
             return `battery-container default ${!showLabel ? 'no-label' : ''}`;
         },
     );
