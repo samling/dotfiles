@@ -5,7 +5,7 @@ import { isPrimaryClick } from 'src/lib/utils';
 
 const notifdService = AstalNotifd.get_default();
 
-const clearDelay = Variable(1000);
+const clearDelay = Variable(100);
 
 export const ClearNotificationsButton = (): JSX.Element => {
     return (
