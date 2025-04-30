@@ -2,7 +2,7 @@
     color: $text;
     background: $light-background;
     margin: 0.45em;
-    border: 0.15em solid $mauve;
+    border: 0.15em solid transparentize($mauve, 0.1);
     min-width: 26em;
     min-height: 4em;
     border-radius: 8px;
@@ -54,15 +54,16 @@
 }
 
 .notification-card-header-label {
-    font-size: 0.95em;
+    font-size: 1em;
     margin-bottom: 0.5em;
     color: $text;
+    font-weight: 600;
 }
 
 .notification-card-body-label {
-    font-size: 0.84em;
+    font-size: 0.95em;
     margin-bottom: 1em;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .notification-card-actions {
@@ -72,7 +73,7 @@
 
 .notification-action-buttons {
     color: $base;
-    background: $mauve;
+    background: transparentize($mauve, 0.2);
     min-width: 4em;
     min-height: 1.65em;
     border-radius: 8px;
@@ -82,7 +83,7 @@
     }
 
     &:hover {
-        background: transparentize($mauve, 0.2);
+        background: transparentize($mauve, 0.4);
     }
 }
 
@@ -100,17 +101,17 @@
 }
 
 .close-notification-button {
-    background: $mauve;
+    background: transparentize($mauve, 0.1);
     color: $surface2;
     min-width: 2.1em;
-    border-radius: 0rem 8px 8px 0em;
+    border-radius: 0rem 4px 4px 0em;
 
     label {
         font-size: 1.5em;
     }
 
     &:hover {
-        color: transparentize($base, 0.2);
-        background: transparentize($mauve, 0.2);
+        color: transparentize($base, 0.4);
+        background: transparentize($mauve, 0.4);
     }
 }
