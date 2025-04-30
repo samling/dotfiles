@@ -3,9 +3,9 @@
     background-color: transparent;
     
     .dropdown-menu-container {
-        background-color: $crust;
+        background-color: $primary_bg;
         border-radius: 12px;
-        border: 2px solid $surface0;
+        border: 2px solid $border-color-dark;
         box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
         margin: 6px;
         padding: 10px;
@@ -58,15 +58,15 @@
                 padding: 8px;
                 margin: 0 6px;
                 border-radius: 50%;
-                background-color: $surface0;
+                background-color: $button-color;
                 transition: background-color 0.2s ease;
                 
                 &:hover {
-                    background-color: $surface1;
+                    background-color: $button-hover-color;
                 }
                 
                 &:active {
-                    background-color: $surface2;
+                    background-color: $button-active-color;
                 }
                 
                 icon {
@@ -78,8 +78,6 @@
             .play-button {
                 padding: 10px;
                 background-color: $mauve;
-                
-
                 
                 icon {
                     color: $base;

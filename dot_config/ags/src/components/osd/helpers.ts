@@ -12,8 +12,8 @@ const hyprlandService = AstalHyprland.get_default();
 
 const enable = Variable<boolean>(true);
 const duration = Variable<number>(2500);
-const active_monitor = Variable<boolean>(true);
-const monitor = Variable<number>(0);
+const active_monitor = Variable<boolean>(true); // Follow active monitor
+const monitor = Variable<number>(0); // TODO: Make this into a configurable option
 
 let count = 0;
 

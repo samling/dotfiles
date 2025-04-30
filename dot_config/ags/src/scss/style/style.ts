@@ -1,7 +1,8 @@
 import { writeFile } from "astal";
 import { readFile } from "astal/file";
 import { App } from "astal/gtk3";
-import { bash } from "../lib/utils";
+import { bash } from "../../lib/utils";
+import { initializeHotReload } from "./utils/hotReload";
 
 export const resetCss = async (): Promise<void> => {
     try {
@@ -17,4 +18,6 @@ export const resetCss = async (): Promise<void> => {
     }
 };
 
+// First reset CSS, then setup hot reloading
 await resetCss();
+await initializeHotReload();

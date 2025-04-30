@@ -44,8 +44,21 @@ $crust: #11111b;
 
 $default_fg: $primary-color;
 $default_bg: #000000;
+
 $primary_bg: $light-background;
 $primary_fg: mix($mauve, $primary_bg, 70%);
+
 $secondary_fg: $green;
-$secondary_bg: $light-background;
+$secondary_bg: $dark-background;
+
 $shadow-color: #1e1e2e;
+
+$border-color-light: $subtext2;
+$border-color-dark: $surface2;
+
+$button-color: $primary_fg;
+$button-hover-color: $surface1;
+$button-active-color: $surface2;
+$button-disabled-color: $subtext2;
+$button-disabled-hover-color: $subtext2;
+$button-disabled-active-color: $subtext2;

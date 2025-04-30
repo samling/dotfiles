@@ -39,6 +39,25 @@ export async function forMonitors(widget: (monitor: number) => Promise<JSX.Eleme
 }
 
 /**
+ * Executes a function for specified monitor and returns an array of results.
+ *
+ * This function applies the provided function to the specified monitor.
+ * It returns a promise that resolves to the result of the function applied to the corresponding monitor.
+ *
+ * @param widget The function to apply to the specified monitor.
+ *
+ * @returns A promise that resolves to the result of the function applied to the specified monitor.
+ */
+export async function forMonitor(monitorIndex: number, widget: (monitor: number) => Promise<JSX.Element>): Promise<JSX.Element> {
+    const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
+    if (monitorIndex < 0 || monitorIndex >= n) {
+        throw new Error(`Invalid monitor index: ${monitorIndex}`);
+    }
+    return widget(monitorIndex);
+}
+
+
+/**
  * Executes a shell command asynchronously.
  *
  * This function runs a shell command using `execAsync` and returns the output as a string.

@@ -1,5 +1,5 @@
 import './src/lib/session';
-import './src/scss/style';
+import './src/scss/style/style';
 
 import { App } from "astal/gtk3";
 import { Bar } from "./src/components/bar/index";
@@ -14,6 +14,13 @@ import Notifications from 'src/components/notifications/index';
 import OSD from 'src/components/osd/index';
 
 const hyprland = AstalHyprland.get_default();
+const primaryMonitor = hyprland.get_monitor_by_name("DP-3")
+const gdkMonitorMapper = new GdkMonitorMapper();
+if (primaryMonitor) {
+    const primaryMonitorGdk = gdkMonitorMapper.mapHyprlandToGdk(primaryMonitor.id);
+    globalThis['primaryMonitor'] = primaryMonitorGdk;
+    console.log('user declared a primary monitor', globalThis['primaryMonitor']);
+}
 
 const initializeMenus = (): void => {
     DropdownMenus.forEach((window) => {
@@ -39,7 +46,6 @@ App.start({
         const barsForMonitors = await forMonitors(Bar);
         barsForMonitors.forEach((bar: JSX.Element) => bar);
 
-        MediaMenu();
         initializeMenus();
     },
 })

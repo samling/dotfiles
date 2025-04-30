@@ -16,6 +16,7 @@ declare global {
     var options: Options;
     var removingNotifications: Variable<boolean>;
     var idleInhibit: Variable<boolean>;
+    var primaryMonitor: number;
 }
 
 export {};

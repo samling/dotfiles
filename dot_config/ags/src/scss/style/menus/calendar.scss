@@ -6,8 +6,8 @@
     margin-top: 0em;
     min-width: 27em;
     min-height: 6em;
-    background: $dark-background;
-    border: 0.1em solid $light-background;
+    background: $primary_bg;
+    border: 0em solid $border-color-dark;
     border-radius: 0.4em;
     opacity: 1;
 }
@@ -15,11 +15,11 @@
 .calendar-menu-item-container {
     border-radius: 0.4em;
     margin-bottom: 1.35em;
-    background: $dark-background;
+    background: $primary_bg;
 }
 
 .calendar-content-items {
-    margin: 1.35em;
+    margin: 0em;
 }
 
 .calendar-container-box {

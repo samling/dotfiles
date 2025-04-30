@@ -12,10 +12,16 @@ import {
     Updates,
 } from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
+import { bind, Variable } from "astal";
 const gdkMonitorMapper = new GdkMonitorMapper();
 
 export const Bar = async (monitor: number): Promise<JSX.Element> => {
     const hyprlandMonitor = gdkMonitorMapper.mapGdkToHyprland(monitor);
+    const visible = Variable(true);
+    // if (hyprlandMonitor === globalThis['primaryMonitor']) {
+    //     visible.set(true);
+    // }
+
     return (
         <window
         name={`bar-${hyprlandMonitor}`}
@@ -27,6 +33,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
         marginRight={10}
         anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT}
         monitor={monitor}
+        visible={visible()}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         onDestroy={() => {
             // placeholder
@@ -53,8 +60,8 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                             {WidgetContainer(Volume())}
                             {WidgetContainer(BatteryLabel())}
                             {WidgetContainer(SysTray())}
-                            {WidgetContainer(Notifications())}
                             {WidgetContainer(Updates())}
+                            {WidgetContainer(Notifications())}
                         </box>
                     }
                 />
