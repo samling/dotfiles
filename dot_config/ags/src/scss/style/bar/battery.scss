@@ -1,42 +1,18 @@
+.bar-button-label.battery.txt-icon {
+    color: $text;
+    margin-left: 0.5em;
+    font-size: 0.95em;
+}
+
 .bar-button-label.battery {
     color: $text;
     margin-left: 0.5em;
+    font-size: 0.95em;
 }
 
 .bar-button-icon.battery {
     color: $text;
     font-size: 1.15em;
-}
-
-.style2 {
-    .bar-button-icon.battery {
-        border-top-left-radius: 0.5em;
-        border-bottom-left-radius: 0.5em;
-        background: $primary_bg;
-        padding: 0.25em 0em;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-        border-top-left-radius: 0.5em;
-        border-bottom-left-radius: 0.5em;
-
-        &:last-child {
-            border-radius: 0.5em;
-        }
-        color: $text;
-    }
-
-    .bar-button-label.battery {
-        padding: 0.25em 0em;
-        padding-right: 0.5em;
-        padding-left: 0.5em;
-        margin-left: 0em;
-    }
-    &.no-label.battery-container {
-        .bar-button-icon.battery {
-            border-top-right-radius: 0.5em;
-            border-bottom-right-radius: 0.5em;
-        }
-    }
 }
 
 .bar_item_box_visible.battery {

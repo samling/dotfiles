@@ -5,19 +5,19 @@
  
     .bar-panel-container {
         margin: 0;
-        padding: 5px 8px;
+        padding: 2px 8px;
         background-color: $primary_bg;
         border: 2px solid $subtext2;
     };
     
     /* Common styles for bar modules */
     .bar-button-label {
-        font-size: 14px;
+        font-size: 0.95em;
         margin: 0 2px;
     };
     
     .bar-button-icon {
-        font-size: 16px;
+        font-size: 0.95em;
         margin: 0 2px;
     };
     

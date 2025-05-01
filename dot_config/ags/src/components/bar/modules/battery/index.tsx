@@ -26,6 +26,17 @@ const BatteryLabel = (): BarBoxChild => {
         },
     );
 
+    const energyRate = Variable.derive(
+        [bind(batteryService, 'energyRate'), bind(batteryService, 'charging')],
+        (energyRate: number, charging: boolean) => {
+            if (charging) {
+                return '';
+            } else {
+                return ` (${Math.round(energyRate)}w)`;
+            }
+        },
+    );
+
     const formatTime = (seconds: number): Record<string, number> => {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
@@ -61,12 +72,12 @@ const BatteryLabel = (): BarBoxChild => {
     );
 
     const componentChildren = Variable.derive(
-        [bind(show_label), bind(batteryService, 'percentage'), bind(hideLabelWhenFull)],
-        (showLabel, percentage, hideLabelWhenFull) => {
+        [bind(show_label), bind(batteryService, 'percentage'), bind(hideLabelWhenFull), bind(energyRate)],
+        (showLabel, percentage, hideLabelWhenFull, _energyRate) => {
             const isCharged = Math.round(percentage) === 100;
 
             const icon = <label className={'bar-button-icon battery txt-icon'} label={batIcon()} />;
-            const label = <label className={'bar-button-label battery'} label={`${Math.floor(percentage * 100)}%`} />;
+            const label = <label className={'bar-button-label battery'} label={`${Math.floor(percentage * 100)}%${energyRate().get()}`} />;
 
             const children = [icon];
 
@@ -84,6 +95,7 @@ const BatteryLabel = (): BarBoxChild => {
             tooltipText={componentTooltip()}
             onDestroy={() => {
                 batIcon.drop();
+                energyRate.drop();
                 componentClassName.drop();
                 componentTooltip.drop();
                 componentChildren.drop();
