@@ -53,8 +53,12 @@ export class Poller {
      * @param moduleName - The name of the module to initialize.
      */
     public initialize(moduleName?: BarModule): void {
+        console.log("moduleName", moduleName);
         if (moduleName != null && moduleName != undefined) {
+            console.log("initializing poller with module name", moduleName);
             return this.start();
+        } else {
+            console.log("failed to initialize poller: module name undefined");
         }
     }
 

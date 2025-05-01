@@ -7,8 +7,8 @@ if [ "$1" == "ss" ]; then
     grim -c -o "${MONITOR}" "$(xdg-user-dir)/Pictures/Screenshots/${TIMESTAMP}_grim.png" && notify-send "Screenshot of monitor ${MONITOR} saved in ~/Pictures/Screenshots"
 elif [ "$1" == "areass" ]; then
     hyprshot -s -m region -o ~/Pictures/Screenshots
-    hyprctl notify-send "Screenshot saved in ~/Pictures/Screenshots"
+    notify-send "Screenshot saved in ~/Pictures/Screenshots"
 elif [ "$1" == "areasscb" ]; then
     hyprshot -s -m region --clipboard-only
-    hyprctl notify-send "Screenshot copied to clipboard"
+    notify-send "Screenshot copied to clipboard"
 fi

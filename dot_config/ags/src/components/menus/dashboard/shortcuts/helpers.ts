@@ -35,6 +35,7 @@ export const executeCommand = async (command: string): Promise<void> => {
  * @returns True if the command output is 'recording', false otherwise.
  */
 export const handleRecorder = (commandOutput: string): boolean => {
+    console.log("started recording");
     return commandOutput === 'recording';
 };
 
