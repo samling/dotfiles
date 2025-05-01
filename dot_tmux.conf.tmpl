@@ -118,17 +118,17 @@ bind -T locked F12 \
 
 is_ssh_session='#(if [[ -n $SSH_CLIENT ]]; then echo "hello"; fi)'
 
-set-window-option -g window-status-format '#[fg=#FFFFFF] #{?pane_synchronized, 󰓦 ,}#{?window_zoomed_flag, 󰊓 ,} #I #[fg=#FFFFFF]#W  '
+set-window-option -g window-status-format '#[fg=colour0,italics,bg=default]• #I #W#{?pane_synchronized, 󰓦 ,}#{?window_zoomed_flag, 󰊓 ,} #[fg=default]'
 set-window-option -g window-status-style 'bold'
-set-window-option -g window-status-current-format '#[fg=colour4,bg=default]#[fg=#000000,italics,bg=colour4] #{?pane_synchronized, 󰓦 ,}#{?window_zoomed_flag, 󰊓 ,} #I #[fg=#000001]#W #[fg=colour4,bg=default]'
+set-window-option -g window-status-current-format '#[fg=colour255,italics,bg=default]• #I #W#[fg=orange]#{?pane_synchronized, 󰓦 ,}#[fg=colour255]#[fg=colour4]#{?window_zoomed_flag, 󰊓 ,}#[fg=default] #[fg=default]'
 set-window-option -g window-status-current-style 'bold'
 
 sshhostname="#(~/.tmux/scripts/ssh_hostname.sh) "
 prefixhighlight="#{prefix_highlight} "
-gitstatus="#(gitmux -cfg ~/.gitmux.conf #{pane_current_path})#[bold] "
+gitstatus="#(gitmux -cfg ~/.gitmux.conf #{pane_current_path})#[bold]"
 kubestatus="#[fg=white]#(/bin/bash ~/.tmux/kube-tmux/kube.tmux 250 '#cba6f7' 'colour4') "
-session="#[fg=#cba6f7,bg=default]#[fg=colour0,bg=#cba6f7]☰ #(tmux display-message -p #S:#{pane_index}#[fg=#cba6f7,bg=default]) "
-datetime="#(date +%%H:%%M) "
+session="#[fg=#cba6f7,bg=default]≡ #(tmux display-message -p #S:#{pane_index}#[fg=default,bg=default]) "
+datetime="  #(date +%%H:%%M) "
 keytable="#(~/.tmux/scripts/keytable.sh #{client_key_table}) "
 
 set -g status-left "$sshhostname$keytable"
@@ -142,7 +142,7 @@ set -g message-style fg=white,bg=default,bright
 set -g status-bg default
 set -g status-style default
 set -g status-interval 2 # Refresh tmux every 2 seconds
-set -g status-justify left
+set -g status-justify absolute-centre # left | centre | right | absolute-centre
 set -g status-position bottom
 set -g status-left-length 100
 set -g status-right-length 100

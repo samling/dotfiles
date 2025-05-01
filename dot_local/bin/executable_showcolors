@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Standard & High Intensity Colors (0-15):"
+for i in {0..15}; do
+    printf "\e[48;5;%sm %3s \e[0m" "$i" "$i"
+done
+printf "\n\n"
+
+echo "6x6x6 Color Cube (16-231):"
+for i in {16..231}; do
+    printf "\e[48;5;%sm %3s \e[0m" "$i" "$i"
+    # Add a newline every 6 colors in the cube section for better alignment
+    if ((( (i - 16) + 1 ) % 6 == 0)); then
+        # Add extra space every 36 colors (end of a cube plane)
+        if ((( (i - 16) + 1 ) % 36 == 0)); then
+             printf "\n\n" # Extra newline between planes
+        else
+             printf "\n"   # Newline within a plane
+        fi
+    fi
+done
+printf "\n"
+
+echo "Grayscale Ramp (232-255):"
+for i in {232..255}; do
+    printf "\e[48;5;%sm %3s \e[0m" "$i" "$i"
+done
+printf "\n"
