@@ -1,0 +1,14 @@
+#!/bin/env bash
+
+if [ "$1" == "ss" ]; then
+    #grim -g "$(slurp)" $(xdg-user-dir)/Pictures/Screenshots/$(date +'%s_grim.png') && notify-send "Screenshot saved in ~/Pictures/Screenshots"
+    MONITOR=$(hyprctl activeworkspace -j | jq -r '.monitor')
+    TIMESTAMP=$(date +'%Y-%m-%d-%H%M%S')
+    grim -c -o "${MONITOR}" "$(xdg-user-dir)/Pictures/Screenshots/${TIMESTAMP}_grim.png" && notify-send "Screenshot of monitor ${MONITOR} saved in ~/Pictures/Screenshots"
+elif [ "$1" == "areass" ]; then
+    hyprshot -s -m region -o ~/Pictures/Screenshots
+    notify-send "Screenshot saved in ~/Pictures/Screenshots"
+elif [ "$1" == "areasscb" ]; then
+    hyprshot -s -m region --clipboard-only
+    notify-send "Screenshot copied to clipboard"
+fi
