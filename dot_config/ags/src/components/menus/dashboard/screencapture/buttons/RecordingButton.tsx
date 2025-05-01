@@ -76,7 +76,7 @@ export const RecordingButton = (): JSX.Element => {
                 }
             }}
         >
-            <label className={'button-label txt-icon'} label={' '} />
+            <label className={'button-label txt-icon'} label={''} />
         </button>
     );
 };
