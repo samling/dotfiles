@@ -1,0 +1,127 @@
+.menu-items.media {
+    background: $primary_bg;
+    border-color: $border-color-light;
+    opacity: 1;
+}
+
+.menu-items-container.media {
+    * {
+        font-size: 16px;
+    }
+
+    min-width: 23em;
+    min-height: 10em;
+
+    .menu-section-container {
+        margin: 1em 0em;
+    }
+
+    .menu-items-section {
+        background: none;
+        border-radius: 0.5em;
+        padding: 0em;
+    }
+
+    .menu-content {
+        border-radius: 0.5em;
+        background-size: cover;
+        background-position: center;
+        padding: 1em;
+    }
+
+    .media-indicator-current-song-name {
+        margin-bottom: 0.75rem;
+    }
+
+    .media-indicator-current-song-author {
+        margin-bottom: 0.75rem;
+    }
+
+    .media-indicator-current-song-name-label {
+        color: $text;
+        font-size: 1.35em;
+    }
+
+    .media-indicator-current-song-author-label {
+        color: $subtext1;
+        font-size: 1em;
+    }
+
+    .media-indicator-current-song-album-label {
+        color: $subtext1;
+        font-size: 1em;
+    }
+
+    .media-indicator-current-controls {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .media-indicator-control-button {
+        margin: 0rem 0.5rem;
+    }
+
+    .media-indicator-control-button {
+        background: $mauve;
+        color: $crust;
+        min-height: 1.8em;
+        min-width: 2.5em;
+        border-radius: 0.5em;
+
+        &.disabled {
+            background: $surface2;
+        }
+
+        &.enabled {
+            background: $mauve;
+
+            &:hover {
+                background: transparentize($mauve, 0.5);
+            }
+
+            &.active {
+                background: $mauve;
+
+                &:hover {
+                    background: transparentize($mauve, 0.5);
+                }
+            }
+        }
+    }
+
+    image {
+        font-size: 1.1em;
+    }
+
+    .menu-slider.media.progress {
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+        trough {
+            background: $surface2;
+            border-radius: 0.5em;
+
+            highlight,
+            progress {
+                border-radius: 0.5em;
+                min-height: 0.85em;
+                background: $mauve;
+            }
+        }
+
+        slider {
+            background: $mauve;
+        }
+
+        &:hover {
+            trough {
+                background: transparentize($mauve, 0.3);
+            }
+        }
+    }
+
+    .time-label {
+        color: $text;
+        margin-bottom: 0.25em;
+    }
+}

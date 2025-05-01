@@ -123,8 +123,13 @@ export function getEnvVar(name: string): string {
  * @returns The normalized path.
  */
 export function normalizePath(path: string): string {
-    if (path.charAt(0) == '~') {
-        // Replace will only replace the first match, in this case, the first character
+    // Handle file:// URLs by removing the protocol prefix
+    if (path.startsWith('file://')) {
+        path = path.substring(7);
+    }
+    
+    // Handle home directory expansion
+    if (path.charAt(0) === '~') {
         return path.replace('~', GLib.get_home_dir());
     }
 
@@ -144,6 +149,7 @@ export function normalizePath(path: string): string {
  * @returns True if the filepath is a valid image, false otherwise.
  */
 export function isAnImage(imgFilePath: string): boolean {
+    console.log(normalizePath(imgFilePath));
     try {
         GdkPixbuf.Pixbuf.new_from_file(normalizePath(imgFilePath));
         return true;
