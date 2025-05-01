@@ -21,8 +21,8 @@ bind = $mainMod, E, exec, uwsm app -- $fileManager
 # Launch application launcher
 # Note: Some applications may depend on which python is set at a global level (like gearlever); if an application isn't
 # launching from rofi, try setting `pyenv global system`
-bind = $mainMod, space, exec, $rofi -show drun -run-command "uwsm app -- {cmd}"
-# bind = $mainMod, space, exec, $fuzzel --launch-prefix='uwsm app -- '
+#bind = $mainMod, space, exec, $rofi -show drun -run-command "uwsm app -- {cmd}"
+bind = $mainMod, space, exec, $fuzzel --launch-prefix='uwsm app -- '
 
 # Maximize window
 bind = $mainMod, F, fullscreenstate, 1,

@@ -51,7 +51,7 @@ export const getWindowMatch = (hyprlandClient: AstalHyprland.Client): Record<str
     const windowMatch = potentialWindowTitles.find((title) => RegExp(title[0]).test(clientClass));
 
     return {
-        icon: windowMatch ? windowMatch[1] : '󰣆',
+        icon: windowMatch ? `${windowMatch[1]} ` : '󰣆 ',
         label: windowMatch ? `${windowMatch[2]} :: ${clientTitle}` : `${capitalizeFirstLetter(hyprlandClient.class ?? 'Unknown')} :: ${clientTitle}`,
     };
 };

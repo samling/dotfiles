@@ -8,30 +8,6 @@
     margin-left: 0.4em;
 }
 
-.style2 {
-    .bar-button-icon.volume {
-        border-top-left-radius: 0.4em;
-        border-bottom-left-radius: 0.4em;
-        background: $primary_bg;
-        padding: 0.2em 0em;
-        padding-left: 0.4em;
-        padding-right: 0.4em;
-        color: $text;
-    }
-
-    .bar-button-label.volume {
-        padding: 0.2em 0em;
-        padding-right: 0.4em;
-        padding-left: 0.4em;
-        margin-left: 0em;
-    }
-    &.no-label.volume-container {
-        .bar-button-icon.volume {
-            border-top-right-radius: 0.4em;
-            border-bottom-right-radius: 0.4em;
-        }
-    }
-}
 .bar_item_box_visible.volume {
     border: 0em solid $text;
 }
