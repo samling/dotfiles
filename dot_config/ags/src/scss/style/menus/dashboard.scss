@@ -1,0 +1,486 @@
+.dashboard-menu-content * {
+    font-size: 1em;
+}
+
+.dashboard-content-items {
+    min-width: 28.5em;
+    background: $primary_bg;
+    border: 1px solid $primary_fg;
+    border-radius: 12px;
+    opacity: 1;
+
+    button {
+        border-radius: 12px;
+    }
+
+    .dashboard-card {
+        background: $primary_bg;
+        margin: 0em 1.3em;
+        border-radius: 12px;
+        padding: 1.5em;
+    }
+
+    .profile-picture-container {
+        margin-right: 0.65em;
+
+        .profile-picture {
+            min-width: 8.5em;
+            min-height: 8.5em;
+            border-radius: 12px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .profile-name {
+            font-size: 1.5em;
+            color: $text;
+            margin-top: 0.75em;
+        }
+    }
+
+    .power-menu-container {
+        margin-left: 0em;
+
+        .dashboard-button {
+            min-width: 3em;
+            min-height: 2.5em;
+
+            &:not(:last-child) {
+                margin-bottom: 0.75em;
+            }
+
+            label {
+                color: $text;
+                font-size: 1.7em;
+            }
+
+            &.shutdown {
+                background: $primary_bg;
+
+                label {
+                    font-size: 1.9em;
+                }
+            }
+
+            &.reboot {
+                background: $primary_bg;
+
+                label {
+                    font-size: 1.9em;
+                }
+            }
+
+            &.logout {
+                background: $primary_bg;
+            }
+
+            &.sleep {
+                background: $primary_bg;
+            }
+
+            &:hover {
+                &.shutdown {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.reboot {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.logout {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.sleep {
+                    background: transparentize($primary_bg, 0.5);
+                }
+            }
+        }
+    }
+
+    .shortcuts-container {
+        font-size: 1em;
+        border: 1px solid $primary_fg;
+
+        .dashboard-card {
+            padding: 1.5em;
+
+            border: 1px solid $primary_fg;
+            button {
+                min-height: 2.5em;
+                min-width: 2.5em;
+            }
+        }
+
+        .card-button-section-container.visible {
+            margin-right: 1.5em;
+            border: 1px solid $primary_fg;
+        }
+
+        // .top-button.paired {
+        //     margin-bottom: 1.5em;
+        // }
+
+        .container {
+            margin-top: 0em;
+
+            &.most-used {
+                margin-right: 0.65em;
+            }
+
+            &.utilities.paired {
+                margin-left: 0em;
+            }
+
+            button {
+                background: $primary_bg;
+                color: $text;
+                min-height: 3em;
+
+                label {
+                    font-size: 1.5em;
+                }
+
+                &.record.active {
+                    background: $red;
+
+                    &:hover {
+                        background: transparentize($red, 0.5);
+                    }
+                }
+
+                &:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+            }
+        }
+    }
+
+    .controls-container {
+        &.dashboard-card {
+            margin-top: 0em;
+        }
+
+        button {
+            padding: 0em;
+            min-height: 3em;
+            min-width: 3.8em;
+
+            label {
+                color: $text;
+                font-size: 1.6em;
+            }
+
+            &:not(:last-child) {
+                margin-right: 1em;
+            }
+
+            &.wifi {
+                background: $primary_bg;
+            }
+
+            &.bluetooth {
+                background: $primary_bg;
+            }
+
+            &.notifications {
+                background: $primary_bg;
+            }
+
+            &.playback {
+                background: $primary_bg;
+            }
+
+            &.input {
+                background: $primary_bg;
+            }
+
+            &.wifi:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.bluetooth:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.notifications:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.playback:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.input:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.disabled {
+                background: $primary_bg;
+
+                &.wifi:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.bluetooth:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.notifications:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.playback:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.input:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+            }
+        }
+    }
+
+    .screencapture-container {
+        &.dashboard-card {
+            margin-top: 0em;
+        }
+
+        button {
+            padding: 0em;
+            min-height: 1em;
+            min-width: 3.8em;
+
+            label {
+                color: $text;
+                font-size: 1.6em;
+            }
+
+            &:not(:last-child) {
+                margin-right: 1em;
+            }
+
+            &.wifi {
+                background: $primary_bg;
+            }
+
+            &.bluetooth {
+                background: $primary_bg;
+            }
+
+            &.notifications {
+                background: $primary_bg;
+            }
+
+            &.playback {
+                background: $primary_bg;
+            }
+
+            &.input {
+                background: $primary_bg;
+            }
+
+            &.wifi:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.bluetooth:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.notifications:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.playback:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.input:hover {
+                background: transparentize($primary_bg, 0.5);
+            }
+
+            &.disabled {
+                background: $primary_bg;
+
+                &.wifi:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.bluetooth:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.notifications:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.playback:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+
+                &.input:hover {
+                    background: transparentize($primary_bg, 0.5);
+                }
+            }
+        }
+    }
+
+
+    .directories-container {
+        &.dashboard-card {
+            margin-top: 0em;
+            padding-left: 1.5em;
+            padding-right: 0em;
+        }
+
+        .directory-link {
+            padding: 0.5em 0em;
+            min-width: 9em;
+
+            &:last-child {
+                margin-bottom: 0em;
+            }
+
+            label {
+                font-size: 1.3em;
+            }
+
+            &.right.top {
+                color: $text;
+            }
+
+            &.right.middle {
+                color: $text;
+            }
+
+            &.right.bottom {
+                color: $text;
+            }
+
+            &.left.top {
+                color: $text;
+            }
+
+            &.left.middle {
+                color: $text;
+            }
+
+            &.left.bottom {
+                color: $text;
+            }
+
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+    }
+
+    .stats-container {
+        margin-top: 0em;
+
+        .stat {
+            label {
+                margin-right: 0.75em;
+                font-size: 1.3em;
+                min-width: 1.65em;
+            }
+
+            &.cpu label {
+                color: $text;
+            }
+
+            &.ram label {
+                color: $text;
+            }
+
+            &.gpu label {
+                color: $text;
+            }
+
+            &.storage label {
+                color: $text;
+            }
+
+            .stats-bar {
+                levelbar * {
+                    transition: 200ms;
+                }
+
+                trough {
+                    min-height: 1.05em;
+                }
+
+                block {
+                    border-radius: 12px;
+
+                    &.empty {
+                        background: $primary_bg;
+                    }
+
+                    &.filled {
+                        padding-left: 0.85em;
+                    }
+                }
+            }
+
+            &.cpu .stats-bar block.filled {
+                background: $primary_bg;
+            }
+
+            &.ram .stats-bar block.filled {
+                background: $primary_bg;
+            }
+
+            &.gpu .stats-bar block.filled {
+                background: $primary_bg;
+            }
+
+            &.storage .stats-bar block.filled {
+                background: $primary_bg;
+            }
+        }
+
+        .stat-value {
+            margin-bottom: 0.5em;
+            font-size: 0.9em;
+
+            &.cpu {
+                color: $text;
+            }
+
+            &.ram {
+                color: $text;
+            }
+
+            &.gpu {
+                color: $text;
+            }
+
+            &.storage {
+                color: $text;
+            }
+        }
+    }
+}
+
+.dashboard-content-items > :not(:first-child):not(:last-child) {
+    margin-top: 0;
+    margin-bottom: 0.65em;
+}
+
+.dashboard-content-items > :first-child {
+    margin-top: 1.3em;
+    margin-bottom: 0.65em;
+}
+
+.dashboard-content-items > :last-child {
+    margin-top: 0;
+    margin-bottom: 1.3em;
+}
+
+.dashboard-content-items > :only-child {
+    margin-top: 1.3em;
+    margin-bottom: 1.3em;
+}

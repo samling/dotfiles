@@ -7,6 +7,7 @@ import { Clock } from '../../components/bar/modules/clock/index';
 import { Volume } from '../../components/bar/modules/volume/index';
 import { Updates } from '../../components/bar/modules/updates/index';
 import { ClientTitle } from '../../components/bar/modules/window_title/index';
+import { DashboardLabel } from './modules/dashboard/index';
 export {
     Workspaces,
     Media,
@@ -17,4 +18,5 @@ export {
     Volume,
     Updates,
     ClientTitle,
+    DashboardLabel,
 };
