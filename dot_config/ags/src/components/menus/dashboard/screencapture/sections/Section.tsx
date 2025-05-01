@@ -53,7 +53,7 @@ export const LeftShortcuts = (): JSX.Element => {
         <box>
             {Variable.derive(leftBindings, () => {
                 return (
-                    <box className={'container dashboard-card'} vertical>
+                    <box className={'container screenshot dashboard-card'} vertical>
                         <Header type={'screenshot'} label={'Capture'} />
                         <box>
                         <LeftColumn>
@@ -77,7 +77,7 @@ export const RightShortcuts = (): JSX.Element => {
         <box>
             {Variable.derive(rightBindings, () => {
                 return (
-                    <box className={`container dashboard-card`} vertical>
+                    <box className={`container recording dashboard-card`} vertical>
                         <Header type={'recording'} label={'Record'} />
                         <box>
                         <LeftColumn>

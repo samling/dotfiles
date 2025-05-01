@@ -6,7 +6,7 @@
     margin-top: 0em;
     min-width: 27em;
     min-height: 6em;
-    background: $primary_bg;
+    background: $surface0;
     border: 0em solid $border-color-dark;
     border-radius: 0.4em;
     opacity: 1;
@@ -15,7 +15,7 @@
 .calendar-menu-item-container {
     border-radius: 0.4em;
     margin-bottom: 1.35em;
-    background: $primary_bg;
+    background: $surface0;
 }
 
 .calendar-content-items {
@@ -38,7 +38,7 @@
     }
 
     &.header {
-        background-color: transparent;
+        background-color: $surface0;
         color: $text;
     }
 
@@ -61,7 +61,7 @@
     }
 
     font-size: 1.1em;
-    padding: 0.35em 0.35em;
+    padding: 0.5em 0.5em;
 }
 
 .clock-content-items {

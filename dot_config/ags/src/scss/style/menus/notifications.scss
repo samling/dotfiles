@@ -6,8 +6,8 @@
     margin: 0em;
     min-width: 30.6em;
     min-height: 50em;
-    background: $primary_bg;
-    border: 0px solid $mauve;
+    background: $surface0;
+    border: 0px solid $surface0;
     margin: 0px;
     border-radius: 10px;
 
@@ -22,7 +22,7 @@
     }
 
     .notification-menu-controls {
-        background: $primary_bg;
+        background: $surface0;
         margin: 1em 1em;
         margin-bottom: 0.5em;
         border-radius: 10px;
@@ -30,7 +30,7 @@
     }
 
     .notification-card.menu {
-        background: $primary_bg;
+        background: transparentize($base, 0.2);
         min-width: 0em;
         min-height: 0em;
         font-size: 16px;
@@ -62,7 +62,7 @@
 
     .menu-separator.notification-controls {
         min-width: 0.1em;
-        background-color: $primary_bg;
+        background-color: $surface0;
         margin: 0em 1em;
     }
 
@@ -71,10 +71,10 @@
             font-size: 16px;
         }
 
-        background-color: $surface0;
+        background-color: $surface1;
 
         &:checked {
-            background: $surface2;
+            background: $overlay0;
         }
 
         slider {
@@ -83,27 +83,28 @@
 
         &:hover {
             trough {
-                background: transparentize($mauve, 0.5);
+                background: $overlay1;
             }
 
             slider {
-                background: transparentize($mauve, 0.5);
+                background: $overlay2;
             }
         }
 
         &:active {
-            background: $surface2;
+            background: $overlay0;
         }
     }
 
     .clear-notifications-button {
         margin-right: 0.3em;
 
+        label:not(.removing) {
+            color: $overlay1;
+        }
+
         &:hover label:not(.removing) {
-            color: transparentize(
-                $primary_fg,
-                0.3
-            );
+            color: $overlay0;
         }
     }
 

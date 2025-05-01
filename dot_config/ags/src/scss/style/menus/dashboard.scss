@@ -2,10 +2,14 @@
     font-size: 1em;
 }
 
+.dashboard-content-container {
+    padding: 0em;
+}
+
 .dashboard-content-items {
-    min-width: 28.5em;
+    min-width: 24em;
     background: $primary_bg;
-    border: 0px solid $primary_fg;
+    border: 0px solid $surface0;
     border-radius: 12px;
     opacity: 1;
 
@@ -13,9 +17,17 @@
         border-radius: 12px;
     }
 
+    .container.screenshot.dashboard-card {
+        margin-right: 4px;
+    }
+
+    .container.recording.dashboard-card {
+        margin-left: 4px;
+    }
+
     .dashboard-card {
-        background: $primary_bg;
-        margin: 0em 1.3em;
+        background: $surface0;
+        margin: 0em;
         border-radius: 12px;
         padding: 0em;
     }
@@ -25,7 +37,7 @@
         padding: 0em;
 
         .screencapture-card {
-            padding: 1.5em;
+            // padding: 1.5em;
 
             button {
                 min-height: 2.5em;
@@ -33,26 +45,11 @@
             }
         }
 
-        // .card-button-section-container.visible {
-        //     margin-right: 1.5em;
-        // }
-
-        .top-button.paired {
-            margin-bottom: 1.5em;
-        }
-
         .container {
-            margin-top: 0em;
             border: 0px solid $primary_fg;
             background: $surface0;
             padding: 0.5em;
-            // &.most-used {
-            //     margin-right: 0.65em;
-            // }
-
-            &.utilities.paired {
-                margin-left: 0em;
-            }
+            margin: 0px 0px;
 
             button {
                 background: transparent;
@@ -82,22 +79,22 @@
     }
 }
 
-.dashboard-content-items > :not(:first-child):not(:last-child) {
-    margin-top: 0;
-    margin-bottom: 0.65em;
-}
+// .dashboard-content-items > :not(:first-child):not(:last-child) {
+//     margin-top: 0;
+//     margin-bottom: 0.65em;
+// }
 
-.dashboard-content-items > :first-child {
-    margin-top: 1.3em;
-    margin-bottom: 0.65em;
-}
+// .dashboard-content-items > :first-child {
+//     margin-top: 1.3em;
+//     margin-bottom: 0.65em;
+// }
 
-.dashboard-content-items > :last-child {
-    margin-top: 0;
-    margin-bottom: 1.3em;
-}
+// .dashboard-content-items > :last-child {
+//     margin-top: 0;
+//     margin-bottom: 1.3em;
+// }
 
-.dashboard-content-items > :only-child {
-    margin-top: 1.3em;
-    margin-bottom: 1.3em;
-}
+// .dashboard-content-items > :only-child {
+//     margin-top: 1.3em;
+//     margin-bottom: 1.3em;
+// }
