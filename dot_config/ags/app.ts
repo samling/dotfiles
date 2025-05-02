@@ -6,7 +6,7 @@ import { Bar } from "./src/components/bar/index";
 import AstalHyprland from "gi://AstalHyprland?version=0.1";
 import { forMonitors } from "./src/lib/utils";
 import { GdkMonitorMapper } from "./src/components/bar/utils/GdkMonitorMapper";
-import { DropdownMenus } from "./src/components/menus/exports";
+import { DropdownMenus, StandardWindows } from "./src/components/menus/exports";
 import { handleRealization } from "./src/components/menus/shared/dropdown/helpers"
 import { isDropdownMenu } from 'src/lib/options';
 import MediaMenu from 'src/components/menus/media';
@@ -23,6 +23,10 @@ if (primaryMonitor) {
 }
 
 const initializeMenus = (): void => {
+    StandardWindows.forEach((window) => {
+        return window();
+    });
+
     DropdownMenus.forEach((window) => {
         return window();
     });
