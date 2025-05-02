@@ -10,6 +10,7 @@ import { ClientTitle } from '../../components/bar/modules/window_title/index';
 import { DashboardLabel } from './modules/dashboard/index';
 import { Power } from './modules/power/index';
 import { Bluetooth } from './modules/bluetooth/index';
+import { Network } from './modules/network/index';
 export {
     Workspaces,
     Media,
@@ -23,4 +24,5 @@ export {
     DashboardLabel,
     Power,
     Bluetooth,
+    Network,
 };

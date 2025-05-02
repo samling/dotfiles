@@ -13,6 +13,7 @@ import {
     ClientTitle,
     DashboardLabel,
     Bluetooth,
+    Network,
 } from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
 import { bind, Variable } from "astal";
@@ -63,6 +64,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                     endWidget={
                         <box className={'box-right'} halign={Gtk.Align.END}>
                             {WidgetContainer(Volume())}
+                            {WidgetContainer(Network())}
                             {WidgetContainer(Bluetooth())}
                             {WidgetContainer(BatteryLabel())}
                             {WidgetContainer(SysTray())}
