@@ -137,6 +137,26 @@ export function normalizePath(path: string): string {
 }
 
 /**
+ * Escape special characters for GTK markup.
+ *
+ * This function takes a string and escapes special characters for use in GTK markup.
+ * It replaces '&', '<', '>', '"', and ''' with their corresponding HTML entities.
+ *
+ * @param text The string to escape.
+ *
+ * @returns The escaped string.
+ */
+export function escapeMarkup(text: string): string {
+    if (!text) return "";
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+};
+
+/**
  * Checks if the provided filepath is a valid image.
  *
  * This function attempts to load an image from the specified filepath using GdkPixbuf.
@@ -158,6 +178,7 @@ export function isAnImage(imgFilePath: string): boolean {
         return false;
     }
 }
+
 /**
  * Handles errors by throwing a new Error with a message.
  *

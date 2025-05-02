@@ -7,6 +7,7 @@ import DashboardMenu from './dashboard/index.js';
 import PowerDropdownMenu from './powerDropdown/index.js';
 import PowerMenu from './power/index.js';
 import Verification from './power/verification.js';
+import BluetoothMenu from './bluetooth/index.js';
 export const DropdownMenus = [
     MediaMenu,
     NotificationsMenu,
@@ -15,6 +16,7 @@ export const DropdownMenus = [
     EnergyMenu,
     DashboardMenu,
     PowerDropdownMenu,
+    BluetoothMenu,
 ];
 
 export const StandardWindows = [PowerMenu, Verification];

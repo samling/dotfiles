@@ -1,0 +1,51 @@
+.bar-button-icon.bluetooth {
+    font-size: 1.15em;
+    color: $text;
+}
+
+.bar-button-label.bluetooth {
+    color: $text;
+    margin-left: 0.25em;
+}
+
+.bluetooth-disabled-menu {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: $surface2;
+    margin: 6rem 0rem;
+}
+
+.menu-button-isactive {
+    color: $text;
+}
+
+.style2 {
+    .bar-button-icon.bluetooth {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background: $surface0;
+        padding: 0.25em 0em;
+        padding-left: 0.5em;
+        padding-right: 0.25em;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        color: $text;
+    }
+
+    .bar-button-label.bluetooth {
+        padding: 0.25em 0em;
+        padding-right: 0.5em;
+        padding-left: 0.25em;
+        margin-left: 0em;
+    }
+    &.no-label.bluetooth-container {
+        .bar-button-icon.bluetooth {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    }
+}
+
+.bar_item_box_visible.bluetooth {
+    border: 0px solid $border-color-light;
+}

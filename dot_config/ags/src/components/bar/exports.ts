@@ -9,6 +9,7 @@ import { Updates } from '../../components/bar/modules/updates/index';
 import { ClientTitle } from '../../components/bar/modules/window_title/index';
 import { DashboardLabel } from './modules/dashboard/index';
 import { Power } from './modules/power/index';
+import { Bluetooth } from './modules/bluetooth/index';
 export {
     Workspaces,
     Media,
@@ -21,4 +22,5 @@ export {
     ClientTitle,
     DashboardLabel,
     Power,
+    Bluetooth,
 };

@@ -9,10 +9,10 @@
     @import './menu.scss';
 
     * {
-        font-size: 16px;
+        font-size: 1em;
     }
 
-    background: $primary_bg;
+    background: $surface0;
 
     .menu-dropdown-label.audio {
         color: $primary-color;

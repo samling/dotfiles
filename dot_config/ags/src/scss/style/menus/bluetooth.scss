@@ -1,0 +1,181 @@
+.menu-items-container.bluetooth * {
+    font-size: 1em;
+}
+
+@import './menu.scss';
+
+.menu-items.bluetooth {
+    background: $surface0;
+    border-color: $border-color-light;
+    opacity: 1;
+    font-size: 1em;
+}
+
+.menu-items-container.bluetooth {
+    min-width: 24em;
+
+    font-size: 1em;
+
+    .menu-section-container {
+        margin: 1em 0em;
+    }
+
+    .menu-label-container {
+        background: $surface0;
+
+        .menu-label {
+            color: $text;
+        }
+
+        .controls-container {
+            margin: 0.5em 1em;
+        }
+    }
+
+    .menu-items-section {
+        background: $surface0;
+        min-height: 20em;
+        font-size: 1em;
+    }
+
+    button {
+        margin-right: 0.5em;
+
+        &.search {
+            image {
+                color: $text;
+            }
+
+            &:hover image {
+                color: $text;
+            }
+
+            font-size: 1em;
+            margin-bottom: 0em;
+        }
+
+        &:hover {
+            color: $text;
+        }
+    }
+
+    .menu-icon-button.bluetooth {
+        color: $text;
+
+        &:hover {
+            color: $text;
+        }
+    }
+
+    .bluetooth-element-item {
+        margin-bottom: 0.4em;
+
+        &:hover {
+            .menu-button-icon,
+            .menu-button-name {
+                color: $text;
+            }
+        }
+
+        image {
+            margin-right: 0em;
+            margin-top: 0em;
+            min-height: 1em;
+            min-width: 1em;
+
+            &.active {
+                color: $text;
+            }
+        }
+
+        label {
+            color: $text;
+            font-size: 1em;
+        }
+
+        .menu-button-icon {
+            font-size: 1.5em;
+            color: $text;
+
+            &.active {
+                color: $text;
+            }
+        }
+
+        .connection-status {
+            font-size: 1em;
+            margin-left: 0.6rem;
+            color: $text;
+            opacity: 0.4;
+        }
+        .battery {
+            opacity: 0.6;
+        }
+    }
+
+    spinner {
+        min-height: 1.3em;
+        min-width: 1.3em;
+        color: $text;
+    }
+
+    .menu-separator {
+        margin: 0em 1em;
+    }
+
+    .menu-switch.bluetooth {
+        background-color: $surface0;
+
+        &:checked {
+            background: $surface0;
+        }
+
+        slider {
+            background-color: $surface0;
+        }
+
+        &:hover {
+            trough {
+                background: $surface0;
+            }
+
+            slider {
+                background: $surface0;
+            }
+        }
+
+        &:active {
+            background: $surface0;
+        }
+    }
+
+    .no-bluetooth-devices.dim,
+    .search-bluetooth-label.dim,
+    .bluetooth-disabled.dim {
+        &:last-child {
+            margin-bottom: 2em;
+        }
+
+        color: $text;
+        opacity: 0.5;
+    }
+    .menu-separator.bluetooth-battery {
+        margin: 0.2em 0.5em;
+        min-width: 0.1em;
+    }
+    .connection-status.txt-icon {
+        margin-left: 0.2em;
+    }
+
+    .bluetooth-controls {
+        margin-right: 0.5em;
+    }
+
+    .menu-scroller.bluetooth {
+        min-height: 18em;
+
+        scrollbar contents trough slider {
+            background: $surface0;
+        }
+    }
+}
