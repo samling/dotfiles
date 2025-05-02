@@ -41,7 +41,10 @@ exec-once = uwsm app -- clipse -listen
 #exec-once = uwsm app -- wl-paste --type text --watch cliphist store # Stores only text data
 #exec-once = uwsm app -- wl-paste --type image --watch cliphist store # Stores only image data
 #=== copyq
-#exec-once = QT_QPA_PLATFORM=xcb uwsm app -- copyq --start-server
+# For SOME reason having copyq running seems to fix odd issues
+# with other clipboard managers hanging when being written to.
+# So let's just run it for now.
+exec-once = QT_QPA_PLATFORM=xcb uwsm app -- copyq --start-server
 
 # Enable dark mode
 # NOTE: Handled by nwg-look instead

@@ -70,13 +70,13 @@ set -g lock-command "cmatrix -s -a"
 bind -T copy-mode-vi v send -X begin-selection
 
 # set -s copy-command "xclip -i -f -selection primary | xclip -i -selection clipboard"
-set -s copy-command 'xsel -i'
+#set -s copy-command 'xsel -i'
 #bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xsel -bi"
 #bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xsel -bi"
 #bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xsel -bi"
-bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy -n"
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "wl-copy -n"
-bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "wl-copy -n"
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "wl-copy"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "wl-copy"
 
 # Set history limit
 set -g history-limit 10000
