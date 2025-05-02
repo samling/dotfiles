@@ -1,0 +1,18 @@
+// Tailscale module styling
+
+// Styling for the tailscale module in the bar
+.tailscale {
+  .module-icon {
+    margin-right: 4px;
+  }
+  
+  // Active/connected state
+  &.connected {
+    color: $green;
+  }
+  
+  // Inactive/disconnected state
+  &.stopped {
+    color: $red;
+  }
+}

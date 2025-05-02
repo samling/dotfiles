@@ -107,6 +107,12 @@ export default {
     recorder: {
         recording: 'media-record-symbolic',
     },
+    network: {
+        vpn: {
+            on: 'network-vpn-symbolic',
+            off: 'network-vpn-disconnected-symbolic',
+        },
+    },
     notifications: {
         noisy: 'org.gnome.Settings-notifications-symbolic',
         silent: 'notifications-disabled-symbolic',

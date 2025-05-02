@@ -32,7 +32,8 @@ export type BarModule =
     | 'hypridle'
     | 'hyprsunset'
     | 'updates'
-    | 'cava';
+    | 'cava'
+    | 'tailscale';
 
 export type BarLayout = {
     left: BarModule[];

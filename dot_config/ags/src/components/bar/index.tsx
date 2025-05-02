@@ -15,6 +15,7 @@ import {
     Bluetooth,
     // Network,
     Netstat,
+    Tailscale,
 } from "./exports";
 import { WidgetContainer } from "./shared/WidgetContainer";
 import { bind, Variable } from "astal";
@@ -67,6 +68,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                             {/* {WidgetContainer(Network())} */}
                             {WidgetContainer(Netstat())}
                             {WidgetContainer(Bluetooth())}
+                            {WidgetContainer(Tailscale())}
                             {WidgetContainer(Volume())}
                             {WidgetContainer(BatteryLabel())}
                             {WidgetContainer(SysTray())}

@@ -11,6 +11,7 @@ import { DashboardLabel } from './modules/dashboard/index';
 import { Power } from './modules/power/index';
 import { Bluetooth } from './modules/bluetooth/index';
 // import { Network } from './modules/network/index';
+import { Tailscale } from './modules/tailscale/index';
 import { Netstat } from './modules/netstat/index';
 export {
     Workspaces,
@@ -27,4 +28,5 @@ export {
     Bluetooth,
     // Network,
     Netstat,
+    Tailscale,
 };

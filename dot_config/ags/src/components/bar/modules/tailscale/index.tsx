@@ -1,83 +1,133 @@
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import { computeNetwork } from './helpers';
-import { BarBoxChild, NetstatLabelType, RateUnit } from 'src/lib/types/bar';
-import { NetworkResourceData } from 'src/lib/types/customModules/network';
+import { BarBoxChild, NetstatLabelType } from 'src/lib/types/bar';
+import { TailscaleIcon } from 'src/lib/types/vpn';
 import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar';
-import { GET_DEFAULT_NETSTAT_DATA } from 'src/lib/types/defaults/netstat';
-import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { Astal } from 'astal/gtk3';
-
-const networkService = AstalNetwork.get_default();
+import { BashPoller } from 'src/lib/poller/BashPoller';
+import icons from 'src/lib/icons/icons2';
 
 const label = Variable(true);
 const labelType = Variable<NetstatLabelType>(NETWORK_LABEL_TYPES[0]);
 const networkInterface = Variable('');
-const rateUnit = Variable<RateUnit>('auto');
 const pollingInterval = Variable(2000);
-const dynamicIcon = Variable(false);
-const icon = Variable('󰖟');
-const networkInLabel = Variable('↓');
-const networkOutLabel = Variable('↑');
-const round = Variable(true);
-const leftClick = Variable('');
+const leftClick = Variable(`${SRC_DIR}/scripts/tailscale.sh --toggle`)
 const rightClick = Variable('');
 const middleClick = Variable('');
 
-export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DATA(rateUnit.get()));
+const tailscaleStatus: Variable<string> = Variable('disconnected');
+const tailscaleTooltip: Variable<string> = Variable('');
+const statusCommand = Variable(`${SRC_DIR}/scripts/tailscale.sh --status`);
+const postInputUpdater = Variable(true);
 
-const netstatPoller = new FunctionPoller<
-    NetworkResourceData,
-    [round: Variable<boolean>, interfaceNameVar: Variable<string>, dataType: Variable<RateUnit>]
->(
-    networkUsage,
-    [bind(rateUnit), bind(networkInterface), bind(round)],
+interface PeerStatus {
+    online: boolean;
+}
+
+interface TooltipData {
+    tooltip: {
+        [peerName: string]: PeerStatus;
+    };
+    ip?: string;
+}
+
+const processTailscaleStatus = (status: string): string => {
+    const statusJson = JSON.parse(status);
+    const connectionStatus = statusJson.class;
+    switch (connectionStatus) {
+        case 'connected':
+            return 'on';
+        case 'stopped':
+            return 'off';
+        default:
+            return 'off';
+    }
+};
+
+const processTailscaleTooltip = (tooltip: string): string => {
+    try {
+        const statusJson = JSON.parse(tooltip) as TooltipData;
+        const peerData = statusJson.tooltip;
+        const ipAddress = statusJson.ip || '';
+        
+        if (!peerData || typeof peerData !== 'object') {
+            return 'No peers available';
+        }
+        
+        // Separate peers by online status
+        const onlinePeers: string[] = [];
+        const offlinePeers: string[] = [];
+        
+        Object.entries(peerData).forEach(([name, status]) => {
+            if (status.online) {
+                onlinePeers.push(name);
+            } else {
+                offlinePeers.push(name);
+            }
+        });
+        
+        // Sort peer names alphabetically
+        onlinePeers.sort();
+        offlinePeers.sort();
+        
+        // Create a formatted tooltip that shows online and offline peers separately
+        let formattedTooltip = '';
+        
+        if (ipAddress) {
+            formattedTooltip += `IP: ${ipAddress}\n\n`;
+        }
+        
+        if (onlinePeers.length > 0) {
+            formattedTooltip += 'Online:\n' + onlinePeers.join('\n') + '\n\n';
+        }
+        
+        if (offlinePeers.length > 0) {
+            formattedTooltip += 'Offline:\n' + offlinePeers.join('\n');
+        }
+        
+        return formattedTooltip || 'No peers connected';
+    } catch (e) {
+        console.error('Failed to parse peer data:', e);
+        return 'Error parsing peer data';
+    }
+}
+
+const tailscalePoller = new BashPoller<string, []>(
+    tailscaleStatus,
+    [bind(statusCommand), bind(postInputUpdater)],
     bind(pollingInterval),
-    computeNetwork,
-    round,
-    networkInterface,
-    rateUnit,
+    statusCommand.get(),
+    processTailscaleStatus,
 );
 
-netstatPoller.initialize('netstat');
+const tailscaleTooltipPoller = new BashPoller<string, []>(
+    tailscaleTooltip,
+    [bind(statusCommand), bind(postInputUpdater)],
+    bind(pollingInterval),
+    statusCommand.get(),
+    processTailscaleTooltip,
+);
 
-export const Netstat = (): BarBoxChild => {
-    const renderNetworkLabel = (lblType: NetstatLabelType, networkService: NetworkResourceData): string => {
-        switch (lblType) {
-            case 'in':
-                return `${networkInLabel.get()} ${networkService.in}`;
-            case 'out':
-                return `${networkOutLabel.get()} ${networkService.out}`;
-            default:
-                return `${networkInLabel.get()} ${networkService.in} ${networkOutLabel.get()} ${networkService.out}`;
-        }
+tailscalePoller.initialize('tailscale');
+tailscaleTooltipPoller.initialize('tailscale');
+
+export const Tailscale = (): BarBoxChild => {
+    const renderTailscaleIcon = (tailscaleStatus: string): string => {
+        const tailscaleIcon = icons.network.vpn[tailscaleStatus as TailscaleIcon];
+        return `${tailscaleIcon}`;
     };
 
     const iconBinding = Variable.derive(
-        [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
-        (pmry, wfi, wrd) => {
-            if (pmry === AstalNetwork.Primary.WIRED) {
-                return wrd?.icon_name;
-            }
-            return wfi?.icon_name;
-        },
+        [bind(tailscaleStatus)],
+        (tailscaleStatus: string) => renderTailscaleIcon(tailscaleStatus),
     );
 
-    const labelBinding = Variable.derive(
-        [bind(networkUsage), bind(labelType)],
-        (networkService: NetworkResourceData, lblTyp: NetstatLabelType) => renderNetworkLabel(lblTyp, networkService),
-    );
-
-    const netstatModule = Module({
-        useTextIcon: bind(dynamicIcon).as((useDynamicIcon) => !useDynamicIcon),
+    const tailscaleModule = Module({
         icon: iconBinding(),
-        textIcon: bind(icon),
-        label: labelBinding(),
-        tooltipText: bind(labelType).as((lblTyp) => { // TODO: bind to VPN connected/disconnected
-            return lblTyp === 'full' ? 'Ingress / Egress' : lblTyp === 'in' ? 'Ingress' : 'Egress';
-        }),
+        label: bind(tailscaleStatus),
+        tooltipText: bind(tailscaleTooltip),
         boxClass: 'tailscale',
         showLabelBinding: bind(label),
         props: {
@@ -92,40 +142,20 @@ export const Netstat = (): BarBoxChild => {
                     onMiddleClick: {
                         cmd: middleClick,
                     },
-                    onScrollUp: {
-                        // fn: () => {
-                        //     labelType.set(
-                        //         NETWORK_LABEL_TYPES[
-                        //             (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) % NETWORK_LABEL_TYPES.length
-                        //         ] as NetstatLabelType,
-                        //     );
-                        // },
-                    },
-                    onScrollDown: {
-                    //     fn: () => {
-                    //         labelType.set(
-                    //             NETWORK_LABEL_TYPES[
-                    //                 (NETWORK_LABEL_TYPES.indexOf(labelType.get()) - 1 + NETWORK_LABEL_TYPES.length) %
-                    //                     NETWORK_LABEL_TYPES.length
-                    //             ] as NetstatLabelType,
-                    //         );
-                    //     },
-                    },
-                });
+                    onScrollUp: {},
+                    onScrollDown: {},
+                },
+                postInputUpdater,
+            );
             },
             onDestroy: () => {
-                labelBinding.drop();
+                // labelBinding.drop();
+                tailscaleStatus.drop();
                 iconBinding.drop();
                 label.drop();
                 labelType.drop();
                 networkInterface.drop();
-                rateUnit.drop();
                 pollingInterval.drop();
-                dynamicIcon.drop();
-                icon.drop();
-                networkInLabel.drop();
-                networkOutLabel.drop();
-                round.drop();
                 leftClick.drop();
                 rightClick.drop();
                 middleClick.drop();
@@ -133,5 +163,5 @@ export const Netstat = (): BarBoxChild => {
         },
     });
 
-    return netstatModule;
+    return tailscaleModule;
 };

@@ -8,7 +8,7 @@ import { Astal } from 'astal/gtk3';
 
 const bluetoothService = AstalBluetooth.get_default();
 
-const label = Variable<boolean>(true);
+const label = Variable<boolean>(false);
 const rightClick = Variable<string>('');
 const middleClick = Variable<string>('');
 const scrollDown = Variable<string>('');
