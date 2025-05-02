@@ -112,6 +112,8 @@ const SysTray = (): BarBoxChild => {
             onDestroy={() => {
                 isVis.drop();
                 componentChildren.drop();
+                ignored.drop();
+                customIcons.drop();
             }}
         >
             {componentChildren()}

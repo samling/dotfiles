@@ -75,12 +75,44 @@ export const Netstat = (): BarBoxChild => {
         icon: iconBinding(),
         textIcon: bind(icon),
         label: labelBinding(),
-        tooltipText: bind(labelType).as((lblTyp) => {
+        tooltipText: bind(labelType).as((lblTyp) => { // TODO: bind to VPN connected/disconnected
             return lblTyp === 'full' ? 'Ingress / Egress' : lblTyp === 'in' ? 'Ingress' : 'Egress';
         }),
-        boxClass: 'netstat',
+        boxClass: 'tailscale',
         showLabelBinding: bind(label),
         props: {
+            setup: (self: Astal.Button) => {
+                inputHandler(self, {
+                    onPrimaryClick: {
+                        cmd: leftClick,
+                    },
+                    onSecondaryClick: {
+                        cmd: rightClick,
+                    },
+                    onMiddleClick: {
+                        cmd: middleClick,
+                    },
+                    onScrollUp: {
+                        // fn: () => {
+                        //     labelType.set(
+                        //         NETWORK_LABEL_TYPES[
+                        //             (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) % NETWORK_LABEL_TYPES.length
+                        //         ] as NetstatLabelType,
+                        //     );
+                        // },
+                    },
+                    onScrollDown: {
+                    //     fn: () => {
+                    //         labelType.set(
+                    //             NETWORK_LABEL_TYPES[
+                    //                 (NETWORK_LABEL_TYPES.indexOf(labelType.get()) - 1 + NETWORK_LABEL_TYPES.length) %
+                    //                     NETWORK_LABEL_TYPES.length
+                    //             ] as NetstatLabelType,
+                    //         );
+                    //     },
+                    },
+                });
+            },
             onDestroy: () => {
                 labelBinding.drop();
                 iconBinding.drop();
@@ -97,38 +129,6 @@ export const Netstat = (): BarBoxChild => {
                 leftClick.drop();
                 rightClick.drop();
                 middleClick.drop();
-            },
-            setup: (self: Astal.Button) => {
-                inputHandler(self, {
-                    onPrimaryClick: {
-                        cmd: leftClick,
-                    },
-                    onSecondaryClick: {
-                        cmd: rightClick,
-                    },
-                    onMiddleClick: {
-                        cmd: middleClick,
-                    },
-                    onScrollUp: {
-                        fn: () => {
-                            labelType.set(
-                                NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) % NETWORK_LABEL_TYPES.length
-                                ] as NetstatLabelType,
-                            );
-                        },
-                    },
-                    onScrollDown: {
-                        fn: () => {
-                            labelType.set(
-                                NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) - 1 + NETWORK_LABEL_TYPES.length) %
-                                        NETWORK_LABEL_TYPES.length
-                                ] as NetstatLabelType,
-                            );
-                        },
-                    },
-                });
             },
         },
     });

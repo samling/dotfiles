@@ -79,6 +79,20 @@ const Media = (): BarBoxChild => {
         isVis,
         boxClass: 'media',
         props: {
+            onDestroy: () => {
+                songIcon.drop();
+                mediaLabel.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+                truncation.drop();
+                truncation_size.drop();
+                show_label.drop();
+                show_active_only.drop();
+                format.drop();
+                isVis.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 

@@ -69,6 +69,20 @@ const Clock = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'clock',
         props: {
+            onDestroy: () => {
+                componentClassName.drop();
+                componentChildren.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+                scrollSpeed.drop();
+                style.drop();
+                time.drop();
+                icon.drop();
+                showIcon.drop();
+                showTime.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 

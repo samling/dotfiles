@@ -101,6 +101,15 @@ const Network = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'network',
         props: {
+            onDestroy: () => {
+                iconBinding.drop();
+                networkLabel.drop();
+                componentClassName.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 

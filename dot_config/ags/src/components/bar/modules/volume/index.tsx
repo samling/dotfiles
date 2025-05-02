@@ -79,6 +79,17 @@ const Volume = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'volume',
         props: {
+            onDestroy: () => {
+                componentTooltip.drop();
+                componentClassName.drop();
+                componentChildren.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+                scrollSpeed.drop();
+                showLabel.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 

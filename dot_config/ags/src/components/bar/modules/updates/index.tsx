@@ -79,6 +79,23 @@ export const Updates = (): BarBoxChild => {
         label: bind(pendingUpdates),
         showLabelBinding: bind(label),
         props: {
+            onDestroy: () => {
+                icon.pending.drop();
+                icon.updated.drop();
+                leftClick.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+                pendingUpdates.drop();
+                pendingUpdatesTooltip.drop();
+                postInputUpdater.drop();
+                autoHide.drop();
+                pollingInterval.drop();
+                updatesIcon.drop();
+                isVis.drop();
+                label.drop();
+            },
             setup: (self: Astal.Button) => {
                 inputHandler(
                     self,

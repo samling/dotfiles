@@ -99,6 +99,22 @@ const ClientTitle = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'windowtitle',
         props: {
+            onDestroy: () => {
+                custom_title.drop();
+                class_name.drop();
+                label.drop();
+                icon.drop();
+                truncation.drop();
+                truncation_size.drop();
+                clientTitle.drop();
+                componentClassName.drop();
+                componentChildren.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+                scrollSpeed.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 

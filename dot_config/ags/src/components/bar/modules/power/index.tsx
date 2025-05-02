@@ -18,6 +18,14 @@ export const Power = (): BarBoxChild => {
         showLabelBinding: Variable(false),
         boxClass: 'powermodule',
         props: {
+            onDestroy: () => {
+                icon.drop();
+                leftClick.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+            },
             setup: (self: Astal.Button) => {
                 inputHandler(self, {
                     onPrimaryClick: {

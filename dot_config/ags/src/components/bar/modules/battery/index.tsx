@@ -110,6 +110,19 @@ const BatteryLabel = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'battery',
         props: {
+            onDestroy: () => {
+                batIcon.drop();
+                energyRate.drop();
+                componentClassName.drop();
+                componentTooltip.drop();
+                componentChildren.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+                hideLabelWhenFull.drop();
+                show_label.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 

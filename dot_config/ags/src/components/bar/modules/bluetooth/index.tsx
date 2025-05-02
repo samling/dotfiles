@@ -62,6 +62,16 @@ const Bluetooth = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'bluetooth',
         props: {
+            onDestroy: () => {
+                componentClassName.drop();
+                componentBinding.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+                scrollSpeed.drop();
+                label.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 
@@ -100,10 +110,6 @@ const Bluetooth = (): BarBoxChild => {
                         disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
                     },
                 );
-            },
-            onDestroy: (): void => {
-                componentClassName.drop();
-                componentBinding.drop();
             },
         },
     };

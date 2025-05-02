@@ -37,6 +37,14 @@ const DashboardLabel = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'dashboard',
         props: {
+            onDestroy: () => {
+                componentClassName.drop();
+                componentChildren.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 

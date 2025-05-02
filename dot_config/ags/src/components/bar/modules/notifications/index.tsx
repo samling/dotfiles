@@ -85,6 +85,13 @@ export const Notifications = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'notifications',
         props: {
+            onDestroy: () => {
+                show_total.drop();
+                rightClick.drop();
+                middleClick.drop();
+                scrollUp.drop();
+                scrollDown.drop();
+            },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];
 
