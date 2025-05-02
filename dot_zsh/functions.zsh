@@ -84,3 +84,13 @@ nvim-maybe-profile() {
     nvim "$@"
   fi
 }
+
+function rgv () {
+	rg --color=always --line-number --no-heading --smart-case "${*:-}" |
+        fzf --ansi --height 80% --tmux 100%,80% \
+            --color "hl:-1:underline,hl+:-1:underline:reverse" \
+            --delimiter : \
+            --preview 'bat --color=always {1} --highlight-line {2}' \
+            --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+            --bind 'enter:become(emacsclient -c -nw -a "vim" +{2} {1} || vim {1} +{2})'
+}
