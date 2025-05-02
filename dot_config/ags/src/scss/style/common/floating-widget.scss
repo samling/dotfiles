@@ -1,7 +1,5 @@
-@import "../colors";
-
 @mixin floating-widget {
-    margin: max($spacing, 8px);
+    margin: 8px;
     border: 0.2rem solid $surface0;
     background-color: $base;
     color: $primary_fg;

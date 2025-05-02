@@ -6,6 +6,7 @@
 
 @import 'style/common/common.scss';
 @import 'style/common/general.scss';
+@import 'style/common/floating-widget.scss';
 
 @import 'style/bar/audio.scss';
 @import 'style/bar/bar.scss';
@@ -27,5 +28,6 @@
 @import 'style/menus/menu.scss';
 @import 'style/menus/notifications.scss';
 @import 'style/notifications/popups.scss';
+@import 'style/menus/power.scss';
 
 @import 'style/osd/index.scss';

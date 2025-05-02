@@ -1,0 +1,229 @@
+window#powermenu,
+window#verification {
+    // the fraction has to be more than hyprland ignorealpha
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+$popover-padding: 0.6rem * 1.6;
+
+window#verification .verification {
+    * {
+        font-size: 1.2em;
+    }
+
+    @include floating-widget;
+    background: $surface0;
+    border: 0.2rem solid $surface0;
+    padding: 0.35em * 1.6 * 1.5;
+    min-width: 20em;
+    min-height: 6em;
+    opacity: 1;
+
+    .verification-content {
+        background: $surface0;
+        border-radius: 12px;
+        padding: 1em;
+    }
+
+    .text-box {
+        margin-bottom: 0.3em;
+
+        .title {
+            font-size: 1.5em;
+            color: $text;
+            margin-bottom: 0.5em;
+        }
+
+        .desc {
+            color: $text;
+            font-size: 1em;
+            margin-bottom: 0.55em;
+            padding: 1em 3em;
+        }
+    }
+
+    .verification-button {
+        background: $surface0;
+        padding: 0.7em 0em;
+        margin: 0.4em 1.7em;
+        border-radius: 12px;
+        opacity: 1;
+        transition: border-color 0.2s ease-in-out;
+        transition: opacity 0.3s ease-in-out;
+
+        &.bar-verification_yes {
+            background-color: $red;
+        }
+
+        &.bar-verification_no {
+            background-color: $red;
+        }
+
+        &:hover {
+            &.bar-verification_yes {
+                background-color: transparentize($red, 0.5);
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            &.bar-verification_no {
+                background-color: transparentize($red, 0.5);
+                transition: background-color 0.2s ease-in-out;
+            }
+        }
+
+        &:focus {
+            &.bar-verification_yes {
+                background-color: transparentize($red, 0.5);
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            &.bar-verification_no {
+                background-color: transparentize($red, 0.5);
+                transition: background-color 0.2s ease-in-out;
+            }
+        }
+
+        &:active {
+            &.bar-verification_yes {
+                background-color: transparentize($red, 0.5);
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            &.bar-verification_no {
+                background-color: transparentize($red, 0.5);
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            image {
+                opacity: 0.3;
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            label {
+                opacity: 0.3;
+                transition: opacity 0.3s ease-in-out;
+            }
+        }
+    }
+
+    .bar-verification_no label {
+        color: $text;
+    }
+
+    .bar-verification_yes label {
+        color: $text;
+    }
+}
+
+window#powermenu .powermenu {
+    @include floating-widget;
+
+    &.line {
+        padding: 0.5em;
+    }
+
+    &.box {
+        padding: 0.5em;
+    }
+}
+
+.widget-button {
+    border-color: $crust;
+    min-width: 4.5em;
+    min-height: 4.5em;
+    opacity: 1;
+    transition: border-color 0.2s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+
+    &:hover {
+        &.powermenu-button-shutdown {
+            border-color: $red;
+        }
+
+        &.powermenu-button-logout {
+            border-color: $green;
+        }
+
+        &.powermenu-button-sleep {
+            border-color: $sky;
+        }
+
+        &.powermenu-button-reboot {
+            border-color: $peach;
+        }
+    }
+
+    &:focus {
+        &.powermenu-button-shutdown {
+            border-color: $red;
+        }
+
+        &.powermenu-button-logout {
+            border-color: $green;
+        }
+
+        &.powermenu-button-sleep {
+            border-color: $sky;
+        }
+
+        &.powermenu-button-reboot {
+            border-color: $peach;
+        }
+    }
+
+    &:active {
+        &.powermenu-button-shutdown {
+            border-color: rgba($red, 0.5);
+        }
+
+        &.powermenu-button-logout {
+            border-color: rgba($green, 0.5);
+        }
+
+        &.powermenu-button-sleep {
+            border-color: rgba($sky, 0.5);
+        }
+
+        &.powermenu-button-reboot {
+            border-color: rgba($peach, 0.5);
+        }
+    }
+}
+
+.system-button_icon {
+    font-size: 3em;
+
+    &.shutdown {
+        color: $red;
+    }
+
+    &.logout {
+        color: $green;
+    }
+
+    &.reboot {
+        color: $peach;
+    }
+
+    &.sleep {
+        color: $sky;
+    }
+}
+
+.system-button_label {
+    &.shutdown {
+        color: $red;
+    }
+
+    &.logout {
+        color: $green;
+    }
+
+    &.reboot {
+        color: $peach;
+    }
+
+    &.sleep {
+        color: $sky;
+    }
+}
