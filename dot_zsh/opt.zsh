@@ -69,12 +69,20 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab
 
 # fzf-zsh
 zstyle ':fzf-tab:*' fzf-flags \
-  --tmux=35%,60% \
   --preview-window=down,15 \
   --bind 'ctrl-/:change-preview-window(down,40|)' \
   --color=label:italic \
   --border-label='[C-/] Change Layout' \
-  --border-label-pos=0:bottom
+  --border-label-pos=0:bottom \
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+  --color=selected-bg:#45475a \
+  --color=border:#313244,label:#cdd6f4 \
+  --info=inline \
+  --pointer ▶ \
+  --marker ⇒
+  #--tmux=35%,60% \
 
 
 #zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
