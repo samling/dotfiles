@@ -69,10 +69,11 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab
 
 # fzf-zsh
 zstyle ':fzf-tab:*' fzf-flags \
-  --preview-window=down,15 \
+  --preview-window=down,5 \
+  --height 100% \
   --bind 'ctrl-/:change-preview-window(down,40|)' \
   --color=label:italic \
-  --border-label='[C-/] Change Layout' \
+  --border-label='[C-/] Expand preview' \
   --border-label-pos=0:bottom \
   --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
   --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
