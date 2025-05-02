@@ -4,6 +4,9 @@ import CalendarMenu from './calendar/index.js';
 import AudioMenu from './audio/index.js';
 import EnergyMenu from './energy/index.js';
 import DashboardMenu from './dashboard/index.js';
+import PowerDropdownMenu from './powerDropdown/index.js';
+import PowerMenu from './power/index.js';
+
 export const DropdownMenus = [
     MediaMenu,
     NotificationsMenu,
@@ -11,4 +14,6 @@ export const DropdownMenus = [
     AudioMenu,
     EnergyMenu,
     DashboardMenu,
+    PowerDropdownMenu,
+    PowerMenu,
 ];

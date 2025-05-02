@@ -27,10 +27,99 @@
 
     .dashboard-card {
         background: $surface0;
-        margin: 0em;
+        margin-bottom: 0.5em;
         border-radius: 12px;
         padding: 0em;
     }
+
+    .profile-picture-container {
+        margin-right: 0.65em;
+
+        .profile-picture {
+            min-width: 2.5em;
+            min-height: 2.5em;
+            border-radius: 12px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .profile-name {
+            font-size: 1.5em;
+            color: $text;
+            margin-top: 0.75em;
+        }
+    }
+
+    .power-menu-container {
+        margin-left: 0em;
+        background: transparent;
+
+        .dashboard-button {
+            min-width: 3em;
+            min-height: 2.5em;
+
+            &:not(:last-child) {
+                margin-bottom: 0.75em;
+            }
+
+            label {
+                color: $text;
+                font-size: 1.7em;
+            }
+
+            &.shutdown {
+                background: $red;
+
+                label {
+                    font-size: 1.9em;
+                }
+            }
+
+            &.reboot {
+                background: $yellow;
+
+                label {
+                    font-size: 1.9em;
+                }
+            }
+
+            &.logout {
+                background: $red;
+
+                label {
+                    font-size: 1.9em;
+                }
+            }
+
+            &.sleep {
+                background: $blue;
+
+                label {
+                    font-size: 1.9em;
+                }
+            }
+
+            &:hover {
+                &.shutdown {
+                    background: transparentize($red, 0.5);
+                }
+
+                &.reboot {
+                    background: transparentize($yellow, 0.5);
+                }
+
+                &.logout {
+                    background: transparentize($red, 0.5);
+                }
+
+                &.sleep {
+                    background: transparentize($blue, 0.5);
+                }
+            }
+        }
+    }
+
 
     .screencapture-container {
         font-size: 1em;

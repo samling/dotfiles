@@ -1,9 +1,9 @@
-import { bind, GLib } from 'astal';
+import { bind, GLib, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import options from 'src/options.js';
 import { normalizePath, isAnImage } from 'src/lib/utils.js';
 
-const { image, name } = options.menus.dashboard.powermenu.avatar;
+const image = Variable<string>('~/.face.icon');
+const name = Variable<'system' | string>('system');
 
 const ProfilePicture = (): JSX.Element => {
     return (

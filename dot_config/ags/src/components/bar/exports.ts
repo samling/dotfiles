@@ -8,6 +8,7 @@ import { Volume } from '../../components/bar/modules/volume/index';
 import { Updates } from '../../components/bar/modules/updates/index';
 import { ClientTitle } from '../../components/bar/modules/window_title/index';
 import { DashboardLabel } from './modules/dashboard/index';
+import { Power } from './modules/power/index';
 export {
     Workspaces,
     Media,
@@ -19,4 +20,5 @@ export {
     Updates,
     ClientTitle,
     DashboardLabel,
+    Power,
 };

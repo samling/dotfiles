@@ -1,8 +1,12 @@
 import { App } from 'astal/gtk3';
 import powermenu from '../../power/helpers/actions.js';
 import { PowerOptions } from 'src/lib/types/options.js';
-import { execAsync } from 'astal';
-const { confirmation, shutdown, logout, sleep, reboot } = options.menus.dashboard.powermenu;
+import { execAsync, Variable } from 'astal';
+const confirmation = Variable<boolean>(true);
+const shutdown = Variable<string>('systemctl poweroff');
+const logout = Variable<string>('wlogout');
+const sleep = Variable<string>('systemctl suspend');
+const reboot = Variable<string>('systemctl reboot');
 
 /**
  * Handles the click event for power options.
