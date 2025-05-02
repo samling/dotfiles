@@ -37,6 +37,8 @@ packages:
     bat:
       pacman: bat
       brew: bat
+    bemoji:
+      yay: bemoji
     bison:
       pacman: bison
       brew: bison
