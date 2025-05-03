@@ -52,7 +52,8 @@ export const getWindowMatch = (hyprlandClient: AstalHyprland.Client): Record<str
 
     return {
         icon: windowMatch ? `${windowMatch[1]} ` : '󰣆 ',
-        label: windowMatch ? `${windowMatch[2]} :: ${clientTitle}` : `${capitalizeFirstLetter(hyprlandClient.class ?? 'Unknown')} :: ${clientTitle}`,
+        label: windowMatch ? `${windowMatch[2]}` : `${capitalizeFirstLetter(hyprlandClient.class ?? 'Unknown')}`,
+        activewindow: clientTitle ? `${clientTitle}` : '',
     };
 };
 
@@ -68,8 +69,13 @@ export const getWindowMatch = (hyprlandClient: AstalHyprland.Client): Record<str
  *
  * @returns The title of the window as a string.
  */
-export const getTitle = (client: AstalHyprland.Client, useCustomTitle: boolean, useClassName: boolean): string => {
-    if (client === null || useCustomTitle) return getWindowMatch(client).label;
+export const getTitle = (client: AstalHyprland.Client, useCustomTitle: boolean, useClassName: boolean, showActiveWindow: boolean): string => {
+    if (client === null || useCustomTitle) {
+        if (showActiveWindow) {
+            return `${getWindowMatch(client).label} :: ${getWindowMatch(client).activewindow}`;
+        }
+        return getWindowMatch(client).label;
+    }
 
     const title = client.title;
     if (!title || useClassName) return client.class;
@@ -77,6 +83,7 @@ export const getTitle = (client: AstalHyprland.Client, useCustomTitle: boolean, 
     if (title.length === 0 || title.match(/^ *$/)) {
         return client.class;
     }
+
     return title;
 };
 

@@ -61,9 +61,9 @@
     }
 
     .menu-separator.notification-controls {
-        min-width: 0.1em;
-        background-color: $surface0;
-        margin: 0em 1em;
+        min-width: 0.01em;
+        background-color: $surface1;
+        margin: 0.2em 0.5em;
     }
 
     .menu-switch.notifications {
@@ -109,11 +109,11 @@
     }
 
     .clear-notifications-label {
-        color: $primary_fg;
+        color: $text;
         font-size: 16px;
 
         &.removing {
-            color: $primary_fg;
+            color: $text;
         }
     }
 
@@ -126,7 +126,7 @@
         slider {
             min-width: 10px;
             border-radius: 10px;
-            background: $primary_bg;
+            background: $text;
         }
     }
 
@@ -150,7 +150,7 @@
     margin-bottom: 8em;
 
     label {
-        color: $primary_fg;
+        color: $text;
     }
 
     .bell {
@@ -163,8 +163,8 @@
 }
 
 .close-notification-button.menu {
-    background: $primary_bg;
-    color: $primary_fg;
+    background: $surface0;
+    color: $text;
     min-width: 2.1em;
     border-radius: 0rem 10px 10px 0em;
 
@@ -173,12 +173,12 @@
     }
 
     &:hover {
-        background: transparentize($primary_fg, 0.5);
+        background: transparentize($text, 0.5);
     }
 }
 
 .notification-menu-pager {
-    background: $primary_bg;
+    background: $surface0;
     margin-bottom: 0.1em;
     border-radius: 10px;
     border-top-left-radius: 0em;
@@ -187,7 +187,7 @@
     .pager-button {
         margin: 0em;
         padding: 0.25em 1em;
-        color: $primary_fg;
+        color: $text;
 
         .pager-button-label {
             font-size: 12px;

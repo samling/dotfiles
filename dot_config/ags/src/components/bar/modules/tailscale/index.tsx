@@ -9,7 +9,7 @@ import { Astal } from 'astal/gtk3';
 import { BashPoller } from 'src/lib/poller/BashPoller';
 import icons from 'src/lib/icons/icons2';
 
-const label = Variable(true);
+const label = Variable(false);
 const labelType = Variable<NetstatLabelType>(NETWORK_LABEL_TYPES[0]);
 const networkInterface = Variable('');
 const pollingInterval = Variable(2000);
@@ -45,6 +45,13 @@ const processTailscaleStatus = (status: string): string => {
             return 'off';
     }
 };
+
+const tailscaleLabel = Variable.derive([bind(tailscaleStatus), bind(label)], (status: string, label: boolean) => {
+    if (label) {
+        return status === 'on' ? 'On' : 'Off';
+    }
+    return '';
+});
 
 const processTailscaleTooltip = (tooltip: string): string => {
     try {
@@ -126,7 +133,7 @@ export const Tailscale = (): BarBoxChild => {
 
     const tailscaleModule = Module({
         icon: iconBinding(),
-        label: bind(tailscaleStatus),
+        label: tailscaleLabel.get(),
         tooltipText: bind(tailscaleTooltip),
         boxClass: 'tailscale',
         showLabelBinding: bind(label),
@@ -149,7 +156,6 @@ export const Tailscale = (): BarBoxChild => {
             );
             },
             onDestroy: () => {
-                // labelBinding.drop();
                 tailscaleStatus.drop();
                 iconBinding.drop();
                 label.drop();

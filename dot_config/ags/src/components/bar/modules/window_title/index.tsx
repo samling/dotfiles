@@ -12,11 +12,12 @@ const rightClick = Variable<string>('');
 const middleClick = Variable<string>('');
 const scrollDown = Variable<string>('');
 const scrollUp = Variable<string>('');
-const scrollSpeed = Variable<number>(50);
+const scrollSpeed = Variable<number>(40);
 
 const ClientTitle = (): BarBoxChild => {
     const custom_title = Variable(true);
     const class_name = Variable(true);
+    const show_active_window = Variable(false);
     const label = Variable(true);
     const icon = Variable(true);
     const truncation = Variable(true);
@@ -30,6 +31,7 @@ const ClientTitle = (): BarBoxChild => {
         client,
         useCustomTitle,
         useClassName,
+        showActiveWindow,
         showIcon,
         truncate,
         truncationSize,
@@ -37,7 +39,7 @@ const ClientTitle = (): BarBoxChild => {
         return (
             <label
                 className={`bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`}
-                label={truncateTitle(getTitle(client, useCustomTitle, useClassName), truncate ? truncationSize : -1)}
+                label={truncateTitle(getTitle(client, useCustomTitle, useClassName, showActiveWindow), truncate ? truncationSize : -1)}
             />
         );
     };
@@ -54,6 +56,7 @@ const ClientTitle = (): BarBoxChild => {
             bind(hyprlandService, 'focusedClient'),
             bind(custom_title),
             bind(class_name),
+            bind(show_active_window),
             bind(label),
             bind(icon),
             bind(truncation),
@@ -64,6 +67,7 @@ const ClientTitle = (): BarBoxChild => {
             client: AstalHyprland.Client,
             useCustomTitle: boolean,
             useClassName: boolean,
+            showActiveWindow: boolean,
             showLabel: boolean,
             showIcon: boolean,
             truncate: boolean,
@@ -81,6 +85,7 @@ const ClientTitle = (): BarBoxChild => {
                         client={client}
                         useCustomTitle={useCustomTitle}
                         useClassName={useClassName}
+                        showActiveWindow={showActiveWindow}
                         truncate={truncate}
                         truncationSize={truncationSize}
                         showIcon={showIcon}
@@ -102,6 +107,7 @@ const ClientTitle = (): BarBoxChild => {
             onDestroy: () => {
                 custom_title.drop();
                 class_name.drop();
+                show_active_window.drop();
                 label.drop();
                 icon.drop();
                 truncation.drop();
@@ -166,6 +172,7 @@ interface ClientLabelProps {
     client: AstalHyprland.Client;
     useCustomTitle: boolean;
     useClassName: boolean;
+    showActiveWindow: boolean;
     showIcon: boolean;
     truncate: boolean;
     truncationSize: number;

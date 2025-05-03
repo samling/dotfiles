@@ -67,11 +67,11 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
                         <box className={'box-right'} halign={Gtk.Align.END}>
                             {/* {WidgetContainer(Network())} */}
                             {WidgetContainer(Netstat())}
-                            {WidgetContainer(Bluetooth())}
-                            {WidgetContainer(Tailscale())}
                             {WidgetContainer(Volume())}
-                            {WidgetContainer(BatteryLabel())}
+                            {WidgetContainer(Tailscale())}
+                            {WidgetContainer(Bluetooth())}
                             {WidgetContainer(SysTray())}
+                            {WidgetContainer(BatteryLabel())}
                             {WidgetContainer(Updates())}
                             {WidgetContainer(Notifications())}
                         </box>
