@@ -1,0 +1,160 @@
+// Updates menu styling
+
+// Menu labels
+.menu-label.updates {
+  background-color: $surface0;
+}
+
+.menu-label-container.updates {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  background-color: $surface0;
+}
+
+// Menu containers
+.menu-content.updates {
+  padding: 0.3rem;
+  transition: min-height 0.3s ease;
+  background-color: $surface0;
+}
+
+.menu-items.updates {
+  background-color: $surface0;
+}
+
+.menu-items-container.updates {
+  background-color: $surface0;
+}
+
+.menu-section-container.updates {
+  background-color: $surface0;
+}
+
+// Menu section sizing
+.menu-items-section.updates {
+  transition: min-height 0.3s ease;
+  background-color: $surface0;
+  
+  .menu-scroller.updates {
+    min-height: 38em;
+    min-width: 34em;
+  }
+}
+
+// Updates components styling
+.updates {
+  background-color: $surface0;
+  transition: all 0.2s ease;
+  
+  // Updates count row
+  .updates-count-row {
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    background-color: $surface0;
+    
+    .updates-label {
+      font-size: 1em;
+      font-weight: bold;
+      color: $text;
+    }
+    
+    .updates-count {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: $blue;
+      
+      &.has-updates {
+        color: $mauve;
+      }
+    }
+  }
+  
+  // Updates details section
+  .updates-details {
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    background-color: $surface1;
+    
+    .updates-tooltip {
+      font-size: 0.9em;
+      color: $text;
+      font-family: monospace;
+    }
+  }
+  
+  // Updates actions buttons
+  .updates-actions {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+      
+      &.update-button {
+        background-color: $blue;
+        color: $base;
+        
+        &:hover {
+          background-color: mix($blue, $overlay0, 80%);
+        }
+      }
+      
+      &.refresh-button {
+        background-color: $surface1;
+        color: $text;
+        
+        &:hover {
+          background-color: mix($surface1, $overlay0, 80%);
+        }
+      }
+    }
+  }
+}
+
+// Hide scrollbar in the menu (if needed)
+.menu-scroller.updates {
+  // Hide the scrollbar but keep scrolling functionality
+  scrollbar {
+    background: transparent;
+    border: none;
+    
+    slider {
+      background: transparent;
+      border: none;
+    }
+    
+    &.vertical {
+      -GtkScrollbar-has-backward-stepper: false;
+      -GtkScrollbar-has-forward-stepper: false;
+      min-width: 0;
+      margin-left: -14px; // Move it off-screen
+    }
+  }
+}
+
+// Empty or no updates state
+.no-updates {
+  padding: 1rem;
+  color: $text;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+// Up-to-date status
+.system-up-to-date {
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  background-color: $surface1;
+  
+  .up-to-date-label {
+    color: $green;
+    font-weight: bold;
+    font-size: 0.95em;
+  }
+} 

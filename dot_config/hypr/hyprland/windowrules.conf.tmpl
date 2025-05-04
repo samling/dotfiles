@@ -27,6 +27,12 @@ windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned
 # Highlight pinned windows
 windowrule = bordercolor rgb(DF8E1D), pinned:1,
 
+# Configure floating pacman/yay update window
+windowrule = float,class:(wezterm-yay-update)
+windowrule = center,class:(wezterm-yay-update)
+windowrule = size 622 652,class:(wezterm-yay-update) # set the size of the window as necessary
+windowrule = plugin:hyprbars:nobar,class:(wezterm-yay-update) # disable hyprbars for clipse
+
 # Configure floating clipse window
 windowrule = plugin:hyprbars:nobar,class:(clipse) # disable hyprbars for clipse
 windowrule = float,class:(clipse) # ensure you have a floating window class set if you want this behavior

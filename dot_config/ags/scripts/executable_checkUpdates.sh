@@ -29,8 +29,20 @@ check_arch_updates() {
         aur_helper="yay"
     fi
 
+    # Simple header colors
+    if has_param "-color" "$@"; then
+        pacman_color="\033[1;34m" # Blue
+        aur_color="\033[1;32m"    # Green
+        NC="\033[0m"              # No Color
+    else
+        pacman_color=""
+        aur_color=""
+        NC=""
+    fi
+
     if has_param "-tooltip" "$@"; then
-        command=" | head -n 50"
+        # command=" | head -n 50"
+        command=""
         official_updates=""
         aur_updates=""
         wait_for_process_to_finish "checkupdates"
@@ -40,8 +52,13 @@ check_arch_updates() {
         aur_updates=0
     fi
 
-    aur_command="$aur_helper -Qum $command"
     official_command="checkupdates $command"
+    aur_command="$aur_helper -Qum $command"
+
+    if has_param "-nosync" "$@"; then
+        official_command="checkupdates --nosync $command"
+        aur_command="$aur_helper -Qua $command"
+    fi
 
     if has_param "-y" "$@"; then
         aur_updates=$(eval "$aur_command")
@@ -54,22 +71,20 @@ check_arch_updates() {
 
     if has_param "-tooltip" "$@"; then
         if [ "$official_updates" ];then
-            echo "pacman:"
+            echo -e "${pacman_color}pacman:${NC}"
             echo "$official_updates"
         fi
         if [ "$official_updates" ] && [ "$aur_updates" ];then
             echo ""
         fi
         if [ "$aur_updates" ];then
-            echo "AUR:"
+            echo -e "${aur_color}AUR:${NC}"
             echo "$aur_updates"
         fi
     else
         total_updates=$((official_updates + aur_updates))
         echo $total_updates
     fi
-
-
 }
 
 check_ubuntu_updates() {
@@ -84,7 +99,7 @@ check_fedora_updates() {
 
 case "$1" in
     -arch)
-        check_arch_updates "$2" "$3"
+        check_arch_updates "$2" "$3" "$4"
         ;;
     -ubuntu)
         check_ubuntu_updates

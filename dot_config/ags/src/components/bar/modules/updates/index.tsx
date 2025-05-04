@@ -1,15 +1,17 @@
 import { Module } from '../../shared/Module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { BashPoller } from 'src/lib/poller/BashPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
+import { openMenu } from '../../utils/menu.js';
+import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 
 const updateCommand = Variable(`${SRC_DIR}/scripts/checkUpdates.sh -arch`);
 const updateTooltipCommand = Variable(`${SRC_DIR}/scripts/checkUpdates.sh -arch -tooltip`);
 const extendedTooltip = Variable(true);
 const label = Variable(true);
-const padZero = Variable(true);
+const padZero = Variable(false);
 const autoHide = Variable(false);
 const pollingInterval = Variable(1000 * 60 * 60 * 6);
 const icon = {
@@ -21,21 +23,14 @@ const rightClick = Variable('');
 const middleClick = Variable('');
 const scrollUp = Variable('');
 const scrollDown = Variable('');
-
-const pendingUpdates: Variable<string> = Variable('0');
-const pendingUpdatesTooltip: Variable<string> = Variable('');
+const scrollSpeed = Variable<number>(50);
+export const pendingUpdates: Variable<string> = Variable('0');
 const postInputUpdater = Variable(true);
 const isVis = Variable(!autoHide.get());
 
 const processUpdateCount = (updateCount: string): string => {
     if (!padZero.get()) return updateCount;
     return `${updateCount.padStart(2, '0')}`;
-};
-
-const processUpdateTooltip = (updateTooltip: string, updateCount: Variable<string>): string => {
-    const defaultTooltip = updateCount.get() + ' updates available';
-    if (!extendedTooltip.get() || !updateTooltip) return defaultTooltip;
-    return defaultTooltip + '\n\n' + updateTooltip;
 };
 
 const updatesPoller = new BashPoller<string, []>(
@@ -46,17 +41,10 @@ const updatesPoller = new BashPoller<string, []>(
     processUpdateCount,
 );
 
-const tooltipPoller = new BashPoller<string, [Variable<string>]>(
-    pendingUpdatesTooltip,
-    [bind(extendedTooltip), bind(postInputUpdater), bind(updateTooltipCommand)],
-    bind(pollingInterval),
-    updateTooltipCommand.get(),
-    processUpdateTooltip,
-    pendingUpdates,
-);
-
 updatesPoller.initialize('updates');
-tooltipPoller.initialize('updates');
+
+// Force immediate poll
+updatesPoller.execute();
 
 Variable.derive([bind(autoHide)], (autoHideModule) => {
     isVis.set(!autoHideModule || (autoHideModule && parseFloat(pendingUpdates.get()) > 0));
@@ -73,8 +61,7 @@ const updatesIcon = Variable.derive(
 export const Updates = (): BarBoxChild => {
     const updatesModule = Module({
         textIcon: updatesIcon(),
-        tooltipText: bind(pendingUpdatesTooltip),
-        boxClass: 'updates',
+        boxClass: 'updates-bar',
         isVis: isVis,
         label: bind(pendingUpdates),
         showLabelBinding: bind(label),
@@ -88,7 +75,6 @@ export const Updates = (): BarBoxChild => {
                 scrollUp.drop();
                 scrollDown.drop();
                 pendingUpdates.drop();
-                pendingUpdatesTooltip.drop();
                 postInputUpdater.drop();
                 autoHide.drop();
                 pollingInterval.drop();
@@ -96,29 +82,46 @@ export const Updates = (): BarBoxChild => {
                 isVis.drop();
                 label.drop();
             },
-            setup: (self: Astal.Button) => {
-                inputHandler(
-                    self,
-                    {
-                        onPrimaryClick: {
-                            cmd: leftClick,
-                        },
-                        onSecondaryClick: {
-                            cmd: rightClick,
-                        },
-                        onMiddleClick: {
-                            cmd: middleClick,
-                        },
-                        onScrollUp: {
-                            cmd: scrollUp,
-                        },
-                        onScrollDown: {
-                            cmd: scrollDown,
-                        },
+            setup: (self: Astal.Button): void => {
+                let disconnectFunctions: (() => void)[] = [];
+
+                Variable.derive(
+                    [
+                        bind(rightClick),
+                        bind(middleClick),
+                        bind(scrollUp),
+                        bind(scrollDown),
+                        bind(scrollSpeed),
+                    ],
+                    () => {
+                        disconnectFunctions.forEach((disconnect) => disconnect());
+                        disconnectFunctions = [];
+
+                        const throttledHandler = throttledScrollHandler(scrollSpeed.get());
+
+                        disconnectFunctions.push(
+                            onPrimaryClick(self, (clicked, event) => {
+                                openMenu(clicked, event, 'updatesmenu');
+                            }),
+                        );
+
+                        disconnectFunctions.push(
+                            onSecondaryClick(self, (clicked, event) => {
+                                runAsyncCommand(rightClick.get(), { clicked, event });
+                            }),
+                        );
+
+                        disconnectFunctions.push(
+                            onMiddleClick(self, (clicked, event) => {
+                                runAsyncCommand(middleClick.get(), { clicked, event });
+                            }),
+                        );
+
+                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
                     },
-                    postInputUpdater,
                 );
             },
+
         },
     });
 

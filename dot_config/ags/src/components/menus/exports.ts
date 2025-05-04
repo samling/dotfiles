@@ -9,6 +9,7 @@ import PowerMenu from './power/index.js';
 import Verification from './power/verification.js';
 import BluetoothMenu from './bluetooth/index.js';
 import TailscaleMenu from './tailscale/index.js';
+import UpdatesMenu from './updates/index.js';
 // import NetworkMenu from './network/index.js';
 export const DropdownMenus = [
     MediaMenu,
@@ -20,6 +21,7 @@ export const DropdownMenus = [
     PowerDropdownMenu,
     BluetoothMenu,
     TailscaleMenu,
+    UpdatesMenu,
     // NetworkMenu,
 ];
 
