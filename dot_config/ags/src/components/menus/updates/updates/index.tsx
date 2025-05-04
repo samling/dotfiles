@@ -102,13 +102,13 @@ export const fetchUpdateData = async () => {
         
         // Update the variable with new data
         updateData.set({
-            count: count.padStart(2, '0'),
+            count: count.padStart(1, '0'),
             details,
             formattedDetails,
         });
     } catch (error) {
         console.error('Error fetching update data:', error);
-        updateData.set({ count: '00', details: '', formattedDetails: '' });
+        updateData.set({ count: '0', details: '', formattedDetails: '' });
     } finally {
         // Set checking state to false when done
         isChecking.set(false);

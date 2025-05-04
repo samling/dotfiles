@@ -1,5 +1,5 @@
 .menu-items-container.bluetooth * {
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
 @import './menu.scss';
@@ -12,7 +12,7 @@
 }
 
 .menu-items-container.bluetooth {
-    min-width: 24em;
+    min-width: 38em;
 
     font-size: 1em;
 
@@ -69,8 +69,9 @@
 
     .bluetooth-element-item {
         margin-bottom: 0.4em;
-
+        font-size: 0.6em;
         &:hover {
+            background-color: $surface1;
             .menu-button-icon,
             .menu-button-name {
                 color: $text;
@@ -94,7 +95,7 @@
         }
 
         .menu-button-icon {
-            font-size: 1.5em;
+            font-size: 1em;
             color: $text;
 
             &.active {
@@ -155,6 +156,7 @@
         &:last-child {
             margin-bottom: 2em;
         }
+        font-size: 0.9em;
 
         color: $text;
         opacity: 0.5;
