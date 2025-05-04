@@ -33,6 +33,10 @@ bind = $mainMod, F, fullscreenstate, 1,
 # Fullscreen window (covers menu bar)
 bind = $mainMod SHIFT, F, fullscreenstate, 2,
 
+# Send and retrieve windows from scratchpad
+bind = $mainMod, S, exec, scratchpad
+bind = $mainMod SHIFT, S, exec, scratchpad -m "fuzzel -d" -g
+
 # Toggle floating window
 bind = $mainMod, V, togglefloating,
 

@@ -3,19 +3,23 @@ import Hyprland from "gi://AstalHyprland";
 import { Gtk } from "astal/gtk3";
 import { bind } from "astal";
 
+// Variable to track if magic workspace is currently focused
+const isMagicWorkspaceFocused = Variable(false);
+const isMagicWorkspaceOccupied = Variable(false);
+const isScratchpadWorkspaceFocused = Variable(false);
+const isScratchpadWorkspaceOccupied = Variable(false);
+
 const WorkspaceModule = (): JSX.Element => {
 
     const hyprland = Hyprland.get_default();
     
-    // Variable to track if magic workspace is currently focused
-    const isMagicWorkspaceFocused = Variable(false);
-    const isMagicWorkspaceOccupied = Variable(false);
-    
     // Listen for Hyprland events
     hyprland.connect("event", (_, event, data) => {
         const clients = hyprland.get_clients();
-        const isMagicOccupied = clients.some(c => c.get_workspace().id == -98);
+        const isMagicOccupied = clients.some(c => c.get_workspace().name == "special:magic");
+        const isScratchpadOccupied = clients.some(c => c.get_workspace().name == "special:scratchpad");
         isMagicWorkspaceOccupied.set(isMagicOccupied);
+        isScratchpadWorkspaceOccupied.set(isScratchpadOccupied);
 
         // Check for special workspace activation/deactivation events
         if (event === "activespecial" || event === "activespecialv2") {
@@ -24,12 +28,15 @@ const WorkspaceModule = (): JSX.Element => {
             // When inactive, both have empty values before the commas
             const isMagicActive = data.includes("special:magic");
             isMagicWorkspaceFocused.set(isMagicActive);
+
+            const isScratchpadActive = data.includes("special:scratchpad");
+            isScratchpadWorkspaceFocused.set(isScratchpadActive);
         }
     });
 
     const getButtonClass = (i: number) => {
-        const className = Variable.derive([bind(hyprland, "focusedWorkspace"), bind(hyprland, "workspaces"), bind(isMagicWorkspaceFocused), bind(isMagicWorkspaceOccupied)],
-            (currentWorkspace, workspaces, magicFocused, magicOccupied) => {
+        const className = Variable.derive([bind(hyprland, "focusedWorkspace"), bind(hyprland, "workspaces"), bind(isMagicWorkspaceFocused), bind(isMagicWorkspaceOccupied), bind(isScratchpadWorkspaceFocused), bind(isScratchpadWorkspaceOccupied)],
+            (currentWorkspace, workspaces, magicFocused, magicOccupied, scratchpadFocused, scratchpadOccupied) => {
                 if (i === -98) { // Magic workspace
                     if (magicFocused) return "magic-focused";
                     return magicOccupied ? "active" : "";
@@ -42,12 +49,20 @@ const WorkspaceModule = (): JSX.Element => {
                     return "focused";
                 } else {
                     const workspaceIDs = workspaces.map((w) => w.id);
+                    const workspaceNames = workspaces.map((w) => w.name);
                     if (workspaceIDs.includes(i)) {
                         return "active"
+                    }
+                    else if (workspaceNames.includes("special:scratchpad")) {
+                        return "scratchpad-active";
+                    }
+                    else if (workspaceNames.includes("special:magic")) {
+                        return "magic-active";
                     }
                     else {
                         return "";
                     }
+
                 }
             }
         )
