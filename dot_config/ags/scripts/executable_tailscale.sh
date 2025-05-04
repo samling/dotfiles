@@ -24,6 +24,14 @@ toggle_status () {
     sleep 5
 }
 
+set_status_up() {
+    tailscale up --accept-routes
+}
+
+set_status_down() {
+    tailscale down
+}
+
 case $1 in
     --status)
         if tailscale_status; then
@@ -41,7 +49,7 @@ case $1 in
             exitnode=$(tailscale status --json | jq -r '.Self.ExitNode // "None"')
             
             # Format peers as a dictionary with DNS names as keys and online status as values
-            peers=$(tailscale status --json | jq -c '{tooltip: (.Peer | reduce .[] as $p ({}; .[$p.DNSName | split(".")[0]] = {online: $p.Online}))}')
+            peers=$(tailscale status --json | jq -c '{tooltip: (.Peer | reduce .[] as $p ({}; .[$p.DNSName | split(".")[0]] = {online: $p.Online, ip: ($p.TailscaleIPs | map(select(startswith("100."))) | .[0])}))}')
             
             # Remove the enclosing braces to merge with the outer JSON
             peers=${peers:1:${#peers}-2}
@@ -53,6 +61,12 @@ case $1 in
     ;;
     --toggle)
         toggle_status
+    ;;
+    --up)
+        set_status_up
+    ;;
+    --down)
+        set_status_down
     ;;
 esac
 

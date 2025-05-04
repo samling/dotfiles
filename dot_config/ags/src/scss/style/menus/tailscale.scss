@@ -1,0 +1,141 @@
+// Tailscale menu styling
+
+// Menu containers
+.menu-content.tailscale {
+  padding: 0.3rem;
+  transition: min-height 0.3s ease;
+}
+
+.menu-container.tailscale-peers {
+  margin: 0.3rem 0;
+}
+
+.menu-container.tailscale-section {
+  margin-bottom: 0.5rem;
+}
+
+// Menu state-based sizing
+.menu-items-section.tailscale {
+  transition: min-height 0.3s ease;
+  
+  &.disconnected .menu-scroller.tailscale {
+    min-height: 5em;  // Compact size when disconnected
+    min-width: 28em;
+  }
+  
+  &.connected .menu-scroller.tailscale {
+    min-height: 28em;  // Full size when connected
+    min-width: 28em;
+  }
+}
+
+// Hide scrollbar in the menu
+.menu-scroller.tailscale {
+  // Hide the scrollbar but keep scrolling functionality
+  scrollbar {
+    background: transparent;
+    border: none;
+    
+    slider {
+      background: transparent;
+      border: none;
+    }
+    
+    &.vertical {
+      -GtkScrollbar-has-backward-stepper: false;
+      -GtkScrollbar-has-forward-stepper: false;
+      min-width: 0;
+      margin-left: -14px; // Move it off-screen
+    }
+  }
+}
+
+// IP Address component styles
+.menu-item-container.tailscale-ip {
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.15rem;
+  border-radius: 8px;
+  background-color: $base;
+  
+  .tailscale-ip-label {
+    font-size: 0.95em;
+    font-weight: bold;
+    color: $text;
+    margin-right: 1rem;
+  }
+  
+  .tailscale-ip-value {
+    font-size: 0.95em;
+    color: $blue;
+  }
+  
+  &:hover {
+    background-color: $surface0;
+  }
+}
+
+// Tailscale peer item
+.menu-item-container.tailscale-peer-item {
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+  background-color: $base;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: $surface0;
+  }
+  
+  .peer-name {
+    color: $text;
+  }
+  
+  .peer-ip {
+    color: $blue;
+    font-size: 0.9em;
+    margin-right: 0.3rem;
+  }
+  
+  .peer-status {
+    margin-left: 0.5rem;
+    font-size: 0.8em;
+    
+    &.online {
+      color: $green;
+    }
+    
+    &.offline {
+      color: $red;
+    }
+  }
+}
+
+// Disconnected message
+.menu-item-container.tailscale-disconnected {
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  background-color: $surface0;
+  
+  .tailscale-disconnected-label {
+    color: $red;
+    font-weight: bold;
+  }
+}
+
+// Tailscale section headers
+.tailscale-section-header {
+  color: $text;
+  font-weight: bold;
+  font-size: 1em;
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+// No peers found message
+.menu-item-container.no-tailscale-peers {
+  padding: 1rem;
+  color: $text;
+  font-style: italic;
+}

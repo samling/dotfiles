@@ -30,6 +30,7 @@ export const dropdownMenuList = [
     'energymenu',
     'powerdropdownmenu',
     'settings-dialog',
+    'tailscalemenu',
 ] as const;
 
 export const isDropdownMenu = (name: string): name is DropdownMenuList => {

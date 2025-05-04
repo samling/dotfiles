@@ -169,7 +169,7 @@ export function escapeMarkup(text: string): string {
  * @returns True if the filepath is a valid image, false otherwise.
  */
 export function isAnImage(imgFilePath: string): boolean {
-    console.log(normalizePath(imgFilePath));
+    //console.log(normalizePath(imgFilePath));
     try {
         GdkPixbuf.Pixbuf.new_from_file(normalizePath(imgFilePath));
         return true;

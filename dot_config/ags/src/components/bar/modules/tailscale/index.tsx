@@ -8,14 +8,21 @@ import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { Astal } from 'astal/gtk3';
 import { BashPoller } from 'src/lib/poller/BashPoller';
 import icons from 'src/lib/icons/icons2';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
+import { openMenu } from '../../utils/menu.js';
+import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 
 const label = Variable(false);
 const labelType = Variable<NetstatLabelType>(NETWORK_LABEL_TYPES[0]);
 const networkInterface = Variable('');
 const pollingInterval = Variable(2000);
-const leftClick = Variable(`${SRC_DIR}/scripts/tailscale.sh --toggle`)
+// const leftClick = Variable(`${SRC_DIR}/scripts/tailscale.sh --toggle`)
+const leftClick = Variable('menu:tailscalemenu');
 const rightClick = Variable('');
 const middleClick = Variable('');
+const scrollUp = Variable('');
+const scrollDown = Variable('');
+const scrollSpeed = Variable<number>(50);
 
 const tailscaleStatus: Variable<string> = Variable('disconnected');
 const tailscaleTooltip: Variable<string> = Variable('');
@@ -138,23 +145,46 @@ export const Tailscale = (): BarBoxChild => {
         boxClass: 'tailscale',
         showLabelBinding: bind(label),
         props: {
-            setup: (self: Astal.Button) => {
-                inputHandler(self, {
-                    onPrimaryClick: {
-                        cmd: leftClick,
+            setup: (self: Astal.Button): void => {
+                let disconnectFunctions: (() => void)[] = [];
+
+                Variable.derive(
+                    [
+                        bind(rightClick),
+                        bind(middleClick),
+                        bind(scrollUp),
+                        bind(scrollDown),
+                        bind(scrollSpeed),
+                    ],
+                    () => {
+                        disconnectFunctions.forEach((disconnect) => disconnect());
+                        disconnectFunctions = [];
+
+                        const throttledHandler = throttledScrollHandler(scrollSpeed.get());
+
+                        disconnectFunctions.push(
+                            onPrimaryClick(self, (clicked, event) => {
+                                openMenu(clicked, event, 'tailscalemenu');
+                            }),
+                        );
+
+                        disconnectFunctions.push(
+                            onSecondaryClick(self, (clicked, event) => {
+                                runAsyncCommand(rightClick.get(), { clicked, event });
+                            }),
+                        );
+
+                        disconnectFunctions.push(
+                            onMiddleClick(self, (clicked, event) => {
+                                runAsyncCommand(middleClick.get(), { clicked, event });
+                            }),
+                        );
+
+                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
                     },
-                    onSecondaryClick: {
-                        cmd: rightClick,
-                    },
-                    onMiddleClick: {
-                        cmd: middleClick,
-                    },
-                    onScrollUp: {},
-                    onScrollDown: {},
-                },
-                postInputUpdater,
-            );
+                );
             },
+
             onDestroy: () => {
                 tailscaleStatus.drop();
                 iconBinding.drop();
