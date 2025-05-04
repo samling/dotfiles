@@ -59,11 +59,11 @@ export const LeftShortcuts = (): JSX.Element => {
                         <box>
                         <LeftColumn>
                             <ScreenshotButton />
-                            <LeftShortcut3 />
+                            <box />
                         </LeftColumn>
                         <RightColumn>
-                            <LeftShortcut2 />
                             <LeftShortcut4 />
+                            <box />
                         </RightColumn>
                         </box>
                     </box>
@@ -83,11 +83,11 @@ export const RightShortcuts = (): JSX.Element => {
                         <box>
                         <LeftColumn>
                             <RecordingButton />
-                            <RightShortcut3 />
+                            <box />
                         </LeftColumn>
                         <RightColumn>
-                            <RightShortcut2 />
                             <RightShortcut4 />
+                            <box />
                         </RightColumn>
                         </box>
                     </box>

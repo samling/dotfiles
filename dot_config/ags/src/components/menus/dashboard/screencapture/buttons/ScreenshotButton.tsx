@@ -14,10 +14,14 @@ const MonitorListDropdown = (): JSX.Element => {
         monitorList.set(hyprlandService.get_monitors());
     });
 
+    const activeDisplay = Variable.derive([bind(hyprlandService, 'focused_monitor')], () => {
+        return hyprlandService.get_focused_monitor();
+    });
+
     return (
         <Menu className={'dropdown screenshot'} halign={Gtk.Align.FILL} onDestroy={() => monitorBinding.drop()} hexpand>
             <MenuItem
-                label="Window"
+                label={`Display ${activeDisplay.get()?.name}`}
                 onButtonPressEvent={(_, event) => {
                     if (event.get_button()[1] !== Gdk.BUTTON_PRIMARY) return;
 
@@ -64,7 +68,7 @@ export const ScreenshotButton = (): JSX.Element => {
                 monitorDropdownList.popup_at_pointer(event);
             }}
         >
-            <label className={'button-label txt-icon'} label={''} />
+            <label className={'button-label txt-icon'} label={''} />
         </button>
     );
 };
