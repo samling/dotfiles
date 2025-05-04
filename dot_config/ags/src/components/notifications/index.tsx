@@ -48,8 +48,9 @@ export default (): JSX.Element => {
         [bind(popupNotifications), bind(showActionsOnHover)],
         (notifications, showActions) => {
             const maxDisplayed = notifications.slice(0, displayedTotal.get());
-
-            return maxDisplayed.map((notification) => {
+            
+            // Reverse the array to display new notifications at the top
+            return [...maxDisplayed].reverse().map((notification) => {
                 return <NotificationCard notification={notification} showActions={showActions} />;
             });
         },

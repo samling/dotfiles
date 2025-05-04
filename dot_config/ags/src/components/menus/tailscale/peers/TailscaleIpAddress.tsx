@@ -13,14 +13,12 @@ export const TailscaleIpAddress = ({ ipAddress }: TailscaleIpAddressProps): JSX.
     
     const copyToClipboard = () => {
         execAsync(['wl-copy', ipAddress])
-            .then(() => {
-                Notify({
-                    summary: 'Tailscale IP Copied',
-                    body: `Copied ${ipAddress} to clipboard`,
-                    iconName: 'edit-copy',
-                });
-            })
             .catch(err => console.error('Failed to copy IP:', err));
+        Notify({
+            summary: 'Tailscale IP Copied',
+            body: `Copied ${ipAddress} to clipboard`,
+            iconName: 'edit-copy',
+        });
     };
     
     return (

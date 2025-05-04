@@ -13,14 +13,12 @@ export const TailscalePeerListItem = ({ peer }: TailscalePeerListItemProps): JSX
     const copyValue = (value: string, type: 'hostname' | 'IP') => {
         if (peer.online) {
             execAsync(['wl-copy', value])
-                .then(() => {
-                    Notify({
-                        summary: `Tailscale ${type} Copied`,
-                        body: `Copied ${type}: ${value}`,
-                        iconName: 'edit-copy',
-                    });
-                })
                 .catch(err => console.error(`Failed to copy value:`, err));
+            Notify({
+                summary: `Tailscale ${type} Copied`,
+                body: `Copied ${type}: ${value}`,
+                iconName: 'edit-copy',
+            });
         }
     };
     
