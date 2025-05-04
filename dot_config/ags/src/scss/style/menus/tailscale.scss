@@ -12,7 +12,16 @@
 }
 
 .menu-switch.tailscale {
-  background-color: $mauve;
+  background-color: $surface1;
+  &:hover {
+    background-color: $surface2;
+  }
+  &:checked {
+    background-color: $mauve;
+    &:hover {
+      background-color: transparentize($color: $mauve, $amount: 0.2);
+    }
+  }
 }
 
 // Menu containers
