@@ -41,7 +41,7 @@ const formatRate = (rate: number, type: string, round: boolean): string => {
         case rate >= 1e3:
             return `${(rate / 1e3).toFixed(fixed)} KiB/s`;
         default:
-            return `${rate.toFixed(fixed)} bytes/s`;
+            return `${rate.toFixed(fixed)} B/s`;
     }
 };
 
