@@ -13,4 +13,14 @@ hyprpm enable hy3
 #=== this is necessary *after* installing and enabling plugins for the first time
 # hyprpm update
 
+#=== Configure hyprland contrib binaries
+(
+  echo "Installing grimblast from contrib"
+  cd ~/.config/hypr/contrib && \
+    cd grimblast && sudo make install
+
+  echo "Installing scratchpad from contrib"
+  cd ~/.config/hypr/contrib && \
+    cd scratchpad && sudo make install
+)
 {{- end }}

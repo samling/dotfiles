@@ -1,3 +1,9 @@
+#=== HYPRLAND
+[".config/hypr/contrib"]
+  type = "git-repo"
+  url = "https://github.com/hyprwm/contrib"
+  refreshPeriod = "168h"
+
 #=== TMUX
 [".config/tmux/plugins/tpm"]
   type = "git-repo"
