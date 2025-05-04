@@ -96,7 +96,7 @@ export const TailscalePeers = (): JSX.Element => {
         >
             <scrollable 
                 className="menu-scroller tailscale"
-                vscrollbarPolicy={Gtk.PolicyType.NEVER}
+                vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
             >
                 <box className="menu-content tailscale" vertical>
                     {bind(tailscaleData).as(renderContent)}

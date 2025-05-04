@@ -1,22 +1,45 @@
 // Tailscale menu styling
 
+// Menu labels
+.menu-label.tailscale {
+  background-color: $surface0;
+}
+
+.menu-label-container.tailscale {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  background-color: $surface0;
+}
+
+.menu-switch.tailscale {
+  background-color: $mauve;
+}
+
 // Menu containers
 .menu-content.tailscale {
   padding: 0.3rem;
   transition: min-height 0.3s ease;
+  background-color: $surface0;
 }
 
 .menu-container.tailscale-peers {
   margin: 0.3rem 0;
+  background-color: $surface0;
 }
 
 .menu-container.tailscale-section {
   margin-bottom: 0.5rem;
+  background-color: $surface0;
+}
+
+.menu-items.tailscale {
+  background-color: $surface0;
 }
 
 // Menu state-based sizing
 .menu-items-section.tailscale {
   transition: min-height 0.3s ease;
+  background-color: $surface0;
   
   &.disconnected .menu-scroller.tailscale {
     min-height: 5em;  // Compact size when disconnected
@@ -55,7 +78,8 @@
   padding: 0.5rem 0.8rem;
   margin-bottom: 0.15rem;
   border-radius: 8px;
-  background-color: $base;
+  background-color: $surface0;
+  font-weight: bold;
   
   .tailscale-ip-label {
     font-size: 0.95em;
@@ -80,7 +104,7 @@
   font-weight: bold;
   padding: 0.3rem 0.8rem;
   border-radius: 8px;
-  background-color: $base;
+  background-color: $surface0;
   transition: background-color 0.2s ease;
   
   &:hover {
@@ -131,6 +155,7 @@
   font-size: 1em;
   margin-top: 0.5rem;
   margin-bottom: 0.3rem;
+  background-color: $surface0;
 }
 
 // No peers found message
