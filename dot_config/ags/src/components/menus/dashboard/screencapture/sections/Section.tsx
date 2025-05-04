@@ -14,6 +14,7 @@ import { LeftColumn, RightColumn } from './Column';
 import { RecordingButton } from '../buttons/RecordingButton';
 import { left, right } from '../shortcuts';
 import { Header } from './Header';
+import { ScreenshotButton } from '../buttons/ScreenshotButton';
 
 const leftBindings = [
     bind(left.shortcut1.command),
@@ -57,7 +58,7 @@ export const LeftShortcuts = (): JSX.Element => {
                         <Header type={'screenshot'} label={'Capture'} />
                         <box>
                         <LeftColumn>
-                            <LeftShortcut1 />
+                            <ScreenshotButton />
                             <LeftShortcut3 />
                         </LeftColumn>
                         <RightColumn>
