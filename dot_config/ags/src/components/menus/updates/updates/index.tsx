@@ -132,7 +132,7 @@ export const Updates = (): JSX.Element => {
         const hasUpdates = parseInt(data.count, 10) > 0;
         
         return (
-            <>
+            <box className="updates-container" halign={Gtk.Align.FILL} hexpand vertical>
                 <box className="updates-count-row" halign={Gtk.Align.FILL} hexpand>
                     <label 
                         className="updates-label" 
@@ -148,10 +148,9 @@ export const Updates = (): JSX.Element => {
                 </box>
                 
                 {hasUpdates ? (
-                    <>
+                    <box className="updates-details" halign={Gtk.Align.FILL} hexpand vertical>
                         {data.formattedDetails && (
-                            <box className="updates-details" halign={Gtk.Align.FILL} hexpand>
-                                <label 
+                            <label 
                                     className="updates-tooltip monospace" 
                                     label={data.formattedDetails} 
                                     wrap={false} 
@@ -159,7 +158,6 @@ export const Updates = (): JSX.Element => {
                                     halign={Gtk.Align.FILL} 
                                     hexpand 
                                 />
-                            </box>
                         )}
                         
                         <box className="updates-actions" halign={Gtk.Align.FILL} hexpand spacing={8}>
@@ -173,26 +171,26 @@ export const Updates = (): JSX.Element => {
                                 <label label="Update System" />
                             </button>
                         </box>
-                    </>
+                    </box>
                 ) : (
-                    <>
-                        <box className="system-up-to-date" halign={Gtk.Align.FILL} hexpand>
-                            <label 
-                                className="up-to-date-label" 
-                                label="System is up to date" 
-                                halign={Gtk.Align.CENTER} 
-                                hexpand 
-                            />
-                        </box>
-                    </>
+                    <box className="system-up-to-date" halign={Gtk.Align.FILL} hexpand>
+                        <label 
+                            className="up-to-date-label" 
+                            label="System is up to date" 
+                            halign={Gtk.Align.CENTER} 
+                            hexpand 
+                        />
+                    </box>
                 )}
-            </>
+            </box>
         );
     };
 
     return (
         <box 
-            className="menu-items-section updates"
+            className={bind(updateData).as(data =>
+                `menu-items-section updates ${data.count !== '0' ? 'has-updates' : 'has-no-updates'}`
+            )}
             halign={Gtk.Align.FILL} 
             hexpand 
             onDestroy={() => {

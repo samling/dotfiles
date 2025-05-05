@@ -35,9 +35,14 @@
   transition: min-height 0.3s ease;
   background-color: $surface0;
   
-  .menu-scroller.updates {
-    min-height: 38em;
+  &.has-updates .menu-scroller.updates {
     min-width: 34em;
+    min-height: 38em;
+  }
+
+  &.has-no-updates .menu-scroller.updates {
+    min-width: 34em;
+    min-height: 10em;
   }
 }
 
