@@ -1,12 +1,12 @@
 .menu-items-container.energy * {
-  font-size: 16px;
+  font-size: 1em;
 }
 
 .menu-items.energy {
   background: $surface0;
   border-color: $mauve;
   opacity: 1;
-  font-size: 16px;
+  font-size: 1em;
 }
 
 @import "./menu.scss";
@@ -97,7 +97,7 @@
 
     &:hover {
       trough {
-        background: $surface0;
+        background: $surface1;
       }
 
       slider {
