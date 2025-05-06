@@ -6,14 +6,11 @@ import { Astal } from 'astal/gtk3';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { openMenu } from '../../utils/menu.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
+import { sharedUpdateData, fetchUpdateData } from 'src/globals/updates';
 
-const updateCommand = Variable(`${SRC_DIR}/scripts/checkUpdates.sh -arch`);
-const updateTooltipCommand = Variable(`${SRC_DIR}/scripts/checkUpdates.sh -arch -tooltip`);
-const extendedTooltip = Variable(true);
 const label = Variable(true);
-const padZero = Variable(false);
 const autoHide = Variable(false);
-const pollingInterval = Variable(1000 * 60 * 60 * 6);
+const pollingInterval = Variable(1000 * 60 * 5); // 5 minutes
 const icon = {
     pending: Variable('󰏗'),
     updated: Variable('󰏖'),
@@ -24,27 +21,18 @@ const middleClick = Variable('');
 const scrollUp = Variable('');
 const scrollDown = Variable('');
 const scrollSpeed = Variable<number>(50);
-export const pendingUpdates: Variable<string> = Variable('0');
 const postInputUpdater = Variable(true);
 const isVis = Variable(!autoHide.get());
 
-const processUpdateCount = (updateCount: string): string => {
-    if (!padZero.get()) return updateCount;
-    return `${updateCount.padStart(2, '0')}`;
-};
+// Replace the BashPoller with a timer-based approach
+const updateTimer = setInterval(() => {
+    fetchUpdateData();
+}, pollingInterval.get());
 
-const updatesPoller = new BashPoller<string, []>(
-    pendingUpdates,
-    [bind(padZero), bind(postInputUpdater), bind(updateCommand)],
-    bind(pollingInterval),
-    updateCommand.get(),
-    processUpdateCount,
-);
-
-updatesPoller.initialize('updates');
-
-// Force immediate poll
-updatesPoller.execute();
+// Use the shared data for the UI
+export const pendingUpdates = Variable.derive([bind(sharedUpdateData)], (data) => {
+    return data.count;
+});
 
 Variable.derive([bind(autoHide)], (autoHideModule) => {
     isVis.set(!autoHideModule || (autoHideModule && parseFloat(pendingUpdates.get()) > 0));
@@ -81,6 +69,7 @@ export const Updates = (): BarBoxChild => {
                 updatesIcon.drop();
                 isVis.drop();
                 label.drop();
+                clearInterval(updateTimer);
             },
             setup: (self: Astal.Button): void => {
                 let disconnectFunctions: (() => void)[] = [];

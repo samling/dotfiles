@@ -1,6 +1,6 @@
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { fetchUpdateData, isChecking } from '../updates';
+import { fetchUpdateData, isChecking } from 'src/globals/updates';
 
 export const Header = (): JSX.Element => {
     const MenuLabel = (): JSX.Element => {
