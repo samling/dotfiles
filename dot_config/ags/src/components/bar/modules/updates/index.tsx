@@ -1,6 +1,5 @@
 import { Module } from '../../shared/Module';
 import { BarBoxChild } from 'src/lib/types/bar';
-import { BashPoller } from 'src/lib/poller/BashPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
@@ -29,20 +28,19 @@ const updateTimer = setInterval(() => {
     fetchUpdateData();
 }, pollingInterval.get());
 
-// Use the shared data for the UI
-export const pendingUpdates = Variable.derive([bind(sharedUpdateData)], (data) => {
-    return data.count;
-});
+// Bind directly to the sharedUpdateData for reactive updates
+const pendingUpdates = bind(sharedUpdateData).as(data => data.count);
 
-Variable.derive([bind(autoHide)], (autoHideModule) => {
-    isVis.set(!autoHideModule || (autoHideModule && parseFloat(pendingUpdates.get()) > 0));
+Variable.derive([bind(autoHide), bind(sharedUpdateData)], (autoHideModule, data) => {
+    isVis.set(!autoHideModule || (autoHideModule && parseFloat(data.count) > 0));
 });
 
 const updatesIcon = Variable.derive(
-    [bind(icon.pending), bind(icon.updated), bind(pendingUpdates)],
-    (pendingIcon, updatedIcon, pUpdates) => {
-        isVis.set(!autoHide.get() || (autoHide.get() && parseFloat(pUpdates) > 0));
-        return parseFloat(pUpdates) === 0 ? updatedIcon : pendingIcon;
+    [bind(icon.pending), bind(icon.updated), bind(sharedUpdateData)],
+    (pendingIcon, updatedIcon, data) => {
+        const count = parseFloat(data.count);
+        isVis.set(!autoHide.get() || (autoHide.get() && count > 0));
+        return count === 0 ? updatedIcon : pendingIcon;
     },
 );
 
@@ -51,7 +49,7 @@ export const Updates = (): BarBoxChild => {
         textIcon: updatesIcon(),
         boxClass: 'updates-bar',
         isVis: isVis,
-        label: bind(pendingUpdates),
+        label: pendingUpdates,
         showLabelBinding: bind(label),
         props: {
             onDestroy: () => {
@@ -62,7 +60,6 @@ export const Updates = (): BarBoxChild => {
                 middleClick.drop();
                 scrollUp.drop();
                 scrollDown.drop();
-                pendingUpdates.drop();
                 postInputUpdater.drop();
                 autoHide.drop();
                 pollingInterval.drop();
