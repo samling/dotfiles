@@ -7,7 +7,7 @@ import { Astal } from 'astal/gtk3';
 import { systemTime } from 'src/globals/time';
 import { BarButtonStyles } from 'src/lib/types/options';
 
-const format = Variable('%H:%M');
+const format = Variable('%H:%M  󰃭  %a, %d %b %Y');
 const icon = Variable('');
 const showIcon = Variable(true);
 const showTime = Variable(true);
@@ -28,13 +28,7 @@ const Clock = (): BarBoxChild => {
     const componentClassName = Variable.derive(
         [bind(style), bind(showIcon), bind(showTime)],
         (btnStyle, shwIcn, shwLbl) => {
-            const styleMap = {
-                default: 'style1',
-                split: 'style2',
-                wave: 'style3',
-                wave2: 'style3',
-            };
-            return `clock-container default ${!shwLbl ? 'no-label' : ''} ${!shwIcn ? 'no-icon' : ''}`;
+            return `clock-container ${btnStyle} ${!shwLbl ? 'no-label' : ''} ${!shwIcn ? 'no-icon' : ''}`;
         },
     );
 

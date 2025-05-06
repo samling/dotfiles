@@ -19,7 +19,7 @@
 }
 
 .calendar-content-items {
-    margin: 0em;
+    margin: 1.35em;
 }
 
 .calendar-container-box {
@@ -30,11 +30,14 @@
 .calendar-menu-widget {
     border-radius: 0.4em;
     color: $text;
+    padding: 0.5em 0.15em;
+    font-size: 1.1em;
+    font-weight: normal;
 
     &:selected {
-        color: $primary_bg;
-        background-color: $mauve;
-        border-radius: 0.4em;
+        color: $mauve;
+        background-color: transparent;
+        border-radius: 0em;
     }
 
     &.header {
@@ -59,9 +62,6 @@
     &:indeterminate {
         color: transparentize($text, 0.65);
     }
-
-    font-size: 1.1em;
-    padding: 0.5em 0.5em;
 }
 
 .clock-content-items {
