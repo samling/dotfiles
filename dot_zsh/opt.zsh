@@ -73,6 +73,7 @@ zstyle ':fzf-tab:*' fzf-flags \
   --height 100% \
   --bind 'ctrl-/:change-preview-window(down,40|)' \
   --color=label:italic \
+  --border \
   --border-label='[C-/] Expand preview' \
   --border-label-pos=0:bottom \
   --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
