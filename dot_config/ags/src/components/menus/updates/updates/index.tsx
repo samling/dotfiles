@@ -36,6 +36,7 @@ export const Updates = (): JSX.Element => {
                                     xalign={0} 
                                     halign={Gtk.Align.FILL} 
                                     hexpand 
+                                    selectable={true}
                                 />
                         )}
                         
@@ -76,6 +77,9 @@ export const Updates = (): JSX.Element => {
             <scrollable 
                 className="menu-scroller updates"
                 vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
+                hscrollbarPolicy={Gtk.PolicyType.NEVER}
+                hexpand
+                vexpand
             >
                 <box 
                     className="menu-content updates" 
