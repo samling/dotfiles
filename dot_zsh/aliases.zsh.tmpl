@@ -1,3 +1,6 @@
+#=== Force sudo to try and expand the next command if it's an alias
+alias sudo="sudo "
+
 #=== Builtin Replacements
 alias cat="bat -pp"
 alias df="duf -hide special,fuse"
@@ -5,6 +8,7 @@ alias diff="delta"
 # alias find="fd" # use find and fd separately
 alias grep="rg"
 alias grepall="rg -uuu --no-ignore"
+alias journalctl="SYSTEMD_LESS=FRXMK journalctl --no-pager"
 alias top="btop"
 alias watch="viddy -d"
 #alias vi=nvim-maybe-profile

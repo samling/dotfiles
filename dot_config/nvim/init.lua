@@ -2,6 +2,7 @@ require 'autocmd'
 require 'options'
 require 'keymaps'
 require 'diagnostics'
+require 'lsp'
 
 -- Disable netrw
 -- https://github.com/nvim-tree/nvim-tree.lua?tab=readme-ov-file#setup
