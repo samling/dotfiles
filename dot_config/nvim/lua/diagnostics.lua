@@ -1,4 +1,24 @@
 -- opt into diagnostics
 vim.diagnostic.config({
-  virtual_lines = true
+  -- virtual_text shows inline diagnostics
+  -- virtual_text = {
+  --   format = function(diagnostic)
+  --     if diagnostic.code == nil then
+  --       return string.format("[%s]: %s", diagnostic.source, diagnostic.message)
+  --     else
+  --       return string.format("[%s]: %s (%s)", diagnostic.source, diagnostic.message, diagnostic.code)
+  --     end
+  --   end
+  -- }
+  --
+  -- virtual_lines shows diagnostics on a new line
+  -- virtual_lines = {
+  --   format = function(diagnostic)
+  --     if diagnostic.code == nil then
+  --       return string.format("[%s]: %s", diagnostic.source, diagnostic.message)
+  --     else
+  --       return string.format("[%s]: %s (%s)", diagnostic.source, diagnostic.message, diagnostic.code)
+  --     end
+  --   end
+  -- }
 })

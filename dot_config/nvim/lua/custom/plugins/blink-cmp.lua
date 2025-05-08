@@ -108,7 +108,7 @@ return {
         },
       },
       trigger = {
-        show_on_trigger_character = true,
+        -- show_on_trigger_character = true,
       },
     },
 
@@ -116,6 +116,9 @@ return {
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
+      min_keyword_length = function(ctx)
+        return ctx.trigger.kind == "trigger_character" and 0 or 3
+      end,
     },
 
     fuzzy = { implementation = 'prefer_rust_with_warning' },
