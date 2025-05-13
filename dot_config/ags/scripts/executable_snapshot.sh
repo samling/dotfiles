@@ -9,13 +9,13 @@ mode=${1:-area}
 
 case "$mode" in
 active)
-    command="grimblast copysave active $outputPath"
+    command="GRIMBLAST_DISABLE_VIRTUAL_DISPLAY=true ~/.config/hypr/scripts/grimblast copysave active $outputPath"
     ;;
 output)
-    command="grimblast copysave output $outputPath"
+    command="GRIMBLAST_DISABLE_VIRTUAL_DISPLAY=true ~/.config/hypr/scripts/grimblast copysave output $outputPath"
     ;;
 area)
-    command="grimblast copysave area $outputPath"
+    command="GRIMBLAST_DISABLE_VIRTUAL_DISPLAY=true ~/.config/hypr/scripts/grimblast copysave area $outputPath"
     ;;
 *)
     echo "Invalid option: $mode"
