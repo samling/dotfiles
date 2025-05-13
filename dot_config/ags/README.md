@@ -13,12 +13,15 @@
 
 ### Inspiration
 
-This is the third iteration of my bar. It draws _heavily_ from [HyprPanel](https://github.com/Jas-SinghFSU/HyprPanel), an extensive and extremely well-designed bar and panel that already implements the majority of modules I wanted for my own. Primarily the goal has been to better understand, piece by piece, how HyprPanel works to inform my own future modules. I've plucked a great many pieces from HyprPanel, with the primary changes being:
+This is the third iteration of my bar. It draws _heavily_ from [HyprPanel](https://github.com/Jas-SinghFSU/HyprPanel); I'd go as far as calling it a (very bespoke) fork. HyprPanel is an extensive and extremely well-designed bar and panel that already implements the majority of modules I wanted for my own bar. Primarily the goal has been to better understand, piece by piece, how HyprPanel is built to inform my own future modules. I've plucked a great many pieces from HyprPanel, with the primary changes being:
 
-* No settings menu; I will eventually implement a config file of my own, but I prefer something copmletely declarative (I know HyprPanel settings can be exported, just a personal choice)
-* New/modified modules (e.g. Tailscale, dashboard buttons, etc.)
+* No settings menu; I will eventually implement a config file of my own, but I prefer something completely declarative (I know HyprPanel settings can be exported, just a personal choice)
+* New/modified modules
+    * Tailscale bar widget and menu
+    * Updates menu
+    * My own Workspaces module
+    * Many modifications to existing modules to suit my own needs
 * My own styles
-
 
 That said, the majority of this bar's code comes directly from HyprPanel, so they deserve many, many thanks.
 
