@@ -1,6 +1,9 @@
 {{- $primaryMonitor := "" -}}                     {{/* Initialize to empty string */}}
+{{- $hostData := "" -}}                     {{/* Initialize to empty string */}}
 {{- $hostname := .chezmoi.fqdnHostname -}}        {{/* Get the current hostname */}}
-{{- $hostData := index .host $hostname -}}   {{/* Get data for the current host */}}
+{{- if (hasKey . "host") -}}
+{{- $hostData = index .host $hostname -}}   {{/* Get data for the current host */}}
+{{- end -}}
 
 {{- if and $hostData (hasKey $hostData "monitors") -}}       {{/* Check if host data and monitors array exist */}}
   {{- range $hostData.monitors -}}                {{/* Loop through monitors for this host */}}
