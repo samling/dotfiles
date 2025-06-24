@@ -11,7 +11,7 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   sudo systemctl enable --now tailscaled
 
   #=== User
-  systemctl --user enable --now fumon
+  #systemctl --user enable --now fumon
 
   # These are started conditionally when running hyprland as we don't really need or want them in KDE
   #systemctl --user enable --now hyprpolkitagent

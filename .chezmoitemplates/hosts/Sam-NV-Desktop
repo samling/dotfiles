@@ -1,1 +1,2 @@
 [data.host.Sam-NV-Desktop]
+  headless = true
