@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 {{- $osID := .host.os_type }}
+{{- $desktopEnvironment := includeTemplate "desktopEnvironment" . }}
 
 {{- /* Map OS type to package manager */}}
 {{- $packageManager := "" -}}
@@ -35,7 +36,7 @@
   {{- end -}}
 {{- end }}
 
-{{- if eq $osID "arch" }}
+{{- if and (eq $osID "arch") (eq $desktopEnvironment "hyprland") }}
 echo "Installing Hyprland and Sway packages for {{ $osID }}..."
 sudo pacman -Sy --needed --noconfirm --ask=4 {{ $packageList | trim }}
 yay -S --needed --noconfirm {{ $aurPackageList | trim }}
