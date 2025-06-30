@@ -36,10 +36,14 @@
   {{- end -}}
 {{- end }}
 
-{{- if and (eq $osID "arch") (eq $desktopEnvironment "hyprland") }}
+{{- if eq $osID "arch" }}
+{{- if eq $desktopEnvironment "hyprland" }}
 echo "Installing Hyprland and Sway packages for {{ $osID }}..."
 sudo pacman -Sy --needed --noconfirm --ask=4 {{ $packageList | trim }}
 yay -S --needed --noconfirm {{ $aurPackageList | trim }}
+{{- else }}
+echo "No desktop environment or a desktop environment other than hyprland selected. Skipping..."
+{{- end }} 
 {{- else }}
 echo "Hyprland is not supported on {{ $osID }}. Skipping..."
 {{- end }} 
