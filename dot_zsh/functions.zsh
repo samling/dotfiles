@@ -94,3 +94,15 @@ function rgv () {
             --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
             --bind 'enter:become(emacsclient -c -nw -a "vim" +{2} {1} || vim {1} +{2})'
 }
+
+function cleanssh() {
+    pkill ssh-agent
+    unset SSH_AGENT_PID
+    unset SSH_AUTH_SOCK
+    rm -f $SSH_AUTH_SOCK # ~/.ssh/ssh-agent.sock
+    rm -f $HOME/.config/ssh-agent.pid
+}
+
+function startssh() {
+  eval $(ssh-agent)
+}
