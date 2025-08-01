@@ -85,6 +85,8 @@ packages:
       pacman: d-spy
     derailed-k9s:
       brew: derailed/k9s/k9s
+    devspace:
+      brew: devspace
     devtools:
       pacman: devtools
     dialog:
