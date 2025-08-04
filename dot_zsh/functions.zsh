@@ -106,3 +106,12 @@ function cleanssh() {
 function startssh() {
   eval $(ssh-agent)
 }
+
+# watch kubernetes shorthand
+function wk() {
+  if [[ -x $(command -v viddy) ]]; then
+    viddy -n 1 kubectl "$@"
+  elif [[ -f /usr/bin/watch ]]; then
+    /usr/bin/watch -n 1 kubectl "$@"
+  fi
+}
