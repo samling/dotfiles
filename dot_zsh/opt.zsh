@@ -119,12 +119,14 @@ zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
 	"commit tag") git show --color=always $word ;;
 	*) git show --color=always $word | delta ;;
 	esac'
-zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
-	'case "$group" in
-	"modified file") git diff $word | delta ;;
-	"recent commit object name") git show --color=always $word | delta ;;
-	*) git log --color=always $word ;;
-	esac'
+# disable default git completion for branches
+#zstyle :completion::complete:git-checkout:argument-rest:headrefs command "git for-each-ref --format='%(refname)' refs/heads 2>/dev/null"
+#zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
+#	'case "$group" in
+#	"modified file") git diff $word | delta ;;
+#	"recent commit object name") git show --color=always $word | delta ;;
+#	*) git log --color=always $word ;;
+#	esac'
 
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 #zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"

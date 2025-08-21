@@ -46,6 +46,11 @@
   url = "https://github.com/Aloxaf/fzf-tab"
   refreshPeriod = "168h"
 
+[".zsh/plugins/zsh-ssh"]
+  type = "git-repo"
+  url = "https://github.com/sunlei/zsh-ssh"
+  refreshPeriod = "168h"
+
 #=== THEMES
 ["Themes/catppuccin/fuzzel"]
   type = "git-repo"

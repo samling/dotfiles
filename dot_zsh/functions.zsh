@@ -115,3 +115,110 @@ function wk() {
     /usr/bin/watch -n 1 kubectl "$@"
   fi
 }
+
+s_debug() {
+  local config_file="$HOME/.ssh/config"
+  local all_hosts=""
+  
+  echo "=== DEBUG: Checking main config file ==="
+  echo "Config file: $config_file"
+  
+  # Function to extract hosts from a config file
+  extract_hosts() {
+    local file="$1"
+    echo "  Checking file: $file"
+    if [[ -r "$file" ]]; then
+      local hosts=$("grep" -E '^Host ' "$file" 2>/dev/null | awk '{print $2}' | "grep" -v '\*')
+      echo "  Found hosts: $hosts"
+      echo "$hosts"
+    else
+      echo "  File not readable or doesn't exist"
+    fi
+  }
+  
+  # Get hosts from main config file
+  echo "=== Getting hosts from main config ==="
+  all_hosts=$(extract_hosts "$config_file")
+  
+  # Parse Include directives and get hosts from included files
+  echo "=== Checking Include directives ==="
+  while IFS= read -r include_line; do
+    echo "Found include line: '$include_line'"
+    
+    # Remove "Include " from the beginning - using parameter expansion
+    include_path="${include_line#Include }"
+    echo "Extracted path: '$include_path'"
+    
+    # Expand the path properly using eval
+    resolved_path=$(eval echo "$include_path")
+    echo "Resolved path: '$resolved_path'"
+    
+    # Get hosts from included file
+    included_hosts=$(extract_hosts "$resolved_path")
+    if [[ -n "$included_hosts" ]]; then
+      all_hosts="$all_hosts"$'\n'"$included_hosts"
+    fi
+  done < <("grep" -E '^Include ' "$config_file" 2>/dev/null)
+  
+  echo "=== Final host list ==="
+  echo "$all_hosts" | sed '/^$/d' | sort -u
+}
+
+s() {
+  local config_file="$HOME/.ssh/config"
+  local temp_config=$(mktemp)
+  
+  # Function to extract hosts from a config file
+  extract_hosts() {
+    local file="$1"
+    if [[ -r "$file" ]]; then
+      "grep" -E '^Host ' "$file" 2>/dev/null | awk '{print $2}' | "grep" -v '\*'
+    fi
+  }
+  
+  # Function to append file contents to temp config
+  append_config() {
+    local file="$1"
+    if [[ -r "$file" ]]; then
+      cat "$file" >> "$temp_config"
+      echo "" >> "$temp_config"  # Add blank line between files
+    fi
+  }
+  
+  # Start with main config file
+  append_config "$config_file"
+  local all_hosts=$(extract_hosts "$config_file")
+  
+  # Parse Include directives and append included files
+  while IFS= read -r include_line; do
+    # Remove "Include " from the beginning using parameter expansion
+    include_path="${include_line#Include }"
+    
+    # Expand the path properly using eval for tilde expansion
+    resolved_path=$(eval echo "$include_path")
+    
+    # Append the included file contents (but skip Include directives to avoid recursion)
+    if [[ -r "$resolved_path" ]]; then
+      "grep" -v '^Include ' "$resolved_path" >> "$temp_config"
+      echo "" >> "$temp_config"
+      
+      # Get hosts from included file
+      included_hosts=$(extract_hosts "$resolved_path")
+      if [[ -n "$included_hosts" ]]; then
+        all_hosts="$all_hosts"$'\n'"$included_hosts"
+      fi
+    fi
+  done < <("grep" -E '^Include ' "$config_file" 2>/dev/null)
+  
+  # Remove empty lines, sort, deduplicate, and select with fzf
+  local server
+  server=$(echo "$all_hosts" | sed '/^$/d' | sort -u | fzf)
+  
+  if [[ -n "$server" ]]; then
+    # Use the temporary combined config file
+    ssh -F "$temp_config" "$server"
+  fi
+  
+  # Clean up temporary file
+  rm -f "$temp_config"
+}

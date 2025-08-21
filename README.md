@@ -12,7 +12,7 @@ My ever-growing collection of dotfiles and configs.
 ### Bitwarden-cli tl;dr
 
 1. Create `~/.bwpass` with password
-1. export BW_SESSION=$(bw unlock --raw --passwordfile=/home/$USERNAME/.bwpass)
+1. export BW_SESSION=$(bw unlock --raw --passwordfile=$HOME/.bwpass)
 
 ### Chezmoi tl;dr
 ```

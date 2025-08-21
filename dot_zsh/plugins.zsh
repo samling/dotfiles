@@ -9,4 +9,6 @@ source ~/.zsh/plugins/git-auto-fetch.plugin.zsh
 
 source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
+#source ~/.zsh/plugins/zsh-ssh/zsh-ssh.plugin.zsh
+
 #source ~/.zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
