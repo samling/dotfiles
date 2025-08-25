@@ -268,6 +268,8 @@ packages:
       pacman: luarocks
       brew: luarocks
       apt: luarocks
+    man-db:
+      pacman: man-db
     mardownlint:
       pacman: markdownlint
     meson:
