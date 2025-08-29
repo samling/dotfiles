@@ -26,6 +26,7 @@
     "themes",         # Appearance and theming
     "wayland",        # Wayland compositor tools (or use "x11" for X11)
     "hyprland",       # Hyprland-specific packages (match desktop_environment)
+    "gui_framework",  # GUI frameworks
     
     # System utilities
     "network",        # Network tools (nmap, traceroute, etc.)

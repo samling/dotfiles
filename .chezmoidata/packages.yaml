@@ -582,8 +582,10 @@ packages:
 
   # GUI frameworks (for those building desktop apps)
   gui_framework:
-    aylurs-gtk-shell-git:
-      yay: aylurs-gtk-shell-git
+    # aylurs-gtk-shell-git:
+    #   yay: aylurs-gtk-shell-git
+    quickshell:
+      yay: quickshell
     hyprswitch:
       yay: hyprswitch
 
