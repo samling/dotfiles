@@ -37,9 +37,10 @@
     # Optional groups (enable as needed)
     "media",        # Audio/video tools
     "security",     # Security tools
-    # "ai",           # AI/ML tools
+    "ai",           # AI/ML tools
     # "gaming",       # Gaming packages
-    # "hardware",     # Hardware-specific tools (nvidia-settings, etc.)
+    "hardware",     # Hardware-specific tools (nvidia-settings, etc.)
+    # "nvidia",       # NVIDIA-specific packages
     "terminal",     # Terminal emulators/multiplexers
     # "macos",        # macOS specific tools (if on macOS)
     "laptop",       # Laptop-specific packages (auto-enabled if chassis.type = "laptop")
@@ -50,13 +51,6 @@
   # Monitor configuration (optional - only needed for multi-monitor setups)
   # If you have only one monitor, you can omit this entire section
   # The primaryMonitor template will return "dummy" for single-monitor setups
-  monitors = [
-    # Primary monitor example
-    {
-      name = "dummy",
-      primary = true,
-    }
-  ]
 
   # Additional host-specific configuration examples:
   
