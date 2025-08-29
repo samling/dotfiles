@@ -31,6 +31,7 @@ packages:
   #     - ai: AI/ML tools
   #     - gaming: Gaming packages
   #     - hardware: Hardware-specific tools
+  #     - nvidia: NVIDIA-specific tools
   #     - terminal: Terminal emulators/multiplexers
   #     - macos: macOS specific tools
   #     - gui_framework: GUI development frameworks
@@ -304,6 +305,8 @@ packages:
 
   # Desktop applications
   desktop:
+    appimagelauncher:
+      yay: appimagelauncher
     google-chrome:
       yay: google-chrome
       apt: google-chrome-stable
@@ -404,9 +407,6 @@ packages:
   themes:
     catppuccin-gtk-theme-mocha:
       yay: catppuccin-gtk-theme-mocha
-    gnome-themes-extra:
-      pacman: gnome-themes-extra
-      apt: gnome-themes-extra
     papirus-icon-theme:
       yay: papirus-icon-theme
     numix-circle-icon-theme:
@@ -485,11 +485,6 @@ packages:
 
   # System services and management
   system_services:
-    gnome-keyring:
-      pacman: gnome-keyring
-      apt: gnome-keyring
-    gnome-power-manager:
-      pacman: gnome-power-manager
     greetd:
       pacman: greetd
     greetd-regreet:
@@ -556,7 +551,14 @@ packages:
 
   # GNOME desktop environment
   gnome:
-    # Add GNOME packages here when needed
+    gnome-keyring:
+      pacman: gnome-keyring
+      apt: gnome-keyring
+    gnome-power-manager:
+      pacman: gnome-power-manager
+    gnome-themes-extra:
+      pacman: gnome-themes-extra
+      apt: gnome-themes-extra
 
   # macOS specific
   macos:
@@ -571,8 +573,6 @@ packages:
 
   # Hardware specific
   hardware:
-    nvidia-settings:
-      pacman: nvidia-settings
     brightnessctl:
       pacman: brightnessctl
     blueman:
@@ -586,8 +586,11 @@ packages:
       yay: aylurs-gtk-shell-git
     hyprswitch:
       yay: hyprswitch
-    appimagelauncher:
-      yay: appimagelauncher
+
+  # NVIDIA
+  nvidia:
+    nvidia-settings:
+      pacman: nvidia-settings
 
   ##########
   # LAPTOP #
