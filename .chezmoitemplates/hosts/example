@@ -1,8 +1,7 @@
-# Example host configuration file
-# Copy this file and rename it to your actual hostname
-# Remove the comments and customize the values for your specific machine
-
 [data.host.example]
+  # Example host configuration file
+  # Copy this file and rename it to your actual hostname
+  # Remove the comments and customize the values for your specific machine
   # Desktop environment - affects which packages and configs are applied
   # Options: "hyprland", "sway", "gnome", "kde", "xfce", etc.
   # Leave empty or comment out for headless/server systems
@@ -48,39 +47,9 @@
   ]
 
   # Monitor configuration (optional - only needed for multi-monitor setups)
-  # If you have only one monitor, you can omit this entire section
-  # The primaryMonitor template will return "dummy" for single-monitor setups
+  # For multi-monitor setups, replace the dummy entry with your actual monitors:
+  # { name = "DP-1", desc = "desc:Dell Inc. DELL U2719DX", resolution = "2560x1440@144", position = "0x0", scale = "1", translation = "", primary = true, workspaces = [1, 2, 3, 4, 5, 6] },
+  # { name = "HDMI-A-1", desc = "desc:LG Electronics LG ULTRAGEAR", resolution = "3440x1440@120", position = "2560x0", scale = "1", translation = "", primary = false, workspaces = [7, 8, 9] },
   monitors = [
-    # Primary monitor example
-    {
-      name = "DP-1",                    # Monitor connection name (use `hyprctl monitors` to find)
-      desc = "desc:Dell Inc. DELL U2719DX", # Monitor description (optional, helps identify specific monitor)
-      resolution = "2560x1440@144",     # Resolution and refresh rate
-      position = "0x0",                 # Position in desktop layout (x,y coordinates)
-      scale = "1",                      # Scale factor (1 = 100%, 1.5 = 150%, etc.)
-      translation = "",                 # Transform (rotation, etc.) - usually empty
-      primary = true,                   # Mark as primary monitor
-      workspaces = [1, 2, 3, 4, 5, 6]  # Workspaces to assign to this monitor
-    },
-    
-    # Secondary monitor example
-    {
-      name = "HDMI-A-1",
-      desc = "desc:LG Electronics LG ULTRAGEAR",
-      resolution = "3440x1440@120",
-      position = "2560x0",              # Positioned to the right of primary
-      scale = "1",
-      translation = "",
-      primary = false,                  # Not the primary monitor
-      workspaces = [7, 8, 9]           # Different workspaces for secondary monitor
-    }
-    
-    # For single monitor setups, you can either:
-    # 1. Omit the entire monitors section
-    # 2. Or include a minimal config like this:
-    # {
-    #   name = "dummy",
-    #   primary = true,
-    #   workspaces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-    # }
+    { name = "dummy", primary = true, workspaces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
   ]

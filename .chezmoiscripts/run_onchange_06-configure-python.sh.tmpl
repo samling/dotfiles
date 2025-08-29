@@ -11,14 +11,49 @@ echo "Configuring Python with uv for {{ $osID }}..."
 #    exit 1
 #fi
 
-# Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Check if uv is already installed
+if ! command -v uv &> /dev/null; then
+    echo "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    
+    # Source the updated PATH (uv typically installs to ~/.cargo/bin)
+    if [ -f "$HOME/.cargo/env" ]; then
+        source "$HOME/.cargo/env"
+    fi
+    
+    # Add to PATH for this session if not already there
+    export PATH="$HOME/.cargo/bin:$PATH"
+else
+    echo "uv is already installed"
+fi
+
+# Verify uv is now available
+if ! command -v uv &> /dev/null; then
+    echo "Error: uv installation failed or not found in PATH"
+    echo "Trying alternative paths..."
+    
+    # Try common installation locations
+    UV_PATH=""
+    for path in "$HOME/.cargo/bin/uv" "$HOME/.local/bin/uv" "/usr/local/bin/uv"; do
+        if [ -x "$path" ]; then
+            UV_PATH="$path"
+            echo "Found uv at: $UV_PATH"
+            break
+        fi
+    done
+    
+    if [ -z "$UV_PATH" ]; then
+        echo "Error: Could not find uv executable"
+        exit 1
+    fi
+else
+    UV_PATH="uv"
+fi
 
 # Install Python
 PYTHON_VERSION="3.13"
-#echo "Installing Python 3.11 with pyenv"
 echo "Installing Python ${PYTHON_VERSION} with uv"
-uv python install ${PYTHON_VERSION} --default --preview
+$UV_PATH python install ${PYTHON_VERSION} --default --preview
 
 # Set as default for the user
 #pyenv global 3.11 
