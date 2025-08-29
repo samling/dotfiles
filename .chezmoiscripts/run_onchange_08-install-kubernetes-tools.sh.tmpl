@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
 {{- $osID := .host.os_type }}
+{{- $hostname := .chezmoi.fqdnHostname -}}
+{{- $hostData := index .host $hostname -}}
+{{- $enabledGroups := list -}}
 
+{{- /* Get enabled package groups for this host */}}
+{{- if and $hostData (hasKey $hostData "packageGroups") (hasKey $hostData.packageGroups "enabled") -}}
+  {{- $enabledGroups = $hostData.packageGroups.enabled -}}
+{{- end -}}
+
+{{- if has "cloud" $enabledGroups }}
 echo "Installing Kubernetes tools for {{ $osID }}..."
 
 # Install krew
@@ -26,4 +35,7 @@ kubectl krew index add kubectl-ai https://github.com/sozercan/kubectl-ai
 
 # Install krew plugins
 echo "Installing krew plugins..."
-kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree ktop 
+kubectl krew install ns ctx neat sniff konfig stern resource-capacity tree ktop
+{{- else }}
+echo "Skipping Kubernetes tools - cloud group not enabled"
+{{- end }} 

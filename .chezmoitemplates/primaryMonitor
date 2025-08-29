@@ -10,5 +10,8 @@
       {{- break -}}                              {{/* Stop searching */}}
     {{- end -}}
   {{- end -}}
+{{- else -}}
+  {{/* Fallback: if no monitors defined, use dummy value */}}
+  {{- $primaryMonitor = "dummy" -}}
 {{- end -}}
 {{- $primaryMonitor -}}

@@ -2,19 +2,148 @@ packages:
   ############
   # PACKAGES #
   ############
+  #
+  # Available package groups:
+  #   Core & Essential:
+  #     - core: Essential system tools (curl, wget, git, zsh, tmux, etc.)
+  #     - cli_tools: Command line productivity (bat, fzf, ripgrep, jq, etc.)
+  #     - system_libs: Libraries and dependencies
+  #     - system_services: System services (gnome-keyring, networkmanager, etc.)
+  #
+  #   Development:
+  #     - development: Programming languages, build tools, editors
+  #     - cloud: Docker, Kubernetes, Terraform, AWS/Azure tools
+  #
+  #   Desktop & GUI:
+  #     - desktop: GUI applications (browsers, Discord, Obsidian, etc.)
+  #     - themes: Appearance and theming packages
+  #     - fonts: Font packages
+  #     - wayland: Wayland-specific tools
+  #     - x11: X11-specific tools
+  #     - gnome: GNOME desktop environment
+  #
+  #   Specialized:
+  #     - network: Networking tools (nmap, traceroute, etc.)
+  #     - media: Audio/video tools (ffmpeg, pavucontrol, etc.)
+  #     - monitoring: System monitoring (btop, fastfetch, etc.)
+  #     - file_management: File handling utilities
+  #     - security: Security tools
+  #     - ai: AI/ML tools
+  #     - gaming: Gaming packages
+  #     - hardware: Hardware-specific tools
+  #     - terminal: Terminal emulators/multiplexers
+  #     - macos: macOS specific tools
+  #     - gui_framework: GUI development frameworks
+  #
+  #   Desktop Environments:
+  #     - laptop: Laptop-specific packages
+  #     - hyprland: Hyprland window manager
+  #     - sway: Sway window manager
+  #
+  # Usage in host profiles (.chezmoitemplates/hosts/):
+  #   [data.host.hostname.packageGroups]
+  #   enabled = ["core", "cli_tools", "development"]
+  #   # Groups not listed are automatically disabled
+  #
+  ############
   taps:
     darwin:
       - carvel-dev/carvel
-  base:
-    aichat:
-      pacman: aichat
-      brew: aichat
-    asdf:
-      brew: asdf
-    appimagelauncher:
-      yay: appimagelauncher
-    apple-fonts:
-      yay: apple-fonts
+  
+  # Core system tools and utilities
+  core:
+    base-devel:
+      pacman: base-devel
+      apt: build-essential
+    curl:
+      pacman: curl
+      brew: curl
+      apt: curl
+    wget:
+      pacman: wget
+      brew: wget
+      apt: wget
+    unzip:
+      pacman: unzip
+      brew: unzip
+      apt: unzip
+    p7zip:
+      pacman: p7zip
+      brew: p7zip
+      apt: p7zip
+    zsh:
+      pacman: zsh
+      brew: zsh
+      apt: zsh
+    tmux:
+      pacman: tmux
+      brew: tmux
+    git-delta:
+      pacman: git-delta
+      brew: delta
+    github-cli:
+      pacman: github-cli
+    openssl:
+      pacman: openssl
+      brew: openssl
+      apt: openssl
+    gnupg:
+      pacman: gnupg
+      brew: gnupg
+      apt: gnupg
+
+  # Command line utilities and productivity tools
+  cli_tools:
+    bat:
+      pacman: bat
+      brew: bat
+    eza:
+      pacman: eza
+      brew: eza
+    lsd:
+      pacman: lsd
+      brew: lsd
+    tree:
+      pacman: tree
+    fzf:
+      pacman: fzf
+      brew: fzf
+      apt: fzf
+    ripgrep:
+      pacman: ripgrep
+      brew: rg
+    fd:
+      pacman: fd
+      brew: fd
+    jq:
+      pacman: jq
+      brew: jq
+      apt: jq
+    go-yq:
+      pacman: go-yq
+      brew: yq
+    gron:
+      pacman: gron
+    jc:
+      pacman: jc
+      brew: jc
+    zoxide:
+      pacman: zoxide
+      brew: zoxide
+    grc:
+      pacman: grc
+      brew: grc
+    direnv:
+      pacman: direnv
+      brew: direnv
+      apt: direnv
+    rename:
+      brew: rename
+    tealdeer:
+      brew: tealdeer
+
+  # Development tools and languages
+  development:
     autoconf:
       pacman: autoconf
       brew: autoconf
@@ -23,85 +152,75 @@ packages:
       pacman: automake
       brew: automake
       apt: automake
-    aws-cli:
-      pacman: aws-cli
-      brew: awscli
-    aylurs-gtk-shell-git:
-      yay: aylurs-gtk-shell-git
-    azure-cli:
-      pacman: azure-cli
-      brew: azure-cli
-    base-devel:
-      pacman: base-devel
-      apt: build-essential
-    bat:
-      pacman: bat
-      brew: bat
-    bemoji:
-      yay: bemoji
-    bison:
-      pacman: bison
-      brew: bison
-      apt: bison
-    blueman:
-      pacman: blueman
-    bluez-utils:
-      pacman: bluez-utils
-    brightnessctl:
-      pacman: brightnessctl
-    bruno:
-      brew: bruno
-    btop:
-      pacman: btop
-      brew: btop
-    bustle: # dbus viewer
-      pacman: bustle
-    cage:
-      pacman: cage
-    catppuccin-gtk-theme-mocha:
-      yay: catppuccin-gtk-theme-mocha
-    cliphist:
-      pacman: cliphist
-    clipse:
-      yay: clipse
-    clipse-gui:
-      yay: clipse-gui
     cmake:
       pacman: cmake
       brew: cmake
       apt: cmake
-    copyq:
-      pacman: copyq
-      apt: copyq
-    cpio:
-      pacman: cpio
-      brew: cpio
-      apt: cpio
-    curl:
-      pacman: curl
-      brew: curl
-      apt: curl
-    d-spy: # d-bus inspection tool
-      pacman: d-spy
-    derailed-k9s:
-      brew: derailed/k9s/k9s
-    devspace:
-      brew: devspace
+    meson:
+      pacman: meson
+      apt: meson
+    bison:
+      pacman: bison
+      brew: bison
+      apt: bison
+    flex:
+      pacman: flex
+      brew: flex
+      apt: flex
+    gcc:
+      pacman: gcc
+      brew: gcc
+      apt: gcc
+    llvm:
+      pacman: llvm
+      apt: llvm
+    go:
+      pacman: go
+      brew: go
+      apt: golang-go
+    pyenv:
+      pacman: pyenv
+      brew: pyenv
+      apt: pyenv
+    asdf:
+      brew: asdf
+    nvm:
+      yay: nvm
+      brew: nvm
+    luarocks:
+      pacman: luarocks
+      brew: luarocks
+      apt: luarocks
+    lua-language-server:
+      pacman: lua-language-server
+    pkg-config:
+      pacman: pkg-config
+      brew: pkg-config
+      apt: pkg-config
+    neovim:
+      pacman: neovim
+      brew: nvim
+      apt: nvim
+    vim:
+      pacman: vim
+      apt: vim
+    visual-studio-code-bin:
+      yay: visual-studio-code-bin
+    lazygit:
+      pacman: lazygit
+      brew: jesseduffield/lazygit/lazygit
+    gitmux:
+      yay: gitmux
+      brew: arl/arl/gitmux
     devtools:
       pacman: devtools
-    dialog:
-      pacman: dialog
-      brew: dialog
-      apt: dialog
-    direnv:
-      pacman: direnv
-      brew: direnv
-      apt: direnv
-    discord:
-      pacman: discord
-    dnsutils:
-      pacman: dnsutils
-      apt: dnsutils
+    mardownlint:
+      pacman: markdownlint
+    patchelf:
+      pacman: patchelf
+
+  # Cloud and container tools
+  cloud:
     docker:
       pacman: docker
       brew: docker
@@ -109,129 +228,233 @@ packages:
     docker-buildx:
       pacman: docker-buildx
       apt: docker-buildx
-    duf:
-      pacman: duf
-      brew: duf
-    evolution:
-      pacman: evolution
-      apt: evolution
-    eza:
-      pacman: eza
-      brew: eza
-    fastfetch:
-      pacman: fastfetch
-    fd:
-      pacman: fd
-      brew: fd
-    feh:
-      pacman: feh
-      apt: feh
-    ffmpeg:
-      brew: ffmpeg
-    ffmpegthumbnailer:
-      pacman: ffmpegthumbnailer
-    fira-sans:
-      pacman: ttf-fira-sans
-    flex:
-      pacman: flex
-      brew: flex
-      apt: flex
-    font-manager:
-      pacman: font-manager
-    fuzzel:
-      pacman: fuzzel
-    fzf:
-      pacman: fzf
-      brew: fzf
-      apt: fzf
-    gcc:
-      pacman: gcc
-      brew: gcc
-      apt: gcc
-    git-delta:
-      pacman: git-delta
-      brew: delta
-    github-cli:
-      pacman: github-cli
-    gitmux:
-      yay: gitmux
-      brew: arl/arl/gitmux
-    glib2:
-      pacman: glib2
-    gnome-keyring:
-      pacman: gnome-keyring
-      apt: gnome-keyring
-    gnome-power-manager:
-      pacman: gnome-power-manager
-    gnome-themes-extra:
-      pacman: gnome-themes-extra
-      apt: gnome-themes-extra
-    gnupg:
-      pacman: gnupg
-      brew: gnupg
-      apt: gnupg
-    go:
-      pacman: go
-      brew: go
-      apt: golang-go
-    go-yq:
-      pacman: go-yq
-      brew: yq
-    google-chrome:
-      yay: google-chrome
-      apt: google-chrome-stable
-    grc:
-      pacman: grc
-      brew: grc
-    greetd:
-      pacman: greetd
-    greetd-regreet:
-      pacman: greetd-regreet
-    grimblast:
-      yay: grimblast
-    gron:
-      pacman: gron
-    gtk3:
-      pacman: gtk3
-    gtk4:
-      pacman: gtk4
-    gvfs:
-      pacman: gvfs
-    helm:
-      pacman: helm
-      brew: helm
-    hyprswitch:
-      yay: hyprswitch
-    imagemagick:
-      brew: imagemagick
-    insync:
-      yay: insync
-      apt: insync
-    ipcalc:
-      pacman: ipcalc
-    jc:
-      pacman: jc
-      brew: jc
-    jq:
-      pacman: jq
-      brew: jq
-      apt: jq
-    keyd:
-      pacman: keyd
-    k9s:
-      pacman: k9s
-      brew: derailed/k9s/k9s
     kubectl:
       pacman: kubectl
       brew: kubectl
       apt: kubectl
+    k9s:
+      pacman: k9s
+      brew: derailed/k9s/k9s
+    derailed-k9s:
+      brew: derailed/k9s/k9s
+    helm:
+      pacman: helm
+      brew: helm
+    terraform:
+      pacman: terraform
+      brew: hashicorp/tap/terraform
+      apt: terraform
+    terragrunt:
+      pacman: terragrunt
+      brew: terragrunt
+    aws-cli:
+      pacman: aws-cli
+      brew: awscli
+    azure-cli:
+      pacman: azure-cli
+      brew: azure-cli
+    devspace:
+      brew: devspace
+    vendir:
+      yay: vendir
+      brew: vendir
+    ytt:
+      yay: ytt
+      brew: ytt
+    vkv:
+      brew: falcosuessgott/tap/vkv
+
+  # Network tools
+  network:
+    dnsutils:
+      pacman: dnsutils
+      apt: dnsutils
+    nmap:
+      pacman: nmap
+      brew: nmap
+      apt: nmap
+    traceroute:
+      pacman: traceroute
+      brew: tcptraceroute
+      apt: traceroute
+    ipcalc:
+      pacman: ipcalc
+    tailscale:
+      pacman: tailscale
+    socat:
+      pacman: socat
+    smbclient:
+      pacman: smbclient
+      apt: smbclient
+
+  # Media and graphics
+  media:
+    ffmpeg:
+      brew: ffmpeg
+    ffmpegthumbnailer:
+      pacman: ffmpegthumbnailer
+    imagemagick:
+      brew: imagemagick
+    pavucontrol:
+      pacman: pavucontrol
+      apt: pavucontrol
+    feh:
+      pacman: feh
+      apt: feh
+
+  # Desktop applications
+  desktop:
+    google-chrome:
+      yay: google-chrome
+      apt: google-chrome-stable
+    discord:
+      pacman: discord
+    signal-desktop:
+      pacman: signal-desktop
+    vesktop:
+      yay: vesktop
+      apt: vesktop
+    spotify-launcher:
+      pacman: spotify-launcher
+    obsidian:
+      pacman: obsidian
+    evolution:
+      pacman: evolution
+      apt: evolution
+    wezterm:
+      pacman: wezterm
+      brew: wezterm
+      apt: wezterm
+    thunar:
+      pacman: thunar
+    thunar-volman:
+      pacman: thunar-volman
+    copyq:
+      pacman: copyq
+      apt: copyq
+    localsend-bin:
+      yay: localsend-bin
+      brew: localsend
+      apt: localsend
+    insync:
+      yay: insync
+      apt: insync
+    bruno:
+      brew: bruno
+
+  # System monitoring and information
+  monitoring:
+    btop:
+      pacman: btop
+      brew: btop
+    duf:
+      pacman: duf
+      brew: duf
+    fastfetch:
+      pacman: fastfetch
+    serie:
+      pacman: serie
+    viddy:
+      yay: viddy
+      brew: viddy
+    syshud:
+      yay: syshud
+    bustle: # dbus viewer
+      pacman: bustle
+    d-spy: # d-bus inspection tool
+      pacman: d-spy
+
+  # File management
+  file_management:
+    cpio:
+      pacman: cpio
+      brew: cpio
+      apt: cpio
+    dialog:
+      pacman: dialog
+      brew: dialog
+      apt: dialog
+    gvfs:
+      pacman: gvfs
+    udiskie:
+      pacman: udiskie
+    tumbler:
+      pacman: tumbler
+    perl-file-mimeinfo:
+      pacman: perl-file-mimeinfo
+
+  # Fonts
+  fonts:
+    fira-sans:
+      pacman: ttf-fira-sans
+    ttf-iosevka:
+      yay: ttf-iosevka
+    ttf-iosevka-term:
+      yay: ttf-iosevka-term
+    ttf-iosevka-nerd:
+      pacman: ttf-iosevka-nerd
+    nerd-fonts:
+      yay: nerd-fonts
+    apple-fonts:
+      yay: apple-fonts
+    ttf-ms-win11-auto:
+      yay: ttf-ms-win11-auto
+
+  # Themes and appearance
+  themes:
+    catppuccin-gtk-theme-mocha:
+      yay: catppuccin-gtk-theme-mocha
+    gnome-themes-extra:
+      pacman: gnome-themes-extra
+      apt: gnome-themes-extra
+    papirus-icon-theme:
+      yay: papirus-icon-theme
+    numix-circle-icon-theme:
+      yay: numix-circle-icon-theme-git
+    font-manager:
+      pacman: font-manager
+    nwg-look:
+      pacman: nwg-look
+    qt6ct:
+      pacman: qt6ct
+      apt: qt6ct
+
+  # Security
+  security:
     lastpass-cli:
       brew: lastpass-cli
-    lazygit:
-      pacman: lazygit
-      brew: jesseduffield/lazygit/lazygit
+
+  # AI tools
+  ai:
+    aichat:
+      pacman: aichat
+      brew: aichat
+
+  # System libraries and dependencies
+  system_libs:
+    glib2:
+      pacman: glib2
+    gtk3:
+      pacman: gtk3
+    gtk4:
+      pacman: gtk4
     libconfig:
       pacman: libconfig
+    systemd-libs:
+      pacman: systemd-libs
+    sqlite3:
+      pacman: sqlite3
+      brew: sqlite3
+      apt: sqlite3
+    xz:
+      pacman: xz
+      brew: xz
+      apt: xz
+    zlib:
+      brew: zlib
+    readline:
+      brew: readline
+    # APT-specific development libraries
     libbz2-dev:
       apt: libbz2-dev
     libevent-core:
@@ -252,227 +475,119 @@ packages:
       apt: libssl-dev
     libxml2-dev:
       apt: libxml2-dev
-    llvm:
-      pacman: llvm
-      apt: llvm
-    localsend-bin:
-      yay: localsend-bin
-      brew: localsend
-      apt: localsend
-    lsd:
-      pacman: lsd
-      brew: lsd
-    lua-language-server:
-      pacman: lua-language-server
-    luarocks:
-      pacman: luarocks
-      brew: luarocks
-      apt: luarocks
+    zlib1g-dev:
+      apt: zlib1g-dev
+    xmlsec:
+      pacman: xmlsec
+      apt: libxmlsec1-dev
+    software-properties-common:
+      apt: software-properties-common
+
+  # System services and management
+  system_services:
+    gnome-keyring:
+      pacman: gnome-keyring
+      apt: gnome-keyring
+    gnome-power-manager:
+      pacman: gnome-power-manager
+    greetd:
+      pacman: greetd
+    greetd-regreet:
+      pacman: greetd-regreet
+    keyd:
+      pacman: keyd
     man-db:
       pacman: man-db
-    mardownlint:
-      pacman: markdownlint
-    meson:
-      pacman: meson
-      apt: meson
-    nerd-fonts:
-      yay: nerd-fonts
-    neovim:
-      pacman: neovim
-      brew: nvim
-      apt: nvim
     networkmanager:
       pacman: networkmanager
     network-manager-applet:
       pacman: network-manager-applet
     nm-connection-editor:
       pacman: nm-connection-editor
-    nmap:
-      pacman: nmap
-      brew: nmap
-      apt: nmap
-    numix-circle-icon-theme:
-      yay: numix-circle-icon-theme-git
-    nvidia-settings:
-      pacman: nvidia-settings
-    nvm:
-      yay: nvm
-      brew: nvm
-    nwg-look:
-      pacman: nwg-look
-    obsidian:
-      pacman: obsidian
-    openssl:
-      pacman: openssl
-      brew: openssl
-      apt: openssl
-    p7zip:
-      pacman: p7zip
-      brew: p7zip
-      apt: p7zip
     pacman-contrib:
       pacman: pacman-contrib
-    papirus-icon-theme:
-      yay: papirus-icon-theme
-    patchelf:
-      pacman: patchelf
-    pavucontrol:
-      pacman: pavucontrol
-      apt: pavucontrol
-    perl-file-mimeinfo:
-      pacman: perl-file-mimeinfo
-    pkg-config:
-      pacman: pkg-config
-      brew: pkg-config
-      apt: pkg-config
-    pyenv:
-      pacman: pyenv
-      brew: pyenv
-      apt: pyenv
-    qt6ct:
-      pacman: qt6ct
-      apt: qt6ct
-    readline:
-      brew: readline
-    rename:
-      brew: rename
-    ripgrep:
-      pacman: ripgrep
-      brew: rg
-    serie:
-      pacman: serie
-    signal-desktop:
-      pacman: signal-desktop
-    sketchybar:
-      brew: FelixKratz/formulae/sketchybar
-    smbclient:
-      pacman: smbclient
-      apt: smbclient
-    socat:
-      pacman: socat
-    software-properties-common:
-      apt: software-properties-common
-    spotify-launcher:
-      pacman: spotify-launcher
-    sqlite3:
-      pacman: sqlite3
-      brew: sqlite3
-      apt: sqlite3
-    syshud:
-      yay: syshud
-    systemd-libs:
-      pacman: systemd-libs
-    tailscale:
-      pacman: tailscale
-    tealdeer:
-      brew: tealdeer
-    terraform:
-      pacman: terraform
-      brew: hashicorp/tap/terraform
-      apt: terraform
-    terragrunt:
-      pacman: terragrunt
-      brew: terragrunt
-    thunar:
-      pacman: thunar
-    thunar-volman:
-      pacman: thunar-volman
-    tmux:
-      pacman: tmux
-      brew: tmux
-    traceroute:
-      pacman: traceroute
-      brew: tcptraceroute
-      apt: traceroute
-    tree:
-      pacman: tree
-    ttf-iosevka:
-      yay: ttf-iosevka
-    ttf-iosevka-term:
-      yay: ttf-iosevka-term
-    ttf-iosevka-nerd:
-      pacman: ttf-iosevka-nerd
-    ttf-ms-win11-auto:
-      yay: ttf-ms-win11-auto
-    tumbler:
-      pacman: tumbler
-    udiskie:
-      pacman: udiskie
-    unzip:
-      pacman: unzip
-      brew: unzip
-      apt: unzip
     uwsm:
       pacman: uwsm
-    vendir:
-      yay: vendir
-      brew: vendir
-    vesktop:
-      yay: vesktop
-      apt: vesktop
-    viddy:
-      yay: viddy
-      brew: viddy
-    vim:
-      pacman: vim
-      apt: vim
-    visual-studio-code-bin:
-      yay: visual-studio-code-bin
-    vkv:
-      brew: falcosuessgott/tap/vkv
+
+  # Wayland/compositor tools
+  wayland:
     waybar:
       pacman: waybar
     waybar-module-pacman-updates:
       yay: waybar-module-pacman-updates-git
-    wezterm:
-      pacman: wezterm
-      brew: wezterm
-      apt: wezterm
-    wf-recorder:
-      pacman: wf-recorder
-    wget:
-      pacman: wget
-      brew: wget
-      apt: wget
     wl-clipboard:
       pacman: wl-clipboard
+    wf-recorder:
+      pacman: wf-recorder
     wlogout:
       yay: wlogout
     wofi-emoji:
       yay: wofi-emoji
+    fuzzel:
+      pacman: fuzzel
+    cage:
+      pacman: cage
+    grimblast:
+      yay: grimblast
+    bemoji:
+      yay: bemoji
+    cliphist:
+      pacman: cliphist
+    clipse:
+      yay: clipse
+    clipse-gui:
+      yay: clipse-gui
+
+  # X11 tools
+  x11:
     xclip:
       pacman: xclip
       apt: xclip
-    xdotool:
-      pacman: xdotool
-      apt: xdotool
-    xmlsec:
-      pacman: xmlsec
-      apt: libxmlsec1-dev
     xsel:
       pacman: xsel
       apt: xsel
-    xz:
-      pacman: xz
-      brew: xz
-      apt: xz
-    ytt:
-      yay: ytt
-      brew: ytt
+    xdotool:
+      pacman: xdotool
+      apt: xdotool
+
+  # Gaming
+  gaming:
+    # Add gaming packages here when needed
+
+  # GNOME desktop environment
+  gnome:
+    # Add GNOME packages here when needed
+
+  # macOS specific
+  macos:
+    sketchybar:
+      brew: FelixKratz/formulae/sketchybar
+
+  # Terminal emulators and multiplexers
+  terminal:
     zellij:
       pacman: zellij
       brew: zellij
-    zlib:
-      brew: zlib
-    zlib1g-dev:
-      apt: zlib1g-dev
-    zoxide:
-      pacman: zoxide
-      brew: zoxide
-    zsh:
-      pacman: zsh
-      brew: zsh
-      apt: zsh
+
+  # Hardware specific
+  hardware:
+    nvidia-settings:
+      pacman: nvidia-settings
+    brightnessctl:
+      pacman: brightnessctl
+    blueman:
+      pacman: blueman
+    bluez-utils:
+      pacman: bluez-utils
+
+  # GUI frameworks (for those building desktop apps)
+  gui_framework:
+    aylurs-gtk-shell-git:
+      yay: aylurs-gtk-shell-git
+    hyprswitch:
+      yay: hyprswitch
+    appimagelauncher:
+      yay: appimagelauncher
 
   ##########
   # LAPTOP #

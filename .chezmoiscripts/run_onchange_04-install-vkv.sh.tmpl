@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
 {{- $osID := .host.os_type }}
+{{- $hostname := .chezmoi.fqdnHostname -}}
+{{- $hostData := index .host $hostname -}}
+{{- $enabledGroups := list -}}
 
+{{- /* Get enabled package groups for this host */}}
+{{- if and $hostData (hasKey $hostData "packageGroups") (hasKey $hostData.packageGroups "enabled") -}}
+  {{- $enabledGroups = $hostData.packageGroups.enabled -}}
+{{- end -}}
+
+{{- if has "cloud" $enabledGroups }}
 echo "Installing vkv for {{ $osID }}..."
 
 # Check if go is installed
@@ -20,4 +29,7 @@ fi
 {{- else }}
 # For Linux systems, use go install
 go install github.com/FalcoSuessgott/vkv@latest
+{{- end }}
+{{- else }}
+echo "Skipping vkv installation - cloud group not enabled"
 {{- end }} 

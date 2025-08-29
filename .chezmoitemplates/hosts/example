@@ -1,0 +1,114 @@
+# Example host configuration file
+# Copy this file and rename it to your actual hostname
+# Remove the comments and customize the values for your specific machine
+
+[data.host.example]
+  # Desktop environment - affects which packages and configs are applied
+  # Options: "hyprland", "sway", "gnome", "kde", "xfce", etc.
+  # Leave empty or comment out for headless/server systems
+  desktop_environment = "hyprland"
+
+  # Package groups to install on this host
+  # Only the groups listed here will be installed - everything else is skipped
+  [data.host.example.packageGroups]
+  enabled = [
+    # Essential packages (always recommended)
+    "core",           # Basic system tools (curl, wget, git, etc.)
+    "cli_tools",      # Command line productivity (fzf, ripgrep, bat, etc.)
+    
+    # Development (comment out if not a dev machine)
+    "development",    # Programming languages, editors, build tools
+    "cloud",          # Docker, Kubernetes, Terraform, AWS/Azure tools
+    
+    # Desktop environment (comment out for servers)
+    "desktop",        # GUI applications (browser, Discord, etc.)
+    "fonts",          # Font packages
+    "themes",         # Appearance and theming
+    "wayland",        # Wayland compositor tools (or use "x11" for X11)
+    "hyprland",       # Hyprland-specific packages (match desktop_environment)
+    
+    # System utilities
+    "network",        # Network tools (nmap, traceroute, etc.)
+    "monitoring",     # System monitoring (btop, fastfetch, etc.)
+    "file_management", # File handling utilities
+    "system_services", # System services (networkmanager, etc.)
+    "system_libs",    # Required system libraries
+    
+    # Optional groups (enable as needed)
+    # "media",        # Audio/video tools
+    # "security",     # Security tools
+    # "ai",           # AI/ML tools
+    # "gaming",       # Gaming packages
+    # "hardware",     # Hardware-specific tools (nvidia-settings, etc.)
+    # "terminal",     # Terminal emulators/multiplexers
+    # "macos",        # macOS specific tools (if on macOS)
+    # "laptop",       # Laptop-specific packages (auto-enabled if chassis.type = "laptop")
+    # "gnome",        # GNOME packages (if using GNOME)
+    # "sway",         # Sway packages (if using Sway)
+  ]
+
+  # Monitor configuration (optional - only needed for multi-monitor setups)
+  # If you have only one monitor, you can omit this entire section
+  # The primaryMonitor template will return "dummy" for single-monitor setups
+  monitors = [
+    # Primary monitor example
+    {
+      name = "DP-1",                    # Monitor connection name (use `hyprctl monitors` to find)
+      desc = "desc:Dell Inc. DELL U2719DX", # Monitor description (optional, helps identify specific monitor)
+      resolution = "2560x1440@144",     # Resolution and refresh rate
+      position = "0x0",                 # Position in desktop layout (x,y coordinates)
+      scale = "1",                      # Scale factor (1 = 100%, 1.5 = 150%, etc.)
+      translation = "",                 # Transform (rotation, etc.) - usually empty
+      primary = true,                   # Mark as primary monitor
+      workspaces = [1, 2, 3, 4, 5, 6]  # Workspaces to assign to this monitor
+    },
+    
+    # Secondary monitor example
+    {
+      name = "HDMI-A-1",
+      desc = "desc:LG Electronics LG ULTRAGEAR",
+      resolution = "3440x1440@120",
+      position = "2560x0",              # Positioned to the right of primary
+      scale = "1",
+      translation = "",
+      primary = false,                  # Not the primary monitor
+      workspaces = [7, 8, 9]           # Different workspaces for secondary monitor
+    }
+    
+    # For single monitor setups, you can either:
+    # 1. Omit the entire monitors section
+    # 2. Or include a minimal config like this:
+    # {
+    #   name = "dummy",
+    #   primary = true,
+    #   workspaces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    # }
+  ]
+
+  # Additional host-specific configuration examples:
+  
+  # System chassis type (affects package selection)
+  # chassis_type = "laptop"    # Enables laptop-specific packages
+  # chassis_type = "desktop"   # Default
+  
+  # Host-specific environment variables (optional)
+  # [data.host.example.env]
+  # EDITOR = "nvim"
+  # BROWSER = "firefox"
+  
+  # Host-specific feature flags (optional)
+  # [data.host.example.features]
+  # enable_gaming = true
+  # enable_streaming = false
+  # enable_development = true
+  
+  # SSH configuration (optional)
+  # [data.host.example.ssh]
+  # port = 22
+  # allow_agent_forwarding = true
+  
+  # Network configuration (optional)
+  # [data.host.example.network]
+  # hostname = "example"
+  # domain = "local"
+  # static_ip = "192.168.1.100"
