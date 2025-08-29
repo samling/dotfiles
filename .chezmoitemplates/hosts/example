@@ -42,7 +42,7 @@
     # "hardware",     # Hardware-specific tools (nvidia-settings, etc.)
     # "terminal",     # Terminal emulators/multiplexers
     # "macos",        # macOS specific tools (if on macOS)
-    # "laptop",       # Laptop-specific packages (auto-enabled if chassis.type = "laptop")
+    # "laptop",       # Laptop-specific packages (auto-detected from system chassis type)
     # "gnome",        # GNOME packages (if using GNOME)
     # "sway",         # Sway packages (if using Sway)
   ]
@@ -84,31 +84,3 @@
     #   workspaces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     # }
   ]
-
-  # Additional host-specific configuration examples:
-  
-  # System chassis type (affects package selection)
-  # chassis_type = "laptop"    # Enables laptop-specific packages
-  # chassis_type = "desktop"   # Default
-  
-  # Host-specific environment variables (optional)
-  # [data.host.example.env]
-  # EDITOR = "nvim"
-  # BROWSER = "firefox"
-  
-  # Host-specific feature flags (optional)
-  # [data.host.example.features]
-  # enable_gaming = true
-  # enable_streaming = false
-  # enable_development = true
-  
-  # SSH configuration (optional)
-  # [data.host.example.ssh]
-  # port = 22
-  # allow_agent_forwarding = true
-  
-  # Network configuration (optional)
-  # [data.host.example.network]
-  # hostname = "example"
-  # domain = "local"
-  # static_ip = "192.168.1.100"

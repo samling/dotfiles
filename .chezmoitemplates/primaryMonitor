@@ -1,17 +1,23 @@
-{{- $primaryMonitor := "" -}}                     {{/* Initialize to empty string */}}
-{{- $hostData := "" -}}                     {{/* Initialize to empty string */}}
-{{- $hostname := .chezmoi.fqdnHostname -}}        {{/* Get the current hostname */}}
-{{- $hostData = index .host $hostname -}}   {{/* Get data for the current host */}}
+{{- $primaryMonitor := "dummy" -}}                {{/* Initialize with fallback value */}}
 
-{{- if and $hostData (hasKey $hostData "monitors") -}}       {{/* Check if host data and monitors array exist */}}
-  {{- range $hostData.monitors -}}                {{/* Loop through monitors for this host */}}
-    {{- if .primary -}}                          {{/* Check if primary */}}
-      {{- $primaryMonitor = .name -}}             {{/* Assign the name */}}
-      {{- break -}}                              {{/* Stop searching */}}
+{{- /* Check if host data is available (it won't be during chezmoi init) */}}
+{{- if hasKey . "host" -}}
+  {{- $hostname := .chezmoi.fqdnHostname -}}      {{/* Get the current hostname */}}
+  {{- $hostData := "" -}}                        {{/* Initialize to empty string */}}
+  
+  {{- /* Check if this hostname exists in host data */}}
+  {{- if hasKey .host $hostname -}}
+    {{- $hostData = index .host $hostname -}}     {{/* Get data for the current host */}}
+    
+    {{- /* Check if host data has monitors configured */}}
+    {{- if and $hostData (hasKey $hostData "monitors") -}}
+      {{- range $hostData.monitors -}}           {{/* Loop through monitors for this host */}}
+        {{- if .primary -}}                      {{/* Check if primary */}}
+          {{- $primaryMonitor = .name -}}         {{/* Assign the name */}}
+          {{- break -}}                          {{/* Stop searching */}}
+        {{- end -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
-{{- else -}}
-  {{/* Fallback: if no monitors defined, use dummy value */}}
-  {{- $primaryMonitor = "dummy" -}}
 {{- end -}}
 {{- $primaryMonitor -}}
