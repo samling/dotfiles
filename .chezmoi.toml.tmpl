@@ -10,10 +10,12 @@
 #=== Calculated information
 [data.calculated]
 
-#=== Host configuration
-[data.host]
+#=== Global system information
+[data.system]
   os_type = "{{ includeTemplate "osID" . }}"
-  primaryMonitor = "{{ includeTemplate "primaryMonitor" . }}"
+  
+  [data.system.primaryMonitor]
+    name = "{{ includeTemplate "primaryMonitor" . }}"
 
 #=== Hostname-specific configuration
 {{- $hostTemplate := joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" .chezmoi.fqdnHostname }}

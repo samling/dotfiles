@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # packages hash: {{ .packages | toJson | sha256sum }}
 
-{{- $osID := .host.os_type -}}
+{{- $osID := .system.os_type -}}
 {{- $hostname := .chezmoi.fqdnHostname -}}
 {{- $hostData := index .host $hostname -}}
 {{- $enabledGroups := list -}}

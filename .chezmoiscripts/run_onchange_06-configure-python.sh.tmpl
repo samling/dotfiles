@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-{{- $osID := .host.os_type }}
+{{- $osID := .system.os_type }}
 
 echo "Configuring Python with uv for {{ $osID }}..."
 #echo "Configuring Python with pyenv for {{ $osID }}..."
