@@ -10,16 +10,14 @@
 #=== Calculated information
 [data.calculated]
 
-#=== Host-specific configuration
+#=== Host configuration
 [data.host]
   os_type = "{{ includeTemplate "osID" . }}"
-
-#=== Find the primary monitor for the current host
-  [data.host.primaryMonitor]
-    name = "{{ includeTemplate "primaryMonitor" . }}"
+  primaryMonitor = "{{ includeTemplate "primaryMonitor" . }}"
 
 #=== Hostname-specific configuration
 {{- $hostTemplate := joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" .chezmoi.fqdnHostname }}
 {{- if stat $hostTemplate }}
-{{ includeTemplate $hostTemplate . }}
+  [data.host.{{ .chezmoi.fqdnHostname }}]
+{{ includeTemplate $hostTemplate . | nindent 2 }}
 {{- end }}
