@@ -1,2 +1,3 @@
-# Minimal host configuration
-# Add packageGroups.enabled = [...] if needed
+[data.host.aries]
+  # Minimal host configuration
+  # Add packageGroups.enabled = [...] if needed

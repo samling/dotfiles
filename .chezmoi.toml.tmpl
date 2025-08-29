@@ -18,6 +18,5 @@
 #=== Hostname-specific configuration
 {{- $hostTemplate := joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" .chezmoi.fqdnHostname }}
 {{- if stat $hostTemplate }}
-  [data.host.{{ .chezmoi.fqdnHostname }}]
-{{ includeTemplate $hostTemplate . | nindent 2 }}
+{{ includeTemplate $hostTemplate . }}
 {{- end }}
