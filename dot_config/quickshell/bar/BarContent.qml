@@ -38,4 +38,26 @@ Item {
             }
         }
     }
+
+    // Middle section
+    RowLayout {
+        id: middleSection
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+        spacing: 4
+
+        BarGroup {
+            id: middleGroupContent
+            Layout.fillHeight: false
+
+            ClockWidget {
+                id: clockWidget
+                Layout.fillHeight: true
+            }
+        }
+    }
+
 }

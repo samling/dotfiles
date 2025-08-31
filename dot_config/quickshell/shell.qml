@@ -1,9 +1,10 @@
+import qs.services
+import qs.bar
+import qs.osd
 import QtQuick
 import QtQuick.Window
 import Quickshell
 import Quickshell.Io
-import "osd"
-import "bar"
 
 ShellRoot {
 	LazyLoader { active: true; component: Bar {} }
