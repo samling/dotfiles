@@ -8,6 +8,7 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import Qt5Compat.GraphicalEffects
+import qs.common
 
 Item {
     id: root
@@ -22,7 +23,7 @@ Item {
     RowLayout {
         id: workspaceRow
         anchors.centerIn: parent
-        spacing: 4
+        spacing: Config.workspaceSpacing
         
         Repeater {
             model: 10 // Show workspaces 1-10 for the current group
@@ -34,30 +35,30 @@ Item {
                 readonly property bool isActive: root.monitor?.activeWorkspace?.id === workspaceIndicator.workspaceId
                 readonly property bool isOccupied: workspaceIndicator.index < root.workspaceOccupied.length ? root.workspaceOccupied[workspaceIndicator.index] : false
                 
-                width: 24
-                height: 20
-                radius: 4
+                width: Config.workspaceWidth
+                height: Config.workspaceHeight
+                radius: Config.workspaceRadius
                 
                 // Color logic: blue if occupied, gray if not, highlighted if active
                 color: {
                     if (workspaceIndicator.isActive) {
-                        return workspaceIndicator.isOccupied ? "#6c7ff2" : "#5a6cf0" // Bright blue variants for active
+                        return workspaceIndicator.isOccupied ? Config.workspaceActiveColor : Config.workspaceActiveBrightColor
                     } else if (workspaceIndicator.isOccupied) {
-                        return "#4a5568" // Dark blue-gray for occupied
+                        return Config.workspaceOccupiedColor
                     } else {
-                        return "#2d3748" // Dark gray for empty
+                        return Config.workspaceEmptyColor
                     }
                 }
                 
-                border.color: workspaceIndicator.isActive ? "#ffffff" : "transparent"
-                border.width: workspaceIndicator.isActive ? 2 : 0
+                border.color: workspaceIndicator.isActive ? Config.workspaceActiveBorderColor : "transparent"
+                border.width: workspaceIndicator.isActive ? Config.workspaceBorderWidth : 0
                 
                 // Workspace number text
                 Text {
                     anchors.centerIn: parent
                     text: (workspaceIndicator.index + 1)
-                    color: workspaceIndicator.isActive ? "#ffffff" : (workspaceIndicator.isOccupied ? "#e2e8f0" : "#718096")
-                    font.pixelSize: 11
+                    color: workspaceIndicator.isActive ? Config.workspaceActiveTextColor : (workspaceIndicator.isOccupied ? Config.workspaceOccupiedTextColor : Config.workspaceEmptyTextColor)
+                    font.pixelSize: Config.workspaceFontSize
                     font.bold: workspaceIndicator.isActive
                 }
                 
@@ -65,7 +66,7 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        Hyprland.dispatch("workspace", workspaceIndicator.workspaceId.toString())
+                        Hyprland.dispatch("workspace " + workspaceIndicator.workspaceId)
                     }
                     
                     // Hover effect
@@ -76,11 +77,11 @@ Item {
                 
                 // Smooth transitions
                 Behavior on color {
-                    ColorAnimation { duration: 200 }
+                    ColorAnimation { duration: Config.colorAnimationDuration }
                 }
                 
                 Behavior on border.color {
-                    ColorAnimation { duration: 200 }
+                    ColorAnimation { duration: Config.colorAnimationDuration }
                 }
             }
         }

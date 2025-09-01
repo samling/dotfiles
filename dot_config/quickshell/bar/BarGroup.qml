@@ -1,10 +1,14 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.common
 
 Item {
     id: root
     property real padding: 5
     default property alias items: gridLayout.children
+
+    implicitWidth: gridLayout.implicitWidth + Config.groupImplicitWidthPadding
+    implicitHeight: gridLayout.implicitHeight
 
     Rectangle {
         id: background
@@ -12,9 +16,13 @@ Item {
             fill: parent
             topMargin: 0
             bottomMargin: 0
-            leftMargin: 4
-            rightMargin: 4
+            leftMargin: Config.groupBackgroundMarginLeft
+            rightMargin: Config.groupBackgroundMarginRight
         }
+        color: "transparent"
+        border.color: Config.groupBorderColor
+        border.width: Config.groupBorderWidth
+        radius: Config.groupRadius
     }
 
     GridLayout {
@@ -23,13 +31,10 @@ Item {
 
         anchors {
             verticalCenter: parent.verticalCenter
-            horizontalCenter: undefined
             left: parent.left
             right: parent.right
-            bottom: undefined
-            top: undefined
         }
-        columnSpacing: 4
-        rowSpacing: 12
+        columnSpacing: Config.groupColumnSpacing
+        rowSpacing: Config.groupRowSpacing
     }
 }

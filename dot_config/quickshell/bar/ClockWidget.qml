@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import qs.common
 
 Item {
     id: root
@@ -13,20 +14,14 @@ Item {
     RowLayout {
         id: rowLayout
         anchors.centerIn: parent
-        spacing: 4
 
           Text {
             id: clock
-            color: "white"
+            color: Config.clockTextColor
             
-            // Set explicit size like workspace rectangles do
-            width: implicitWidth
-            height: 20
             verticalAlignment: Text.AlignVCenter
 
             Process {
-                // give the process object an id so we can talk
-                // about it from the timer
                 id: dateProc
 
                 command: ["date"]

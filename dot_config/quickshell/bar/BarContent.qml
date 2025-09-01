@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Services.UPower
+import qs.common
 
 Item {
     id: root
@@ -13,20 +13,20 @@ Item {
             fill: parent
             margins: 1
         }
-        color: "#161217"
-        radius: 1
+        color: Config.barBackgroundColor
+        radius: Config.barRadius
     }
 
-    // Left section for workspaces
+    // Left section
     RowLayout {
         id: leftSection
         anchors {
             top: parent.top
             bottom: parent.bottom
             left: parent.left
-            leftMargin: 8
+            leftMargin: Config.barContentLeftMargin
         }
-        spacing: 4
+        spacing: Config.barContentSpacing
 
         BarGroup {
             id: leftGroup
@@ -47,7 +47,7 @@ Item {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
         }
-        spacing: 4
+        spacing: Config.barContentSpacing
 
         BarGroup {
             id: middleGroupContent
@@ -55,6 +55,29 @@ Item {
 
             ClockWidget {
                 id: clockWidget
+                Layout.fillHeight: true
+            }
+        }
+    }
+
+    // Right section
+    RowLayout {
+        id: rightSection
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+            rightMargin: Config.barContentRightMargin
+        }
+        spacing: Config.barContentSpacing
+
+        BarGroup {
+            id: rightGroupContent
+            Layout.fillHeight: false
+            Layout.fillWidth: false
+
+            BatteryIndicator {
+                id: batteryWidget
                 Layout.fillHeight: true
             }
         }

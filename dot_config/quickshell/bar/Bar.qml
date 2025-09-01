@@ -1,19 +1,15 @@
+
+pragma ComponentBehavior: Bound
+
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
-import Quickshell.Io
-import Quickshell.Wayland
-import Quickshell.Hyprland
-import Quickshell.Services.UPower
+import qs.common
 
 Scope {
     id: bar
 
     Variants {
-        model: {
-            const screens = Quickshell.screens;
-            return screens;
-        }
+        model: Quickshell.screens
 
         LazyLoader {
             id: barLoader
@@ -22,7 +18,7 @@ Scope {
             component: PanelWindow {
                 id: barRoot
                 screen: barLoader.modelData
-                implicitHeight: 40
+                implicitHeight: Config.barHeight
                 color: "transparent"
                 anchors {
                     top: true
@@ -37,7 +33,7 @@ Scope {
 
                     BarContent {
                         id: barContent
-                        implicitHeight: 40
+                        implicitHeight: Config.barHeight
                         anchors {
                             top: parent.top
                             left: parent.left
