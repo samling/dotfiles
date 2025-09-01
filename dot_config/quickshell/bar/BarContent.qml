@@ -28,14 +28,9 @@ Item {
         }
         spacing: Config.barContentSpacing
 
-        BarGroup {
-            id: leftGroup
-            Layout.fillHeight: false
-
-            Workspaces {
-                id: workspacesWidget
-                Layout.fillHeight: true
-            }
+        Workspaces {
+            id: workspacesWidget
+            Layout.fillHeight: true
         }
     }
 

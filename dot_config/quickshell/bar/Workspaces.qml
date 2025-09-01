@@ -7,7 +7,7 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Widgets
-import Qt5Compat.GraphicalEffects
+
 import qs.common
 
 Item {
@@ -23,65 +23,68 @@ Item {
     RowLayout {
         id: workspaceRow
         anchors.centerIn: parent
-        spacing: Config.workspaceSpacing
+        spacing: 4  // Small margin between workspace items
         
         Repeater {
-            model: 10 // Show workspaces 1-10 for the current group
+            model: 10 // Restore all workspaces
             
-            Rectangle {
-                id: workspaceIndicator
+            Item {
+                id: workspaceContainer
                 required property int index
-                readonly property int workspaceId: root.workspaceGroup * 10 + workspaceIndicator.index + 1
-                readonly property bool isActive: root.monitor?.activeWorkspace?.id === workspaceIndicator.workspaceId
-                readonly property bool isOccupied: workspaceIndicator.index < root.workspaceOccupied.length ? root.workspaceOccupied[workspaceIndicator.index] : false
+                readonly property int workspaceId: root.workspaceGroup * 10 + workspaceContainer.index + 1
+                readonly property bool isActive: root.monitor?.activeWorkspace?.id === workspaceContainer.workspaceId
+                readonly property bool isOccupied: !workspaceContainer.isActive && (workspaceContainer.index < root.workspaceOccupied.length ? root.workspaceOccupied[workspaceContainer.index] : false)
                 
-                width: Config.workspaceWidth
+                // Container size: circle width, or exact pill width with no extra margin
+                width: workspaceContainer.isActive ? Config.workspaceWidth * 1.5 : Config.workspaceHeight
                 height: Config.workspaceHeight
-                radius: Config.workspaceRadius
                 
-                // Color logic: blue if occupied, gray if not, highlighted if active
-                color: {
-                    if (workspaceIndicator.isActive) {
-                        return workspaceIndicator.isOccupied ? Config.workspaceActiveColor : Config.workspaceActiveBrightColor
-                    } else if (workspaceIndicator.isOccupied) {
-                        return Config.workspaceOccupiedColor
-                    } else {
-                        return Config.workspaceEmptyColor
-                    }
+                // Ensure RowLayout respects the width changes
+                Layout.preferredWidth: width
+                Layout.fillWidth: false
+                
+                // Smooth container width animation
+                Behavior on width {
+                    NumberAnimation { duration: Config.colorAnimationDuration }
                 }
                 
-                border.color: workspaceIndicator.isActive ? Config.workspaceActiveBorderColor : "transparent"
-                border.width: workspaceIndicator.isActive ? Config.workspaceBorderWidth : 0
-                
-                // Workspace number text
-                Text {
-                    anchors.centerIn: parent
-                    text: (workspaceIndicator.index + 1)
-                    color: workspaceIndicator.isActive ? Config.workspaceActiveTextColor : (workspaceIndicator.isOccupied ? Config.workspaceOccupiedTextColor : Config.workspaceEmptyTextColor)
-                    font.pixelSize: Config.workspaceFontSize
-                    font.bold: workspaceIndicator.isActive
+                Rectangle {
+                    id: workspaceIndicator
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: workspaceContainer.isActive ? Config.workspaceWidth * 1.5 : Config.workspaceHeight
+                    height: Config.workspaceHeight
+                    radius: Config.workspaceHeight / 2
+                    color: {
+                        if (workspaceContainer.isActive) {
+                            return Config.workspaceActiveColor
+                        } else if (workspaceContainer.isOccupied) {
+                            return Config.workspaceOccupiedColor
+                        } else {
+                            return Config.workspaceEmptyColor
+                        }
+                    }
+                    
+                    // Reduce opacity for empty workspaces
+                    opacity: (!workspaceContainer.isActive && !workspaceContainer.isOccupied) ? 0.6 : 1.0
+                    
+                    // Smooth color transition
+                    Behavior on color {
+                        ColorAnimation { duration: Config.colorAnimationDuration }
+                    }
                 }
                 
                 // Click to switch workspace
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        Hyprland.dispatch("workspace " + workspaceIndicator.workspaceId)
+                        Hyprland.dispatch("workspace " + workspaceContainer.workspaceId)
                     }
                     
                     // Hover effect
                     hoverEnabled: true
-                    onEntered: parent.opacity = 0.8
-                    onExited: parent.opacity = 1.0
-                }
-                
-                // Smooth transitions
-                Behavior on color {
-                    ColorAnimation { duration: Config.colorAnimationDuration }
-                }
-                
-                Behavior on border.color {
-                    ColorAnimation { duration: Config.colorAnimationDuration }
+                    onEntered: workspaceIndicator.opacity = 0.8
+                    onExited: workspaceIndicator.opacity = 1.0
                 }
             }
         }
