@@ -76,6 +76,11 @@ Item {
             Layout.fillHeight: false
             Layout.fillWidth: false
 
+            NotificationButton {
+                id: notificationButton
+                Layout.fillHeight: true
+            }
+
             BatteryIndicator {
                 id: batteryWidget
                 Layout.fillHeight: true
