@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import qs.services
+import qs.common
 
 LazyLoader {
     id: root

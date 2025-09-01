@@ -166,7 +166,7 @@ Item {
                     NotificationListView {
                         id: notificationListView
                         anchors.fill: parent
-                        popup: false  // Show persistent notifications
+                        popup: false  // Show persistent notifications (all notifications in the main list)
                         visible: root.hasNotifications
                     }
                 }
