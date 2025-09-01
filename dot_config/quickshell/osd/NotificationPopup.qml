@@ -22,7 +22,6 @@ Scope {
         anchors {
             top: true
             right: true
-            bottom: true
         }
 
         mask: Region {
@@ -30,18 +29,19 @@ Scope {
         }
 
         color: "transparent"
-        implicitWidth: 400
+        width: 400
+        height: Math.min(listview.realContentHeight + 8, screen ? screen.height * 0.6 : 400)
 
         NotificationListView {
             id: listview
             anchors {
                 top: parent.top
-                bottom: parent.bottom
                 right: parent.right
                 rightMargin: 4
                 topMargin: 4
             }
-            implicitWidth: parent.width - 20
+            width: parent.width - 8
+            height: parent.height - 8
             popup: true
         }
     }

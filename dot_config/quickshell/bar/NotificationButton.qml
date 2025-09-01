@@ -93,7 +93,7 @@ Item {
             anchors.top: parent.top
             anchors.right: parent.right
             width: 400
-            height: Math.max(150, notificationListView.realContentHeight + 80)
+            height: Math.min(parent.height * 0.8, 600)  // Fixed height constraint
             color: "#1e1e2e"
             border.color: "#6c7086"
             border.width: 2

@@ -11,6 +11,37 @@ ScrollView {
 
     clip: true
     contentWidth: availableWidth
+    contentHeight: realContentHeight
+    
+    ScrollBar.vertical.policy: ScrollBar.AsNeeded
+    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+    ScrollBar.vertical.active: true
+    ScrollBar.vertical.visible: contentHeight > height
+    
+    // Disable default wheel handling so we can customize it
+    wheelEnabled: false
+    
+    // Custom mouse area for faster wheel scrolling
+    MouseArea {
+        anchors.fill: parent
+        propagateComposedEvents: true
+        acceptedButtons: Qt.NoButton
+        
+        onWheel: (wheel) => {
+            // Custom scroll distance - much larger than default
+            const scrollDistance = wheel.angleDelta.y * 2  // Increase multiplier for faster scrolling
+            if (root.contentItem) {
+                root.contentItem.contentY = Math.max(0, 
+                    Math.min(root.contentItem.contentY - scrollDistance, 
+                             root.contentItem.contentHeight - root.contentItem.height))
+            }
+            wheel.accepted = true
+        }
+        
+        onPressed: (mouse) => {
+            mouse.accepted = false  // Let other mouse events pass through
+        }
+    }
 
     Column {
         id: contentColumn

@@ -11,7 +11,7 @@ Rectangle {
     property var notificationObject
     property bool expanded: true
     
-    implicitHeight: contentColumn.implicitHeight + 20
+    implicitHeight: contentColumn.implicitHeight + 45
     radius: 12
     color: "#1e1e2e"
     border.color: "#6c7086"
@@ -21,6 +21,7 @@ Rectangle {
         id: contentColumn
         anchors.fill: parent
         anchors.margins: 15
+        anchors.bottomMargin: 30
         spacing: 8
 
         RowLayout {
@@ -42,6 +43,16 @@ Rectangle {
                     font.pixelSize: 16
                     font.weight: Font.Bold
                 }
+            }
+
+            // Notification image (moved to left side of content)
+            Image {
+                source: root.notificationObject?.image ?? ""
+                visible: source !== ""
+                fillMode: Image.PreserveAspectFit
+                Layout.preferredWidth: Math.min(sourceSize.width, 64)
+                Layout.preferredHeight: Math.min(sourceSize.height, 64)
+                Layout.alignment: Qt.AlignTop
             }
 
             ColumnLayout {
@@ -104,16 +115,6 @@ Rectangle {
                     }
                 }
             }
-        }
-
-        // Notification image
-        Image {
-            source: root.notificationObject?.image ?? ""
-            visible: source !== ""
-            fillMode: Image.PreserveAspectFit
-            Layout.preferredWidth: Math.min(sourceSize.width, 300)
-            Layout.preferredHeight: Math.min(sourceSize.height, 100)
-            Layout.alignment: Qt.AlignHCenter
         }
 
         // Action buttons
