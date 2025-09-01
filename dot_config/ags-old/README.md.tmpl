@@ -15,8 +15,8 @@
 
 * Chezmoi apply & restart:
 ```bash
-{{- if .host.primaryMonitor }}
-killall gjs; cm apply && hyprctl dispatch exec 'ags run --args="primaryMonitor={{ .host.primaryMonitor.name }}'
+{{- if .system.primaryMonitor }}
+killall gjs; cm apply && hyprctl dispatch exec 'ags run --args="primaryMonitor={{ .system.primaryMonitor.name }}'
 {{- else }}
 killall gjs; cm apply && hyprctl dispatch exec 'ags run'
 {{- end }}

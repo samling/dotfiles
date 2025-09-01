@@ -10,12 +10,11 @@
 #=== Calculated information
 [data.calculated]
 
-#=== Host-specific configuration
-[data.host]
+#=== Global system information
+[data.system]
   os_type = "{{ includeTemplate "osID" . }}"
-
-#=== Find the primary monitor for the current host
-  [data.host.primaryMonitor]
+  
+  [data.system.primaryMonitor]
     name = "{{ includeTemplate "primaryMonitor" . }}"
 
 #=== Hostname-specific configuration

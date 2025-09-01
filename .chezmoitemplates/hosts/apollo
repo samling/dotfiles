@@ -1,0 +1,61 @@
+# Example host configuration file
+# Copy this file and rename it to your actual hostname
+# Remove the comments and customize the values for your specific machine
+
+[data.host.apollo]
+  # Desktop environment - affects which packages and configs are applied
+  # Options: "hyprland", "sway", "gnome", "kde", "xfce", etc.
+  # Leave empty or comment out for headless/server systems
+  desktop_environment = "hyprland"
+  default_browser = "google-chrome-stable"
+
+  # Package groups to install on this host
+  # Only the groups listed here will be installed - everything else is skipped
+  [data.host.apollo.packageGroups]
+  enabled = [
+    # Essential packages (always recommended)
+    "core",           # Basic system tools (curl, wget, git, etc.)
+    "cli_tools",      # Command line productivity (fzf, ripgrep, bat, etc.)
+    
+    # Development (comment out if not a dev machine)
+    "development",    # Programming languages, editors, build tools
+    "cloud",          # Docker, Kubernetes, Terraform, AWS/Azure tools
+    
+    # Desktop environment (comment out for servers)
+    "desktop",        # GUI applications (browser, Discord, etc.)
+    "fonts",          # Font packages
+    "themes",         # Appearance and theming
+    "wayland",        # Wayland compositor tools (or use "x11" for X11)
+    "hyprland",       # Hyprland-specific packages (match desktop_environment)
+    "gui_framework",  # GUI frameworks
+    
+    # System utilities
+    "network",        # Network tools (nmap, traceroute, etc.)
+    "monitoring",     # System monitoring (btop, fastfetch, etc.)
+    "file_management", # File handling utilities
+    "system_services", # System services (networkmanager, etc.)
+    "system_libs",    # Required system libraries
+    
+    # Optional groups (enable as needed)
+    "media",        # Audio/video tools
+    "security",     # Security tools
+    "ai",           # AI/ML tools
+    # "gaming",       # Gaming packages
+    "hardware",     # Hardware-specific tools (nvidia-settings, etc.)
+    # "nvidia",       # NVIDIA-specific packages
+    "terminal",     # Terminal emulators/multiplexers
+    # "macos",        # macOS specific tools (if on macOS)
+    "laptop",       # Laptop-specific packages (auto-enabled if chassis.type = "laptop")
+    # "gnome",        # GNOME packages (if using GNOME)
+    # "sway",         # Sway packages (if using Sway)
+  ]
+
+  # Monitor configuration (optional - only needed for multi-monitor setups)
+  # If you have only one monitor, you can omit this entire section
+  # The primaryMonitor template will return "dummy" for single-monitor setups
+
+  # Additional host-specific configuration examples:
+  
+  # System chassis type (affects package selection)
+  chassis_type = "laptop"    # Enables laptop-specific packages
+  # chassis_type = "desktop"   # Default

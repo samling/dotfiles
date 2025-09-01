@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
-{{- $osID := .host.os_type }}
+{{- $osID := .system.os_type }}
+{{- $hostname := .chezmoi.fqdnHostname -}}
+{{- $hostData := index .host $hostname -}}
+{{- $enabledGroups := list -}}
 
-{{ if eq $osID "ubuntu" }}
+{{- /* Get enabled package groups for this host */}}
+{{- if and $hostData (hasKey $hostData "packageGroups") (hasKey $hostData.packageGroups "enabled") -}}
+  {{- $enabledGroups = $hostData.packageGroups.enabled -}}
+{{- end -}}
+
+{{ if and (eq $osID "ubuntu") (has "system_libs" $enabledGroups) }}
 echo "Installing Ubuntu system libraries..."
 
 {{- $libsList := "" -}}
-{{- range $libName, $libData := .packages.ubuntu_libs -}}
-{{- if and ($libData) (index $libData $osID) (index $libData $osID "name") -}}
-{{- $libsList = printf "%s %s" $libsList (index $libData $osID "name") -}}
+{{- range $libName, $libData := .packages.system_libs -}}
+{{- if and ($libData) (index $libData "apt") -}}
+{{- $libsList = printf "%s %s" $libsList (index $libData "apt") -}}
 {{- end -}}
 {{- end -}}
 
@@ -22,4 +30,6 @@ sudo apt install -y {{ $libsList | trim }}
 echo "Configuring locale"
 sudo locale-gen en_US.UTF-8
 sudo locale-gen en_US.ISO-8859-15
+{{- else }}
+echo "Skipping Ubuntu system libraries - either not Ubuntu or system_libs group not enabled"
 {{- end }} 

@@ -429,7 +429,7 @@
         "orientation": "horizontal"
     },
 
-    {{- if and .host.primaryMonitor (hasKey .host.primaryMonitor "name") }}
-    "output": "{{ .host.primaryMonitor.name }}",
+    {{- if and .system.primaryMonitor (hasKey .system.primaryMonitor "name") }}
+    "output": "{{ .system.primaryMonitor.name }}",
     {{- end }}
 }

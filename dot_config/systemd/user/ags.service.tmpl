@@ -3,8 +3,8 @@ Description=Aylur's GTK Shell
 
 [Service]
 Type=simple
-#ExecStart=/bin/bash -c 'ags run --gtk4 -d ~/.config/ags-gtk4 --arg=\"primaryMonitor={{ .host.primaryMonitor.name }}\"'
-ExecStart=/bin/bash -c 'ags run --arg=\"primaryMonitor={{ .host.primaryMonitor.name }}\"'
+#ExecStart=/bin/bash -c 'ags run --gtk4 -d ~/.config/ags-gtk4 --arg=\"primaryMonitor={{ .system.primaryMonitor.name }}\"'
+ExecStart=/bin/bash -c 'ags run --arg=\"primaryMonitor={{ .system.primaryMonitor.name }}\"'
 Restart=always
 RestartSec=10s
 
