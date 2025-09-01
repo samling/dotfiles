@@ -52,6 +52,14 @@ Singleton {
         }
     }
     
+    // Process for setting brightness values
+    Process {
+        id: setBrightnessProcess
+        property string targetValue: ""
+        
+        command: ["brightnessctl", "set", targetValue]
+    }
+    
     Component.onCompleted: {
         // Load initial values
         maxBrightnessFile.reload();
@@ -60,26 +68,14 @@ Singleton {
     
     function setBrightness(value) {
         const clampedValue = Math.max(0, Math.min(value, root.maxBrightness));
-        
-        const setBrightnessProcess = Qt.createQmlObject(`
-            import Quickshell.Io
-            Process {
-                command: ["brightnessctl", "set", "${clampedValue}"]
-                running: true
-            }
-        `, root);
+        setBrightnessProcess.targetValue = clampedValue.toString();
+        setBrightnessProcess.running = true;
     }
     
     function setBrightnessPercent(percent) {
         const clampedPercent = Math.max(0, Math.min(percent, 100));
-        
-        const setBrightnessProcess = Qt.createQmlObject(`
-            import Quickshell.Io
-            Process {
-                command: ["brightnessctl", "set", "${clampedPercent}%"]
-                running: true
-            }
-        `, root);
+        setBrightnessProcess.targetValue = clampedPercent + "%";
+        setBrightnessProcess.running = true;
     }
     
     // Helper to get brightness as percentage
