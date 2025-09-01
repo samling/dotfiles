@@ -1,8 +1,6 @@
-import qs.common
-import qs.services
+pragma ComponentBehavior: Bound
+
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
 
 Column {
     id: root
@@ -12,8 +10,9 @@ Column {
     spacing: 3
 
     Repeater {
-        model: notificationGroup?.notifications ?? []
+        model: root.notificationGroup?.notifications ?? []
         delegate: NotificationItem {
+            required property var modelData
             width: root.width
             notificationObject: modelData
         }
