@@ -76,15 +76,16 @@ Item {
             Layout.fillHeight: false
             Layout.fillWidth: false
 
+            BatteryIndicator {
+                id: batteryWidget
+                Layout.fillHeight: true
+            }
+
             NotificationButton {
                 id: notificationButton
                 Layout.fillHeight: true
             }
 
-            BatteryIndicator {
-                id: batteryWidget
-                Layout.fillHeight: true
-            }
         }
     }
 
