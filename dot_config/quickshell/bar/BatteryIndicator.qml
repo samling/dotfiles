@@ -14,18 +14,7 @@ MouseArea {
     readonly property bool isPluggedIn: Battery.isPluggedIn
     readonly property string timeString: Battery.timeString
     
-    // Debug: Log changes at the BatteryIndicator level
-    onIsChargingChanged: {
-        console.log("BatteryIndicator: isCharging changed to", isCharging);
-    }
-    
-    onIsPluggedInChanged: {
-        console.log("BatteryIndicator: isPluggedIn changed to", isPluggedIn);
-    }
-    
-    onChargeStateChanged: {
-        console.log("BatteryIndicator: chargeState changed to", chargeState);
-    }
+
 
     implicitWidth: rowLayout.implicitWidth
     implicitHeight: rowLayout.implicitHeight
@@ -46,24 +35,19 @@ MouseArea {
             text: getBatteryIcon()
             
             function getBatteryIcon() {
-                console.log("BatteryIndicator: Computing icon - available:", root.available, "isCharging:", root.isCharging, "isPluggedIn:", root.isPluggedIn, "percentage:", root.percentage);
-                
                 if (!root.available) return "󰂑"; // battery unknown icon
                 
                 // Charging - actively receiving power
                 if (root.isCharging) {
-                    console.log("BatteryIndicator: Showing charging icon");
                     return "󰂄"; // charging bolt icon
                 }
                 
                 // Plugged in but not charging (full battery or pending charge)
                 if (root.isPluggedIn && !root.isCharging) {
-                    console.log("BatteryIndicator: Showing plugged in icon");
                     return "󰚥"; // plugged in icon
                 }
                 
                 // Battery level icons when unplugged (discharging)
-                console.log("BatteryIndicator: Showing battery level icon for", root.percentage);
                 if (root.percentage >= 0.9) return "󰁹"; // 100%
                 else if (root.percentage >= 0.8) return "󰂂"; // 90%
                 else if (root.percentage >= 0.7) return "󰂁"; // 80%
@@ -87,29 +71,8 @@ MouseArea {
         }
     }
 
-    // Simple tooltip approach
-    Rectangle {
-        id: simpleTooltip
-        visible: root.containsMouse && Battery.available
-        color: "#E0000000"
-        radius: 4
-        width: tooltipText.width + 16
-        height: tooltipText.height + 8
-        z: 1000
-        
-        // Position above the battery indicator
-        anchors {
-            bottom: root.top
-            bottomMargin: 8
-            horizontalCenter: root.horizontalCenter
-        }
-        
-        Text {
-            id: tooltipText
-            anchors.centerIn: parent
-            color: "white"
-            font.pixelSize: 12
-            text: Battery.timeString
-        }
+    BatteryTooltip {
+        id: batteryTooltip
+        hoverTarget: root
     }
 }

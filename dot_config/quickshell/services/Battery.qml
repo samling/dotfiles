@@ -42,20 +42,5 @@ Singleton {
         }
     }
     
-    // Debug: Log changes to help troubleshoot reactivity
-    onIsChargingChanged: {
-        console.log("Battery: isCharging changed to", isCharging);
-    }
-    
-    onIsPluggedInChanged: {
-        console.log("Battery: isPluggedIn changed to", isPluggedIn);
-    }
-    
-    onPercentageChanged: {
-        console.log("Battery: percentage changed to", percentage);
-    }
-    
-    onChargeStateChanged: {
-        console.log("Battery: chargeState changed to", chargeState);
-    }
+
 }
