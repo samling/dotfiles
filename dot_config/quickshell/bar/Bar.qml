@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
+import Quickshell.Wayland
 import qs.common
 
 Scope {
@@ -20,6 +21,12 @@ Scope {
                 screen: barLoader.modelData
                 implicitHeight: Config.barHeight
                 color: "transparent"
+                
+                // Layer configuration for proper popup handling
+                WlrLayershell.namespace: "quickshell:bar"
+                WlrLayershell.layer: WlrLayer.Bottom
+                exclusiveZone: Config.barHeight
+                
                 anchors {
                     top: true
                     left: true
