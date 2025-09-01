@@ -23,7 +23,7 @@ Item {
     RowLayout {
         id: workspaceRow
         anchors.centerIn: parent
-        spacing: 4  // Small margin between workspace items
+        spacing: Config.workspaceSpacing
         
         Repeater {
             model: 10 // Restore all workspaces

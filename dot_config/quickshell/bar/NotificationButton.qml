@@ -22,31 +22,36 @@ Item {
         anchors.centerIn: parent
         spacing: Config.batterySpacing
         
-        Rectangle {
-            id: notificationIcon
-            width: 24
-            height: 24
-            radius: 4
-            color: root.hasNotifications ? Config.notificationActiveColor : Config.notificationInactiveColor
-            border.color: root.hasNotifications ? Config.notificationActiveAccentColor : Config.notificationBorderColor
-            border.width: 1
+        Item {
+            id: notificationContainer
+            implicitWidth: notificationRow.width
+            implicitHeight: 24
             
-            // Notification icon
-            Text {
-                anchors.centerIn: parent
-                text: "🔔"
-                font.pixelSize: 12
-                visible: !root.hasNotifications
-            }
-            
-            // Notification count
-            Text {
-                anchors.centerIn: parent
-                text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
-                color: Config.notificationBackgroundColor
-                font.pixelSize: root.notificationCount > 9 ? 9 : 11
-                font.weight: Font.Bold
-                visible: root.hasNotifications
+            Row {
+                id: notificationRow
+                spacing: 6
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                
+                // Notification count (left of flag)
+                Text {
+                    id: countText
+                    text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
+                    color: Config.notificationTextPrimaryColor
+                    font.pixelSize: Config.batteryFontSize
+                    font.weight: Font.Bold
+                    visible: root.hasNotifications
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                
+                // Notification flag icon
+                Text {
+                    id: flagIcon
+                    text: root.hasNotifications ? "⚑" : "⚐"
+                    font.pixelSize: 16
+                    color: Config.notificationTextPrimaryColor
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
             
             MouseArea {

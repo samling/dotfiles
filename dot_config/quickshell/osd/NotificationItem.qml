@@ -34,7 +34,24 @@ Rectangle {
                 Layout.preferredHeight: 32
                 radius: 16
                 color: Config.notificationInactiveColor
-                visible: root.notificationObject?.appIcon !== ""
+                visible: (appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")
+                
+                Image {
+                    id: appIconImage
+                    anchors.centerIn: parent
+                    source: root.notificationObject?.appIcon ?? ""
+                    fillMode: Image.PreserveAspectFit
+                    width: 24
+                    height: 24
+                    asynchronous: true
+                    cache: true
+                    
+                    onStatusChanged: {
+                        if (status === Image.Error) {
+                            console.log("[NotificationItem] Failed to load app icon:", source)
+                        }
+                    }
+                }
                 
                 Text {
                     anchors.centerIn: parent
@@ -42,6 +59,7 @@ Rectangle {
                     color: Config.notificationTextPrimaryColor
                     font.pixelSize: 16
                     font.weight: Font.Bold
+                    visible: appIconImage.status !== Image.Ready
                 }
             }
 

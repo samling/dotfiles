@@ -17,6 +17,7 @@ MouseArea {
     
     property int gaugeSize: Config.barHeight - Config.batteryGaugeOffset
     property int lineWidth: Config.batteryGaugeLineWidth
+    property int spacing: 8
     property color primaryColor: {
         if (!root.available) return Config.batteryUnavailableColor
         if (root.isCharging) return Config.batteryChargingColor
@@ -27,17 +28,33 @@ MouseArea {
     }
     property color backgroundColor: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, Config.batteryGaugeBackgroundOpacity)
 
-    implicitWidth: gaugeSize
+    implicitWidth: batteryPercentage.width + spacing + gaugeSize
     implicitHeight: gaugeSize
     hoverEnabled: true
 
+    // Percentage text on the left
+    Text {
+        id: batteryPercentage
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        color: root.primaryColor
+        font.pixelSize: Math.min(Config.batteryFontSize, root.gaugeSize * Config.batteryGaugeFontSizeMultiplier)
+        font.weight: Font.Bold
+
+        text: root.available ? Math.round(root.percentage * 100) + "%" : "N/A"
+    }
+
     // Background circle
     Shape {
-        anchors.fill: parent
+        id: backgroundCircle
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        width: root.gaugeSize
+        height: root.gaugeSize
         preferredRendererType: Shape.CurveRenderer
         
         ShapePath {
-            strokeColor: root.backgroundColor
+            strokeColor: "transparent"
             strokeWidth: root.lineWidth
             fillColor: "transparent"
             capStyle: ShapePath.RoundCap
@@ -55,7 +72,11 @@ MouseArea {
 
     // Progress arc
     Shape {
-        anchors.fill: parent
+        id: progressCircle
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        width: root.gaugeSize
+        height: root.gaugeSize
         preferredRendererType: Shape.CurveRenderer
         
         ShapePath {
@@ -75,15 +96,60 @@ MouseArea {
         }
     }
 
-    // Center content - just percentage
-    Text {
-        id: batteryPercentage
-        anchors.centerIn: parent
-        color: root.primaryColor
-        font.pixelSize: Math.min(Config.batteryFontSize, root.gaugeSize * Config.batteryGaugeFontSizeMultiplier)
-        font.weight: Font.Bold
-
-        text: root.available ? Math.round(root.percentage * 100) + "%" : "N/A"
+    // Battery icon in center of circle
+    Item {
+        id: batteryIconContainer
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        width: root.gaugeSize
+        height: root.gaugeSize
+        
+        // Battery body
+        Rectangle {
+            id: batteryBody
+            anchors.centerIn: parent
+            width: parent.width * 0.25
+            height: parent.height * 0.4
+            color: "transparent"
+            border.color: root.primaryColor
+            border.width: 1
+            radius: 1
+            
+            // Battery fill based on percentage
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.margins: 1
+                height: root.available ? (parent.height - 2) * root.percentage : 0
+                color: root.primaryColor
+                radius: parent.radius
+                
+                Behavior on height {
+                    NumberAnimation { duration: 200 }
+                }
+            }
+        }
+        
+        // Battery terminal (positive end)
+        Rectangle {
+            anchors.bottom: batteryBody.top
+            anchors.horizontalCenter: batteryBody.horizontalCenter
+            width: batteryBody.width * 0.6
+            height: 2
+            color: root.primaryColor
+            radius: 1
+        }
+        
+        // Charging indicator
+        Text {
+            anchors.centerIn: batteryBody
+            color: root.isCharging ? "white" : "transparent"
+            font.pixelSize: batteryBody.width * 0.8
+            font.weight: Font.Bold
+            text: "⚡"
+            visible: root.isCharging
+        }
     }
 
     BatteryTooltip {

@@ -29,7 +29,7 @@ QtObject {
                 }
             } catch (e) {
                 console.error("[Config] Failed to parse palette.json:", e)
-                config.paletteData = config.getDefaultPalette()
+                config.paletteData = getDefaultPalette()
             }
         }
         
@@ -40,7 +40,7 @@ QtObject {
         
         onLoadFailed: {
             console.error("[Config] Failed to load palette.json, using defaults")
-            config.paletteData = config.getDefaultPalette()
+            config.paletteData = getDefaultPalette()
         }
     }
     
@@ -50,16 +50,12 @@ QtObject {
             "colors": {
                 "primary": {"blue": "#89b4fa", "green": "#a6e3a1", "red": "#f38ba8", "white": "#ffffff"},
                 "text": {"primary": "#cdd6f4", "light": "#e2e8f0"},
-                "background": {"primary": "#1e1e2e", "secondary": "#2d3748", "bar": "#161217"}
+                "background": {"primary": "#1e1e2e", "secondary": "#2d3748", "bar": "#1e1e2e"}
             }
         }
     }
     
     function getColor(path) {
-        if (!paletteData.colors && !paletteData.semantic) {
-            return "#ff00ff"
-        }
-        
         const parts = path.split('.')
         
         // First try semantic colors (for component roles like "workspace.active")
@@ -86,7 +82,8 @@ QtObject {
                         if (refCurrent && typeof refCurrent === 'object' && refPart in refCurrent) {
                             refCurrent = refCurrent[refPart]
                         } else {
-                            return "#ff00ff"
+                            console.warn("[Config] Color reference not found:", current, "for", path)
+                            return "#6c7086" // Fallback gray
                         }
                     }
                     return refCurrent
@@ -103,14 +100,16 @@ QtObject {
                 if (current && typeof current === 'object' && part in current) {
                     current = current[part]
                 } else {
-                    return "#ff00ff"
+                    console.warn("[Config] Color not found:", path)
+                    return "#6c7086" // Fallback gray
                 }
             }
             
             return current
         }
         
-        return "#ff00ff"
+        console.error("[Config] No palette data available for:", path)
+        return "#6c7086" // Fallback gray
     }
 
     // Bar dimensions
@@ -134,9 +133,9 @@ QtObject {
     readonly property int groupImplicitWidthPadding: 8
 
     // Workspace indicators
-    readonly property int workspaceSpacing: 4
-    readonly property int workspaceWidth: 24
-    readonly property int workspaceHeight: 20
+    readonly property int workspaceSpacing: 6
+    readonly property int workspaceWidth: 18
+    readonly property int workspaceHeight: 15
     readonly property int workspaceRadius: 4
     readonly property int workspaceFontSize: 12
     readonly property int workspaceBorderWidth: 2
@@ -155,10 +154,10 @@ QtObject {
     readonly property string batteryTextColor: getColor("text.white")
     
     // Battery gauge (circular)
-    readonly property int batteryGaugeOffset: 6  // Subtracted from barHeight for gauge size
-    readonly property int batteryGaugeLineWidth: 3
+    readonly property int batteryGaugeOffset: 14  // Subtracted from barHeight for gauge size
+    readonly property int batteryGaugeLineWidth: 2
     readonly property real batteryGaugeBackgroundOpacity: 0.3
-    readonly property real batteryGaugeFontSizeMultiplier: 0.3
+    readonly property real batteryGaugeFontSizeMultiplier: 1
     
     // Battery threshold values (as percentages 0.0-1.0)
     readonly property real batteryCriticalThreshold: 0.15  // 15%
