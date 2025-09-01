@@ -29,8 +29,8 @@ Scope {
         }
 
         color: "transparent"
-        width: 400
-        height: Math.min(listview.realContentHeight + 8, screen ? screen.height * 0.6 : 400)
+        implicitWidth: 450
+        implicitHeight: Math.min(listview.realContentHeight + 8, screen ? screen.height * 0.6 : 400)
 
         NotificationListView {
             id: listview
@@ -40,8 +40,8 @@ Scope {
                 rightMargin: 4
                 topMargin: 4
             }
-            width: parent.width - 8
-            height: parent.height - 8
+            implicitWidth: parent.width - 8
+            implicitHeight: parent.height - 8
             popup: true
         }
     }

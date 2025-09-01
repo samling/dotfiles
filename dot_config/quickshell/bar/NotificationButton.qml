@@ -72,8 +72,8 @@ Item {
             bottom: true
         }
         
-        margins.top: 5
-        margins.right: 8
+        margins.top: -1
+        margins.right: 0
         margins.left: 200
         margins.bottom: 50
         
@@ -90,14 +90,73 @@ Item {
         
         // Actual notification content
         Rectangle {
+            id: notificationPanel
             anchors.top: parent.top
             anchors.right: parent.right
             width: 400
             height: Math.min(parent.height * 0.8, 600)  // Fixed height constraint
             color: Config.notificationBackgroundColor
-            border.color: Config.notificationBorderColor
-            border.width: 2
-            radius: 12
+            border.width: 0  // Remove all borders, we'll add custom ones
+            
+            // Only round the bottom left corner for seamless connection
+            topLeftRadius: 0
+            topRightRadius: 0
+            bottomLeftRadius: 12
+            bottomRightRadius: 0
+            
+            // Drop shadow
+            Rectangle {
+                anchors.fill: parent
+                anchors.topMargin: 3
+                anchors.leftMargin: 3
+                color: Config.tooltipShadowColor
+                opacity: Config.tooltipShadowOpacity
+                topLeftRadius: 0
+                topRightRadius: 0
+                bottomLeftRadius: 12
+                bottomRightRadius: 0
+                z: -1
+            }
+            
+            // Custom borders - only bottom and left (no top or right)
+            Rectangle {
+                id: bottomBorder
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                height: 2
+                color: Config.notificationBorderColor
+            }
+            
+            Rectangle {
+                id: leftBorder
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 2
+                color: Config.notificationBorderColor
+            }
+            
+            // Animation properties
+            transform: Translate {
+                id: slideTransform
+                y: root.listOpen ? 0 : -notificationPanel.height  // Slide down from top (negative height)
+                
+                Behavior on y {
+                    NumberAnimation {
+                        duration: Config.colorAnimationDuration
+                        easing.type: Easing.OutCubic
+                    }
+                }
+            }
+            
+            opacity: root.listOpen ? 1.0 : 0.0
+            
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: Config.colorAnimationDuration
+                }
+            }
             
             // Prevent clicks from passing through to the background MouseArea
             MouseArea {

@@ -11,7 +11,7 @@ Item {
         id: barBackground
         anchors {
             fill: parent
-            margins: 1
+            margins: 0
         }
         color: Config.barBackgroundColor
         radius: Config.barRadius

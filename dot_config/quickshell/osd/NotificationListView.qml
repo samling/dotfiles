@@ -16,9 +16,16 @@ ListView {
     
     // Scrollbar configuration
     ScrollBar.vertical: ScrollBar {
+        id: scrollBar
         policy: ScrollBar.AsNeeded
-        active: true
+        active: scrollTimer.running
         visible: parent.contentHeight > parent.height
+        
+        Timer {
+            id: scrollTimer
+            interval: 500  // Hide after 0.5 seconds of no scrolling
+            repeat: false
+        }
     }
     
     // Custom mouse area for faster wheel scrolling
@@ -28,6 +35,9 @@ ListView {
         acceptedButtons: Qt.NoButton
         
         onWheel: (wheel) => {
+            // Show scrollbar and restart timer
+            scrollTimer.restart()
+            
             // Custom scroll distance - much larger than default
             const scrollDistance = wheel.angleDelta.y * 2  // Increase multiplier for faster scrolling
             root.contentY = Math.max(0, 
