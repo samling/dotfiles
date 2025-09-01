@@ -1,0 +1,98 @@
+{
+  "name": "Catppuccin Mocha",
+  "description": "Catppuccin Mocha - The darkest variant offering a cozy feeling with color-rich accents",
+  "flavor": "mocha",
+  "colors": {
+    "primary": {
+      "blue": "#89b4fa",
+      "green": "#a6e3a1", 
+      "red": "#f38ba8",
+      "yellow": "#f9e2af",
+      "orange": "#fab387",
+      "purple": "#cba6f7",
+      "pink": "#f5c2e7",
+      "teal": "#94e2d5",
+      "sky": "#89dceb",
+      "lavender": "#b4befe",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "text": {
+      "primary": "#cdd6f4",
+      "secondary": "#bac2de", 
+      "tertiary": "#a6adc8",
+      "light": "#cdd6f4",
+      "white": "#cdd6f4",
+      "muted": "#7f849c"
+    },
+    "background": {
+      "primary": "#1e1e2e",
+      "secondary": "#181825", 
+      "tertiary": "#313244",
+      "surface": "#45475a",
+      "overlay": "#6c7086",
+      "bar": "#1e1e2e",
+      "mantle": "#181825",
+      "crust": "#11111b"
+    },
+    "border": {
+      "primary": "#6c7086",
+      "secondary": "#45475a",
+      "accent": "#b4befe",
+      "subtle": "#313244"
+    },
+    "state": {
+      "success": "#a6e3a1",
+      "warning": "#f9e2af", 
+      "error": "#f38ba8",
+      "info": "#89b4fa",
+      "critical": "#eba0ac",
+      "inactive": "#6c7086"
+    },
+    "interactive": {
+      "default": "#45475a",
+      "pressed": "#585b70",
+      "hover": "#313244"
+    },
+    "transparency": {
+      "track": "#50ffffff",
+      "background": "#80000000",
+      "shadow": "#00000080"
+    }
+  },
+  "semantic": {
+    "workspace": {
+      "active": "primary.blue",
+      "occupied": "background.surface",
+      "empty": "background.tertiary"
+    },
+    "battery": {
+      "charging": "state.success",
+      "high": "state.success", 
+      "medium": "state.warning",
+      "low": "primary.orange",
+      "critical": "state.error",
+      "unavailable": "state.inactive"
+    },
+    "notification": {
+      "background": "background.primary",
+      "border": "border.primary",
+      "active": "primary.purple",
+      "inactive": "background.surface",
+      "accent": "border.accent",
+      "close": "state.error",
+      "closePressed": "state.critical"
+    },
+    "osd": {
+      "background": "transparency.background",
+      "track": "transparency.track", 
+      "fill": "text.primary"
+    },
+    "tooltip": {
+      "background": "background.secondary",
+      "border": "border.secondary",
+      "text": "text.primary",
+      "shadow": "transparency.shadow"
+    }
+  }
+}

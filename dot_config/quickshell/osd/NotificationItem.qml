@@ -13,8 +13,8 @@ Rectangle {
     
     implicitHeight: contentColumn.implicitHeight + 45
     radius: 12
-    color: "#1e1e2e"
-    border.color: "#6c7086"
+    color: Config.notificationBackgroundColor
+    border.color: Config.notificationBorderColor
     border.width: 2
 
     ColumnLayout {
@@ -33,13 +33,13 @@ Rectangle {
                 Layout.preferredWidth: 32
                 Layout.preferredHeight: 32
                 radius: 16
-                color: "#45475a"
+                color: Config.notificationInactiveColor
                 visible: root.notificationObject?.appIcon !== ""
                 
                 Text {
                     anchors.centerIn: parent
                     text: root.notificationObject?.appName?.charAt(0) ?? "?"
-                    color: "#cdd6f4"
+                    color: Config.notificationTextPrimaryColor
                     font.pixelSize: 16
                     font.weight: Font.Bold
                 }
@@ -62,7 +62,7 @@ Rectangle {
                 // App name
                 Text {
                     text: root.notificationObject?.appName ?? ""
-                    color: "#a6adc8"
+                    color: Config.notificationTextSecondaryColor
                     font.pixelSize: 14
                     font.weight: Font.Medium
                     visible: text !== ""
@@ -71,7 +71,7 @@ Rectangle {
                 // Summary (title)
                 Text {
                     text: root.notificationObject?.summary ?? ""
-                    color: "#cdd6f4"
+                    color: Config.notificationTextPrimaryColor
                     font.pixelSize: 18
                     font.weight: Font.Bold
                     wrapMode: Text.WordWrap
@@ -82,7 +82,7 @@ Rectangle {
                 // Body text
                 Text {
                     text: root.notificationObject?.body ?? ""
-                    color: "#bac2de"
+                    color: Config.notificationTextTertiaryColor
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
@@ -97,12 +97,12 @@ Rectangle {
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 radius: 12
-                color: closeArea.pressed ? "#e64553" : "#f38ba8"
+                color: closeArea.pressed ? Config.notificationClosePressedColor : Config.notificationCloseColor
                 
                 Text {
                     anchors.centerIn: parent
                     text: "×"
-                    color: "#1e1e2e"
+                    color: Config.notificationBackgroundColor
                     font.pixelSize: 16
                     font.weight: Font.Bold
                 }
@@ -130,14 +130,14 @@ Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 32
                     radius: 6
-                    color: buttonArea.pressed ? "#585b70" : "#45475a"
-                    border.color: "#6c7086"
+                    color: buttonArea.pressed ? Config.notificationButtonPressedColor : Config.notificationButtonColor
+                    border.color: Config.notificationBorderColor
                     border.width: 1
 
                     Text {
                         anchors.centerIn: parent
                         text: modelData.text || "Action"
-                        color: "#cdd6f4"
+                        color: Config.notificationTextPrimaryColor
                         font.pixelSize: 13
                     }
 

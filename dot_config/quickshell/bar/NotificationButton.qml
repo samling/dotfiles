@@ -27,8 +27,8 @@ Item {
             width: 24
             height: 24
             radius: 4
-            color: root.hasNotifications ? "#cba6f7" : "#45475a"
-            border.color: root.hasNotifications ? "#b4befe" : "#6c7086"
+            color: root.hasNotifications ? Config.notificationActiveColor : Config.notificationInactiveColor
+            border.color: root.hasNotifications ? Config.notificationActiveAccentColor : Config.notificationBorderColor
             border.width: 1
             
             // Notification icon
@@ -43,7 +43,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
-                color: "#1e1e2e"
+                color: Config.notificationBackgroundColor
                 font.pixelSize: root.notificationCount > 9 ? 9 : 11
                 font.weight: Font.Bold
                 visible: root.hasNotifications
@@ -94,8 +94,8 @@ Item {
             anchors.right: parent.right
             width: 400
             height: Math.min(parent.height * 0.8, 600)  // Fixed height constraint
-            color: "#1e1e2e"
-            border.color: "#6c7086"
+            color: Config.notificationBackgroundColor
+            border.color: Config.notificationBorderColor
             border.width: 2
             radius: 12
             
@@ -129,14 +129,14 @@ Item {
                         width: 60
                         height: 24
                         radius: 12
-                        color: "#45475a"
-                        border.color: "#6c7086"
+                        color: Config.notificationButtonColor
+                        border.color: Config.notificationBorderColor
                         border.width: 1
                         
                         Text {
                             anchors.centerIn: parent
                             text: "Clear"
-                            color: "#cdd6f4"
+                            color: Config.notificationTextPrimaryColor
                             font.pixelSize: 11
                         }
                         
@@ -158,7 +158,7 @@ Item {
                     Text {
                         anchors.centerIn: parent
                         text: "No notifications"
-                        color: "#6c7086"
+                        color: Config.notificationBorderColor
                         font.pixelSize: 14
                         visible: !root.hasNotifications
                     }

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
+import qs.common
 
 Item {
 	id: root
@@ -56,7 +57,7 @@ Item {
 			Rectangle {
 				anchors.fill: parent
 				radius: height / 2
-				color: "#80000000"
+				color: Config.osdBackgroundColor
 
 				RowLayout {
 					anchors {
@@ -90,7 +91,7 @@ Item {
 						Layout.fillWidth: true
 						implicitHeight: 10
 						radius: 20
-						color: "#50ffffff"
+						color: Config.osdTrackColor
 
 						Rectangle {
 							anchors {
@@ -100,7 +101,7 @@ Item {
 							}
 							implicitWidth: parent.width * (Pipewire.defaultAudioSink?.audio.volume ?? 0)
 							radius: parent.radius
-							color: "#ffffff"
+							color: Config.osdFillColor
 						}
 					}
 

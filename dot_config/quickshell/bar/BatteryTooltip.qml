@@ -48,8 +48,8 @@ LazyLoader {
                 const globalPos = root.hoverTarget.mapToGlobal(0, 0);
                 return globalPos.y + root.hoverTarget.height + 8;
             }
-            color: "#2D3748"
-            border.color: "#4A5568"
+            color: Config.tooltipBackgroundColor
+            border.color: Config.tooltipBorderColor
             border.width: 1
             radius: 6
             
@@ -61,8 +61,8 @@ LazyLoader {
                 anchors.fill: parent
                 anchors.topMargin: 2
                 anchors.leftMargin: 2
-                color: "#000000"
-                opacity: 0.3
+                color: Config.tooltipShadowColor
+                opacity: Config.tooltipShadowOpacity
                 radius: parent.radius
                 z: -1
             }
@@ -70,7 +70,7 @@ LazyLoader {
             Text {
                 id: tooltipText
                 anchors.centerIn: parent
-                color: "#E2E8F0"
+                color: Config.tooltipTextColor
                 font.pixelSize: 12
                 font.weight: Font.Medium
                 

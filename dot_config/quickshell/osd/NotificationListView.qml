@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import qs.common
 import qs.services
 import QtQuick
