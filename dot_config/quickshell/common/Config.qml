@@ -32,11 +32,11 @@ QtObject {
     readonly property int workspaceRadius: 4
     readonly property int workspaceFontSize: 12
     readonly property int workspaceBorderWidth: 2
-    readonly property string workspaceActiveColor: "#6c7ff2"
-    readonly property string workspaceActiveBrightColor: "#5a6cf0"
+    readonly property string workspaceActiveColor: "#89b4fa"
+    readonly property string workspaceActiveBrightColor: "#89b4fa"
     readonly property string workspaceOccupiedColor: "#4a5568"
     readonly property string workspaceEmptyColor: "#2d3748"
-    readonly property string workspaceActiveBorderColor: "#ffffff"
+    readonly property string workspaceActiveBorderColor: "#89b4fa"
     readonly property string workspaceActiveTextColor: "#ffffff"
     readonly property string workspaceOccupiedTextColor: "#e2e8f0"
     readonly property string workspaceEmptyTextColor: "#718096"
@@ -48,6 +48,7 @@ QtObject {
 
     // Clock widget
     readonly property string clockTextColor: "white"
+    readonly property int clockFontSize: 14
 
     // Animation durations
     readonly property int colorAnimationDuration: 200

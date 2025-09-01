@@ -18,13 +18,15 @@ Item {
           Text {
             id: clock
             color: Config.clockTextColor
+
+            font.pixelSize: Config.clockFontSize
             
             verticalAlignment: Text.AlignVCenter
 
             Process {
                 id: dateProc
 
-                command: ["date"]
+                command: ["date", "+%H:%M"]
                 running: true
 
                 stdout: StdioCollector {
