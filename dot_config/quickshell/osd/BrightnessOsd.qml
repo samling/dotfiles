@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.services
+import qs.common
 
 Item {
 	id: root
@@ -46,7 +47,7 @@ Item {
 			Rectangle {
 				anchors.fill: parent
 				radius: height / 2
-				color: "#80000000"
+				color: Config.osdBackgroundColor
 
 				RowLayout {
 					anchors {
@@ -79,7 +80,7 @@ Item {
 						Layout.fillWidth: true
 						implicitHeight: 10
 						radius: 20
-						color: "#50ffffff"
+						color: Config.osdTrackColor
 
 						Rectangle {
 							anchors {
@@ -89,7 +90,7 @@ Item {
 							}
 							implicitWidth: parent.width * (Brightness.brightnessPercent / 100)
 							radius: parent.radius
-							color: "#ffffff"
+							color: Config.osdFillColor
 						}
 					}
 

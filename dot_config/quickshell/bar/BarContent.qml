@@ -11,7 +11,7 @@ Item {
         id: barBackground
         anchors {
             fill: parent
-            margins: 1
+            margins: 0
         }
         color: Config.barBackgroundColor
         radius: Config.barRadius
@@ -71,10 +71,19 @@ Item {
             Layout.fillHeight: false
             Layout.fillWidth: false
 
+            SysTray {
+                id: sysTrayWidget
+                Layout.fillHeight: true
+            }
+
+            Item { width: 8; height: 1 } // Spacer
+
             BatteryIndicator {
                 id: batteryWidget
                 Layout.fillHeight: true
             }
+
+            Item { width: 8; height: 1 } // Spacer
 
             NotificationButton {
                 id: notificationButton

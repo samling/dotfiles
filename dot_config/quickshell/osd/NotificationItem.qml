@@ -13,8 +13,8 @@ Rectangle {
     
     implicitHeight: contentColumn.implicitHeight + 45
     radius: 12
-    color: "#1e1e2e"
-    border.color: "#6c7086"
+    color: Config.notificationBackgroundColor
+    border.color: Config.notificationBorderColor
     border.width: 2
 
     ColumnLayout {
@@ -33,26 +33,56 @@ Rectangle {
                 Layout.preferredWidth: 32
                 Layout.preferredHeight: 32
                 radius: 16
-                color: "#45475a"
-                visible: root.notificationObject?.appIcon !== ""
+                color: Config.notificationInactiveColor
+                visible: ((appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")) && !notificationImage.ready
+                
+                Image {
+                    id: appIconImage
+                    anchors.centerIn: parent
+                    source: root.notificationObject?.appIcon ?? ""
+                    fillMode: Image.PreserveAspectFit
+                    width: 24
+                    height: 24
+                    asynchronous: true
+                    cache: true
+                    
+                    onStatusChanged: {
+                        if (status === Image.Error) {
+                            console.log("[NotificationItem] Failed to load app icon:", source)
+                        }
+                    }
+                }
                 
                 Text {
                     anchors.centerIn: parent
                     text: root.notificationObject?.appName?.charAt(0) ?? "?"
-                    color: "#cdd6f4"
+                    color: Config.notificationTextPrimaryColor
                     font.pixelSize: 16
                     font.weight: Font.Bold
+                    visible: appIconImage.status !== Image.Ready
                 }
             }
 
             // Notification image (moved to left side of content)
             Image {
+                id: notificationImage
+                property bool ready: status === Image.Ready && source !== ""
                 source: root.notificationObject?.image ?? ""
                 visible: source !== ""
                 fillMode: Image.PreserveAspectFit
                 Layout.preferredWidth: Math.min(sourceSize.width, 64)
                 Layout.preferredHeight: Math.min(sourceSize.height, 64)
                 Layout.alignment: Qt.AlignTop
+                asynchronous: true
+                cache: true
+                
+                onStatusChanged: {
+                    if (status === Image.Error) {
+                        console.log("[NotificationItem] Failed to load notification image:", source)
+                    } else if (status === Image.Ready) {
+                        console.log("[NotificationItem] Successfully loaded notification image:", source)
+                    }
+                }
             }
 
             ColumnLayout {
@@ -62,7 +92,7 @@ Rectangle {
                 // App name
                 Text {
                     text: root.notificationObject?.appName ?? ""
-                    color: "#a6adc8"
+                    color: Config.notificationTextSecondaryColor
                     font.pixelSize: 14
                     font.weight: Font.Medium
                     visible: text !== ""
@@ -71,7 +101,7 @@ Rectangle {
                 // Summary (title)
                 Text {
                     text: root.notificationObject?.summary ?? ""
-                    color: "#cdd6f4"
+                    color: Config.notificationTextPrimaryColor
                     font.pixelSize: 18
                     font.weight: Font.Bold
                     wrapMode: Text.WordWrap
@@ -82,7 +112,7 @@ Rectangle {
                 // Body text
                 Text {
                     text: root.notificationObject?.body ?? ""
-                    color: "#bac2de"
+                    color: Config.notificationTextTertiaryColor
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
@@ -97,12 +127,12 @@ Rectangle {
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 radius: 12
-                color: closeArea.pressed ? "#e64553" : "#f38ba8"
+                color: closeArea.pressed ? Config.notificationClosePressedColor : Config.notificationCloseColor
                 
                 Text {
                     anchors.centerIn: parent
                     text: "×"
-                    color: "#1e1e2e"
+                    color: Config.notificationBackgroundColor
                     font.pixelSize: 16
                     font.weight: Font.Bold
                 }
@@ -130,14 +160,14 @@ Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 32
                     radius: 6
-                    color: buttonArea.pressed ? "#585b70" : "#45475a"
-                    border.color: "#6c7086"
+                    color: buttonArea.pressed ? Config.notificationButtonPressedColor : Config.notificationButtonColor
+                    border.color: Config.notificationBorderColor
                     border.width: 1
 
                     Text {
                         anchors.centerIn: parent
                         text: modelData.text || "Action"
-                        color: "#cdd6f4"
+                        color: Config.notificationTextPrimaryColor
                         font.pixelSize: 13
                     }
 

@@ -26,7 +26,7 @@ Item {
             Process {
                 id: dateProc
 
-                command: ["date", "+%H:%M"]
+                command: ["date", "+%H:%M • %A, %d %b %Y"]
                 running: true
 
                 stdout: StdioCollector {
@@ -36,8 +36,7 @@ Item {
 
             // use a timer to rerun the process at an interval
             Timer {
-                // 1000 milliseconds is 1 second
-                interval: 1000
+                interval: Config.clockUpdateInterval
 
                 // start the timer immediately
                 running: true

@@ -1,25 +1,32 @@
+pragma ComponentBehavior: Bound
+
 import qs.common
 import qs.services
 import QtQuick
 import QtQuick.Controls
 import Quickshell
 
-ScrollView {
+ListView {
     id: root
     property bool popup: false
-    property real realContentHeight: contentColumn.implicitHeight
+    property real realContentHeight: contentHeight
 
     clip: true
-    contentWidth: availableWidth
-    contentHeight: realContentHeight
+    spacing: 3
     
-    ScrollBar.vertical.policy: ScrollBar.AsNeeded
-    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-    ScrollBar.vertical.active: true
-    ScrollBar.vertical.visible: contentHeight > height
-    
-    // Disable default wheel handling so we can customize it
-    wheelEnabled: false
+    // Scrollbar configuration
+    ScrollBar.vertical: ScrollBar {
+        id: scrollBar
+        policy: ScrollBar.AsNeeded
+        active: scrollTimer.running
+        visible: parent.contentHeight > parent.height
+        
+        Timer {
+            id: scrollTimer
+            interval: 500  // Hide after 0.5 seconds of no scrolling
+            repeat: false
+        }
+    }
     
     // Custom mouse area for faster wheel scrolling
     MouseArea {
@@ -28,13 +35,14 @@ ScrollView {
         acceptedButtons: Qt.NoButton
         
         onWheel: (wheel) => {
+            // Show scrollbar and restart timer
+            scrollTimer.restart()
+            
             // Custom scroll distance - much larger than default
             const scrollDistance = wheel.angleDelta.y * 2  // Increase multiplier for faster scrolling
-            if (root.contentItem) {
-                root.contentItem.contentY = Math.max(0, 
-                    Math.min(root.contentItem.contentY - scrollDistance, 
-                             root.contentItem.contentHeight - root.contentItem.height))
-            }
+            root.contentY = Math.max(0, 
+                Math.min(root.contentY - scrollDistance, 
+                         root.contentHeight - root.height))
             wheel.accepted = true
         }
         
@@ -42,23 +50,18 @@ ScrollView {
             mouse.accepted = false  // Let other mouse events pass through
         }
     }
-
-    Column {
-        id: contentColumn
-        width: root.availableWidth
-        spacing: 3
-
-        Repeater {
-            model: ScriptModel {
-                values: root.popup ? Notifications.popupAppNameList : Notifications.appNameList
-            }
-            delegate: NotificationGroup {
-                width: parent.width
-                popup: root.popup
-                notificationGroup: popup ? 
-                    Notifications.popupGroupsByAppName[modelData] :
-                    Notifications.groupsByAppName[modelData]
-            }
-        }
+    
+    model: ScriptModel {
+        values: root.popup ? Notifications.popupAppNameList : Notifications.appNameList
+    }
+    
+    delegate: NotificationGroup {
+        required property int index
+        required property var modelData
+        popup: root.popup
+        width: root.width
+        notificationGroup: popup ? 
+            Notifications.popupGroupsByAppName[modelData] :
+            Notifications.groupsByAppName[modelData]
     }
 }

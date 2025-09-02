@@ -129,6 +129,8 @@ Singleton {
     property var popupGroupsByAppName: groupsForList(root.popupList)
     property var appNameList: appNameListForGroups(root.groupsByAppName)
     property var popupAppNameList: appNameListForGroups(root.popupGroupsByAppName)
+    
+
 
     // Quickshell's notification IDs starts at 1 on each run, while saved notifications
     // can already contain higher IDs. This is for avoiding id collisions
@@ -159,6 +161,7 @@ Singleton {
                 "time": Date.now(),
             });
 			root.list = [...root.list, newNotifObject];
+			triggerListChange()
 
             // Popup
             if (!root.popupInhibited) {

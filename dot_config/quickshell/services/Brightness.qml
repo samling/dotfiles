@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.common
 
 Singleton {
     id: root
@@ -44,7 +45,7 @@ Singleton {
     // Timer to periodically check for brightness changes
     Timer {
         id: brightnessTimer
-        interval: 100  // Check every 100ms for responsive updates
+        interval: Config.brightnessCheckInterval
         running: true
         repeat: true
         onTriggered: {

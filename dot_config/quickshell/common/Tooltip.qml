@@ -1,18 +1,44 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
-import qs.services
+import qs.common
 
-LazyLoader {
+Item {
     id: root
     
-    property Item hoverTarget
-    property bool shouldShow: hoverTarget && hoverTarget.containsMouse
+    property MouseArea hoverTarget
+    property string text: ""
+    property bool isHovering: hoverTarget && hoverTarget.containsMouse && text.length > 0
+    property bool shouldShow: false
     
-    active: shouldShow
+    onIsHoveringChanged: {
+        if (!isHovering) {
+            shouldShow = false
+        }
+    }
     
-    component: PanelWindow {
+    Timer {
+        id: showTimer
+        interval: 500
+        repeat: false
+        running: root.isHovering
+        onTriggered: {
+            root.shouldShow = true
+        }
+        onRunningChanged: {
+            if (!running && !root.isHovering) {
+                root.shouldShow = false
+            }
+        }
+    }
+    
+    LazyLoader {
+        active: root.shouldShow
+        
+        component: PanelWindow {
         id: tooltipWindow
         color: "transparent"
         
@@ -30,7 +56,7 @@ LazyLoader {
         exclusionMode: ExclusionMode.Ignore
         exclusiveZone: 0
         
-        WlrLayershell.namespace: "quickshell:battery-tooltip"
+        WlrLayershell.namespace: "quickshell:tooltip"
         WlrLayershell.layer: WlrLayer.Overlay
         
         Rectangle {
@@ -48,8 +74,8 @@ LazyLoader {
                 const globalPos = root.hoverTarget.mapToGlobal(0, 0);
                 return globalPos.y + root.hoverTarget.height + 8;
             }
-            color: "#2D3748"
-            border.color: "#4A5568"
+            color: Config.tooltipBackgroundColor
+            border.color: Config.tooltipBorderColor
             border.width: 1
             radius: 6
             
@@ -61,8 +87,8 @@ LazyLoader {
                 anchors.fill: parent
                 anchors.topMargin: 2
                 anchors.leftMargin: 2
-                color: "#000000"
-                opacity: 0.3
+                color: Config.tooltipShadowColor
+                opacity: Config.tooltipShadowOpacity
                 radius: parent.radius
                 z: -1
             }
@@ -70,27 +96,12 @@ LazyLoader {
             Text {
                 id: tooltipText
                 anchors.centerIn: parent
-                color: "#E2E8F0"
+                color: Config.tooltipTextColor
                 font.pixelSize: 12
                 font.weight: Font.Medium
-                
-                text: {
-                    if (!Battery.available) return "Battery not available";
-                    
-                    // Show more useful info when time is unknown
-                    if (Battery.timeString === "Time unknown") {
-                        if (Battery.isCharging) {
-                            return "Charging: " + Math.round(Battery.percentage * 100) + "%";
-                        } else if (Battery.isPluggedIn) {
-                            return "Plugged in: " + Math.round(Battery.percentage * 100) + "% (Full)";
-                        } else {
-                            return "Battery: " + Math.round(Battery.percentage * 100) + "%";
-                        }
-                    }
-                    
-                    return Battery.timeString;
-                }
+                text: root.text
             }
+        }
         }
     }
 }
