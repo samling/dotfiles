@@ -28,132 +28,124 @@ MouseArea {
     }
     property color backgroundColor: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, Config.batteryGaugeBackgroundOpacity)
 
-    implicitWidth: batteryPercentage.width + spacing + gaugeSize
+    implicitWidth: batteryIconContainer.width + 6 + gaugeSize
     implicitHeight: gaugeSize
     hoverEnabled: true
 
-    // Percentage text on the left
-    Text {
-        id: batteryPercentage
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        color: root.primaryColor
-        font.pixelSize: Math.min(Config.batteryFontSize, root.gaugeSize * Config.batteryGaugeFontSizeMultiplier)
-        font.weight: Font.Bold
-
-        text: root.available ? Math.round(root.percentage * 100) + "%" : "N/A"
-    }
-
-    // Background circle
-    Shape {
-        id: backgroundCircle
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        width: root.gaugeSize
-        height: root.gaugeSize
-        preferredRendererType: Shape.CurveRenderer
-        
-        ShapePath {
-            strokeColor: "transparent"
-            strokeWidth: root.lineWidth
-            fillColor: "transparent"
-            capStyle: ShapePath.RoundCap
-            
-            PathAngleArc {
-                centerX: root.gaugeSize / 2
-                centerY: root.gaugeSize / 2
-                radiusX: (root.gaugeSize - root.lineWidth) / 2
-                radiusY: (root.gaugeSize - root.lineWidth) / 2
-                startAngle: 0
-                sweepAngle: 360
-            }
-        }
-    }
-
-    // Progress arc
-    Shape {
-        id: progressCircle
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        width: root.gaugeSize
-        height: root.gaugeSize
-        preferredRendererType: Shape.CurveRenderer
-        
-        ShapePath {
-            strokeColor: root.primaryColor
-            strokeWidth: root.lineWidth
-            fillColor: "transparent"
-            capStyle: ShapePath.RoundCap
-            
-            PathAngleArc {
-                centerX: root.gaugeSize / 2
-                centerY: root.gaugeSize / 2
-                radiusX: (root.gaugeSize - root.lineWidth) / 2
-                radiusY: (root.gaugeSize - root.lineWidth) / 2
-                startAngle: -90 // Start from top
-                sweepAngle: root.available ? (root.percentage * 360) : 0
-            }
-        }
-    }
-
-    // Battery icon in center of circle
+    // Battery/charging icon (to the left)
     Item {
         id: batteryIconContainer
-        anchors.right: parent.right
+        anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        width: root.gaugeSize
-        height: root.gaugeSize
+        width: root.gaugeSize * 0.4
+        height: root.gaugeSize * 0.8
         
-        // Battery body
-        Rectangle {
-            id: batteryBody
-            anchors.centerIn: parent
-            width: parent.width * 0.25
-            height: parent.height * 0.4
-            color: "transparent"
-            border.color: root.primaryColor
-            border.width: 1
-            radius: 1
-            
-            // Battery fill based on percentage
-            Rectangle {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.margins: 1
-                height: root.available ? (parent.height - 2) * root.percentage : 0
-                color: root.primaryColor
-                radius: parent.radius
-                
-                Behavior on height {
-                    NumberAnimation { duration: 200 }
-                }
-            }
-        }
-        
-        // Battery terminal (positive end)
-        Rectangle {
-            anchors.bottom: batteryBody.top
-            anchors.horizontalCenter: batteryBody.horizontalCenter
-            width: batteryBody.width * 0.6
-            height: 2
-            color: root.primaryColor
-            radius: 1
-        }
-        
-        // Charging indicator
+        // Vertical battery icon (when not charging)
         Text {
-            anchors.centerIn: batteryBody
-            color: root.isCharging ? "white" : "transparent"
-            font.pixelSize: batteryBody.width * 0.8
+            anchors.centerIn: parent
+            color: root.primaryColor
+            font.pixelSize: root.gaugeSize * 0.6
             font.weight: Font.Bold
-            text: "⚡"
+            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+            textFormat: Text.PlainText
+            text: "🔋︎"
+            visible: !root.isCharging
+        }
+        
+        // Charging icon (when charging)
+        Text {
+            anchors.centerIn: parent
+            color: root.primaryColor
+            font.pixelSize: root.gaugeSize * 0.6
+            font.weight: Font.Bold
+            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+            textFormat: Text.PlainText
+            text: "🔌︎"
             visible: root.isCharging
         }
     }
 
-    BatteryTooltip {
-        id: batteryTooltip
+    // Battery gauge container
+    Item {
+        id: gaugeContainer
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        width: root.gaugeSize
+        height: root.gaugeSize
+        
+        // Background circle
+        Shape {
+            id: backgroundCircle
+            anchors.fill: parent
+            preferredRendererType: Shape.CurveRenderer
+            
+            ShapePath {
+                strokeColor: "transparent"
+                strokeWidth: root.lineWidth
+                fillColor: "transparent"
+                capStyle: ShapePath.RoundCap
+                
+                PathAngleArc {
+                    centerX: root.gaugeSize / 2
+                    centerY: root.gaugeSize / 2
+                    radiusX: (root.gaugeSize - root.lineWidth) / 2
+                    radiusY: (root.gaugeSize - root.lineWidth) / 2
+                    startAngle: 0
+                    sweepAngle: 360
+                }
+            }
+        }
+
+        // Progress arc
+        Shape {
+            id: progressCircle
+            anchors.fill: parent
+            preferredRendererType: Shape.CurveRenderer
+            
+            ShapePath {
+                strokeColor: root.primaryColor
+                strokeWidth: root.lineWidth
+                fillColor: "transparent"
+                capStyle: ShapePath.RoundCap
+                
+                PathAngleArc {
+                    centerX: root.gaugeSize / 2
+                    centerY: root.gaugeSize / 2
+                    radiusX: (root.gaugeSize - root.lineWidth) / 2
+                    radiusY: (root.gaugeSize - root.lineWidth) / 2
+                    startAngle: -90 // Start from top
+                    sweepAngle: root.available ? (root.percentage * 360) : 0
+                }
+            }
+        }
+
+        // Percentage text (always visible)
+        Text {
+            anchors.centerIn: parent
+            text: root.available ? Math.round(root.percentage * 100).toString() : "N/A"
+            color: root.primaryColor
+            font.pixelSize: Math.min(12, root.gaugeSize * 0.4)
+            font.weight: Font.Bold
+        }
+    }
+
+    Tooltip {
         hoverTarget: root
+        text: {
+            if (!Battery.available) return "Battery not available";
+            
+            // Show more useful info when time is unknown
+            if (Battery.timeString === "Time unknown") {
+                if (Battery.isCharging) {
+                    return "Charging: " + Math.round(Battery.percentage * 100) + "%";
+                } else if (Battery.isPluggedIn) {
+                    return "Plugged in: " + Math.round(Battery.percentage * 100) + "% (Full)";
+                } else {
+                    return "Battery: " + Math.round(Battery.percentage * 100) + "%";
+                }
+            }
+            
+            return Battery.timeString;
+        }
     }
 }

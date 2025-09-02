@@ -1,3 +1,5 @@
+//@ pragma UseQApplication
+
 import qs.bar
 import qs.osd
 import Quickshell

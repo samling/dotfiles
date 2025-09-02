@@ -3,6 +3,7 @@ import qs.common
 import qs.osd
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Shapes
 import Quickshell
 
 Item {
@@ -20,37 +21,39 @@ Item {
     RowLayout {
         id: rowLayout
         anchors.centerIn: parent
-        spacing: Config.batterySpacing
+        spacing: 12
         
         Item {
             id: notificationContainer
-            implicitWidth: notificationRow.width
-            implicitHeight: 24
+            implicitWidth: notificationIndicator.width
+            implicitHeight: notificationIndicator.height
             
-            Row {
-                id: notificationRow
-                spacing: 6
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
+            property int indicatorSize: 24
+            property color primaryColor: root.hasNotifications ? Config.clockTextColor : Config.getColor("text.muted")
+            property color backgroundColor: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, 1)
+            
+            Item {
+                id: notificationIndicator
+                width: notificationContainer.indicatorSize
+                height: notificationContainer.indicatorSize
+                anchors.centerIn: parent
                 
-                // Notification count (left of flag)
-                Text {
-                    id: countText
-                    text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
-                    color: Config.notificationTextPrimaryColor
-                    font.pixelSize: Config.batteryFontSize
-                    font.weight: Font.Bold
-                    visible: root.hasNotifications
-                    anchors.verticalCenter: parent.verticalCenter
+                // Background square
+                Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                    border.color: notificationContainer.backgroundColor
+                    border.width: 2
+                    radius: 4
                 }
                 
-                // Notification flag icon
+                // Notification count text in center
                 Text {
-                    id: flagIcon
-                    text: root.hasNotifications ? "⚑" : "⚐"
-                    font.pixelSize: 16
-                    color: Config.notificationTextPrimaryColor
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.centerIn: parent
+                    text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
+                    color: notificationContainer.primaryColor
+                    font.pixelSize: 10
+                    font.weight: Font.Bold
                 }
             }
             
@@ -77,8 +80,8 @@ Item {
             bottom: true
         }
         
-        margins.top: -1
-        margins.right: 0
+        margins.top: 4
+        margins.right: 4
         margins.left: 200
         margins.bottom: 50
         
@@ -101,13 +104,14 @@ Item {
             width: 400
             height: Math.min(parent.height * 0.8, 600)  // Fixed height constraint
             color: Config.notificationBackgroundColor
-            border.width: 0  // Remove all borders, we'll add custom ones
+            border.width: 2
+            border.color: Qt.lighter(Config.notificationBackgroundColor, 1.3)
             
-            // Only round the bottom left corner for seamless connection
-            topLeftRadius: 0
-            topRightRadius: 0
+            // Round all corners
+            topLeftRadius: 12
+            topRightRadius: 12
             bottomLeftRadius: 12
-            bottomRightRadius: 0
+            bottomRightRadius: 12
             
             // Drop shadow
             Rectangle {
@@ -116,31 +120,14 @@ Item {
                 anchors.leftMargin: 3
                 color: Config.tooltipShadowColor
                 opacity: Config.tooltipShadowOpacity
-                topLeftRadius: 0
-                topRightRadius: 0
+                topLeftRadius: 12
+                topRightRadius: 12
                 bottomLeftRadius: 12
-                bottomRightRadius: 0
+                bottomRightRadius: 12
                 z: -1
             }
             
-            // Custom borders - only bottom and left (no top or right)
-            Rectangle {
-                id: bottomBorder
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                height: 2
-                color: Config.notificationBorderColor
-            }
-            
-            Rectangle {
-                id: leftBorder
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: 2
-                color: Config.notificationBorderColor
-            }
+
             
             // Animation properties
             transform: Translate {

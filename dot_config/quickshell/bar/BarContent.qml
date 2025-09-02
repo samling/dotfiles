@@ -71,10 +71,19 @@ Item {
             Layout.fillHeight: false
             Layout.fillWidth: false
 
+            SysTray {
+                id: sysTrayWidget
+                Layout.fillHeight: true
+            }
+
+            Item { width: 8; height: 1 } // Spacer
+
             BatteryIndicator {
                 id: batteryWidget
                 Layout.fillHeight: true
             }
+
+            Item { width: 8; height: 1 } // Spacer
 
             NotificationButton {
                 id: notificationButton

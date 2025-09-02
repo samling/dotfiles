@@ -34,7 +34,7 @@ Rectangle {
                 Layout.preferredHeight: 32
                 radius: 16
                 color: Config.notificationInactiveColor
-                visible: (appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")
+                visible: ((appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")) && !notificationImage.ready
                 
                 Image {
                     id: appIconImage
@@ -65,12 +65,24 @@ Rectangle {
 
             // Notification image (moved to left side of content)
             Image {
+                id: notificationImage
+                property bool ready: status === Image.Ready && source !== ""
                 source: root.notificationObject?.image ?? ""
                 visible: source !== ""
                 fillMode: Image.PreserveAspectFit
                 Layout.preferredWidth: Math.min(sourceSize.width, 64)
                 Layout.preferredHeight: Math.min(sourceSize.height, 64)
                 Layout.alignment: Qt.AlignTop
+                asynchronous: true
+                cache: true
+                
+                onStatusChanged: {
+                    if (status === Image.Error) {
+                        console.log("[NotificationItem] Failed to load notification image:", source)
+                    } else if (status === Image.Ready) {
+                        console.log("[NotificationItem] Successfully loaded notification image:", source)
+                    }
+                }
             }
 
             ColumnLayout {

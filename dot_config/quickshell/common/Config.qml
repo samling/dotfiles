@@ -58,6 +58,9 @@ QtObject {
     function getColor(path) {
         const parts = path.split('.')
         
+        // Don't log errors if palette hasn't loaded yet
+        const paletteLoading = !paletteInitialized || !paletteData.colors
+        
         // First try semantic colors (for component roles like "workspace.active")
         if (paletteData.semantic) {
             let current = paletteData.semantic
@@ -82,7 +85,9 @@ QtObject {
                         if (refCurrent && typeof refCurrent === 'object' && refPart in refCurrent) {
                             refCurrent = refCurrent[refPart]
                         } else {
-                            console.warn("[Config] Color reference not found:", current, "for", path)
+                            if (!paletteLoading) {
+                                console.warn("[Config] Color reference not found:", current, "for", path)
+                            }
                             return "#6c7086" // Fallback gray
                         }
                     }
@@ -100,7 +105,9 @@ QtObject {
                 if (current && typeof current === 'object' && part in current) {
                     current = current[part]
                 } else {
-                    console.warn("[Config] Color not found:", path)
+                    if (!paletteLoading) {
+                        console.warn("[Config] Color not found:", path)
+                    }
                     return "#6c7086" // Fallback gray
                 }
             }
@@ -108,7 +115,10 @@ QtObject {
             return current
         }
         
-        console.error("[Config] No palette data available for:", path)
+        // Only log errors if palette has finished loading
+        if (!paletteLoading) {
+            console.error("[Config] No palette data available for:", path)
+        }
         return "#6c7086" // Fallback gray
     }
 
@@ -204,6 +214,24 @@ QtObject {
     readonly property string tooltipShadowColor: getColor("tooltip.shadow")
     readonly property string tooltipTextColor: getColor("tooltip.text")
     readonly property real tooltipShadowOpacity: 0.3
+    
+    // System Tray configuration
+    readonly property var sysTrayPinnedItems: []  // Array of item IDs to pin (empty = auto-pin first 3)
+    readonly property int sysTrayMaxPinnedItems: 3
+    readonly property int sysTrayOverflowColumns: 4
+    
+    // Bar configuration options  
+    readonly property var options: ({
+        bar: {
+            vertical: false,
+            bottom: false,
+            tray: {
+                pinnedItems: [],
+                invertPinnedItems: false,
+                monochromeIcons: false  // Disable monochrome for better visibility
+            }
+        }
+    })
     
     // Common sizing and timing
     readonly property int brightnessCheckInterval: 100  // milliseconds

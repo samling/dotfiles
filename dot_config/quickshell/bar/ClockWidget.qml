@@ -26,7 +26,7 @@ Item {
             Process {
                 id: dateProc
 
-                command: ["date", "+%H:%M"]
+                command: ["date", "+%H:%M • %A, %d %b %Y"]
                 running: true
 
                 stdout: StdioCollector {
