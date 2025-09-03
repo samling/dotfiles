@@ -90,6 +90,13 @@ Item {
                 Layout.fillHeight: true
             }
 
+            Item { width: 8; height: 1 } // Spacer
+
+            Updates {
+                id: updatesWidget
+                Layout.fillHeight: true
+            }
+
         }
     }
 

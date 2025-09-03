@@ -1,0 +1,11 @@
+[Unit]
+Description=Quickshell
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c 'qs'
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=default.target
