@@ -78,6 +78,13 @@ Item {
 
             Item { width: 8; height: 1 } // Spacer
 
+            TailscaleIndicator {
+                id: tailscaleWidget
+                Layout.fillHeight: true
+            }
+
+            Item { width: 8; height: 1 } // Spacer
+
             BatteryIndicator {
                 id: batteryWidget
                 Layout.fillHeight: true
@@ -85,15 +92,15 @@ Item {
 
             Item { width: 8; height: 1 } // Spacer
 
-            NotificationButton {
-                id: notificationButton
+            Updates {
+                id: updatesWidget
                 Layout.fillHeight: true
             }
 
             Item { width: 8; height: 1 } // Spacer
 
-            Updates {
-                id: updatesWidget
+            NotificationButton {
+                id: notificationButton
                 Layout.fillHeight: true
             }
 
