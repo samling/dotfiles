@@ -28,6 +28,16 @@ Item {
         }
         spacing: Config.barContentSpacing
 
+        PowerMenu {
+            id: powerMenuWidget
+            Layout.fillHeight: true
+        }
+
+        Item { 
+            Layout.preferredWidth: 4
+            Layout.preferredHeight: 1
+        } // Spacer
+
         Workspaces {
             id: workspacesWidget
             Layout.fillHeight: true
