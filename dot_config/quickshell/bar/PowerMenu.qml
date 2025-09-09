@@ -90,7 +90,7 @@ Item {
             anchors.top: parent.top
             anchors.left: parent.left
             width: 300
-            height: 240
+            height: powerGrid.height + 32  // Grid height + margins
             color: Config.notificationBackgroundColor
             border.width: 2
             border.color: Qt.lighter(Config.notificationBackgroundColor, 1.3)
@@ -144,10 +144,12 @@ Item {
                 }
             }
         
-            // 2x2 Grid of power options
+            // 2x2 Grid of action options
             Grid {
                 id: powerGrid
-                anchors.centerIn: parent
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: 16
                 columns: 2
                 rowSpacing: 12
                 columnSpacing: 12

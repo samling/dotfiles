@@ -56,7 +56,7 @@ Item {
 
         BarGroup {
             id: middleGroupContent
-            Layout.fillHeight: false
+            Layout.fillHeight: true
 
             ClockWidget {
                 id: clockWidget
@@ -78,7 +78,7 @@ Item {
 
         BarGroup {
             id: rightGroupContent
-            Layout.fillHeight: false
+            Layout.fillHeight: true
             Layout.fillWidth: false
 
             SysTray {

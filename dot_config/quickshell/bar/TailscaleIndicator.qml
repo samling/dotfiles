@@ -12,7 +12,7 @@ MouseArea {
     
     property int iconSize: Config.barHeight - 16
     property int dotSize: Math.floor(iconSize / 5) // 3x3 grid with spacing
-    property int dotSpacing: Math.floor(dotSize * 0.4)
+    property int dotSpacing: Math.floor(dotSize * 0.6)
     property color connectedColor: Config.getColor("text.white")
     property color disconnectedColor: Config.getColor("text.muted")
     

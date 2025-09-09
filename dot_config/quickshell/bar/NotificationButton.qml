@@ -35,6 +35,7 @@ Item {
         RowLayout {
             id: rowLayout
             anchors.centerIn: parent
+            anchors.horizontalCenterOffset: -3
             spacing: 4
             
             property int gaugeSize: Config.barHeight - Config.batteryGaugeOffset
