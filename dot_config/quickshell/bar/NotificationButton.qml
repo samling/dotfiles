@@ -12,59 +12,73 @@ Item {
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
     
-    implicitWidth: rowLayout.implicitWidth
-    implicitHeight: rowLayout.implicitHeight
+    implicitWidth: background.implicitWidth
+    implicitHeight: background.implicitHeight
     
     // Toggle notification list popup
     property bool listOpen: false
     
-    RowLayout {
-        id: rowLayout
+    Rectangle {
+        id: background
+        implicitWidth: rowLayout.implicitWidth + 24
+        implicitHeight: rowLayout.implicitHeight + 8
         anchors.centerIn: parent
-        spacing: 12
+        color: mouseArea.containsMouse ? Qt.darker(Config.getColor("background.tertiary"), 1.1) : Config.getColor("background.tertiary")
+        radius: height / 2
         
-        Item {
-            id: notificationContainer
-            implicitWidth: notificationIndicator.width
-            implicitHeight: notificationIndicator.height
+        Behavior on color {
+            ColorAnimation {
+                duration: Config.colorAnimationDuration
+            }
+        }
+        
+        RowLayout {
+            id: rowLayout
+            anchors.centerIn: parent
+            anchors.horizontalCenterOffset: -3
+            spacing: 4
             
-            property int indicatorSize: 24
+            property int gaugeSize: Config.barHeight - Config.batteryGaugeOffset
             property color primaryColor: root.hasNotifications ? Config.clockTextColor : Config.getColor("text.muted")
-            property color backgroundColor: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, 1)
             
+            // Notification icon (to the left)
             Item {
-                id: notificationIndicator
-                width: notificationContainer.indicatorSize
-                height: notificationContainer.indicatorSize
-                anchors.centerIn: parent
+                id: notificationIconContainer
+                Layout.preferredWidth: rowLayout.gaugeSize * 0.8
+                Layout.preferredHeight: rowLayout.gaugeSize * 0.8
                 
-                // Background square
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    border.color: notificationContainer.backgroundColor
-                    border.width: 2
-                    radius: 4
-                }
-                
-                // Notification count text in center
                 Text {
                     anchors.centerIn: parent
-                    text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
-                    color: notificationContainer.primaryColor
-                    font.pixelSize: 10
+                    color: rowLayout.primaryColor
+                    font.pixelSize: 16
                     font.weight: Font.Bold
+                    font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                    textFormat: Text.PlainText
+                    text: "🔔︎"
                 }
             }
-            
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    root.listOpen = !root.listOpen
-                    // Also update GlobalStates to prevent conflicts
-                    GlobalStates.sidebarRightOpen = root.listOpen
-                }
+
+            // Notification count text (to the right)
+            Text {
+                id: countText
+                Layout.alignment: Qt.AlignVCenter
+                text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
+                color: rowLayout.primaryColor
+                font.pixelSize: 12
+                font.weight: Font.Bold
+                verticalAlignment: Text.AlignVCenter
             }
+        }
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: {
+            root.listOpen = !root.listOpen
+            // Also update GlobalStates to prevent conflicts
+            GlobalStates.sidebarRightOpen = root.listOpen
         }
     }
     

@@ -28,6 +28,16 @@ Item {
         }
         spacing: Config.barContentSpacing
 
+        PowerMenu {
+            id: powerMenuWidget
+            Layout.fillHeight: true
+        }
+
+        Item { 
+            Layout.preferredWidth: 4
+            Layout.preferredHeight: 1
+        } // Spacer
+
         Workspaces {
             id: workspacesWidget
             Layout.fillHeight: true
@@ -46,7 +56,7 @@ Item {
 
         BarGroup {
             id: middleGroupContent
-            Layout.fillHeight: false
+            Layout.fillHeight: true
 
             ClockWidget {
                 id: clockWidget
@@ -68,11 +78,18 @@ Item {
 
         BarGroup {
             id: rightGroupContent
-            Layout.fillHeight: false
+            Layout.fillHeight: true
             Layout.fillWidth: false
 
             SysTray {
                 id: sysTrayWidget
+                Layout.fillHeight: true
+            }
+
+            Item { width: 8; height: 1 } // Spacer
+
+            TailscaleIndicator {
+                id: tailscaleWidget
                 Layout.fillHeight: true
             }
 
@@ -85,15 +102,15 @@ Item {
 
             Item { width: 8; height: 1 } // Spacer
 
-            NotificationButton {
-                id: notificationButton
+            Updates {
+                id: updatesWidget
                 Layout.fillHeight: true
             }
 
             Item { width: 8; height: 1 } // Spacer
 
-            Updates {
-                id: updatesWidget
+            NotificationButton {
+                id: notificationButton
                 Layout.fillHeight: true
             }
 
