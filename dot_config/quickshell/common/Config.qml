@@ -143,9 +143,9 @@ QtObject {
     readonly property int groupImplicitWidthPadding: 8
 
     // Workspace indicators
-    readonly property int workspaceSpacing: 6
+    readonly property int workspaceSpacing: 8
     readonly property int workspaceWidth: 18
-    readonly property int workspaceHeight: 15
+    readonly property int workspaceHeight: 14
     readonly property int workspaceRadius: 4
     readonly property int workspaceFontSize: 12
     readonly property int workspaceBorderWidth: 2
