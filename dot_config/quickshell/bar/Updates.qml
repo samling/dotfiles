@@ -43,6 +43,7 @@ Item {
                 Layout.preferredHeight: rowLayout.gaugeSize * 0.8
                 
                 Text {
+                    id: updatesIcon
                     anchors.centerIn: parent
                     color: rowLayout.primaryColor
                     font.pixelSize: 16
@@ -50,6 +51,30 @@ Item {
                     font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
                     textFormat: Text.PlainText
                     text: "⬆︎"
+                    visible: !loadingIndicator.visible
+                }
+                
+                // Spinning indicator
+                Text {
+                    id: loadingIndicator
+                    anchors.centerIn: parent
+                    anchors.verticalCenterOffset: 1
+                    color: rowLayout.primaryColor
+                    font.pixelSize: 16
+                    font.weight: Font.Bold
+                    textFormat: Text.PlainText
+                    text: "↻"
+                    visible: checkupdatesCountProc.running || checkupdatesFullProc.running
+                    
+                    RotationAnimation {
+                        target: loadingIndicator
+                        property: "rotation"
+                        from: 0
+                        to: 360
+                        duration: 1000
+                        loops: Animation.Infinite
+                        running: loadingIndicator.visible
+                    }
                 }
             }
 
@@ -70,6 +95,13 @@ Item {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        
+        onClicked: function(mouse) {
+            if (mouse.button === Qt.RightButton) {
+                checkupdatesCountProc.running = true
+            }
+        }
     }
 
     Process {
