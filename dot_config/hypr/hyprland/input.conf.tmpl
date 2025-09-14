@@ -26,10 +26,7 @@ input {
 }
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
-gestures {
-    workspace_swipe = true
-    workspace_swipe_fingers = 3
-}
+gesture = 3, horizontal, workspace
 
 # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more about per-device configs
 {{ if eq .chassis.type "laptop" }}

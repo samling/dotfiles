@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Shapes
 import Quickshell
+import Quickshell.Io
 
 Item {
     id: root
@@ -184,7 +185,14 @@ Item {
                                 root.menuOpen = false
                                 // Lock the screen
                                 Qt.callLater(function() {
-                                    Process.start("hyprlock")
+                                    const lockProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["hyprlock"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    lockProcess.running = true
                                 })
                             }
                         }
@@ -220,7 +228,14 @@ Item {
                                 root.menuOpen = false
                                 // Logout
                                 Qt.callLater(function() {
-                                    Process.start("hyprctl", ["dispatch", "exit"])
+                                    const logoutProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["hyprctl", "dispatch", "exit"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    logoutProcess.running = true
                                 })
                             }
                         }
@@ -256,7 +271,14 @@ Item {
                                 root.menuOpen = false
                                 // Restart the system
                                 Qt.callLater(function() {
-                                    Process.start("systemctl", ["reboot"])
+                                    const restartProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["systemctl", "reboot"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    restartProcess.running = true
                                 })
                             }
                         }
@@ -292,7 +314,14 @@ Item {
                                 root.menuOpen = false
                                 // Shutdown the system
                                 Qt.callLater(function() {
-                                    Process.start("systemctl", ["poweroff"])
+                                    const shutdownProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["systemctl", "poweroff"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    shutdownProcess.running = true
                                 })
                             }
                         }
