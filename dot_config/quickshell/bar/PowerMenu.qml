@@ -1,11 +1,6 @@
-import qs.services
 import qs.common
-import qs.osd
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Shapes
 import Quickshell
-import Quickshell.Io
 
 Item {
     id: root

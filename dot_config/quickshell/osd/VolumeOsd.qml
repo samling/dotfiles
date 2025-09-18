@@ -99,14 +99,24 @@ Item {
 								top: parent.top
 								bottom: parent.bottom
 							}
-							implicitWidth: parent.width * (Pipewire.defaultAudioSink?.audio.volume ?? 0)
+							implicitWidth: {
+								if (Pipewire.defaultAudioSink?.audio.muted) {
+									return 0;
+								}
+								return parent.width * (Pipewire.defaultAudioSink?.audio.volume ?? 0);
+							}
 							radius: parent.radius
 							color: Config.osdFillColor
 						}
 					}
 
 					Text {
-						text: Math.round((Pipewire.defaultAudioSink?.audio.volume ?? 0) * 100) + "%"
+						text: {
+							if (Pipewire.defaultAudioSink?.audio.muted) {
+								return "Muted";
+							}
+							return Math.round((Pipewire.defaultAudioSink?.audio.volume ?? 0) * 100) + "%";
+						}
 						color: "white"
 						font.pixelSize: 12
 						font.weight: Font.Medium
