@@ -6,13 +6,12 @@ My ever-growing collection of dotfiles and configs.
 * `git`
 * `make`
 * `direnv`
-* [bitwarden-cli](https://bitwarden.com/help/cli/)
+* [doppler cli](https://aur.archlinux.org/packages/doppler-cli-bin)
 * [chezmoi](https://github.com/twpayne/chezmoi)
 
-### Bitwarden-cli tl;dr
+### Doppler CLI tl;dr
 
-1. Create `~/.bwpass` with password
-1. export BW_SESSION=$(bw unlock --raw --passwordfile=$HOME/.bwpass)
+`doppler login`
 
 ### Chezmoi tl;dr
 ```
@@ -34,6 +33,7 @@ chezmoi managed             # View managed files
 1. Add `GITHUB_TOKEN`
 1. Enable direnv with `eval "$(direnv hook bash)"
 1. `direnv allow`
+1. `doppler login`
 1. `chezmoi init`
 1. `chezmoi apply {--refresh-externals}`
 

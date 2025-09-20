@@ -222,3 +222,4 @@ s() {
   # Clean up temporary file
   rm -f "$temp_config"
 }
+

@@ -12,6 +12,7 @@ export ZSH_VERSION=$ZSH_VERSION
 source ~/.zsh/path.zsh
 source ~/.zsh/completions.zsh
 source ~/.zsh/env.zsh
+source ~/.zsh/secret.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/opt.zsh
 source ~/.zsh/aliases.zsh

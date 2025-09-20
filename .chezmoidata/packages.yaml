@@ -138,10 +138,14 @@ packages:
       pacman: direnv
       brew: direnv
       apt: direnv
+    pet:
+      yay: pet-git
     rename:
       brew: rename
     tealdeer:
       brew: tealdeer
+    doppler:
+      yay: doppler-cli-bin
 
   # Development tools and languages
   development:
