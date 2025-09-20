@@ -1,10 +1,9 @@
+pragma ComponentBehavior: Bound
+
 import qs.common
 import qs.services
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
-import Quickshell
-import Quickshell.Services.Notifications
 
 Rectangle {
     id: root
@@ -16,6 +15,26 @@ Rectangle {
     color: Config.notificationBackgroundColor
     border.color: Config.notificationBorderColor
     border.width: 2
+
+    function formatTimestamp(timestamp) {
+        if (!timestamp) return ""
+        
+        const date = new Date(timestamp)
+        const now = new Date()
+        
+        // If it's today, just show the time
+        if (date.toDateString() === now.toDateString()) {
+            return Qt.formatTime(date, "h:mm AP")
+        }
+        // If it's this year, show month/day and time
+        else if (date.getFullYear() === now.getFullYear()) {
+            return Qt.formatDateTime(date, "MMM d h:mm AP")
+        }
+        // If it's a different year, show full date and time
+        else {
+            return Qt.formatDateTime(date, "MMM d yyyy h:mm AP")
+        }
+    }
 
     ColumnLayout {
         id: contentColumn
@@ -89,13 +108,29 @@ Rectangle {
                 Layout.fillWidth: true
                 spacing: 4
 
-                // App name
-                Text {
-                    text: root.notificationObject?.appName ?? ""
-                    color: Config.notificationTextSecondaryColor
-                    font.pixelSize: 14
-                    font.weight: Font.Medium
-                    visible: text !== ""
+                // App name and timestamp row
+                RowLayout {
+                    Layout.fillWidth: true
+                    
+                    Text {
+                        text: root.notificationObject?.appName ?? ""
+                        color: Config.notificationTextSecondaryColor
+                        font.pixelSize: 14
+                        font.weight: Font.Medium
+                        visible: text !== ""
+                        Layout.fillWidth: true
+                    }
+                    
+                    // Timestamp
+                    Text {
+                        text: root.formatTimestamp(root.notificationObject?.time ?? 0)
+                        color: Config.notificationTextSecondaryColor
+                        font.pixelSize: 12
+                        font.weight: Font.Normal
+                        opacity: 0.7
+                        visible: root.notificationObject?.time !== undefined
+                        Layout.alignment: Qt.AlignRight
+                    }
                 }
 
                 // Summary (title)
@@ -157,6 +192,7 @@ Rectangle {
                 model: root.notificationObject?.actions ?? []
 
                 Rectangle {
+                    required property var modelData
                     Layout.fillWidth: true
                     Layout.preferredHeight: 32
                     radius: 6
@@ -166,7 +202,7 @@ Rectangle {
 
                     Text {
                         anchors.centerIn: parent
-                        text: modelData.text || "Action"
+                        text: parent.modelData.text || "Action"
                         color: Config.notificationTextPrimaryColor
                         font.pixelSize: 13
                     }
@@ -177,7 +213,7 @@ Rectangle {
                         onClicked: {
                             Notifications.attemptInvokeAction(
                                 root.notificationObject.notificationId, 
-                                modelData.identifier
+                                parent.modelData.identifier
                             )
                         }
                     }
