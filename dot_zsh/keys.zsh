@@ -29,10 +29,11 @@ bindkey '^x^e' edit-command-line
 #========= C-s to bring up the pet menu
 
 function pet-select() {
-  RBUFFER=$(pet search)
+  RBUFFER=$(pet search --color)
   CURSOR=$#BUFFER
   zle redisplay
 }
 zle -N pet-select
 stty -ixon
+bindkey -r '^s'
 bindkey '^s' pet-select
