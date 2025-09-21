@@ -21,7 +21,7 @@ if [ "$image_count" -eq 0 ]; then
 fi
 
 # Set a different random image as wallpaper for each display
-for d in $(swww query | grep -Po "^[^:]+"); do # see swww-query(1)
+for d in $(swww query | cut -d: -f2 | tr -d ' '); do # see swww-query(1)
     # Select a random image for this display
     random_image=$(find "$1" -type f | shuf -n 1)
     swww img --resize "$RESIZE_TYPE" --outputs "$d" "$random_image"
