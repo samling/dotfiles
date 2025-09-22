@@ -8,7 +8,7 @@ SAVEHIST=100000                 # Maximum commands to save
 setopt AUTO_CD                  # Typing a directory and hitting enter will go to that directory
 setopt INTERACTIVE_COMMENTS     # Allow comments in interactive shells
 setopt NO_BEEP                  # No beep on error
-setopt SHARE_HISTORY            # Share history between zsh sessions
+#setopt SHARE_HISTORY            # Share history between zsh sessions
 setopt INC_APPEND_HISTORY       # Append lines to history as soon as they're entered, rather than when the shell exits
 setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming history
 setopt HIST_IGNORE_DUPS         # Do not write events to history that are duplicates of previous events
