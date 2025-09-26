@@ -1,0 +1,83 @@
+# Git-specific command snippets
+snippets:
+  git-log-oneline:
+    id: "git-log-oneline"
+    name: "git-log-oneline"
+    description: "Show git log in one line format with optional limits"
+    command: "git log --oneline <limit> <branch>"
+    variables:
+      - name: "limit"
+        description: "Number of commits to show"
+        default: "10"
+        transform:
+          empty_value: ""
+          value_pattern: "-{{.Value}}"
+      - name: "branch"
+        description: "Branch or commit range (optional)"
+        default: ""
+    tags: ["git", "log", "history"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  git-branch-create:
+    id: "git-branch-create"
+    name: "git-branch-create"
+    description: "Create and switch to new git branch"
+    command: "git checkout -b <branch_name> <base_branch>"
+    variables:
+      - name: "branch_name"
+        description: "New branch name"
+        required: true
+      - name: "base_branch"
+        description: "Base branch to branch from"
+        default: "main"
+    tags: ["git", "branch", "create"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  git-commit-amend:
+    id: "git-commit-amend"
+    name: "git-commit-amend"
+    description: "Amend the last commit"
+    command: "git commit --amend <no_edit> <message_flag>"
+    variables:
+      - name: "no_edit"
+        description: "Don't edit commit message"
+        type: "boolean"
+        default: "false"
+        transform:
+          true_value: "--no-edit"
+          false_value: ""
+      - name: "new_message"
+        description: "New commit message (optional)"
+        default: ""
+      - name: "message_flag"
+        description: "Message flag for commit"
+        computed: true
+        transform:
+          compose: |
+            {{- if .new_message -}}-m "{{.new_message}}"{{end -}}
+    tags: ["git", "commit", "amend"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  git-checkout:
+    id: "git-checkout"
+    name: "git-checkout"
+    description: "Checkout git branch with optional remote"
+    command: "git checkout <branch_ref>"
+    variables:
+      - name: "branch"
+        description: "Branch name"
+        required: true
+      - name: "remote"
+        description: "Remote name"
+        default: "origin"
+      - name: "branch_ref"
+        description: "Full branch reference"
+        computed: true
+        transform:
+          compose: "{{.remote}}/{{.branch}}"
+    tags: ["git", "checkout"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"

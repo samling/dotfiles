@@ -1,0 +1,26 @@
+transform_templates:
+  # Kubernetes namespace transformation
+  k8s-namespace:
+    description: "Kubernetes namespace: empty=none, 'all'=-A, name=-n <name>"
+    transform:
+      empty_value: ""
+      value_pattern: |
+        {{- if eq .Value "all" -}}
+          -A
+        {{- else -}}
+          -n {{.Value}}
+        {{- end -}}
+
+  # Docker container transformation  
+  docker-port:
+    description: "Docker port mapping (hostport:targetport)"
+    transform:
+      empty_value: ""
+      value_pattern: "-p {{.Value}}:{{.Value}}"
+
+  # Boolean flag transformation
+  follow-logs:
+    description: "Follow logs flag"
+    transform:
+      true_value: "-f"
+      false_value: ""

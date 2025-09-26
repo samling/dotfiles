@@ -1,0 +1,127 @@
+# Docker-specific command snippets
+snippets:
+  docker-ps:
+    id: "docker-ps"
+    name: "docker-ps"
+    description: "List Docker containers with optional filters"
+    command: "docker ps <show_all> <filter>"
+    variables:
+      - name: "show_all"
+        description: "Show all containers (including stopped)"
+        type: "boolean"
+        default: "false"
+        transform:
+          true_value: "-a"
+          false_value: ""
+      - name: "filter"
+        description: "Filter containers (e.g., name=myapp)"
+        default: ""
+        transform:
+          empty_value: ""
+          value_pattern: "--filter {{.Value}}"
+    tags: ["docker", "containers", "list"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  docker-exec:
+    id: "docker-exec"
+    name: "docker-exec"
+    description: "Execute command in running container"
+    command: "docker exec <interactive> <container_name> <command>"
+    variables:
+      - name: "interactive"
+        description: "Run in interactive mode"
+        type: "boolean"
+        default: "true"
+        transform:
+          true_value: "-it"
+          false_value: ""
+      - name: "container_name"
+        description: "Container name or ID"
+        required: true
+      - name: "command"
+        description: "Command to execute"
+        default: "/bin/bash"
+    tags: ["docker", "exec", "containers"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  docker-build:
+    id: "docker-build"
+    name: "docker-build"
+    description: "Build Docker image from Dockerfile"
+    command: "docker build <build_args> -t <image_tag> <context_path>"
+    variables:
+      - name: "image_tag"
+        description: "Docker image tag (e.g., myapp:latest)"
+        required: true
+      - name: "context_path"
+        description: "Build context path"
+        default: "."
+      - name: "dockerfile"
+        description: "Path to Dockerfile (optional)"
+        default: ""
+      - name: "build_args"
+        description: "Docker build arguments"
+        computed: true
+        transform:
+          compose: |
+            {{- if .dockerfile -}}-f {{.dockerfile}} {{end -}}
+    tags: ["docker", "build", "image"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  docker-run:
+    id: "docker-run"
+    name: "docker-run"
+    description: "Run docker container with optional port mapping"
+    command: "docker run <port_mapping> <image_name>"
+    variables:
+      - name: "port_mapping"
+        description: "Port mapping (empty for none)"
+        transformTemplate: "docker-port"
+      - name: "image_name"
+        description: "Docker image name"
+        required: true
+    tags: ["docker", "run"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  docker-run-advanced:
+    id: "docker-run-advanced"
+    name: "docker-run-advanced"
+    description: "Advanced docker run with complex configuration"
+    command: "docker run <docker_args> <image_name>"
+    variables:
+      - name: "image_name"
+        description: "Docker image name"
+        required: true
+      - name: "port"
+        description: "Port to expose (1-65535)"
+        default: ""
+        validation:
+          range: [1, 65535]
+      - name: "volume"
+        description: "Volume to mount"
+        default: ""
+      - name: "env_var"
+        description: "Environment variable (KEY=VALUE)"
+        default: ""
+        validation:
+          pattern: "^[A-Z_][A-Z0-9_]*=.*$"
+      - name: "detach"
+        description: "Run in detached mode"
+        type: "boolean"
+        default: "false"
+      - name: "docker_args"
+        description: "Complete docker arguments"
+        computed: true
+        transform:
+          compose: |
+            {{- if eq .detach "true" -}}-d {{end -}}
+            {{- if .port -}}-p {{.port}} {{end -}}
+            {{- if .volume -}}-v {{.volume}} {{end -}}
+            {{- if .env_var -}}-e {{.env_var}} {{end -}}
+    tags: ["docker", "advanced"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"

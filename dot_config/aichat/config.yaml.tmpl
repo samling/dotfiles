@@ -1,0 +1,35 @@
+model: claude:claude-sonnet-4-20250219
+rag_embedding_model: openai:text-embedding-3-large
+function_calling: true
+save: false
+clients:
+- type: openai
+  name: openai
+  api_base: https://api.openai.com/v1
+  api_key: {{ doppler "OPENAI_API_KEY" "homelab" "dev_personal" }}
+
+- type: gemini
+  api_base: https://generativelanguage.googleapis.com/v1beta
+  api_key: {{ doppler "GEMINI_API_KEY" "homelab" "dev_personal" }}
+  patch:
+    chat_completions:
+      '.*':
+        body:
+          safetySettings:
+            - category: HARM_CATEGORY_HARASSMENT
+              threshold: BLOCK_NONE
+            - category: HARM_CATEGORY_HATE_SPEECH
+              threshold: BLOCK_NONE
+            - category: HARM_CATEGORY_SEXUALLY_EXPLICIT
+              threshold: BLOCK_NONE
+            - category: HARM_CATEGORY_DANGEROUS_CONTENT
+              threshold: BLOCK_NONE
+
+- type: claude
+  api_base: https://api.anthropic.com/v1
+  api_key: {{ doppler "ANTHROPIC_API_KEY" "homelab" "dev_personal" }}
+
+- type: openai-compatible
+  name: deepseek
+  api_base: https://api.deepseek.com
+  api_key: {{ doppler "DEEPSEEK_API_KEY" "homelab" "dev_personal" }}

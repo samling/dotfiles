@@ -1,0 +1,159 @@
+# Kubernetes-specific command snippets
+snippets:
+  kubectl-describe-pod:
+    id: "kubectl-describe-pod"
+    name: "kubectl-describe-pod"
+    description: "Describe a specific pod"
+    command: "kubectl describe pod <pod_name> <namespace>"
+    variables:
+      - name: "pod_name"
+        description: "Pod name to describe"
+        required: true
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+    tags: ["kubernetes", "describe", "pods"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-get-services:
+    id: "kubectl-get-services"
+    name: "kubectl-get-services"
+    description: "Get Kubernetes services"
+    command: "kubectl get services <namespace>"
+    variables:
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+    tags: ["kubernetes", "services"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-apply:
+    id: "kubectl-apply"
+    name: "kubectl-apply"
+    description: "Apply Kubernetes manifests"
+    command: "kubectl apply -f <manifest_file> <namespace>"
+    variables:
+      - name: "manifest_file"
+        description: "Path to Kubernetes manifest file"
+        required: true
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+    tags: ["kubernetes", "apply", "manifest"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-get-pods:
+    id: "kubectl-get-pods"
+    name: "kubectl-get-pods"
+    description: "Get Kubernetes pods with namespace selection"
+    command: "kubectl get pods <namespace>"
+    variables:
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+    tags: ["kubernetes", "pods"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-logs:
+    id: "kubectl-logs"
+    name: "kubectl-logs"
+    description: "Get logs from a pod in a namespace"
+    command: "kubectl logs <pod_name> <namespace> <follow>"
+    variables:
+      - name: "pod_name"
+        description: "Pod name"
+        required: true
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+      - name: "follow"
+        description: "Follow logs"
+        type: "boolean"
+        transform:
+          true_value: "-f"
+          false_value: ""
+    tags: ["kubernetes", "logs"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-port-forward:
+    id: "kubectl-port-forward"
+    name: "kubectl-port-forward"
+    description: "Forward local port to pod or service"
+    command: "kubectl port-forward <resource> <port_mapping> <namespace>"
+    variables:
+      - name: "resource_type"
+        required: true
+        description: "Resource type: [pod, svc]"
+        default: "svc"
+        validation:
+          enum: ["pod", "svc"]
+      - name: "resource_name"
+        required: true
+        description: "Resource name (e.g., my-pod, my-service)"
+      - name: "resource"
+        description: "Resource to forward to (e.g., pod/my-pod, service/my-service)"
+        computed: true
+        transform:
+          compose: "{{.resource_type}}/{{.resource_name}}"
+      - name: "host_port"
+        description: "Host port (e.g., 8080)"
+        required: true
+        type: "port"
+      - name: "target_port"
+        description: "Target port (leave empty to use host port)"
+        default: ""
+        type: "port"
+      - name: "port_mapping"
+        description: "Complete port mapping"
+        computed: true
+        transform:
+          compose: |
+            {{- .host_port -}}:
+            {{- if .target_port -}}
+              {{- .target_port -}}
+            {{- else -}}
+              {{- .host_port -}}
+            {{- end -}}
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+    tags: ["kubernetes", "port-forward", "networking"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-get-pods-advanced:
+    id: "kubectl-get-pods-advanced"
+    name: "kubectl-get-pods-advanced"
+    description: "Advanced kubectl get pods with multiple options"
+    command: "kubectl get pods <namespace> <output> <selector>"
+    variables:
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+      - name: "output"
+        description: "Output format"
+        validation:
+          enum: ["", "wide", "yaml", "json"]
+        transform:
+          empty_value: ""
+          value_pattern: "-o {{.Value}}"
+      - name: "selector"
+        description: "Label selector"
+        transform:
+          empty_value: ""
+          value_pattern: "--selector {{.Value}}"
+    tags: ["kubernetes", "pods", "advanced"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"

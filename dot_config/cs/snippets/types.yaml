@@ -1,0 +1,22 @@
+# Variable type definitions - reusable variable configurations
+variable_types:
+  port:
+    description: "Network port"
+    validation:
+      range: [1, 65535]
+    default: "8080"
+
+  log_level:
+    description: "Application log level" 
+    validation:
+      enum: ["debug", "info", "warn", "error"]
+    default: "info"
+
+  environment:
+    description: "Deployment environment"
+    validation:
+      enum: ["dev", "staging", "prod"]
+
+  namespace:
+    description: "Kubernetes namespace"
+    default: ""

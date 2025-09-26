@@ -1,0 +1,9 @@
+settings:
+    additional_configs:
+        - snippets/*.yaml
+    interactive:
+        confirm_before_execute: false
+        show_final_command: true
+    selector:
+        command: fzf
+        options: --height 40% --reverse --border --sort --bind ctrl-u:page-up --bind ctrl-d:page-down
