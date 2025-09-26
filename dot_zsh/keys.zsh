@@ -26,14 +26,14 @@ zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 
-#========= C-s to bring up the pet menu
+#========= C-s to bring up the cs menu
 
-function pet-select() {
-  RBUFFER=$(pet search --color)
+function cs-select() {
+  RBUFFER=$(cs exec)
   CURSOR=$#BUFFER
   zle redisplay
 }
-zle -N pet-select
+zle -N cs-select
 stty -ixon
 bindkey -r '^s'
-bindkey '^s' pet-select
+bindkey '^s' cs-select
