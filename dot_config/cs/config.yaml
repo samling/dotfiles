@@ -6,4 +6,4 @@ settings:
         show_final_command: true
     selector:
         command: fzf
-        options: --height 40% --reverse --border --sort --bind ctrl-u:page-up --bind ctrl-d:page-down
+        options: --height 60% --reverse --border --sort --bind ctrl-u:page-up --bind ctrl-d:page-down
