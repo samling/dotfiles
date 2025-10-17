@@ -52,12 +52,41 @@ snippets:
     id: "kubectl-get-pods"
     name: "kubectl-get-pods"
     description: "Get Kubernetes pods with namespace selection"
-    command: "kubectl get pods <namespace>"
+    command: "kubectl get pods <namespace> <show_details>"
     variables:
       - name: "namespace"
         description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
         type: "namespace"
         transformTemplate: "k8s-namespace"
+      - name: "show_details"
+        description: "Show additional details"
+        type: "boolean"
+        transform:
+          true_value: "-o wide"
+          false_value: ""
+    tags: ["kubernetes", "pods"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-get-pods-by-node:
+    id: "kubectl-get-pods-by-node"
+    name: "kubectl-get-pods-by-node"
+    description: "Get Kubernetes pods on a specific node with namespace selection"
+    command: "kubectl get pods <namespace> <show_details> --field-selector=spec.nodeName=<node_name>"
+    variables:
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transformTemplate: "k8s-namespace"
+      - name: "node_name"
+        description: "Node name"
+        required: true
+      - name: "show_details"
+        description: "Show additional details"
+        type: "boolean"
+        transform:
+          true_value: "-o wide"
+          false_value: ""
     tags: ["kubernetes", "pods"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
