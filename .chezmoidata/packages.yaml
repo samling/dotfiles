@@ -306,6 +306,12 @@ packages:
     feh:
       pacman: feh
       apt: feh
+    mpv:
+      pacman: mpv
+    vlc:
+      pacman: vlc
+    vlc-plugins-all:
+      pacman: vlc-plugins-all
 
   # Desktop applications
   desktop:
@@ -425,6 +431,8 @@ packages:
 
   # Security
   security:
+    certbot:
+      pacman: certbot
     lastpass-cli:
       brew: lastpass-cli
 
@@ -616,6 +624,8 @@ packages:
   # HYPRLAND #
   ############
   hyprland:
+    hyprdynamicmonitors:
+      yay: hyprdynamicmonitors
     hyprland:
       pacman: hyprland
     hypridle:
@@ -632,6 +642,8 @@ packages:
       pacman: hyprpicker
     hyprsysteminfo:
       yay: hyprsysteminfo
+    hyprutils-git:
+      pacman: hyprutils-git
     swww:
       pacman: swww
     xdg-desktop-portal-hyprland:
