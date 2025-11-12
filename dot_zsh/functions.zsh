@@ -116,6 +116,36 @@ function wk() {
   fi
 }
 
+# watch previous command
+wp() {
+  local last_cmd
+
+  # Get the previous command (the one before `wp`)
+  last_cmd=$(history 2 | tail -n 1 | sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//')
+
+  if [[ -z $last_cmd ]]; then
+    echo "No previous command found." >&2
+    return 1
+  fi
+
+  # If the previous command starts with `k` (or is just `k`), swap to kubectl
+  if [[ $last_cmd == "k" || $last_cmd == k\ * ]]; then
+    last_cmd="kubectl ${last_cmd#k }"
+  fi
+
+  # Prefer viddy if available, fall back to watch
+  if command -v viddy >/dev/null 2>&1; then
+    echo "Watching last command: viddy -n 1 $last_cmd"
+    viddy -n 1 "$last_cmd"
+  elif command -v watch >/dev/null 2>&1; then
+    echo "Watching last command: watch -n 1 $last_cmd"
+    watch -n 1 "$last_cmd"
+  else
+    echo "Neither viddy nor watch found in PATH." >&2
+    return 1
+  fi
+}
+
 s_debug() {
   local config_file="$HOME/.ssh/config"
   local all_hosts=""
