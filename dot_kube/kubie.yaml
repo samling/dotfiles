@@ -1,0 +1,8 @@
+shell: zsh
+default_editor: vim
+configs:
+  include:
+    - ~/.kube/*.yml
+    - ~/.kube/*.yaml
+    - ~/.kube/kubeconfigs/*.yml
+    - ~/.kube/kubeconfigs/*.yaml

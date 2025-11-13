@@ -237,6 +237,8 @@ packages:
       pacman: kubectl
       brew: kubectl
       apt: kubectl
+    kubie:
+      pacman: kubie
     k9s:
       pacman: k9s
       brew: derailed/k9s/k9s
