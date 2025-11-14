@@ -116,6 +116,8 @@ packages:
     fd:
       pacman: fd
       brew: fd
+    fx:
+      pacman: fx
     jq:
       pacman: jq
       brew: jq
