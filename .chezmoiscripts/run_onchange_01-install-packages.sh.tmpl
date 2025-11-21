@@ -2,7 +2,7 @@
 # packages hash: {{ .packages | toJson | sha256sum }}
 
 {{- $osID := .system.os_type -}}
-{{- $hostname := .chezmoi.fqdnHostname -}}
+{{- $hostname := .chezmoi.hostname -}}
 {{- $hostData := index .host $hostname -}}
 {{- $enabledGroups := list -}}
 

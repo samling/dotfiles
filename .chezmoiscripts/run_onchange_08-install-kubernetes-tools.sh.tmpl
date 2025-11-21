@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 {{- $osID := .system.os_type }}
-{{- $hostname := .chezmoi.fqdnHostname -}}
+{{- $hostname := .chezmoi.hostname -}}
 {{- $hostData := index .host $hostname -}}
 {{- $enabledGroups := list -}}
 

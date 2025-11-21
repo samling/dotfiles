@@ -10,26 +10,25 @@
   {{- $enabledGroups = $hostData.packageGroups.enabled -}}
 {{- end -}}
 
-{{- if has "cloud" $enabledGroups }}
-echo "Installing vkv for {{ $osID }}..."
+{{- if has "ai" $enabledGroups }}
+echo "Installing AI tools for {{ $osID }}..."
 
-# Check if go is installed
-if ! command -v go &> /dev/null; then
-    echo "Go is required to install vkv. Please install go first."
-    exit 1
-fi
+# # Check if go is installed
+# if ! command -v go &> /dev/null; then
+#     echo "Go is required to install ai tools. Please install go first."
+#     exit 1
+# fi
 
 {{- if eq $osID "darwin" }}
 # On macOS, use Homebrew if available
 if command -v brew &> /dev/null; then
-    brew install falcosuessgott/tap/vkv
+    brew install --cask claude-code
 else
-    go install github.com/FalcoSuessgott/vkv@latest
+    echo "Brew is not installed; skipping ai tools installation"
 fi
 {{- else }}
-# For Linux systems, use go install
-go install github.com/FalcoSuessgott/vkv@latest
+curl -fsSL https://claude.ai/install.sh | bash
 {{- end }}
 {{- else }}
-echo "Skipping vkv installation - cloud group not enabled"
+echo "Skipping ai tools installation - ai group not enabled"
 {{- end }} 

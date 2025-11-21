@@ -11,7 +11,7 @@
 
   # Package groups to install on this host
   # Only the groups listed here will be installed - everything else is skipped
-  [data.host.apollo.packageGroups]
+  [data.host."Sam-Desktop".packageGroups]
   enabled = [
     # Essential packages (always recommended)
     "core",           # Basic system tools (curl, wget, git, etc.)
