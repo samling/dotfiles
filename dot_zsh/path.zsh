@@ -14,6 +14,7 @@ PATH=$PATH:/sbin
 
 # Local paths (put first in order to take precedence)
 #
+PATH=$PATH:${HOME}/.local/usr/bin
 PATH=$PATH:${HOME}/.local/bin
 
 #=== XDG

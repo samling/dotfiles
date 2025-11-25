@@ -185,6 +185,8 @@ packages:
       pacman: go
       brew: go
       apt: golang-go
+    gopls:
+      pacman: gopls
     pyenv:
       pacman: pyenv
       brew: pyenv
