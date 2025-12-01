@@ -1,0 +1,14 @@
+[Unit]
+Description=Serena MCP Server (Work)
+After=network.target
+
+[Service]
+Type=simple
+User=sboynton
+WorkingDirectory={{ .chezmoi.homeDir }}
+ExecStart={{ .chezmoi.homeDir }}/.local/bin/uvx --from git+https://github.com/oraios/serena serena start-mcp-server --transport streamable-http --port 9122 --context ide-assistant
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
