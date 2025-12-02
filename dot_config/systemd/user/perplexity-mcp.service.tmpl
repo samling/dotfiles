@@ -1,0 +1,15 @@
+[Unit]
+Description=Perplexity MCP Server
+After=network.target
+
+[Service]
+Type=simple
+User=sboynton
+WorkingDirectory={{ .chezmoi.homeDir }}
+Environment="PERPLEXITY_API_KEY={{ doppler "PERPLEXITYAI_NVDA_API_KEY" "homelab" "dev_personal" }}"
+ExecStart=/usr/bin/npx -y perplexity-mcp
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

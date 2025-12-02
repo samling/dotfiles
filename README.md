@@ -12,6 +12,7 @@ My ever-growing collection of dotfiles and configs.
 ### Doppler CLI tl;dr
 
 `doppler login`
+`doppler setup`
 
 ### Chezmoi tl;dr
 ```
