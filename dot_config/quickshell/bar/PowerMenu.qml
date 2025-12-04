@@ -163,13 +163,27 @@ Item {
                             ColorAnimation { duration: Config.colorAnimationDuration }
                         }
                         
-                        Text {
+                        Column {
                             anchors.centerIn: parent
-                            text: "🔒︎"
-                            font.pixelSize: 20
-                            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                            textFormat: Text.PlainText
-                            color: Config.notificationTextPrimaryColor
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "🔒︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "lock"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
                         }
                         
                         MouseArea {
@@ -206,13 +220,27 @@ Item {
                             ColorAnimation { duration: Config.colorAnimationDuration }
                         }
                         
-                        Text {
+                        Column {
                             anchors.centerIn: parent
-                            text: "⏏︎"
-                            font.pixelSize: 20
-                            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                            textFormat: Text.PlainText
-                            color: Config.notificationTextPrimaryColor
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "🚪︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "logout"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
                         }
                         
                         MouseArea {
@@ -226,7 +254,7 @@ Item {
                                     const logoutProcess = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
-                                            command: ["hyprctl", "dispatch", "exit"]
+                                            command: ["loginctl", "terminate-user", ""]
                                             onExited: destroy()
                                         }
                                     `, root)
@@ -249,13 +277,27 @@ Item {
                             ColorAnimation { duration: Config.colorAnimationDuration }
                         }
                         
-                        Text {
+                        Column {
                             anchors.centerIn: parent
-                            text: "🔄︎"
-                            font.pixelSize: 20
-                            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                            textFormat: Text.PlainText
-                            color: Config.notificationTextPrimaryColor
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "🔄︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "restart"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
                         }
                         
                         MouseArea {
@@ -292,13 +334,27 @@ Item {
                             ColorAnimation { duration: Config.colorAnimationDuration }
                         }
                         
-                        Text {
+                        Column {
                             anchors.centerIn: parent
-                            text: "⏻︎"
-                            font.pixelSize: 20
-                            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                            textFormat: Text.PlainText
-                            color: Config.notificationTextPrimaryColor
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "⏻︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "shutdown"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
                         }
                         
                         MouseArea {
@@ -321,6 +377,253 @@ Item {
                             }
                         }
                 }
+                
+                // Spacer for extra gap before screenshot buttons
+                Item {
+                    width: 130
+                    height: 12
+                }
+                
+                // Spacer (second column)
+                Item {
+                    width: 130
+                    height: 12
+                }
+                
+                // Screenshot output button
+                Rectangle {
+                    width: 130
+                    height: 60
+                        radius: 25
+                        color: screenshotOutputMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
+                        border.color: Config.notificationBorderColor
+                        border.width: 1
+                        
+                        Behavior on color {
+                            ColorAnimation { duration: Config.colorAnimationDuration }
+                        }
+                        
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "📷︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "fullscreen"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                        }
+                        
+                        MouseArea {
+                            id: screenshotOutputMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                root.menuOpen = false
+                                Qt.callLater(function() {
+                                    const screenshotProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["hyprshot", "-m", "output"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    screenshotProcess.running = true
+                                })
+                            }
+                        }
+                }
+                
+                // Screenshot window button
+                Rectangle {
+                    width: 130
+                    height: 60
+                        radius: 25
+                        color: screenshotWindowMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
+                        border.color: Config.notificationBorderColor
+                        border.width: 1
+                        
+                        Behavior on color {
+                            ColorAnimation { duration: Config.colorAnimationDuration }
+                        }
+                        
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "📷︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "window"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                        }
+                        
+                        MouseArea {
+                            id: screenshotWindowMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                root.menuOpen = false
+                                Qt.callLater(function() {
+                                    const screenshotProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["hyprshot", "-m", "window"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    screenshotProcess.running = true
+                                })
+                            }
+                        }
+                }
+                
+                // Screenshot region button
+                Rectangle {
+                    width: 130
+                    height: 60
+                        radius: 25
+                        color: screenshotRegionMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
+                        border.color: Config.notificationBorderColor
+                        border.width: 1
+                        
+                        Behavior on color {
+                            ColorAnimation { duration: Config.colorAnimationDuration }
+                        }
+                        
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "📷︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "region"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                        }
+                        
+                        MouseArea {
+                            id: screenshotRegionMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                root.menuOpen = false
+                                Qt.callLater(function() {
+                                    const screenshotProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["hyprshot", "-m", "region"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    screenshotProcess.running = true
+                                })
+                            }
+                        }
+                }
+                
+                // Screenshot active button
+                Rectangle {
+                    width: 130
+                    height: 60
+                        radius: 25
+                        color: screenshotActiveMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
+                        border.color: Config.notificationBorderColor
+                        border.width: 1
+                        
+                        Behavior on color {
+                            ColorAnimation { duration: Config.colorAnimationDuration }
+                        }
+                        
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 2
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "📷︎"
+                                font.pixelSize: 18
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                            
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: "active"
+                                font.pixelSize: 11
+                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
+                                textFormat: Text.PlainText
+                                color: Config.notificationTextPrimaryColor
+                            }
+                        }
+                        
+                        MouseArea {
+                            id: screenshotActiveMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                root.menuOpen = false
+                                Qt.callLater(function() {
+                                    const screenshotProcess = Qt.createQmlObject(`
+                                        import Quickshell.Io
+                                        Process {
+                                            command: ["hyprshot", "-m", "active"]
+                                            onExited: destroy()
+                                        }
+                                    `, root)
+                                    screenshotProcess.running = true
+                                })
+                            }
+                        }
+                }
+            }
+            
+            // Divider line between power and screenshot buttons
+            Rectangle {
+                anchors.horizontalCenter: powerGrid.horizontalCenter
+                anchors.top: powerGrid.top
+                anchors.topMargin: 150  // Centered in spacer row: 60 + 12 + 60 + 12 + 6
+                width: 272  // 2 * 130 (button width) + 12 (column spacing)
+                height: 1
+                color: Config.notificationBorderColor
+                opacity: 0.4
             }
         }
     }
