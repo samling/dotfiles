@@ -1,5 +1,5 @@
 {
- "permissions": {
+  "permissions": {
     "allow": [
       "mcp__serena__list_dir",
       "mcp__serena__find_file",
@@ -11,5 +11,12 @@
       "mcp__serena__insert_after_symbol",
       "mcp__serena__insert_before_symbol"
     ]
+  },
+  "model": "opus",
+  "alwaysThinkingEnabled": true,
+    "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
   }
 }

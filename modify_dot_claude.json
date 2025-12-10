@@ -1,0 +1,40 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $config := dict -}}
+{{- if .chezmoi.stdin -}}
+{{-   $config = fromJson .chezmoi.stdin -}}
+{{- end -}}
+
+{{- /* Get secrets */ -}}
+{{- $context7ApiKey := doppler "CONTEXT7_API_KEY" "homelab" "dev_personal" -}}
+{{- $perplexityApiKey := doppler "PERPLEXITYAI_NVDA_API_KEY" "homelab" "dev_personal" -}}
+
+{{- /* Define your MCP servers here */ -}}
+{{- $mcpServers := dict
+    "context7" (dict
+        "type" "http"
+        "url" "https://mcp.context7.com/mcp"
+        "headers" (dict
+            "CONTEXT7_API_KEY" $context7ApiKey
+        )
+    )
+    "serena" (dict
+        "type" "http"
+        "url" "http://localhost:9121/mcp"
+    )
+    "sequential-thinking" (dict
+        "type" "stdio"
+        "command" "npx"
+        "args" (list "-y" "@modelcontextprotocol/server-sequential-thinking")
+    )
+    "perplexity" (dict
+        "type" "stdio"
+        "command" "npx"
+        "args" (list "-y" "perplexity-mcp")
+        "env" (dict
+            "PERPLEXITY_API_KEY" $perplexityApiKey
+        )
+    )
+-}}
+
+{{- $config = $config | setValueAtPath "mcpServers" $mcpServers -}}
+{{ $config | toPrettyJson }}
