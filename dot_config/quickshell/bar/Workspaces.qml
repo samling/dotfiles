@@ -15,81 +15,76 @@ Item {
     readonly property HyprlandMonitor monitor: Hyprland.monitorFor(root.QsWindow.window?.screen ?? null)
     readonly property int workspaceGroup: Math.floor((monitor?.activeWorkspace?.id - 1) / 10)
     property list<bool> workspaceOccupied: []
-    
+
+    // Theme colors
+    property color activeColor: Config.getColor("primary.lavender")
+    property color occupiedColor: Config.getColor("border.primary")
+    property color emptyColor: Config.getColor("text.muted")
+
     implicitWidth: workspaceRow.implicitWidth
     implicitHeight: workspaceRow.implicitHeight
-    
-    
+
     RowLayout {
         id: workspaceRow
         anchors.centerIn: parent
-        spacing: Config.workspaceSpacing
-        
+        spacing: 6
+
         Repeater {
-            model: 10 // Restore all workspaces
-            
-            Item {
-                id: workspaceContainer
+            model: 10
+
+            Rectangle {
+                id: workspaceIndicator
                 required property int index
-                readonly property int workspaceId: root.workspaceGroup * 10 + workspaceContainer.index + 1
-                readonly property bool isActive: root.monitor?.activeWorkspace?.id === workspaceContainer.workspaceId
-                readonly property bool isOccupied: !workspaceContainer.isActive && (workspaceContainer.index < root.workspaceOccupied.length ? root.workspaceOccupied[workspaceContainer.index] : false)
-                
-                // Container size: circle width, or exact pill width with no extra margin
-                width: workspaceContainer.isActive ? Config.workspaceWidth * 1.5 : Config.workspaceHeight
-                height: Config.workspaceHeight
-                
-                // Ensure RowLayout respects the width changes
-                Layout.preferredWidth: width
-                Layout.fillWidth: false
-                
-                // Smooth container width animation
-                Behavior on width {
-                    NumberAnimation { duration: Config.colorAnimationDuration }
-                }
-                
-                Rectangle {
-                    id: workspaceIndicator
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: workspaceContainer.isActive ? Config.workspaceWidth * 1.5 : Config.workspaceHeight
-                    height: Config.workspaceHeight
-                    radius: Config.workspaceHeight / 2
-                    color: {
-                        if (workspaceContainer.isActive) {
-                            return Config.workspaceActiveColor
-                        } else if (workspaceContainer.isOccupied) {
-                            return Config.workspaceOccupiedColor
-                        } else {
-                            return Config.workspaceEmptyColor
-                        }
-                    }
-                    
-                    // Reduce opacity for empty workspaces
-                    opacity: (!workspaceContainer.isActive && !workspaceContainer.isOccupied) ? 0.6 : 1.0
-                    
-                    // Smooth color transition
-                    Behavior on color {
-                        ColorAnimation { duration: Config.colorAnimationDuration }
+                readonly property int workspaceId: root.workspaceGroup * 10 + workspaceIndicator.index + 1
+                readonly property bool isActive: root.monitor?.activeWorkspace?.id === workspaceIndicator.workspaceId
+                readonly property bool isOccupied: !workspaceIndicator.isActive && (workspaceIndicator.index < root.workspaceOccupied.length ? root.workspaceOccupied[workspaceIndicator.index] : false)
+                readonly property bool isHovered: mouseArea.containsMouse
+
+                // Size: active is pill, others are dots
+                Layout.preferredWidth: workspaceIndicator.isActive ? 24 : 8
+                Layout.preferredHeight: 8
+                radius: height / 2
+
+                // Solid fill colors
+                color: {
+                    if (workspaceIndicator.isActive) {
+                        return root.activeColor
+                    } else if (workspaceIndicator.isHovered) {
+                        return Qt.rgba(root.activeColor.r, root.activeColor.g, root.activeColor.b, 0.6)
+                    } else if (workspaceIndicator.isOccupied) {
+                        return root.occupiedColor
+                    } else {
+                        return root.emptyColor
                     }
                 }
-                
-                // Click to switch workspace
+
+                opacity: (workspaceIndicator.isActive || workspaceIndicator.isOccupied || workspaceIndicator.isHovered) ? 1.0 : 0.4
+
+                // Single synchronized animation for width
+                Behavior on Layout.preferredWidth {
+                    NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+                }
+
+                Behavior on color {
+                    ColorAnimation { duration: 150 }
+                }
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 150 }
+                }
+
                 MouseArea {
+                    id: mouseArea
                     anchors.fill: parent
-                    onClicked: {
-                        Hyprland.dispatch("workspace " + workspaceContainer.workspaceId)
-                    }
-                    
-                    // Hover effect
                     hoverEnabled: true
-                    onEntered: workspaceIndicator.opacity = 0.8
-                    onExited: workspaceIndicator.opacity = 1.0
+                    onClicked: {
+                        Hyprland.dispatch("workspace " + workspaceIndicator.workspaceId)
+                    }
                 }
             }
         }
     }
-    
+
     function updateWorkspaceOccupied() {
         root.workspaceOccupied = Array.from({ length: 10}, (_, i) => {
             const workspaceId = root.workspaceGroup * 10 + i + 1;
@@ -100,14 +95,14 @@ Item {
     Component.onCompleted: {
         root.updateWorkspaceOccupied()
     }
-    
+
     Connections {
         target: Hyprland.workspaces
         function onValuesChanged() {
             root.updateWorkspaceOccupied()
         }
     }
-    
+
     Connections {
         target: Hyprland
         function onFocusedWorkspaceChanged() {
@@ -115,10 +110,7 @@ Item {
         }
     }
 
-    
     onWorkspaceGroupChanged: {
         root.updateWorkspaceOccupied()
     }
-
-
 }

@@ -1,77 +1,103 @@
 import qs.common
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 
-Item {
+MouseArea {
     id: root
-    
-    implicitWidth: background.implicitWidth
-    implicitHeight: background.implicitHeight
-    
+
+    property int containerWidth: 42
+    property int containerHeight: Config.barHeight - 16
+    property int borderRadius: 4
+    property int borderWidth: 1
+
+    property color primaryColor: Config.getColor("primary.blue")
+
+    implicitWidth: containerWidth
+    implicitHeight: containerHeight
+    hoverEnabled: true
+
     // Toggle menu popup
     property bool menuOpen: false
-    
+
+    onClicked: {
+        root.menuOpen = !root.menuOpen
+    }
+
+    // Main container with border
     Rectangle {
-        id: background
-        implicitWidth: iconContainer.implicitWidth + 16
-        implicitHeight: iconContainer.implicitHeight + 8
+        id: container
         anchors.centerIn: parent
-        color: mouseArea.containsMouse ? Qt.darker(Config.getColor("background.tertiary"), 1.1) : Config.getColor("background.tertiary")
-        radius: height / 2
-        
-        Behavior on color {
-            ColorAnimation {
-                duration: Config.colorAnimationDuration
+        width: root.containerWidth
+        height: root.containerHeight
+        radius: root.borderRadius
+        color: "transparent"
+        border.color: root.primaryColor
+        border.width: root.borderWidth
+
+        Behavior on border.color {
+            ColorAnimation { duration: Config.colorAnimationDuration }
+        }
+
+        // Subtle fill
+        Rectangle {
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+                margins: root.borderWidth + 1
+            }
+            radius: Math.max(0, root.borderRadius - 2)
+            color: root.containsMouse
+                ? Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.25)
+                : Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.1)
+
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
-        
-        Item {
-            id: iconContainer
+
+        // Arch Linux logo
+        Text {
             anchors.centerIn: parent
-            width: Config.barHeight - Config.batteryGaugeOffset
-            height: Config.barHeight - Config.batteryGaugeOffset
-            
-            // Arch Linux logo (Nerd Font icon)
-            Text {
-                anchors.centerIn: parent
-                color: "#1793d1"  // Arch Linux blue
-                font.pixelSize: 20
-                font.weight: Font.Bold
-                font.family: "FiraCode Nerd Font Propo"
-                textFormat: Text.PlainText
-                text: "\uf303"  // Arch Linux icon from Nerd Font
+            color: root.primaryColor
+            font.pixelSize: 18
+            font.weight: Font.Bold
+            font.family: "FiraCode Nerd Font Propo"
+            textFormat: Text.PlainText
+            text: "\uf303"
+
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-        onClicked: {
-            root.menuOpen = !root.menuOpen
-        }
+    Tooltip {
+        hoverTarget: root
+        text: "Power Menu"
     }
-    
+
     // Power menu popup using PanelWindow approach
     PanelWindow {
         id: powerMenuPopup
         visible: root.menuOpen
-        
+
         anchors {
             top: true
             right: true
             left: true
             bottom: true
         }
-        
+
         margins.top: 4
         margins.left: 4
         margins.right: 200
         margins.bottom: 50
-        
+
         color: "transparent"
-        
+
         // Click outside to close
         MouseArea {
             anchors.fill: parent
@@ -79,551 +105,310 @@ Item {
                 root.menuOpen = false
             }
         }
-        
+
         // Actual menu content
         Rectangle {
             id: menuPanel
             anchors.top: parent.top
             anchors.left: parent.left
-            width: 300
-            height: powerGrid.height + 32  // Grid height + margins
-            color: Config.notificationBackgroundColor
-            border.width: 2
-            border.color: Qt.lighter(Config.notificationBackgroundColor, 1.3)
-            
-            // Round all corners
-            topLeftRadius: 12
-            topRightRadius: 12
-            bottomLeftRadius: 12
-            bottomRightRadius: 12
-            
-            // Drop shadow
-            Rectangle {
-                anchors.fill: parent
-                anchors.topMargin: 3
-                anchors.leftMargin: 3
-                color: Config.tooltipShadowColor
-                opacity: Config.tooltipShadowOpacity
-                topLeftRadius: 12
-                topRightRadius: 12
-                bottomLeftRadius: 12
-                bottomRightRadius: 12
-                z: -1
-            }
-            
+            width: 320
+            height: menuContent.implicitHeight + 32
+            color: Config.getColor("background.crust")
+            border.width: 1
+            border.color: Config.getColor("border.subtle")
+            radius: 12
+
             // Animation properties
             transform: Translate {
-                id: slideTransform
-                y: root.menuOpen ? 0 : -menuPanel.height
-                
+                y: root.menuOpen ? 0 : -20
+
                 Behavior on y {
                     NumberAnimation {
-                        duration: Config.colorAnimationDuration
+                        duration: 200
                         easing.type: Easing.OutCubic
                     }
                 }
             }
-            
+
             opacity: root.menuOpen ? 1.0 : 0.0
-            
+            scale: root.menuOpen ? 1.0 : 0.95
+
             Behavior on opacity {
-                NumberAnimation {
-                    duration: Config.colorAnimationDuration
-                }
+                NumberAnimation { duration: 150 }
             }
-            
-            // Prevent clicks from passing through to the background MouseArea
+
+            Behavior on scale {
+                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+            }
+
+            // Prevent clicks from passing through
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    // Do nothing - just prevent click-through
-                }
+                onClicked: { }
             }
-        
-            // 2x2 Grid of action options
-            Grid {
-                id: powerGrid
-                anchors.top: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.margins: 16
-                columns: 2
-                rowSpacing: 12
-                columnSpacing: 12
-                
-                // Lock button
+
+            Column {
+                id: menuContent
+                anchors.fill: parent
+                spacing: 0
+
+                // Header
                 Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: lockMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
+                    width: parent.width
+                    height: 48
+                    color: Config.getColor("background.mantle")
+                    radius: 12
+
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 12
+                        color: parent.color
+                    }
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 16
+                        anchors.rightMargin: 12
+                        spacing: 12
+
+                        Text {
+                            text: "\uf303"
+                            font.pixelSize: 16
+                            font.family: "FiraCode Nerd Font Propo"
+                            color: Config.getColor("primary.blue")
                         }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "🔒︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "lock"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
+
+                        Text {
+                            text: "Power Menu"
+                            color: Config.getColor("text.primary")
+                            font.pixelSize: 14
+                            font.weight: Font.DemiBold
+                            Layout.fillWidth: true
                         }
-                        
-                        MouseArea {
-                            id: lockMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+                    }
+                }
+
+                // Divider
+                Rectangle {
+                    width: parent.width - 24
+                    height: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Config.getColor("border.subtle")
+                }
+
+                // Power buttons grid
+                Item {
+                    width: parent.width
+                    height: powerGrid.height + 24
+
+                    Grid {
+                        id: powerGrid
+                        anchors.centerIn: parent
+                        columns: 2
+                        rowSpacing: 8
+                        columnSpacing: 8
+
+                        // Lock button
+                        PowerMenuButton {
+                            icon: "\uf023"
+                            label: "Lock"
+                            accentColor: Config.getColor("primary.lavender")
+                            onActivated: {
                                 root.menuOpen = false
-                                // Lock the screen
                                 Qt.callLater(function() {
-                                    const lockProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["hyprlock"]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    lockProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
-                }
-                
-                // Logout button
-                Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: logoutMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
-                        }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "🚪︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "logout"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                        }
-                        
-                        MouseArea {
-                            id: logoutMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+
+                        // Logout button
+                        PowerMenuButton {
+                            icon: "\uf2f5"
+                            label: "Logout"
+                            accentColor: Config.getColor("primary.peach")
+                            onActivated: {
                                 root.menuOpen = false
-                                // Logout
                                 Qt.callLater(function() {
-                                    const logoutProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["loginctl", "terminate-user", ""]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    logoutProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
-                }
-                
-                // Restart button
-                Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: restartMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
-                        }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "🔄︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "restart"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                        }
-                        
-                        MouseArea {
-                            id: restartMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+
+                        // Restart button
+                        PowerMenuButton {
+                            icon: "\uf01e"
+                            label: "Restart"
+                            accentColor: Config.getColor("primary.yellow")
+                            onActivated: {
                                 root.menuOpen = false
-                                // Restart the system
                                 Qt.callLater(function() {
-                                    const restartProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["systemctl", "reboot"]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    restartProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
-                }
-                
-                // Shutdown button
-                Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: shutdownMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
-                        }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "⏻︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "shutdown"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                        }
-                        
-                        MouseArea {
-                            id: shutdownMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+
+                        // Shutdown button
+                        PowerMenuButton {
+                            icon: "\uf011"
+                            label: "Shutdown"
+                            accentColor: Config.getColor("state.error")
+                            onActivated: {
                                 root.menuOpen = false
-                                // Shutdown the system
                                 Qt.callLater(function() {
-                                    const shutdownProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["systemctl", "poweroff"]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    shutdownProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
+                    }
                 }
-                
-                // Spacer for extra gap before screenshot buttons
-                Item {
-                    width: 130
-                    height: 12
-                }
-                
-                // Spacer (second column)
-                Item {
-                    width: 130
-                    height: 12
-                }
-                
-                // Screenshot output button
+
+                // Divider
                 Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: screenshotOutputMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
-                        }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "📷︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "fullscreen"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                        }
-                        
-                        MouseArea {
-                            id: screenshotOutputMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+                    width: parent.width - 24
+                    height: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Config.getColor("border.subtle")
+                }
+
+                // Section header for screenshots
+                Rectangle {
+                    width: parent.width
+                    height: 32
+                    color: "transparent"
+
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Screenshots"
+                        color: Config.getColor("text.muted")
+                        font.pixelSize: 11
+                        font.weight: Font.Medium
+                    }
+                }
+
+                // Screenshot buttons grid
+                Item {
+                    width: parent.width
+                    height: screenshotGrid.height + 16
+
+                    Grid {
+                        id: screenshotGrid
+                        anchors.centerIn: parent
+                        columns: 2
+                        rowSpacing: 8
+                        columnSpacing: 8
+
+                        // Fullscreen
+                        PowerMenuButton {
+                            icon: "\uf03e"
+                            label: "Fullscreen"
+                            accentColor: Config.getColor("primary.teal")
+                            onActivated: {
                                 root.menuOpen = false
                                 Qt.callLater(function() {
-                                    const screenshotProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["hyprshot", "-m", "output"]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    screenshotProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
-                }
-                
-                // Screenshot window button
-                Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: screenshotWindowMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
-                        }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "📷︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "window"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                        }
-                        
-                        MouseArea {
-                            id: screenshotWindowMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+
+                        // Window
+                        PowerMenuButton {
+                            icon: "\uf2d0"
+                            label: "Window"
+                            accentColor: Config.getColor("primary.teal")
+                            onActivated: {
                                 root.menuOpen = false
                                 Qt.callLater(function() {
-                                    const screenshotProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["hyprshot", "-m", "window"]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    screenshotProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
-                }
-                
-                // Screenshot region button
-                Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: screenshotRegionMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
-                        }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "📷︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "region"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                        }
-                        
-                        MouseArea {
-                            id: screenshotRegionMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+
+                        // Region
+                        PowerMenuButton {
+                            icon: "\uf125"
+                            label: "Region"
+                            accentColor: Config.getColor("primary.teal")
+                            onActivated: {
                                 root.menuOpen = false
                                 Qt.callLater(function() {
-                                    const screenshotProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["hyprshot", "-m", "region"]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    screenshotProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
-                }
-                
-                // Screenshot active button
-                Rectangle {
-                    width: 130
-                    height: 60
-                        radius: 25
-                        color: screenshotActiveMouseArea.containsMouse ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
-                        Behavior on color {
-                            ColorAnimation { duration: Config.colorAnimationDuration }
-                        }
-                        
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 2
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "📷︎"
-                                font.pixelSize: 18
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                            
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: "active"
-                                font.pixelSize: 11
-                                font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                                textFormat: Text.PlainText
-                                color: Config.notificationTextPrimaryColor
-                            }
-                        }
-                        
-                        MouseArea {
-                            id: screenshotActiveMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
+
+                        // Active
+                        PowerMenuButton {
+                            icon: "\uf065"
+                            label: "Active"
+                            accentColor: Config.getColor("primary.teal")
+                            onActivated: {
                                 root.menuOpen = false
                                 Qt.callLater(function() {
-                                    const screenshotProcess = Qt.createQmlObject(`
+                                    const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
                                         Process {
                                             command: ["hyprshot", "-m", "active"]
                                             onExited: destroy()
                                         }
                                     `, root)
-                                    screenshotProcess.running = true
+                                    proc.running = true
                                 })
                             }
                         }
+                    }
                 }
-            }
-            
-            // Divider line between power and screenshot buttons
-            Rectangle {
-                anchors.horizontalCenter: powerGrid.horizontalCenter
-                anchors.top: powerGrid.top
-                anchors.topMargin: 150  // Centered in spacer row: 60 + 12 + 60 + 12 + 6
-                width: 272  // 2 * 130 (button width) + 12 (column spacing)
-                height: 1
-                color: Config.notificationBorderColor
-                opacity: 0.4
             }
         }
     }

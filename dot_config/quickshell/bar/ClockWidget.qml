@@ -4,50 +4,120 @@ import Quickshell
 import Quickshell.Io
 import qs.common
 
-Item {
+MouseArea {
     id: root
 
-    property bool showDate: true
-    
-    implicitHeight: rowLayout.implicitHeight
+    property string timeText: "00:00"
+    property string dateText: "Thu, 11 Dec 2025"
 
-    RowLayout {
-        id: rowLayout
+    property int containerWidth: 200
+    property int containerHeight: Config.barHeight - 16
+    property int borderRadius: 4
+    property int borderWidth: 1
+
+    property color primaryColor: Config.getColor("primary.lavender")
+    property color secondaryColor: Config.getColor("text.secondary")
+
+    implicitWidth: containerWidth
+    implicitHeight: containerHeight
+    hoverEnabled: true
+
+    // Main container with border
+    Rectangle {
+        id: container
         anchors.centerIn: parent
+        width: root.containerWidth
+        height: root.containerHeight
+        radius: root.borderRadius
+        color: "transparent"
+        border.color: root.primaryColor
+        border.width: root.borderWidth
 
-          Text {
-            id: clock
-            color: Config.clockTextColor
+        Behavior on border.color {
+            ColorAnimation { duration: Config.colorAnimationDuration }
+        }
 
-            font.pixelSize: Config.clockFontSize
-            
-            verticalAlignment: Text.AlignVCenter
+        // Subtle gradient fill
+        Rectangle {
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+                margins: root.borderWidth + 1
+            }
+            radius: Math.max(0, root.borderRadius - 2)
+            color: Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.1)
 
-            Process {
-                id: dateProc
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
+            }
+        }
 
-                command: ["date", "+%H:%M • %A, %d %b %Y"]
-                running: true
+        // Content layout
+        RowLayout {
+            anchors.centerIn: parent
+            spacing: 10
 
-                stdout: StdioCollector {
-                    onStreamFinished: clock.text = this.text
+            // Time display
+            Text {
+                id: timeDisplay
+                text: root.timeText
+                color: root.primaryColor
+                font.pixelSize: 14
+                font.weight: Font.Bold
+                font.family: "monospace"
+
+                Behavior on color {
+                    ColorAnimation { duration: Config.colorAnimationDuration }
                 }
             }
 
-            // use a timer to rerun the process at an interval
-            Timer {
-                interval: Config.clockUpdateInterval
+            // Separator
+            Rectangle {
+                width: 1
+                height: 14
+                color: Config.getColor("border.subtle")
+                opacity: 0.6
+            }
 
-                // start the timer immediately
-                running: true
+            // Date display
+            Text {
+                id: dateDisplay
+                text: root.dateText
+                color: root.secondaryColor
+                font.pixelSize: 11
+                font.weight: Font.Medium
 
-                // run the timer again when it ends
-                repeat: true
-
-                // when the timer is triggered, set the running property of the
-                // process to true, which reruns it if stopped.
-                onTriggered: dateProc.running = true
+                Behavior on color {
+                    ColorAnimation { duration: Config.colorAnimationDuration }
+                }
             }
         }
+    }
+
+    // Process to get time and date
+    Process {
+        id: dateProc
+        command: ["date", "+%H:%M|%a, %d %b %Y"]
+        running: true
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const parts = this.text.trim().split("|")
+                if (parts.length >= 2) {
+                    root.timeText = parts[0]
+                    root.dateText = parts[1]
+                }
+            }
+        }
+    }
+
+    // Update timer
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: dateProc.running = true
     }
 }
