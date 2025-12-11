@@ -6,8 +6,8 @@ Column {
     id: root
     property var notificationGroup
     property bool popup: false
-    
-    spacing: 3
+
+    spacing: 8
 
     Repeater {
         model: root.notificationGroup?.notifications ?? []

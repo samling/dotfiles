@@ -3,104 +3,127 @@ import qs.common
 import qs.osd
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Shapes
 import Quickshell
 
-Item {
+MouseArea {
     id: root
-    
+
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
-    
-    implicitWidth: background.implicitWidth
-    implicitHeight: background.implicitHeight
-    
+
+    property int indicatorWidth: 48
+    property int indicatorHeight: Config.barHeight - 16
+    property int borderRadius: 4
+    property int borderWidth: 1
+
+    property color primaryColor: root.hasNotifications
+        ? Config.getColor("primary.mauve")
+        : Config.getColor("text.muted")
+
+    implicitWidth: indicatorWidth
+    implicitHeight: indicatorHeight
+    hoverEnabled: true
+
     // Toggle notification list popup
     property bool listOpen: false
-    
+
+    onClicked: {
+        root.listOpen = !root.listOpen
+        GlobalStates.sidebarRightOpen = root.listOpen
+    }
+
+    // Main container with border
     Rectangle {
-        id: background
-        implicitWidth: rowLayout.implicitWidth + 24
-        implicitHeight: rowLayout.implicitHeight + 8
+        id: container
         anchors.centerIn: parent
-        color: mouseArea.containsMouse ? Qt.darker(Config.getColor("background.tertiary"), 1.1) : Config.getColor("background.tertiary")
-        radius: height / 2
-        
-        Behavior on color {
-            ColorAnimation {
-                duration: Config.colorAnimationDuration
+        width: root.indicatorWidth
+        height: root.indicatorHeight
+        radius: root.borderRadius
+        color: "transparent"
+        border.color: root.primaryColor
+        border.width: root.borderWidth
+
+        Behavior on border.color {
+            ColorAnimation { duration: Config.colorAnimationDuration }
+        }
+
+        // Subtle fill when has notifications
+        Rectangle {
+            id: fillBar
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+                margins: root.borderWidth + 1
+            }
+            radius: Math.max(0, root.borderRadius - 2)
+            color: root.hasNotifications
+                ? Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.2)
+                : "transparent"
+
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
-        
+
+        // Content layout
         RowLayout {
-            id: rowLayout
             anchors.centerIn: parent
-            anchors.horizontalCenterOffset: -3
-            spacing: 4
-            
-            property int gaugeSize: Config.barHeight - Config.batteryGaugeOffset
-            property color primaryColor: root.hasNotifications ? Config.clockTextColor : Config.getColor("text.muted")
-            
-            // Notification icon (to the left)
-            Item {
-                id: notificationIconContainer
-                Layout.preferredWidth: rowLayout.gaugeSize * 0.8
-                Layout.preferredHeight: rowLayout.gaugeSize * 0.8
-                
-                Text {
-                    anchors.centerIn: parent
-                    color: rowLayout.primaryColor
-                    font.pixelSize: 16
-                    font.weight: Font.Bold
-                    font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                    textFormat: Text.PlainText
-                    text: "🔔︎"
+            spacing: 2
+
+            // Bell icon
+            Text {
+                text: "🔔"
+                color: root.primaryColor
+                font.pixelSize: 11
+
+                Behavior on color {
+                    ColorAnimation { duration: Config.colorAnimationDuration }
                 }
             }
 
-            // Notification count text (to the right)
+            // Count
             Text {
-                id: countText
-                Layout.alignment: Qt.AlignVCenter
-                text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
-                color: rowLayout.primaryColor
-                font.pixelSize: 12
-                font.weight: Font.Bold
-                verticalAlignment: Text.AlignVCenter
+                text: root.notificationCount > 99 ? "99" : root.notificationCount.toString()
+                color: root.primaryColor
+                font.pixelSize: 11
+                font.weight: Font.DemiBold
+                font.family: "monospace"
+
+                Behavior on color {
+                    ColorAnimation { duration: Config.colorAnimationDuration }
+                }
             }
         }
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-        onClicked: {
-            root.listOpen = !root.listOpen
-            // Also update GlobalStates to prevent conflicts
-            GlobalStates.sidebarRightOpen = root.listOpen
-        }
+    Tooltip {
+        hoverTarget: root
+        text: root.hasNotifications
+            ? root.notificationCount + " notification" + (root.notificationCount > 1 ? "s" : "")
+            : "No notifications"
     }
-    
+
     // Notification list popup
     PanelWindow {
         id: notificationListPopup
         visible: root.listOpen
-        
+
         anchors {
             top: true
             right: true
             left: true
             bottom: true
         }
-        
+
         margins.top: 4
         margins.right: 4
         margins.left: 200
         margins.bottom: 50
-        
+
         color: "transparent"
-        
+
         // Click outside to close
         MouseArea {
             anchors.fill: parent
@@ -109,129 +132,206 @@ Item {
                 GlobalStates.sidebarRightOpen = false
             }
         }
-        
+
         // Actual notification content
         Rectangle {
             id: notificationPanel
             anchors.top: parent.top
             anchors.right: parent.right
-            width: 400
-            height: Math.min(parent.height * 0.8, 600)  // Fixed height constraint
-            color: Config.notificationBackgroundColor
-            border.width: 2
-            border.color: Qt.lighter(Config.notificationBackgroundColor, 1.3)
-            
-            // Round all corners
-            topLeftRadius: 12
-            topRightRadius: 12
-            bottomLeftRadius: 12
-            bottomRightRadius: 12
-            
-            // Drop shadow
-            Rectangle {
-                anchors.fill: parent
-                anchors.topMargin: 3
-                anchors.leftMargin: 3
-                color: Config.tooltipShadowColor
-                opacity: Config.tooltipShadowOpacity
-                topLeftRadius: 12
-                topRightRadius: 12
-                bottomLeftRadius: 12
-                bottomRightRadius: 12
-                z: -1
-            }
-            
+            width: 380
+            height: Math.min(parent.height * 0.85, 550)
+            color: Config.getColor("background.crust")
+            border.width: 1
+            border.color: Config.getColor("border.subtle")
+            radius: 12
 
-            
             // Animation properties
             transform: Translate {
                 id: slideTransform
-                y: root.listOpen ? 0 : -notificationPanel.height  // Slide down from top (negative height)
-                
+                y: root.listOpen ? 0 : -20
+
                 Behavior on y {
                     NumberAnimation {
-                        duration: Config.colorAnimationDuration
+                        duration: 200
                         easing.type: Easing.OutCubic
                     }
                 }
             }
-            
+
             opacity: root.listOpen ? 1.0 : 0.0
-            
+            scale: root.listOpen ? 1.0 : 0.95
+
             Behavior on opacity {
-                NumberAnimation {
-                    duration: Config.colorAnimationDuration
-                }
+                NumberAnimation { duration: 150 }
             }
-            
-            // Prevent clicks from passing through to the background MouseArea
+
+            Behavior on scale {
+                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+            }
+
+            // Prevent clicks from passing through
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    // Do nothing - just prevent click-through
-                }
+                onClicked: { }
             }
-        
+
             Column {
                 id: notificationContent
                 anchors.fill: parent
-                anchors.margins: 12
-                spacing: 8
+                spacing: 0
 
-                // Header
-                Row {
+                // Header bar
+                Rectangle {
                     width: parent.width
-                    spacing: 8
-                    
-                    Text {
-                        text: "Notifications"
-                        color: "#cdd6f4"
-                        font.pixelSize: 18
-                        font.weight: Font.Bold
-                    }
-                    
+                    height: 48
+                    color: Config.getColor("background.mantle")
+                    radius: 12
+
+                    // Square off bottom corners
                     Rectangle {
-                        width: 60
-                        height: 24
-                        radius: 12
-                        color: Config.notificationButtonColor
-                        border.color: Config.notificationBorderColor
-                        border.width: 1
-                        
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 12
+                        color: parent.color
+                    }
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 16
+                        anchors.rightMargin: 12
+                        spacing: 12
+
+                        // Bell icon
                         Text {
-                            anchors.centerIn: parent
-                            text: "Clear"
-                            color: Config.notificationTextPrimaryColor
-                            font.pixelSize: 11
+                            text: "🔔"
+                            font.pixelSize: 14
+                            color: Config.getColor("primary.mauve")
                         }
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                Notifications.discardAllNotifications()
+
+                        Text {
+                            text: "Notifications"
+                            color: Config.getColor("text.primary")
+                            font.pixelSize: 14
+                            font.weight: Font.DemiBold
+                            Layout.fillWidth: true
+                        }
+
+                        // Count badge
+                        Rectangle {
+                            visible: root.hasNotifications
+                            width: countBadgeText.width + 12
+                            height: 20
+                            radius: 10
+                            color: Config.getColor("primary.mauve")
+
+                            Text {
+                                id: countBadgeText
+                                anchors.centerIn: parent
+                                text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
+                                color: Config.getColor("background.crust")
+                                font.pixelSize: 11
+                                font.weight: Font.Bold
+                            }
+                        }
+
+                        // Clear all button
+                        Rectangle {
+                            id: clearButton
+                            width: 28
+                            height: 28
+                            radius: 6
+                            color: clearMouseArea.containsMouse
+                                ? Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.2)
+                                : "transparent"
+                            border.color: clearMouseArea.containsMouse ? Config.getColor("state.error") : Config.getColor("border.subtle")
+                            border.width: 1
+                            visible: root.hasNotifications
+
+                            Behavior on color {
+                                ColorAnimation { duration: 100 }
+                            }
+
+                            Behavior on border.color {
+                                ColorAnimation { duration: 100 }
+                            }
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "✕"
+                                color: clearMouseArea.containsMouse ? Config.getColor("state.error") : Config.getColor("text.muted")
+                                font.pixelSize: 12
+                                font.weight: Font.Bold
+
+                                Behavior on color {
+                                    ColorAnimation { duration: 100 }
+                                }
+                            }
+
+                            MouseArea {
+                                id: clearMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onClicked: {
+                                    Notifications.discardAllNotifications()
+                                }
+                            }
+
+                            Tooltip {
+                                hoverTarget: clearMouseArea
+                                text: "Clear all"
                             }
                         }
                     }
                 }
-                
-                // Notification list
+
+                // Divider
                 Rectangle {
+                    width: parent.width - 24
+                    height: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Config.getColor("border.subtle")
+                }
+
+                // Notification list area
+                Item {
                     width: parent.width
-                    height: parent.height - 40
-                    color: "transparent"
-                    
-                    Text {
+                    height: parent.height - 49
+
+                    // Empty state
+                    Column {
                         anchors.centerIn: parent
-                        text: "No notifications"
-                        color: Config.notificationBorderColor
-                        font.pixelSize: 14
+                        spacing: 12
                         visible: !root.hasNotifications
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "🔕"
+                            font.pixelSize: 32
+                            opacity: 0.5
+                        }
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "All caught up!"
+                            color: Config.getColor("text.muted")
+                            font.pixelSize: 13
+                            font.weight: Font.Medium
+                        }
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "No new notifications"
+                            color: Config.getColor("text.muted")
+                            font.pixelSize: 11
+                            opacity: 0.7
+                        }
                     }
-                    
+
                     NotificationListView {
                         id: notificationListView
                         anchors.fill: parent
-                        popup: false  // Show persistent notifications (all notifications in the main list)
+                        anchors.margins: 8
+                        popup: false
                         visible: root.hasNotifications
                     }
                 }

@@ -4,7 +4,6 @@ import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import Quickshell.Wayland
-import Qt5Compat.GraphicalEffects
 import qs.common
 
 MouseArea {
@@ -17,9 +16,23 @@ MouseArea {
     hoverEnabled: true
 
     acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-    implicitWidth: 20
-    implicitHeight: 20
-    
+    implicitWidth: 18
+    implicitHeight: 18
+
+    // Hover background
+    Rectangle {
+        anchors.fill: parent
+        anchors.margins: -2
+        radius: 3
+        color: root.containsMouse
+            ? Qt.rgba(Config.getColor("text.primary").r, Config.getColor("text.primary").g, Config.getColor("text.primary").b, 0.1)
+            : "transparent"
+
+        Behavior on color {
+            ColorAnimation { duration: 100 }
+        }
+    }
+
     onClicked: (event) => {
         switch (event.button) {
         case Qt.LeftButton:
@@ -57,39 +70,32 @@ MouseArea {
 
     IconImage {
         id: trayIcon
-        source: getIconSource()
+        source: root.item.icon
         anchors.centerIn: parent
         width: parent.width
         height: parent.height
         smooth: true
-        
-        function getIconSource() {
-            // With Papirus theme, just use the original icons - they should all work now
-            return root.item.icon;
-        }
-        
-        // Debug icon loading
-        onStatusChanged: {
-            if (status === Image.Error) {
-                console.log("SysTray icon failed to load for", root.item.id, "original source:", root.item.icon, "tried:", source)
-            } else if (status === Image.Ready) {
-                console.log("SysTray icon loaded for", root.item.id, "source:", source)
-            }
+
+        // Subtle opacity change on hover
+        opacity: root.containsMouse ? 1.0 : 0.85
+
+        Behavior on opacity {
+            NumberAnimation { duration: 100 }
         }
     }
-    
+
     // Fallback text when no icon is available
     Text {
         anchors.centerIn: parent
-        text: root.item.id.charAt(0) || "?"
+        text: root.item.id.charAt(0).toUpperCase() || "?"
         font.pixelSize: 10
         font.weight: Font.Bold
-        color: Config.clockTextColor
+        color: Config.getColor("text.primary")
         visible: trayIcon.status !== Image.Ready && trayIcon.status !== Image.Loading
     }
 
     Tooltip {
         hoverTarget: root
-        text: root.item.id || ""
+        text: root.item.title || root.item.id || ""
     }
 }

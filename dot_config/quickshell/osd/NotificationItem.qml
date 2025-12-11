@@ -9,172 +9,155 @@ Rectangle {
     id: root
     property var notificationObject
     property bool expanded: true
-    
-    implicitHeight: contentColumn.implicitHeight + 45
-    radius: 12
-    color: Config.notificationBackgroundColor
-    border.color: Config.notificationBorderColor
-    border.width: 2
+
+    // Helper properties for image handling
+    property string imgSource: notificationObject?.image ?? ""
+    property bool hasImage: imgSource !== ""
+    property bool isIconUrl: imgSource.startsWith("image://icon/")
+
+    implicitHeight: contentColumn.implicitHeight + 24
+    radius: 8
+    color: Config.getColor("background.secondary")
+    border.color: itemMouseArea.containsMouse ? Config.getColor("border.primary") : Config.getColor("border.subtle")
+    border.width: 1
+
+    Behavior on border.color {
+        ColorAnimation { duration: 100 }
+    }
+
+    // Hover detection for the whole item
+    MouseArea {
+        id: itemMouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+        acceptedButtons: Qt.NoButton
+    }
 
     function formatTimestamp(timestamp) {
         if (!timestamp) return ""
-        
+
         const date = new Date(timestamp)
         const now = new Date()
-        
-        // If it's today, just show the time
-        if (date.toDateString() === now.toDateString()) {
-            return Qt.formatTime(date, "h:mm AP")
+        const diffMs = now - date
+        const diffMins = Math.floor(diffMs / 60000)
+        const diffHours = Math.floor(diffMs / 3600000)
+        const diffDays = Math.floor(diffMs / 86400000)
+
+        // Relative time for recent notifications
+        if (diffMins < 1) return "Just now"
+        if (diffMins < 60) return diffMins + "m ago"
+        if (diffHours < 24) return diffHours + "h ago"
+        if (diffDays < 7) return diffDays + "d ago"
+
+        // Absolute time for older notifications
+        if (date.getFullYear() === now.getFullYear()) {
+            return Qt.formatDateTime(date, "MMM d")
         }
-        // If it's this year, show month/day and time
-        else if (date.getFullYear() === now.getFullYear()) {
-            return Qt.formatDateTime(date, "MMM d h:mm AP")
-        }
-        // If it's a different year, show full date and time
-        else {
-            return Qt.formatDateTime(date, "MMM d yyyy h:mm AP")
-        }
+        return Qt.formatDateTime(date, "MMM d yyyy")
     }
 
     ColumnLayout {
         id: contentColumn
         anchors.fill: parent
-        anchors.margins: 15
-        anchors.bottomMargin: 30
+        anchors.margins: 12
         spacing: 8
 
+        // Top row: App icon, App name, Time, Close button
         RowLayout {
             Layout.fillWidth: true
-            spacing: 12
+            spacing: 10
 
-            // App icon
+            // App icon container
             Rectangle {
-                Layout.preferredWidth: 32
-                Layout.preferredHeight: 32
-                radius: 16
-                color: Config.notificationInactiveColor
-                visible: ((appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")) && !notificationImage.ready
-                
+                Layout.preferredWidth: 28
+                Layout.preferredHeight: 28
+                radius: 6
+                color: Config.getColor("background.tertiary")
+                visible: (appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")
+
                 Image {
                     id: appIconImage
                     anchors.centerIn: parent
                     source: root.notificationObject?.appIcon ?? ""
                     fillMode: Image.PreserveAspectFit
-                    width: 24
-                    height: 24
+                    width: 18
+                    height: 18
+                    sourceSize.width: 18
+                    sourceSize.height: 18
                     asynchronous: true
                     cache: true
-                    
-                    onStatusChanged: {
-                        if (status === Image.Error) {
-                            console.log("[NotificationItem] Failed to load app icon:", source)
-                        }
-                    }
                 }
-                
+
+                // Fallback letter
                 Text {
                     anchors.centerIn: parent
-                    text: root.notificationObject?.appName?.charAt(0) ?? "?"
-                    color: Config.notificationTextPrimaryColor
-                    font.pixelSize: 16
+                    text: root.notificationObject?.appName?.charAt(0)?.toUpperCase() ?? "?"
+                    color: Config.getColor("text.secondary")
+                    font.pixelSize: 12
                     font.weight: Font.Bold
                     visible: appIconImage.status !== Image.Ready
                 }
             }
 
-            // Notification image (moved to left side of content)
-            Image {
-                id: notificationImage
-                property bool ready: status === Image.Ready && source !== ""
-                source: root.notificationObject?.image ?? ""
-                visible: source !== ""
-                fillMode: Image.PreserveAspectFit
-                Layout.preferredWidth: Math.min(sourceSize.width, 64)
-                Layout.preferredHeight: Math.min(sourceSize.height, 64)
-                Layout.alignment: Qt.AlignTop
-                asynchronous: true
-                cache: true
-                
-                onStatusChanged: {
-                    if (status === Image.Error) {
-                        console.log("[NotificationItem] Failed to load notification image:", source)
-                    } else if (status === Image.Ready) {
-                        console.log("[NotificationItem] Successfully loaded notification image:", source)
-                    }
-                }
-            }
-
-            ColumnLayout {
+            // App name and timestamp
+            RowLayout {
                 Layout.fillWidth: true
-                spacing: 4
+                spacing: 8
 
-                // App name and timestamp row
-                RowLayout {
-                    Layout.fillWidth: true
-                    
-                    Text {
-                        text: root.notificationObject?.appName ?? ""
-                        color: Config.notificationTextSecondaryColor
-                        font.pixelSize: 14
-                        font.weight: Font.Medium
-                        visible: text !== ""
-                        Layout.fillWidth: true
-                    }
-                    
-                    // Timestamp
-                    Text {
-                        text: root.formatTimestamp(root.notificationObject?.time ?? 0)
-                        color: Config.notificationTextSecondaryColor
-                        font.pixelSize: 12
-                        font.weight: Font.Normal
-                        opacity: 0.7
-                        visible: root.notificationObject?.time !== undefined
-                        Layout.alignment: Qt.AlignRight
-                    }
-                }
-
-                // Summary (title)
                 Text {
-                    text: root.notificationObject?.summary ?? ""
-                    color: Config.notificationTextPrimaryColor
-                    font.pixelSize: 18
-                    font.weight: Font.Bold
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    visible: text !== ""
-                }
-
-                // Body text
-                Text {
-                    text: root.notificationObject?.body ?? ""
-                    color: Config.notificationTextTertiaryColor
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    visible: text !== ""
-                    maximumLineCount: 4
+                    text: root.notificationObject?.appName ?? "Unknown"
+                    color: Config.getColor("text.secondary")
+                    font.pixelSize: 11
+                    font.weight: Font.Medium
                     elide: Text.ElideRight
+                    Layout.fillWidth: true
+                }
+
+                Text {
+                    text: root.formatTimestamp(root.notificationObject?.time ?? 0)
+                    color: Config.getColor("text.muted")
+                    font.pixelSize: 10
+                    visible: root.notificationObject?.time !== undefined
                 }
             }
 
             // Close button
             Rectangle {
-                Layout.preferredWidth: 24
-                Layout.preferredHeight: 24
-                radius: 12
-                color: closeArea.pressed ? Config.notificationClosePressedColor : Config.notificationCloseColor
-                
+                id: closeButton
+                Layout.preferredWidth: 22
+                Layout.preferredHeight: 22
+                radius: 6
+                color: closeArea.containsMouse
+                    ? Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.2)
+                    : "transparent"
+                border.color: closeArea.containsMouse ? Config.getColor("state.error") : "transparent"
+                border.width: 1
+                opacity: itemMouseArea.containsMouse || closeArea.containsMouse ? 1.0 : 0.0
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+
+                Behavior on color {
+                    ColorAnimation { duration: 100 }
+                }
+
                 Text {
                     anchors.centerIn: parent
-                    text: "×"
-                    color: Config.notificationBackgroundColor
-                    font.pixelSize: 16
+                    text: "✕"
+                    color: closeArea.containsMouse ? Config.getColor("state.error") : Config.getColor("text.muted")
+                    font.pixelSize: 10
                     font.weight: Font.Bold
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
                 }
 
                 MouseArea {
                     id: closeArea
                     anchors.fill: parent
+                    hoverEnabled: true
                     onClicked: {
                         Notifications.discardNotification(root.notificationObject.notificationId)
                     }
@@ -182,37 +165,137 @@ Rectangle {
             }
         }
 
+        // Large notification image (only for actual large images, not icons)
+        Image {
+            id: notificationImage
+            property bool ready: status === Image.Ready && source !== ""
+            property bool isLargeImage: ready && !root.isIconUrl && sourceSize.width > 64 && sourceSize.height > 64
+            source: root.imgSource
+            visible: isLargeImage
+            fillMode: Image.PreserveAspectFit
+            Layout.fillWidth: true
+            Layout.preferredHeight: isLargeImage ? Math.min(sourceSize.height, 120) : 0
+            Layout.maximumHeight: 120
+            asynchronous: true
+            cache: true
+        }
+
+        // Content row: Small icon (if any) + Message text
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 10
+
+            // Small notification icon (for icon URLs or small images)
+            Rectangle {
+                id: smallIconContainer
+                // Show for icon URLs OR small images (but not if large image is shown)
+                property bool showIcon: root.hasImage && (root.isIconUrl || (notificationImage.ready && !notificationImage.isLargeImage))
+                visible: showIcon
+                Layout.preferredWidth: 40
+                Layout.preferredHeight: 40
+                Layout.alignment: Qt.AlignTop
+                radius: 8
+                color: Config.getColor("background.tertiary")
+
+                Image {
+                    anchors.centerIn: parent
+                    source: root.imgSource
+                    width: 28
+                    height: 28
+                    sourceSize.width: 28
+                    sourceSize.height: 28
+                    fillMode: Image.PreserveAspectFit
+                    asynchronous: true
+                    cache: true
+                }
+            }
+
+            // Message content
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 4
+
+                // Summary (title)
+                Text {
+                    text: root.notificationObject?.summary ?? ""
+                    color: Config.getColor("text.primary")
+                    font.pixelSize: 13
+                    font.weight: Font.DemiBold
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    visible: text !== ""
+                    maximumLineCount: 2
+                    elide: Text.ElideRight
+                }
+
+                // Body text
+                Text {
+                    text: root.notificationObject?.body ?? ""
+                    color: Config.getColor("text.tertiary")
+                    font.pixelSize: 12
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    visible: text !== ""
+                    maximumLineCount: 3
+                    elide: Text.ElideRight
+                    lineHeight: 1.2
+                }
+            }
+        }
+
         // Action buttons
         RowLayout {
             Layout.fillWidth: true
-            spacing: 8
+            Layout.topMargin: 4
+            spacing: 6
             visible: root.notificationObject?.actions.length > 0
 
             Repeater {
                 model: root.notificationObject?.actions ?? []
 
                 Rectangle {
+                    id: actionButton
                     required property var modelData
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 32
+                    Layout.preferredHeight: 28
                     radius: 6
-                    color: buttonArea.pressed ? Config.notificationButtonPressedColor : Config.notificationButtonColor
-                    border.color: Config.notificationBorderColor
+                    color: buttonArea.containsMouse
+                        ? Config.getColor("background.surface")
+                        : Config.getColor("background.tertiary")
+                    border.color: buttonArea.containsMouse
+                        ? Config.getColor("primary.lavender")
+                        : Config.getColor("border.subtle")
                     border.width: 1
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+
+                    Behavior on border.color {
+                        ColorAnimation { duration: 100 }
+                    }
 
                     Text {
                         anchors.centerIn: parent
                         text: parent.modelData.text || "Action"
-                        color: Config.notificationTextPrimaryColor
-                        font.pixelSize: 13
+                        color: buttonArea.containsMouse
+                            ? Config.getColor("primary.lavender")
+                            : Config.getColor("text.secondary")
+                        font.pixelSize: 11
+                        font.weight: Font.Medium
+
+                        Behavior on color {
+                            ColorAnimation { duration: 100 }
+                        }
                     }
 
                     MouseArea {
                         id: buttonArea
                         anchors.fill: parent
+                        hoverEnabled: true
                         onClicked: {
                             Notifications.attemptInvokeAction(
-                                root.notificationObject.notificationId, 
+                                root.notificationObject.notificationId,
                                 parent.modelData.identifier
                             )
                         }

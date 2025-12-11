@@ -648,8 +648,8 @@ packages:
       pacman: hyprpicker
     hyprsysteminfo:
       yay: hyprsysteminfo
-    hyprutils-git:
-      pacman: hyprutils-git
+    hyprutils:
+      pacman: hyprutils
     swww:
       pacman: swww
     xdg-desktop-portal-hyprland:

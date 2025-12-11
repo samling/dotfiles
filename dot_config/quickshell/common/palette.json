@@ -5,15 +5,18 @@
   "colors": {
     "primary": {
       "blue": "#89b4fa",
-      "green": "#a6e3a1", 
+      "green": "#a6e3a1",
       "red": "#f38ba8",
       "yellow": "#f9e2af",
       "orange": "#fab387",
+      "peach": "#fab387",
       "purple": "#cba6f7",
       "pink": "#f5c2e7",
       "teal": "#94e2d5",
       "sky": "#89dceb",
       "lavender": "#b4befe",
+      "mauve": "#cba6f7",
+      "maroon": "#eba0ac",
       "white": "#ffffff",
       "black": "#000000"
     },
@@ -93,6 +96,23 @@
       "border": "border.secondary",
       "text": "text.primary",
       "shadow": "transparency.shadow"
+    },
+    "system": {
+      "cpu": {
+        "normal": "primary.sky",
+        "high": "state.warning",
+        "critical": "state.error"
+      },
+      "memory": {
+        "normal": "primary.lavender",
+        "high": "state.warning",
+        "critical": "state.error"
+      },
+      "disk": {
+        "normal": "primary.peach",
+        "high": "state.warning",
+        "critical": "state.error"
+      }
     }
   }
 }

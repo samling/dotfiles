@@ -1,105 +1,133 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.common
 
-Item {
+MouseArea {
     id: root
-    
+
     readonly property int updateCount: parseInt(updateCountText.text) || 0
     readonly property bool hasUpdates: updateCount > 0
-    
-    implicitWidth: background.implicitWidth
-    implicitHeight: background.implicitHeight
-    
-    Rectangle {
-        id: background
-        implicitWidth: rowLayout.implicitWidth + 24
-        implicitHeight: rowLayout.implicitHeight + 8
-        anchors.centerIn: parent
-        color: mouseArea.containsMouse ? Qt.darker(Config.getColor("background.tertiary"), 1.1) : Config.getColor("background.tertiary")
-        radius: height / 2
-        
-        Behavior on color {
-            ColorAnimation {
-                duration: Config.colorAnimationDuration
-            }
-        }
-        
-        RowLayout {
-            id: rowLayout
-            anchors.centerIn: parent
-            anchors.horizontalCenterOffset: -3
-            spacing: 4
-            
-            property int gaugeSize: Config.barHeight - Config.batteryGaugeOffset
-            property color primaryColor: root.hasUpdates ? Config.clockTextColor : Config.getColor("text.muted")
-            
-            // Updates icon (to the left)
-            Item {
-                id: updatesIconContainer
-                Layout.preferredWidth: rowLayout.gaugeSize * 0.8
-                Layout.preferredHeight: rowLayout.gaugeSize * 0.8
-                
-                Text {
-                    id: updatesIcon
-                    anchors.centerIn: parent
-                    color: rowLayout.primaryColor
-                    font.pixelSize: 16
-                    font.weight: Font.Bold
-                    font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-                    textFormat: Text.PlainText
-                    text: "⬆︎"
-                    visible: !loadingIndicator.visible
-                }
-                
-                // Spinning indicator
-                Text {
-                    id: loadingIndicator
-                    anchors.centerIn: parent
-                    anchors.verticalCenterOffset: 1
-                    color: rowLayout.primaryColor
-                    font.pixelSize: 16
-                    font.weight: Font.Bold
-                    textFormat: Text.PlainText
-                    text: "↻"
-                    visible: checkupdatesCountProc.running || checkupdatesFullProc.running
-                    
-                    RotationAnimation {
-                        target: loadingIndicator
-                        property: "rotation"
-                        from: 0
-                        to: 360
-                        duration: 1000
-                        loops: Animation.Infinite
-                        running: loadingIndicator.visible
-                    }
-                }
-            }
+    readonly property bool isLoading: checkupdatesCountProc.running || checkupdatesFullProc.running
+    property bool panelOpen: false
 
-            // Updates count text (to the right)
-            Text {
-                id: updateCountText
-                Layout.alignment: Qt.AlignVCenter
-                text: root.updateCount > 99 ? "99+" : root.updateCount.toString()
-                color: rowLayout.primaryColor
-                font.pixelSize: 12
-                font.weight: Font.Bold
-                verticalAlignment: Text.AlignVCenter
+    // Parse updates into structured data
+    property var updatesList: {
+        const text = fullUpdatesCollector.text.trim()
+        if (!text) return []
+        return text.split('\n').map(line => {
+            // Format: "package oldversion -> newversion"
+            const match = line.match(/^(\S+)\s+(\S+)\s+->\s+(\S+)$/)
+            if (match) {
+                return { name: match[1], oldVersion: match[2], newVersion: match[3] }
             }
+            return { name: line, oldVersion: "", newVersion: "" }
+        })
+    }
+
+    property int indicatorWidth: 48
+    property int indicatorHeight: Config.barHeight - 16
+    property int borderRadius: 4
+    property int borderWidth: 1
+
+    property color primaryColor: {
+        if (root.isLoading) return Config.getColor("primary.blue")
+        if (root.hasUpdates) return Config.getColor("primary.teal")
+        return Config.getColor("text.muted")
+    }
+
+    implicitWidth: indicatorWidth
+    implicitHeight: indicatorHeight
+    hoverEnabled: true
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+    onClicked: function(mouse) {
+        if (mouse.button === Qt.RightButton) {
+            checkupdatesCountProc.running = true
+        } else if (mouse.button === Qt.LeftButton) {
+            root.panelOpen = !root.panelOpen
         }
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        
-        onClicked: function(mouse) {
-            if (mouse.button === Qt.RightButton) {
-                checkupdatesCountProc.running = true
+    // Main container with border
+    Rectangle {
+        id: container
+        anchors.centerIn: parent
+        width: root.indicatorWidth
+        height: root.indicatorHeight
+        radius: root.borderRadius
+        color: "transparent"
+        border.color: root.primaryColor
+        border.width: root.borderWidth
+
+        Behavior on border.color {
+            ColorAnimation { duration: Config.colorAnimationDuration }
+        }
+
+        // Subtle fill when has updates
+        Rectangle {
+            id: fillBar
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+                margins: root.borderWidth + 1
+            }
+            radius: Math.max(0, root.borderRadius - 2)
+            color: root.hasUpdates
+                ? Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.2)
+                : "transparent"
+
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
+            }
+        }
+
+        // Content layout
+        RowLayout {
+            anchors.centerIn: parent
+            spacing: 2
+
+            // Arrow icon (static, no rotation)
+            Text {
+                id: iconText
+                text: root.isLoading ? "⟳" : "⬆"
+                color: root.primaryColor
+                font.pixelSize: 12
+                font.weight: Font.Bold
+
+                Behavior on color {
+                    ColorAnimation { duration: Config.colorAnimationDuration }
+                }
+
+                // Pulse opacity when loading instead of rotating
+                opacity: root.isLoading ? loadingPulse.opacity : 1.0
+
+                SequentialAnimation {
+                    id: loadingPulse
+                    property real opacity: 1.0
+                    running: root.isLoading
+                    loops: Animation.Infinite
+                    NumberAnimation { target: loadingPulse; property: "opacity"; to: 0.4; duration: 400 }
+                    NumberAnimation { target: loadingPulse; property: "opacity"; to: 1.0; duration: 400 }
+                }
+            }
+
+            // Count
+            Text {
+                id: updateCountText
+                text: root.updateCount > 99 ? "99" : root.updateCount.toString()
+                color: root.primaryColor
+                font.pixelSize: 11
+                font.weight: Font.DemiBold
+                font.family: "monospace"
+
+                Behavior on color {
+                    ColorAnimation { duration: Config.colorAnimationDuration }
+                }
             }
         }
     }
@@ -119,7 +147,7 @@ Item {
 
     Process {
         id: checkupdatesFullProc
-        command: ["checkupdates", "-n"]
+        command: ["checkupdates"]
         running: false
 
         stdout: StdioCollector {
@@ -137,7 +165,329 @@ Item {
     }
 
     Tooltip {
-        hoverTarget: mouseArea
-        text: fullUpdatesCollector.text
+        hoverTarget: root
+        text: {
+            if (root.isLoading) return "Checking for updates..."
+            if (!root.hasUpdates) return "System up to date\nClick to view • Right-click to refresh"
+            return root.updateCount + " update" + (root.updateCount > 1 ? "s" : "") + " available\nClick to view • Right-click to refresh"
+        }
+    }
+
+    // Updates panel popup
+    PanelWindow {
+        id: updatesPanel
+        visible: root.panelOpen
+
+        anchors {
+            top: true
+            right: true
+            left: true
+            bottom: true
+        }
+
+        margins.top: 4
+        margins.right: 4
+        margins.left: 200
+        margins.bottom: 50
+
+        color: "transparent"
+
+        // Click outside to close
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                root.panelOpen = false
+            }
+        }
+
+        // Panel content
+        Rectangle {
+            id: panelContent
+            anchors.top: parent.top
+            anchors.right: parent.right
+            width: 360
+            height: Math.min(parent.height * 0.85, 450)
+            color: Config.getColor("background.crust")
+            border.width: 1
+            border.color: Config.getColor("border.subtle")
+            radius: 12
+
+            // Animation
+            transform: Translate {
+                y: root.panelOpen ? 0 : -20
+                Behavior on y {
+                    NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+                }
+            }
+
+            opacity: root.panelOpen ? 1.0 : 0.0
+            scale: root.panelOpen ? 1.0 : 0.95
+
+            Behavior on opacity {
+                NumberAnimation { duration: 150 }
+            }
+
+            Behavior on scale {
+                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+            }
+
+            // Prevent clicks from closing
+            MouseArea {
+                anchors.fill: parent
+                onClicked: { }
+            }
+
+            Column {
+                anchors.fill: parent
+                spacing: 0
+
+                // Header
+                Rectangle {
+                    width: parent.width
+                    height: 48
+                    color: Config.getColor("background.mantle")
+                    radius: 12
+
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 12
+                        color: parent.color
+                    }
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 16
+                        anchors.rightMargin: 12
+                        spacing: 12
+
+                        Text {
+                            text: "⬆"
+                            font.pixelSize: 14
+                            color: Config.getColor("primary.teal")
+                        }
+
+                        Text {
+                            text: "System Updates"
+                            color: Config.getColor("text.primary")
+                            font.pixelSize: 14
+                            font.weight: Font.DemiBold
+                            Layout.fillWidth: true
+                        }
+
+                        // Count badge
+                        Rectangle {
+                            visible: root.hasUpdates
+                            width: countText.width + 12
+                            height: 20
+                            radius: 10
+                            color: Config.getColor("primary.teal")
+
+                            Text {
+                                id: countText
+                                anchors.centerIn: parent
+                                text: root.updateCount > 99 ? "99+" : root.updateCount.toString()
+                                color: Config.getColor("background.crust")
+                                font.pixelSize: 11
+                                font.weight: Font.Bold
+                            }
+                        }
+
+                        // Refresh button
+                        Rectangle {
+                            id: refreshButton
+                            width: 28
+                            height: 28
+                            radius: 6
+                            color: refreshMouseArea.containsMouse
+                                ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.2)
+                                : "transparent"
+                            border.color: refreshMouseArea.containsMouse ? Config.getColor("primary.blue") : Config.getColor("border.subtle")
+                            border.width: 1
+
+                            Behavior on color { ColorAnimation { duration: 100 } }
+                            Behavior on border.color { ColorAnimation { duration: 100 } }
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "⟳"
+                                color: refreshMouseArea.containsMouse ? Config.getColor("primary.blue") : Config.getColor("text.muted")
+                                font.pixelSize: 12
+                                font.weight: Font.Bold
+                                opacity: root.isLoading ? loadingPulse.opacity : 1.0
+
+                                Behavior on color { ColorAnimation { duration: 100 } }
+                            }
+
+                            MouseArea {
+                                id: refreshMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onClicked: {
+                                    checkupdatesCountProc.running = true
+                                }
+                            }
+
+                            Tooltip {
+                                hoverTarget: refreshMouseArea
+                                text: "Refresh"
+                            }
+                        }
+                    }
+                }
+
+                // Divider
+                Rectangle {
+                    width: parent.width - 24
+                    height: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Config.getColor("border.subtle")
+                }
+
+                // Content area
+                Item {
+                    width: parent.width
+                    height: parent.height - 49
+
+                    // Loading state
+                    Column {
+                        anchors.centerIn: parent
+                        spacing: 12
+                        visible: root.isLoading
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "⟳"
+                            font.pixelSize: 32
+                            color: Config.getColor("primary.blue")
+                            opacity: loadingPulse.opacity
+                        }
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "Checking for updates..."
+                            color: Config.getColor("text.muted")
+                            font.pixelSize: 13
+                            font.weight: Font.Medium
+                        }
+                    }
+
+                    // Empty state
+                    Column {
+                        anchors.centerIn: parent
+                        spacing: 12
+                        visible: !root.isLoading && !root.hasUpdates
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "✓"
+                            font.pixelSize: 32
+                            color: Config.getColor("primary.green")
+                        }
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "System up to date!"
+                            color: Config.getColor("text.muted")
+                            font.pixelSize: 13
+                            font.weight: Font.Medium
+                        }
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: "No packages need updating"
+                            color: Config.getColor("text.muted")
+                            font.pixelSize: 11
+                            opacity: 0.7
+                        }
+                    }
+
+                    // Updates list
+                    ListView {
+                        id: updatesList
+                        anchors.fill: parent
+                        anchors.margins: 6
+                        visible: !root.isLoading && root.hasUpdates
+                        clip: true
+                        spacing: 0
+
+                        boundsBehavior: Flickable.StopAtBounds
+
+                        ScrollBar.vertical: ScrollBar {
+                            policy: ScrollBar.AsNeeded
+                            contentItem: Rectangle {
+                                implicitWidth: 4
+                                radius: 2
+                                color: parent.pressed
+                                    ? Config.getColor("text.muted")
+                                    : parent.hovered
+                                        ? Config.getColor("border.primary")
+                                        : Config.getColor("border.subtle")
+                                opacity: parent.active ? 1.0 : 0.0
+                                Behavior on opacity { NumberAnimation { duration: 150 } }
+                                Behavior on color { ColorAnimation { duration: 100 } }
+                            }
+                            background: Rectangle {
+                                implicitWidth: 4
+                                color: "transparent"
+                            }
+                        }
+
+                        model: root.updatesList
+
+                        delegate: Item {
+                            id: updateItem
+                            required property var modelData
+                            required property int index
+                            width: updatesList.width - 4
+                            height: 18
+
+                            RowLayout {
+                                anchors.fill: parent
+                                anchors.leftMargin: 4
+                                anchors.rightMargin: 4
+                                spacing: 0
+
+                                // Package name
+                                Text {
+                                    text: updateItem.modelData.name
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: 11
+                                    font.family: "monospace"
+                                    Layout.fillWidth: true
+                                    elide: Text.ElideRight
+                                }
+
+                                // Old version
+                                Text {
+                                    visible: updateItem.modelData.oldVersion !== ""
+                                    text: updateItem.modelData.oldVersion
+                                    color: Config.getColor("text.secondary")
+                                    font.pixelSize: 10
+                                    font.family: "monospace"
+                                }
+
+                                // Arrow
+                                Text {
+                                    visible: updateItem.modelData.newVersion !== ""
+                                    text: " → "
+                                    color: Config.getColor("primary.teal")
+                                    font.pixelSize: 10
+                                }
+
+                                // New version
+                                Text {
+                                    visible: updateItem.modelData.newVersion !== ""
+                                    text: updateItem.modelData.newVersion
+                                    color: Config.getColor("primary.teal")
+                                    font.pixelSize: 10
+                                    font.family: "monospace"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

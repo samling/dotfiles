@@ -1,23 +1,23 @@
 import qs.services
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Shapes
 import qs.common
 
 MouseArea {
     id: root
 
-    property bool showPercentage: true
     readonly property var chargeState: Battery.chargeState
     readonly property real percentage: Battery.percentage
     readonly property bool available: Battery.available
     readonly property bool isCharging: Battery.isCharging
     readonly property bool isPluggedIn: Battery.isPluggedIn
     readonly property string timeString: Battery.timeString
-    
-    property int gaugeSize: Config.barHeight - Config.batteryGaugeOffset
-    property int lineWidth: Config.batteryGaugeLineWidth
-    property int spacing: 8
+
+    property int indicatorWidth: 48
+    property int indicatorHeight: Config.barHeight - 16
+    property int borderRadius: 4
+    property int borderWidth: 1
+
     property color primaryColor: {
         if (!root.available) return Config.batteryUnavailableColor
         if (root.isCharging) return Config.batteryChargingColor
@@ -26,106 +26,64 @@ MouseArea {
         if (root.percentage <= Config.batteryMediumThreshold) return Config.batteryMediumColor
         return Config.batteryHighColor
     }
-    property color backgroundColor: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, Config.batteryGaugeBackgroundOpacity)
 
-    implicitWidth: batteryIconContainer.width + 6 + gaugeSize
-    implicitHeight: gaugeSize
+    implicitWidth: indicatorWidth
+    implicitHeight: indicatorHeight
     hoverEnabled: true
 
-    // Battery/charging icon (to the left)
-    Item {
-        id: batteryIconContainer
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        width: root.gaugeSize * 0.4
-        height: root.gaugeSize * 0.8
-        
-        // Vertical battery icon (when not charging)
-        Text {
-            anchors.centerIn: parent
-            color: root.primaryColor
-            font.pixelSize: root.gaugeSize * 0.6
-            font.weight: Font.Bold
-            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-            textFormat: Text.PlainText
-            text: "🔋︎"
-            visible: !root.isCharging
-        }
-        
-        // Charging icon (when charging)
-        Text {
-            anchors.centerIn: parent
-            color: root.primaryColor
-            font.pixelSize: root.gaugeSize * 0.6
-            font.weight: Font.Bold
-            font.family: "DejaVu Sans Mono, Liberation Mono, Consolas, monospace"
-            textFormat: Text.PlainText
-            text: "🔌︎"
-            visible: root.isCharging
-        }
-    }
+    // Main container with border
+    Rectangle {
+        id: container
+        anchors.centerIn: parent
+        width: root.indicatorWidth
+        height: root.indicatorHeight
+        radius: root.borderRadius
+        color: "transparent"
+        border.color: root.primaryColor
+        border.width: root.borderWidth
 
-    // Battery gauge container
-    Item {
-        id: gaugeContainer
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        width: root.gaugeSize
-        height: root.gaugeSize
-        
-        // Background circle
-        Shape {
-            id: backgroundCircle
-            anchors.fill: parent
-            preferredRendererType: Shape.CurveRenderer
-            
-            ShapePath {
-                strokeColor: "transparent"
-                strokeWidth: root.lineWidth
-                fillColor: "transparent"
-                capStyle: ShapePath.RoundCap
-                
-                PathAngleArc {
-                    centerX: root.gaugeSize / 2
-                    centerY: root.gaugeSize / 2
-                    radiusX: (root.gaugeSize - root.lineWidth) / 2
-                    radiusY: (root.gaugeSize - root.lineWidth) / 2
-                    startAngle: 0
-                    sweepAngle: 360
-                }
+        Behavior on border.color {
+            ColorAnimation { duration: Config.colorAnimationDuration }
+        }
+
+        // Fill bar (background layer)
+        Rectangle {
+            id: fillBar
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+                margins: root.borderWidth + 1
+            }
+            width: root.available ? (parent.width - (root.borderWidth + 1) * 2) * root.percentage : 0
+            radius: Math.max(0, root.borderRadius - 2)
+            color: Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.35)
+
+            Behavior on width {
+                NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
+            }
+
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
 
-        // Progress arc
-        Shape {
-            id: progressCircle
-            anchors.fill: parent
-            preferredRendererType: Shape.CurveRenderer
-            
-            ShapePath {
-                strokeColor: root.primaryColor
-                strokeWidth: root.lineWidth
-                fillColor: "transparent"
-                capStyle: ShapePath.RoundCap
-                
-                PathAngleArc {
-                    centerX: root.gaugeSize / 2
-                    centerY: root.gaugeSize / 2
-                    radiusX: (root.gaugeSize - root.lineWidth) / 2
-                    radiusY: (root.gaugeSize - root.lineWidth) / 2
-                    startAngle: -90 // Start from top
-                    sweepAngle: root.available ? (root.percentage * 360) : 0
-                }
-            }
-        }
-
-        // Percentage text (always visible)
+        // Percentage text (foreground)
         Text {
             anchors.centerIn: parent
-            text: root.available ? Math.round(root.percentage * 100).toString() : "N/A"
+            text: {
+                if (!root.available) return "N/A"
+                let pct = Math.round(root.percentage * 100)
+                return root.isCharging ? pct + "⚡" : pct + "%"
+            }
             color: root.primaryColor
-            font.pixelSize: Math.min(12, root.gaugeSize * 0.4)
-            font.weight: Font.Bold
+            font.pixelSize: 11
+            font.weight: Font.DemiBold
+            font.family: "monospace"
+
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
+            }
         }
     }
 
@@ -133,19 +91,15 @@ MouseArea {
         hoverTarget: root
         text: {
             if (!Battery.available) return "Battery not available";
-            
-            // Show more useful info when time is unknown
+
+            let status = root.isCharging ? "Charging" : (root.isPluggedIn ? "Plugged in" : "Battery")
+            let pct = Math.round(Battery.percentage * 100) + "%"
+
             if (Battery.timeString === "Time unknown") {
-                if (Battery.isCharging) {
-                    return "Charging: " + Math.round(Battery.percentage * 100) + "%";
-                } else if (Battery.isPluggedIn) {
-                    return "Plugged in: " + Math.round(Battery.percentage * 100) + "% (Full)";
-                } else {
-                    return "Battery: " + Math.round(Battery.percentage * 100) + "%";
-                }
+                return status + ": " + pct
             }
-            
-            return Battery.timeString;
+
+            return status + ": " + pct + "\n" + Battery.timeString
         }
     }
 }

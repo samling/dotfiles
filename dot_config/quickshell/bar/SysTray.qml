@@ -8,25 +8,33 @@ import qs.common
 
 Item {
     id: root
-    implicitWidth: background.implicitWidth
-    implicitHeight: background.implicitHeight
+    implicitWidth: container.width
+    implicitHeight: container.height
     property bool vertical: false
     property bool invertSide: false
 
+    property int containerHeight: Config.barHeight - 16
+    property int borderRadius: 4
+    property int borderWidth: 1
+    property color primaryColor: Config.getColor("border.subtle")
+
+    // Main container with border
     Rectangle {
-        id: background
-        implicitWidth: gridLayout.implicitWidth + 16
-        implicitHeight: gridLayout.implicitHeight + 8
+        id: container
         anchors.centerIn: parent
-        color: Config.getColor("background.tertiary")
-        radius: height / 2
-        
+        width: gridLayout.implicitWidth + 16
+        height: root.containerHeight
+        radius: root.borderRadius
+        color: "transparent"
+        border.color: root.primaryColor
+        border.width: root.borderWidth
+
         GridLayout {
             id: gridLayout
             columns: root.vertical ? 1 : -1
             anchors.centerIn: parent
-            rowSpacing: 6
-            columnSpacing: 4
+            rowSpacing: 4
+            columnSpacing: 6
 
             // System tray items
             Repeater {
