@@ -21,6 +21,11 @@ eval "$(direnv hook zsh)"
 #=== flux
 command -v flux >/dev/null && source <(flux completion zsh)
 
+#=== fx
+if [[ -x $(command -v fx) ]]; then
+  source <(fx --comp zsh)
+fi
+
 #=== fzf
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #source "$(fzf --zsh)"
