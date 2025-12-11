@@ -214,7 +214,6 @@ MouseArea {
         // Panel content
         Rectangle {
             id: panelContent
-            anchors.top: parent.top
             anchors.right: parent.right
             width: 360
             height: Math.min(parent.height * 0.85, 450)
@@ -223,23 +222,15 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Animation
-            transform: Translate {
-                y: root.panelOpen ? 0 : -20
-                Behavior on y {
-                    NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+            // Fly out from top animation
+            clip: true
+            y: root.panelOpen ? 0 : -500
+
+            Behavior on y {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
-            }
-
-            opacity: root.panelOpen ? 1.0 : 0.0
-            scale: root.panelOpen ? 1.0 : 0.95
-
-            Behavior on opacity {
-                NumberAnimation { duration: 150 }
-            }
-
-            Behavior on scale {
-                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
             }
 
             // Prevent clicks from closing

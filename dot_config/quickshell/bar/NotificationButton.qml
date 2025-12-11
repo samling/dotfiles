@@ -136,7 +136,6 @@ MouseArea {
         // Actual notification content
         Rectangle {
             id: notificationPanel
-            anchors.top: parent.top
             anchors.right: parent.right
             width: 380
             height: Math.min(parent.height * 0.85, 550)
@@ -145,28 +144,15 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Animation properties
-            transform: Translate {
-                id: slideTransform
-                y: root.listOpen ? 0 : -20
+            // Fly out from top animation
+            clip: true
+            y: root.listOpen ? 0 : -600
 
-                Behavior on y {
-                    NumberAnimation {
-                        duration: 200
-                        easing.type: Easing.OutCubic
-                    }
+            Behavior on y {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
-            }
-
-            opacity: root.listOpen ? 1.0 : 0.0
-            scale: root.listOpen ? 1.0 : 0.95
-
-            Behavior on opacity {
-                NumberAnimation { duration: 150 }
-            }
-
-            Behavior on scale {
-                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
             }
 
             // Prevent clicks from passing through

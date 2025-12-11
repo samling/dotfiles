@@ -109,7 +109,6 @@ MouseArea {
         // Actual menu content
         Rectangle {
             id: menuPanel
-            anchors.top: parent.top
             anchors.left: parent.left
             width: 320
             height: menuContent.implicitHeight + 32
@@ -118,27 +117,15 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Animation properties
-            transform: Translate {
-                y: root.menuOpen ? 0 : -20
+            // Fly out from top animation
+            clip: true
+            y: root.menuOpen ? 0 : -500
 
-                Behavior on y {
-                    NumberAnimation {
-                        duration: 200
-                        easing.type: Easing.OutCubic
-                    }
+            Behavior on y {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
-            }
-
-            opacity: root.menuOpen ? 1.0 : 0.0
-            scale: root.menuOpen ? 1.0 : 0.95
-
-            Behavior on opacity {
-                NumberAnimation { duration: 150 }
-            }
-
-            Behavior on scale {
-                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
             }
 
             // Prevent clicks from passing through
