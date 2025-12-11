@@ -165,11 +165,18 @@ Rectangle {
             }
         }
 
-        // Large notification image (only for actual large images, not icons)
+        // Large notification image (only for actual content images, not icons/avatars)
+        // Square-ish images (aspect ratio ~1:1) are treated as icons/avatars
+        // Only show as large if it's clearly content (wide/landscape) and big enough
         Image {
             id: notificationImage
             property bool ready: status === Image.Ready && source !== ""
-            property bool isLargeImage: ready && !root.isIconUrl && sourceSize.width > 64 && sourceSize.height > 64
+            property real aspectRatio: ready ? sourceSize.width / sourceSize.height : 1.0
+            // Treat as large content image only if:
+            // - Not an icon URL
+            // - Large enough (>128 in both dimensions)
+            // - Not square-ish (aspect ratio > 1.3, i.e., noticeably wider than tall)
+            property bool isLargeImage: ready && !root.isIconUrl && sourceSize.width > 128 && sourceSize.height > 128 && aspectRatio > 1.3
             source: root.imgSource
             visible: isLargeImage
             fillMode: Image.PreserveAspectFit

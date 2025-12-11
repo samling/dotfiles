@@ -164,6 +164,17 @@ MouseArea {
         }
     }
 
+    // Launch wezterm with yay update command
+    Process {
+        id: updateProc
+        command: [
+            "hyprctl", "dispatch", "exec",
+            "[float; size 800 600; center]",
+            "wezterm start --class wezterm-yay-update -- sh -c 'echo \"System Update\"; echo \"=============\"; echo; yay -Syu; echo; echo \"Press Enter to close...\"; read'"
+        ]
+        running: false
+    }
+
     Tooltip {
         hoverTarget: root
         text: {
@@ -290,6 +301,48 @@ MouseArea {
                                 color: Config.getColor("background.crust")
                                 font.pixelSize: 11
                                 font.weight: Font.Bold
+                            }
+                        }
+
+                        // Update button
+                        Rectangle {
+                            id: updateButton
+                            visible: root.hasUpdates && !root.isLoading
+                            width: updateButtonText.width + 16
+                            height: 24
+                            radius: 6
+                            color: updateMouseArea.containsMouse
+                                ? Config.getColor("primary.green")
+                                : Qt.rgba(Config.getColor("primary.green").r, Config.getColor("primary.green").g, Config.getColor("primary.green").b, 0.2)
+                            border.color: Config.getColor("primary.green")
+                            border.width: 1
+
+                            Behavior on color { ColorAnimation { duration: 100 } }
+
+                            Text {
+                                id: updateButtonText
+                                anchors.centerIn: parent
+                                text: "Update"
+                                color: updateMouseArea.containsMouse ? Config.getColor("background.crust") : Config.getColor("primary.green")
+                                font.pixelSize: 11
+                                font.weight: Font.DemiBold
+
+                                Behavior on color { ColorAnimation { duration: 100 } }
+                            }
+
+                            MouseArea {
+                                id: updateMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onClicked: {
+                                    updateProc.running = true
+                                    root.panelOpen = false
+                                }
+                            }
+
+                            Tooltip {
+                                hoverTarget: updateMouseArea
+                                text: "Open terminal to update system"
                             }
                         }
 
