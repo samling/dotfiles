@@ -1,0 +1,16 @@
+{
+  "updates": {
+    "criticalPackages": [
+      "glibc",
+      "linux*",
+      "systemd"
+    ],
+    "warningPackages": [
+      "hyprland",
+      "nvidia*",
+      "pacman",
+      "paru",
+      "yay"
+    ]
+  }
+}

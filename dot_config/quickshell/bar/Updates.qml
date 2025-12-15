@@ -13,17 +13,27 @@ MouseArea {
     readonly property bool isLoading: checkupdatesCountProc.running || checkupdatesFullProc.running
     property bool panelOpen: false
 
-    // Parse updates into structured data
+    // Parse updates into structured data, sorted by priority (critical > warning > normal)
     property var updatesList: {
         const text = fullUpdatesCollector.text.trim()
         if (!text) return []
-        return text.split('\n').map(line => {
+        const updates = text.split('\n').map(line => {
             // Format: "package oldversion -> newversion"
             const match = line.match(/^(\S+)\s+(\S+)\s+->\s+(\S+)$/)
             if (match) {
-                return { name: match[1], oldVersion: match[2], newVersion: match[3] }
+                return {
+                    name: match[1],
+                    oldVersion: match[2],
+                    newVersion: match[3],
+                    priority: Config.getPackagePriority(match[1])
+                }
             }
-            return { name: line, oldVersion: "", newVersion: "" }
+            return { name: line, oldVersion: "", newVersion: "", priority: Config.getPackagePriority(line) }
+        })
+        // Sort by priority (critical=2, warning=1, normal=0), then alphabetically
+        return updates.sort((a, b) => {
+            if (a.priority !== b.priority) return b.priority - a.priority
+            return a.name.localeCompare(b.name)
         })
     }
 
@@ -91,10 +101,23 @@ MouseArea {
             anchors.centerIn: parent
             spacing: 2
 
-            // Arrow icon (static, no rotation)
+            // Arrow icon (static) - shown when not loading
             Text {
-                id: iconText
-                text: root.isLoading ? "⟳" : "⬆"
+                visible: !root.isLoading
+                text: "⬆"
+                color: root.primaryColor
+                font.pixelSize: 12
+                font.weight: Font.Bold
+
+                Behavior on color {
+                    ColorAnimation { duration: Config.colorAnimationDuration }
+                }
+            }
+
+            // Spinner icon (rotating) - shown when loading
+            Text {
+                visible: root.isLoading
+                text: "⟳"
                 color: root.primaryColor
                 font.pixelSize: 12
                 font.weight: Font.Bold
@@ -103,16 +126,12 @@ MouseArea {
                     ColorAnimation { duration: Config.colorAnimationDuration }
                 }
 
-                // Pulse opacity when loading instead of rotating
-                opacity: root.isLoading ? loadingPulse.opacity : 1.0
-
-                SequentialAnimation {
-                    id: loadingPulse
-                    property real opacity: 1.0
-                    running: root.isLoading
+                RotationAnimation on rotation {
+                    from: 0
+                    to: 360
+                    duration: 1000
                     loops: Animation.Infinite
-                    NumberAnimation { target: loadingPulse; property: "opacity"; to: 0.4; duration: 400 }
-                    NumberAnimation { target: loadingPulse; property: "opacity"; to: 1.0; duration: 400 }
+                    running: root.isLoading
                 }
             }
 
@@ -358,9 +377,16 @@ MouseArea {
                                 color: refreshMouseArea.containsMouse ? Config.getColor("primary.blue") : Config.getColor("text.muted")
                                 font.pixelSize: 12
                                 font.weight: Font.Bold
-                                opacity: root.isLoading ? loadingPulse.opacity : 1.0
 
                                 Behavior on color { ColorAnimation { duration: 100 } }
+
+                                RotationAnimation on rotation {
+                                    from: 0
+                                    to: 360
+                                    duration: 1000
+                                    loops: Animation.Infinite
+                                    running: root.isLoading
+                                }
                             }
 
                             MouseArea {
@@ -404,7 +430,14 @@ MouseArea {
                             text: "⟳"
                             font.pixelSize: 32
                             color: Config.getColor("primary.blue")
-                            opacity: loadingPulse.opacity
+
+                            RotationAnimation on rotation {
+                                from: 0
+                                to: 360
+                                duration: 1000
+                                loops: Animation.Infinite
+                                running: root.isLoading
+                            }
                         }
 
                         Text {
@@ -484,20 +517,53 @@ MouseArea {
                             required property var modelData
                             required property int index
                             width: updatesList.width - 4
-                            height: 18
+                            height: 20
+
+                            // Priority: 2 = critical, 1 = warning, 0 = normal
+                            readonly property int priority: modelData.priority
+                            readonly property bool isCritical: priority === 2
+                            readonly property bool isWarning: priority === 1
+                            readonly property bool isHighlighted: priority > 0
+
+                            // Color based on priority
+                            readonly property color highlightColor: isCritical
+                                ? Config.getColor("primary.red")
+                                : Config.getColor("primary.yellow")
+
+                            // Background highlight for important packages
+                            Rectangle {
+                                anchors.fill: parent
+                                anchors.margins: 1
+                                radius: 3
+                                color: updateItem.isHighlighted
+                                    ? Qt.rgba(updateItem.highlightColor.r, updateItem.highlightColor.g, updateItem.highlightColor.b, 0.15)
+                                    : "transparent"
+                                border.width: updateItem.isHighlighted ? 1 : 0
+                                border.color: Qt.rgba(updateItem.highlightColor.r, updateItem.highlightColor.g, updateItem.highlightColor.b, 0.3)
+                            }
 
                             RowLayout {
                                 anchors.fill: parent
-                                anchors.leftMargin: 4
-                                anchors.rightMargin: 4
+                                anchors.leftMargin: 6
+                                anchors.rightMargin: 6
                                 spacing: 0
+
+                                // Priority indicator
+                                Text {
+                                    visible: updateItem.isHighlighted
+                                    text: updateItem.isCritical ? "⚠" : "★"
+                                    color: updateItem.highlightColor
+                                    font.pixelSize: 9
+                                    Layout.rightMargin: 4
+                                }
 
                                 // Package name
                                 Text {
                                     text: updateItem.modelData.name
-                                    color: Config.getColor("text.primary")
+                                    color: updateItem.isHighlighted ? updateItem.highlightColor : Config.getColor("text.primary")
                                     font.pixelSize: 11
                                     font.family: "monospace"
+                                    font.weight: updateItem.isHighlighted ? Font.Bold : Font.Normal
                                     Layout.fillWidth: true
                                     elide: Text.ElideRight
                                 }
@@ -515,7 +581,7 @@ MouseArea {
                                 Text {
                                     visible: updateItem.modelData.newVersion !== ""
                                     text: " → "
-                                    color: Config.getColor("primary.teal")
+                                    color: updateItem.isHighlighted ? updateItem.highlightColor : Config.getColor("primary.teal")
                                     font.pixelSize: 10
                                 }
 
@@ -523,7 +589,7 @@ MouseArea {
                                 Text {
                                     visible: updateItem.modelData.newVersion !== ""
                                     text: updateItem.modelData.newVersion
-                                    color: Config.getColor("primary.teal")
+                                    color: updateItem.isHighlighted ? updateItem.highlightColor : Config.getColor("primary.teal")
                                     font.pixelSize: 10
                                     font.family: "monospace"
                                 }

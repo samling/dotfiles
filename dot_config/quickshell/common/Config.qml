@@ -5,19 +5,19 @@ import Quickshell.Io
 
 QtObject {
     id: config
-    
+
     // Color palette system
     property var paletteData: ({})
     readonly property var palette: paletteData.colors || {}
     readonly property var semanticColors: paletteData.semantic || {}
     readonly property bool paletteLoaded: !!(paletteData.colors && paletteData.semantic)
-    
+
     property bool paletteInitialized: false
-    
+
     property FileView paletteFile: FileView {
         path: Qt.resolvedUrl("palette.json")
         watchChanges: true
-        
+
         onLoaded: {
             try {
                 config.paletteData = JSON.parse(text())
@@ -32,16 +32,105 @@ QtObject {
                 config.paletteData = getDefaultPalette()
             }
         }
-        
+
         onFileChanged: {
             console.log("[Config] File change detected, reloading...")
             reload()
         }
-        
+
         onLoadFailed: {
             console.error("[Config] Failed to load palette.json, using defaults")
             config.paletteData = getDefaultPalette()
         }
+    }
+
+    // User configuration system
+    property var userConfig: ({})
+    property bool userConfigInitialized: false
+
+    // Updates configuration
+    readonly property var criticalPackages: userConfig.updates?.criticalPackages || []
+    readonly property var warningPackages: userConfig.updates?.warningPackages || []
+
+    property FileView userConfigFile: FileView {
+        path: Qt.resolvedUrl("config.json")
+        watchChanges: true
+
+        onLoaded: {
+            try {
+                config.userConfig = JSON.parse(text())
+                if (config.userConfigInitialized) {
+                    console.log("[Config] *** FILE CHANGED *** User config reloaded")
+                } else {
+                    console.log("[Config] Initial user config load")
+                    config.userConfigInitialized = true
+                }
+            } catch (e) {
+                console.error("[Config] Failed to parse config.json:", e)
+                config.userConfig = getDefaultUserConfig()
+            }
+        }
+
+        onFileChanged: {
+            console.log("[Config] User config file change detected, reloading...")
+            reload()
+        }
+
+        onLoadFailed: {
+            console.log("[Config] config.json not found, using defaults")
+            config.userConfig = getDefaultUserConfig()
+        }
+    }
+
+    function getDefaultUserConfig() {
+        return {
+            "updates": {
+                "criticalPackages": [],
+                "warningPackages": []
+            }
+        }
+    }
+
+    // Check if a package name matches a single pattern
+    // Supports glob-style wildcards:
+    //   "hyprland"  - exact match only
+    //   "hyprland*" - starts with "hyprland"
+    //   "*hyprland" - ends with "hyprland"
+    //   "*hyprland*" - contains "hyprland"
+    function matchesPattern(packageName, pattern) {
+        var lowerName = packageName.toLowerCase()
+        var lowerPattern = pattern.toLowerCase()
+        var startsWithWild = lowerPattern.charAt(0) === '*'
+        var endsWithWild = lowerPattern.charAt(lowerPattern.length - 1) === '*'
+        var core = lowerPattern
+        if (startsWithWild) core = core.substring(1)
+        if (endsWithWild) core = core.substring(0, core.length - 1)
+
+        if (startsWithWild && endsWithWild) {
+            return lowerName.indexOf(core) !== -1
+        } else if (startsWithWild) {
+            return lowerName.substring(lowerName.length - core.length) === core
+        } else if (endsWithWild) {
+            return lowerName.substring(0, core.length) === core
+        } else {
+            return lowerName === lowerPattern
+        }
+    }
+
+    // Check if a package name matches any pattern in a list
+    function matchesPatternList(packageName, patternList) {
+        if (!packageName || !patternList || patternList.length === 0) return false
+        for (var i = 0; i < patternList.length; i++) {
+            if (matchesPattern(packageName, patternList[i])) return true
+        }
+        return false
+    }
+
+    // Returns priority: 2 = critical, 1 = warning, 0 = normal
+    function getPackagePriority(packageName) {
+        if (matchesPatternList(packageName, criticalPackages)) return 2
+        if (matchesPatternList(packageName, warningPackages)) return 1
+        return 0
     }
     
     function getDefaultPalette() {
