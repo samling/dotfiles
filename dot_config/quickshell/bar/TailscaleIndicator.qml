@@ -36,7 +36,7 @@ MouseArea {
         readonly property int startX: (root.iconSize - gridSize) / 2
         readonly property int startY: (root.iconSize - gridSize) / 2
         
-        // Top row (all dots lit when connected, forming top of "T")
+        // Top row (all dots off when connected)
         Rectangle {
             id: dot1
             x: dotMatrix.startX
@@ -44,13 +44,13 @@ MouseArea {
             width: root.dotSize
             height: root.dotSize
             radius: root.dotSize / 2
-            color: root.connected ? root.connectedColor : root.disconnectedColor
-            opacity: root.connected ? 1.0 : 0.3
-            
+            color: root.disconnectedColor
+            opacity: 0.3
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
+
         Rectangle {
             id: dot2
             x: dotMatrix.startX + root.dotSize + root.dotSpacing
@@ -58,13 +58,13 @@ MouseArea {
             width: root.dotSize
             height: root.dotSize
             radius: root.dotSize / 2
-            color: root.connected ? root.connectedColor : root.disconnectedColor
-            opacity: root.connected ? 1.0 : 0.3
-            
+            color: root.disconnectedColor
+            opacity: 0.3
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
+
         Rectangle {
             id: dot3
             x: dotMatrix.startX + (root.dotSize + root.dotSpacing) * 2
@@ -72,14 +72,14 @@ MouseArea {
             width: root.dotSize
             height: root.dotSize
             radius: root.dotSize / 2
-            color: root.connected ? root.connectedColor : root.disconnectedColor
-            opacity: root.connected ? 1.0 : 0.3
-            
+            color: root.disconnectedColor
+            opacity: 0.3
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
-        // Middle row (only center dot lit when connected, forming stem of "T")
+
+        // Middle row (all dots lit when connected, forming top of "T")
         Rectangle {
             id: dot4
             x: dotMatrix.startX
@@ -87,13 +87,13 @@ MouseArea {
             width: root.dotSize
             height: root.dotSize
             radius: root.dotSize / 2
-            color: root.disconnectedColor
-            opacity: root.connected ? 0.3 : 0.3
-            
+            color: root.connected ? root.connectedColor : root.disconnectedColor
+            opacity: root.connected ? 1.0 : 0.3
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
+
         Rectangle {
             id: dot5
             x: dotMatrix.startX + root.dotSize + root.dotSpacing
@@ -103,11 +103,11 @@ MouseArea {
             radius: root.dotSize / 2
             color: root.connected ? root.connectedColor : root.disconnectedColor
             opacity: root.connected ? 1.0 : 0.3
-            
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
+
         Rectangle {
             id: dot6
             x: dotMatrix.startX + (root.dotSize + root.dotSpacing) * 2
@@ -115,13 +115,13 @@ MouseArea {
             width: root.dotSize
             height: root.dotSize
             radius: root.dotSize / 2
-            color: root.disconnectedColor
-            opacity: root.connected ? 0.3 : 0.3
-            
+            color: root.connected ? root.connectedColor : root.disconnectedColor
+            opacity: root.connected ? 1.0 : 0.3
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
+
         // Bottom row (only center dot lit when connected, forming stem of "T")
         Rectangle {
             id: dot7
@@ -131,12 +131,12 @@ MouseArea {
             height: root.dotSize
             radius: root.dotSize / 2
             color: root.disconnectedColor
-            opacity: root.connected ? 0.3 : 0.3
-            
+            opacity: 0.3
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
+
         Rectangle {
             id: dot8
             x: dotMatrix.startX + root.dotSize + root.dotSpacing
@@ -146,11 +146,11 @@ MouseArea {
             radius: root.dotSize / 2
             color: root.connected ? root.connectedColor : root.disconnectedColor
             opacity: root.connected ? 1.0 : 0.3
-            
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
-        
+
         Rectangle {
             id: dot9
             x: dotMatrix.startX + (root.dotSize + root.dotSpacing) * 2
@@ -159,8 +159,8 @@ MouseArea {
             height: root.dotSize
             radius: root.dotSize / 2
             color: root.disconnectedColor
-            opacity: root.connected ? 0.3 : 0.3
-            
+            opacity: 0.3
+
             Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
             Behavior on opacity { NumberAnimation { duration: Config.colorAnimationDuration } }
         }
@@ -175,16 +175,17 @@ MouseArea {
                 if (root.tailnetName) details += "\nIP: " + root.tailnetName
                 if (Tailscale.tailnetDomain) details += "\nDomain: " + Tailscale.tailnetDomain
                 
-                // Add connected peers
+                // Add peers list
                 if (Tailscale.connectedPeers && Tailscale.connectedPeers.length > 0) {
-                    details += "\n\nConnected Devices:"
+                    details += "\n\nDevices:"
                     for (let i = 0; i < Tailscale.connectedPeers.length; i++) {
                         const peer = Tailscale.connectedPeers[i]
-                        details += "\n• " + peer.hostname + " (" + peer.ip + ")"
+                        const status = peer.online ? "●" : "○"
+                        details += "\n" + status + " " + peer.hostname + " (" + peer.ip + ")"
                         if (peer.os) details += " [" + peer.os + "]"
                     }
                 } else {
-                    details += "\n\nNo other devices connected"
+                    details += "\n\nNo devices found"
                 }
                 
                 details += "\n\nClick to disconnect"

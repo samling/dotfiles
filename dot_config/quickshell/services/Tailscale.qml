@@ -47,21 +47,37 @@ Singleton {
                     // Extract tailnet domain
                     tailscale.tailnetDomain = statusData.MagicDNSSuffix || ""
                     
-                    // Extract connected peers
+                    // Extract all peers (online and offline)
                     let peers = []
                     if (statusData.Peer) {
                         for (let peerKey in statusData.Peer) {
                             const peer = statusData.Peer[peerKey]
-                            if (peer.Online) {
-                                const peerInfo = {
-                                    hostname: peer.HostName || "Unknown",
-                                    ip: peer.TailscaleIPs && peer.TailscaleIPs.length > 0 ? peer.TailscaleIPs[0] : "No IP",
-                                    os: peer.OS || ""
-                                }
-                                peers.push(peerInfo)
+                            // Use DNSName and strip the tailnet suffix for cleaner display
+                            let dnsName = peer.DNSName || peer.HostName || "Unknown"
+                            // Remove trailing dot and tailnet domain if present
+                            if (dnsName.endsWith(".")) {
+                                dnsName = dnsName.slice(0, -1)
                             }
+                            const domainSuffix = "." + (statusData.MagicDNSSuffix || "")
+                            if (domainSuffix.length > 1 && dnsName.endsWith(domainSuffix)) {
+                                dnsName = dnsName.slice(0, -domainSuffix.length)
+                            }
+
+                            const peerInfo = {
+                                hostname: dnsName,
+                                ip: peer.TailscaleIPs && peer.TailscaleIPs.length > 0 ? peer.TailscaleIPs[0] : "No IP",
+                                os: peer.OS || "",
+                                online: peer.Online || false,
+                                lastSeen: peer.LastSeen || ""
+                            }
+                            peers.push(peerInfo)
                         }
                     }
+                    // Sort: online devices first, then alphabetically
+                    peers.sort((a, b) => {
+                        if (a.online !== b.online) return b.online - a.online
+                        return a.hostname.localeCompare(b.hostname)
+                    })
                     tailscale.connectedPeers = peers
                     
                     tailscale.lastUpdateTime = Date.now()
