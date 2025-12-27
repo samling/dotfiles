@@ -9,7 +9,7 @@ snippets:
       - name: "namespace"
         description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
         type: "namespace"
-        transformTemplate: "k8s-namespace"
+        transform_template: "k8s-namespace"
       - name: "node_name"
         description: "Node name"
         required: true
@@ -32,7 +32,7 @@ snippets:
       - name: "namespace"
         description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
         type: "namespace"
-        transformTemplate: "k8s-namespace"
+        transform_template: "k8s-namespace"
     tags: ["kubernetes", "pods"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
@@ -85,7 +85,7 @@ snippets:
       - name: "namespace"
         description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
         type: "namespace"
-        transformTemplate: "k8s-namespace"
+        transform_template: "k8s-namespace"
     tags: ["kubernetes", "port-forward", "networking"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
@@ -102,7 +102,7 @@ snippets:
       - name: "namespace"
         description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
         type: "namespace"
-        transformTemplate: "k8s-namespace"
+        transform_template: "k8s-namespace"
       - name: "server"
         required: true
         description: "Server"

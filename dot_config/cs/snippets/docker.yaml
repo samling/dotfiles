@@ -79,7 +79,7 @@ snippets:
     variables:
       - name: "port_mapping"
         description: "Port mapping (empty for none)"
-        transformTemplate: "docker-port"
+        transform_template: "docker-port"
       - name: "image_name"
         description: "Docker image name"
         required: true

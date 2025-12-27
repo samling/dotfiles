@@ -19,12 +19,12 @@ input=$(cat)
 
 # Extract values using jq
 MODEL_DISPLAY=$(echo "$input" | jq -r '.model.display_name')
-CURRENT_DIR=$(echo "$input" | jq -r '.cwd')
+CURRENT_DIR=$(echo "$input" | jq -r '.cwd | split("/") | .[-1]')
 COST=$(echo "$input" | jq -r '.cost.total_cost_usd')
 
 # Extract context window info using current_usage (actual context state)
 CTX_SIZE=$(echo "$input" | jq -r '.context_window.context_window_size // 200000')
-USAGE=$(echo "$input" | jq '.context_window.current_usage')
+CTX_USED=$(echo "$input" | jq -r '((.context_window.current_usage.input_tokens // 0) + (.context_window.current_usage.cache_creation_input_tokens // 0) + (.context_window.current_usage.cache_read_input_tokens // 0)) | floor')
 
 # Choose color based on whether model has "1M" in the name
 if [[ "$MODEL_DISPLAY" =~ 1M ]]; then
@@ -33,17 +33,11 @@ else
     MODEL_COLOR="$REGULAR_COLOR"
 fi
 
-# Calculate context usage percentage from current_usage fields
-if [[ "$USAGE" != "null" ]]; then
-    CTX_USED=$(echo "$USAGE" | jq '(.input_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0)')
-else
-    CTX_USED=0
-fi
-
+# Calculate context usage percentage
 if [[ "$CTX_SIZE" -gt 0 && "$CTX_USED" -gt 0 ]]; then
-    CTX_PCT=$(echo "scale=1; $CTX_USED * 100 / $CTX_SIZE" | bc)
+    CTX_PCT=$(awk "BEGIN {printf \"%.1f\", $CTX_USED * 100 / $CTX_SIZE}")
 else
-    CTX_PCT="0"
+    CTX_PCT="0.0"
 fi
 
 # Choose context color based on usage percentage

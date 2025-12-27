@@ -94,12 +94,13 @@ MouseArea {
 
             let status = root.isCharging ? "Charging" : (root.isPluggedIn ? "Plugged in" : "Battery")
             let pct = Math.round(Battery.percentage * 100) + "%"
+            let wattage = Battery.energyRate > 0 ? Battery.energyRate.toFixed(1) + "W" : ""
 
-            if (Battery.timeString === "Time unknown") {
-                return status + ": " + pct
-            }
+            let lines = [status + ": " + pct]
+            if (wattage) lines.push(wattage)
+            if (Battery.timeString !== "Time unknown") lines.push(Battery.timeString)
 
-            return status + ": " + pct + "\n" + Battery.timeString
+            return lines.join("\n")
         }
     }
 }

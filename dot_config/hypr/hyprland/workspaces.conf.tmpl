@@ -16,12 +16,15 @@
   {{- range $monitor := $hostData.monitors }}
     {{- /* Check if workspaces array exists for this monitor */}}
     {{- if and (hasKey $monitor "workspaces") $monitor.workspaces }}
-      {{- $monitorDesc := $monitor.desc }}
+      {{- $monitorDesc := $monitor.name }}
+      {{- if hasKey $monitor "desc" }}{{ $monitorDesc = $monitor.desc }}{{ end }}
       {{- range $wsNum := $monitor.workspaces }}
 workspace = {{ $wsNum }},monitor:{{ $monitorDesc }}
       {{- end }} {{- /* End range workspaces */}}
     {{- else }}
-# Monitor "{{ $monitor.desc | default $monitor.name }}" does not have a 'workspaces' array definition.
+      {{- $monitorDesc := $monitor.name }}
+      {{- if hasKey $monitor "desc" }}{{ $monitorDesc = $monitor.desc }}{{ end }}
+# Monitor "{{ $monitorDesc }}" does not have a 'workspaces' array definition.
     {{- end }} {{- /* End if monitor has workspaces */}}
   {{- end }} {{- /* End range monitors */}}
 {{- else }}
