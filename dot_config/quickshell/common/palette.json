@@ -12,6 +12,7 @@
       "peach": "#fab387",
       "purple": "#cba6f7",
       "pink": "#f5c2e7",
+      "hotpink": "#d670bc",
       "teal": "#94e2d5",
       "sky": "#89dceb",
       "lavender": "#b4befe",
@@ -65,9 +66,11 @@
   },
   "semantic": {
     "workspace": {
-      "active": "primary.blue",
+      "active": "primary.lavender",
+      "activeSecondary": "primary.hotpink",
       "occupied": "background.surface",
-      "empty": "background.tertiary"
+      "empty": "background.tertiary",
+      "divider": "border.subtle"
     },
     "battery": {
       "charging": "state.success",
