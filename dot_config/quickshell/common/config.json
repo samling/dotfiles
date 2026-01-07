@@ -3,13 +3,15 @@
     "criticalPackages": [
       "glibc",
       "linux*",
-      "systemd"
+      "systemd",
+      "hyprland"
     ],
     "warningPackages": [
-      "hyprland",
+      "hypr*",
       "nvidia*",
       "pacman",
       "paru",
+      "uwsm",
       "yay"
     ]
   }
