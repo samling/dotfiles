@@ -6,7 +6,12 @@
 # See https://wiki.hyprland.org/Configuring/Workspace-Rules/ for workspace rules
 
 # Visually indicate when a window is fullscreen
-windowrule = bordercolor rgb(CBA6F7), fullscreen:1,
+windowrule {
+  name = windowrule-1
+  border_color = rgb(CBA6F7)
+  match:fullscreen = 1
+}
+
 
 # Ref https://wiki.hyprland.org/Configuring/Workspace-Rules/
 # "Smart gaps" / "No gaps when only"
@@ -16,70 +21,245 @@ workspace = w[tg1], gapsin:0, gapsout:0,border:0
 #workspace = f[1], gapsout:0, gapsin:0,border:1 # no gaps but add border when in fullscreen
 workspace = f[1], gapsout:0, gapsin:0,border:0 # no gaps or border when in fullscreen
 #windowrule = bordersize 2, floating:0, onworkspace:f[1] # add border when in fullscreen
-windowrule = bordersize 0, floating:0, onworkspace:f[1] # no border when in fullscreen
-windowrule = rounding 0, floating:0, onworkspace:f[1] # no rounding when in fullscreen
+windowrule {
+  name = windowrule-2
+  border_size = 0
+  match:float = 0
+  match:workspace = f[1] # no border when in fullscreen
+}
+
+windowrule {
+  name = windowrule-3
+  rounding = 0
+  match:float = 0
+  match:workspace = f[1] # no rounding when in fullscreen
+}
+
 
 # Only enable hyprbars on floating windows
-windowrule = plugin:hyprbars:nobar, floating:0
+#windowrule {
+#  name = windowrule-4
+#  #match:plugin = hyprbars:nobar
+#  match:float = 0
+#}
+
 
 # Ignore maximize requests from apps. You'll probably like this.
-windowrule = suppressevent maximize, class:.*
+windowrule {
+  name = windowrule-5
+  suppress_event = maximize
+  match:class = .*
+}
+
 
 # Fix some dragging issues with XWayland
-windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+windowrule {
+  name = windowrule-6
+  no_focus = on
+  match:class = ^$
+  match:title = ^$
+  match:xwayland = 1
+  match:float = 1
+  match:fullscreen = 0
+  match:pin = 0
+}
+
 
 # Highlight pinned windows
-windowrule = bordercolor rgb(DF8E1D), pinned:1,
+windowrule {
+  name = windowrule-7
+  border_color = rgb(DF8E1D)
+  match:pin = 1
+}
+
 
 # Configure floating pacman/yay update window
-windowrule = float, class:wezterm-yay-update
-windowrule = size 800 600, class:wezterm-yay-update
-windowrule = center, class:wezterm-yay-update
-windowrule = bordercolor rgb(a6e3a1), class:wezterm-yay-update
-windowrule = bordersize 2, class:wezterm-yay-update
+windowrule {
+  name = windowrule-8
+  float = on
+  size = 800 600
+  center = on
+  border_color = rgb(a6e3a1)
+  border_size = 2
+  match:class = wezterm-yay-update
+}
+
 
 # Configure floating clipse window
-windowrule = plugin:hyprbars:nobar,class:(clipse) # disable hyprbars for clipse
-windowrule = float,class:(clipse) # ensure you have a floating window class set if you want this behavior
-windowrule = center,class:(clipse) # ensure you have a floating window class set if you want this behavior
-windowrule = size 622 652,class:(clipse) # set the size of the window as necessary
-windowrule = size 600 800,title:(Clipse GUI)
-windowrule = center, title:(Clipse GUI)
-windowrule = float, title:(Clipse GUI)
+windowrule {
+  name = windowrule-9
+  #match:plugin = hyprbars:nobar
+  match:class = (clipse) # disable hyprbars for clipse
+}
+
+windowrule {
+  name = windowrule-10
+  float = on
+  center = on
+  match:class = (clipse) # ensure you have a floating window class set if you want this behavior
+}
+
+windowrule {
+  name = windowrule-11
+  size = 622 652
+  match:class = (clipse) # set the size of the window as necessary
+}
+
+windowrule {
+  name = windowrule-12
+  size = 600 800
+  center = on
+  float = on
+  match:title = (Clipse GUI)
+}
+
 
 # Configure live caption floating window
 #windowrule = float,title:(Live Caption)
 
 # Configure blueman-manager
-windowrule = float,class:(blueman-manager)
-windowrule = size 600 300,class:(blueman-manager)
-windowrule = move 100%-w-10 5%,class:(blueman-manager)
+windowrule {
+  name = windowrule-13
+  float = on
+  size = 600 300
+  move = ((monitor_w*1)-window_w-10) ((monitor_h*0.05))
+  match:class = (blueman-manager)
+}
+
 
 # Configure pavucontrol
-windowrule = float,class:(org.pulseaudio.pavucontrol)
-windowrule = size 600 300,class:(org.pulseaudio.pavucontrol)
-windowrule = move 100%-w-10 5%,class:(org.pulseaudio.pavucontrol)
+windowrule {
+  name = windowrule-14
+  float = on
+  size = 600 300
+  move = ((monitor_w*1)-window_w-10) ((monitor_h*0.05))
+  match:class = (org.pulseaudio.pavucontrol)
+}
+
 
 # Force popups for some applications to center
-windowrule = center,class:(Cursor)
+windowrule {
+  name = windowrule-15
+  center = on
+  match:class = (Cursor)
+}
+
 
 # Always start certain applications as floats
-windowrule = float,title:(Bitwarden),initialClass:(chrome-.*)
-windowrule = float,title:(Bitwarden),class:(chrome-.*)
-windowrule = float,initialTitle:(_crx_.*)
-windowrule = float,class:(com.github.hluk.copyq)
-windowrule = float,class:(copyq)
-windowrule = float,class:(feh)
-windowrule = float,class:(gnome-power-statistics)
-windowrule = float,class:(insync)
-windowrule = float,class:(localsend)
-windowrule = float,class:(mpv)
-windowrule = float,class:(nm-connection-editor)
-windowrule = float,class:(nm-openconnect-auth-dialog)
-windowrule = float,class:(nwg-look)
-windowrule = float,class:(org.gnome.*)
-windowrule = float,class:(org.kde.dolphin)
-windowrule = float,title:(Picture in picture)
-windowrule = float,class:(piper)
-windowrule = float,class:(thunar)
-windowrule = float,class:(xdg-desktop-portal-gtk)
+windowrule {
+  name = windowrule-16
+  float = on
+  match:title = (Bitwarden)
+  match:initial_class = (chrome-.*)
+}
+
+windowrule {
+  name = windowrule-17
+  float = on
+  match:title = (Bitwarden)
+  match:class = (chrome-.*)
+}
+
+windowrule {
+  name = windowrule-18
+  float = on
+  match:initial_title = (_crx_.*)
+}
+
+windowrule {
+  name = windowrule-19
+  float = on
+  match:class = (com.github.hluk.copyq)
+}
+
+windowrule {
+  name = windowrule-20
+  float = on
+  match:class = (copyq)
+}
+
+windowrule {
+  name = windowrule-21
+  float = on
+  match:class = (feh)
+}
+
+windowrule {
+  name = windowrule-22
+  float = on
+  match:class = (gnome-power-statistics)
+}
+
+windowrule {
+  name = windowrule-23
+  float = on
+  match:class = (insync)
+}
+
+windowrule {
+  name = windowrule-24
+  float = on
+  match:class = (localsend)
+}
+
+windowrule {
+  name = windowrule-25
+  float = on
+  match:class = (mpv)
+}
+
+windowrule {
+  name = windowrule-26
+  float = on
+  match:class = (nm-connection-editor)
+}
+
+windowrule {
+  name = windowrule-27
+  float = on
+  match:class = (nm-openconnect-auth-dialog)
+}
+
+windowrule {
+  name = windowrule-28
+  float = on
+  match:class = (nwg-look)
+}
+
+windowrule {
+  name = windowrule-29
+  float = on
+  match:class = (org.gnome.*)
+}
+
+windowrule {
+  name = windowrule-30
+  float = on
+  match:class = (org.kde.dolphin)
+}
+
+windowrule {
+  name = windowrule-31
+  float = on
+  match:title = (Picture in picture)
+}
+
+windowrule {
+  name = windowrule-32
+  float = on
+  match:class = (piper)
+}
+
+windowrule {
+  name = windowrule-33
+  float = on
+  match:class = (thunar)
+}
+
+windowrule {
+  name = windowrule-34
+  float = on
+  match:class = (xdg-desktop-portal-gtk)
+}
+
+
