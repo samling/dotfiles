@@ -262,4 +262,10 @@ windowrule {
   match:class = (xdg-desktop-portal-gtk)
 }
 
-
+windowrule {
+  name = chrome-notifications
+  float = on
+  match:class = ()
+  match:title = ()
+  move = ((monitor_w*1)-window_w-10) ((monitor_h*0.05))
+}
