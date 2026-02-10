@@ -253,3 +253,10 @@ s() {
   rm -f "$temp_config"
 }
 
+function bd() {
+  printf '%s' "$1" | base64 -d
+}
+
+function be() {
+  printf '%s' "$1" | base64
+}

@@ -54,6 +54,10 @@ prompt pure
 #=== starship prompt
 #eval "$(starship init zsh)"
 
+#=== talos
+source <(talosctl completion zsh)
+source <(talhelper completion zsh)
+
 #=== uv
 eval "$(uv generate-shell-completion zsh)"
 
