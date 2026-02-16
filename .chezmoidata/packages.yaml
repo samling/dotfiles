@@ -401,6 +401,8 @@ packages:
       pacman: tumbler
     perl-file-mimeinfo:
       pacman: perl-file-mimeinfo
+    restic:
+      pacman: restic
 
   # Fonts
   fonts:
