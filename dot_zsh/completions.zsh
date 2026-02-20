@@ -12,6 +12,9 @@ for dump in ~/.zcompdump(N.mh+24);do
   compinit
 done
 
+#=== asdf
+command -v asdf >/dev/null && source <(asdf completion zsh)
+
 #=== colima
 command -v colima >/dev/null && source <(colima completion zsh)
 
@@ -33,6 +36,9 @@ eval "$(fzf --zsh)"
 
 #=== kubectl
 source <(kubectl completion zsh)
+
+#=== plz
+source <(plz --completion_script)
 
 #=== pure prompt
 prompt pure

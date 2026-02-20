@@ -14,8 +14,11 @@ PATH=$PATH:/sbin
 
 # Local paths (put first in order to take precedence)
 #
-PATH=$PATH:${HOME}/.local/usr/bin
-PATH=$PATH:${HOME}/.local/bin
+PATH=${HOME}/.local/usr/bin:${PATH}
+PATH=${HOME}/.local/bin:${PATH}
+
+#=== asdf
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 #=== XDG
 export XDG_DATA_DIRS=/usr/share:/usr/local/share:$XDG_DATA_DIRS

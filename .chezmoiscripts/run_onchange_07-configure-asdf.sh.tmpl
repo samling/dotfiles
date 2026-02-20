@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+{{- $osID := .system.os_type }}
+
+echo "Configuring asdf for {{ $osID }}..."
+
+# Check if asdf is already installed
+if ! command -v asdf &> /dev/null; then
+    echo "Installing asdf..."
+    yay -Syy asdf-vm
+else
+    echo "asdf is already installed"
+fi
+
+# Verify asdf is now available
+if ! command -v asdf &> /dev/null; then
+    echo "Error: asdf installation failed or not found in PATH"
+    echo "Trying alternative paths..."
+else
+    ASDF_PATH="asdf"
+fi
+
+# Enable plugins
+asdf plugin add golang
+
+# List plugins
+asdf plugin list
+
+# Install plugins
+echo "Installing asdf plugins"
+$ASDF_PATH install
