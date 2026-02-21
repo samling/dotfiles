@@ -366,6 +366,9 @@ packages:
     btop:
       pacman: btop
       brew: btop
+    htop:
+      pacman: htop
+      brew: htop
     duf:
       pacman: duf
       brew: duf
