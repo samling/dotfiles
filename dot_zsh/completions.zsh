@@ -19,26 +19,24 @@ command -v asdf >/dev/null && source <(asdf completion zsh)
 command -v colima >/dev/null && source <(colima completion zsh)
 
 #=== direnv
-eval "$(direnv hook zsh)"
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
 #=== flux
 command -v flux >/dev/null && source <(flux completion zsh)
 
 #=== fx
-if [[ -x $(command -v fx) ]]; then
-  source <(fx --comp zsh)
-fi
+command -v fx >/dev/null && source <(fx --comp zsh)
 
 #=== fzf
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #source "$(fzf --zsh)"
-eval "$(fzf --zsh)"
+command -v fzf >/dev/null && eval "$(fzf --zsh)"
 
 #=== kubectl
-source <(kubectl completion zsh)
+command -v kubectl >/dev/null && source <(kubectl completion zsh)
 
 #=== plz
-source <(plz --completion_script)
+command -v plz >/dev/null && source <(plz --completion_script)
 
 #=== pure prompt
 prompt pure
@@ -61,14 +59,14 @@ prompt pure
 #eval "$(starship init zsh)"
 
 #=== talos
-source <(talosctl completion zsh)
-source <(talhelper completion zsh)
+command -v talosctl >/dev/null && source <(talosctl completion zsh)
+command -v talhelper >/dev/null && source <(talhelper completion zsh)
 
 #=== uv
-eval "$(uv generate-shell-completion zsh)"
+command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 
 #=== zellij
-source <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
+command -v zellij >/dev/null && source <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
 
 #=== zoxide
-eval "$(zoxide init zsh --cmd cd)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"

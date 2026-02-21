@@ -27,5 +27,26 @@ asdf plugin add golang
 asdf plugin list
 
 # Install plugins
-echo "Installing asdf plugins"
-$ASDF_PATH install
+LATEST_GO_1_24=$(asdf list all golang | grep 1.24 | grep -v rc | tail -n -1)
+LATEST_GO_1_25=$(asdf list all golang | grep 1.25 | grep -v rc | tail -n -1)
+LATEST_GO=$(asdf list all golang | grep -v rc | sed '/^[[:space:]]*$/d' | tail -n -1)
+
+echo "Installing Go ${LATEST_GO_1_24}"
+echo "========================="
+$ASDF_PATH install golang ${LATEST_GO_1_24}
+echo ""
+
+echo "Installing Go ${LATEST_GO_1_25}"
+echo "========================="
+$ASDF_PATH install golang ${LATEST_GO_1_25}
+echo ""
+
+echo "Installing Go ${LATEST_GO}"
+echo "========================="
+$ASDF_PATH install golang ${LATEST_GO}
+echo ""
+
+# Use latest
+echo "Setting latest Go version ${LATEST_GO} as global default"
+$ASDF_PATH set --home golang latest
+echo ""
