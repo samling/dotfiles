@@ -7,7 +7,7 @@ echo "Configuring asdf for {{ $osID }}..."
 # Check if asdf is already installed
 if ! command -v asdf &> /dev/null; then
     echo "Installing asdf..."
-    yay -Syy asdf-vm
+    yay -Syy --noconfirm asdf-vm
 else
     echo "asdf is already installed"
 fi
