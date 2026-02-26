@@ -98,56 +98,58 @@ packages:
     bat:
       pacman: bat
       brew: bat
+    direnv:
+      pacman: direnv
+      brew: direnv
+      apt: direnv
+    doppler:
+      yay: doppler-cli-bin
     eza:
       pacman: eza
       brew: eza
-    lsd:
-      pacman: lsd
-      brew: lsd
-    tree:
-      pacman: tree
-    fzf:
-      pacman: fzf
-      brew: fzf
-      apt: fzf
-    ripgrep:
-      pacman: ripgrep
-      brew: rg
     fd:
       pacman: fd
       brew: fd
     fx:
       pacman: fx
-    jq:
-      pacman: jq
-      brew: jq
-      apt: jq
+    fzf:
+      pacman: fzf
+      brew: fzf
+      apt: fzf
     go-yq:
       pacman: go-yq
       brew: yq
+    glow:
+      pacman: glow
+    grc:
+      pacman: grc
+      brew: grc
     gron:
       pacman: gron
     jc:
       pacman: jc
       brew: jc
-    zoxide:
-      pacman: zoxide
-      brew: zoxide
-    grc:
-      pacman: grc
-      brew: grc
-    direnv:
-      pacman: direnv
-      brew: direnv
-      apt: direnv
+    jq:
+      pacman: jq
+      brew: jq
+      apt: jq
+    lsd:
+      pacman: lsd
+      brew: lsd
     pet:
       yay: pet-git
     rename:
       brew: rename
+    ripgrep:
+      pacman: ripgrep
+      brew: rg
     tealdeer:
       brew: tealdeer
-    doppler:
-      yay: doppler-cli-bin
+    tree:
+      pacman: tree
+    zoxide:
+      pacman: zoxide
+      brew: zoxide
 
   # Development tools and languages
   development:
