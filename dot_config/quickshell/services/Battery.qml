@@ -16,7 +16,7 @@ Singleton {
     property real timeToFull: UPower.displayDevice.timeToFull || 0
 
     // Power draw in watts
-    property real energyRate: UPower.displayDevice.energyRate || 0
+    property real energyRate: UPower.displayDevice.changeRate || 0
     
     // Helper function to format time
     function formatTime(seconds) {
