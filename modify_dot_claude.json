@@ -18,8 +18,9 @@
         )
     )
     "serena" (dict
-        "type" "http"
-        "url" "http://localhost:9121/mcp"
+        "type" "stdio"
+        "command" "uvx"
+        "args" (list "--from" "git+https://github.com/oraios/serena" "serena" "start-mcp-server" "--context=claude-code" "--project-from-cwd")
     )
     "sequential-thinking" (dict
         "type" "stdio"
@@ -33,6 +34,11 @@
         "env" (dict
             "PERPLEXITY_API_KEY" $perplexityApiKey
         )
+    )
+    "slop-guard" (dict
+      "type" "stdio"
+      "command" "uvx"
+      "args" (list "slop-guard")
     )
 -}}
 
