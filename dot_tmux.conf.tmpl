@@ -208,6 +208,11 @@ bind-key -T copy-mode-vi 'C-Space' select-pane -t:.+\; refresh-client -S
 bind -n C-n next-window
 bind -n C-p previous-window
 
+# Make shift-enter work
+bind-key -n S-Enter send-keys Escape "[13;2u"
+set -s extended-keys on
+set -as terminal-features "tmux-256color:extkeys"
+
 #############
 ### PANES ###
 #############
