@@ -30,11 +30,11 @@ chezmoi managed             # View managed files
 
 ### Installation
 
-1. Copy `.envrc.example` to `.envrc`
-1. Add `GITHUB_TOKEN`
-1. Enable direnv with `eval "$(direnv hook bash)"
-1. `direnv allow`
 1. `doppler login`
+1. `doppler setup`
+1. `doppler secrets substitute ./.envrc.tmpl > .envrc`
+1. Enable direnv with `eval "$(direnv hook bash)"`
+1. `direnv allow`
 1. `chezmoi init`
 1. `chezmoi apply {--refresh-externals}`
 
