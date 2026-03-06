@@ -2,10 +2,11 @@
 ### MONITORS ###
 ################
 
-{{- if and (eq .chezmoi.fqdnHostname "endeavor") (hasKey .host "endeavor") }}
+{{- $hostname := .chezmoi.fqdnHostname -}}
+{{- if and (hasKey .host $hostname) (hasKey (index .host $hostname) "monitors") }}
 # See https://wiki.hyprland.org/Configuring/Monitors/
-{{- range $index, $monitor := .host.endeavor.monitors }}
-monitor={{ $monitor.desc }},{{ $monitor.resolution }},{{ $monitor.position }},{{ $monitor.scale }}{{ if $monitor.translation }},{{ $monitor.translation }}{{ end }}
+{{- range $index, $monitor := (index .host $hostname).monitors }}
+monitor={{ $monitor.desc | default ",preferred" }},{{ $monitor.resolution | default "preferred" }},{{ $monitor.position | default "auto" }},{{ $monitor.scale | default "1" }}{{ if $monitor.translation }},{{ $monitor.translation }}{{ end }}
 {{- end }}
 {{- else }}
 monitor=,preferred,auto,1
