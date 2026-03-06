@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -e
+
+# cm-rerun source hash: {{ include "dot_local/src/cm-rerun/main.go" | sha256sum }}
+
+echo "Building cm-rerun..."
+
+if ! command -v go &> /dev/null; then
+    echo "Go is required to build cm-rerun. Skipping."
+    exit 0
+fi
+
+# Build from chezmoi source since target files may not be synced yet
+SRC="{{ .chezmoi.sourceDir }}/dot_local/src/cm-rerun"
+cd "$SRC" && go build -o ~/.local/bin/cm-rerun .
+echo "cm-rerun installed."
