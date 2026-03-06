@@ -6,6 +6,7 @@ local config = wezterm.config_builder()
 -- windows
 --
 {{ if eq .chezmoi.os "windows"}}
+local base_font_size = 10.5
 config.animation_fps = 255
 config.wsl_domains = {
     {
@@ -17,16 +18,15 @@ config.wsl_domains = {
 config.front_end = 'WebGpu' -- WebGpu or OpenGL
 config.default_domain = "WSL:Ubuntu"
 config.font = wezterm.font('Iosevka', { weight = 'Regular', stretch = 'Normal' })
-config.font_size = 10.5
 {{ end }}
 
 --
 -- macos
 --
 {{ if eq .chezmoi.os "darwin" }}
+local base_font_size = 16
 config.animation_fps = 120
 config.font = wezterm.font_with_fallback {'Iosevka', 'Iosevka Nerd Font Propo'}
-config.font_size = 16
 config.window_decorations = "RESIZE"
 {{ end }}
 
@@ -34,11 +34,13 @@ config.window_decorations = "RESIZE"
 -- linux
 --
 {{ if eq .chezmoi.os "linux" }}
+local base_font_size = 12
 config.animation_fps = 120
 config.font = wezterm.font 'Iosevka'
 -- config.font = wezterm.font_with_fallback {'Iosevka', 'Iosevka Nerd Font Propo'}
-config.font_size = 12
 {{ end }}
+
+config.font_size = base_font_size
 
 -- enabling kitty keyboard fixes certain keybindings on windows and linux
 {{ if ne .chezmoi.os "darwin" }}
@@ -107,5 +109,16 @@ config.keys = {
   },
   {{ end }}
 }
+
+-- Scale font size on high-DPI displays
+wezterm.on('window-config-reloaded', function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+  local dpi = window:get_dimensions().dpi
+  local target_size = base_font_size * (dpi / 96)
+  if overrides.font_size ~= target_size then
+    overrides.font_size = target_size
+    window:set_config_overrides(overrides)
+  end
+end)
 
 return config
