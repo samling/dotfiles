@@ -6,7 +6,7 @@
 {{- if and (hasKey .host $hostname) (hasKey (index .host $hostname) "monitors") }}
 # See https://wiki.hyprland.org/Configuring/Monitors/
 {{- range $index, $monitor := (index .host $hostname).monitors }}
-monitor={{ if hasKey $monitor "desc" }}{{ $monitor.desc }}{{ else }},preferred{{ end }},{{ if hasKey $monitor "resolution" }}{{ $monitor.resolution }}{{ else }}preferred{{ end }},{{ if hasKey $monitor "position" }}{{ $monitor.position }}{{ else }}auto{{ end }},{{ if hasKey $monitor "scale" }}{{ $monitor.scale }}{{ else }}1{{ end }}{{ if and (hasKey $monitor "translation") $monitor.translation }},{{ $monitor.translation }}{{ end }}
+monitor={{ if hasKey $monitor "desc" }}{{ $monitor.desc }}{{ end }},{{ if hasKey $monitor "resolution" }}{{ $monitor.resolution }}{{ else }}preferred{{ end }},{{ if hasKey $monitor "position" }}{{ $monitor.position }}{{ else }}auto{{ end }},{{ if hasKey $monitor "scale" }}{{ $monitor.scale }}{{ else }}1{{ end }}{{ if and (hasKey $monitor "translation") $monitor.translation }},{{ $monitor.translation }}{{ end }}
 {{- end }}
 {{- else }}
 monitor=,preferred,auto,1
