@@ -111,9 +111,12 @@ config.keys = {
 }
 
 {{- $hostname := .chezmoi.hostname -}}
-{{- if and (hasKey .host $hostname) (hasKey (index .host $hostname) "wezterm") (hasKey (index .host $hostname).wezterm "font_size") }}
--- Host override for font size
-config.font_size = {{ (index .host $hostname).wezterm.font_size }}
+{{- $weztermCfg := dict -}}
+{{- if and (hasKey . "host") (hasKey .host $hostname) (hasKey (index .host $hostname) "appconfig") (hasKey (index .host $hostname).appconfig "wezterm") -}}
+{{-   $weztermCfg = (index .host $hostname).appconfig.wezterm -}}
+{{- end -}}
+{{- if hasKey $weztermCfg "font_size" }}
+config.font_size = {{ $weztermCfg.font_size }}
 {{- else }}
 -- Scale font size based on screen resolution
 wezterm.on('window-config-reloaded', function(window, pane)
