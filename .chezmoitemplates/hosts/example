@@ -53,3 +53,7 @@
   monitors = [
     { name = "dummy", primary = true, workspaces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
   ]
+
+  # Per-app configuration overrides
+  # [data.host.example.appconfig]
+  # wezterm = { font_size = 21 }
