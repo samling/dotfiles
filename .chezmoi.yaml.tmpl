@@ -1,0 +1,18 @@
+{{- $chassisType := includeTemplate "chassis" . -}}
+diff:
+  command: delta
+  #exclude: scripts
+
+data:
+  chassis:
+    type: "{{ $chassisType }}"
+  calculated: {}
+  system:
+    os_type: "{{ includeTemplate "osID" . }}"
+    primaryMonitor:
+      name: "{{ includeTemplate "primaryMonitor" . }}"
+{{- $hostTemplate := joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" .chezmoi.hostname }}
+{{- if stat $hostTemplate }}
+  host:
+{{ includeTemplate $hostTemplate . | indent 4 }}
+{{- end }}

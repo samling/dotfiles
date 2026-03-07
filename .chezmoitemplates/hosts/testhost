@@ -1,8 +1,10 @@
-[data.host.testhost]
-  chassis_type = "desktop"
+testhost:
+  chassis_type: desktop
 
-  [data.host.testhost.appconfig]
-  wezterm = { font_size = 21 }
+  appconfig:
+    wezterm:
+      font_size: 21
 
-  [data.host.testhost.packageGroups]
-  enabled = ["core"]
+  packageGroups:
+    enabled:
+      - core
