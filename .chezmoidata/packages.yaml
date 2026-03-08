@@ -606,6 +606,10 @@ packages:
       pacman: blueman
     bluez-utils:
       pacman: bluez-utils
+    cpupower:
+      pacman: cpupower
+    cpupower-gui:
+      yay: cpupower-gui-git
 
   # GUI frameworks (for those building desktop apps)
   gui_framework:

@@ -11,11 +11,8 @@ PATH=$PATH:/usr/bin
 PATH=$PATH:/bin
 PATH=$PATH:/usr/sbin
 PATH=$PATH:/sbin
-
-# Local paths (put first in order to take precedence)
-#
-PATH=${HOME}/.local/usr/bin:${PATH}
-PATH=${HOME}/.local/bin:${PATH}
+PATH=$PATH:${HOME}/.local/usr/bin
+PATH=$PATH:${HOME}/.local/bin
 
 #=== asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
