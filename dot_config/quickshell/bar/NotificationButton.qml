@@ -11,17 +11,12 @@ MouseArea {
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
 
-    property int indicatorWidth: 48
-    property int indicatorHeight: Config.barHeight - 16
-    property int borderRadius: 4
-    property int borderWidth: 1
-
     property color primaryColor: root.hasNotifications
         ? Config.getColor("primary.mauve")
         : Config.getColor("text.muted")
 
-    implicitWidth: indicatorWidth
-    implicitHeight: indicatorHeight
+    implicitWidth: notifRow.implicitWidth + 8
+    implicitHeight: parent ? parent.height : Config.barHeight
     hoverEnabled: true
 
     // Toggle notification list popup
@@ -32,68 +27,32 @@ MouseArea {
         GlobalStates.sidebarRightOpen = root.listOpen
     }
 
-    // Main container with border
-    Rectangle {
-        id: container
+    RowLayout {
+        id: notifRow
         anchors.centerIn: parent
-        width: root.indicatorWidth
-        height: root.indicatorHeight
-        radius: root.borderRadius
-        color: "transparent"
-        border.color: root.primaryColor
-        border.width: root.borderWidth
+        spacing: 2
 
-        Behavior on border.color {
-            ColorAnimation { duration: Config.colorAnimationDuration }
-        }
-
-        // Subtle fill when has notifications
-        Rectangle {
-            id: fillBar
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
-                right: parent.right
-                margins: root.borderWidth + 1
-            }
-            radius: Math.max(0, root.borderRadius - 2)
-            color: root.hasNotifications
-                ? Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.2)
-                : "transparent"
+        // Bell icon
+        Text {
+            text: "🔔"
+            color: root.primaryColor
+            font.pixelSize: 11
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
 
-        // Content layout
-        RowLayout {
-            anchors.centerIn: parent
-            spacing: 2
+        // Count
+        Text {
+            text: root.notificationCount > 99 ? "99" : root.notificationCount.toString()
+            color: root.primaryColor
+            font.pixelSize: 11
+            font.weight: Font.DemiBold
+            font.family: "monospace"
 
-            // Bell icon
-            Text {
-                text: "🔔"
-                color: root.primaryColor
-                font.pixelSize: 11
-
-                Behavior on color {
-                    ColorAnimation { duration: Config.colorAnimationDuration }
-                }
-            }
-
-            // Count
-            Text {
-                text: root.notificationCount > 99 ? "99" : root.notificationCount.toString()
-                color: root.primaryColor
-                font.pixelSize: 11
-                font.weight: Font.DemiBold
-                font.family: "monospace"
-
-                Behavior on color {
-                    ColorAnimation { duration: Config.colorAnimationDuration }
-                }
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
     }

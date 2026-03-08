@@ -54,14 +54,9 @@ Item {
         }
         spacing: Config.barContentSpacing
 
-        BarGroup {
-            id: middleGroupContent
+        ClockWidget {
+            id: clockWidget
             Layout.fillHeight: true
-
-            ClockWidget {
-                id: clockWidget
-                Layout.fillHeight: true
-            }
         }
     }
 
@@ -76,65 +71,44 @@ Item {
         }
         spacing: Config.barContentSpacing
 
-        BarGroup {
-            id: rightGroupContent
+        SysTray {
+            id: sysTrayWidget
             Layout.fillHeight: true
-            Layout.fillWidth: false
+        }
 
-            SysTray {
-                id: sysTrayWidget
-                Layout.fillHeight: true
-            }
+        TailscaleIndicator {
+            id: tailscaleWidget
+            Layout.fillHeight: true
+        }
 
-            Item { width: 6; height: 1 }
+        CpuIndicator {
+            id: cpuWidget
+            Layout.fillHeight: true
+        }
 
-            TailscaleIndicator {
-                id: tailscaleWidget
-                Layout.fillHeight: true
-            }
+        MemoryIndicator {
+            id: memoryWidget
+            Layout.fillHeight: true
+        }
 
-            Item { width: 6; height: 1 }
+        DiskIndicator {
+            id: diskWidget
+            Layout.fillHeight: true
+        }
 
-            CpuIndicator {
-                id: cpuWidget
-                Layout.fillHeight: true
-            }
+        BatteryIndicator {
+            id: batteryWidget
+            Layout.fillHeight: true
+        }
 
-            Item { width: 6; height: 1 }
+        Updates {
+            id: updatesWidget
+            Layout.fillHeight: true
+        }
 
-            MemoryIndicator {
-                id: memoryWidget
-                Layout.fillHeight: true
-            }
-
-            Item { width: 6; height: 1 }
-
-            DiskIndicator {
-                id: diskWidget
-                Layout.fillHeight: true
-            }
-
-            Item { width: 6; height: 1 }
-
-            BatteryIndicator {
-                id: batteryWidget
-                Layout.fillHeight: true
-            }
-
-            Item { width: 6; height: 1 }
-
-            Updates {
-                id: updatesWidget
-                Layout.fillHeight: true
-            }
-
-            Item { width: 6; height: 1 }
-
-            NotificationButton {
-                id: notificationButton
-                Layout.fillHeight: true
-            }
-
+        NotificationButton {
+            id: notificationButton
+            Layout.fillHeight: true
         }
     }
 

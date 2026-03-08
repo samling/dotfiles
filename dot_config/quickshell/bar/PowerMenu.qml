@@ -6,15 +6,10 @@ import Quickshell
 MouseArea {
     id: root
 
-    property int containerWidth: 42
-    property int containerHeight: Config.barHeight - 16
-    property int borderRadius: 4
-    property int borderWidth: 1
-
     property color primaryColor: Config.getColor("primary.blue")
 
-    implicitWidth: containerWidth
-    implicitHeight: containerHeight
+    implicitWidth: logoText.implicitWidth + 12
+    implicitHeight: parent ? parent.height : Config.barHeight
     hoverEnabled: true
 
     // Toggle menu popup
@@ -24,53 +19,21 @@ MouseArea {
         root.menuOpen = !root.menuOpen
     }
 
-    // Main container with border
-    Rectangle {
-        id: container
+    // Arch Linux logo
+    Text {
+        id: logoText
         anchors.centerIn: parent
-        width: root.containerWidth
-        height: root.containerHeight
-        radius: root.borderRadius
-        color: "transparent"
-        border.color: root.primaryColor
-        border.width: root.borderWidth
+        color: root.containsMouse
+            ? Qt.lighter(root.primaryColor, 1.3)
+            : root.primaryColor
+        font.pixelSize: 16
+        font.weight: Font.Bold
+        font.family: "FiraCode Nerd Font Propo"
+        textFormat: Text.PlainText
+        text: "\uf303"
 
-        Behavior on border.color {
+        Behavior on color {
             ColorAnimation { duration: Config.colorAnimationDuration }
-        }
-
-        // Subtle fill
-        Rectangle {
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
-                right: parent.right
-                margins: root.borderWidth + 1
-            }
-            radius: Math.max(0, root.borderRadius - 2)
-            color: root.containsMouse
-                ? Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.25)
-                : Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.1)
-
-            Behavior on color {
-                ColorAnimation { duration: Config.colorAnimationDuration }
-            }
-        }
-
-        // Arch Linux logo
-        Text {
-            anchors.centerIn: parent
-            color: root.primaryColor
-            font.pixelSize: 18
-            font.weight: Font.Bold
-            font.family: "FiraCode Nerd Font Propo"
-            textFormat: Text.PlainText
-            text: "\uf303"
-
-            Behavior on color {
-                ColorAnimation { duration: Config.colorAnimationDuration }
-            }
         }
     }
 

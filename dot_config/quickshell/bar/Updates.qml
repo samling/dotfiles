@@ -37,19 +37,14 @@ MouseArea {
         })
     }
 
-    property int indicatorWidth: 48
-    property int indicatorHeight: Config.barHeight - 16
-    property int borderRadius: 4
-    property int borderWidth: 1
-
     property color primaryColor: {
         if (root.isLoading) return Config.getColor("primary.blue")
         if (root.hasUpdates) return Config.getColor("primary.teal")
         return Config.getColor("text.muted")
     }
 
-    implicitWidth: indicatorWidth
-    implicitHeight: indicatorHeight
+    implicitWidth: updatesRow.implicitWidth + 8
+    implicitHeight: parent ? parent.height : Config.barHeight
     hoverEnabled: true
     acceptedButtons: Qt.LeftButton | Qt.RightButton
 
@@ -61,92 +56,56 @@ MouseArea {
         }
     }
 
-    // Main container with border
-    Rectangle {
-        id: container
+    RowLayout {
+        id: updatesRow
         anchors.centerIn: parent
-        width: root.indicatorWidth
-        height: root.indicatorHeight
-        radius: root.borderRadius
-        color: "transparent"
-        border.color: root.primaryColor
-        border.width: root.borderWidth
+        spacing: 2
 
-        Behavior on border.color {
-            ColorAnimation { duration: Config.colorAnimationDuration }
-        }
-
-        // Subtle fill when has updates
-        Rectangle {
-            id: fillBar
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
-                right: parent.right
-                margins: root.borderWidth + 1
-            }
-            radius: Math.max(0, root.borderRadius - 2)
-            color: root.hasUpdates
-                ? Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.2)
-                : "transparent"
+        // Arrow icon (static) - shown when not loading
+        Text {
+            visible: !root.isLoading
+            text: "⬆"
+            color: root.primaryColor
+            font.pixelSize: 11
+            font.weight: Font.Bold
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
 
-        // Content layout
-        RowLayout {
-            anchors.centerIn: parent
-            spacing: 2
+        // Spinner icon (rotating) - shown when loading
+        Text {
+            visible: root.isLoading
+            text: "⟳"
+            color: root.primaryColor
+            font.pixelSize: 11
+            font.weight: Font.Bold
 
-            // Arrow icon (static) - shown when not loading
-            Text {
-                visible: !root.isLoading
-                text: "⬆"
-                color: root.primaryColor
-                font.pixelSize: 12
-                font.weight: Font.Bold
-
-                Behavior on color {
-                    ColorAnimation { duration: Config.colorAnimationDuration }
-                }
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
             }
 
-            // Spinner icon (rotating) - shown when loading
-            Text {
-                visible: root.isLoading
-                text: "⟳"
-                color: root.primaryColor
-                font.pixelSize: 12
-                font.weight: Font.Bold
-
-                Behavior on color {
-                    ColorAnimation { duration: Config.colorAnimationDuration }
-                }
-
-                RotationAnimation on rotation {
-                    from: 0
-                    to: 360
-                    duration: 1000
-                    loops: Animation.Infinite
-                    running: root.isLoading
-                }
+            RotationAnimation on rotation {
+                from: 0
+                to: 360
+                duration: 1000
+                loops: Animation.Infinite
+                running: root.isLoading
             }
+        }
 
-            // Count
-            Text {
-                id: updateCountText
-                text: root.updateCount > 99 ? "99" : root.updateCount.toString()
-                color: root.primaryColor
-                font.pixelSize: 11
-                font.weight: Font.DemiBold
-                font.family: "monospace"
+        // Count
+        Text {
+            id: updateCountText
+            text: root.updateCount > 99 ? "99" : root.updateCount.toString()
+            color: root.primaryColor
+            font.pixelSize: 11
+            font.weight: Font.DemiBold
+            font.family: "monospace"
 
-                Behavior on color {
-                    ColorAnimation { duration: Config.colorAnimationDuration }
-                }
+            Behavior on color {
+                ColorAnimation { duration: Config.colorAnimationDuration }
             }
         }
     }

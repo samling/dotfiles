@@ -212,7 +212,7 @@ QtObject {
     }
 
     // Bar dimensions
-    readonly property int barHeight: 40
+    readonly property int barHeight: 28
     readonly property int barRadius: 1
     readonly property string barBackgroundColor: getColor("background.bar")
 

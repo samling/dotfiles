@@ -10,7 +10,7 @@ MouseArea {
     readonly property string nodeName: Tailscale.nodeName
     readonly property string tailnetName: Tailscale.tailnetName
     
-    property int iconSize: Config.barHeight - 16
+    property int iconSize: Config.barHeight - 10
     property int dotSize: Math.floor(iconSize / 5) // 3x3 grid with spacing
     property int dotSpacing: Math.floor(dotSize * 0.8)
     property color connectedColor: Config.getColor("text.white")
