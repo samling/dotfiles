@@ -7,18 +7,38 @@ import qs.common
 
 Singleton {
     id: root
-    
+
     property real brightness: 0.0
     property real maxBrightness: 100.0
     property bool available: false
-    
+    property string backlightPath: ""
+
     signal brightnessUpdated()
-    
+
+    // Discover the backlight device via brightnessctl
+    Process {
+        id: detectProcess
+        command: ["brightnessctl", "-m", "-c", "backlight"]
+        running: true
+        stdout: SplitParser {
+            onRead: data => {
+                const name = data.split(",")[0];
+                if (name) {
+                    root.backlightPath = "/sys/class/backlight/" + name;
+                    brightnessFile.path = root.backlightPath + "/brightness";
+                    maxBrightnessFile.path = root.backlightPath + "/max_brightness";
+                    maxBrightnessFile.reload();
+                    brightnessFile.reload();
+                }
+            }
+        }
+    }
+
     // Monitor brightness file
     FileView {
         id: brightnessFile
-        path: "/sys/class/backlight/intel_backlight/brightness"
-        
+        path: ""
+
         onLoaded: {
             const value = parseFloat(text());
             if (!isNaN(value) && value !== root.brightness) {
@@ -28,12 +48,12 @@ Singleton {
             }
         }
     }
-    
+
     // Monitor max brightness file
     FileView {
         id: maxBrightnessFile
-        path: "/sys/class/backlight/intel_backlight/max_brightness"
-        
+        path: ""
+
         onLoaded: {
             const value = parseFloat(text());
             if (!isNaN(value)) {
@@ -41,30 +61,24 @@ Singleton {
             }
         }
     }
-    
+
     // Timer to periodically check for brightness changes
     Timer {
         id: brightnessTimer
         interval: Config.brightnessCheckInterval
-        running: true
+        running: root.backlightPath !== ""
         repeat: true
         onTriggered: {
             brightnessFile.reload();
         }
     }
-    
+
     // Process for setting brightness values
     Process {
         id: setBrightnessProcess
         property string targetValue: ""
-        
+
         command: ["brightnessctl", "set", targetValue]
-    }
-    
-    Component.onCompleted: {
-        // Load initial values
-        maxBrightnessFile.reload();
-        brightnessFile.reload();
     }
     
     function setBrightness(value) {
