@@ -16,7 +16,7 @@ xen:
 
   appconfig:
     wezterm:
-      font_size: 18
+      font_size: 15
     hyprland:
       input:
         sensitivity: 0

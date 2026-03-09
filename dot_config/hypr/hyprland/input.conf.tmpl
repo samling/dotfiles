@@ -48,9 +48,15 @@ device {
   accel_profile = flat
 }
 
-# Disable touchscreen
+# Disable touchscreen on x1 carbon
 device {
   name = elan901c:00-04f3:2c29
+  enabled = false
+}
+
+# Disable touchscreen on Zenbook S16
+device {
+  name = elan9008:00-04f3:433b
   enabled = false
 }
 {{ end }}
