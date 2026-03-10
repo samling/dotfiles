@@ -3,7 +3,7 @@
   "theme.font.size": "1rem",
   "theme.font.name": "Iosevka Term",
   "theme.font.label": "Iosevka Term",
-  "terminal": "wezterm",
+  "terminal": "ghostty",
   "bar.network.showWifiInfo": true,
   "bar.network.truncation_size": 12,
   "menus.dashboard.shortcuts.left.shortcut1.command": "google-chrome-stable",

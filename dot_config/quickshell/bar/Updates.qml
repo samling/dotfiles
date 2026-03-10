@@ -148,7 +148,7 @@ MouseArea {
         command: [
             "hyprctl", "dispatch", "exec",
             "[float; size 800 600; center]",
-            "wezterm start --class wezterm-yay-update -- sh -c 'echo \"System Update\"; echo \"=============\"; echo; yay -Syu; echo; echo \"Press Enter to close...\"; read'"
+            "ghostty start --class ghostty-yay-update -- sh -c 'echo \"System Update\"; echo \"=============\"; echo; yay -Syu; echo; echo \"Press Enter to close...\"; read'"
         ]
         running: false
     }
