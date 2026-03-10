@@ -10,6 +10,16 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   sudo systemctl enable --now keyd
   sudo systemctl enable --now tailscaled
 
+  {{- $hostname := .chezmoi.hostname -}}
+  {{- $hostData := index .host $hostname -}}
+  {{- $headless := false -}}
+  {{- if and $hostData (hasKey $hostData "headless") -}}
+    {{- $headless = $hostData.headless -}}
+  {{- end -}}
+  {{- if not $headless }}
+  sudo systemctl enable --now greetd
+  {{- end }}
+
   #=== User
   #systemctl --user enable --now fumon
   systemctl --user enable --now quickshell

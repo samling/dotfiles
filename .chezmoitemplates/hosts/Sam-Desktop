@@ -3,6 +3,8 @@
 Sam-Desktop:
   chassis_type: desktop
 
+  headless: true
+
   appconfig:
     wezterm:
       font_size: 21
