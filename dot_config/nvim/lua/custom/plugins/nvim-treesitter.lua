@@ -7,7 +7,7 @@ return { -- Highlight, edit, and navigate code
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 
     ---@diagnostic disable-next-line: missing-fields
-    require('nvim-treesitter.configs').setup {
+    require('nvim-treesitter.config').setup {
       ensure_installed = {
         'bash',
         'c',

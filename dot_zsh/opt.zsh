@@ -1,7 +1,7 @@
 # ======== HISTORY
 
 HISTCONTROL=ignoreboth          # Ignore duplicate lines and lines starting with spaces in the history
-HISTFILE=$HOME/.zhistory        # Make a history file
+HISTFILE=$HISTFILE              # Make a history file
 HISTFILESIZE=100000             # Save 10000 bytes of command history
 HISTSIZE=100000                 # Save 10000 bytes of command history
 SAVEHIST=100000                 # Maximum commands to save
