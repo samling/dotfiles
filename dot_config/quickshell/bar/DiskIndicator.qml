@@ -16,7 +16,7 @@ SystemIndicator {
     primaryColor: {
         if (diskUsage >= 0.90) return Config.getColor("state.error")
         if (diskUsage >= 0.80) return Config.getColor("state.warning")
-        return Config.getColor("primary.peach")
+        return Config.getColor("primary.rosewater")
     }
     tooltipText: "Disk (" + mountPoint + "): " + diskUsed + " / " + diskTotal + " (" + Math.round(diskUsage * 100) + "% used)\nAvailable: " + diskAvail
 

@@ -271,6 +271,10 @@ QtObject {
     readonly property string batteryLowColor: getColor("battery.low")
     readonly property string batteryCriticalColor: getColor("battery.critical")
 
+    // Volume colors
+    readonly property string volumeMutedColor: getColor("volume.muted")
+    readonly property string volumeDefaultColor: getColor("volume.default")
+
     // Clock widget
     readonly property string clockTextColor: getColor("text.white")
     readonly property int clockFontSize: 14

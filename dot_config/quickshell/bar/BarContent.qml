@@ -101,6 +101,11 @@ Item {
             Layout.fillHeight: true
         }
 
+        VolumeIndicator {
+            id: volumeWidget
+            Layout.fillHeight: true
+        }
+
         Updates {
             id: updatesWidget
             Layout.fillHeight: true

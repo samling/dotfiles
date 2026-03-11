@@ -17,6 +17,9 @@
       "sky": "#89dceb",
       "lavender": "#b4befe",
       "mauve": "#cba6f7",
+      "rosewater": "#f5e0dc",
+      "flamingo": "#f2cdcd",
+      "sapphire": "#74c7ec",
       "maroon": "#eba0ac",
       "white": "#ffffff",
       "black": "#000000"
@@ -79,6 +82,10 @@
       "low": "primary.orange",
       "critical": "state.error",
       "unavailable": "state.inactive"
+    },
+    "volume": {
+      "muted": "state.inactive",
+      "default": "text.light"
     },
     "notification": {
       "background": "background.primary",
