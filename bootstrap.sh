@@ -22,6 +22,9 @@ else
   echo "Doppler is already configured; continuing..."
 fi
 
+echo "Creating .envrc from template..."
+doppler secrets substitute ./.envrc.tmpl > .envrc
+
 if [[ -z "${GITHUB_TOKEN}" ]]; then
   echo "\$GITHUB_TOKEN is empty; enabling direnv..."
   eval "$(direnv hook bash)"
