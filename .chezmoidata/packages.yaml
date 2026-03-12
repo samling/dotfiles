@@ -667,6 +667,8 @@ packages:
       pacman: swww
     xdg-desktop-portal-hyprland:
       pacman: xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk:
+      pacman: xdg-desktop-portal-gtk
 
   ########
   # SWAY #
