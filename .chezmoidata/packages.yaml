@@ -390,6 +390,10 @@ packages:
 
   # File management
   file_management:
+    snapper:
+      pacman: snapper
+    btrfs-assistant:
+      pacman: btrfs-assistant
     cpio:
       pacman: cpio
       brew: cpio
@@ -467,6 +471,8 @@ packages:
       pacman: gtk4
     libconfig:
       pacman: libconfig
+    libinput-tools:
+      pacman: libinput-tools
     systemd-libs:
       pacman: systemd-libs
     sqlite3:
