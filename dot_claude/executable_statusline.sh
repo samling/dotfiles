@@ -19,7 +19,16 @@ input=$(cat)
 
 # Extract values using jq
 MODEL_DISPLAY=$(echo "$input" | jq -r '.model.display_name')
-CURRENT_DIR=$(echo "$input" | jq -r '.cwd | split("/") | .[-1]')
+# Abbreviate home directory with ~
+CURRENT_DIR=$(echo "$input" | jq -r '.cwd' | sed "s|^$HOME|~|")
+
+# Shorten to last 4 path components (matching %(5~|%-1~/…/%3~|%4~) logic)
+component_count=$(echo "$CURRENT_DIR" | tr -cd '/' | wc -c)
+if [[ "$component_count" -gt 4 ]]; then
+    first=$(echo "$CURRENT_DIR" | cut -d'/' -f1-2)
+    last3=$(echo "$CURRENT_DIR" | rev | cut -d'/' -f1-3 | rev)
+    CURRENT_DIR="$first/.../$last3"
+fi
 COST=$(echo "$input" | jq -r '.cost.total_cost_usd')
 
 # Extract context window info using current_usage (actual context state)

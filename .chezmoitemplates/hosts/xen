@@ -41,7 +41,7 @@ xen:
       - media           # Audio/video tools
       - security        # Security tools
       - ai              # AI/ML tools
-      # - gaming         # Gaming packages
+      - gaming         # Gaming packages
       - hardware        # Hardware-specific tools (nvidia-settings, etc.)
       # - nvidia         # NVIDIA-specific packages
       - terminal        # Terminal emulators/multiplexers

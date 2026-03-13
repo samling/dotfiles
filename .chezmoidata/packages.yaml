@@ -325,6 +325,8 @@ packages:
   desktop:
     appimagelauncher:
       yay: appimagelauncher
+    flatpak:
+      pacman: flatpak
     google-chrome:
       yay: google-chrome
       apt: google-chrome-stable
@@ -582,7 +584,12 @@ packages:
 
   # Gaming
   gaming:
-    # Add gaming packages here when needed
+    steam:
+      yay: steam
+    moonlight:
+      yay: moonlight-qt
+    vulkan-radeon:
+      pacman: vulkan-radeon
 
   # GNOME desktop environment
   gnome:
