@@ -325,45 +325,49 @@ packages:
   desktop:
     appimagelauncher:
       yay: appimagelauncher
-    flatpak:
-      pacman: flatpak
-    google-chrome:
-      yay: google-chrome
-      apt: google-chrome-stable
-    discord:
-      pacman: discord
-    signal-desktop:
-      pacman: signal-desktop
-    vesktop:
-      yay: vesktop
-      apt: vesktop
-    spotify-launcher:
-      pacman: spotify-launcher
-    obsidian:
-      pacman: obsidian
-    evolution:
-      pacman: evolution
-      apt: evolution
-    wezterm:
-      pacman: wezterm
-      brew: wezterm
-      apt: wezterm
-    thunar:
-      pacman: thunar
-    thunar-volman:
-      pacman: thunar-volman
+    bruno:
+      brew: bruno
     copyq:
       pacman: copyq
       apt: copyq
+    discord:
+      pacman: discord
+    evolution:
+      pacman: evolution
+      apt: evolution
+    flatpak:
+      pacman: flatpak
+    ghostty:
+      pacman: ghostty
+    google-chrome:
+      yay: google-chrome
+      apt: google-chrome-stable
+    handlr:
+      pacman: handlr-regex
+    insync:
+      yay: insync
+      apt: insync
     localsend-bin:
       yay: localsend-bin
       brew: localsend
       apt: localsend
-    insync:
-      yay: insync
-      apt: insync
-    bruno:
-      brew: bruno
+    obsidian:
+      pacman: obsidian
+    signal-desktop:
+      pacman: signal-desktop
+    spotify-launcher:
+      pacman: spotify-launcher
+    thunar:
+      pacman: thunar
+    thunar-volman:
+      pacman: thunar-volman
+    vesktop:
+      yay: vesktop
+      apt: vesktop
+    wezterm:
+      pacman: wezterm
+      brew: wezterm
+      apt: wezterm
 
   # System monitoring and information
   monitoring:
