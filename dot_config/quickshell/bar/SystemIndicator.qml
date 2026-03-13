@@ -25,9 +25,9 @@ MouseArea {
         Text {
             text: root.label
             color: Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.7)
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.Medium
-            font.family: "monospace"
+            font.family: Config.fontFamilyMonospace
             visible: root.label.length > 0
 
             Behavior on color {
@@ -39,9 +39,9 @@ MouseArea {
         Text {
             text: Math.round(root.percentage * 100) + "%"
             color: root.primaryColor
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.DemiBold
-            font.family: "monospace"
+            font.family: Config.fontFamilyMonospace
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }

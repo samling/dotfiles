@@ -36,7 +36,7 @@ MouseArea {
         Text {
             text: "🔔"
             color: root.primaryColor
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
@@ -47,9 +47,9 @@ MouseArea {
         Text {
             text: root.notificationCount > 99 ? "99" : root.notificationCount.toString()
             color: root.primaryColor
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.DemiBold
-            font.family: "monospace"
+            font.family: Config.fontFamilyMonospace
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
@@ -149,15 +149,16 @@ MouseArea {
                         // Bell icon
                         Text {
                             text: "🔔"
-                            font.pixelSize: 14
+                            font.pixelSize: Config.fontSizeHeader
                             color: Config.getColor("primary.mauve")
                         }
 
                         Text {
                             text: "Notifications"
                             color: Config.getColor("text.primary")
-                            font.pixelSize: 14
+                            font.pixelSize: Config.fontSizeHeader
                             font.weight: Font.DemiBold
+                            font.family: Config.fontFamilyMonospace
                             Layout.fillWidth: true
                         }
 
@@ -174,8 +175,9 @@ MouseArea {
                                 anchors.centerIn: parent
                                 text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
                                 color: Config.getColor("background.crust")
-                                font.pixelSize: 11
+                                font.pixelSize: Config.fontSizeBase
                                 font.weight: Font.Bold
+                                font.family: Config.fontFamilyMonospace
                             }
                         }
 
@@ -204,8 +206,9 @@ MouseArea {
                                 anchors.centerIn: parent
                                 text: "✕"
                                 color: clearMouseArea.containsMouse ? Config.getColor("state.error") : Config.getColor("text.muted")
-                                font.pixelSize: 12
+                                font.pixelSize: Config.fontSizeMedium
                                 font.weight: Font.Bold
+                                font.family: Config.fontFamilyMonospace
 
                                 Behavior on color {
                                     ColorAnimation { duration: 100 }
@@ -251,7 +254,7 @@ MouseArea {
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "🔕"
-                            font.pixelSize: 32
+                            font.pixelSize: Config.fontSizeIconXL
                             opacity: 0.5
                         }
 
@@ -259,15 +262,17 @@ MouseArea {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "All caught up!"
                             color: Config.getColor("text.muted")
-                            font.pixelSize: 13
+                            font.pixelSize: Config.fontSizeLarge
                             font.weight: Font.Medium
+                            font.family: Config.fontFamilyMonospace
                         }
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "No new notifications"
                             color: Config.getColor("text.muted")
-                            font.pixelSize: 11
+                            font.pixelSize: Config.fontSizeBase
+                            font.family: Config.fontFamilyMonospace
                             opacity: 0.7
                         }
                     }

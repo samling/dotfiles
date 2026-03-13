@@ -97,8 +97,9 @@ Item {
                 id: tooltipText
                 anchors.centerIn: parent
                 color: Config.tooltipTextColor
-                font.pixelSize: 12
+                font.pixelSize: Config.fontSizeMedium
                 font.weight: Font.Medium
+                font.family: Config.fontFamilyMonospace
                 text: root.text
             }
         }

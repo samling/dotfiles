@@ -35,9 +35,9 @@ MouseArea {
             return root.isCharging ? pct + "⚡" : "BAT " + pct + "%"
         }
         color: root.primaryColor
-        font.pixelSize: 11
+        font.pixelSize: Config.fontSizeBase
         font.weight: Font.DemiBold
-        font.family: "monospace"
+        font.family: Config.fontFamilyMonospace
 
         Behavior on color {
             ColorAnimation { duration: Config.colorAnimationDuration }

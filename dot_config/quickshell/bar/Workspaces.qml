@@ -38,8 +38,8 @@ Item {
             .sort((a, b) => a - b)
     }
 
-    implicitWidth: workspaceRow.implicitWidth
-    implicitHeight: workspaceRow.implicitHeight
+    implicitWidth: workspaceRow.implicitWidth + 8
+    implicitHeight: parent ? parent.height : Config.barHeight
 
     RowLayout {
         id: workspaceRow
@@ -59,9 +59,9 @@ Item {
                 readonly property bool isHovered: mouseArea.containsMouse
 
                 text: wsLabel.workspaceId.toString()
-                font.pixelSize: 14
-                font.bold: wsLabel.isActive
-                font.family: "monospace"
+                font.pixelSize: Config.fontSizeBase
+                font.weight: Font.DemiBold
+                font.family: Config.fontFamilyMonospace
 
                 color: {
                     if (wsLabel.isActive) {

@@ -57,8 +57,8 @@ Item {
 					}
 
 					Text {
-						font.family: "Nerd Font"
-						font.pixelSize: 24
+						font.family: Config.fontFamilyIcon
+						font.pixelSize: Config.fontSizeIconLarge
 						text: {
 							const percent = Brightness.brightnessPercent;
 							if (percent === 0) {
@@ -97,8 +97,9 @@ Item {
 					Text {
 						text: Math.round(Brightness.brightnessPercent) + "%"
 						color: "white"
-						font.pixelSize: 12
+						font.pixelSize: Config.fontSizeMedium
 						font.weight: Font.Medium
+						font.family: Config.fontFamilyMonospace
 					}
 				}
 			}

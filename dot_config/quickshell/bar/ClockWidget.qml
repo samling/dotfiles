@@ -26,9 +26,9 @@ MouseArea {
         Text {
             text: root.timeText
             color: root.primaryColor
-            font.pixelSize: 13
+            font.pixelSize: Config.fontSizeLarge
             font.weight: Font.Bold
-            font.family: "monospace"
+            font.family: Config.fontFamilyMonospace
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
@@ -47,8 +47,9 @@ MouseArea {
         Text {
             text: root.dateText
             color: root.secondaryColor
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.Medium
+            font.family: Config.fontFamilyMonospace
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }

@@ -66,8 +66,9 @@ MouseArea {
             visible: !root.isLoading
             text: "⬆"
             color: root.primaryColor
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.Bold
+            font.family: Config.fontFamilyMonospace
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
@@ -79,8 +80,9 @@ MouseArea {
             visible: root.isLoading
             text: "⟳"
             color: root.primaryColor
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.Bold
+            font.family: Config.fontFamilyMonospace
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
@@ -100,9 +102,9 @@ MouseArea {
             id: updateCountText
             text: root.updateCount > 99 ? "99" : root.updateCount.toString()
             color: root.primaryColor
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.DemiBold
-            font.family: "monospace"
+            font.family: Config.fontFamilyMonospace
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
@@ -243,15 +245,17 @@ MouseArea {
 
                         Text {
                             text: "⬆"
-                            font.pixelSize: 14
+                            font.pixelSize: Config.fontSizeHeader
+                            font.family: Config.fontFamilyMonospace
                             color: Config.getColor("primary.teal")
                         }
 
                         Text {
                             text: "System Updates"
                             color: Config.getColor("text.primary")
-                            font.pixelSize: 14
+                            font.pixelSize: Config.fontSizeHeader
                             font.weight: Font.DemiBold
+                            font.family: Config.fontFamilyMonospace
                             Layout.fillWidth: true
                         }
 
@@ -268,8 +272,9 @@ MouseArea {
                                 anchors.centerIn: parent
                                 text: root.updateCount > 99 ? "99+" : root.updateCount.toString()
                                 color: Config.getColor("background.crust")
-                                font.pixelSize: 11
+                                font.pixelSize: Config.fontSizeBase
                                 font.weight: Font.Bold
+                                font.family: Config.fontFamilyMonospace
                             }
                         }
 
@@ -293,8 +298,9 @@ MouseArea {
                                 anchors.centerIn: parent
                                 text: "Update"
                                 color: updateMouseArea.containsMouse ? Config.getColor("background.crust") : Config.getColor("primary.green")
-                                font.pixelSize: 11
+                                font.pixelSize: Config.fontSizeBase
                                 font.weight: Font.DemiBold
+                                font.family: Config.fontFamilyMonospace
 
                                 Behavior on color { ColorAnimation { duration: 100 } }
                             }
@@ -334,8 +340,9 @@ MouseArea {
                                 anchors.centerIn: parent
                                 text: "⟳"
                                 color: refreshMouseArea.containsMouse ? Config.getColor("primary.blue") : Config.getColor("text.muted")
-                                font.pixelSize: 12
+                                font.pixelSize: Config.fontSizeMedium
                                 font.weight: Font.Bold
+                                font.family: Config.fontFamilyMonospace
 
                                 Behavior on color { ColorAnimation { duration: 100 } }
 
@@ -387,7 +394,8 @@ MouseArea {
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "⟳"
-                            font.pixelSize: 32
+                            font.pixelSize: Config.fontSizeIconXL
+                            font.family: Config.fontFamilyMonospace
                             color: Config.getColor("primary.blue")
 
                             RotationAnimation on rotation {
@@ -403,8 +411,9 @@ MouseArea {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "Checking for updates..."
                             color: Config.getColor("text.muted")
-                            font.pixelSize: 13
+                            font.pixelSize: Config.fontSizeLarge
                             font.weight: Font.Medium
+                            font.family: Config.fontFamilyMonospace
                         }
                     }
 
@@ -417,7 +426,8 @@ MouseArea {
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "✓"
-                            font.pixelSize: 32
+                            font.pixelSize: Config.fontSizeIconXL
+                            font.family: Config.fontFamilyMonospace
                             color: Config.getColor("primary.green")
                         }
 
@@ -425,15 +435,17 @@ MouseArea {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "System up to date!"
                             color: Config.getColor("text.muted")
-                            font.pixelSize: 13
+                            font.pixelSize: Config.fontSizeLarge
                             font.weight: Font.Medium
+                            font.family: Config.fontFamilyMonospace
                         }
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "No packages need updating"
                             color: Config.getColor("text.muted")
-                            font.pixelSize: 11
+                            font.pixelSize: Config.fontSizeBase
+                            font.family: Config.fontFamilyMonospace
                             opacity: 0.7
                         }
                     }
@@ -512,7 +524,8 @@ MouseArea {
                                     visible: updateItem.isHighlighted
                                     text: updateItem.isCritical ? "⚠" : "★"
                                     color: updateItem.highlightColor
-                                    font.pixelSize: 9
+                                    font.pixelSize: Config.fontSizeSmall - 1
+                                    font.family: Config.fontFamilyMonospace
                                     Layout.rightMargin: 4
                                 }
 
@@ -520,8 +533,8 @@ MouseArea {
                                 Text {
                                     text: updateItem.modelData.name
                                     color: updateItem.isHighlighted ? updateItem.highlightColor : Config.getColor("text.primary")
-                                    font.pixelSize: 11
-                                    font.family: "monospace"
+                                    font.pixelSize: Config.fontSizeBase
+                                    font.family: Config.fontFamilyMonospace
                                     font.weight: updateItem.isHighlighted ? Font.Bold : Font.Normal
                                     Layout.fillWidth: true
                                     elide: Text.ElideRight
@@ -532,8 +545,8 @@ MouseArea {
                                     visible: updateItem.modelData.oldVersion !== ""
                                     text: updateItem.modelData.oldVersion
                                     color: Config.getColor("text.secondary")
-                                    font.pixelSize: 10
-                                    font.family: "monospace"
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
                                 }
 
                                 // Arrow
@@ -541,7 +554,8 @@ MouseArea {
                                     visible: updateItem.modelData.newVersion !== ""
                                     text: " → "
                                     color: updateItem.isHighlighted ? updateItem.highlightColor : Config.getColor("primary.teal")
-                                    font.pixelSize: 10
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
                                 }
 
                                 // New version
@@ -549,8 +563,8 @@ MouseArea {
                                     visible: updateItem.modelData.newVersion !== ""
                                     text: updateItem.modelData.newVersion
                                     color: updateItem.isHighlighted ? updateItem.highlightColor : Config.getColor("primary.teal")
-                                    font.pixelSize: 10
-                                    font.family: "monospace"
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
                                 }
                             }
                         }

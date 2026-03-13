@@ -93,8 +93,9 @@ Rectangle {
                     anchors.centerIn: parent
                     text: root.notificationObject?.appName?.charAt(0)?.toUpperCase() ?? "?"
                     color: Config.getColor("text.secondary")
-                    font.pixelSize: 12
+                    font.pixelSize: Config.fontSizeMedium
                     font.weight: Font.Bold
+                    font.family: Config.fontFamilyMonospace
                     visible: appIconImage.status !== Image.Ready
                 }
             }
@@ -107,8 +108,9 @@ Rectangle {
                 Text {
                     text: root.notificationObject?.appName ?? "Unknown"
                     color: Config.getColor("text.secondary")
-                    font.pixelSize: 11
+                    font.pixelSize: Config.fontSizeBase
                     font.weight: Font.Medium
+                    font.family: Config.fontFamilyMonospace
                     elide: Text.ElideRight
                     Layout.fillWidth: true
                 }
@@ -116,7 +118,8 @@ Rectangle {
                 Text {
                     text: root.formatTimestamp(root.notificationObject?.time ?? 0)
                     color: Config.getColor("text.muted")
-                    font.pixelSize: 10
+                    font.pixelSize: Config.fontSizeSmall
+                    font.family: Config.fontFamilyMonospace
                     visible: root.notificationObject?.time !== undefined
                 }
             }
@@ -146,8 +149,9 @@ Rectangle {
                     anchors.centerIn: parent
                     text: "✕"
                     color: closeArea.containsMouse ? Config.getColor("state.error") : Config.getColor("text.muted")
-                    font.pixelSize: 10
+                    font.pixelSize: Config.fontSizeSmall
                     font.weight: Font.Bold
+                    font.family: Config.fontFamilyMonospace
 
                     Behavior on color {
                         ColorAnimation { duration: 100 }
@@ -226,8 +230,9 @@ Rectangle {
                 Text {
                     text: root.notificationObject?.summary ?? ""
                     color: Config.getColor("text.primary")
-                    font.pixelSize: 13
+                    font.pixelSize: Config.fontSizeLarge
                     font.weight: Font.DemiBold
+                    font.family: Config.fontFamilyMonospace
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     visible: text !== ""
@@ -239,7 +244,8 @@ Rectangle {
                 Text {
                     text: root.notificationObject?.body ?? ""
                     color: Config.getColor("text.tertiary")
-                    font.pixelSize: 12
+                    font.pixelSize: Config.fontSizeMedium
+                    font.family: Config.fontFamilyMonospace
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     visible: text !== ""
@@ -288,8 +294,9 @@ Rectangle {
                         color: buttonArea.containsMouse
                             ? Config.getColor("primary.lavender")
                             : Config.getColor("text.secondary")
-                        font.pixelSize: 11
+                        font.pixelSize: Config.fontSizeBase
                         font.weight: Font.Medium
+                        font.family: Config.fontFamilyMonospace
 
                         Behavior on color {
                             ColorAnimation { duration: 100 }

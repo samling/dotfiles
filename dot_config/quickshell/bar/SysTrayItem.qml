@@ -88,8 +88,9 @@ MouseArea {
     Text {
         anchors.centerIn: parent
         text: root.item.id.charAt(0).toUpperCase() || "?"
-        font.pixelSize: 10
+        font.pixelSize: Config.fontSizeSmall
         font.weight: Font.Bold
+        font.family: Config.fontFamilyMonospace
         color: Config.getColor("text.primary")
         visible: trayIcon.status !== Image.Ready && trayIcon.status !== Image.Loading
     }

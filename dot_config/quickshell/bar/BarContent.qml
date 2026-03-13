@@ -33,7 +33,7 @@ Item {
             Layout.fillHeight: true
         }
 
-        Item { 
+        Item {
             Layout.preferredWidth: 4
             Layout.preferredHeight: 1
         } // Spacer

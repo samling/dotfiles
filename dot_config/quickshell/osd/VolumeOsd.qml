@@ -67,8 +67,8 @@ Item {
 					}
 
 					Text {
-						font.family: "Nerd Font"
-						font.pixelSize: 24
+						font.family: Config.fontFamilyIcon
+						font.pixelSize: Config.fontSizeIconLarge
 						text: {
 							if (Pipewire.defaultAudioSink?.audio.muted) {
 								return "󰖁";
@@ -118,8 +118,9 @@ Item {
 							return Math.round((Pipewire.defaultAudioSink?.audio.volume ?? 0) * 100) + "%";
 						}
 						color: "white"
-						font.pixelSize: 12
+						font.pixelSize: Config.fontSizeMedium
 						font.weight: Font.Medium
+						font.family: Config.fontFamilyMonospace
 					}
 				}
 			}

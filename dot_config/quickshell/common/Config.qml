@@ -211,6 +211,21 @@ QtObject {
         return "#6c7086" // Fallback gray
     }
 
+    // Font families
+    readonly property string fontFamilyMonospace: "JetBrainsMono Nerd Font Propo"
+    readonly property string fontFamilyIcon: "JetBrainsMono Nerd Font Propo"
+
+    // Font size scale
+    readonly property int fontSizeSmall: 10      // timestamps, version strings, priority icons
+    readonly property int fontSizeBase: 11       // bar indicator text
+    readonly property int fontSizeMedium: 12     // tooltips, notification body, secondary text
+    readonly property int fontSizeLarge: 13      // notification summary, emphasized text
+    readonly property int fontSizeHeader: 14     // panel headers
+    readonly property int fontSizeIconSmall: 16  // bar icon glyphs
+    readonly property int fontSizeIconMedium: 18 // menu button icons
+    readonly property int fontSizeIconLarge: 24  // OSD icons
+    readonly property int fontSizeIconXL: 32     // loading spinners, empty state icons
+
     // Bar dimensions
     readonly property int barHeight: 28
     readonly property int barRadius: 1
@@ -236,7 +251,7 @@ QtObject {
     readonly property int workspaceWidth: 18
     readonly property int workspaceHeight: 14
     readonly property int workspaceRadius: 4
-    readonly property int workspaceFontSize: 12
+    readonly property int workspaceFontSize: fontSizeBase
     readonly property int workspaceBorderWidth: 2
     readonly property string workspaceActiveColor: getColor("workspace.active")
     readonly property string workspaceActiveBrightColor: getColor("workspace.active")
@@ -248,7 +263,7 @@ QtObject {
     readonly property string workspaceEmptyTextColor: getColor("text.muted")
 
     // Battery indicator
-    readonly property int batteryFontSize: 12
+    readonly property int batteryFontSize: fontSizeBase
     readonly property int batterySpacing: 4
     readonly property string batteryTextColor: getColor("text.white")
     
@@ -277,7 +292,7 @@ QtObject {
 
     // Clock widget
     readonly property string clockTextColor: getColor("text.white")
-    readonly property int clockFontSize: 14
+    readonly property int clockFontSize: fontSizeHeader
 
     // Animation durations
     readonly property int colorAnimationDuration: 200

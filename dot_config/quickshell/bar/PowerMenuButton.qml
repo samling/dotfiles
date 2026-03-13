@@ -37,8 +37,8 @@ Rectangle {
         Text {
             Layout.alignment: Qt.AlignHCenter
             text: root.icon
-            font.pixelSize: 18
-            font.family: "FiraCode Nerd Font Propo"
+            font.pixelSize: Config.fontSizeIconMedium
+            font.family: Config.fontFamilyIcon
             color: mouseArea.containsMouse ? root.accentColor : Config.getColor("text.secondary")
 
             Behavior on color {
@@ -49,8 +49,9 @@ Rectangle {
         Text {
             Layout.alignment: Qt.AlignHCenter
             text: root.label
-            font.pixelSize: 11
+            font.pixelSize: Config.fontSizeBase
             font.weight: Font.Medium
+            font.family: Config.fontFamilyMonospace
             color: mouseArea.containsMouse ? root.accentColor : Config.getColor("text.secondary")
 
             Behavior on color {

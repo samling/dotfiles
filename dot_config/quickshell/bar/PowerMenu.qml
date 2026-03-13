@@ -26,9 +26,9 @@ MouseArea {
         color: root.containsMouse
             ? Qt.lighter(root.primaryColor, 1.3)
             : root.primaryColor
-        font.pixelSize: 16
+        font.pixelSize: Config.fontSizeIconSmall
         font.weight: Font.Bold
-        font.family: "FiraCode Nerd Font Propo"
+        font.family: Config.fontFamilyIcon
         textFormat: Text.PlainText
         text: "\uf303"
 
@@ -124,16 +124,17 @@ MouseArea {
 
                         Text {
                             text: "\uf303"
-                            font.pixelSize: 16
-                            font.family: "FiraCode Nerd Font Propo"
+                            font.pixelSize: Config.fontSizeIconSmall
+                            font.family: Config.fontFamilyIcon
                             color: Config.getColor("primary.blue")
                         }
 
                         Text {
                             text: "Power Menu"
                             color: Config.getColor("text.primary")
-                            font.pixelSize: 14
+                            font.pixelSize: Config.fontSizeHeader
                             font.weight: Font.DemiBold
+                            font.family: Config.fontFamilyMonospace
                             Layout.fillWidth: true
                         }
                     }
@@ -261,8 +262,9 @@ MouseArea {
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Screenshots"
                         color: Config.getColor("text.muted")
-                        font.pixelSize: 11
+                        font.pixelSize: Config.fontSizeBase
                         font.weight: Font.Medium
+                        font.family: Config.fontFamilyMonospace
                     }
                 }
 
