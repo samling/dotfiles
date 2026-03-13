@@ -26,8 +26,7 @@ bind = $mainMod, space, exec, $fuzzel --launch-prefix='uwsm app -- '
 
 # Launch emoji picker
 # Not sure which keybinding will stick yet
-bind = $mainMod SHIFT, space, exec, $emoji
-bind = $mainMod SHIFT, P, exec, $emoji
+bind = $mainMod, Period, exec, $emoji
 
 # Maximize window
 bind = $mainMod, F, fullscreenstate, 1,
@@ -227,12 +226,12 @@ bindm = $mainMod SHIFT, mouse:272, resizewindow
 bindm = $mainMod, mouse:273, resizewindow
 
 # Laptop multimedia keys with visual feedback from swayosd
-bind = ,XF86AudioLowerVolume, exec, pactl -- set-sink-volume 0 -10%
-bind = ,XF86AudioRaiseVolume, exec, pactl -- set-sink-volume 0 +10%
+binde = ,XF86AudioLowerVolume, exec, pactl -- set-sink-volume 0 -2%
+binde = ,XF86AudioRaiseVolume, exec, pactl -- set-sink-volume 0 +2%
 bind = ,XF86AudioMute, exec, pactl -- set-sink-mute 0 toggle
 bind = ,XF86AudioMicMute, exec, pactl -- set-source-mute 0 toggle
-bindl = ,XF86MonBrightnessDown, exec, brightnessctl s 5%-
-bindl = ,XF86MonBrightnessUp, exec, brightnessctl s +5%
+bindle = ,XF86MonBrightnessDown, exec, brightnessctl s 5%-
+bindle = ,XF86MonBrightnessUp, exec, brightnessctl s +5%
 
 #bindel = ,XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise
 #bindel = ,XF86AudioLowerVolume, exec, swayosd-client --output-volume lower

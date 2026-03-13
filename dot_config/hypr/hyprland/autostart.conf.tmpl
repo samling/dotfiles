@@ -2,14 +2,6 @@
 ### AUTOSTART ###
 #################
 
-# System essentials
-exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
-
-# Desktop portals
-exec-once = uwsm app -- /usr/lib/xdg-desktop-portal-hyprland
-exec-once = uwsm app -- /usr/lib/xdg-desktop-portal-gtk
-exec-once = uwsm app -- /usr/lib/xdg-desktop-portal
-
 # Start daemons
 #   Some daemons are started by systemd; I don't know when it's appropriate to launch them
 #   this way and when to use systemd, so it's a mix of both for now.
@@ -23,11 +15,11 @@ exec-once = uwsm app -- /usr/lib/xdg-desktop-portal
 #   Other:
 #     exec-once = uwsm app -- insync start - starts via xdg-autostart
 #exec-once = uwsm app -- astal-tray -d
-exec-once = systemctl --user start hyprpolkitagent
-exec-once = systemctl --user start swww
+# exec-once = systemctl --user start hyprpolkitagent
+# exec-once = systemctl --user start swww
 #exec-once = systemctl --user start ags
 #exec-once = uwsm app -- blueman-applet
-exec-once = uwsm app -- hypridle
+#exec-once = uwsm app -- hypridle
 exec-once = uwsm app -- udiskie --no-automount --smart-tray
 #exec-once = uwsm app -- qs # starting via systemd
 # note that passing in env vars this way *does* work
@@ -36,7 +28,7 @@ exec-once = uwsm app -- ~/.config/swww/swww_randomize_multi_daemon.sh '/home/sbo
 exec-once = uwsm app -s b fumon
 
 # Clipboard history
-exec-once = wl-paste -p -t text --watch wl-copy
+exec-once = uwsm app -- wl-paste -p -t text --watch wl-copy
 #=== clipse
 exec-once = uwsm app -- clipse -listen
 #=== cliphist
@@ -51,11 +43,11 @@ exec-once = QT_QPA_PLATFORM=xcb uwsm app -- copyq --start-server
 # Enable dark mode
 # NOTE: Handled by nwg-look instead
 #env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
-exec = gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard+default"   # for GTK3 apps # TODO Exec once?
-exec = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps # TODO exec once?
+exec-once = gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard+default"   # for GTK3 apps # TODO Exec once?
+exec-once = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps # TODO exec once?
 exec-once = gsettings set org.gnome.desktop.interface cursor-theme BreezeX-RosePine
 exec-once = gsettings set org.gnome.desktop.interface cursor-size 24 
 
 # Load plugins
 exec-once = hyprpm reload -n
-exec-once = $HOME/.local/lib/import_env tmux # https://github.com/hyprwm/Hyprland/issues/3134
+exec-once = uwsm app -- $HOME/.local/lib/import_env tmux # https://github.com/hyprwm/Hyprland/issues/3134
