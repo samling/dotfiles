@@ -453,6 +453,8 @@ packages:
     qt6ct:
       pacman: qt6ct
       apt: qt6ct
+    matugen:
+      yay: matugen-bin
 
   # Security
   security:
@@ -678,8 +680,6 @@ packages:
       yay: hyprshot
     hyprpicker:
       pacman: hyprpicker
-    hyprsysteminfo:
-      yay: hyprsysteminfo
     hyprutils:
       pacman: hyprutils
     swww:

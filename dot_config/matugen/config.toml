@@ -26,4 +26,3 @@ output_path = "~/.vscode/extensions/custom.matugen-theme-1.0.0/themes/matugen-co
 [templates.quickshell]
 input_path = "~/.config/matugen/quickshell-colors"
 output_path = "~/.config/quickshell/common/Colors.qml"
-post_hook = "date +%s > ~/.cache/matugen/quickshell-reload-trigger"
