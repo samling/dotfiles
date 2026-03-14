@@ -60,7 +60,7 @@ Item {
 
                 text: wsLabel.workspaceId.toString()
                 font.pixelSize: Config.fontSizeBase
-                font.weight: Font.DemiBold
+                font.weight: wsLabel.isActive ? Font.Black : Font.Normal
                 font.family: Config.fontFamilyMonospace
 
                 color: {

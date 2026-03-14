@@ -13,8 +13,8 @@ general {
 
     # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
     #col.active_border = rgb(99EEFF) rgb(FF99FF) 45deg
-    col.active_border = rgb(b4befe)
-    col.inactive_border = rgba(595959aa)
+    col.active_border = $primary
+    col.inactive_border = $secondary
 
     # Set to true enable resizing windows by clicking and dragging on borders and gaps
     resize_on_border = true
@@ -40,7 +40,7 @@ decoration {
         enabled = {{ if eq .chassis.type "laptop" }}false{{ else }}true{{ end }}
         range = 300 
         render_power = 4
-        color = rgba(1a1a1aaf)
+        color = $shadow
         offset = 0 40
         scale = 0.9
     }

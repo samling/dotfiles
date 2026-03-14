@@ -1,11 +1,25 @@
 [config]
 
+[templates.fuzzel]
+input_path = "~/.config/matugen/fuzzel.ini"
+output_path = "~/.config/fuzzel/colors.ini"
+
 [templates.ghostty]
 input_path = "~/.config/matugen/ghostty"
 output_path = "~/.config/ghostty/themes/matugen.conf"
 post_hook = "kill -SIGUSR2 $(pgrep ghostty)"
 
-[templates.quickshell-colors]
+[templates.hyprland]
+input_path = "~/.config/matugen/hyprland-colors.conf"
+output_path = "~/.config/hypr/colors.conf"
+post_hook = "hyprctl reload"
+
+[templates.nvim]
+input_path = "~/.config/matugen/nvim-base16-colorscheme.lua"
+output_path = "~/.config/nvim/generated.lua"
+post_hook = "pkill -SIGUSR1 nvim"
+
+[templates.quickshell]
 input_path = "~/.config/matugen/quickshell-colors"
 output_path = "~/.config/quickshell/common/Colors.qml"
 post_hook = "date +%s > ~/.cache/matugen/quickshell-reload-trigger"

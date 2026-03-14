@@ -19,7 +19,7 @@ find "$TARGET_DIR" -maxdepth 1 -type f | while read -r target_file; do
   # Construct the corresponding path in the source directory
   source_file="$SOURCE_DIR/$rel_path"
   # If the file doesn't exist in the source directory, remove it from the target
-  if [ ! -f "$source_file" ]; then
+  if [ ! -f "$source_file" ] && [ "$rel_path" != "matugen-base16-colorscheme.lua" ]; then
     echo "[sync-nvim-plugins] File $target_file not in source, removing..."
     rm -fv $target_file
     found=$((found + 1))
