@@ -6,7 +6,7 @@ import Quickshell
 MouseArea {
     id: root
 
-    property color primaryColor: Config.getColor("primary.blue")
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: logoText.implicitWidth + 12
     implicitHeight: parent ? parent.height : Config.barHeight
@@ -43,9 +43,24 @@ MouseArea {
     }
 
     // Power menu popup using PanelWindow approach
+    Timer {
+        id: powerMenuHideTimer
+        interval: 250
+        onTriggered: powerMenuPopup.visible = false
+    }
+
+    onMenuOpenChanged: {
+        if (menuOpen) {
+            powerMenuHideTimer.stop()
+            powerMenuPopup.visible = true
+        } else {
+            powerMenuHideTimer.restart()
+        }
+    }
+
     PanelWindow {
         id: powerMenuPopup
-        visible: root.menuOpen
+        visible: false
 
         anchors {
             top: true

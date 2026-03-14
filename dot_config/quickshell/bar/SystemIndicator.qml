@@ -9,7 +9,7 @@ MouseArea {
     // Required properties
     property real percentage: 0  // 0.0 to 1.0
     property string label: ""    // Short label like "CPU", "MEM", "DSK"
-    property color primaryColor: Config.getColor("primary.teal")
+    property color primaryColor: Config.barTextColor
     property string tooltipText: ""
 
     implicitWidth: indicatorRow.implicitWidth + 8
@@ -24,7 +24,7 @@ MouseArea {
         // Label
         Text {
             text: root.label
-            color: Qt.rgba(root.primaryColor.r, root.primaryColor.g, root.primaryColor.b, 0.7)
+            color: root.primaryColor
             font.pixelSize: Config.fontSizeBase
             font.weight: Font.Medium
             font.family: Config.fontFamilyMonospace

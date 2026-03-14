@@ -1,0 +1,11 @@
+[config]
+
+[templates.ghostty]
+input_path = "~/.config/matugen/ghostty"
+output_path = "~/.config/ghostty/themes/matugen.conf"
+post_hook = "kill -SIGUSR2 $(pgrep ghostty)"
+
+[templates.quickshell-colors]
+input_path = "~/.config/matugen/quickshell-colors"
+output_path = "~/.config/quickshell/common/Colors.qml"
+post_hook = "date +%s > ~/.cache/matugen/quickshell-reload-trigger"

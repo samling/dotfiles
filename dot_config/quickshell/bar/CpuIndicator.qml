@@ -12,11 +12,7 @@ SystemIndicator {
 
     percentage: cpuUsage
     label: "CPU"
-    primaryColor: {
-        if (cpuUsage >= 0.90) return Config.getColor("state.error")
-        if (cpuUsage >= 0.70) return Config.getColor("state.warning")
-        return Config.getColor("primary.sky")
-    }
+    primaryColor: Config.barTextColor
     tooltipText: {
         let text = "CPU Usage: " + Math.round(cpuUsage * 100) + "%"
         if (topProcesses.length > 0) {

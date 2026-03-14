@@ -12,11 +12,7 @@ SystemIndicator {
 
     percentage: memUsage
     label: "MEM"
-    primaryColor: {
-        if (memUsage >= 0.90) return Config.getColor("state.error")
-        if (memUsage >= 0.75) return Config.getColor("state.warning")
-        return Config.getColor("primary.lavender")
-    }
+    primaryColor: Config.barTextColor
     tooltipText: {
         const usedGB = (memUsed / 1048576).toFixed(1)
         const totalGB = (memTotal / 1048576).toFixed(1)

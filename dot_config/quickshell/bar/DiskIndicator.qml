@@ -13,11 +13,7 @@ SystemIndicator {
 
     percentage: diskUsage
     label: "DSK"
-    primaryColor: {
-        if (diskUsage >= 0.90) return Config.getColor("state.error")
-        if (diskUsage >= 0.80) return Config.getColor("state.warning")
-        return Config.getColor("primary.rosewater")
-    }
+    primaryColor: Config.barTextColor
     tooltipText: "Disk (" + mountPoint + "): " + diskUsed + " / " + diskTotal + " (" + Math.round(diskUsage * 100) + "% used)\nAvailable: " + diskAvail
 
     // Use df to get disk usage

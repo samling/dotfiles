@@ -48,6 +48,7 @@ while true; do
 			# and pick again if no more unused images are remaining
 			[ -z "$img" ] && if read -r img; then true; else break 2; fi
 			swww img --resize "$RESIZE_TYPE" --outputs "$d" "$img"
+      matugen image --source-color-index 0 "$img"
 			unset -v img # Each image should only be used once per loop
 		done
 		sleep "${2:-$DEFAULT_INTERVAL}"

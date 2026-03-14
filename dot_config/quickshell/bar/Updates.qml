@@ -37,11 +37,7 @@ MouseArea {
         })
     }
 
-    property color primaryColor: {
-        if (root.isLoading) return Config.getColor("primary.blue")
-        if (root.hasUpdates) return Config.getColor("primary.teal")
-        return Config.getColor("text.muted")
-    }
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: updatesRow.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
@@ -164,10 +160,25 @@ MouseArea {
         }
     }
 
+    Timer {
+        id: updatesHideTimer
+        interval: 250
+        onTriggered: updatesPanel.visible = false
+    }
+
+    onPanelOpenChanged: {
+        if (panelOpen) {
+            updatesHideTimer.stop()
+            updatesPanel.visible = true
+        } else {
+            updatesHideTimer.restart()
+        }
+    }
+
     // Updates panel popup
     PanelWindow {
         id: updatesPanel
-        visible: root.panelOpen
+        visible: false
 
         anchors {
             top: true

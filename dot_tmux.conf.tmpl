@@ -105,6 +105,11 @@ set-option -g renumber-windows on
 # prompting to close the session
 set-environment -g 'IGNOREEOF' 10000
 
+# Set pane background to default
+set -g allow-passthrough on
+set-hook -g pane-focus-in 'select-pane -P bg=default,fg=default'
+set-hook -g pane-focus-out 'select-pane -P bg=colour0,fg=colour10'
+
 ##################
 ### STATUS BAR ###
 ##################

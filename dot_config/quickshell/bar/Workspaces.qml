@@ -13,9 +13,9 @@ Item {
     id: root
 
     // Theme colors
-    property color activeColor: Config.getColor("workspace.active")
-    property color activeSecondaryColor: Config.getColor("workspace.activeSecondary")
-    property color inactiveColor: Config.getColor("text.muted")
+    property color activeColor: Config.barTextColor
+    property color activeSecondaryColor: Config.barTextColor
+    property color inactiveColor: Qt.darker(Config.barTextColor, 1.4)
 
     // All occupied workspace IDs
     property var occupiedWorkspaces: []

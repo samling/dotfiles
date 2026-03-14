@@ -11,9 +11,7 @@ MouseArea {
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
 
-    property color primaryColor: root.hasNotifications
-        ? Config.getColor("primary.mauve")
-        : Config.getColor("text.muted")
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: notifRow.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
@@ -64,10 +62,25 @@ MouseArea {
             : "No notifications"
     }
 
+    Timer {
+        id: notifHideTimer
+        interval: 250
+        onTriggered: notificationListPopup.visible = false
+    }
+
+    onListOpenChanged: {
+        if (listOpen) {
+            notifHideTimer.stop()
+            notificationListPopup.visible = true
+        } else {
+            notifHideTimer.restart()
+        }
+    }
+
     // Notification list popup
     PanelWindow {
         id: notificationListPopup
-        visible: root.listOpen
+        visible: false
 
         anchors {
             top: true
