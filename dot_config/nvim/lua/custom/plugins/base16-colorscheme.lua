@@ -11,5 +11,14 @@ return {
       illuminate = true,
       dapui = true,
     })
+
+    local matugen_path = os.getenv("HOME") .. "/.config/nvim/generated.lua"
+    local file = io.open(matugen_path, "r")
+    if file then
+      io.close(file)
+      dofile(matugen_path)
+    else
+      vim.cmd('colorscheme base16-catppuccin-mocha')
+    end
   end,
 }

@@ -1,5 +1,8 @@
+{{- $host := index .host .chezmoi.hostname -}}
+{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
+{{ if $dynamicTheme -}}
 source = ~/.config/hypr/colors.conf
-
+{{ end }}
 background {
   monitor=
   blur_passes=1
@@ -19,18 +22,35 @@ background {
 input-field {
   monitor=
   size=200,50
+{{ if $dynamicTheme -}}
   check_color=$secondary
+{{ else -}}
+  check_color=rgb(30, 107, 204)
+{{ end -}}
   dots_center=true
   dots_size=0.200000
   dots_spacing=0.350000
   fade_on_empty=false
+{{ if $dynamicTheme -}}
   font_color=$secondary
+{{ else -}}
+  font_color=rgb(111, 45, 104)
+{{ end -}}
   halign=center
   hide_input=false
+{{ if $dynamicTheme -}}
   inner_color=$inverse_primary
   outer_color=$primary
+{{ else -}}
+  inner_color=rgba(0, 0, 0, 0.2)
+  outer_color=rgba(0, 0, 0, 0)
+{{ end -}}
   outline_thickness=2
+{{ if $dynamicTheme -}}
   placeholder_text=<i><span>Input Password...</span></i>
+{{ else -}}
+  placeholder_text=<i><span foreground="##cdd6f4">Input Password...</span></i>
+{{ end -}}
   position=0, -100
   rounding=-1
   valign=center

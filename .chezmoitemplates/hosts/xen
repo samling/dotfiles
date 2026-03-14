@@ -4,6 +4,7 @@ xen:
   desktop_environment: hyprland
   default_browser: google-chrome-stable
   chassis_type: laptop
+  dynamic_theme: true
 
   monitors:
     - name: eDP-1

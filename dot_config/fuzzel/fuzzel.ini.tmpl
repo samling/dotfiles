@@ -1,6 +1,11 @@
+{{- $host := index .host .chezmoi.hostname -}}
+{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
 [main]
-#include=~/.config/fuzzel/themes/catppuccin-macchiato-lavender.ini
+{{ if $dynamicTheme -}}
 include=~/.config/fuzzel/colors.ini
+{{ else -}}
+include=~/.config/fuzzel/themes/catppuccin-macchiato-lavender.ini
+{{ end -}}
 prompt="❯ "
 font=FiraSans:size=14,Noto Color Emoji:size=14,Symbols Nerd Font:size=14
 hide-before-typing=no

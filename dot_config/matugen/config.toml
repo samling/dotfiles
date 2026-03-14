@@ -19,6 +19,10 @@ input_path = "~/.config/matugen/nvim-base16-colorscheme.lua"
 output_path = "~/.config/nvim/generated.lua"
 post_hook = "pkill -SIGUSR1 nvim"
 
+[templates.vscode]
+input_path = "~/.config/matugen/vscode-matugen-theme.json"
+output_path = "~/.vscode/extensions/custom.matugen-theme-1.0.0/themes/matugen-color-theme.json"
+
 [templates.quickshell]
 input_path = "~/.config/matugen/quickshell-colors"
 output_path = "~/.config/quickshell/common/Colors.qml"
