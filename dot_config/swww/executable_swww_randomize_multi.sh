@@ -25,6 +25,6 @@ for d in $(swww query | cut -d: -f2 | tr -d ' '); do # see swww-query(1)
     # Select a random image for this display
     random_image=$(find "$1" -type f | shuf -n 1)
     swww img --resize "$RESIZE_TYPE" --outputs "$d" "$random_image"
-    matugen image --source-color-index 0 --contrast 0.4 -t scheme-fidelity "$random_image"
+    matugen image --source-color-index 3 --contrast 0.4 -t scheme-fidelity "$random_image"
     echo "Display $d: Wallpaper set to: $random_image"
 done

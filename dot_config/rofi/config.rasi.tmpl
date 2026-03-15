@@ -1,3 +1,5 @@
+{{- $host := index .host .chezmoi.hostname -}}
+{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
 configuration {
   modes: [
     window,
@@ -24,7 +26,7 @@ configuration {
     }
   }
 
-@import	 "colors/catppuccin-mocha.rasi"
+@import	 "colors/{{ ternary "matugen.rasi" "catppuccin-mocha.rasi" $dynamicTheme }}"
 * {
   lightfg:                     @text;
   lightbg:                     @mantle;
