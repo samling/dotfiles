@@ -11,9 +11,14 @@ return { -- You can easily change to a different colorscheme.
   lazy = false,
   priority = 1000,
   config = function()
+    -- Load matugen color overrides if available, otherwise use stock mocha
+    local overrides_path = os.getenv("HOME") .. "/.config/nvim/catppuccin-overrides.lua"
+    local ok, overrides = pcall(dofile, overrides_path)
+
     require('catppuccin').setup {
       flavour = 'mocha',
       transparent_background = true,
+      color_overrides = ok and { mocha = overrides } or {},
       integrations = {
         blink_cmp = true,
         cmp = true,
@@ -37,10 +42,7 @@ return { -- You can easily change to a different colorscheme.
         which_key = true
       }
     }
-    -- Load the colorscheme here
     vim.cmd.colorscheme 'catppuccin'
-
-    -- You can configure highlights by doing something like
     vim.cmd.hi 'Comment gui=none'
   end,
 }

@@ -469,10 +469,10 @@ Variants {
                                     anchors.fill: parent
                                     hoverEnabled: true
                                     cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        gridView.currentIndex = thumbDelegate.index
-                                        root.applySelection()
+                                    onContainsMouseChanged: {
+                                        if (containsMouse) gridView.currentIndex = thumbDelegate.index
                                     }
+                                    onClicked: root.applySelection()
                                 }
                             }
                         }
