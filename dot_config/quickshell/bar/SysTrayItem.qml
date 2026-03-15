@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import Quickshell.Wayland
+import Qt5Compat.GraphicalEffects
 import qs.common
 
 MouseArea {
@@ -75,6 +76,13 @@ MouseArea {
         width: parent.width
         height: parent.height
         smooth: true
+        visible: false
+    }
+
+    ColorOverlay {
+        anchors.fill: trayIcon
+        source: trayIcon
+        color: "black"
 
         // Subtle opacity change on hover
         opacity: root.containsMouse ? 1.0 : 0.85

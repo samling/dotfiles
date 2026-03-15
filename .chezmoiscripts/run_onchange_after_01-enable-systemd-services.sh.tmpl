@@ -28,6 +28,7 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   systemctl --user enable --now hyprpolkitagent
   systemctl --user enable --now hypridle
   systemctl --user enable --now swww
+  systemctl --user enable --now swww_change_wallpaper.timer
   #systemctl --user enable --now ags
   #systemctl --user enable --now waybar
 fi

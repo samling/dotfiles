@@ -44,6 +44,9 @@ bind = $mainMod, V, togglefloating,
 # Toggle window pinning
 bind = $mainMod SHIFT, P, pin
 
+# Center floating window
+bind = $mainMod, C, exec, hyprctl dispatch resizeactive exact 50% 50% && hyprctl dispatch centerwindow
+
 # Cycle wallpaper
 #bind = $mainMod SHIFT, R, exec, ~/.config/swww/swww_randomize_multi.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr' && notify-send "Cycled wallpaper"
 bind = $mainMod SHIFT, R, exec, ~/.config/swww/swww_randomize_multi.sh '/home/sboynton/Pictures/Wallpapers' && notify-send "Cycled wallpaper"
@@ -62,7 +65,7 @@ bind = $mainMod SHIFT, W, exec, pkill waybar && hyprctl dispatch exec waybar
 
 # Toggle cliphist in fuzzel
 # bind = $mainMod, C, exec, cliphist list | fuzzel -w 120 --dmenu | cliphist decode | wl-copy
-bind = $mainMod, c, exec, $copyMenu
+bind = $mainMod ALT, c, exec, $copyMenu
 
 # Hyprexpo
 $key = tab

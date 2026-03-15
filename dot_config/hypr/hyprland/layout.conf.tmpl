@@ -1,5 +1,3 @@
-{{- $host := index .host .chezmoi.hostname -}}
-{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
 #####################
 ### LOOK AND FEEL ###
 #####################
@@ -15,13 +13,8 @@ general {
 
     # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
     #col.active_border = rgb(99EEFF) rgb(FF99FF) 45deg
-{{- if $dynamicTheme }}
-    col.active_border = $primary
-    col.inactive_border = $secondary
-{{- else }}
     col.active_border = rgb(b4befe)
     col.inactive_border = rgba(595959aa)
-{{- end }}
 
     # Set to true enable resizing windows by clicking and dragging on borders and gaps
     resize_on_border = true
@@ -47,11 +40,7 @@ decoration {
         enabled = {{ if eq .chassis.type "laptop" }}false{{ else }}true{{ end }}
         range = 300
         render_power = 4
-{{- if $dynamicTheme }}
-        color = $shadow
-{{- else }}
         color = rgba(1a1a1aaf)
-{{- end }}
         offset = 0 40
         scale = 0.9
     }

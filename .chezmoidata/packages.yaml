@@ -575,6 +575,10 @@ packages:
       yay: clipse
     clipse-gui:
       yay: clipse-gui
+    satty:
+      pacman: satty
+    slurp:
+      pacman: slurp
 
   # X11 tools
   x11:

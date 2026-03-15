@@ -2,7 +2,7 @@ require('base16-colorscheme').setup({
   base00 = "{{colors.background.default.hex}}",
   base01 = "{{colors.surface_container_lowest.default.hex}}",
   base02 = "{{colors.surface_container_low.default.hex}}",
-  base03 = "{{colors.outline_variant.default.hex}}",
+  base03 = "{{colors.on_surface_variant.default.hex}}",
   base04 = "{{colors.on_surface_variant.default.hex}}",
   base05 = "{{colors.on_surface.default.hex}}",
   base06 = "{{colors.inverse_on_surface.default.hex}}",

@@ -1,14 +1,43 @@
-#!/bin/env bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-if [ "$1" == "ss" ]; then
-    #grim -g "$(slurp)" $(xdg-user-dir)/Pictures/Screenshots/$(date +'%s_grim.png') && notify-send "Screenshot saved in ~/Pictures/Screenshots"
-    MONITOR=$(hyprctl activeworkspace -j | jq -r '.monitor')
-    TIMESTAMP=$(date +'%Y-%m-%d-%H%M%S')
-    grim -c -o "${MONITOR}" "$(xdg-user-dir)/Pictures/Screenshots/${TIMESTAMP}_grim.png" && notify-send "Screenshot of monitor ${MONITOR} saved in ~/Pictures/Screenshots"
-elif [ "$1" == "areass" ]; then
-    hyprshot -s -m region -o ~/Pictures/Screenshots
-    notify-send "Screenshot saved in ~/Pictures/Screenshots"
-elif [ "$1" == "areasscb" ]; then
-    hyprshot -s -m region --clipboard-only
-    notify-send "Screenshot copied to clipboard"
-fi
+SCREENSHOT_DIR="$(xdg-user-dir PICTURES)/Screenshots"
+DATE_FMT="%Y-%m-%d-%H%M%S"
+OUTFILE="$SCREENSHOT_DIR/screenshot-$(date +"$DATE_FMT").png"
+mkdir -p "$SCREENSHOT_DIR"
+
+capture() {
+    satty --filename - \
+        --output-filename "$OUTFILE" \
+        --early-exit \
+        --actions-on-enter save-to-clipboard \
+        --copy-command 'wl-copy'
+}
+
+case "${1:-}" in
+    ss|monitor)
+        MONITOR=$(hyprctl activeworkspace -j | jq -r '.monitor')
+        grim -c -o "$MONITOR" - | capture
+        ;;
+    window)
+        GEOM=$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
+        grim -g "$GEOM" - | capture
+        ;;
+    areass|region)
+        region="$(slurp || true)"
+        [ -z "$region" ] && exit 0
+        grim -g "$region" - | capture
+        ;;
+    areasscb)
+        region="$(slurp || true)"
+        [ -z "$region" ] && exit 0
+        grim -g "$region" - | satty --filename - \
+            --early-exit \
+            --actions-on-enter save-to-clipboard \
+            --copy-command 'wl-copy'
+        ;;
+    *)
+        echo "Usage: screenshot {ss|monitor|window|areass|areasscb|region}" >&2
+        exit 1
+        ;;
+esac
