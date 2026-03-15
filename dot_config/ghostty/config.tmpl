@@ -1,3 +1,5 @@
+{{- $host := index .host .chezmoi.hostname -}}
+{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
 # set fish as the interactive shell while keeping zsh as the login shell
 #command = bash ~/dotfiles/linux/config/ghostty/launch-fish.sh
 
@@ -11,10 +13,10 @@ window-padding-x = 5
 window-padding-y = 0
 
 #=== Theme
-theme = catppuccin-mocha.conf
+theme = {{ ternary "matugen.conf" "catppuccin-mocha.conf" $dynamicTheme }}
 background-blur = true
 background-blur-radius = 100
-background-opacity = 0.9
+background-opacity = 0.75
 
 #=== Font
 # Get available fonts:

@@ -1,5 +1,23 @@
 [config]
 
+[config.custom_colors]
+term_red = "#f38ba8"
+term_green = "#a6e3a1"
+term_yellow = "#f9e2af"
+term_blue = "#89b4fa"
+term_magenta = "#cba6f7"
+term_cyan = "#94e2d5"
+term_orange = "#fab387"
+
+[templates.delta]
+input_path = "~/.config/matugen/delta.gitconfig"
+output_path = "~/.config/delta/matugen.gitconfig"
+
+[templates.bat]
+input_path = "~/.config/matugen/bat-matugen.tmTheme"
+output_path = "~/.config/bat/themes/matugen.tmTheme"
+post_hook = "bat cache --build"
+
 [templates.fuzzel]
 input_path = "~/.config/matugen/fuzzel.ini"
 output_path = "~/.config/fuzzel/colors.ini"
@@ -11,7 +29,7 @@ post_hook = "kill -SIGUSR2 $(pgrep ghostty)"
 
 [templates.hyprland]
 input_path = "~/.config/matugen/hyprland-colors.conf"
-output_path = "~/.config/hypr/colors.conf"
+output_path = "~/.config/hypr/hyprland/colors.conf"
 post_hook = "hyprctl reload"
 
 [templates.nvim]
