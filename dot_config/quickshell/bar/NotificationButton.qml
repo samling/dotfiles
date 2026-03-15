@@ -65,22 +65,24 @@ MouseArea {
     Timer {
         id: notifHideTimer
         interval: 250
-        onTriggered: notificationListPopup.visible = false
+        onTriggered: root._popupLoaded = false
     }
+
+    property bool _popupLoaded: false
 
     onListOpenChanged: {
         if (listOpen) {
             notifHideTimer.stop()
-            notificationListPopup.visible = true
+            root._popupLoaded = true
         } else {
             notifHideTimer.restart()
         }
     }
 
     // Notification list popup
-    PanelWindow {
-        id: notificationListPopup
-        visible: false
+    LazyLoader {
+        active: root._popupLoaded
+        component: PanelWindow {
 
         anchors {
             top: true
@@ -116,9 +118,11 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Fly out from top animation
+            // Fly in/out animation
             clip: true
-            y: root.listOpen ? 0 : -600
+            property bool showContent: false
+            Component.onCompleted: showContent = true
+            y: showContent && root.listOpen ? 0 : -600
 
             Behavior on y {
                 NumberAnimation {
@@ -299,6 +303,7 @@ MouseArea {
                     }
                 }
             }
+        }
         }
     }
 }

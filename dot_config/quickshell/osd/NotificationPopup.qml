@@ -10,9 +10,10 @@ import Quickshell.Hyprland
 Scope {
     id: notificationPopup
 
-    PanelWindow {
-        id: root
-        visible: (Notifications.popupList.length > 0) && !GlobalStates.screenLocked
+    LazyLoader {
+        active: (Notifications.popupList.length > 0) && !GlobalStates.screenLocked
+        component: PanelWindow {
+            id: root
         screen: Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name) ?? null
 
         WlrLayershell.namespace: "quickshell:notificationPopup"
@@ -43,6 +44,7 @@ Scope {
             implicitWidth: parent.width - 8
             implicitHeight: parent.height - 8
             popup: true
+        }
         }
     }
 }

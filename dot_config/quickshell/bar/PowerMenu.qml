@@ -46,7 +46,7 @@ MouseArea {
     Timer {
         id: powerMenuHideTimer
         interval: 250
-        onTriggered: powerMenuPopup.visible = false
+        onTriggered: root._popupLoaded = false
     }
 
     // Delay screenshot launch until after popup is hidden
@@ -62,18 +62,20 @@ MouseArea {
         screenshotTimer.start()
     }
 
+    property bool _popupLoaded: false
+
     onMenuOpenChanged: {
         if (menuOpen) {
             powerMenuHideTimer.stop()
-            powerMenuPopup.visible = true
+            root._popupLoaded = true
         } else {
             powerMenuHideTimer.restart()
         }
     }
 
-    PanelWindow {
-        id: powerMenuPopup
-        visible: false
+    LazyLoader {
+        active: root._popupLoaded
+        component: PanelWindow {
 
         anchors {
             top: true
@@ -108,9 +110,11 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Fly out from top animation
+            // Fly in/out animation
             clip: true
-            y: root.menuOpen ? 0 : -500
+            property bool showContent: false
+            Component.onCompleted: showContent = true
+            y: showContent && root.menuOpen ? 0 : -500
 
             Behavior on y {
                 NumberAnimation {
@@ -342,6 +346,7 @@ MouseArea {
                     }
                 }
             }
+        }
         }
     }
 }

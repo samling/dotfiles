@@ -47,8 +47,29 @@
 
     /* Catppuccin-compatible aliases for config.rasi */
     text:     @on-surface;
+    subtext1: @on-surface-variant;
+    subtext0: @on-surface-variant;
+    overlay2: @outline;
+    overlay1: @outline-variant;
+    overlay0: @outline-variant;
+    surface2: @surface-container-highest;
+    surface1: @surface-container;
+    surface0: @surface-container-low;
     base:     @surface;
-    mantle:   @surface-container-low;
-    red:      @error;
-    lavender: @primary;
+    mantle:   @surface-dim;
+    crust:    @surface-container-lowest;
+    rosewater: {{palettes.neutral._80.hex}};
+    flamingo: {{palettes.neutral._70.hex}};
+    pink:     {{palettes.error._80.hex}};
+    mauve:    {{palettes.neutral_variant._70.hex}};
+    red:      {{palettes.error._70.hex}};
+    maroon:   {{palettes.error._60.hex}};
+    peach:    {{palettes.primary._70.hex}};
+    yellow:   {{palettes.primary._80.hex}};
+    green:    {{palettes.tertiary._70.hex}};
+    teal:     {{palettes.tertiary._80.hex}};
+    sky:      {{palettes.secondary._80.hex}};
+    sapphire: {{palettes.secondary._70.hex}};
+    blue:     {{palettes.secondary._70.hex}};
+    lavender: {{palettes.neutral_variant._80.hex}};
 }

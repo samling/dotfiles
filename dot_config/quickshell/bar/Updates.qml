@@ -163,22 +163,24 @@ MouseArea {
     Timer {
         id: updatesHideTimer
         interval: 250
-        onTriggered: updatesPanel.visible = false
+        onTriggered: root._popupLoaded = false
     }
+
+    property bool _popupLoaded: false
 
     onPanelOpenChanged: {
         if (panelOpen) {
             updatesHideTimer.stop()
-            updatesPanel.visible = true
+            root._popupLoaded = true
         } else {
             updatesHideTimer.restart()
         }
     }
 
     // Updates panel popup
-    PanelWindow {
-        id: updatesPanel
-        visible: false
+    LazyLoader {
+        active: root._popupLoaded
+        component: PanelWindow {
 
         anchors {
             top: true
@@ -213,9 +215,11 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Fly out from top animation
+            // Fly in/out animation
             clip: true
-            y: root.panelOpen ? 0 : -500
+            property bool showContent: false
+            Component.onCompleted: showContent = true
+            y: showContent && root.panelOpen ? 0 : -500
 
             Behavior on y {
                 NumberAnimation {
@@ -582,6 +586,7 @@ MouseArea {
                     }
                 }
             }
+        }
         }
     }
 }
