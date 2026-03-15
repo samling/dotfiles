@@ -11,4 +11,5 @@ Singleton {
     id: root
     property bool sidebarRightOpen: false
     property bool screenLocked: false
+    property bool wallpaperPickerOpen: false
 }

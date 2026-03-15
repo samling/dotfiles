@@ -1,4 +1,7 @@
 {
+  "wallpaper": {
+    "directory": "/home/sboynton/Pictures/Wallpapers/Images/"
+  },
   "updates": {
     "criticalPackages": [
       "glibc",

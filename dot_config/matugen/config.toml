@@ -40,11 +40,6 @@ input_path = "~/.config/matugen/templates/hyprland-colors.conf"
 output_path = "~/.config/hypr/hyprland/colors.conf"
 post_hook = "hyprctl reload"
 
-[templates.nvim]
-input_path = "~/.config/matugen/templates/nvim-base16-colorscheme.lua"
-output_path = "~/.config/nvim/generated.lua"
-post_hook = "pkill -SIGUSR1 nvim"
-
 [templates.rofi]
 input_path = '~/.config/matugen/templates/rofi-colors.rasi'
 output_path = '~/.config/rofi/colors/matugen.rasi'

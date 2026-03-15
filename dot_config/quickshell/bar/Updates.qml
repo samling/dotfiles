@@ -476,6 +476,20 @@ MouseArea {
 
                         boundsBehavior: Flickable.StopAtBounds
 
+                        MouseArea {
+                            anchors.fill: parent
+                            propagateComposedEvents: true
+                            acceptedButtons: Qt.NoButton
+                            onWheel: (wheel) => {
+                                const scrollDistance = wheel.angleDelta.y * 3
+                                updatesList.contentY = Math.max(0,
+                                    Math.min(updatesList.contentY - scrollDistance,
+                                             updatesList.contentHeight - updatesList.height))
+                                wheel.accepted = true
+                            }
+                            onPressed: (mouse) => { mouse.accepted = false }
+                        }
+
                         ScrollBar.vertical: ScrollBar {
                             policy: ScrollBar.AsNeeded
                             contentItem: Rectangle {

@@ -58,7 +58,7 @@ ListView {
 
         onWheel: (wheel) => {
             // Custom scroll distance
-            const scrollDistance = wheel.angleDelta.y * 1.5
+            const scrollDistance = wheel.angleDelta.y * 3
             root.contentY = Math.max(0,
                 Math.min(root.contentY - scrollDistance,
                          root.contentHeight - root.height))
