@@ -62,11 +62,11 @@ MouseArea {
 
         menu: root.item.menu
         anchor.window: root.bar
-        anchor.rect.x: root.x + (root.vertical ? 0 : (root.bar?.width || 0))
-        anchor.rect.y: root.y + (root.vertical ? (root.bar?.height || 0) : 0) + 10
+        anchor.rect.x: root.bar ? root.mapToItem(root.bar.contentItem, 0, 0).x : 0
+        anchor.rect.y: root.bar ? root.mapToItem(root.bar.contentItem, 0, 0).y : 0
         anchor.rect.height: root.height
         anchor.rect.width: root.width
-        anchor.edges: root.invertSide ? (Edges.Top | Edges.Left) : (Edges.Bottom | Edges.Right)
+        anchor.edges: root.invertSide ? (Edges.Top | Edges.Left) : (Edges.Bottom | Edges.Left)
     }
 
     IconImage {
