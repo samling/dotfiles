@@ -12,4 +12,5 @@ Singleton {
     property bool available: Pipewire.defaultAudioSink?.ready ?? false
     property bool mutedState: Pipewire.defaultAudioSink?.audio?.muted ?? false
     property real percentage: Pipewire.defaultAudioSink?.audio?.volume ?? 0
+    property string deviceName: Pipewire.defaultAudioSink?.description ?? Pipewire.defaultAudioSink?.name ?? ""
 }

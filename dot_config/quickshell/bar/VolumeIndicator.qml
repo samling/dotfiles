@@ -38,6 +38,10 @@ MouseArea {
         hoverTarget: root
         text: {
             if (!root.available) return "Audio device not available";
+            let pct = Math.round(root.percentage * 100);
+            let vol = root.mutedState ? "Muted (" + pct + "%)" : "Volume: " + pct + "%";
+            let device = Volume.deviceName;
+            return device ? vol + "\n" + device : vol;
         }
     }
 }

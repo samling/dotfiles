@@ -34,13 +34,17 @@ MouseArea {
         }
     }
 
-    onClicked: (event) => {
-        switch (event.button) {
-        case Qt.LeftButton:
-            item.activate();
-            break;
-        case Qt.RightButton:
+    onPressed: (event) => {
+        if (event.button === Qt.RightButton) {
             if (item.hasMenu) {
+                // Update anchor position at open time since mapToItem bindings may be stale
+                if (root.bar) {
+                    let pos = root.mapToItem(root.bar.contentItem, 0, 0);
+                    menu.anchor.rect.x = pos.x;
+                    menu.anchor.rect.y = pos.y;
+                    menu.anchor.rect.width = root.width;
+                    menu.anchor.rect.height = root.height;
+                }
                 try {
                     menu.open();
                 } catch (e) {
@@ -49,6 +53,14 @@ MouseArea {
             } else {
                 item.secondaryActivate();
             }
+            event.accepted = true;
+        }
+    }
+
+    onClicked: (event) => {
+        switch (event.button) {
+        case Qt.LeftButton:
+            item.activate();
             break;
         case Qt.MiddleButton:
             item.secondaryActivate();
