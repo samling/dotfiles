@@ -1,5 +1,15 @@
 # Quickshell Configuration
 
+## Permissions
+
+Controlling the fan state and governor requires passwordless sudo:
+
+```bash
+# /etc/sudoers.d/quickshell
+sboynton ALL=(ALL) NOPASSWD: /usr/bin/fan_state
+sboynton ALL=(ALL) NOPASSWD: /usr/bin/cpupower
+```
+
 ## Files
 
 - `common/palette.json` - Color theme (Catppuccin Mocha by default)

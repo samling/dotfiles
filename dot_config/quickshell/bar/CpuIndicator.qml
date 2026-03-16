@@ -10,18 +10,32 @@ SystemIndicator {
     property var prevTotal: 0
     property string topProcesses: ""
     property string cpuGovernor: ""
+    property real cpuTemp: 0
+    property string fanState: "standard"
+
+    readonly property var fanModes: [
+        { value: "0", label: "Standard", icon: "\uf2c9" },
+        { value: "1", label: "Quiet",    icon: "\uf4b8" },
+        { value: "2", label: "High",     icon: "\uf72e" },
+        { value: "3", label: "Full",     icon: "\uf863" },
+    ]
+
+    readonly property var governorModes: [
+        { value: "performance", label: "Performance", icon: "\uf0e7" },
+        { value: "schedutil",   label: "Balanced",    icon: "\uf24e" },
+        { value: "powersave",   label: "Powersave",   icon: "\uf06c" },
+    ]
 
     percentage: cpuUsage
     label: "CPU"
+    suffix: root.cpuTemp > 0 ? "(" + root.cpuTemp + "C)" : ""
     primaryColor: Config.barTextColor
-    tooltipText: {
-        let text = "CPU Usage: " + Math.round(cpuUsage * 100) + "%"
-        text += "\nGovernor: " + cpuGovernor
-        if (topProcesses.length > 0) {
-            text += "\n\n─── Top Processes ───\n" + topProcesses
-        }
-        return text
+    tooltipText: ""
+
+    onClicked: {
+        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
     }
+
     // Read /sys/devices/system/cpu to get current CPU governor
     Process {
         id: cpuGov
@@ -31,6 +45,18 @@ SystemIndicator {
         stdout: StdioCollector {
             onStreamFinished: {
                 root.cpuGovernor = this.text.trim()
+            }
+        }
+    }
+
+    Process {
+        id: cpuTempProc
+        command: ["bash", "-c", "sensors -j | jq -r '.\"k10temp-pci-00c3\".Tctl.temp1_input'"]
+        running: true
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.cpuTemp = Math.round(parseFloat(this.text.trim()))
             }
         }
     }
@@ -82,6 +108,55 @@ SystemIndicator {
         }
     }
 
+    // Get current fan state
+    Process {
+        id: fanStateGetProc
+        command: ["sudo", "fan_state", "get"]
+        running: true
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.fanState = this.text.trim()
+            }
+        }
+    }
+
+    // Set fan state
+    Process {
+        id: fanStateSetProc
+        property string mode: "0"
+        command: ["sudo", "fan_state", "set", mode]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                fanStateGetProc.running = true
+            }
+        }
+    }
+
+    // Set CPU governor
+    Process {
+        id: cpuGovSetProc
+        property string governor: "schedutil"
+        command: ["sudo", "cpupower", "frequency-set", "-g", governor]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                cpuGov.running = true
+            }
+        }
+    }
+
+    function setFanState(mode) {
+        fanStateSetProc.mode = mode
+        fanStateSetProc.running = true
+    }
+
+    function setCpuGovernor(governor) {
+        cpuGovSetProc.governor = governor
+        cpuGovSetProc.running = true
+    }
+
     Timer {
         interval: 2000
         running: true
@@ -89,6 +164,7 @@ SystemIndicator {
         onTriggered: {
             cpuProc.running = true
             cpuGov.running = true
+            cpuTempProc.running = true
             topCpuProc.running = true
         }
     }
@@ -96,6 +172,8 @@ SystemIndicator {
     Component.onCompleted: {
         cpuProc.running = true
         cpuGov.running = true
+        cpuTempProc.running = true
         topCpuProc.running = true
+        fanStateGetProc.running = true
     }
 }

@@ -13,7 +13,7 @@ MouseArea {
     readonly property bool isPluggedIn: Battery.isPluggedIn
     readonly property string timeString: Battery.timeString
 
-    property bool showWattage: false
+    property bool showWattage: true
     property color primaryColor: Config.barTextColor
 
     implicitWidth: batteryText.implicitWidth + 8

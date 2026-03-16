@@ -11,6 +11,7 @@ MouseArea {
     property string label: ""    // Short label like "CPU", "MEM", "DSK"
     property color primaryColor: Config.barTextColor
     property string tooltipText: ""
+    property string suffix: ""  // Optional text after percentage, e.g. "(65C)"
 
     implicitWidth: indicatorRow.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
@@ -35,9 +36,9 @@ MouseArea {
             }
         }
 
-        // Percentage value
+        // Percentage value + optional suffix
         Text {
-            text: Math.round(root.percentage * 100) + "%"
+            text: Math.round(root.percentage * 100) + "%" + (root.suffix.length > 0 ? " " + root.suffix : "")
             color: root.primaryColor
             font.pixelSize: Config.fontSizeBase
             font.weight: Font.DemiBold

@@ -7,6 +7,10 @@ Item {
     id: root
     property var screen: root.QsWindow.window?.screen
 
+    InfoPanel {
+        cpuIndicator: cpuWidget
+    }
+
     // Left section
     RowLayout {
         id: leftSection
