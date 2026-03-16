@@ -9,16 +9,30 @@ SystemIndicator {
     property var prevIdle: 0
     property var prevTotal: 0
     property string topProcesses: ""
+    property string cpuGovernor: ""
 
     percentage: cpuUsage
     label: "CPU"
     primaryColor: Config.barTextColor
     tooltipText: {
         let text = "CPU Usage: " + Math.round(cpuUsage * 100) + "%"
+        text += "\nGovernor: " + cpuGovernor
         if (topProcesses.length > 0) {
             text += "\n\n─── Top Processes ───\n" + topProcesses
         }
         return text
+    }
+    // Read /sys/devices/system/cpu to get current CPU governor
+    Process {
+        id: cpuGov
+        command: ["cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"]
+        running: true
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.cpuGovernor = this.text.trim()
+            }
+        }
     }
 
     // Read /proc/stat to calculate CPU usage
@@ -74,12 +88,14 @@ SystemIndicator {
         repeat: true
         onTriggered: {
             cpuProc.running = true
+            cpuGov.running = true
             topCpuProc.running = true
         }
     }
 
     Component.onCompleted: {
         cpuProc.running = true
+        cpuGov.running = true
         topCpuProc.running = true
     }
 }
