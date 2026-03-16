@@ -1,3 +1,1 @@
-{{- $host := index .host .chezmoi.hostname -}}
-{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
---theme={{ ternary "matugen" "Catppuccin Mocha" $dynamicTheme }}
+--theme="Catppuccin Mocha"

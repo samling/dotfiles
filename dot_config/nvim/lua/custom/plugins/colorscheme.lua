@@ -11,10 +11,6 @@ return { -- You can easily change to a different colorscheme.
   lazy = false,
   priority = 1000,
   config = function()
-    -- Load matugen color overrides if available, otherwise use stock mocha
-    local overrides_path = os.getenv("HOME") .. "/.config/nvim/catppuccin-overrides.lua"
-    local ok, overrides = pcall(dofile, overrides_path)
-
     require('catppuccin').setup {
       flavour = 'mocha',
       transparent_background = true,
