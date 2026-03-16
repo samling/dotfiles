@@ -1,0 +1,167 @@
+#!/usr/bin/env bash
+# chezmoi-pkg-audit — Compare packages.yaml against what's installed on the system.
+#
+# Reports:
+#   1. Packages defined in enabled groups but NOT installed
+#   2. Explicitly installed packages NOT tracked in any enabled group
+#
+# Usage: chezmoi-pkg-audit [--all-groups] [--missing-only] [--untracked-only]
+
+set -euo pipefail
+
+CHEZMOI_DIR="${CHEZMOI_DIR:-$(chezmoi source-path)}"
+PACKAGES_FILE="$CHEZMOI_DIR/.chezmoidata/packages.yaml"
+HOSTS_DIR="$CHEZMOI_DIR/.chezmoitemplates/hosts"
+HOSTNAME="$(hostname)"
+HOST_FILE="$HOSTS_DIR/$HOSTNAME"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+show_missing=true
+show_untracked=true
+all_groups=false
+
+for arg in "$@"; do
+    case "$arg" in
+        --missing-only)   show_untracked=false ;;
+        --untracked-only) show_missing=false ;;
+        --all-groups)     all_groups=true ;;
+        -h|--help)
+            echo "Usage: chezmoi-pkg-audit [--all-groups] [--missing-only] [--untracked-only]"
+            echo ""
+            echo "  --all-groups      Check all package groups, not just enabled ones"
+            echo "  --missing-only    Only show packages defined but not installed"
+            echo "  --untracked-only  Only show installed packages not in config"
+            exit 0
+            ;;
+        *) echo "Unknown option: $arg"; exit 1 ;;
+    esac
+done
+
+if [[ ! -f "$PACKAGES_FILE" ]]; then
+    echo "Error: packages.yaml not found at $PACKAGES_FILE" >&2
+    exit 1
+fi
+
+if ! command -v yq &>/dev/null; then
+    echo "Error: yq is required (go-yq). Install with: pacman -S go-yq" >&2
+    exit 1
+fi
+
+# Determine enabled groups
+if [[ "$all_groups" == true ]]; then
+    mapfile -t enabled_groups < <(
+        yq '.packages | keys | .[] | select(. != "taps")' "$PACKAGES_FILE"
+    )
+    echo -e "${CYAN}Checking all package groups${RESET}"
+else
+    if [[ ! -f "$HOST_FILE" ]]; then
+        echo "Error: Host file not found at $HOST_FILE" >&2
+        echo "Available hosts:"
+        ls "$HOSTS_DIR"
+        exit 1
+    fi
+    mapfile -t enabled_groups < <(
+        yq ".$HOSTNAME.packageGroups.enabled[]" "$HOST_FILE"
+    )
+    echo -e "${CYAN}Host:${RESET} $HOSTNAME"
+fi
+
+echo -e "${CYAN}Enabled groups:${RESET} ${enabled_groups[*]}"
+echo ""
+
+# Collect expected packages from enabled groups
+# Arrays: expected_pacman[pkg]=group, expected_yay[pkg]=group
+declare -A expected_pacman
+declare -A expected_yay
+
+for group in "${enabled_groups[@]}"; do
+    # Get pacman packages for this group
+    while IFS=$'\t' read -r pkg_name mgr_pkg; do
+        [[ -z "$mgr_pkg" ]] && continue
+        expected_pacman["$mgr_pkg"]="$group"
+    done < <(
+        yq -r ".packages.${group} // {} | to_entries[] | select(.value.pacman) | [.key, .value.pacman] | @tsv" "$PACKAGES_FILE" 2>/dev/null
+    )
+
+    # Get yay/AUR packages for this group
+    while IFS=$'\t' read -r pkg_name mgr_pkg; do
+        [[ -z "$mgr_pkg" ]] && continue
+        expected_yay["$mgr_pkg"]="$group"
+    done < <(
+        yq -r ".packages.${group} // {} | to_entries[] | select(.value.yay) | [.key, .value.yay] | @tsv" "$PACKAGES_FILE" 2>/dev/null
+    )
+done
+
+# Merge all expected packages (pacman + yay both install to pacman db)
+declare -A all_expected
+for pkg in "${!expected_pacman[@]}"; do
+    all_expected["$pkg"]="${expected_pacman[$pkg]}"
+done
+for pkg in "${!expected_yay[@]}"; do
+    all_expected["$pkg"]="${expected_yay[$pkg]}"
+done
+
+# Get installed packages
+declare -A installed
+while read -r pkg; do
+    installed["$pkg"]=1
+done < <(pacman -Qq 2>/dev/null)
+
+# Also get explicitly installed packages (not deps)
+declare -A explicit
+while read -r pkg; do
+    explicit["$pkg"]=1
+done < <(pacman -Qqe 2>/dev/null)
+
+# Report: defined but not installed
+if [[ "$show_missing" == true ]]; then
+    missing=()
+    for pkg in $(printf '%s\n' "${!all_expected[@]}" | sort); do
+        if [[ -z "${installed[$pkg]:-}" ]]; then
+            missing+=("$pkg (${all_expected[$pkg]})")
+        fi
+    done
+
+    if [[ ${#missing[@]} -gt 0 ]]; then
+        echo -e "${RED}${BOLD}Defined but NOT installed (${#missing[@]}):${RESET}"
+        for entry in "${missing[@]}"; do
+            echo -e "  ${RED}✗${RESET} $entry"
+        done
+    else
+        echo -e "${GREEN}${BOLD}All defined packages are installed.${RESET}"
+    fi
+    echo ""
+fi
+
+# Report: explicitly installed but not tracked
+if [[ "$show_untracked" == true ]]; then
+    untracked=()
+    for pkg in $(printf '%s\n' "${!explicit[@]}" | sort); do
+        if [[ -z "${all_expected[$pkg]:-}" ]]; then
+            untracked+=("$pkg")
+        fi
+    done
+
+    if [[ ${#untracked[@]} -gt 0 ]]; then
+        echo -e "${YELLOW}${BOLD}Explicitly installed but NOT in config (${#untracked[@]}):${RESET}"
+        for entry in "${untracked[@]}"; do
+            echo -e "  ${YELLOW}?${RESET} $entry"
+        done
+    else
+        echo -e "${GREEN}${BOLD}All explicitly installed packages are tracked.${RESET}"
+    fi
+    echo ""
+fi
+
+# Summary
+total_expected=${#all_expected[@]}
+total_installed=${#installed[@]}
+total_explicit=${#explicit[@]}
+echo -e "${BOLD}Summary:${RESET} $total_expected defined | $total_explicit explicitly installed | $total_installed total installed"

@@ -299,6 +299,8 @@ packages:
     smbclient:
       pacman: smbclient
       apt: smbclient
+    wireshark:
+      pacman: wireshark-qt
 
   # Media and graphics
   media:
@@ -435,8 +437,8 @@ packages:
       yay: nerd-fonts
     apple-fonts:
       yay: apple-fonts
-    ttf-ms-win11-auto:
-      yay: ttf-ms-win11-auto
+    ttf-ms-fonts:
+      yay: ttf-ms-fonts
 
   # Themes and appearance
   themes:
@@ -579,6 +581,8 @@ packages:
       pacman: satty
     slurp:
       pacman: slurp
+    rofi:
+      pacman: rofi
 
   # X11 tools
   x11:
