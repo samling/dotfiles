@@ -32,7 +32,7 @@ MouseArea {
 
         // Bell icon
         Text {
-            text: "🔔"
+            text: "🔔\uFE0E"
             color: root.primaryColor
             font.pixelSize: Config.fontSizeBase
 
@@ -165,7 +165,7 @@ MouseArea {
 
                         // Bell icon
                         Text {
-                            text: "🔔"
+                            text: "🔔\uFE0E"
                             font.pixelSize: Config.fontSizeHeader
                             color: Config.getColor("primary.mauve")
                         }
@@ -270,7 +270,7 @@ MouseArea {
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            text: "🔕"
+                            text: "🔕\uFE0E"
                             font.pixelSize: Config.fontSizeIconXL
                             opacity: 0.5
                         }

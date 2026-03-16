@@ -33,7 +33,7 @@ MouseArea {
         text: {
             if (!root.available) return "BAT N/A"
             let pct = Math.round(root.percentage * 100)
-            let base = root.isCharging ? pct + "⚡" : "BAT " + pct + "%"
+            let base = root.isCharging ? "BAT " + pct + " ⚡\uFE0E" : "BAT " + pct + "%"
             if (root.showWattage && Battery.energyRate > 0) {
                 base += " (" + Battery.energyRate.toFixed(1) + "W)"
             }
