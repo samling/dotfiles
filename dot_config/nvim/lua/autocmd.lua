@@ -135,3 +135,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
   end
 })
+
+-- [[ Matugen ]]
+-- Reload catppuccin with matugen overrides on SIGUSR1
+vim.api.nvim_create_autocmd("Signal", {
+  pattern = "SIGUSR1",
+  callback = function()
+    local overrides_path = os.getenv("HOME") .. "/.config/nvim/catppuccin-overrides.lua"
+    local ok, overrides = pcall(dofile, overrides_path)
+    require('catppuccin').setup(vim.tbl_deep_extend("force",
+      require('catppuccin').options,
+      { color_overrides = ok and { mocha = overrides } or {} }
+    ))
+    vim.cmd.colorscheme 'catppuccin'
+    -- Refresh lualine with the new catppuccin theme
+    local lualine_ok, lualine = pcall(require, 'lualine')
+    if lualine_ok then
+      lualine.setup({ options = { theme = 'catppuccin' } })
+    end
+  end,
+})
+
+
+

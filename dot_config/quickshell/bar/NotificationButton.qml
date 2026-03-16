@@ -11,9 +11,7 @@ MouseArea {
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
 
-    property color primaryColor: root.hasNotifications
-        ? Config.getColor("primary.mauve")
-        : Config.getColor("text.muted")
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: notifRow.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
@@ -64,10 +62,27 @@ MouseArea {
             : "No notifications"
     }
 
+    Timer {
+        id: notifHideTimer
+        interval: 250
+        onTriggered: root._popupLoaded = false
+    }
+
+    property bool _popupLoaded: false
+
+    onListOpenChanged: {
+        if (listOpen) {
+            notifHideTimer.stop()
+            root._popupLoaded = true
+        } else {
+            notifHideTimer.restart()
+        }
+    }
+
     // Notification list popup
-    PanelWindow {
-        id: notificationListPopup
-        visible: root.listOpen
+    LazyLoader {
+        active: root._popupLoaded
+        component: PanelWindow {
 
         anchors {
             top: true
@@ -103,9 +118,11 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Fly out from top animation
+            // Fly in/out animation
             clip: true
-            y: root.listOpen ? 0 : -600
+            property bool showContent: false
+            Component.onCompleted: showContent = true
+            y: showContent && root.listOpen ? 0 : -600
 
             Behavior on y {
                 NumberAnimation {
@@ -286,6 +303,7 @@ MouseArea {
                     }
                 }
             }
+        }
         }
     }
 }

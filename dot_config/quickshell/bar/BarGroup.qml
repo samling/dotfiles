@@ -4,25 +4,23 @@ import qs.common
 
 Item {
     id: root
-    property real padding: 5
+    property color accentColor: "transparent"
     default property alias items: gridLayout.children
 
-    implicitWidth: gridLayout.implicitWidth + Config.groupImplicitWidthPadding
-    implicitHeight: gridLayout.implicitHeight
+    implicitWidth: gridLayout.implicitWidth + Config.pillHorizontalPadding * 2
+    implicitHeight: parent ? parent.height : Config.barHeight
 
     Rectangle {
         id: background
         anchors {
             fill: parent
-            topMargin: 0
-            bottomMargin: 0
-            leftMargin: Config.groupBackgroundMarginLeft
-            rightMargin: Config.groupBackgroundMarginRight
+            topMargin: Config.pillVerticalMargin
+            bottomMargin: Config.pillVerticalMargin
         }
-        color: "transparent"
-        border.color: Config.groupBorderColor
-        border.width: Config.groupBorderWidth
-        radius: Config.groupRadius
+        color: root.accentColor
+        radius: Config.pillRadius
+        border.width: 2
+        border.color: "#1e1e2e"
     }
 
     GridLayout {
@@ -30,9 +28,12 @@ Item {
         columns: -1
 
         anchors {
-            verticalCenter: parent.verticalCenter
+            top: parent.top
+            bottom: parent.bottom
             left: parent.left
             right: parent.right
+            leftMargin: Config.pillHorizontalPadding
+            rightMargin: Config.pillHorizontalPadding
         }
         columnSpacing: Config.groupColumnSpacing
         rowSpacing: Config.groupRowSpacing

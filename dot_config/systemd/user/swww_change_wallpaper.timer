@@ -1,0 +1,10 @@
+[Unit]
+Description=Change wallpaper periodically using SWWW
+After=swww.service
+
+[Timer]
+OnActiveSec=0
+OnUnitActiveSec=60min
+
+[Install]
+WantedBy=timers.target

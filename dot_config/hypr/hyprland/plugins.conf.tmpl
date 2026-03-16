@@ -1,3 +1,5 @@
+{{- $host := index .host .chezmoi.hostname -}}
+{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
 ###############
 ### PLUGINS ###
 ###############
@@ -15,18 +17,18 @@ plugin {
   }
 
   hyprbars {
-    bar_height = 28
+    bar_height = 24
     bar_color = rgb(1e1e2e)
     bar_text_size = 12
     bar_text_font = Fira Sans
     bar_button_padding = 8
-    bar_padding = 8
+    bar_padding = 6
     bar_precedence_over_border = true
     bar_part_of_window = true
-    hyprbars-button = rgb(1e1e2e), 20, , hyprctl dispatch killactive
-    hyprbars-button = rgb(1e1e2e), 20, , hyprctl dispatch fullscreen 1
-    hyprbars-button = rgb(1e1e2e), 20, , hyprctl dispatch togglefloating
-    hyprbars-button = rgb(1e1e2e), 20, 󰐃, hyprctl dispatch pin
+    hyprbars-button = ${{ ternary "term_red" "red" $dynamicTheme }}, 16, ⠀, hyprctl dispatch killactive
+    hyprbars-button = ${{ ternary "term_yellow" "yellow" $dynamicTheme }}, 16, ⠀, hyprctl dispatch fullscreen 1
+    hyprbars-button = ${{ ternary "term_green" "green" $dynamicTheme }}, 16, ⠀, hyprctl dispatch togglefloating
+    hyprbars-button = ${{ ternary "term_orange" "orange" $dynamicTheme }}, 16, 󰐃, hyprctl dispatch pin
    }
 
   hy3 {

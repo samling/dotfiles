@@ -6,7 +6,7 @@ import Quickshell
 MouseArea {
     id: root
 
-    property color primaryColor: Config.getColor("primary.blue")
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: logoText.implicitWidth + 12
     implicitHeight: parent ? parent.height : Config.barHeight
@@ -43,9 +43,39 @@ MouseArea {
     }
 
     // Power menu popup using PanelWindow approach
-    PanelWindow {
-        id: powerMenuPopup
-        visible: root.menuOpen
+    Timer {
+        id: powerMenuHideTimer
+        interval: 250
+        onTriggered: root._popupLoaded = false
+    }
+
+    // Delay screenshot launch until after popup is hidden
+    property string _screenshotMode: ""
+    Timer {
+        id: screenshotTimer
+        interval: 300
+        onTriggered: Quickshell.execDetached(["/home/sboynton/.config/hypr/scripts/screenshot", root._screenshotMode])
+    }
+    function takeScreenshot(mode) {
+        menuOpen = false
+        _screenshotMode = mode
+        screenshotTimer.start()
+    }
+
+    property bool _popupLoaded: false
+
+    onMenuOpenChanged: {
+        if (menuOpen) {
+            powerMenuHideTimer.stop()
+            root._popupLoaded = true
+        } else {
+            powerMenuHideTimer.restart()
+        }
+    }
+
+    LazyLoader {
+        active: root._popupLoaded
+        component: PanelWindow {
 
         anchors {
             top: true
@@ -80,9 +110,11 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Fly out from top animation
+            // Fly in/out animation
             clip: true
-            y: root.menuOpen ? 0 : -500
+            property bool showContent: false
+            Component.onCompleted: showContent = true
+            y: showContent && root.menuOpen ? 0 : -500
 
             Behavior on y {
                 NumberAnimation {
@@ -283,21 +315,9 @@ MouseArea {
                         // Fullscreen
                         PowerMenuButton {
                             icon: "\uf03e"
-                            label: "Fullscreen"
+                            label: "Monitor"
                             accentColor: Config.getColor("primary.teal")
-                            onActivated: {
-                                root.menuOpen = false
-                                Qt.callLater(function() {
-                                    const proc = Qt.createQmlObject(`
-                                        import Quickshell.Io
-                                        Process {
-                                            command: ["hyprshot", "-m", "output"]
-                                            onExited: destroy()
-                                        }
-                                    `, root)
-                                    proc.running = true
-                                })
-                            }
+                            onActivated: root.takeScreenshot("monitor")
                         }
 
                         // Window
@@ -305,19 +325,7 @@ MouseArea {
                             icon: "\uf2d0"
                             label: "Window"
                             accentColor: Config.getColor("primary.teal")
-                            onActivated: {
-                                root.menuOpen = false
-                                Qt.callLater(function() {
-                                    const proc = Qt.createQmlObject(`
-                                        import Quickshell.Io
-                                        Process {
-                                            command: ["hyprshot", "-m", "window"]
-                                            onExited: destroy()
-                                        }
-                                    `, root)
-                                    proc.running = true
-                                })
-                            }
+                            onActivated: root.takeScreenshot("window")
                         }
 
                         // Region
@@ -325,43 +333,20 @@ MouseArea {
                             icon: "\uf125"
                             label: "Region"
                             accentColor: Config.getColor("primary.teal")
-                            onActivated: {
-                                root.menuOpen = false
-                                Qt.callLater(function() {
-                                    const proc = Qt.createQmlObject(`
-                                        import Quickshell.Io
-                                        Process {
-                                            command: ["hyprshot", "-m", "region"]
-                                            onExited: destroy()
-                                        }
-                                    `, root)
-                                    proc.running = true
-                                })
-                            }
+                            onActivated: root.takeScreenshot("region")
                         }
 
-                        // Active
+                        // Active (same as window — captures focused window)
                         PowerMenuButton {
                             icon: "\uf065"
                             label: "Active"
                             accentColor: Config.getColor("primary.teal")
-                            onActivated: {
-                                root.menuOpen = false
-                                Qt.callLater(function() {
-                                    const proc = Qt.createQmlObject(`
-                                        import Quickshell.Io
-                                        Process {
-                                            command: ["hyprshot", "-m", "active"]
-                                            onExited: destroy()
-                                        }
-                                    `, root)
-                                    proc.running = true
-                                })
-                            }
+                            onActivated: root.takeScreenshot("window")
                         }
                     }
                 }
             }
+        }
         }
     }
 }

@@ -13,18 +13,19 @@ MouseArea {
     readonly property bool isPluggedIn: Battery.isPluggedIn
     readonly property string timeString: Battery.timeString
 
-    property color primaryColor: {
-        if (!root.available) return Config.batteryUnavailableColor
-        if (root.isCharging) return Config.batteryChargingColor
-        if (root.percentage <= Config.batteryCriticalThreshold) return Config.batteryCriticalColor
-        if (root.percentage <= Config.batteryLowThreshold) return Config.batteryLowColor
-        if (root.percentage <= Config.batteryMediumThreshold) return Config.batteryMediumColor
-        return Config.batteryHighColor
-    }
+    property bool showWattage: false
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: batteryText.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
     hoverEnabled: true
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+    onClicked: event => {
+        if (event.button === Qt.RightButton) {
+            showWattage = !showWattage
+        }
+    }
 
     Text {
         id: batteryText
@@ -32,7 +33,11 @@ MouseArea {
         text: {
             if (!root.available) return "BAT N/A"
             let pct = Math.round(root.percentage * 100)
-            return root.isCharging ? pct + "⚡" : "BAT " + pct + "%"
+            let base = root.isCharging ? pct + "⚡" : "BAT " + pct + "%"
+            if (root.showWattage && Battery.energyRate > 0) {
+                base += " (" + Battery.energyRate.toFixed(1) + "W)"
+            }
+            return base
         }
         color: root.primaryColor
         font.pixelSize: Config.fontSizeBase

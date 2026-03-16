@@ -10,11 +10,11 @@ MouseArea {
     readonly property string nodeName: Tailscale.nodeName
     readonly property string tailnetName: Tailscale.tailnetName
     
-    property int iconSize: Config.barHeight - 10
+    property int iconSize: Config.barHeight - (Config.pillVerticalMargin * 2) - 8
     property int dotSize: Math.floor(iconSize / 5) // 3x3 grid with spacing
     property int dotSpacing: Math.floor(dotSize * 0.8)
-    property color connectedColor: Config.getColor("text.white")
-    property color disconnectedColor: Config.getColor("text.muted")
+    property color connectedColor: Config.barTextColor
+    property color disconnectedColor: Qt.lighter(Config.barTextColor, 1.4)
     
     implicitWidth: iconSize + 12
     implicitHeight: iconSize

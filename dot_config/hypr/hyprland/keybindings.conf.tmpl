@@ -21,8 +21,10 @@ bind = $mainMod, E, exec, uwsm app -- $fileManager
 # Launch application launcher
 # Note: Some applications may depend on which python is set at a global level (like gearlever); if an application isn't
 # launching from rofi, try setting `pyenv global system`
-#bind = $mainMod, space, exec, $rofi -show drun -run-command "uwsm app -- {cmd}"
-bind = $mainMod, space, exec, $fuzzel --launch-prefix='uwsm app -- '
+# rofi
+bind = $mainMod, space, exec, $launcher -show drun -run-command "uwsm app -- {cmd}"
+# fuzzel
+#bind = $mainMod, space, exec, $launcher --launch-prefix='uwsm app -- '
 
 # Launch emoji picker
 # Not sure which keybinding will stick yet
@@ -36,7 +38,8 @@ bind = $mainMod SHIFT, F, fullscreenstate, 2,
 
 # Send and retrieve windows from scratchpad
 bind = $mainMod, S, exec, ~/.config/hypr/scripts/scratchpad
-bind = $mainMod SHIFT, S, exec, ~/.config/hypr/scripts/scratchpad -m "fuzzel -d" -g -l
+# bind = $mainMod SHIFT, S, exec, ~/.config/hypr/scripts/scratchpad -m "fuzzel -d" -g -l
+bind = $mainMod SHIFT, S, exec, ~/.config/hypr/scripts/scratchpad -m "rofi -dmenu" -g -l
 
 # Toggle floating window
 bind = $mainMod, V, togglefloating,
@@ -44,9 +47,15 @@ bind = $mainMod, V, togglefloating,
 # Toggle window pinning
 bind = $mainMod SHIFT, P, pin
 
+# Center floating window
+bind = $mainMod, C, exec, hyprctl dispatch resizeactive exact 50% 50% && hyprctl dispatch centerwindow
+
 # Cycle wallpaper
 #bind = $mainMod SHIFT, R, exec, ~/.config/swww/swww_randomize_multi.sh '/home/sboynton/Insync/samlingx@gmail.com/Google Drive/Apps/Desktoppr' && notify-send "Cycled wallpaper"
 bind = $mainMod SHIFT, R, exec, ~/.config/swww/swww_randomize_multi.sh '/home/sboynton/Pictures/Wallpapers' && notify-send "Cycled wallpaper"
+
+# Invoke wallpaper picker
+bind = $mainMod SHIFT, P, exec, qs ipc call wallpaper toggle
 
 # End screen recording if one is starting
 bind = $mainMod ALT, P, exec, pkill wf-recorder && notify-send "Stopped screen recording"
@@ -62,7 +71,7 @@ bind = $mainMod SHIFT, W, exec, pkill waybar && hyprctl dispatch exec waybar
 
 # Toggle cliphist in fuzzel
 # bind = $mainMod, C, exec, cliphist list | fuzzel -w 120 --dmenu | cliphist decode | wl-copy
-bind = $mainMod, c, exec, $copyMenu
+bind = $mainMod ALT, c, exec, $copyMenu
 
 # Hyprexpo
 $key = tab

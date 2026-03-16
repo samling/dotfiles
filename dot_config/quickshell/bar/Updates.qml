@@ -37,11 +37,7 @@ MouseArea {
         })
     }
 
-    property color primaryColor: {
-        if (root.isLoading) return Config.getColor("primary.blue")
-        if (root.hasUpdates) return Config.getColor("primary.teal")
-        return Config.getColor("text.muted")
-    }
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: updatesRow.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
@@ -164,10 +160,27 @@ MouseArea {
         }
     }
 
+    Timer {
+        id: updatesHideTimer
+        interval: 250
+        onTriggered: root._popupLoaded = false
+    }
+
+    property bool _popupLoaded: false
+
+    onPanelOpenChanged: {
+        if (panelOpen) {
+            updatesHideTimer.stop()
+            root._popupLoaded = true
+        } else {
+            updatesHideTimer.restart()
+        }
+    }
+
     // Updates panel popup
-    PanelWindow {
-        id: updatesPanel
-        visible: root.panelOpen
+    LazyLoader {
+        active: root._popupLoaded
+        component: PanelWindow {
 
         anchors {
             top: true
@@ -202,9 +215,11 @@ MouseArea {
             border.color: Config.getColor("border.subtle")
             radius: 12
 
-            // Fly out from top animation
+            // Fly in/out animation
             clip: true
-            y: root.panelOpen ? 0 : -500
+            property bool showContent: false
+            Component.onCompleted: showContent = true
+            y: showContent && root.panelOpen ? 0 : -500
 
             Behavior on y {
                 NumberAnimation {
@@ -461,6 +476,20 @@ MouseArea {
 
                         boundsBehavior: Flickable.StopAtBounds
 
+                        MouseArea {
+                            anchors.fill: parent
+                            propagateComposedEvents: true
+                            acceptedButtons: Qt.NoButton
+                            onWheel: (wheel) => {
+                                const scrollDistance = wheel.angleDelta.y * 3
+                                updatesList.contentY = Math.max(0,
+                                    Math.min(updatesList.contentY - scrollDistance,
+                                             updatesList.contentHeight - updatesList.height))
+                                wheel.accepted = true
+                            }
+                            onPressed: (mouse) => { mouse.accepted = false }
+                        }
+
                         ScrollBar.vertical: ScrollBar {
                             policy: ScrollBar.AsNeeded
                             contentItem: Rectangle {
@@ -571,6 +600,7 @@ MouseArea {
                     }
                 }
             }
+        }
         }
     }
 }

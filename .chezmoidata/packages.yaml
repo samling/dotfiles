@@ -453,6 +453,8 @@ packages:
     qt6ct:
       pacman: qt6ct
       apt: qt6ct
+    matugen:
+      yay: matugen-bin
 
   # Security
   security:
@@ -573,6 +575,10 @@ packages:
       yay: clipse
     clipse-gui:
       yay: clipse-gui
+    satty:
+      pacman: satty
+    slurp:
+      pacman: slurp
 
   # X11 tools
   x11:
@@ -678,8 +684,6 @@ packages:
       yay: hyprshot
     hyprpicker:
       pacman: hyprpicker
-    hyprsysteminfo:
-      yay: hyprsysteminfo
     hyprutils:
       pacman: hyprutils
     swww:

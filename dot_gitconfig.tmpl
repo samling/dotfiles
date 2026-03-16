@@ -1,3 +1,5 @@
+{{- $host := index .host .chezmoi.hostname -}}
+{{- $dynamicTheme := and (hasKey $host "dynamic_theme") (index $host "dynamic_theme") -}}
 [core]
         pager = delta
 
@@ -11,11 +13,11 @@
         diffFilter = delta --color-only
 
 [include]
-        path = ~/.config/delta/themes/catppuccin/catppuccin.gitconfig
+        path = {{ ternary "~/.config/delta/matugen.gitconfig" "~/.config/delta/themes/catppuccin/catppuccin.gitconfig" $dynamicTheme }}
 
 [delta]
     navigate = true
-    features = catppuccin-mocha unobtrusive-line-numbers decorations
+    features = {{ ternary "matugen" "catppuccin-mocha" $dynamicTheme }} unobtrusive-line-numbers decorations
     whitespace-error-style = 22 reverse
 
 [delta "unobtrusive-line-numbers"]

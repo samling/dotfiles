@@ -10,8 +10,8 @@ MouseArea {
     property string timeText: "00:00"
     property string dateText: "Thu, 11 Dec 2025"
 
-    property color primaryColor: Config.getColor("primary.lavender")
-    property color secondaryColor: Config.getColor("text.secondary")
+    property color primaryColor: Config.barTextColor
+    property color secondaryColor: Config.barTextColor
 
     implicitWidth: clockRow.implicitWidth + 12
     implicitHeight: parent ? parent.height : Config.barHeight

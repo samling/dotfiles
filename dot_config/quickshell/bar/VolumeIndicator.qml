@@ -10,10 +10,7 @@ MouseArea {
     readonly property bool mutedState: Volume.mutedState
     readonly property real percentage: Volume.percentage
 
-    property color primaryColor: {
-        if (root.mutedState) return Config.volumeMutedColor
-        return Config.volumeDefaultColor
-    }
+    property color primaryColor: Config.barTextColor
 
     implicitWidth: volumeText.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight

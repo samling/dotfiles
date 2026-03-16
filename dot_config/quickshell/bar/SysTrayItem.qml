@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import Quickshell.Wayland
+import Qt5Compat.GraphicalEffects
 import qs.common
 
 MouseArea {
@@ -61,11 +62,11 @@ MouseArea {
 
         menu: root.item.menu
         anchor.window: root.bar
-        anchor.rect.x: root.x + (root.vertical ? 0 : (root.bar?.width || 0))
-        anchor.rect.y: root.y + (root.vertical ? (root.bar?.height || 0) : 0) + 10
+        anchor.rect.x: root.bar ? root.mapToItem(root.bar.contentItem, 0, 0).x : 0
+        anchor.rect.y: root.bar ? root.mapToItem(root.bar.contentItem, 0, 0).y : 0
         anchor.rect.height: root.height
         anchor.rect.width: root.width
-        anchor.edges: root.invertSide ? (Edges.Top | Edges.Left) : (Edges.Bottom | Edges.Right)
+        anchor.edges: root.invertSide ? (Edges.Top | Edges.Left) : (Edges.Bottom | Edges.Left)
     }
 
     IconImage {
@@ -75,6 +76,13 @@ MouseArea {
         width: parent.width
         height: parent.height
         smooth: true
+        visible: false
+    }
+
+    ColorOverlay {
+        anchors.fill: trayIcon
+        source: trayIcon
+        color: "black"
 
         // Subtle opacity change on hover
         opacity: root.containsMouse ? 1.0 : 0.85
