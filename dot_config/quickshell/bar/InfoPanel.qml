@@ -384,7 +384,8 @@ Item {
                                     width: notifList.width - 6
                                     height: notifColumn.implicitHeight + 8
                                     radius: 6
-                                    color: notifRowMouse.containsMouse
+                                    property bool hovered: notifRowMouse.containsMouse || dismissMouse.containsMouse
+                                    color: hovered
                                         ? Config.getColor("background.tertiary")
                                         : notifRow.expanded
                                             ? Config.getColor("background.secondary")
@@ -493,16 +494,17 @@ Item {
                                                 Layout.preferredHeight: 18
                                                 radius: 4
                                                 color: dismissMouse.containsMouse
-                                                    ? Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.2)
+                                                    ? Config.getColor("state.error")
                                                     : "transparent"
-                                                opacity: notifRowMouse.containsMouse || notifRow.expanded ? 1.0 : 0.0
+                                                opacity: notifRow.hovered || notifRow.expanded ? 1.0 : 0.0
 
                                                 Behavior on opacity { NumberAnimation { duration: 100 } }
+                                                Behavior on color { ColorAnimation { duration: 100 } }
 
                                                 Text {
                                                     anchors.centerIn: parent
                                                     text: "✕"
-                                                    color: dismissMouse.containsMouse ? Config.getColor("state.error") : Config.getColor("text.muted")
+                                                    color: dismissMouse.containsMouse ? Config.getColor("background.crust") : Config.getColor("text.muted")
                                                     font.pixelSize: 8
                                                     font.weight: Font.Bold
                                                     font.family: Config.fontFamilyMonospace
