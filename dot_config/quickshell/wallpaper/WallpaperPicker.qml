@@ -55,8 +55,20 @@ Variants {
         property var imageList: []
         property bool loading: true
 
-        Component.onCompleted: {
-            generateThumbsProc.running = true
+        // Wait for user config to load before scanning wallpapers
+        onWallpaperDirChanged: {
+            if (Config.userConfigInitialized) {
+                generateThumbsProc.running = true
+            }
+        }
+
+        Connections {
+            target: Config
+            function onUserConfigInitializedChanged() {
+                if (Config.userConfigInitialized) {
+                    generateThumbsProc.running = true
+                }
+            }
         }
 
         // Generate thumbnails and get the listing in one shot
@@ -272,7 +284,7 @@ Variants {
                     Column {
                         anchors.centerIn: parent
                         spacing: 12
-                        visible: !root.loading && root.imageList.length === 0
+                        visible: !root.loading && root.imageList.length == 0
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -399,8 +411,8 @@ Variants {
                                 anchors.margins: root.thumbnailSpacing / 2
                                 radius: 8
                                 color: Config.getColor("background.mantle")
-                                border.width: (thumbMouseArea.containsMouse || thumbDelegate.isSelected) ? 2 : 1
-                                border.color: (thumbMouseArea.containsMouse || thumbDelegate.isSelected)
+                                border.width: thumbDelegate.isSelected ? 2 : 1
+                                border.color: thumbDelegate.isSelected
                                     ? Config.getColor("primary.lavender")
                                     : Config.getColor("border.subtle")
                                 clip: true
@@ -449,7 +461,7 @@ Variants {
                                     anchors.margins: 1
                                     height: 24
                                     color: "#CC000000"
-                                    visible: thumbMouseArea.containsMouse || thumbDelegate.isSelected
+                                    visible: thumbDelegate.isSelected
 
                                     Text {
                                         anchors.fill: parent
