@@ -137,42 +137,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- [[ Matugen ]]
---
-local function source_matugen()
-  -- Update this with the location of your output file
-  local matugen_path = os.getenv("HOME") .. "/.config/nvim/generated.lua"  -- dofile doesn't expand $HOME or ~
-
-  local file, err = io.open(matugen_path, "r")
-  -- If the matugen file does not exist (yet or at all), we must initialize a color scheme ourselves
-  if err ~= nil then
-    -- Some placeholder theme, this will be overwritten once matugen kicks in
-    vim.cmd('colorscheme base16-catppuccin-mocha')
-
-    -- Optionally print something to the user
-    vim.print("A matugen style file was not found, but that's okay! The colorscheme will dynamically change if matugen runs!")
-  else
-    dofile(matugen_path)
-    io.close(file)
-  end
-end
-
--- Main entrypoint on matugen reloads
-local function auxiliary_function()
-  -- Load the matugen style file to get all the new colors
-  source_matugen()
-
-  -- Because reloading base16 overwrites lualine configuration, just source lualine here
-  dofile(os.getenv("HOME") .. '/.config/nvim/lua/custom/plugins/lualine.lua') -- path of your lualine setup
-
-  -- Any other options you wish to set upon matugen reloads can also go here!
-  vim.api.nvim_set_hl(0, "Comment", { italic = true })
-end
-
---
--- Register an autocmd to listen for matugen updates
+-- Reload catppuccin with matugen overrides on SIGUSR1
 vim.api.nvim_create_autocmd("Signal", {
   pattern = "SIGUSR1",
-  callback = auxiliary_function,
+  callback = function()
+    local overrides_path = os.getenv("HOME") .. "/.config/nvim/catppuccin-overrides.lua"
+    local ok, overrides = pcall(dofile, overrides_path)
+    require('catppuccin').setup(vim.tbl_deep_extend("force",
+      require('catppuccin').options,
+      { color_overrides = ok and { mocha = overrides } or {} }
+    ))
+    vim.cmd.colorscheme 'catppuccin'
+    -- Refresh lualine with the new catppuccin theme
+    local lualine_ok, lualine = pcall(require, 'lualine')
+    if lualine_ok then
+      lualine.setup({ options = { theme = 'catppuccin' } })
+    end
+  end,
 })
 
 
