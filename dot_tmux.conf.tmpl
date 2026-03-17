@@ -62,6 +62,10 @@ set -g mouse on
 # Set "leader" key to be C-a instead of C-b, like screen
 set -g prefix C-a
 
+# Allow sending C-a into a tmux pane by pressing <leader> followed by 'a'
+unbind a
+bind a send-prefix
+
 # Use vim keybindings in copy mode
 set -g mode-keys vi
 
