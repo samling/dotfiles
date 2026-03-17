@@ -12,6 +12,8 @@ Item {
     id: root
 
     property var cpuIndicator
+    property var memIndicator
+    property var diskIndicator
 
     property bool panelOpen: GlobalStates.sidebarRightOpen
     property bool _loaded: false
@@ -20,6 +22,7 @@ Item {
     readonly property bool hasNotifications: notificationCount > 0
 
     property bool expandAllState: false
+    property bool notificationsExpanded: true
     signal toggleExpandAll()
 
     onPanelOpenChanged: {
@@ -260,6 +263,39 @@ Item {
                                         root.expandAllState = !root.expandAllState
                                         root.toggleExpandAll()
                                     }
+                                }
+                            }
+
+                            // Maximize/restore notifications
+                            Rectangle {
+                                width: 22
+                                height: 22
+                                radius: 6
+                                visible: root.hasNotifications
+                                color: maximizeMouse.containsMouse
+                                    ? Config.getColor("background.tertiary")
+                                    : "transparent"
+                                border.color: maximizeMouse.containsMouse ? Config.getColor("border.primary") : Config.getColor("border.subtle")
+                                border.width: 1
+
+                                Behavior on color { ColorAnimation { duration: 100 } }
+                                Behavior on border.color { ColorAnimation { duration: 100 } }
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: root.notificationsExpanded ? "\uf2d2" : "\uf2d0"
+                                    color: maximizeMouse.containsMouse ? Config.getColor("text.primary") : Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyIcon
+
+                                    Behavior on color { ColorAnimation { duration: 100 } }
+                                }
+
+                                MouseArea {
+                                    id: maximizeMouse
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onClicked: root.notificationsExpanded = !root.notificationsExpanded
                                 }
                             }
 
@@ -588,18 +624,20 @@ Item {
                     Layout.rightMargin: 12
                     Layout.preferredHeight: 1
                     color: Config.getColor("border.subtle")
+                    visible: !root.notificationsExpanded
                 }
 
-                // ── CPU / System Section ──
+                // ── System Section ──
                 Flickable {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: Math.min(contentHeight, 320)
-                    contentHeight: cpuSection.implicitHeight
+                    Layout.preferredHeight: contentHeight
+                    contentHeight: systemSection.implicitHeight
                     clip: true
                     boundsBehavior: Flickable.StopAtBounds
+                    visible: !root.notificationsExpanded
 
                     Column {
-                        id: cpuSection
+                        id: systemSection
                         width: parent.width
                         spacing: 8
                         padding: 12
@@ -704,7 +742,7 @@ Item {
                                     Rectangle {
                                         required property var modelData
                                         property bool isActive: root.cpuIndicator && root.cpuIndicator.cpuGovernor === modelData.value
-                                        width: (cpuSection.width - 24 - 8) / 3
+                                        width: (systemSection.width - 24 - 8) / 3
                                         height: 32
                                         radius: 6
                                         color: isActive
@@ -776,7 +814,7 @@ Item {
                                     Rectangle {
                                         required property var modelData
                                         property bool isActive: root.cpuIndicator && root.cpuIndicator.fanState.toLowerCase().indexOf(modelData.label.toLowerCase()) !== -1
-                                        width: (cpuSection.width - 24 - 12) / 4
+                                        width: (systemSection.width - 24 - 12) / 4
                                         height: 32
                                         radius: 6
                                         color: isActive
@@ -859,6 +897,256 @@ Item {
                                     font.family: Config.fontFamilyMonospace
                                     lineHeight: 1.4
                                     verticalAlignment: Text.AlignTop
+                                }
+                            }
+                        }
+
+                        // ── Separator ──
+                        Rectangle {
+                            width: parent.width - 24
+                            height: 1
+                            color: Config.getColor("border.subtle")
+                        }
+
+                        // ── Memory Section ──
+                        RowLayout {
+                            width: parent.width - 24
+                            spacing: 8
+
+                            Text {
+                                text: "\uf538"
+                                font.pixelSize: Config.fontSizeMedium
+                                font.family: Config.fontFamilyIcon
+                                color: Config.getColor("primary.mauve")
+                            }
+
+                            Text {
+                                text: "Memory"
+                                color: Config.getColor("text.secondary")
+                                font.pixelSize: Config.fontSizeMedium
+                                font.weight: Font.DemiBold
+                                font.family: Config.fontFamilyMonospace
+                                Layout.fillWidth: true
+                            }
+                        }
+
+                        // Memory stats
+                        RowLayout {
+                            width: parent.width - 24
+                            spacing: 16
+
+                            Column {
+                                spacing: 2
+                                Text {
+                                    text: "Usage"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                                Text {
+                                    text: root.memIndicator ? Math.round(root.memIndicator.memUsage * 100) + "%" : "—"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeLarge
+                                    font.weight: Font.Bold
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                            }
+
+                            Column {
+                                spacing: 2
+                                Text {
+                                    text: "Used"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                                Text {
+                                    text: root.memIndicator ? (root.memIndicator.memUsed / 1048576).toFixed(1) + "G" : "—"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeLarge
+                                    font.weight: Font.Bold
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                            }
+
+                            Column {
+                                spacing: 2
+                                Text {
+                                    text: "Total"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                                Text {
+                                    text: root.memIndicator ? (root.memIndicator.memTotal / 1048576).toFixed(1) + "G" : "—"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeLarge
+                                    font.weight: Font.Bold
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                            }
+                        }
+
+                        // Memory top processes
+                        Column {
+                            width: parent.width - 24
+                            spacing: 4
+                            visible: root.memIndicator && root.memIndicator.topProcesses.length > 0
+
+                            Text {
+                                text: "Top Processes"
+                                color: Config.getColor("text.muted")
+                                font.pixelSize: Config.fontSizeSmall
+                                font.family: Config.fontFamilyMonospace
+                            }
+
+                            Rectangle {
+                                width: parent.width
+                                height: Math.ceil(Config.fontSizeSmall * 1.4) * 6 + 12
+                                radius: 6
+                                color: Config.getColor("background.secondary")
+
+                                Text {
+                                    anchors.fill: parent
+                                    anchors.margins: 6
+                                    text: root.memIndicator ? root.memIndicator.topProcesses : ""
+                                    color: Config.getColor("text.secondary")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                    lineHeight: 1.4
+                                    verticalAlignment: Text.AlignTop
+                                }
+                            }
+                        }
+
+                        // ── Separator ──
+                        Rectangle {
+                            width: parent.width - 24
+                            height: 1
+                            color: Config.getColor("border.subtle")
+                        }
+
+                        // ── Disk Section ──
+                        RowLayout {
+                            width: parent.width - 24
+                            spacing: 8
+
+                            Text {
+                                text: "\uf0a0"
+                                font.pixelSize: Config.fontSizeMedium
+                                font.family: Config.fontFamilyIcon
+                                color: Config.getColor("primary.teal")
+                            }
+
+                            Text {
+                                text: "Disk (" + (root.diskIndicator ? root.diskIndicator.mountPoint : "/") + ")"
+                                color: Config.getColor("text.secondary")
+                                font.pixelSize: Config.fontSizeMedium
+                                font.weight: Font.DemiBold
+                                font.family: Config.fontFamilyMonospace
+                                Layout.fillWidth: true
+                            }
+                        }
+
+                        // Disk stats row
+                        RowLayout {
+                            width: parent.width - 24
+                            spacing: 16
+
+                            Column {
+                                spacing: 2
+                                Text {
+                                    text: "Used"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                                Text {
+                                    text: root.diskIndicator ? root.diskIndicator.diskUsed : "—"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeLarge
+                                    font.weight: Font.Bold
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                            }
+
+                            Column {
+                                spacing: 2
+                                Text {
+                                    text: "Total"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                                Text {
+                                    text: root.diskIndicator ? root.diskIndicator.diskTotal : "—"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeLarge
+                                    font.weight: Font.Bold
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                            }
+
+                            Column {
+                                spacing: 2
+                                Text {
+                                    text: "Free"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                                Text {
+                                    text: root.diskIndicator ? root.diskIndicator.diskAvail : "—"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeLarge
+                                    font.weight: Font.Bold
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                            }
+                        }
+
+                        // Disk usage bar
+                        Column {
+                            width: parent.width - 24
+                            spacing: 4
+
+                            Rectangle {
+                                width: parent.width
+                                height: 16
+                                radius: 4
+                                color: Config.getColor("background.secondary")
+                                clip: true
+
+                                Rectangle {
+                                    id: diskBar
+                                    width: parent.width * (root.diskIndicator ? root.diskIndicator.diskUsage : 0)
+                                    height: parent.height
+                                    radius: 4
+                                    color: {
+                                        if (!root.diskIndicator) return Config.getColor("primary.teal")
+                                        const usage = root.diskIndicator.diskUsage
+                                        if (usage > 0.9) return Config.getColor("state.error")
+                                        if (usage > 0.75) return Config.getColor("state.warning")
+                                        return Config.getColor("primary.teal")
+                                    }
+
+                                    Behavior on width {
+                                        NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
+                                    }
+
+                                    Behavior on color {
+                                        ColorAnimation { duration: 300 }
+                                    }
+                                }
+
+                                // Percentage label centered on the bar
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: root.diskIndicator ? Math.round(root.diskIndicator.diskUsage * 100) + "%" : "—"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.weight: Font.Bold
+                                    font.family: Config.fontFamilyMonospace
                                 }
                             }
                         }

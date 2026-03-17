@@ -13,14 +13,10 @@ SystemIndicator {
     percentage: memUsage
     label: "MEM"
     primaryColor: Config.barTextColor
-    tooltipText: {
-        const usedGB = (memUsed / 1048576).toFixed(1)
-        const totalGB = (memTotal / 1048576).toFixed(1)
-        let text = "Memory: " + usedGB + " / " + totalGB + " GB (" + Math.round(memUsage * 100) + "%)"
-        if (topProcesses.length > 0) {
-            text += "\n\n─── Top Processes ───\n" + topProcesses
-        }
-        return text
+    tooltipText: ""
+
+    onClicked: {
+        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
     }
 
     // Read /proc/meminfo to calculate memory usage

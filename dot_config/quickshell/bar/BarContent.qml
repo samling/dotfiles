@@ -9,6 +9,8 @@ Item {
 
     InfoPanel {
         cpuIndicator: cpuWidget
+        memIndicator: memoryWidget
+        diskIndicator: diskWidget
     }
 
     // Left section

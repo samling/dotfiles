@@ -14,7 +14,11 @@ SystemIndicator {
     percentage: diskUsage
     label: "DSK"
     primaryColor: Config.barTextColor
-    tooltipText: "Disk (" + mountPoint + "): " + diskUsed + " / " + diskTotal + " (" + Math.round(diskUsage * 100) + "% used)\nAvailable: " + diskAvail
+    tooltipText: ""
+
+    onClicked: {
+        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
+    }
 
     // Use df to get disk usage
     Process {
