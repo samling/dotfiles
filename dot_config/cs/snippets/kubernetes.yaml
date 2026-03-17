@@ -115,3 +115,15 @@ snippets:
       - name: "email"
         required: true
         description: "Email"
+
+  kubectl-top-pods-by-node:
+    description: "Get pod cpu and memory metrics by node"
+    command: >
+      kubectl get pods -A --field-selector spec.nodeName=<node_name> -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' > /tmp/talos03-pods.txt;
+      kubectl top pods -A --no-headers | rg -Ff /tmp/<node_name>-pods.txt | sort -k3 -rh;
+      rm -f /tmp/<node_name>-pods.txt > /dev/null
+    variables:
+      - name: "node_name"
+        required: true
+        description: "Name of the target node"
+
