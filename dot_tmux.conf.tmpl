@@ -129,7 +129,7 @@ bind -T locked F12 \
 
 is_ssh_session='#(if [[ -n $SSH_CLIENT ]]; then echo "hello"; fi)'
 
-set-window-option -g window-status-format '#[fg=colour0,italics,dim,bg=default]• #I #W#{?pane_synchronized, 󰓦 ,}#{?window_zoomed_flag, 󰊓 ,} #[fg=default]'
+set-window-option -g window-status-format '#[fg=colour0,italics,bg=default]• #I #W#{?pane_synchronized, 󰓦 ,}#{?window_zoomed_flag, 󰊓 ,} #[fg=default]'
 set-window-option -g window-status-style 'bold'
 set-window-option -g window-status-current-format '#[fg=colour255,italics,bg=default]• #I #W#[fg=orange]#{?pane_synchronized, 󰓦 ,}#[fg=colour255]#[fg=colour4]#{?window_zoomed_flag, 󰊓 ,}#[fg=default] #[fg=default]'
 set-window-option -g window-status-current-style 'bold'
