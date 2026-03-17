@@ -1,0 +1,8 @@
+[als.iio]
+path = "/sys/bus/iio/devices"
+thresholds = { 0 = "night", 2 = "dark", 5 = "dim", 8 = "normal", 13 = "bright", 15 = "outdoors" }
+
+[[output.backlight]]
+name = "eDP-1"
+path = "/sys/class/backlight/amdgpu_bl1"
+capturer = "none"

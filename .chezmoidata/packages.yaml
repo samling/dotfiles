@@ -667,6 +667,8 @@ packages:
       pacman: iwd
     powertop:
       pacman: powertop
+    wluma:
+      yay: wluma
 
   ############
   # HYPRLAND #
