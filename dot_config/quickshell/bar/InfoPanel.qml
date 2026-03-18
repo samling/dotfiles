@@ -21,8 +21,8 @@ Item {
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
 
-    property bool expandAllState: false
-    property bool notificationsExpanded: true
+    property bool expandAllState: true
+    property bool notificationsExpanded: false
     signal toggleExpandAll()
 
     onPanelOpenChanged: {
@@ -370,7 +370,8 @@ Item {
                                 clip: true
                                 spacing: 2
                                 visible: root.hasNotifications
-                                boundsBehavior: Flickable.StopAtBounds
+                                boundsBehavior: Flickable.DragAndOvershootBounds
+                                boundsMovement: Flickable.FollowBoundsBehavior
 
                                 ScrollBar.vertical: ScrollBar {
                                     id: notifScrollBar
@@ -427,7 +428,7 @@ Item {
                                             ? Config.getColor("background.secondary")
                                             : "transparent"
 
-                                    property bool expanded: false
+                                    property bool expanded: root.expandAllState
 
                                     Connections {
                                         target: root
@@ -464,17 +465,38 @@ Item {
                                             width: parent.width
                                             spacing: 6
 
-                                            // App icon/letter
+                                            // App icon/letter — prefer notification image (sender avatar), fall back to app icon, then letter
                                             Rectangle {
                                                 Layout.preferredWidth: 20
                                                 Layout.preferredHeight: 20
                                                 radius: 4
                                                 color: Config.getColor("background.tertiary")
+                                                clip: true
+
+                                                Image {
+                                                    id: rowNotifImage
+                                                    anchors.centerIn: parent
+                                                    source: notifRow.modelData?.image ?? ""
+                                                    width: 18
+                                                    height: 18
+                                                    sourceSize.width: 18
+                                                    sourceSize.height: 18
+                                                    fillMode: Image.PreserveAspectCrop
+                                                    asynchronous: true
+                                                    cache: true
+                                                    visible: status === Image.Ready && source !== ""
+                                                }
 
                                                 Image {
                                                     id: rowAppIcon
                                                     anchors.centerIn: parent
-                                                    source: notifRow.modelData?.appIcon ?? ""
+                                                    property string rawIcon: notifRow.modelData?.appIcon ?? ""
+                                                    source: {
+                                                        if (rawIcon === "") return ""
+                                                        if (rawIcon.startsWith("image://") || rawIcon.startsWith("/") || rawIcon.startsWith("file://"))
+                                                            return rawIcon
+                                                        return "image://icon/" + rawIcon
+                                                    }
                                                     width: 14
                                                     height: 14
                                                     sourceSize.width: 14
@@ -482,6 +504,7 @@ Item {
                                                     fillMode: Image.PreserveAspectFit
                                                     asynchronous: true
                                                     cache: true
+                                                    visible: !rowNotifImage.visible && status === Image.Ready && source !== ""
                                                 }
 
                                                 Text {
@@ -491,7 +514,7 @@ Item {
                                                     font.pixelSize: Config.fontSizeSmall
                                                     font.weight: Font.Bold
                                                     font.family: Config.fontFamilyMonospace
-                                                    visible: rowAppIcon.status !== Image.Ready
+                                                    visible: !rowNotifImage.visible && rowAppIcon.status !== Image.Ready
                                                 }
                                             }
 
@@ -585,19 +608,6 @@ Item {
                                                 lineHeight: 1.3
                                             }
 
-                                            // Notification image
-                                            Image {
-                                                id: notifImage
-                                                property bool hasImage: status === Image.Ready && (notifRow.modelData?.image ?? "") !== ""
-                                                source: notifRow.modelData?.image ?? ""
-                                                visible: hasImage
-                                                fillMode: Image.PreserveAspectFit
-                                                width: hasImage ? parent.width : 0
-                                                height: hasImage ? Math.min(implicitHeight, 120) : 0
-                                                sourceSize.width: parent.width
-                                                asynchronous: true
-                                                cache: true
-                                            }
                                         }
                                     }
                                 }
