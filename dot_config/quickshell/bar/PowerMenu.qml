@@ -62,6 +62,19 @@ MouseArea {
         screenshotTimer.start()
     }
 
+    function confirmAction(prompt, cmd, arg) {
+        Qt.callLater(function() {
+            const proc = Qt.createQmlObject(`
+                import Quickshell.Io
+                Process {
+                    command: ["bash", "-c", "echo -e 'Yes\\nNo' | rofi -dmenu -p '` + prompt + `' -no-fixed-num-lines -theme-str 'listview { lines: 2; scrollbar: false; } inputbar { children: [prompt]; }'  | grep -q '^Yes$' && ` + cmd + ` ` + arg + `"]
+                    onExited: destroy()
+                }
+            `, root)
+            proc.running = true
+        })
+    }
+
     property bool _popupLoaded: false
 
     onMenuOpenChanged: {
@@ -239,16 +252,7 @@ MouseArea {
                             accentColor: Config.getColor("primary.yellow")
                             onActivated: {
                                 root.menuOpen = false
-                                Qt.callLater(function() {
-                                    const proc = Qt.createQmlObject(`
-                                        import Quickshell.Io
-                                        Process {
-                                            command: ["systemctl", "reboot"]
-                                            onExited: destroy()
-                                        }
-                                    `, root)
-                                    proc.running = true
-                                })
+                                root.confirmAction("Restart?", "systemctl", "reboot")
                             }
                         }
 
@@ -259,16 +263,7 @@ MouseArea {
                             accentColor: Config.getColor("state.error")
                             onActivated: {
                                 root.menuOpen = false
-                                Qt.callLater(function() {
-                                    const proc = Qt.createQmlObject(`
-                                        import Quickshell.Io
-                                        Process {
-                                            command: ["systemctl", "poweroff"]
-                                            onExited: destroy()
-                                        }
-                                    `, root)
-                                    proc.running = true
-                                })
+                                root.confirmAction("Shutdown?", "systemctl", "poweroff")
                             }
                         }
                     }

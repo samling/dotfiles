@@ -9,7 +9,7 @@ SystemIndicator {
     property var prevIdle: 0
     property var prevTotal: 0
     property string topProcesses: ""
-    property string cpuGovernor: ""
+    property string powerProfile: ""
     property real cpuTemp: 0
     property string fanState: "standard"
 
@@ -20,10 +20,10 @@ SystemIndicator {
         { value: "3", label: "Full",     icon: "\uf863" },
     ]
 
-    readonly property var governorModes: [
-        { value: "performance", label: "Performance", icon: "\uf0e7" },
-        { value: "schedutil",   label: "Balanced",    icon: "\uf24e" },
-        { value: "powersave",   label: "Powersave",   icon: "\uf06c" },
+    readonly property var powerProfileModes: [
+        { value: "performance",  label: "Performance", icon: "\uf0e7" },
+        { value: "balanced",     label: "Balanced",    icon: "\uf24e" },
+        { value: "power-saver",  label: "Power Saver", icon: "\uf06c" },
     ]
 
     percentage: cpuUsage
@@ -36,15 +36,15 @@ SystemIndicator {
         GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
     }
 
-    // Read /sys/devices/system/cpu to get current CPU governor
+    // Get current power profile
     Process {
-        id: cpuGov
-        command: ["cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"]
+        id: powerProfileGetProc
+        command: ["powerprofilesctl", "get"]
         running: true
 
         stdout: StdioCollector {
             onStreamFinished: {
-                root.cpuGovernor = this.text.trim()
+                root.powerProfile = this.text.trim()
             }
         }
     }
@@ -134,15 +134,15 @@ SystemIndicator {
         }
     }
 
-    // Set CPU governor
+    // Set power profile
     Process {
-        id: cpuGovSetProc
-        property string governor: "schedutil"
-        command: ["sudo", "cpupower", "frequency-set", "-g", governor]
+        id: powerProfileSetProc
+        property string profile: "balanced"
+        command: ["powerprofilesctl", "set", profile]
 
         stdout: StdioCollector {
             onStreamFinished: {
-                cpuGov.running = true
+                powerProfileGetProc.running = true
             }
         }
     }
@@ -152,9 +152,9 @@ SystemIndicator {
         fanStateSetProc.running = true
     }
 
-    function setCpuGovernor(governor) {
-        cpuGovSetProc.governor = governor
-        cpuGovSetProc.running = true
+    function setPowerProfile(profile) {
+        powerProfileSetProc.profile = profile
+        powerProfileSetProc.running = true
     }
 
     Timer {
@@ -163,7 +163,7 @@ SystemIndicator {
         repeat: true
         onTriggered: {
             cpuProc.running = true
-            cpuGov.running = true
+            powerProfileGetProc.running = true
             cpuTempProc.running = true
             topCpuProc.running = true
         }
@@ -171,7 +171,7 @@ SystemIndicator {
 
     Component.onCompleted: {
         cpuProc.running = true
-        cpuGov.running = true
+        powerProfileGetProc.running = true
         cpuTempProc.running = true
         topCpuProc.running = true
         fanStateGetProc.running = true

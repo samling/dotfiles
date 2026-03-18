@@ -9,20 +9,51 @@ Rectangle {
     id: root
     property var notificationObject
     property bool expanded: true
+    property bool isPopup: false
+    property bool bodyExpanded: false
 
     // Helper properties for image handling
     property string imgSource: notificationObject?.image ?? ""
     property bool hasImage: imgSource !== ""
     property bool isIconUrl: imgSource.startsWith("image://icon/")
 
-    implicitHeight: contentColumn.implicitHeight + 24
+    // Urgency: "0" = Low, "1" = Normal, "2" = Critical
+    property string urgency: notificationObject?.urgency ?? "1"
+    property bool isCritical: urgency === "2"
+    property bool isLow: urgency === "0"
+
+    // Tick counter to force timestamp re-evaluation
+    property int _timeRefreshTick: 0
+
+    implicitHeight: contentColumn.implicitHeight + 24 + (isPopup ? progressBar.height : 0)
     radius: 8
-    color: Config.getColor("background.secondary")
-    border.color: itemMouseArea.containsMouse ? Config.getColor("border.primary") : Config.getColor("border.subtle")
+    color: isCritical
+        ? Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.15)
+        : isLow
+            ? Config.getColor("background.tertiary")
+            : Config.getColor("background.secondary")
+    border.color: isCritical
+        ? Config.getColor("state.error")
+        : itemMouseArea.containsMouse
+            ? Config.getColor("border.primary")
+            : Config.getColor("border.subtle")
     border.width: 1
 
     Behavior on border.color {
         ColorAnimation { duration: 100 }
+    }
+
+    Behavior on color {
+        ColorAnimation { duration: 100 }
+    }
+
+    // Auto-refresh timestamp every 60 seconds
+    Timer {
+        id: timeRefreshTimer
+        interval: 60000
+        running: root.visible
+        repeat: true
+        onTriggered: root._timeRefreshTick++
     }
 
     // Hover detection for the whole item
@@ -31,9 +62,23 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
+
+        onContainsMouseChanged: {
+            if (!root.isPopup || !root.notificationObject) return
+            if (containsMouse) {
+                root.notificationObject.pausePopup()
+                progressAnim.pause()
+            } else {
+                root.notificationObject.resumePopup()
+                progressAnim.resume()
+            }
+        }
     }
 
     function formatTimestamp(timestamp) {
+        // Reference _timeRefreshTick to force re-evaluation
+        void(root._timeRefreshTick)
+
         if (!timestamp) return ""
 
         const date = new Date(timestamp)
@@ -60,6 +105,7 @@ Rectangle {
         id: contentColumn
         anchors.fill: parent
         anchors.margins: 12
+        anchors.bottomMargin: isPopup ? 12 + progressBar.height : 12
         spacing: 8
 
         // Top row: App icon, App name, Time, Close button
@@ -72,7 +118,9 @@ Rectangle {
                 Layout.preferredWidth: 28
                 Layout.preferredHeight: 28
                 radius: 6
-                color: Config.getColor("background.tertiary")
+                color: root.isCritical
+                    ? Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.3)
+                    : Config.getColor("background.tertiary")
                 visible: (appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")
 
                 Image {
@@ -240,18 +288,57 @@ Rectangle {
                     elide: Text.ElideRight
                 }
 
-                // Body text
-                Text {
-                    text: root.notificationObject?.body ?? ""
-                    color: Config.getColor("text.tertiary")
-                    font.pixelSize: Config.fontSizeMedium
-                    font.family: Config.fontFamilyMonospace
-                    wrapMode: Text.WordWrap
+                // Body text with expand/collapse
+                RowLayout {
                     Layout.fillWidth: true
-                    visible: text !== ""
-                    maximumLineCount: 3
-                    elide: Text.ElideRight
-                    lineHeight: 1.2
+                    spacing: 4
+                    visible: bodyText.text !== ""
+
+                    Text {
+                        id: bodyText
+                        text: root.notificationObject?.body ?? ""
+                        color: Config.getColor("text.tertiary")
+                        font.pixelSize: Config.fontSizeMedium
+                        font.family: Config.fontFamilyMonospace
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        maximumLineCount: root.bodyExpanded ? 0 : 1
+                        elide: root.bodyExpanded ? Text.ElideNone : Text.ElideRight
+                        lineHeight: 1.2
+                    }
+
+                    // Expand/collapse button (only when text is truncated or expanded)
+                    Rectangle {
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
+                        Layout.alignment: Qt.AlignTop
+                        radius: 4
+                        color: expandArea.containsMouse ? Config.getColor("background.surface") : "transparent"
+                        visible: bodyText.truncated || root.bodyExpanded
+
+                        Behavior on color {
+                            ColorAnimation { duration: 100 }
+                        }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: root.bodyExpanded ? "▴" : "▾"
+                            color: expandArea.containsMouse ? Config.getColor("text.primary") : Config.getColor("text.muted")
+                            font.pixelSize: Config.fontSizeSmall
+                            font.family: Config.fontFamilyMonospace
+
+                            Behavior on color {
+                                ColorAnimation { duration: 100 }
+                            }
+                        }
+
+                        MouseArea {
+                            id: expandArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: root.bodyExpanded = !root.bodyExpanded
+                        }
+                    }
                 }
             }
         }
@@ -315,6 +402,46 @@ Rectangle {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // Popup progress bar (depletes over popup duration)
+    Rectangle {
+        id: progressBar
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: root.isPopup ? 3 : 0
+        radius: root.radius
+        color: "transparent"
+        clip: true
+        visible: root.isPopup
+
+        // Background track
+        Rectangle {
+            anchors.fill: parent
+            radius: parent.radius
+            color: Config.getColor("border.subtle")
+            opacity: 0.3
+        }
+
+        // Progress fill
+        Rectangle {
+            id: progressFill
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: parent.width
+            radius: parent.radius
+            color: root.isCritical ? Config.getColor("state.error") : Config.getColor("primary.lavender")
+
+            NumberAnimation on width {
+                id: progressAnim
+                from: progressBar.width
+                to: 0
+                duration: root.notificationObject?.popupDuration ?? 5000
+                running: root.isPopup
             }
         }
     }

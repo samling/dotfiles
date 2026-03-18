@@ -32,6 +32,37 @@ Singleton {
         property double time
         property string urgency: notification?.urgency.toString() ?? "normal"
         property Timer timer
+        property int popupDuration: 5000
+        property double popupStartTime: 0
+        property double popupRemaining: popupDuration
+
+        // Lock mechanism: prevents destruction during animations
+        property int _lockCount: 0
+        property bool _pendingDiscard: false
+
+        function lock() { _lockCount++ }
+        function unlock() {
+            _lockCount--
+            if (_lockCount <= 0 && _pendingDiscard) {
+                _lockCount = 0
+                root.discardNotification(notificationId)
+            }
+        }
+
+        function pausePopup() {
+            if (timer && timer.running) {
+                popupRemaining = Math.max(0, popupRemaining - (Date.now() - popupStartTime))
+                timer.stop()
+            }
+        }
+
+        function resumePopup() {
+            if (timer && popup && popupRemaining > 0) {
+                timer.interval = popupRemaining
+                popupStartTime = Date.now()
+                timer.start()
+            }
+        }
 
         onNotificationChanged: {
             if (notification === null) {
@@ -165,11 +196,15 @@ Singleton {
 
             // Popup
             if (!root.popupInhibited) {
+                const duration = notification.expireTimeout < 0 ? 5000 : (notification.expireTimeout || 5000);
                 newNotifObject.popup = true;
+                newNotifObject.popupDuration = duration;
+                newNotifObject.popupRemaining = duration;
+                newNotifObject.popupStartTime = Date.now();
                 if (notification.expireTimeout != 0) {
                     newNotifObject.timer = notifTimerComponent.createObject(root, {
                         "notificationId": newNotifObject.notificationId,
-                        "interval": notification.expireTimeout < 0 ? 5000 : notification.expireTimeout,
+                        "interval": duration,
                     });
                 }
             }
@@ -183,6 +218,13 @@ Singleton {
     function discardNotification(id) {
         console.log("[Notifications] Discarding notification with ID: " + id);
         const index = root.list.findIndex((notif) => notif.notificationId === id);
+
+        // Defer if locked (e.g., mid-animation)
+        if (index !== -1 && root.list[index]._lockCount > 0) {
+            root.list[index]._pendingDiscard = true;
+            return;
+        }
+
         const notifServerIndex = notifServer.trackedNotifications.values.findIndex((notif) => notif.id + root.idOffset === id);
         if (index !== -1) {
             root.list.splice(index, 1);

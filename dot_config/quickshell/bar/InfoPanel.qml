@@ -731,13 +731,13 @@ Item {
                             }
                         }
 
-                        // Governor toggle
+                        // Power Profile toggle
                         Column {
                             width: parent.width - 24
                             spacing: 4
 
                             Text {
-                                text: "Governor"
+                                text: "Power Profile"
                                 color: Config.getColor("text.muted")
                                 font.pixelSize: Config.fontSizeSmall
                                 font.family: Config.fontFamilyMonospace
@@ -747,17 +747,17 @@ Item {
                                 spacing: 4
 
                                 Repeater {
-                                    model: root.cpuIndicator ? root.cpuIndicator.governorModes : []
+                                    model: root.cpuIndicator ? root.cpuIndicator.powerProfileModes : []
 
                                     Rectangle {
                                         required property var modelData
-                                        property bool isActive: root.cpuIndicator && root.cpuIndicator.cpuGovernor === modelData.value
+                                        property bool isActive: root.cpuIndicator && root.cpuIndicator.powerProfile === modelData.value
                                         width: (systemSection.width - 24 - 8) / 3
                                         height: 32
                                         radius: 6
                                         color: isActive
                                             ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.2)
-                                            : govMouse.containsMouse
+                                            : profileMouse.containsMouse
                                                 ? Config.getColor("background.tertiary")
                                                 : Config.getColor("background.secondary")
                                         border.width: isActive ? 1 : 0
@@ -790,12 +790,12 @@ Item {
                                         }
 
                                         MouseArea {
-                                            id: govMouse
+                                            id: profileMouse
                                             anchors.fill: parent
                                             hoverEnabled: true
                                             onClicked: {
                                                 if (root.cpuIndicator)
-                                                    root.cpuIndicator.setCpuGovernor(modelData.value)
+                                                    root.cpuIndicator.setPowerProfile(modelData.value)
                                             }
                                         }
                                     }

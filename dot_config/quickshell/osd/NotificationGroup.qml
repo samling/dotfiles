@@ -15,6 +15,7 @@ Column {
             required property var modelData
             width: root.width
             notificationObject: modelData
+            isPopup: root.popup
         }
     }
 }
