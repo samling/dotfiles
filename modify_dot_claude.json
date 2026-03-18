@@ -7,6 +7,7 @@
 {{- /* Get secrets */ -}}
 {{- $context7ApiKey := doppler "CONTEXT7_API_KEY" "homelab" "dev_personal" -}}
 {{- $perplexityApiKey := doppler "PERPLEXITYAI_NVDA_API_KEY" "homelab" "dev_personal" -}}
+{{- $githubClaudeCodePAT := doppler "GITHUB_CLAUDE_CODE_PAT" "homelab" "dev_personal" -}}
 
 {{- /* Define your MCP servers here */ -}}
 {{- $mcpServers := dict
@@ -39,6 +40,13 @@
       "type" "stdio"
       "command" "uvx"
       "args" (list "slop-guard")
+    )
+    "github" (dict
+      "type" "http"
+      "url" "https://api.githubcopilot.com/mcp"
+      "headers" (dict
+        "Authorization" (printf "Bearer %s" $githubClaudeCodePAT)
+      )
     )
 -}}
 
