@@ -43,7 +43,7 @@ Item {
     LazyLoader {
         active: root._loaded
         component: PanelWindow {
-        visible: root.panelOpen
+        visible: root._loaded
 
         anchors {
             top: true
@@ -84,6 +84,7 @@ Item {
 
             Behavior on anchors.rightMargin {
                 NumberAnimation {
+                    id: slideAnim
                     duration: 300
                     easing.type: Easing.OutCubic
                 }
