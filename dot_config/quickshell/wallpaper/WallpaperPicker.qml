@@ -9,11 +9,28 @@ import qs.common
 Variants {
     model: Quickshell.screens
 
-    PanelWindow {
+    LazyLoader {
+        id: pickerLoader
+        required property ShellScreen modelData
+        active: GlobalStates.wallpaperPickerOpen || pickerUnloadDelay.running
+
+        Timer {
+            id: pickerUnloadDelay
+            interval: 3000
+        }
+
+        Connections {
+            target: GlobalStates
+            function onWallpaperPickerOpenChanged() {
+                if (!GlobalStates.wallpaperPickerOpen) {
+                    pickerUnloadDelay.start()
+                }
+            }
+        }
+        component: PanelWindow {
         id: root
 
-        property var modelData
-        screen: modelData
+        screen: pickerLoader.modelData
 
         visible: GlobalStates.wallpaperPickerOpen
 
@@ -491,6 +508,7 @@ Variants {
                     }
                 }
             }
+        }
         }
     }
 }

@@ -125,8 +125,9 @@ Rectangle {
 
                 Image {
                     id: appIconImage
+                    property bool usingImage: !root.notificationObject?.appIcon && root.hasImage
                     anchors.centerIn: parent
-                    source: root.notificationObject?.appIcon ?? ""
+                    source: (root.notificationObject?.appIcon || root.imgSource) ?? ""
                     fillMode: Image.PreserveAspectFit
                     width: 18
                     height: 18
@@ -248,7 +249,7 @@ Rectangle {
             Rectangle {
                 id: smallIconContainer
                 // Show for icon URLs OR small images (but not if large image is shown)
-                property bool showIcon: root.hasImage && (root.isIconUrl || (notificationImage.ready && !notificationImage.isLargeImage))
+                property bool showIcon: root.hasImage && !appIconImage.usingImage && (root.isIconUrl || (notificationImage.ready && !notificationImage.isLargeImage))
                 visible: showIcon
                 Layout.preferredWidth: 40
                 Layout.preferredHeight: 40
@@ -413,7 +414,6 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         height: root.isPopup ? 3 : 0
-        radius: root.radius
         color: "transparent"
         clip: true
         visible: root.isPopup
@@ -421,7 +421,6 @@ Rectangle {
         // Background track
         Rectangle {
             anchors.fill: parent
-            radius: parent.radius
             color: Config.getColor("border.subtle")
             opacity: 0.3
         }
@@ -429,17 +428,24 @@ Rectangle {
         // Progress fill
         Rectangle {
             id: progressFill
-            anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: parent.width
-            radius: parent.radius
+            anchors.left: parent.left
+            anchors.right: parent.right
             color: root.isCritical ? Config.getColor("state.error") : Config.getColor("primary.lavender")
 
-            NumberAnimation on width {
+            transform: Scale {
+                id: progressScale
+                origin.x: 0
+                xScale: 1.0
+            }
+
+            NumberAnimation {
                 id: progressAnim
-                from: progressBar.width
-                to: 0
+                target: progressScale
+                property: "xScale"
+                from: 1.0
+                to: 0.0
                 duration: root.notificationObject?.popupDuration ?? 5000
                 running: root.isPopup
             }

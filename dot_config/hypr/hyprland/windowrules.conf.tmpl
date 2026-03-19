@@ -1,4 +1,15 @@
 ###################
+### LAYERRULES  ###
+###################
+
+# Disable blur on quickshell layer surfaces to prevent continuous GPU compositing
+layerrule {
+    name = quickshell-noblur
+    match:namespace = ^quickshell:.*$
+    blur = false
+}
+
+###################
 ### WINDOWRULES ###
 ###################
 

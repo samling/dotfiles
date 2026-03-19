@@ -8,7 +8,6 @@ SystemIndicator {
     property real cpuUsage: 0
     property var prevIdle: 0
     property var prevTotal: 0
-    property string topProcesses: ""
     property string powerProfile: ""
     property real cpuTemp: 0
     property string fanState: "standard"
@@ -94,20 +93,6 @@ SystemIndicator {
         }
     }
 
-    // Get top 5 CPU-consuming processes (actual % of total CPU capacity)
-    // Divides by nproc to convert per-core % to total system %
-    Process {
-        id: topCpuProc
-        command: ["sh", "-c", "cores=$(nproc); top -b -n 1 -o %CPU | awk -v c=$cores 'NR>7 && $9>0 {pct=$9/c; printf \"%-12s %5.1f%%\\n\", substr($12,1,12), pct}' | head -5"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                root.topProcesses = this.text.trim()
-            }
-        }
-    }
-
     // Get current fan state
     Process {
         id: fanStateGetProc
@@ -158,14 +143,13 @@ SystemIndicator {
     }
 
     Timer {
-        interval: 2000
+        interval: 5000
         running: true
         repeat: true
         onTriggered: {
             cpuProc.running = true
             powerProfileGetProc.running = true
             cpuTempProc.running = true
-            topCpuProc.running = true
         }
     }
 
@@ -173,7 +157,6 @@ SystemIndicator {
         cpuProc.running = true
         powerProfileGetProc.running = true
         cpuTempProc.running = true
-        topCpuProc.running = true
         fanStateGetProc.running = true
     }
 }

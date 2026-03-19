@@ -8,8 +8,6 @@ SystemIndicator {
     property real memUsage: 0
     property real memTotal: 0
     property real memUsed: 0
-    property string topProcesses: ""
-
     percentage: memUsage
     label: "MEM"
     primaryColor: Config.barTextColor
@@ -47,31 +45,16 @@ SystemIndicator {
         }
     }
 
-    // Get top 5 memory-consuming processes (shows RSS in human-readable format)
-    Process {
-        id: topMemProc
-        command: ["sh", "-c", "ps -eo comm,rss --sort=-rss | awk 'NR>1 && NR<=6 {mb=$2/1024; if(mb>=1024) printf \"%-12s %5.1fG\\n\", substr($1,1,12), mb/1024; else printf \"%-12s %5.0fM\\n\", substr($1,1,12), mb}'"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                root.topProcesses = this.text.trim()
-            }
-        }
-    }
-
     Timer {
-        interval: 3000
+        interval: 5000
         running: true
         repeat: true
         onTriggered: {
             memProc.running = true
-            topMemProc.running = true
         }
     }
 
     Component.onCompleted: {
         memProc.running = true
-        topMemProc.running = true
     }
 }

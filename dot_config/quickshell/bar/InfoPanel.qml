@@ -43,6 +43,7 @@ Item {
     LazyLoader {
         active: root._loaded
         component: PanelWindow {
+        visible: root.panelOpen
 
         anchors {
             top: true
@@ -877,40 +878,6 @@ Item {
                             }
                         }
 
-                        // Top processes
-                        Column {
-                            width: parent.width - 24
-                            spacing: 4
-                            visible: root.cpuIndicator && root.cpuIndicator.topProcesses.length > 0
-
-                            Text {
-                                text: "Top Processes"
-                                color: Config.getColor("text.muted")
-                                font.pixelSize: Config.fontSizeSmall
-                                font.family: Config.fontFamilyMonospace
-                            }
-
-                            Rectangle {
-                                width: parent.width
-                                // Fixed height for 5 lines so it doesn't jump
-                                height: Math.ceil(Config.fontSizeSmall * 1.4) * 6 + 12
-                                radius: 6
-                                color: Config.getColor("background.secondary")
-
-                                Text {
-                                    id: processText
-                                    anchors.fill: parent
-                                    anchors.margins: 6
-                                    text: root.cpuIndicator ? root.cpuIndicator.topProcesses : ""
-                                    color: Config.getColor("text.secondary")
-                                    font.pixelSize: Config.fontSizeSmall
-                                    font.family: Config.fontFamilyMonospace
-                                    lineHeight: 1.4
-                                    verticalAlignment: Text.AlignTop
-                                }
-                            }
-                        }
-
                         // ── Separator ──
                         Rectangle {
                             width: parent.width - 24
@@ -993,38 +960,6 @@ Item {
                                     font.pixelSize: Config.fontSizeLarge
                                     font.weight: Font.Bold
                                     font.family: Config.fontFamilyMonospace
-                                }
-                            }
-                        }
-
-                        // Memory top processes
-                        Column {
-                            width: parent.width - 24
-                            spacing: 4
-                            visible: root.memIndicator && root.memIndicator.topProcesses.length > 0
-
-                            Text {
-                                text: "Top Processes"
-                                color: Config.getColor("text.muted")
-                                font.pixelSize: Config.fontSizeSmall
-                                font.family: Config.fontFamilyMonospace
-                            }
-
-                            Rectangle {
-                                width: parent.width
-                                height: Math.ceil(Config.fontSizeSmall * 1.4) * 6 + 12
-                                radius: 6
-                                color: Config.getColor("background.secondary")
-
-                                Text {
-                                    anchors.fill: parent
-                                    anchors.margins: 6
-                                    text: root.memIndicator ? root.memIndicator.topProcesses : ""
-                                    color: Config.getColor("text.secondary")
-                                    font.pixelSize: Config.fontSizeSmall
-                                    font.family: Config.fontFamilyMonospace
-                                    lineHeight: 1.4
-                                    verticalAlignment: Text.AlignTop
                                 }
                             }
                         }

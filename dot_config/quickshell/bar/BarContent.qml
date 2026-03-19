@@ -75,7 +75,7 @@ Item {
         spacing: Config.pillSpacing
 
         BarGroup {
-            accentColor: Config.pillColor4
+            accentColor: Config.pillColor9
             Layout.fillHeight: true
 
             SysTray {
