@@ -93,6 +93,15 @@ Item {
         }
 
         BarGroup {
+            accentColor: Config.pillColor4
+            Layout.fillHeight: true
+
+            NetworkIndicator {
+                id: networkWidget
+            }
+        }
+
+        BarGroup {
             accentColor: Config.pillColor6
             Layout.fillHeight: true
 
