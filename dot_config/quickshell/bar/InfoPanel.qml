@@ -4,6 +4,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
+import Quickshell.Hyprland
 import qs.common
 import qs.services
 import qs.osd
@@ -16,7 +18,6 @@ Item {
     property var diskIndicator
 
     property bool panelOpen: GlobalStates.sidebarRightOpen
-    property bool _loaded: false
 
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
@@ -25,44 +26,32 @@ Item {
     property bool notificationsExpanded: false
     signal toggleExpandAll()
 
-    onPanelOpenChanged: {
-        if (panelOpen) {
-            hideTimer.stop()
-            _loaded = true
-        } else {
-            hideTimer.restart()
-        }
-    }
+    PanelWindow {
+        id: panelWindow
+        visible: root.panelOpen || slideAnim.running
 
-    Timer {
-        id: hideTimer
-        interval: 300
-        onTriggered: root._loaded = false
-    }
-
-    LazyLoader {
-        active: root._loaded
-        component: PanelWindow {
-        visible: root._loaded
+        WlrLayershell.namespace: "quickshell:infopanel"
+        WlrLayershell.layer: root.panelOpen ? WlrLayer.Top : WlrLayer.Background
+        exclusiveZone: 0
 
         anchors {
             top: true
             right: true
-            left: true
             bottom: true
         }
 
         margins.top: 4
         margins.right: 4
-        margins.left: 4
         margins.bottom: 4
 
+        implicitWidth: 388
         color: "transparent"
 
-        // Click outside to close
-        MouseArea {
-            anchors.fill: parent
-            onClicked: GlobalStates.sidebarRightOpen = false
+        HyprlandFocusGrab {
+            id: focusGrab
+            active: root.panelOpen
+            windows: [panelWindow]
+            onCleared: GlobalStates.sidebarRightOpen = false
         }
 
         // The panel
@@ -71,16 +60,13 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.right: parent.right
-            anchors.rightMargin: showContent && root.panelOpen ? 0 : -width - 20
-            width: 380
+            anchors.rightMargin: root.panelOpen ? 0 : -width - 20
+            width: parent.width
             color: Config.getColor("background.crust")
             border.width: 1
             border.color: Config.getColor("border.subtle")
             radius: 12
             clip: true
-
-            property bool showContent: false
-            Component.onCompleted: showContent = true
 
             Behavior on anchors.rightMargin {
                 NumberAnimation {
@@ -88,12 +74,6 @@ Item {
                     duration: 300
                     easing.type: Easing.OutCubic
                 }
-            }
-
-            // Prevent clicks from passing through
-            MouseArea {
-                anchors.fill: parent
-                onClicked: { }
             }
 
             ColumnLayout {
@@ -1099,7 +1079,6 @@ Item {
                     }
                 }
             }
-        }
         }
     }
 }
