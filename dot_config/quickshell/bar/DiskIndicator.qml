@@ -12,12 +12,10 @@ SystemIndicator {
     property string mountPoint: "/"  // Monitor root by default
 
     percentage: diskUsage
-    label: "DSK"
+    icon: "\uf0a0"
     primaryColor: Config.barTextColor
-    tooltipText: ""
-
-    onClicked: {
-        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
+    tooltipText: {
+        return "Disk (" + mountPoint + "): " + Math.round(diskUsage * 100) + "%\n" + diskUsed + " / " + diskTotal + " (Avail: " + diskAvail + ")"
     }
 
     // Use df to get disk usage

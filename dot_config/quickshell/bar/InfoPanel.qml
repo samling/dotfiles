@@ -4,6 +4,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
+import Quickshell.Hyprland
+import Quickshell.Services.Pipewire
 import qs.common
 import qs.services
 import qs.osd
@@ -16,53 +19,45 @@ Item {
     property var diskIndicator
 
     property bool panelOpen: GlobalStates.sidebarRightOpen
-    property bool _loaded: false
 
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
 
     property bool expandAllState: true
     property bool notificationsExpanded: false
+    property string activeSubPanel: ""
     signal toggleExpandAll()
 
     onPanelOpenChanged: {
-        if (panelOpen) {
-            hideTimer.stop()
-            _loaded = true
-        } else {
-            hideTimer.restart()
-        }
+        if (!panelOpen) activeSubPanel = ""
     }
 
-    Timer {
-        id: hideTimer
-        interval: 300
-        onTriggered: root._loaded = false
-    }
+    PanelWindow {
+        id: panelWindow
+        visible: root.panelOpen || slideAnim.running
 
-    LazyLoader {
-        active: root._loaded
-        component: PanelWindow {
-        visible: root._loaded
+        WlrLayershell.namespace: "quickshell:infopanel"
+        WlrLayershell.layer: root.panelOpen || slideAnim.running ? WlrLayer.Top : WlrLayer.Background
+        exclusiveZone: 0
 
         anchors {
             top: true
             right: true
-            left: true
             bottom: true
         }
 
         margins.top: 4
         margins.right: 4
-        margins.left: 4
         margins.bottom: 4
 
+        implicitWidth: 388
         color: "transparent"
 
-        // Click outside to close
-        MouseArea {
-            anchors.fill: parent
-            onClicked: GlobalStates.sidebarRightOpen = false
+        HyprlandFocusGrab {
+            id: focusGrab
+            active: root.panelOpen
+            windows: [panelWindow]
+            onCleared: GlobalStates.sidebarRightOpen = false
         }
 
         // The panel
@@ -71,16 +66,13 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.right: parent.right
-            anchors.rightMargin: showContent && root.panelOpen ? 0 : -width - 20
-            width: 380
+            anchors.rightMargin: root.panelOpen ? 0 : -width - 20
+            width: parent.width
             color: Config.getColor("background.crust")
             border.width: 1
             border.color: Config.getColor("border.subtle")
             radius: 12
             clip: true
-
-            property bool showContent: false
-            Component.onCompleted: showContent = true
 
             Behavior on anchors.rightMargin {
                 NumberAnimation {
@@ -88,12 +80,6 @@ Item {
                     duration: 300
                     easing.type: Easing.OutCubic
                 }
-            }
-
-            // Prevent clicks from passing through
-            MouseArea {
-                anchors.fill: parent
-                onClicked: { }
             }
 
             ColumnLayout {
@@ -178,12 +164,14 @@ Item {
                     Layout.rightMargin: 12
                     Layout.preferredHeight: 1
                     color: Config.getColor("border.subtle")
+                    visible: root.activeSubPanel === ""
                 }
 
                 // ── Notifications Section ──
                 Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    visible: root.activeSubPanel === ""
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -351,8 +339,10 @@ Item {
 
                                 Text {
                                     anchors.horizontalCenter: parent.horizontalCenter
-                                    text: "🔕\uFE0E"
+                                    text: "󰂛"
                                     font.pixelSize: Config.fontSizeIconLarge
+                                    font.family: Config.fontFamilyIcon
+                                    color: Config.getColor("text.muted")
                                     opacity: 0.5
                                 }
 
@@ -646,13 +636,174 @@ Item {
                     contentHeight: systemSection.implicitHeight
                     clip: true
                     boundsBehavior: Flickable.StopAtBounds
-                    visible: !root.notificationsExpanded
+                    visible: !root.notificationsExpanded && root.activeSubPanel === ""
 
                     Column {
                         id: systemSection
                         width: parent.width
                         spacing: 8
                         padding: 12
+
+                        // ── Quick Toggles Grid ──
+                        Grid {
+                            width: parent.width - 24
+                            columns: 2
+                            spacing: 6
+
+                            ToggleButton {
+                                width: (parent.width - parent.spacing) / 2
+                                icon: "\uf1eb"
+                                label: "WiFi"
+                                status: Wifi.connected ? Wifi.ssid : (Wifi.enabled ? "Disconnected" : "Off")
+                                active: Wifi.connected
+                                accentColor: Config.getColor("primary.blue")
+                                onClicked: Wifi.toggle()
+                                onExpandClicked: root.activeSubPanel = "wifi"
+                            }
+
+                            ToggleButton {
+                                width: (parent.width - parent.spacing) / 2
+                                icon: "\uf294"
+                                label: "Bluetooth"
+                                status: {
+                                    if (!BluetoothService.available) return "Unavailable"
+                                    if (!BluetoothService.enabled) return "Off"
+                                    if (BluetoothService.connectedCount > 0)
+                                        return BluetoothService.connectedCount + " connected"
+                                    return "On"
+                                }
+                                active: BluetoothService.enabled
+                                accentColor: Config.getColor("primary.blue")
+                                onClicked: BluetoothService.toggle()
+                                onExpandClicked: root.activeSubPanel = "bluetooth"
+                            }
+                        }
+
+                        // ── Brightness Slider ──
+                        RowLayout {
+                            width: parent.width - 24
+                            spacing: 8
+                            visible: Brightness.available
+
+                            Text {
+                                text: Brightness.brightnessPercent > 50 ? "\uf185" : "\uf186"
+                                font.pixelSize: Config.fontSizeSmall
+                                font.family: Config.fontFamilyIcon
+                                color: Config.getColor("text.muted")
+                            }
+
+                            Rectangle {
+                                Layout.fillWidth: true
+                                height: 6
+                                radius: 3
+                                color: Config.getColor("background.secondary")
+
+                                Rectangle {
+                                    width: parent.width * (Brightness.brightnessPercent / 100)
+                                    height: parent.height
+                                    radius: parent.radius
+                                    color: Config.getColor("primary.yellow")
+
+                                    Behavior on width { NumberAnimation { duration: 100 } }
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    anchors.margins: -4
+                                    onClicked: (mouse) => {
+                                        const percent = Math.round((mouse.x / parent.width) * 100)
+                                        Brightness.setBrightnessPercent(percent)
+                                    }
+                                    onPositionChanged: (mouse) => {
+                                        if (pressed) {
+                                            const percent = Math.max(1, Math.min(100, Math.round((mouse.x / parent.width) * 100)))
+                                            Brightness.setBrightnessPercent(percent)
+                                        }
+                                    }
+                                }
+                            }
+
+                            Text {
+                                text: Math.round(Brightness.brightnessPercent) + "%"
+                                color: Config.getColor("text.muted")
+                                font.pixelSize: Config.fontSizeSmall - 1
+                                font.family: Config.fontFamilyMonospace
+                                Layout.preferredWidth: 30
+                                horizontalAlignment: Text.AlignRight
+                            }
+                        }
+
+                        // ── Volume Slider ──
+                        RowLayout {
+                            width: parent.width - 24
+                            spacing: 8
+                            visible: Volume.available
+
+                            Text {
+                                text: Volume.mutedState ? "󰖁" : (Volume.percentage > 0.5 ? "󰕾" : "󰖀")
+                                font.pixelSize: Config.fontSizeSmall
+                                font.family: Config.fontFamilyIcon
+                                color: Volume.mutedState ? Config.getColor("state.error") : Config.getColor("text.muted")
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    anchors.margins: -4
+                                    onClicked: {
+                                        if (Pipewire.defaultAudioSink?.audio)
+                                            Pipewire.defaultAudioSink.audio.muted = !Pipewire.defaultAudioSink.audio.muted
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                Layout.fillWidth: true
+                                height: 6
+                                radius: 3
+                                color: Config.getColor("background.secondary")
+
+                                Rectangle {
+                                    width: parent.width * Math.min(Volume.percentage, 1.0)
+                                    height: parent.height
+                                    radius: parent.radius
+                                    color: Volume.mutedState
+                                        ? Config.getColor("text.muted")
+                                        : Config.getColor("primary.blue")
+
+                                    Behavior on width { NumberAnimation { duration: 100 } }
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    anchors.margins: -4
+                                    onClicked: (mouse) => {
+                                        if (Pipewire.defaultAudioSink?.audio) {
+                                            Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1.0, mouse.x / parent.width))
+                                        }
+                                    }
+                                    onPositionChanged: (mouse) => {
+                                        if (pressed && Pipewire.defaultAudioSink?.audio) {
+                                            Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1.0, mouse.x / parent.width))
+                                        }
+                                    }
+                                }
+                            }
+
+                            Text {
+                                text: Volume.mutedState ? "Muted" : Math.round(Volume.percentage * 100) + "%"
+                                color: Config.getColor("text.muted")
+                                font.pixelSize: Config.fontSizeSmall - 1
+                                font.family: Config.fontFamilyMonospace
+                                Layout.preferredWidth: 36
+                                horizontalAlignment: Text.AlignRight
+                            }
+                        }
+
+                        // ── Separator ──
+                        Rectangle {
+                            width: parent.width - 24
+                            height: 1
+                            color: Config.getColor("border.subtle")
+                        }
 
                         // Section header
                         RowLayout {
@@ -1098,8 +1249,126 @@ Item {
                         }
                     }
                 }
+
             }
-        }
+
+            // ── Sub-panel overlay (slides in from right) ──
+            Item {
+                id: subPanelContainer
+                anchors.fill: parent
+                clip: true
+                visible: root.activeSubPanel !== "" || subPanelSlideAnim.running
+
+                Rectangle {
+                    id: subPanelContent
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    x: root.activeSubPanel !== "" ? 0 : width
+                    color: Config.getColor("background.crust")
+                    radius: 12
+
+                    Behavior on x {
+                        NumberAnimation {
+                            id: subPanelSlideAnim
+                            duration: 250
+                            easing.type: Easing.OutCubic
+                        }
+                    }
+
+                    // Sub-panel header
+                    Rectangle {
+                        id: subPanelHeader
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: 44
+                        color: Config.getColor("background.mantle")
+                        radius: 12
+                        z: 1
+
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 12
+                            color: parent.color
+                        }
+
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.leftMargin: 12
+                            anchors.rightMargin: 12
+                            spacing: 8
+
+                            Rectangle {
+                                width: 28
+                                height: 28
+                                radius: 6
+                                color: subBackMouse.containsMouse
+                                    ? Config.getColor("background.tertiary")
+                                    : "transparent"
+
+                                Behavior on color { ColorAnimation { duration: 100 } }
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: "\uf053"
+                                    font.pixelSize: Config.fontSizeMedium
+                                    font.family: Config.fontFamilyIcon
+                                    color: subBackMouse.containsMouse
+                                        ? Config.getColor("text.primary")
+                                        : Config.getColor("text.muted")
+
+                                    Behavior on color { ColorAnimation { duration: 100 } }
+                                }
+
+                                MouseArea {
+                                    id: subBackMouse
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onClicked: root.activeSubPanel = ""
+                                }
+                            }
+
+                            Text {
+                                text: root.activeSubPanel === "wifi" ? "\uf1eb"
+                                    : root.activeSubPanel === "bluetooth" ? "\uf294"
+                                    : ""
+                                font.pixelSize: Config.fontSizeHeader
+                                font.family: Config.fontFamilyIcon
+                                color: Config.getColor("primary.blue")
+                            }
+
+                            Text {
+                                text: root.activeSubPanel === "wifi" ? "WiFi"
+                                    : root.activeSubPanel === "bluetooth" ? "Bluetooth"
+                                    : ""
+                                color: Config.getColor("text.primary")
+                                font.pixelSize: Config.fontSizeHeader
+                                font.weight: Font.DemiBold
+                                font.family: Config.fontFamilyMonospace
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
+
+                    WifiPanel {
+                        anchors.top: subPanelHeader.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        visible: root.activeSubPanel === "wifi"
+                    }
+
+                    BluetoothPanel {
+                        anchors.top: subPanelHeader.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        visible: root.activeSubPanel === "bluetooth"
+                    }
+                }
+            }
         }
     }
 }

@@ -9,12 +9,12 @@ SystemIndicator {
     property real memTotal: 0
     property real memUsed: 0
     percentage: memUsage
-    label: "MEM"
+    icon: "󰘚"
     primaryColor: Config.barTextColor
-    tooltipText: ""
-
-    onClicked: {
-        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
+    tooltipText: {
+        let used = (memUsed / 1048576).toFixed(1)
+        let total = (memTotal / 1048576).toFixed(1)
+        return "Memory: " + Math.round(memUsage * 100) + "%\n" + used + "G / " + total + "G"
     }
 
     // Read /proc/meminfo to calculate memory usage

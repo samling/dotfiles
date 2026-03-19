@@ -12,25 +12,43 @@ MouseArea {
 
     property color primaryColor: Config.barTextColor
 
-    implicitWidth: volumeText.implicitWidth + 8
+    implicitWidth: volumeRow.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
     hoverEnabled: true
 
-    Text {
-        id: volumeText
+    Row {
+        id: volumeRow
         anchors.centerIn: parent
-        text: {
-            if (!root.available) return "VOL N/A"
-            let pct = Math.round(root.percentage * 100)
-            return root.mutedState ? "VOL: MUTED" : "VOL " + pct + "%"
-        }
-        color: root.primaryColor
-        font.pixelSize: Config.fontSizeBase
-        font.weight: Font.DemiBold
-        font.family: Config.fontFamilyMonospace
+        spacing: 3
 
-        Behavior on color {
-            ColorAnimation { duration: Config.colorAnimationDuration }
+        Text {
+            text: {
+                if (root.mutedState) return "󰖁"
+                if (root.percentage > 0.5) return "󰕾"
+                if (root.percentage > 0) return "󰖀"
+                return "󰕿"
+            }
+            color: root.primaryColor
+            font.pixelSize: Config.fontSizeBase + 1
+            font.family: Config.fontFamilyIcon
+            anchors.verticalCenter: parent.verticalCenter
+
+            Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
+        }
+
+        Text {
+            id: volumeText
+            text: {
+                if (!root.available) return "N/A"
+                return root.mutedState ? "Muted" : Math.round(root.percentage * 100) + "%"
+            }
+            color: root.primaryColor
+            font.pixelSize: Config.fontSizeBase
+            font.weight: Font.DemiBold
+            font.family: Config.fontFamilyMonospace
+            anchors.verticalCenter: parent.verticalCenter
+
+            Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
         }
     }
 

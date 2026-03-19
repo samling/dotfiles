@@ -6,27 +6,34 @@ import Quickshell.Io
 import Quickshell.Wayland
 import qs.common
 
-Variants {
-    model: Quickshell.screens
+Scope {
+    id: pickerScope
 
-    LazyLoader {
-        id: pickerLoader
-        required property ShellScreen modelData
-        active: GlobalStates.wallpaperPickerOpen || pickerUnloadDelay.running
+    property bool keepAlive: false
 
-        Timer {
-            id: pickerUnloadDelay
-            interval: 3000
-        }
+    Timer {
+        id: pickerUnloadDelay
+        interval: 3000
+        onTriggered: pickerScope.keepAlive = false
+    }
 
-        Connections {
-            target: GlobalStates
-            function onWallpaperPickerOpenChanged() {
-                if (!GlobalStates.wallpaperPickerOpen) {
-                    pickerUnloadDelay.start()
-                }
+    Connections {
+        target: GlobalStates
+        function onWallpaperPickerOpenChanged() {
+            if (!GlobalStates.wallpaperPickerOpen) {
+                pickerScope.keepAlive = true
+                pickerUnloadDelay.start()
             }
         }
+    }
+
+    Variants {
+        model: Quickshell.screens
+
+        LazyLoader {
+            id: pickerLoader
+            required property ShellScreen modelData
+            active: GlobalStates.wallpaperPickerOpen || pickerScope.keepAlive
         component: PanelWindow {
         id: root
 
@@ -508,6 +515,7 @@ Variants {
                     }
                 }
             }
+        }
         }
         }
     }

@@ -26,13 +26,14 @@ SystemIndicator {
     ]
 
     percentage: cpuUsage
-    label: "CPU"
-    suffix: root.cpuTemp > 0 ? "(" + root.cpuTemp + "C)" : ""
+    icon: "\uf2db"
+    suffix: ""
     primaryColor: Config.barTextColor
-    tooltipText: ""
-
-    onClicked: {
-        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
+    tooltipText: {
+        let text = "CPU: " + Math.round(cpuUsage * 100) + "%"
+        if (root.cpuTemp > 0) text += "\nTemp: " + root.cpuTemp + "°C"
+        if (root.powerProfile) text += "\nProfile: " + root.powerProfile
+        return text
     }
 
     // Get current power profile
