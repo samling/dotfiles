@@ -16,7 +16,7 @@ MouseArea {
     property bool showWattage: true
     property color primaryColor: Config.barTextColor
 
-    implicitWidth: batteryText.implicitWidth + 8
+    implicitWidth: batteryRow.implicitWidth + 8
     implicitHeight: parent ? parent.height : Config.barHeight
     hoverEnabled: true
     acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -27,25 +27,49 @@ MouseArea {
         }
     }
 
-    Text {
-        id: batteryText
+    Row {
+        id: batteryRow
         anchors.centerIn: parent
-        text: {
-            if (!root.available) return "BAT N/A"
-            let pct = Math.round(root.percentage * 100)
-            let base = root.isCharging ? "BAT " + pct + " ⚡\uFE0E" : "BAT " + pct + "%"
-            if (root.showWattage && Battery.energyRate > 0) {
-                base += " (" + Battery.energyRate.toFixed(1) + "W)"
-            }
-            return base
-        }
-        color: root.primaryColor
-        font.pixelSize: Config.fontSizeBase
-        font.weight: Font.DemiBold
-        font.family: Config.fontFamilyMonospace
+        spacing: 3
 
-        Behavior on color {
-            ColorAnimation { duration: Config.colorAnimationDuration }
+        Text {
+            text: {
+                if (!root.available) return "󰂃"
+                let pct = Math.round(root.percentage * 100)
+                if (root.isCharging) return "󰂄"
+                if (pct >= 90) return "󰁹"
+                if (pct >= 70) return "󰂁"
+                if (pct >= 50) return "󰁿"
+                if (pct >= 30) return "󰁽"
+                if (pct >= 10) return "󰁻"
+                return "󰂎"
+            }
+            color: root.primaryColor
+            font.pixelSize: Config.fontSizeBase + 1
+            font.family: Config.fontFamilyIcon
+            anchors.verticalCenter: parent.verticalCenter
+
+            Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
+        }
+
+        Text {
+            id: batteryText
+            text: {
+                if (!root.available) return "N/A"
+                let pct = Math.round(root.percentage * 100)
+                let base = pct + "%"
+                if (root.showWattage && Battery.energyRate > 0) {
+                    base += " (" + Battery.energyRate.toFixed(1) + "W)"
+                }
+                return base
+            }
+            color: root.primaryColor
+            font.pixelSize: Config.fontSizeBase
+            font.weight: Font.DemiBold
+            font.family: Config.fontFamilyMonospace
+            anchors.verticalCenter: parent.verticalCenter
+
+            Behavior on color { ColorAnimation { duration: Config.colorAnimationDuration } }
         }
     }
 

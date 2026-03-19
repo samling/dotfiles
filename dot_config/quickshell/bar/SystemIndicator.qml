@@ -9,6 +9,7 @@ MouseArea {
     // Required properties
     property real percentage: 0  // 0.0 to 1.0
     property string label: ""    // Short label like "CPU", "MEM", "DSK"
+    property string icon: ""     // Nerd Font icon (used instead of label if set)
     property color primaryColor: Config.barTextColor
     property string tooltipText: ""
     property string suffix: ""  // Optional text after percentage, e.g. "(65C)"
@@ -22,14 +23,14 @@ MouseArea {
         anchors.centerIn: parent
         spacing: 3
 
-        // Label
+        // Icon or label
         Text {
-            text: root.label
+            text: root.icon || root.label
             color: root.primaryColor
-            font.pixelSize: Config.fontSizeBase
+            font.pixelSize: root.icon ? Config.fontSizeBase + 1 : Config.fontSizeBase
             font.weight: Font.Medium
-            font.family: Config.fontFamilyMonospace
-            visible: root.label.length > 0
+            font.family: root.icon ? Config.fontFamilyIcon : Config.fontFamilyMonospace
+            visible: text.length > 0
 
             Behavior on color {
                 ColorAnimation { duration: Config.colorAnimationDuration }
