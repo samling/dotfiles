@@ -13,10 +13,10 @@ SystemIndicator {
     property string fanState: "standard"
 
     readonly property var fanModes: [
-        { value: "0", label: "Standard", icon: "\uf2c9" },
-        { value: "1", label: "Quiet",    icon: "\uf4b8" },
-        { value: "2", label: "High",     icon: "\uf72e" },
-        { value: "3", label: "Full",     icon: "\uf863" },
+        { value: "1", label: "Quiet",    icon: "󱑱" },
+        { value: "0", label: "Standard", icon: "󱑲" },
+        { value: "2", label: "High",     icon: "󱑳" },
+        { value: "3", label: "Full",     icon: "󱑴" },
     ]
 
     readonly property var powerProfileModes: [
