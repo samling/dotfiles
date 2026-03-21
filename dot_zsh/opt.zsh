@@ -55,8 +55,8 @@ setopt GLOB_DOTS                # Include dotfiles in globbing
 
 # ======== VI MODE
 
-zle -N zle-line-init
-zle -N zle-keymap-select
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 
 # ======== TERMINAL BEHAVIOR
 
