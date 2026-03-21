@@ -116,13 +116,6 @@ Scope {
             }
         }
 
-        // Set wallpaper process
-        Process {
-            id: setWallpaperProc
-            property string imagePath: ""
-            command: [root.configDir + "/swww/set_wallpaper.sh", imagePath]
-        }
-
         // Click outside to close
         MouseArea {
             anchors.fill: parent
@@ -131,8 +124,15 @@ Scope {
 
         function applySelection() {
             if (gridView.currentIndex >= 0 && gridView.currentIndex < root.imageList.length) {
-                setWallpaperProc.imagePath = root.imageList[gridView.currentIndex].fullPath
-                setWallpaperProc.running = true
+                const imagePath = root.imageList[gridView.currentIndex].fullPath
+                const proc = Qt.createQmlObject(`
+                    import Quickshell.Io
+                    Process {
+                        onExited: destroy()
+                    }
+                `, pickerScope)
+                proc.command = [root.configDir + "/swww/set_wallpaper.sh", imagePath]
+                proc.running = true
                 GlobalStates.wallpaperPickerOpen = false
             }
         }
