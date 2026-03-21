@@ -20,6 +20,6 @@ fi
 # Set a different random image as wallpaper for each display
 for d in $(swww query | cut -d: -f2 | tr -d ' '); do # see swww-query(1)
     random_image=$(find "$1" -type f | shuf -n 1)
-    "$SCRIPT_DIR/set_wallpaper.sh" "$random_image" "$d"
+    "$SCRIPT_DIR/set_wallpaper.sh" "$random_image" 0 "$d"
     echo "Display $d: Wallpaper set to: $random_image"
 done

@@ -116,25 +116,87 @@ Scope {
             }
         }
 
+        // Color palette state
+        property string selectedImagePath: ""
+        property var paletteColors: []
+        property bool paletteLoading: false
+        property bool paletteVisible: false
+        property int paletteCompletedCount: 0
+
         // Click outside to close
         MouseArea {
             anchors.fill: parent
-            onClicked: GlobalStates.wallpaperPickerOpen = false
+            onClicked: {
+                if (root.paletteVisible) {
+                    root.paletteVisible = false
+                    root.paletteColors = []
+                } else {
+                    GlobalStates.wallpaperPickerOpen = false
+                }
+            }
         }
 
         function applySelection() {
             if (gridView.currentIndex >= 0 && gridView.currentIndex < root.imageList.length) {
                 const imagePath = root.imageList[gridView.currentIndex].fullPath
-                const proc = Qt.createQmlObject(`
-                    import Quickshell.Io
-                    Process {
-                        onExited: destroy()
-                    }
-                `, pickerScope)
-                proc.command = [root.configDir + "/swww/set_wallpaper.sh", imagePath]
-                proc.running = true
-                GlobalStates.wallpaperPickerOpen = false
+                root.selectedImagePath = imagePath
+                root.paletteColors = ["", "", "", ""]
+                root.paletteCompletedCount = 0
+                root.paletteLoading = true
+                root.paletteVisible = true
+
+                for (let i = 0; i < 4; i++) {
+                    const idx = i
+                    const proc = Qt.createQmlObject(`
+                        import Quickshell.Io
+                        Process {
+                            stdout: StdioCollector {
+                                onStreamFinished: {
+                                    try {
+                                        const data = JSON.parse(this.text)
+                                        const primary = data.colors.primary.dark.color
+                                        let colors = root.paletteColors
+                                        colors[${idx}] = primary
+                                        root.paletteColors = colors
+                                    } catch(e) {}
+                                    root.paletteCompletedCount++
+                                    if (root.paletteCompletedCount >= 4) {
+                                        root.paletteLoading = false
+                                    }
+                                }
+                            }
+                            onExited: destroy()
+                        }
+                    `, root)
+                    proc.command = ["matugen", "image", "--source-color-index", idx.toString(),
+                                    "--dry-run", "-j", "hex", "--contrast", "1.0",
+                                    "-t", "scheme-fidelity", imagePath]
+                    proc.running = true
+                }
             }
+        }
+
+        function applyQuick() {
+            if (gridView.currentIndex >= 0 && gridView.currentIndex < root.imageList.length) {
+                const imagePath = root.imageList[gridView.currentIndex].fullPath
+                root.selectedImagePath = imagePath
+                root.applyWithColorIndex(0)
+            }
+        }
+
+        function applyWithColorIndex(colorIndex) {
+            const proc = Qt.createQmlObject(`
+                import Quickshell.Io
+                Process {
+                    onExited: destroy()
+                }
+            `, pickerScope)
+            proc.command = [root.configDir + "/swww/set_wallpaper.sh",
+                            root.selectedImagePath, colorIndex.toString()]
+            proc.running = true
+            root.paletteVisible = false
+            root.paletteColors = []
+            GlobalStates.wallpaperPickerOpen = false
         }
 
         onVisibleChanged: {
@@ -156,7 +218,13 @@ Scope {
             // Prevent clicks from closing
             MouseArea {
                 anchors.fill: parent
-                onClicked: function(mouse) { mouse.accepted = true }
+                onClicked: function(mouse) {
+                    if (root.paletteVisible) {
+                        root.paletteVisible = false
+                        root.paletteColors = []
+                    }
+                    mouse.accepted = true
+                }
             }
 
             Column {
@@ -365,7 +433,11 @@ Scope {
                                 return
                             }
                             if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                                root.applySelection()
+                                if (event.modifiers & Qt.ShiftModifier) {
+                                    root.applyQuick()
+                                } else {
+                                    root.applySelection()
+                                }
                                 event.accepted = true
                                 return
                             }
@@ -508,7 +580,106 @@ Scope {
                                     onContainsMouseChanged: {
                                         if (containsMouse) gridView.currentIndex = thumbDelegate.index
                                     }
-                                    onClicked: root.applySelection()
+                                    onClicked: (mouse) => {
+                                        if (root.paletteVisible) {
+                                            root.paletteVisible = false
+                                            root.paletteColors = []
+                                        } else if (mouse.modifiers & Qt.ShiftModifier) {
+                                            root.applyQuick()
+                                        } else {
+                                            root.applySelection()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Color palette popup
+                Rectangle {
+                    id: palettePopup
+                    visible: root.paletteVisible
+                    anchors.centerIn: parent
+                    width: paletteColumn.width + 32
+                    height: paletteColumn.height + 32
+                    radius: 12
+                    color: Config.getColor("background.crust")
+                    border.width: 1
+                    border.color: Config.getColor("border.subtle")
+                    z: 10
+
+                    // Prevent clicks from propagating
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: function(mouse) { mouse.accepted = true }
+                    }
+
+                    Column {
+                        id: paletteColumn
+                        anchors.centerIn: parent
+                        spacing: 12
+
+                        Text {
+                            text: "Choose a color palette"
+                            color: Config.getColor("text.primary")
+                            font.pixelSize: Config.fontSizeMedium
+                            font.weight: Font.DemiBold
+                            font.family: Config.fontFamilyMonospace
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Text {
+                            visible: root.paletteLoading
+                            text: "Extracting colors..."
+                            color: Config.getColor("text.muted")
+                            font.pixelSize: Config.fontSizeBase
+                            font.family: Config.fontFamilyMonospace
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Row {
+                            spacing: 12
+                            anchors.horizontalCenter: parent.horizontalCenter
+
+                            Repeater {
+                                model: 4
+
+                                Rectangle {
+                                    id: swatchRect
+                                    required property int index
+                                    width: 56
+                                    height: 56
+                                    radius: 28
+                                    color: {
+                                        const c = root.paletteColors[index]
+                                        return (c && c !== "") ? c : Config.getColor("background.surface")
+                                    }
+                                    border.width: swatchMouse.containsMouse ? 3 : 1
+                                    border.color: swatchMouse.containsMouse
+                                        ? Config.getColor("text.primary")
+                                        : Config.getColor("border.subtle")
+                                    opacity: {
+                                        const c = root.paletteColors[index]
+                                        return (c && c !== "") ? 1.0 : 0.4
+                                    }
+
+                                    Behavior on border.width { NumberAnimation { duration: 100 } }
+                                    Behavior on border.color { ColorAnimation { duration: 100 } }
+                                    Behavior on color { ColorAnimation { duration: 200 } }
+                                    Behavior on opacity { NumberAnimation { duration: 200 } }
+
+                                    MouseArea {
+                                        id: swatchMouse
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        cursorShape: Qt.PointingHandCursor
+                                        enabled: {
+                                            const c = root.paletteColors[swatchRect.index]
+                                            return c && c !== ""
+                                        }
+                                        onClicked: root.applyWithColorIndex(swatchRect.index)
+                                    }
                                 }
                             }
                         }
