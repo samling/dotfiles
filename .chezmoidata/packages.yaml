@@ -103,7 +103,7 @@ packages:
       brew: direnv
       apt: direnv
     doppler:
-      yay: doppler-cli-bin
+      aur: doppler-cli-bin
     eza:
       pacman: eza
       brew: eza
@@ -137,7 +137,7 @@ packages:
       pacman: lsd
       brew: lsd
     pet:
-      yay: pet-git
+      aur: pet-git
     rename:
       brew: rename
     ripgrep:
@@ -196,7 +196,7 @@ packages:
     asdf:
       brew: asdf
     nvm:
-      yay: nvm
+      aur: nvm
       brew: nvm
     luarocks:
       pacman: luarocks
@@ -216,12 +216,12 @@ packages:
       pacman: vim
       apt: vim
     visual-studio-code-bin:
-      yay: visual-studio-code-bin
+      aur: visual-studio-code-bin
     lazygit:
       pacman: lazygit
       brew: jesseduffield/lazygit/lazygit
     gitmux:
-      yay: gitmux
+      aur: gitmux
       brew: arl/arl/gitmux
     devtools:
       pacman: devtools
@@ -269,10 +269,10 @@ packages:
     devspace:
       brew: devspace
     vendir:
-      yay: vendir
+      aur: vendir
       brew: vendir
     ytt:
-      yay: ytt
+      aur: ytt
       brew: ytt
     vkv:
       brew: falcosuessgott/tap/vkv
@@ -326,7 +326,7 @@ packages:
   # Desktop applications
   desktop:
     appimagelauncher:
-      yay: appimagelauncher
+      aur: appimagelauncher
     bruno:
       brew: bruno
     copyq:
@@ -342,15 +342,15 @@ packages:
     ghostty:
       pacman: ghostty
     google-chrome:
-      yay: google-chrome
+      aur: google-chrome
       apt: google-chrome-stable
     handlr:
       pacman: handlr-regex
     insync:
-      yay: insync
+      aur: insync
       apt: insync
     localsend-bin:
-      yay: localsend-bin
+      aur: localsend-bin
       brew: localsend
       apt: localsend
     obsidian:
@@ -364,7 +364,7 @@ packages:
     thunar-volman:
       pacman: thunar-volman
     vesktop:
-      yay: vesktop
+      aur: vesktop
       apt: vesktop
     wezterm:
       pacman: wezterm
@@ -389,10 +389,10 @@ packages:
     serie:
       pacman: serie
     viddy:
-      yay: viddy
+      aur: viddy
       brew: viddy
     syshud:
-      yay: syshud
+      aur: syshud
     bustle: # dbus viewer
       pacman: bustle
     d-spy: # d-bus inspection tool
@@ -428,26 +428,26 @@ packages:
     fira-sans:
       pacman: ttf-fira-sans
     ttf-iosevka:
-      yay: ttf-iosevka
+      aur: ttf-iosevka
     ttf-iosevka-term:
-      yay: ttf-iosevka-term
+      aur: ttf-iosevka-term
     ttf-iosevka-nerd:
       pacman: ttf-iosevka-nerd
     nerd-fonts:
-      yay: nerd-fonts
+      aur: nerd-fonts
     apple-fonts:
-      yay: apple-fonts
+      aur: apple-fonts
     ttf-ms-fonts:
-      yay: ttf-ms-fonts
+      aur: ttf-ms-fonts
 
   # Themes and appearance
   themes:
     catppuccin-gtk-theme-mocha:
-      yay: catppuccin-gtk-theme-mocha
+      aur: catppuccin-gtk-theme-mocha
     papirus-icon-theme:
-      yay: papirus-icon-theme
+      aur: papirus-icon-theme
     numix-circle-icon-theme:
-      yay: numix-circle-icon-theme-git
+      aur: numix-circle-icon-theme-git
     font-manager:
       pacman: font-manager
     nwg-look:
@@ -456,7 +456,7 @@ packages:
       pacman: qt6ct
       apt: qt6ct
     matugen:
-      yay: matugen-bin
+      aur: matugen-bin
 
   # Security
   security:
@@ -554,29 +554,29 @@ packages:
     waybar:
       pacman: waybar
     waybar-module-pacman-updates:
-      yay: waybar-module-pacman-updates-git
+      aur: waybar-module-pacman-updates-git
     wl-clipboard:
       pacman: wl-clipboard
     wf-recorder:
       pacman: wf-recorder
     wlogout:
-      yay: wlogout
+      aur: wlogout
     wofi-emoji:
-      yay: wofi-emoji
+      aur: wofi-emoji
     fuzzel:
       pacman: fuzzel
     cage:
       pacman: cage
     grimblast:
-      yay: grimblast
+      aur: grimblast
     bemoji:
-      yay: bemoji
+      aur: bemoji
     cliphist:
       pacman: cliphist
     clipse:
-      yay: clipse
+      aur: clipse
     clipse-gui:
-      yay: clipse-gui
+      aur: clipse-gui
     satty:
       pacman: satty
     slurp:
@@ -599,9 +599,9 @@ packages:
   # Gaming
   gaming:
     steam:
-      yay: steam
+      aur: steam
     moonlight:
-      yay: moonlight-qt
+      aur: moonlight-qt
     vulkan-radeon:
       pacman: vulkan-radeon
 
@@ -638,16 +638,16 @@ packages:
     cpupower:
       pacman: cpupower
     cpupower-gui:
-      yay: cpupower-gui-git
+      aur: cpupower-gui-git
 
   # GUI frameworks (for those building desktop apps)
   gui_framework:
     # aylurs-gtk-shell-git:
-    #   yay: aylurs-gtk-shell-git
+    #   aur: aylurs-gtk-shell-git
     quickshell:
-      yay: quickshell
+      aur: quickshell
     hyprswitch:
-      yay: hyprswitch
+      aur: hyprswitch
 
   # NVIDIA
   nvidia:
@@ -668,14 +668,14 @@ packages:
     powertop:
       pacman: powertop
     wluma:
-      yay: wluma
+      aur: wluma
 
   ############
   # HYPRLAND #
   ############
   hyprland:
     hyprdynamicmonitors:
-      yay: hyprdynamicmonitors
+      aur: hyprdynamicmonitors
     hyprland:
       pacman: hyprland
     hypridle:
@@ -687,7 +687,7 @@ packages:
     hyprpolkitagent:
       pacman: hyprpolkitagent
     hyprshot:
-      yay: hyprshot
+      aur: hyprshot
     hyprpicker:
       pacman: hyprpicker
     hyprutils:

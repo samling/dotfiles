@@ -40,8 +40,8 @@ echo "Enabled groups: {{ $enabledGroups | join ", " }}"
         {{- $packageList = printf "%s %s" $packageList (index $packageData $packageManager) -}}
       {{- end -}}
       {{- /* Add Arch AUR packages if applicable */}}
-      {{- if and (eq $osID "arch") ($packageData) (index $packageData "yay") -}}
-        {{- $aurPackageList = printf "%s %s" $aurPackageList (index $packageData "yay") -}}
+      {{- if and (eq $osID "arch") ($packageData) (index $packageData "aur") -}}
+        {{- $aurPackageList = printf "%s %s" $aurPackageList (index $packageData "aur") -}}
       {{- end -}}
     {{- end -}}
   {{- else -}}
@@ -59,8 +59,8 @@ echo "Adding laptop-specific packages..."
         {{- $packageList = printf "%s %s" $packageList (index $laptopPackageData $packageManager) -}}
       {{- end -}}
       {{- /* Add Arch AUR packages if applicable */}}
-      {{- if and (eq $osID "arch") ($laptopPackageData) (index $laptopPackageData "yay") -}}
-        {{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData "yay") -}}
+      {{- if and (eq $osID "arch") ($laptopPackageData) (index $laptopPackageData "aur") -}}
+        {{- $aurPackageList = printf "%s %s" $aurPackageList (index $laptopPackageData "aur") -}}
       {{- end -}}
     {{- end }}
   {{- end }}
@@ -79,20 +79,17 @@ echo "No Arch packages to install."
 
   {{- if $aurPackageList }}
 echo "Installing AUR packages: {{ $aurPackageList }}"
-# Check if yay is installed
-if ! command -v yay &> /dev/null; then
-  echo "yay not found. Attempting to install yay-bin..."
-  TEMP_DIR=$(mktemp -d)
-  git clone https://aur.archlinux.org/yay-bin.git "$TEMP_DIR"
-  (cd "$TEMP_DIR" && makepkg -si --noconfirm)
-  rm -rf "$TEMP_DIR"
-  if ! command -v yay &> /dev/null; then
-    echo "Failed to install yay. Please install an AUR helper manually."
+# Check if paru is installed
+if ! command -v paru &> /dev/null; then
+  echo "paru not found. Attempting to install paru..."
+  sudo pacman -Sy paru
+  if ! command -v paru &> /dev/null; then
+    echo "Failed to install paru. Please install an AUR helper manually."
     exit 1
   fi
-  echo "yay installed successfully."
+  echo "paru installed successfully."
 fi
-yay -S --needed --noconfirm --ask=4 {{ $aurPackageList }}
+paru -S --needed --noconfirm --ask=4 {{ $aurPackageList }}
   {{- else }}
 echo "No AUR packages to install."
   {{- end }}
