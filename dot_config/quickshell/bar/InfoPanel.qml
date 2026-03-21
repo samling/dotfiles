@@ -26,10 +26,20 @@ Item {
     property bool expandAllState: true
     property bool notificationsExpanded: false
     property string activeSubPanel: ""
+    property int _timeRefreshTick: 0
     signal toggleExpandAll()
 
+    // Auto-refresh notification timestamps every 60 seconds
+    Timer {
+        interval: 60000
+        running: root.panelOpen
+        repeat: true
+        onTriggered: root._timeRefreshTick++
+    }
+
     onPanelOpenChanged: {
-        if (!panelOpen) activeSubPanel = ""
+        if (panelOpen) _timeRefreshTick++
+        else activeSubPanel = ""
     }
 
     PanelWindow {
@@ -525,6 +535,7 @@ Item {
                                             // Time
                                             Text {
                                                 text: {
+                                                    void root._timeRefreshTick // force re-evaluation on tick
                                                     const t = notifRow.modelData?.time
                                                     if (!t) return ""
                                                     const diff = Math.floor((Date.now() - t) / 60000)
@@ -795,6 +806,276 @@ Item {
                                 font.family: Config.fontFamilyMonospace
                                 Layout.preferredWidth: 36
                                 horizontalAlignment: Text.AlignRight
+                            }
+                        }
+
+                        // ── Audio Output Device ──
+                        Column {
+                            width: parent.width - 24
+                            spacing: 4
+                            visible: Volume.sinkNodes.length > 0
+
+                            Text {
+                                text: "Output Device"
+                                color: Config.getColor("text.muted")
+                                font.pixelSize: Config.fontSizeSmall
+                                font.family: Config.fontFamilyMonospace
+                            }
+
+                            Rectangle {
+                                id: sinkSelector
+                                width: parent.width
+                                height: 32
+                                radius: 6
+                                color: sinkSelectorMouse.containsMouse
+                                    ? Config.getColor("background.tertiary")
+                                    : Config.getColor("background.secondary")
+                                border.color: sinkDropdown.visible
+                                    ? Config.getColor("primary.blue")
+                                    : sinkSelectorMouse.containsMouse
+                                        ? Config.getColor("border.primary")
+                                        : Config.getColor("border.subtle")
+                                border.width: 1
+
+                                Behavior on color { ColorAnimation { duration: 100 } }
+                                Behavior on border.color { ColorAnimation { duration: 100 } }
+
+                                RowLayout {
+                                    anchors.fill: parent
+                                    anchors.leftMargin: 8
+                                    anchors.rightMargin: 8
+                                    spacing: 6
+
+                                    Text {
+                                        text: "󰕾"
+                                        font.pixelSize: Config.fontSizeBase
+                                        font.family: Config.fontFamilyIcon
+                                        color: Config.getColor("text.secondary")
+                                    }
+
+                                    Text {
+                                        text: Volume.deviceName || "No device"
+                                        color: Config.getColor("text.primary")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                        elide: Text.ElideRight
+                                        Layout.fillWidth: true
+                                    }
+
+                                    Text {
+                                        text: sinkDropdown.visible ? "\uf077" : "\uf078"
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyIcon
+                                        color: Config.getColor("text.muted")
+                                    }
+                                }
+
+                                MouseArea {
+                                    id: sinkSelectorMouse
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onClicked: sinkDropdown.visible = !sinkDropdown.visible
+                                }
+                            }
+
+                            // Sink dropdown
+                            Column {
+                                id: sinkDropdown
+                                width: parent.width
+                                visible: false
+                                spacing: 1
+
+                                Repeater {
+                                    model: Volume.sinkNodes
+
+                                    Rectangle {
+                                        required property var modelData
+                                        property bool isActive: Pipewire.defaultAudioSink && modelData.name === Pipewire.defaultAudioSink.name
+                                        width: sinkDropdown.width
+                                        height: 30
+                                        radius: 4
+                                        color: isActive
+                                            ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.15)
+                                            : sinkItemMouse.containsMouse
+                                                ? Config.getColor("background.tertiary")
+                                                : "transparent"
+
+                                        Behavior on color { ColorAnimation { duration: 100 } }
+
+                                        RowLayout {
+                                            anchors.fill: parent
+                                            anchors.leftMargin: 8
+                                            anchors.rightMargin: 8
+                                            spacing: 6
+
+                                            Text {
+                                                text: parent.parent.isActive ? "\uf058" : "\uf111"
+                                                font.pixelSize: Config.fontSizeSmall
+                                                font.family: Config.fontFamilyIcon
+                                                color: parent.parent.isActive
+                                                    ? Config.getColor("primary.blue")
+                                                    : Config.getColor("text.muted")
+                                            }
+
+                                            Text {
+                                                text: modelData.description || modelData.name || "Unknown"
+                                                color: parent.parent.isActive
+                                                    ? Config.getColor("primary.blue")
+                                                    : Config.getColor("text.primary")
+                                                font.pixelSize: Config.fontSizeSmall
+                                                font.weight: parent.parent.isActive ? Font.Bold : Font.Normal
+                                                font.family: Config.fontFamilyMonospace
+                                                elide: Text.ElideRight
+                                                Layout.fillWidth: true
+                                            }
+                                        }
+
+                                        MouseArea {
+                                            id: sinkItemMouse
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            onClicked: {
+                                                Volume.setDefaultSink(modelData)
+                                                sinkDropdown.visible = false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // ── Audio Input Device ──
+                        Column {
+                            width: parent.width - 24
+                            spacing: 4
+                            visible: Volume.sourceNodes.length > 0
+
+                            Text {
+                                text: "Input Device"
+                                color: Config.getColor("text.muted")
+                                font.pixelSize: Config.fontSizeSmall
+                                font.family: Config.fontFamilyMonospace
+                            }
+
+                            Rectangle {
+                                id: sourceSelector
+                                width: parent.width
+                                height: 32
+                                radius: 6
+                                color: sourceSelectorMouse.containsMouse
+                                    ? Config.getColor("background.tertiary")
+                                    : Config.getColor("background.secondary")
+                                border.color: sourceDropdown.visible
+                                    ? Config.getColor("primary.blue")
+                                    : sourceSelectorMouse.containsMouse
+                                        ? Config.getColor("border.primary")
+                                        : Config.getColor("border.subtle")
+                                border.width: 1
+
+                                Behavior on color { ColorAnimation { duration: 100 } }
+                                Behavior on border.color { ColorAnimation { duration: 100 } }
+
+                                RowLayout {
+                                    anchors.fill: parent
+                                    anchors.leftMargin: 8
+                                    anchors.rightMargin: 8
+                                    spacing: 6
+
+                                    Text {
+                                        text: "\uf130"
+                                        font.pixelSize: Config.fontSizeBase
+                                        font.family: Config.fontFamilyIcon
+                                        color: Config.getColor("text.secondary")
+                                    }
+
+                                    Text {
+                                        text: Volume.sourceName || "No device"
+                                        color: Config.getColor("text.primary")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                        elide: Text.ElideRight
+                                        Layout.fillWidth: true
+                                    }
+
+                                    Text {
+                                        text: sourceDropdown.visible ? "\uf077" : "\uf078"
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyIcon
+                                        color: Config.getColor("text.muted")
+                                    }
+                                }
+
+                                MouseArea {
+                                    id: sourceSelectorMouse
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onClicked: sourceDropdown.visible = !sourceDropdown.visible
+                                }
+                            }
+
+                            // Source dropdown
+                            Column {
+                                id: sourceDropdown
+                                width: parent.width
+                                visible: false
+                                spacing: 1
+
+                                Repeater {
+                                    model: Volume.sourceNodes
+
+                                    Rectangle {
+                                        required property var modelData
+                                        property bool isActive: Pipewire.defaultAudioSource && modelData.name === Pipewire.defaultAudioSource.name
+                                        width: sourceDropdown.width
+                                        height: 30
+                                        radius: 4
+                                        color: isActive
+                                            ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.15)
+                                            : sourceItemMouse.containsMouse
+                                                ? Config.getColor("background.tertiary")
+                                                : "transparent"
+
+                                        Behavior on color { ColorAnimation { duration: 100 } }
+
+                                        RowLayout {
+                                            anchors.fill: parent
+                                            anchors.leftMargin: 8
+                                            anchors.rightMargin: 8
+                                            spacing: 6
+
+                                            Text {
+                                                text: parent.parent.isActive ? "\uf058" : "\uf111"
+                                                font.pixelSize: Config.fontSizeSmall
+                                                font.family: Config.fontFamilyIcon
+                                                color: parent.parent.isActive
+                                                    ? Config.getColor("primary.blue")
+                                                    : Config.getColor("text.muted")
+                                            }
+
+                                            Text {
+                                                text: modelData.description || modelData.name || "Unknown"
+                                                color: parent.parent.isActive
+                                                    ? Config.getColor("primary.blue")
+                                                    : Config.getColor("text.primary")
+                                                font.pixelSize: Config.fontSizeSmall
+                                                font.weight: parent.parent.isActive ? Font.Bold : Font.Normal
+                                                font.family: Config.fontFamilyMonospace
+                                                elide: Text.ElideRight
+                                                Layout.fillWidth: true
+                                            }
+                                        }
+
+                                        MouseArea {
+                                            id: sourceItemMouse
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            onClicked: {
+                                                Volume.setDefaultSource(modelData)
+                                                sourceDropdown.visible = false
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
 
