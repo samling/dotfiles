@@ -86,6 +86,15 @@ return {
               winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
             }
           },
+          split = {
+            border = {
+              style = "rounded",
+              padding = { 0, 1 },
+            },
+            win_options = {
+              winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+            },
+          },
           mini = {
             -- timeout = 5000, -- timeout in milliseconds
             timeout = vim.g.neovim_mode == "skitty" and 2000 or 5000,
@@ -95,6 +104,14 @@ return {
               row = "95%",
               -- Aligns messages to the far right
               col = "100%",
+            },
+            border = {
+              style = "rounded",
+              padding = { 0, 1 },
+            },
+            win_options = {
+              winblend = 0,
+              winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
             },
           },
         },

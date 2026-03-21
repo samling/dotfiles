@@ -56,6 +56,9 @@ Rectangle {
         onTriggered: root._timeRefreshTick++
     }
 
+    // Force timestamp refresh when becoming visible again
+    onVisibleChanged: if (visible) _timeRefreshTick++
+
     // Hover detection for the whole item
     MouseArea {
         id: itemMouseArea

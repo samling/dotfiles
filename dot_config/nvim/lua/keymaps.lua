@@ -54,11 +54,22 @@ vim.keymap.set('n', '<leader>b', '<nop>', { desc = 'Buffers' })
 vim.keymap.set('n', '<leader>bN', ':enew<CR>', { desc = 'Create a new buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Move to the previous buffer' })
 vim.keymap.set('n', '[b', ':bprev<CR>', { desc = 'Move to the previous buffer' })
+vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', { desc = 'Move to the previous buffer' })
 vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Move to the next buffer' })
 vim.keymap.set('n', ']b', ':bnext<CR>', { desc = 'Move to the next buffer' })
+vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', { desc = 'Move to the next buffer' })
 vim.keymap.set('n', '<leader>bx', '<C-W><C-S>', { desc = 'Split the current buffer horizontally' })
 vim.keymap.set('n', '<leader>by', '<C-W><C-V>', { desc = 'Split the current buffer vertically' })
-vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = 'Close the current buffer' })
+vim.keymap.set('n', '<leader>bd', function()
+  if vim.bo.modified then
+    local choice = vim.fn.confirm('Save changes?', '&Yes\n&No\n&Cancel')
+    if choice == 1 then vim.cmd('write | bdelete')
+    elseif choice == 2 then vim.cmd('bdelete!')
+    end
+  else
+    vim.cmd('bdelete')
+  end
+end, { desc = 'Close buffer (prompt if modified)' })
 vim.keymap.set('n', '<leader>bq', ':bdelete<CR>', { desc = 'Close the current buffer' })
 vim.keymap.set('n', '<leader>bw', ':bdelete<CR>', { desc = 'Close the current buffer' })
 
