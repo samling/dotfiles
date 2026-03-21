@@ -209,7 +209,7 @@ MouseArea {
                         PowerMenuButton {
                             icon: "\uf023"
                             label: "Lock"
-                            accentColor: Config.getColor("primary.lavender")
+                            accentColor: Config.getColor("primary.teal")
                             onActivated: {
                                 root.menuOpen = false
                                 Qt.callLater(function() {
@@ -229,7 +229,7 @@ MouseArea {
                         PowerMenuButton {
                             icon: "\uf2f5"
                             label: "Logout"
-                            accentColor: Config.getColor("primary.peach")
+                            accentColor: Config.getColor("primary.teal")
                             onActivated: {
                                 root.menuOpen = false
                                 Qt.callLater(function() {
@@ -249,7 +249,7 @@ MouseArea {
                         PowerMenuButton {
                             icon: "\uf01e"
                             label: "Restart"
-                            accentColor: Config.getColor("primary.yellow")
+                            accentColor: Config.getColor("primary.teal")
                             onActivated: {
                                 root.menuOpen = false
                                 root.confirmAction("Restart?", "systemctl", "reboot")
@@ -260,7 +260,7 @@ MouseArea {
                         PowerMenuButton {
                             icon: "\uf011"
                             label: "Shutdown"
-                            accentColor: Config.getColor("state.error")
+                            accentColor: Config.getColor("primary.teal")
                             onActivated: {
                                 root.menuOpen = false
                                 root.confirmAction("Shutdown?", "systemctl", "poweroff")
