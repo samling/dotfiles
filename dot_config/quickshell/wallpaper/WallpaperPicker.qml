@@ -155,7 +155,7 @@ Scope {
                                     try {
                                         const data = JSON.parse(this.text)
                                         const primary = data.colors.primary.dark.color
-                                        let colors = root.paletteColors
+                                        let colors = root.paletteColors.slice()
                                         colors[${idx}] = primary
                                         root.paletteColors = colors
                                     } catch(e) {}
@@ -638,6 +638,15 @@ Scope {
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
 
+                        Text {
+                            visible: !root.paletteLoading
+                            text: "Shift+click to skip"
+                            color: Config.getColor("text.tertiary")
+                            font.pixelSize: Config.fontSizeSmall
+                            font.family: Config.fontFamilyMonospace
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
                         Row {
                             spacing: 12
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -648,21 +657,20 @@ Scope {
                                 Rectangle {
                                     id: swatchRect
                                     required property int index
+                                    readonly property string swatchColor: {
+                                        const c = root.paletteColors[index]
+                                        return (c && c !== "") ? c : ""
+                                    }
+                                    visible: root.paletteLoading || swatchColor !== ""
                                     width: 56
                                     height: 56
                                     radius: 28
-                                    color: {
-                                        const c = root.paletteColors[index]
-                                        return (c && c !== "") ? c : Config.getColor("background.surface")
-                                    }
+                                    color: swatchColor !== "" ? swatchColor : Config.getColor("background.surface")
                                     border.width: swatchMouse.containsMouse ? 3 : 1
                                     border.color: swatchMouse.containsMouse
                                         ? Config.getColor("text.primary")
                                         : Config.getColor("border.subtle")
-                                    opacity: {
-                                        const c = root.paletteColors[index]
-                                        return (c && c !== "") ? 1.0 : 0.4
-                                    }
+                                    opacity: swatchColor !== "" ? 1.0 : 0.4
 
                                     Behavior on border.width { NumberAnimation { duration: 100 } }
                                     Behavior on border.color { ColorAnimation { duration: 100 } }
@@ -674,10 +682,7 @@ Scope {
                                         anchors.fill: parent
                                         hoverEnabled: true
                                         cursorShape: Qt.PointingHandCursor
-                                        enabled: {
-                                            const c = root.paletteColors[swatchRect.index]
-                                            return c && c !== ""
-                                        }
+                                        enabled: swatchRect.swatchColor !== ""
                                         onClicked: root.applyWithColorIndex(swatchRect.index)
                                     }
                                 }
