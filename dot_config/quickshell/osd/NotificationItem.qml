@@ -75,10 +75,7 @@ Rectangle {
         }
     }
 
-    function formatTimestamp(timestamp) {
-        // Reference _timeRefreshTick to force re-evaluation
-        void(root._timeRefreshTick)
-
+    function formatTimestamp(timestamp, tick) {
         if (!timestamp) return ""
 
         const date = new Date(timestamp)
@@ -165,7 +162,7 @@ Rectangle {
                 }
 
                 Text {
-                    text: root.formatTimestamp(root.notificationObject?.time ?? 0)
+                    text: root.formatTimestamp(root.notificationObject?.time ?? 0, root._timeRefreshTick)
                     color: Config.getColor("text.muted")
                     font.pixelSize: Config.fontSizeSmall
                     font.family: Config.fontFamilyMonospace
