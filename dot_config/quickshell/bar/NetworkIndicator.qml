@@ -20,10 +20,6 @@ MouseArea {
     implicitHeight: parent ? parent.height : Config.barHeight
     hoverEnabled: true
 
-    onClicked: {
-        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
-    }
-
     Column {
         id: row
         anchors.centerIn: parent

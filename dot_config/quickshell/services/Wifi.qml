@@ -211,6 +211,25 @@ Singleton {
         }
     }
 
+    // Connect to a hidden network
+    Process {
+        id: hiddenConnectProc
+        property string targetSsid: ""
+        property string password: ""
+        command: password
+            ? ["nmcli", "device", "wifi", "connect", targetSsid, "password", password, "hidden", "yes"]
+            : ["nmcli", "device", "wifi", "connect", targetSsid, "hidden", "yes"]
+
+        onExited: (exitCode) => {
+            if (exitCode === 0) {
+                console.log("[Wifi] Connected to hidden network " + targetSsid)
+            } else {
+                console.warn("[Wifi] Failed to connect to hidden network " + targetSsid)
+            }
+            checkStatus()
+        }
+    }
+
     // Disconnect from current network
     Process {
         id: disconnectProc
@@ -250,6 +269,12 @@ Singleton {
         connectProc.targetSsid = ssid
         connectProc.password = password || ""
         connectProc.running = true
+    }
+
+    function connectToHiddenNetwork(ssid, password) {
+        hiddenConnectProc.targetSsid = ssid
+        hiddenConnectProc.password = password || ""
+        hiddenConnectProc.running = true
     }
 
     function disconnect() {

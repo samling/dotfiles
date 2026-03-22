@@ -9,6 +9,7 @@ Item {
 
     property string connectingSsid: ""
     property string passwordSsid: ""
+    property bool showHiddenForm: false
 
     ColumnLayout {
         anchors.fill: parent
@@ -347,6 +348,186 @@ Item {
                         }
                     }
                 }
+            }
+        }
+
+        // ── Hidden Network ──
+        Column {
+            Layout.fillWidth: true
+            spacing: 6
+            visible: Wifi.enabled
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                color: Config.getColor("border.subtle")
+            }
+
+            // Toggle button
+            Rectangle {
+                width: parent.width
+                height: 32
+                radius: 6
+                color: hiddenToggleMouse.containsMouse
+                    ? Config.getColor("background.tertiary")
+                    : "transparent"
+
+                Behavior on color { ColorAnimation { duration: 100 } }
+
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.leftMargin: 8
+                    anchors.rightMargin: 8
+                    spacing: 6
+
+                    Text {
+                        text: "\uf070"
+                        font.pixelSize: Config.fontSizeSmall
+                        font.family: Config.fontFamilyIcon
+                        color: Config.getColor("text.muted")
+                    }
+
+                    Text {
+                        text: "Connect to hidden network"
+                        color: Config.getColor("text.secondary")
+                        font.pixelSize: Config.fontSizeSmall
+                        font.family: Config.fontFamilyMonospace
+                        Layout.fillWidth: true
+                    }
+
+                    Text {
+                        text: root.showHiddenForm ? "\uf078" : "\uf077"
+                        font.pixelSize: Config.fontSizeSmall
+                        font.family: Config.fontFamilyIcon
+                        color: Config.getColor("text.muted")
+                    }
+                }
+
+                MouseArea {
+                    id: hiddenToggleMouse
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: root.showHiddenForm = !root.showHiddenForm
+                }
+            }
+
+            // Hidden network form
+            Item {
+                width: parent.width
+                height: root.showHiddenForm ? hiddenFormColumn.implicitHeight : 0
+                clip: true
+                visible: height > 0 || hiddenFormAnim.running
+
+                Behavior on height {
+                    NumberAnimation {
+                        id: hiddenFormAnim
+                        duration: 200
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+            Column {
+                id: hiddenFormColumn
+                width: parent.width
+                anchors.bottom: parent.bottom
+                spacing: 6
+
+                TextField {
+                    id: hiddenSsidField
+                    width: parent.width
+                    placeholderText: "Network name (SSID)"
+                    font.pixelSize: Config.fontSizeSmall
+                    font.family: Config.fontFamilyMonospace
+                    height: 30
+
+                    background: Rectangle {
+                        radius: 6
+                        color: Config.getColor("background.secondary")
+                        border.width: 1
+                        border.color: hiddenSsidField.activeFocus
+                            ? Config.getColor("primary.blue")
+                            : Config.getColor("border.subtle")
+                    }
+
+                    color: Config.getColor("text.primary")
+                    placeholderTextColor: Config.getColor("text.muted")
+
+                    onAccepted: hiddenPasswordField.forceActiveFocus()
+                }
+
+                TextField {
+                    id: hiddenPasswordField
+                    width: parent.width
+                    placeholderText: "Password (optional)"
+                    echoMode: TextInput.Password
+                    font.pixelSize: Config.fontSizeSmall
+                    font.family: Config.fontFamilyMonospace
+                    height: 30
+
+                    background: Rectangle {
+                        radius: 6
+                        color: Config.getColor("background.secondary")
+                        border.width: 1
+                        border.color: hiddenPasswordField.activeFocus
+                            ? Config.getColor("primary.blue")
+                            : Config.getColor("border.subtle")
+                    }
+
+                    color: Config.getColor("text.primary")
+                    placeholderTextColor: Config.getColor("text.muted")
+
+                    onAccepted: {
+                        if (hiddenSsidField.text.trim() !== "") {
+                            root.connectingSsid = hiddenSsidField.text.trim()
+                            Wifi.connectToHiddenNetwork(hiddenSsidField.text.trim(), text)
+                            hiddenSsidField.text = ""
+                            text = ""
+                            root.showHiddenForm = false
+                        }
+                    }
+                }
+
+                Rectangle {
+                    width: parent.width
+                    height: 30
+                    radius: 6
+                    color: hiddenConnectMouse.containsMouse
+                        ? Config.getColor("primary.blue")
+                        : Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.2)
+                    border.width: 1
+                    border.color: Config.getColor("primary.blue")
+
+                    Behavior on color { ColorAnimation { duration: 100 } }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "Connect"
+                        color: hiddenConnectMouse.containsMouse
+                            ? "white"
+                            : Config.getColor("primary.blue")
+                        font.pixelSize: Config.fontSizeSmall
+                        font.weight: Font.DemiBold
+                        font.family: Config.fontFamilyMonospace
+
+                        Behavior on color { ColorAnimation { duration: 100 } }
+                    }
+
+                    MouseArea {
+                        id: hiddenConnectMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: {
+                            if (hiddenSsidField.text.trim() !== "") {
+                                root.connectingSsid = hiddenSsidField.text.trim()
+                                Wifi.connectToHiddenNetwork(hiddenSsidField.text.trim(), hiddenPasswordField.text)
+                                hiddenSsidField.text = ""
+                                hiddenPasswordField.text = ""
+                                root.showHiddenForm = false
+                            }
+                        }
+                    }
+                }
+            }
             }
         }
 
