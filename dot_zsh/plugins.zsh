@@ -1,14 +1,15 @@
-# Must be before zsh-history-substring-search; see https://github.com/zsh-users/zsh-history-substring-search?tab=readme-ov-file#usage
-source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Initialize zinit
+source ~/.zsh/zinit/zinit.zsh
 
-source ~/.zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+# Must load before zsh-history-substring-search
+source ~/.zsh/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+zinit light zsh-users/zsh-syntax-highlighting
 
-source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+zinit light zsh-users/zsh-history-substring-search
 
-source ~/.zsh/plugins/git-auto-fetch.plugin.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+zinit light zsh-users/zsh-autosuggestions
 
-source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+zinit snippet OMZP::git-auto-fetch
 
-#source ~/.zsh/plugins/zsh-ssh/zsh-ssh.plugin.zsh
-
-#source ~/.zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+zinit light Aloxaf/fzf-tab
