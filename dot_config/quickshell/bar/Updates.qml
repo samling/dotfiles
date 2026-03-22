@@ -140,13 +140,13 @@ MouseArea {
         }
     }
 
-    // Launch ghostty with yay update command
+    // Launch ghostty with paru update command
     Process {
         id: updateProc
         command: [
             "hyprctl", "dispatch", "exec",
             "[float; size 800 600; center]",
-            "ghostty --class=ghostty-yay-update --title='System Update' -e sh -c 'echo \"System Update\"; echo \"=============\"; echo; yay -Syu; echo; echo \"Press Enter to close...\"; read'"
+            "ghostty --class=ghostty-paru-update --title='System Update' -e sh -c 'echo \"System Update\"; echo \"=============\"; echo; paru -Syu; echo; echo \"Press Enter to close...\"; read'"
         ]
         running: false
     }

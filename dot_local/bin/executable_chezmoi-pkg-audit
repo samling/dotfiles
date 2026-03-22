@@ -77,9 +77,9 @@ echo -e "${CYAN}Enabled groups:${RESET} ${enabled_groups[*]}"
 echo ""
 
 # Collect expected packages from enabled groups
-# Arrays: expected_pacman[pkg]=group, expected_yay[pkg]=group
+# Arrays: expected_pacman[pkg]=group, expected_aur[pkg]=group
 declare -A expected_pacman
-declare -A expected_yay
+declare -A expected_aur
 
 for group in "${enabled_groups[@]}"; do
     # Get pacman packages for this group
@@ -90,22 +90,22 @@ for group in "${enabled_groups[@]}"; do
         yq -r ".packages.${group} // {} | to_entries[] | select(.value.pacman) | [.key, .value.pacman] | @tsv" "$PACKAGES_FILE" 2>/dev/null
     )
 
-    # Get yay/AUR packages for this group
+    # Get AUR packages for this group
     while IFS=$'\t' read -r pkg_name mgr_pkg; do
         [[ -z "$mgr_pkg" ]] && continue
-        expected_yay["$mgr_pkg"]="$group"
+        expected_aur["$mgr_pkg"]="$group"
     done < <(
-        yq -r ".packages.${group} // {} | to_entries[] | select(.value.yay) | [.key, .value.yay] | @tsv" "$PACKAGES_FILE" 2>/dev/null
+        yq -r ".packages.${group} // {} | to_entries[] | select(.value.aur) | [.key, .value.aur] | @tsv" "$PACKAGES_FILE" 2>/dev/null
     )
 done
 
-# Merge all expected packages (pacman + yay both install to pacman db)
+# Merge all expected packages (pacman + aur both install to pacman db)
 declare -A all_expected
 for pkg in "${!expected_pacman[@]}"; do
     all_expected["$pkg"]="${expected_pacman[$pkg]}"
 done
-for pkg in "${!expected_yay[@]}"; do
-    all_expected["$pkg"]="${expected_yay[$pkg]}"
+for pkg in "${!expected_aur[@]}"; do
+    all_expected["$pkg"]="${expected_aur[$pkg]}"
 done
 
 # Get installed packages

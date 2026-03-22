@@ -86,13 +86,24 @@ windowrule {
 
 # Configure floating pacman/yay update window
 windowrule {
-  name = windowrule-8
+  name = windowrule-8-yay
   float = on
   size = 800 600
   center = on
   border_color = rgb(a6e3a1)
   border_size = 2
   match:class = ghostty-yay-update
+}
+
+# Configure floating pacman/paru update window
+windowrule {
+  name = windowrule-8-paru
+  float = on
+  size = 800 600
+  center = on
+  border_color = rgb(a6e3a1)
+  border_size = 2
+  match:class = ghostty-paru-update
 }
 
 # Configure floating clipse window

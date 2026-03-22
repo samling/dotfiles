@@ -2,7 +2,7 @@
 source ~/.zsh/zinit/zinit.zsh
 
 # Must load before zsh-history-substring-search
-source ~/.zsh/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+# source ~/.zsh/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
 zinit light zsh-users/zsh-syntax-highlighting
 
 zinit light zsh-users/zsh-history-substring-search
