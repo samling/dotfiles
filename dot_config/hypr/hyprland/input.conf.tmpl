@@ -49,6 +49,13 @@ gesture = 4, right, dispatcher, exec, ~/.config/hypr/scripts/gestures.sh right
 ###############
 
 # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more about per-device configs
+
+# Disable accel on attached mouse
+device {
+  name = logitech-g-pro--1
+  accel_profile = flat
+}
+
 {{ if eq .chassis.type "laptop" }}
 device {
   name = elan067b:00-04f3:31f8-touchpad

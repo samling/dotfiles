@@ -4,8 +4,8 @@ require 'keymaps'
 require 'diagnostics'
 require 'lsp'
 
--- Disable netrw
--- https://github.com/nvim-tree/nvim-tree.lua?tab=readme-ov-file#setup
+-- Disable netrw (neo-tree recommends this)
+-- https://github.com/nvim-neo-tree/neo-tree.nvim#quickstart
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
