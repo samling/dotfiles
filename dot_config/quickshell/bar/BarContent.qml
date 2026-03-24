@@ -85,7 +85,7 @@ Item {
 
         BarGroup {
             id: sysTrayGroup
-            accentColor: Config.pillColor9
+            accentColor: Qt.lighter(Colors.color6, 1.4)
             Layout.fillHeight: true
 
             SysTray {

@@ -136,7 +136,7 @@ QtObject {
         case "background.mantle":    return Qt.darker(Colors.color5, 2.6)
         case "background.secondary": return Qt.darker(Colors.color5, 2.2)
         case "background.primary":   return Qt.darker(Colors.color5, 1.8)
-        case "background.bar":       return Colors.color7
+        case "background.bar":       return Qt.lighter(Colors.color7, 1.1)
         case "background.tertiary":  return Qt.darker(Colors.color5, 1.5)
         case "background.surface":   return Qt.darker(Colors.color5, 1.2)
         case "background.overlay":   return Qt.darker(Colors.color5, 2.2)

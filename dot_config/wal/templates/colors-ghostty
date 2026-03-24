@@ -15,5 +15,4 @@ palette = 13={color13}
 palette = 14={color14}
 palette = 15={color15}
 foreground = {foreground}
-background = {background}
 cursor-color = {cursor}
