@@ -260,3 +260,14 @@ function bd() {
 function be() {
   printf '%s' "$1" | base64
 }
+
+function reset_terminal_colors() {
+  # - \033]104\033\\ — reset all 256 palette colors to terminal defaults
+  # - \033]110\033\\ — reset foreground color
+  # - \033]111\033\\ — reset background color
+  # - \033]112\033\\ — reset cursor color
+  #
+  # \033] starts the command, \033\\ ends it (String Terminator).
+
+  printf '\033]104\033\\\033]110\033\\\033]111\033\\\033]112\033\\'
+}
