@@ -2,6 +2,7 @@
 install.sh
 Makefile*
 README*
+bootstrap.sh
 
 # Ignore non-config directories
 windows
