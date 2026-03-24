@@ -107,8 +107,10 @@ Item {
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 44
+                    Layout.margins: 1
+                    Layout.bottomMargin: 0
                     color: Config.getColor("background.mantle")
-                    radius: 12
+                    radius: 11
 
                     // Square off bottom corners
                     Rectangle {
@@ -128,7 +130,7 @@ Item {
                             text: "\uf0e4"
                             font.pixelSize: Config.fontSizeHeader
                             font.family: Config.fontFamilyIcon
-                            color: Config.getColor("primary.blue")
+                            color: Config.getColor("primary.mauve")
                         }
 
                         Text {
@@ -674,7 +676,7 @@ Item {
                                 label: "WiFi"
                                 status: Wifi.connected ? Wifi.ssid : (Wifi.enabled ? "Disconnected" : "Off")
                                 active: Wifi.connected
-                                accentColor: Config.getColor("primary.blue")
+                                accentColor: Config.getColor("primary.mauve")
                                 onClicked: Wifi.toggle()
                                 onExpandClicked: root.activeSubPanel = "wifi"
                             }
@@ -691,7 +693,7 @@ Item {
                                     return "On"
                                 }
                                 active: BluetoothService.enabled
-                                accentColor: Config.getColor("primary.blue")
+                                accentColor: Config.getColor("primary.mauve")
                                 onClicked: BluetoothService.toggle()
                                 onExpandClicked: root.activeSubPanel = "bluetooth"
                             }
@@ -785,7 +787,7 @@ Item {
                                     radius: parent.radius
                                     color: Volume.mutedState
                                         ? Config.getColor("text.muted")
-                                        : Config.getColor("primary.blue")
+                                        : Config.getColor("primary.mauve")
 
                                     Behavior on width { NumberAnimation { duration: 100 } }
                                 }
@@ -843,7 +845,7 @@ Item {
                                         ? Config.getColor("background.tertiary")
                                         : Config.getColor("background.secondary")
                                     border.color: root.sinkDropdownOpen
-                                        ? Config.getColor("primary.blue")
+                                        ? Config.getColor("primary.mauve")
                                         : sinkSelectorMouse.containsMouse
                                             ? Config.getColor("border.primary")
                                             : Config.getColor("border.subtle")
@@ -928,7 +930,7 @@ Item {
                                         ? Config.getColor("background.tertiary")
                                         : Config.getColor("background.secondary")
                                     border.color: root.sourceDropdownOpen
-                                        ? Config.getColor("primary.blue")
+                                        ? Config.getColor("primary.mauve")
                                         : sourceSelectorMouse.containsMouse
                                             ? Config.getColor("border.primary")
                                             : Config.getColor("border.subtle")
@@ -1002,7 +1004,7 @@ Item {
                                 text: "\uf2db"
                                 font.pixelSize: Config.fontSizeMedium
                                 font.family: Config.fontFamilyIcon
-                                color: Config.getColor("primary.blue")
+                                color: Config.getColor("primary.mauve")
                             }
 
                             Text {
@@ -1097,12 +1099,12 @@ Item {
                                         height: 32
                                         radius: 6
                                         color: isActive
-                                            ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.2)
+                                            ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.2)
                                             : profileMouse.containsMouse
                                                 ? Config.getColor("background.tertiary")
                                                 : Config.getColor("background.secondary")
                                         border.width: isActive ? 1 : 0
-                                        border.color: Config.getColor("primary.blue")
+                                        border.color: Config.getColor("primary.mauve")
 
                                         Behavior on color { ColorAnimation { duration: 100 } }
 
@@ -1115,7 +1117,7 @@ Item {
                                                 font.pixelSize: Config.fontSizeBase
                                                 font.family: Config.fontFamilyIcon
                                                 color: parent.parent.isActive
-                                                    ? Config.getColor("primary.blue")
+                                                    ? Config.getColor("primary.mauve")
                                                     : Config.getColor("text.secondary")
                                             }
 
@@ -1125,7 +1127,7 @@ Item {
                                                 font.weight: parent.parent.isActive ? Font.Bold : Font.Medium
                                                 font.family: Config.fontFamilyMonospace
                                                 color: parent.parent.isActive
-                                                    ? Config.getColor("primary.blue")
+                                                    ? Config.getColor("primary.mauve")
                                                     : Config.getColor("text.primary")
                                             }
                                         }
@@ -1169,12 +1171,12 @@ Item {
                                         height: 32
                                         radius: 6
                                         color: isActive
-                                            ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.2)
+                                            ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.2)
                                             : fanMouse.containsMouse
                                                 ? Config.getColor("background.tertiary")
                                                 : Config.getColor("background.secondary")
                                         border.width: isActive ? 1 : 0
-                                        border.color: Config.getColor("primary.blue")
+                                        border.color: Config.getColor("primary.mauve")
 
                                         Behavior on color { ColorAnimation { duration: 100 } }
 
@@ -1188,7 +1190,7 @@ Item {
                                                 font.family: Config.fontFamilyIcon
                                                 Layout.alignment: Qt.AlignHCenter
                                                 color: parent.parent.isActive
-                                                    ? Config.getColor("primary.blue")
+                                                    ? Config.getColor("primary.mauve")
                                                     : Config.getColor("text.secondary")
                                             }
 
@@ -1199,7 +1201,7 @@ Item {
                                                 font.family: Config.fontFamilyMonospace
                                                 Layout.alignment: Qt.AlignHCenter
                                                 color: parent.parent.isActive
-                                                    ? Config.getColor("primary.blue")
+                                                    ? Config.getColor("primary.mauve")
                                                     : Config.getColor("text.primary")
                                             }
                                         }
@@ -1463,8 +1465,9 @@ Item {
 
                 Column {
                     id: sinkDropdownColumn
-                    width: parent.width
+                    width: parent.width - 2
                     anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 4
                     spacing: 1
 
@@ -1478,7 +1481,7 @@ Item {
                             height: 30
                             radius: 4
                             color: isActive
-                                ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.15)
+                                ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.15)
                                 : sinkItemMouse.containsMouse
                                     ? Config.getColor("background.tertiary")
                                     : "transparent"
@@ -1496,14 +1499,14 @@ Item {
                                     font.pixelSize: Config.fontSizeSmall
                                     font.family: Config.fontFamilyIcon
                                     color: parent.parent.isActive
-                                        ? Config.getColor("primary.blue")
+                                        ? Config.getColor("primary.mauve")
                                         : Config.getColor("text.muted")
                                 }
 
                                 Text {
                                     text: modelData.description || modelData.name || "Unknown"
                                     color: parent.parent.isActive
-                                        ? Config.getColor("primary.blue")
+                                        ? Config.getColor("primary.mauve")
                                         : Config.getColor("text.primary")
                                     font.pixelSize: Config.fontSizeSmall
                                     font.weight: parent.parent.isActive ? Font.Bold : Font.Normal
@@ -1549,8 +1552,9 @@ Item {
 
                 Column {
                     id: sourceDropdownColumn
-                    width: parent.width
+                    width: parent.width - 2
                     anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 4
                     spacing: 1
 
@@ -1564,7 +1568,7 @@ Item {
                             height: 30
                             radius: 4
                             color: isActive
-                                ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.15)
+                                ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.15)
                                 : sourceItemMouse.containsMouse
                                     ? Config.getColor("background.tertiary")
                                     : "transparent"
@@ -1582,14 +1586,14 @@ Item {
                                     font.pixelSize: Config.fontSizeSmall
                                     font.family: Config.fontFamilyIcon
                                     color: parent.parent.isActive
-                                        ? Config.getColor("primary.blue")
+                                        ? Config.getColor("primary.mauve")
                                         : Config.getColor("text.muted")
                                 }
 
                                 Text {
                                     text: modelData.description || modelData.name || "Unknown"
                                     color: parent.parent.isActive
-                                        ? Config.getColor("primary.blue")
+                                        ? Config.getColor("primary.mauve")
                                         : Config.getColor("text.primary")
                                     font.pixelSize: Config.fontSizeSmall
                                     font.weight: parent.parent.isActive ? Font.Bold : Font.Normal
@@ -1697,7 +1701,7 @@ Item {
                                     : ""
                                 font.pixelSize: Config.fontSizeHeader
                                 font.family: Config.fontFamilyIcon
-                                color: Config.getColor("primary.blue")
+                                color: Config.getColor("primary.mauve")
                             }
 
                             Text {

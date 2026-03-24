@@ -9,7 +9,7 @@ Rectangle {
     property string label: ""
     property string status: ""
     property bool active: false
-    property color accentColor: Config.getColor("primary.blue")
+    property color accentColor: Config.getColor("primary.mauve")
 
     signal clicked()
     signal expandClicked()

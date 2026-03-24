@@ -5,6 +5,7 @@ import qs.common
 Item {
     id: root
     property color accentColor: "transparent"
+    readonly property color textColor: Config.contrastText(accentColor)
     default property alias items: gridLayout.children
 
     implicitWidth: gridLayout.implicitWidth + Config.pillHorizontalPadding * 2

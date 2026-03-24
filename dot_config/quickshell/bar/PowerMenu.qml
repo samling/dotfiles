@@ -171,7 +171,7 @@ MouseArea {
                             text: "\uf303"
                             font.pixelSize: Config.fontSizeIconSmall
                             font.family: Config.fontFamilyIcon
-                            color: Config.getColor("primary.blue")
+                            color: Config.getColor("primary.mauve")
                         }
 
                         Text {

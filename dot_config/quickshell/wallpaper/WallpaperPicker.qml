@@ -75,9 +75,35 @@ Scope {
         readonly property string configDir:
             Directories.config.replace("file://", "")
 
-        // Each entry: { fullPath: string, thumbPath: string }
+        // Each entry: { fullPath: string, thumbPath: string, mtime: number }
         property var imageList: []
         property bool loading: true
+
+        // Search and sort state
+        property string searchQuery: ""
+        property string sortMode: "name" // "name" or "date"
+
+        // Filtered and sorted view of imageList
+        readonly property var displayList: {
+            let list = root.imageList.slice()
+            const query = root.searchQuery.toLowerCase()
+            if (query) {
+                list = list.filter(item => {
+                    const name = item.fullPath.split('/').pop().toLowerCase()
+                    return name.includes(query)
+                })
+            }
+            if (root.sortMode === "date") {
+                list.sort((a, b) => b.mtime - a.mtime)
+            } else {
+                list.sort((a, b) => {
+                    const nameA = a.fullPath.split('/').pop().toLowerCase()
+                    const nameB = b.fullPath.split('/').pop().toLowerCase()
+                    return nameA.localeCompare(nameB)
+                })
+            }
+            return list
+        }
 
         // Wait for user config to load before scanning wallpapers
         onWallpaperDirChanged: {
@@ -106,7 +132,7 @@ Scope {
                     if (text) {
                         root.imageList = text.split('\n').map(line => {
                             const parts = line.split('\t')
-                            return { fullPath: parts[0], thumbPath: parts[1] }
+                            return { fullPath: parts[0], thumbPath: parts[1], mtime: parseInt(parts[2]) || 0 }
                         })
                     } else {
                         root.imageList = []
@@ -116,91 +142,32 @@ Scope {
             }
         }
 
-        // Color palette state
-        property string selectedImagePath: ""
-        property var paletteColors: []
-        property bool paletteLoading: false
-        property bool paletteVisible: false
-        property int paletteCompletedCount: 0
-
         // Click outside to close
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                if (root.paletteVisible) {
-                    root.paletteVisible = false
-                    root.paletteColors = []
-                } else {
-                    GlobalStates.wallpaperPickerOpen = false
-                }
-            }
+            onClicked: GlobalStates.wallpaperPickerOpen = false
         }
 
         function applySelection() {
-            if (gridView.currentIndex >= 0 && gridView.currentIndex < root.imageList.length) {
-                const imagePath = root.imageList[gridView.currentIndex].fullPath
-                root.selectedImagePath = imagePath
-                root.paletteColors = ["", "", "", ""]
-                root.paletteCompletedCount = 0
-                root.paletteLoading = true
-                root.paletteVisible = true
-
-                for (let i = 0; i < 4; i++) {
-                    const idx = i
-                    const proc = Qt.createQmlObject(`
-                        import Quickshell.Io
-                        Process {
-                            stdout: StdioCollector {
-                                onStreamFinished: {
-                                    try {
-                                        const data = JSON.parse(this.text)
-                                        const primary = data.colors.primary.dark.color
-                                        let colors = root.paletteColors.slice()
-                                        colors[${idx}] = primary
-                                        root.paletteColors = colors
-                                    } catch(e) {}
-                                    root.paletteCompletedCount++
-                                    if (root.paletteCompletedCount >= 4) {
-                                        root.paletteLoading = false
-                                    }
-                                }
-                            }
-                            onExited: destroy()
-                        }
-                    `, root)
-                    proc.command = ["matugen", "image", "--source-color-index", idx.toString(),
-                                    "--dry-run", "-j", "hex", "--contrast", "1.0",
-                                    "-t", "scheme-fidelity", imagePath]
-                    proc.running = true
-                }
+            if (gridView.currentIndex >= 0 && gridView.currentIndex < root.displayList.length) {
+                const imagePath = root.displayList[gridView.currentIndex].fullPath
+                const proc = Qt.createQmlObject(`
+                    import Quickshell.Io
+                    Process {
+                        onExited: destroy()
+                    }
+                `, pickerScope)
+                proc.command = [root.configDir + "/swww/set_wallpaper.sh", imagePath]
+                proc.running = true
+                GlobalStates.wallpaperPickerOpen = false
             }
-        }
-
-        function applyQuick() {
-            if (gridView.currentIndex >= 0 && gridView.currentIndex < root.imageList.length) {
-                const imagePath = root.imageList[gridView.currentIndex].fullPath
-                root.selectedImagePath = imagePath
-                root.applyWithColorIndex(0)
-            }
-        }
-
-        function applyWithColorIndex(colorIndex) {
-            const proc = Qt.createQmlObject(`
-                import Quickshell.Io
-                Process {
-                    onExited: destroy()
-                }
-            `, pickerScope)
-            proc.command = [root.configDir + "/swww/set_wallpaper.sh",
-                            root.selectedImagePath, colorIndex.toString()]
-            proc.running = true
-            root.paletteVisible = false
-            root.paletteColors = []
-            GlobalStates.wallpaperPickerOpen = false
         }
 
         onVisibleChanged: {
-            if (visible) gridView.forceActiveFocus()
+            if (visible) {
+                searchInput.text = ""
+                gridView.forceActiveFocus()
+            }
         }
 
         // Panel content
@@ -218,13 +185,7 @@ Scope {
             // Prevent clicks from closing
             MouseArea {
                 anchors.fill: parent
-                onClicked: function(mouse) {
-                    if (root.paletteVisible) {
-                        root.paletteVisible = false
-                        root.paletteColors = []
-                    }
-                    mouse.accepted = true
-                }
+                onClicked: function(mouse) { mouse.accepted = true }
             }
 
             Column {
@@ -270,7 +231,7 @@ Scope {
 
                         // Image count badge
                         Rectangle {
-                            visible: root.imageList.length > 0
+                            visible: root.displayList.length > 0
                             width: badgeText.width + 12
                             height: 20
                             radius: 10
@@ -279,7 +240,9 @@ Scope {
                             Text {
                                 id: badgeText
                                 anchors.centerIn: parent
-                                text: root.imageList.length.toString()
+                                text: root.searchQuery
+                                    ? root.displayList.length + "/" + root.imageList.length
+                                    : root.imageList.length.toString()
                                 color: Config.getColor("background.crust")
                                 font.pixelSize: Config.fontSizeBase
                                 font.weight: Font.Bold
@@ -335,10 +298,147 @@ Scope {
                     color: Config.getColor("border.subtle")
                 }
 
+                // Search and sort toolbar
+                Rectangle {
+                    width: parent.width
+                    height: 44
+                    color: "transparent"
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                        anchors.rightMargin: 12
+                        anchors.topMargin: 8
+                        anchors.bottomMargin: 4
+                        spacing: 8
+
+                        // Search field
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: 32
+                            radius: 6
+                            color: Config.getColor("background.mantle")
+                            border.width: 1
+                            border.color: searchInput.activeFocus
+                                ? Config.getColor("primary.lavender")
+                                : Config.getColor("border.subtle")
+
+                            Behavior on border.color { ColorAnimation { duration: 100 } }
+
+                            RowLayout {
+                                anchors.fill: parent
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                spacing: 6
+
+                                Text {
+                                    text: "/"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeBase
+                                    font.family: Config.fontFamilyMonospace
+                                }
+
+                                TextInput {
+                                    id: searchInput
+                                    Layout.fillWidth: true
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeBase
+                                    font.family: Config.fontFamilyMonospace
+                                    clip: true
+                                    onTextChanged: root.searchQuery = text
+
+                                    Text {
+                                        anchors.fill: parent
+                                        text: "Search wallpapers..."
+                                        color: Config.getColor("text.tertiary")
+                                        font.pixelSize: Config.fontSizeBase
+                                        font.family: Config.fontFamilyMonospace
+                                        visible: !searchInput.text && !searchInput.activeFocus
+                                    }
+
+                                    Keys.onEscapePressed: {
+                                        if (searchInput.text) {
+                                            searchInput.text = ""
+                                        } else {
+                                            searchInput.focus = false
+                                            gridView.forceActiveFocus()
+                                        }
+                                    }
+                                    Keys.onReturnPressed: {
+                                        searchInput.focus = false
+                                        gridView.forceActiveFocus()
+                                    }
+                                    Keys.onDownPressed: {
+                                        gridView.forceActiveFocus()
+                                    }
+                                }
+
+                                // Clear button
+                                Text {
+                                    text: "✕"
+                                    color: Config.getColor("text.muted")
+                                    font.pixelSize: Config.fontSizeSmall
+                                    font.family: Config.fontFamilyMonospace
+                                    visible: searchInput.text !== ""
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        anchors.margins: -4
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: searchInput.text = ""
+                                    }
+                                }
+                            }
+                        }
+
+                        // Sort toggle
+                        Rectangle {
+                            width: sortRow.width + 16
+                            height: 32
+                            radius: 6
+                            color: sortMouseArea.containsMouse
+                                ? Config.getColor("background.surface")
+                                : Config.getColor("background.mantle")
+                            border.width: 1
+                            border.color: Config.getColor("border.subtle")
+
+                            Behavior on color { ColorAnimation { duration: 100 } }
+
+                            Row {
+                                id: sortRow
+                                anchors.centerIn: parent
+                                spacing: 6
+
+                                Text {
+                                    text: root.sortMode === "name" ? "A-Z" : "⏱"
+                                    color: Config.getColor("primary.lavender")
+                                    font.pixelSize: Config.fontSizeBase
+                                    font.family: Config.fontFamilyMonospace
+                                }
+
+                                Text {
+                                    text: root.sortMode === "name" ? "Name" : "Date"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeBase
+                                    font.family: Config.fontFamilyMonospace
+                                }
+                            }
+
+                            MouseArea {
+                                id: sortMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: root.sortMode = root.sortMode === "name" ? "date" : "name"
+                            }
+                        }
+                    }
+                }
+
                 // Content area
                 Item {
                     width: parent.width
-                    height: parent.height - 49
+                    height: parent.height - 93
 
                     // Loading state
                     Column {
@@ -376,7 +476,7 @@ Scope {
                     Column {
                         anchors.centerIn: parent
                         spacing: 12
-                        visible: !root.loading && root.imageList.length == 0
+                        visible: !root.loading && root.displayList.length == 0
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -388,7 +488,7 @@ Scope {
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            text: "No wallpapers found"
+                            text: root.searchQuery ? "No matching wallpapers" : "No wallpapers found"
                             color: Config.getColor("text.muted")
                             font.pixelSize: Config.fontSizeLarge
                             font.weight: Font.Medium
@@ -397,7 +497,7 @@ Scope {
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            text: root.wallpaperDir
+                            text: root.searchQuery ? "Try a different search" : root.wallpaperDir
                             color: Config.getColor("text.tertiary")
                             font.pixelSize: Config.fontSizeBase
                             font.family: Config.fontFamilyMonospace
@@ -409,7 +509,7 @@ Scope {
                         id: gridView
                         anchors.fill: parent
                         anchors.margins: root.panelPadding
-                        visible: !root.loading && root.imageList.length > 0
+                        visible: !root.loading && root.displayList.length > 0
                         clip: true
                         focus: true
                         currentIndex: -1
@@ -424,7 +524,7 @@ Scope {
 
                         Keys.onPressed: (event) => {
                             const cols = root.columns
-                            const count = root.imageList.length
+                            const count = root.displayList.length
                             let idx = gridView.currentIndex
 
                             if (event.key === Qt.Key_Escape) {
@@ -432,12 +532,13 @@ Scope {
                                 event.accepted = true
                                 return
                             }
+                            if (event.text === "/") {
+                                searchInput.forceActiveFocus()
+                                event.accepted = true
+                                return
+                            }
                             if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                                if (event.modifiers & Qt.ShiftModifier) {
-                                    root.applyQuick()
-                                } else {
-                                    root.applySelection()
-                                }
+                                root.applySelection()
                                 event.accepted = true
                                 return
                             }
@@ -489,7 +590,7 @@ Scope {
                             }
                         }
 
-                        model: root.imageList
+                        model: root.displayList
 
                         delegate: Item {
                             id: thumbDelegate
@@ -580,116 +681,13 @@ Scope {
                                     onContainsMouseChanged: {
                                         if (containsMouse) gridView.currentIndex = thumbDelegate.index
                                     }
-                                    onClicked: (mouse) => {
-                                        if (root.paletteVisible) {
-                                            root.paletteVisible = false
-                                            root.paletteColors = []
-                                        } else if (mouse.modifiers & Qt.ShiftModifier) {
-                                            root.applyQuick()
-                                        } else {
-                                            root.applySelection()
-                                        }
-                                    }
+                                    onClicked: root.applySelection()
                                 }
                             }
                         }
                     }
                 }
 
-                // Color palette popup
-                Rectangle {
-                    id: palettePopup
-                    visible: root.paletteVisible
-                    anchors.centerIn: parent
-                    width: paletteColumn.width + 32
-                    height: paletteColumn.height + 32
-                    radius: 12
-                    color: Config.getColor("background.crust")
-                    border.width: 1
-                    border.color: Config.getColor("border.subtle")
-                    z: 10
-
-                    // Prevent clicks from propagating
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: function(mouse) { mouse.accepted = true }
-                    }
-
-                    Column {
-                        id: paletteColumn
-                        anchors.centerIn: parent
-                        spacing: 12
-
-                        Text {
-                            text: "Choose a color palette"
-                            color: Config.getColor("text.primary")
-                            font.pixelSize: Config.fontSizeMedium
-                            font.weight: Font.DemiBold
-                            font.family: Config.fontFamilyMonospace
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-
-                        Text {
-                            visible: root.paletteLoading
-                            text: "Extracting colors..."
-                            color: Config.getColor("text.muted")
-                            font.pixelSize: Config.fontSizeBase
-                            font.family: Config.fontFamilyMonospace
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-
-                        Text {
-                            visible: !root.paletteLoading
-                            text: "Shift+click to skip"
-                            color: Config.getColor("text.tertiary")
-                            font.pixelSize: Config.fontSizeSmall
-                            font.family: Config.fontFamilyMonospace
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-
-                        Row {
-                            spacing: 12
-                            anchors.horizontalCenter: parent.horizontalCenter
-
-                            Repeater {
-                                model: 4
-
-                                Rectangle {
-                                    id: swatchRect
-                                    required property int index
-                                    readonly property string swatchColor: {
-                                        const c = root.paletteColors[index]
-                                        return (c && c !== "") ? c : ""
-                                    }
-                                    visible: root.paletteLoading || swatchColor !== ""
-                                    width: 56
-                                    height: 56
-                                    radius: 28
-                                    color: swatchColor !== "" ? swatchColor : Config.getColor("background.surface")
-                                    border.width: swatchMouse.containsMouse ? 3 : 1
-                                    border.color: swatchMouse.containsMouse
-                                        ? Config.getColor("text.primary")
-                                        : Config.getColor("border.subtle")
-                                    opacity: swatchColor !== "" ? 1.0 : 0.4
-
-                                    Behavior on border.width { NumberAnimation { duration: 100 } }
-                                    Behavior on border.color { ColorAnimation { duration: 100 } }
-                                    Behavior on color { ColorAnimation { duration: 200 } }
-                                    Behavior on opacity { NumberAnimation { duration: 200 } }
-
-                                    MouseArea {
-                                        id: swatchMouse
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        cursorShape: Qt.PointingHandCursor
-                                        enabled: swatchRect.swatchColor !== ""
-                                        onClicked: root.applyWithColorIndex(swatchRect.index)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
         }

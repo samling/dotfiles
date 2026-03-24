@@ -343,9 +343,9 @@ MouseArea {
                             height: 28
                             radius: 6
                             color: refreshMouseArea.containsMouse
-                                ? Qt.rgba(Config.getColor("primary.blue").r, Config.getColor("primary.blue").g, Config.getColor("primary.blue").b, 0.2)
+                                ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.2)
                                 : "transparent"
-                            border.color: refreshMouseArea.containsMouse ? Config.getColor("primary.blue") : Config.getColor("border.subtle")
+                            border.color: refreshMouseArea.containsMouse ? Config.getColor("primary.mauve") : Config.getColor("border.subtle")
                             border.width: 1
 
                             Behavior on color { ColorAnimation { duration: 100 } }
@@ -354,7 +354,7 @@ MouseArea {
                             Text {
                                 anchors.centerIn: parent
                                 text: "⟳"
-                                color: refreshMouseArea.containsMouse ? Config.getColor("primary.blue") : Config.getColor("text.muted")
+                                color: refreshMouseArea.containsMouse ? Config.getColor("primary.mauve") : Config.getColor("text.muted")
                                 font.pixelSize: Config.fontSizeMedium
                                 font.weight: Font.Bold
                                 font.family: Config.fontFamilyMonospace
@@ -411,7 +411,7 @@ MouseArea {
                             text: "⟳"
                             font.pixelSize: Config.fontSizeIconXL
                             font.family: Config.fontFamilyMonospace
-                            color: Config.getColor("primary.blue")
+                            color: Config.getColor("primary.mauve")
 
                             RotationAnimation on rotation {
                                 from: 0
