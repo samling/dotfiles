@@ -37,7 +37,7 @@ Item {
 
         BarGroup {
             id: workspacesGroup
-            accentColor: Config.pillColor2
+            accentColor: Qt.lighter(Colors.color6, 1.4)
             Layout.fillHeight: true
 
             Workspaces {
@@ -107,7 +107,7 @@ Item {
 
         BarGroup {
             id: networkGroup
-            accentColor: Config.pillColor4
+            accentColor: Qt.lighter(Colors.color6, 1.4)
             Layout.fillHeight: true
 
             NetworkIndicator {
@@ -118,7 +118,7 @@ Item {
 
         BarGroup {
             id: cpuGroup
-            accentColor: Config.pillColor6
+            accentColor: Config.pillColor4
             Layout.fillHeight: true
 
             CpuIndicator {
@@ -129,7 +129,7 @@ Item {
 
         BarGroup {
             id: memoryGroup
-            accentColor: Config.pillColor7
+            accentColor: Config.pillColor11
             Layout.fillHeight: true
 
             MemoryIndicator {
@@ -140,7 +140,7 @@ Item {
 
         BarGroup {
             id: diskGroup
-            accentColor: Config.pillColor8
+            accentColor: Config.pillColor7
             Layout.fillHeight: true
 
             DiskIndicator {
@@ -151,7 +151,7 @@ Item {
 
         BarGroup {
             id: batteryGroup
-            accentColor: Config.pillColor9
+            accentColor: Qt.lighter(Colors.color6, 1.4)
             Layout.fillHeight: true
 
             BatteryIndicator {
@@ -184,7 +184,7 @@ Item {
 
         BarGroup {
             id: notificationGroup
-            accentColor: Config.pillColor12
+            accentColor: Config.pillColor7
             Layout.fillHeight: true
 
             NotificationButton {

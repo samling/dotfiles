@@ -338,7 +338,21 @@ Item {
                                     id: clearAllMouse
                                     anchors.fill: parent
                                     hoverEnabled: true
-                                    onClicked: Notifications.discardAllNotifications()
+                                    onClicked: {
+                                        // Stagger dismiss animations
+                                        for (let i = 0; i < notifList.count; i++) {
+                                            const item = notifList.itemAtIndex(i)
+                                            if (item) {
+                                                const delay = i * 50
+                                                Qt.callLater(() => {
+                                                    const t = Qt.createQmlObject(
+                                                        'import QtQuick; Timer { interval: ' + delay + '; running: true; onTriggered: { parent.dismiss(); destroy() } }',
+                                                        item
+                                                    )
+                                                })
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -430,16 +444,29 @@ Item {
                                     required property var modelData
                                     required property int index
                                     width: notifList.width - 6
-                                    height: notifColumn.implicitHeight + 8
+                                    height: dismissing ? 0 : notifColumn.implicitHeight + 8
                                     radius: 6
                                     property bool hovered: notifRowMouse.containsMouse || dismissMouse.containsMouse
+                                    property bool dismissing: false
                                     color: hovered
                                         ? Config.getColor("background.tertiary")
                                         : notifRow.expanded
                                             ? Config.getColor("background.secondary")
                                             : "transparent"
+                                    clip: true
 
                                     property bool expanded: root.expandAllState
+
+                                    function dismiss() {
+                                        dismissing = true
+                                        dismissTimer.start()
+                                    }
+
+                                    Timer {
+                                        id: dismissTimer
+                                        interval: 200
+                                        onTriggered: Notifications.discardNotification(notifRow.modelData.notificationId)
+                                    }
 
                                     Connections {
                                         target: root
@@ -463,13 +490,21 @@ Item {
 
                                     Column {
                                         id: notifColumn
-                                        anchors.left: parent.left
-                                        anchors.right: parent.right
                                         anchors.top: parent.top
                                         anchors.margins: 4
                                         anchors.leftMargin: 6
                                         anchors.rightMargin: 6
                                         spacing: 4
+                                        width: parent.width - 12
+                                        x: notifRow.dismissing ? parent.width : 6
+                                        opacity: notifRow.dismissing ? 0 : 1
+
+                                        Behavior on x {
+                                            NumberAnimation { duration: 200; easing.type: Easing.InCubic }
+                                        }
+                                        Behavior on opacity {
+                                            NumberAnimation { duration: 200; easing.type: Easing.InCubic }
+                                        }
 
                                         // Compact header row (always visible)
                                         RowLayout {
@@ -587,7 +622,7 @@ Item {
                                                     id: dismissMouse
                                                     anchors.fill: parent
                                                     hoverEnabled: true
-                                                    onClicked: Notifications.discardNotification(notifRow.modelData.notificationId)
+                                                    onClicked: notifRow.dismiss()
                                                 }
                                             }
                                         }
