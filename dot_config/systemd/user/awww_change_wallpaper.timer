@@ -1,6 +1,6 @@
 [Unit]
-Description=Change wallpaper periodically using SWWW
-After=swww.service
+Description=Change wallpaper periodically using AWWW
+After=awww.service
 
 [Timer]
 OnActiveSec=0

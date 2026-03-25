@@ -6,9 +6,9 @@
 #   set_wallpaper.sh IMAGE [OUTPUT]
 #
 # IMAGE  — path to the image file
-# OUTPUT — optional swww output name (see swww-query(1)); omit to set all
+# OUTPUT — optional awww output name (see awww-query(1)); omit to set all
 #
-# Requires: swww, wal (pywal16)
+# Requires: awww, wal (pywal16)
 
 IMAGE="$1"
 OUTPUT="$2"
@@ -18,15 +18,15 @@ if [ -z "$IMAGE" ] || [ ! -f "$IMAGE" ]; then
 	exit 1
 fi
 
-# Set wallpaper via swww
+# Set wallpaper via awww
 RESIZE_TYPE="crop"
-export SWWW_TRANSITION_FPS="${SWWW_TRANSITION_FPS:-60}"
-export SWWW_TRANSITION_STEP="${SWWW_TRANSITION_STEP:-2}"
+export AWWW_TRANSITION_FPS="${AWWW_TRANSITION_FPS:-60}"
+export AWWW_TRANSITION_STEP="${AWWW_TRANSITION_STEP:-2}"
 
 if [ -n "$OUTPUT" ]; then
-	swww img --resize "$RESIZE_TYPE" --outputs "$OUTPUT" "$IMAGE"
+	awww img --resize "$RESIZE_TYPE" --outputs "$OUTPUT" "$IMAGE"
 else
-	swww img --resize "$RESIZE_TYPE" "$IMAGE"
+	awww img --resize "$RESIZE_TYPE" "$IMAGE"
 fi
 
 # Extract colors and render templates (skip terminal, tty, wallpaper, reload)

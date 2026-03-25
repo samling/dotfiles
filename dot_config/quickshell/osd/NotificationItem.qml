@@ -408,19 +408,25 @@ Rectangle {
     }
 
     // Popup progress bar (depletes over popup duration)
-    Rectangle {
+    // An Item clips to a 3px tall strip; inside, tall rounded Rectangles
+    // ensure the visible bottom slice follows the parent's corner curve.
+    Item {
         id: progressBar
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.margins: root.border.width
         height: root.isPopup ? 3 : 0
-        color: "transparent"
         clip: true
         visible: root.isPopup
 
         // Background track
         Rectangle {
-            anchors.fill: parent
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: (root.radius - root.border.width) * 2
+            radius: root.radius - root.border.width
             color: Config.getColor("border.subtle")
             opacity: 0.3
         }
@@ -428,10 +434,11 @@ Rectangle {
         // Progress fill
         Rectangle {
             id: progressFill
-            anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
+            height: (root.radius - root.border.width) * 2
+            radius: root.radius - root.border.width
             color: root.isCritical ? Config.getColor("state.error") : Config.getColor("primary.lavender")
 
             transform: Scale {

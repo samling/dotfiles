@@ -124,7 +124,7 @@ Scope {
         // Generate thumbnails and get the listing in one shot
         Process {
             id: generateThumbsProc
-            command: [root.configDir + "/swww/generate_thumbnails.sh", root.wallpaperDir]
+            command: [root.configDir + "/awww/generate_thumbnails.sh", root.wallpaperDir]
 
             stdout: StdioCollector {
                 onStreamFinished: {
@@ -157,7 +157,7 @@ Scope {
                         onExited: destroy()
                     }
                 `, pickerScope)
-                proc.command = [root.configDir + "/swww/set_wallpaper.sh", imagePath]
+                proc.command = [root.configDir + "/awww/set_wallpaper.sh", imagePath]
                 proc.running = true
                 GlobalStates.wallpaperPickerOpen = false
             }

@@ -1268,7 +1268,7 @@ Item {
                             spacing: 8
 
                             Text {
-                                text: "\uf538"
+                                text: "󰘚"
                                 font.pixelSize: Config.fontSizeMedium
                                 font.family: Config.fontFamilyIcon
                                 color: Config.getColor("primary.mauve")
