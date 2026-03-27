@@ -271,6 +271,8 @@ Singleton {
 
     function attemptInvokeAction(id, notifIdentifier) {
         console.log("[Notifications] Attempting to invoke action with identifier: " + notifIdentifier + " for notification ID: " + id);
+        console.log("[Notifications] idOffset: " + root.idOffset);
+        console.log("[Notifications] Tracked notifications: " + JSON.stringify(notifServer.trackedNotifications.values.map(n => ({id: n.id, offset_id: n.id + root.idOffset, actions: n.actions.map(a => a.identifier)}))));
         const notifServerIndex = notifServer.trackedNotifications.values.findIndex((notif) => notif.id + root.idOffset === id);
         console.log("Notification server index: " + notifServerIndex);
         if (notifServerIndex !== -1) {

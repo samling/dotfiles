@@ -485,7 +485,12 @@ Item {
                                         id: notifRowMouse
                                         anchors.fill: parent
                                         hoverEnabled: true
-                                        onClicked: notifRow.expanded = !notifRow.expanded
+                                        onClicked: {
+                                            Notifications.attemptInvokeAction(
+                                                notifRow.modelData.notificationId,
+                                                "default"
+                                            )
+                                        }
                                     }
 
                                     Column {
@@ -653,6 +658,62 @@ Item {
                                                 width: parent.width
                                                 visible: text !== ""
                                                 lineHeight: 1.3
+                                            }
+
+                                            // Action buttons (non-default actions)
+                                            RowLayout {
+                                                width: parent.width
+                                                spacing: 6
+                                                visible: {
+                                                    const actions = notifRow.modelData?.actions ?? []
+                                                    return actions.some(a => a.identifier !== "default")
+                                                }
+
+                                                Repeater {
+                                                    model: (notifRow.modelData?.actions ?? []).filter(a => a.identifier !== "default")
+
+                                                    Rectangle {
+                                                        required property var modelData
+                                                        Layout.fillWidth: true
+                                                        Layout.preferredHeight: 24
+                                                        radius: 4
+                                                        color: actionMouse.containsMouse
+                                                            ? Config.getColor("background.surface")
+                                                            : Config.getColor("background.tertiary")
+                                                        border.color: actionMouse.containsMouse
+                                                            ? Config.getColor("primary.lavender")
+                                                            : Config.getColor("border.subtle")
+                                                        border.width: 1
+
+                                                        Behavior on color { ColorAnimation { duration: 100 } }
+                                                        Behavior on border.color { ColorAnimation { duration: 100 } }
+
+                                                        Text {
+                                                            anchors.centerIn: parent
+                                                            text: parent.modelData.text || "Action"
+                                                            color: actionMouse.containsMouse
+                                                                ? Config.getColor("primary.lavender")
+                                                                : Config.getColor("text.secondary")
+                                                            font.pixelSize: Config.fontSizeSmall
+                                                            font.weight: Font.Medium
+                                                            font.family: Config.fontFamilyMonospace
+
+                                                            Behavior on color { ColorAnimation { duration: 100 } }
+                                                        }
+
+                                                        MouseArea {
+                                                            id: actionMouse
+                                                            anchors.fill: parent
+                                                            hoverEnabled: true
+                                                            onClicked: {
+                                                                Notifications.attemptInvokeAction(
+                                                                    notifRow.modelData.notificationId,
+                                                                    parent.modelData.identifier
+                                                                )
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
 
                                         }
