@@ -13,7 +13,7 @@ return { -- You can easily change to a different colorscheme.
   config = function()
     require('catppuccin').setup {
       flavour = 'mocha',
-      transparent_background = true,
+      transparent_background = false,
       color_overrides = ok and { mocha = overrides } or {},
       integrations = {
         blink_cmp = true,
@@ -35,7 +35,8 @@ return { -- You can easily change to a different colorscheme.
         },
         lsp_trouble = true,
         treesitter = true,
-        which_key = true
+        which_key = true,
+        bufferline = true,
       }
     }
     vim.cmd.colorscheme 'catppuccin'
