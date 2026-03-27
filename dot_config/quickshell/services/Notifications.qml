@@ -295,12 +295,10 @@ Singleton {
                 }
             } else {
                 console.log("[Notifications] Action not found with identifier: " + notifIdentifier);
-                root.discardNotification(id);
             }
-        } 
+        }
         else {
             console.log("Notification not found in server: " + id)
-            root.discardNotification(id);
         }
     }
 
