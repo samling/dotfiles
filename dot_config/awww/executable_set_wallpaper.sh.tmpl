@@ -29,12 +29,28 @@ else
 	awww img --resize "$RESIZE_TYPE" "$IMAGE"
 fi
 
-# Extract colors and render templates (skip terminal, tty, wallpaper, reload)
+# Extract colors and render templates
+{{- if eq (includeTemplate "dynamicTheme" .) "true" }}
+wal -i "$IMAGE" -t -n -e -q 2>/dev/null
+{{- else }}
 wal -i "$IMAGE" -s -t -n -e -q 2>/dev/null
+{{- end }}
 
 # Copy rendered Colors.qml to Quickshell and trigger reload
 cp ~/.cache/wal/colors-quickshell ~/.config/quickshell/common/Colors.qml
 mkdir -p ~/.cache/matugen
 touch ~/.cache/matugen/quickshell-reload-trigger
+
+{{- if eq (includeTemplate "dynamicTheme" .) "true" }}
+# Apply rendered pywal templates to tool configs
+cp ~/.cache/wal/colors-lsd ~/.config/lsd/colors.yaml
+cp ~/.cache/wal/colors-rofi ~/.config/rofi/colors/pywal.rasi
+cp ~/.cache/wal/colors-bat ~/.config/bat/config
+cp ~/.cache/wal/colors-delta ~/.config/delta/themes/pywal.gitconfig
+
+# Source fzf colors into current shell env
+FZF_COLORS="$(cat ~/.cache/wal/colors-fzf)"
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS}${FZF_COLORS}"
+{{- end }}
 
 echo "Wallpaper set to: $IMAGE"
