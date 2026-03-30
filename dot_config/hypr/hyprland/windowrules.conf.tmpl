@@ -4,9 +4,9 @@
 
 # Disable blur on quickshell layer surfaces to prevent continuous GPU compositing
 layerrule {
-    name = quickshell-noblur
-    match:namespace = ^quickshell:.*$
-    blur = false
+  name = quickshell-noblur
+  match:namespace = ^quickshell:.*$
+  blur = false
 }
 
 ###################
@@ -15,6 +15,13 @@ layerrule {
 
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 # See https://wiki.hyprland.org/Configuring/Workspace-Rules/ for workspace rules
+
+# Semi-transparent terminal so wallpaper shows through colored backgrounds
+windowrule {
+  name = terminal-opacity
+  opacity = 0.9
+  match:class = ^(com\.mitchellh\.ghostty)$
+}
 
 # Visually indicate when a window is fullscreen
 windowrule {

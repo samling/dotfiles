@@ -61,7 +61,7 @@ Item {
 
         BarGroup {
             id: clockGroup
-            accentColor: Config.pillColor3
+            accentColor: Config.pillColor4
             Layout.fillHeight: true
 
             ClockWidget {

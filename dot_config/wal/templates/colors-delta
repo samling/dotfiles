@@ -1,0 +1,25 @@
+[delta "pywal"]
+	dark = true
+	file-decoration-style = "{foreground}"
+	file-style = "{foreground}"
+	commit-decoration-style = "box ul"
+	hunk-header-decoration-style = "box ul"
+	hunk-header-file-style = "bold"
+	hunk-header-line-number-style = "bold {color8}"
+	hunk-header-style = "file line-number syntax"
+	line-numbers = true
+	line-numbers-left-style = "{color8}"
+	line-numbers-minus-style = "bold {color1}"
+	line-numbers-plus-style = "bold {color2}"
+	line-numbers-right-style = "{color8}"
+	line-numbers-zero-style = "{color8}"
+	minus-emph-style = "bold syntax {color1}"
+	minus-style = "syntax {color1}"
+	plus-emph-style = "bold syntax {color2}"
+	plus-style = "syntax {color2}"
+	map-styles = \
+		bold purple => syntax "{color8}", \
+		bold blue => syntax "{color4}", \
+		bold cyan => syntax "{color6}", \
+		bold yellow => syntax "{color3}"
+	syntax-theme = "ansi"

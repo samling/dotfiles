@@ -1,0 +1,28 @@
+* {{
+  rosewater: {color6};
+  flamingo: {color6};
+  pink: {color5};
+  mauve: {color5};
+  red: {color1};
+  maroon: {color1};
+  peach: {color3};
+  yellow: {color3};
+  green: {color2};
+  teal: {color6};
+  sky: {color4};
+  sapphire: {color4};
+  blue: {color4};
+  lavender: {color5};
+  text: {foreground};
+  subtext1: {color15};
+  subtext0: {color8};
+  overlay2: {color8};
+  overlay1: {color8};
+  overlay0: {color8};
+  surface2: {color8};
+  surface1: {color8};
+  surface0: {color0};
+  base: {background};
+  mantle: {background};
+  crust: {background};
+}}

@@ -29,7 +29,11 @@ configuration {
     }
   }
 
+{{- if eq (includeTemplate "dynamicTheme" .) "true" }}
+@import "colors/pywal.rasi"
+{{- else }}
 @import "colors/catppuccin-mocha.rasi"
+{{- end }}
 * {
   foreground:                  @text;
   background:                  @base;

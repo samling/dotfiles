@@ -147,7 +147,7 @@ QtObject {
         case "text.white":           return Qt.lighter(Colors.fg, 1.2)
         case "text.secondary":       return Colors.fg
         case "text.tertiary":
-        case "text.muted":           return Qt.lighter(Colors.color8, 1.4)
+        case "text.muted":           return Qt.lighter(Colors.color5, 2.0)
 
         // Borders — tinted toward accent
         case "border.primary":       return Qt.darker(Colors.color5, 1.2)
@@ -229,7 +229,7 @@ QtObject {
     readonly property string fontFamilyIcon: "JetBrainsMono Nerd Font Propo"
 
     // Font size scale
-    readonly property int fontSizeSmall: 10      // timestamps, version strings, priority icons
+    readonly property int fontSizeSmall: 11      // timestamps, version strings, priority icons
     readonly property int fontSizeBase: 11       // bar indicator text
     readonly property int fontSizeMedium: 12     // tooltips, notification body, secondary text
     readonly property int fontSizeLarge: 13      // notification summary, emphasized text

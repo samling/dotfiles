@@ -13,3 +13,11 @@ tmux
 # Ignore directories
 dot_tmux/plugins/**
 .tmux/plugins/**
+
+# When dynamic_theme is enabled, pywal manages these files
+{{ if eq (includeTemplate "dynamicTheme" .) "true" }}
+.config/lsd/colors.yaml
+.config/bat/config
+.config/rofi/colors/pywal.rasi
+.config/delta/themes/pywal.gitconfig
+{{ end }}
