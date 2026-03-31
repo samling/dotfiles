@@ -11,6 +11,9 @@ Item {
     property string passwordSsid: ""
     property bool showHiddenForm: false
 
+    onPasswordSsidChanged: Wifi.pauseListUpdates = (passwordSsid !== "")
+    Component.onDestruction: Wifi.pauseListUpdates = false
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 12

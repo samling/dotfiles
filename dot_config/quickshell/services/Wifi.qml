@@ -15,6 +15,7 @@ Singleton {
     property string security: ""
     property var networks: []
     property bool scanning: false
+    property bool pauseListUpdates: false
 
     // Wired connection info
     property bool wiredConnected: false
@@ -252,7 +253,7 @@ Singleton {
     function checkStatus() {
         if (!radioProc.running) radioProc.running = true
         if (!statusProc.running) statusProc.running = true
-        if (!listProc.running) listProc.running = true
+        if (!pauseListUpdates && !listProc.running) listProc.running = true
     }
 
     function toggle() {
