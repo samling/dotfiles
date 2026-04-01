@@ -20,7 +20,7 @@ source ~/.zsh/fnm.zsh
 source ~/.zsh/plugins.zsh
 source ~/.zsh/keys.zsh
 source ~/.zsh/completions.zsh
-source ~/.zsh/pywal.zsh
+[ -f ~/.zsh/pywal.zsh ] && source ~/.zsh/pywal.zsh
 #source ~/.zsh/zellij.zsh
 
 # Source ${HOME}/dotfiles-private/zshrc.*.local files
