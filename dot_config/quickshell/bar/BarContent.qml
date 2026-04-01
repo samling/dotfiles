@@ -37,7 +37,7 @@ Item {
 
         BarGroup {
             id: workspacesGroup
-            accentColor: Qt.lighter(Colors.color6, 1.4)
+            accentColor: Config.pillColor2
             Layout.fillHeight: true
 
             Workspaces {
@@ -61,7 +61,7 @@ Item {
 
         BarGroup {
             id: clockGroup
-            accentColor: Config.pillColor4
+            accentColor: Config.pillColor1
             Layout.fillHeight: true
 
             ClockWidget {
@@ -85,7 +85,7 @@ Item {
 
         BarGroup {
             id: sysTrayGroup
-            accentColor: Qt.lighter(Colors.color6, 1.4)
+            accentColor: Config.pillColor3
             Layout.fillHeight: true
 
             SysTray {
@@ -95,7 +95,7 @@ Item {
 
         BarGroup {
             id: tailscaleGroup
-            accentColor: Config.pillColor5
+            accentColor: Config.pillColor4
             Layout.fillHeight: true
 
             TailscaleIndicator {
@@ -107,7 +107,7 @@ Item {
 
         BarGroup {
             id: networkGroup
-            accentColor: Qt.lighter(Colors.color6, 1.4)
+            accentColor: Config.pillColor5
             Layout.fillHeight: true
 
             NetworkIndicator {
@@ -118,7 +118,7 @@ Item {
 
         BarGroup {
             id: cpuGroup
-            accentColor: Config.pillColor4
+            accentColor: Config.pillColor6
             Layout.fillHeight: true
 
             CpuIndicator {
@@ -129,7 +129,7 @@ Item {
 
         BarGroup {
             id: memoryGroup
-            accentColor: Config.pillColor11
+            accentColor: Config.pillColor7
             Layout.fillHeight: true
 
             MemoryIndicator {
@@ -140,7 +140,7 @@ Item {
 
         BarGroup {
             id: diskGroup
-            accentColor: Config.pillColor7
+            accentColor: Config.pillColor8
             Layout.fillHeight: true
 
             DiskIndicator {
@@ -151,7 +151,7 @@ Item {
 
         BarGroup {
             id: batteryGroup
-            accentColor: Qt.lighter(Colors.color6, 1.4)
+            accentColor: Config.pillColor9
             Layout.fillHeight: true
 
             BatteryIndicator {
@@ -184,7 +184,7 @@ Item {
 
         BarGroup {
             id: notificationGroup
-            accentColor: Config.pillColor7
+            accentColor: Config.pillColor12
             Layout.fillHeight: true
 
             NotificationButton {

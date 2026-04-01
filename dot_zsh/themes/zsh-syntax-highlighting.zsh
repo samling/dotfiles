@@ -1,5 +1,5 @@
 # zsh-syntax-highlighting theme using ANSI color indices
-# Works with both static (catppuccin) and dynamic (pywal) terminal palettes
+# Uses ANSI color indices for terminal palette compatibility
 # Key distinction: valid commands = green, unknown/errors = red
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor)
