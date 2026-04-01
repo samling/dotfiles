@@ -780,6 +780,7 @@ Item {
                             ToggleButton {
                                 width: (parent.width - parent.spacing) / 2
                                 icon: "\uf294"
+                                iconSize: Config.fontSizeHeader
                                 label: "Bluetooth"
                                 status: {
                                     if (!BluetoothService.available) return "Unavailable"
@@ -859,7 +860,7 @@ Item {
                                 text: Volume.mutedState ? "󰖁" : (Volume.percentage > 0.5 ? "󰕾" : "󰖀")
                                 font.pixelSize: Config.fontSizeSmall
                                 font.family: Config.fontFamilyIcon
-                                color: Volume.mutedState ? Config.getColor("state.error") : Config.getColor("text.muted")
+                                color: Config.getColor("text.muted")
 
                                 MouseArea {
                                     anchors.fill: parent
@@ -882,8 +883,8 @@ Item {
                                     height: parent.height
                                     radius: parent.radius
                                     color: Volume.mutedState
-                                        ? Config.getColor("text.muted")
-                                        : Config.getColor("primary.mauve")
+                                        ? Config.getColor("background.tertiary")
+                                        : Config.getColor("primary.yellow")
 
                                     Behavior on width { NumberAnimation { duration: 100 } }
                                 }
@@ -1418,7 +1419,7 @@ Item {
                                 text: "\uf0a0"
                                 font.pixelSize: Config.fontSizeMedium
                                 font.family: Config.fontFamilyIcon
-                                color: Config.getColor("primary.teal")
+                                color: Config.getColor("primary.mauve")
                             }
 
                             Text {
@@ -1506,11 +1507,11 @@ Item {
                                     height: parent.height
                                     radius: 4
                                     color: {
-                                        if (!root.diskIndicator) return Config.getColor("primary.teal")
+                                        if (!root.diskIndicator) return Config.getColor("primary.mauve")
                                         const usage = root.diskIndicator.diskUsage
                                         if (usage > 0.9) return Config.getColor("state.error")
                                         if (usage > 0.75) return Config.getColor("state.warning")
-                                        return Config.getColor("primary.teal")
+                                        return Config.getColor("primary.mauve")
                                     }
 
                                     Behavior on width {

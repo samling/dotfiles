@@ -9,6 +9,7 @@ Rectangle {
     property string label: ""
     property string status: ""
     property bool active: false
+    property int iconSize: Config.fontSizeMedium
     property color accentColor: Config.getColor("primary.mauve")
 
     signal clicked()
@@ -35,7 +36,7 @@ Rectangle {
         // Icon
         Text {
             text: root.icon
-            font.pixelSize: Config.fontSizeMedium
+            font.pixelSize: root.iconSize
             font.family: Config.fontFamilyIcon
             color: root.active ? root.accentColor : Config.getColor("text.secondary")
 
