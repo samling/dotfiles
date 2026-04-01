@@ -1,14 +1,22 @@
 function reload-zsh-configuration() {
-  #cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"
-  exec zsh && echo ".zshrc reloaded"
+  local scope="${1:-here}" # "here" (default) or "all"
 
-  # If we're in hyprland, update the instance signature to prevent
-  # issues with stale signatures from restored tmux sessions
-  if command -v -p hyprctl >/dev/null && command -v -p jq >/dev/null; then
-    # echo "Updating HYPRLAND_INSTANCE_SIGNATURE"
-    export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl instances -j | jq -r '.[0].instance')
+  if [ -n "$TMUX" ] && [ "$scope" = "all" ]; then
+    local current_pane count=0
+    current_pane=$(tmux display-message -p '#{session_name}:#{window_index}.#{pane_index}')
+    tmux list-panes -a -F '#{pane_current_command} #{session_name}:#{window_index}.#{pane_index}' \
+      | awk '/^zsh /{print $2}' \
+      | while read pane; do
+          [ "$pane" = "$current_pane" ] && continue
+          tmux send-keys -t "$pane" C-c
+          tmux send-keys -t "$pane" 'exec zsh' Enter
+          count=$((count + 1))
+        done
+    echo "Reloading zsh in $count other pane(s)..."
   fi
 
+  echo "Reloading current shell..."
+  exec zsh
 }
 
 # unlock bitwarden vault
