@@ -85,7 +85,7 @@ Item {
 
         BarGroup {
             id: sysTrayGroup
-            accentColor: Config.pillColor3
+            accentColor: Config.pillColor9
             Layout.fillHeight: true
 
             SysTray {

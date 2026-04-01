@@ -21,7 +21,7 @@ Item {
         color: root.accentColor
         radius: Config.pillRadius
         border.width: 2
-        border.color: "#1e1e2e"
+        border.color: Qt.darker(root.accentColor, 1.3)
     }
 
     GridLayout {

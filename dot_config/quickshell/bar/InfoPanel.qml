@@ -85,7 +85,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: root.panelOpen ? 0 : -width - 20
             width: parent.width
-            color: Config.getColor("background.crust")
+            color: Config.getColor("background.secondary")
             border.width: 1
             border.color: Config.getColor("border.subtle")
             radius: 12
@@ -1198,8 +1198,8 @@ Item {
                                         color: isActive
                                             ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.2)
                                             : profileMouse.containsMouse
-                                                ? Config.getColor("background.tertiary")
-                                                : Config.getColor("background.secondary")
+                                                ? Config.getColor("background.surface")
+                                                : Config.getColor("background.tertiary")
                                         border.width: isActive ? 1 : 0
                                         border.color: Config.getColor("primary.mauve")
 
@@ -1270,8 +1270,8 @@ Item {
                                         color: isActive
                                             ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.2)
                                             : fanMouse.containsMouse
-                                                ? Config.getColor("background.tertiary")
-                                                : Config.getColor("background.secondary")
+                                                ? Config.getColor("background.surface")
+                                                : Config.getColor("background.tertiary")
                                         border.width: isActive ? 1 : 0
                                         border.color: Config.getColor("primary.mauve")
 

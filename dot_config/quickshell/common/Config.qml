@@ -256,7 +256,7 @@ QtObject {
     readonly property color pillColor2:  Colors.tertiary
     readonly property color pillColor3:  Colors.primary_container
     readonly property color pillColor4:  Colors.tertiary_container
-    readonly property color pillColor5:  Qt.lighter(Colors.primary, 1.2)
+    readonly property color pillColor5:  Qt.lighter(Colors.primary, 1.05)
     readonly property color pillColor6:  Qt.lighter(Colors.tertiary, 1.2)
     readonly property color pillColor7:  Qt.darker(Colors.primary, 1.2)
     readonly property color pillColor8:  Qt.darker(Colors.tertiary, 1.2)
