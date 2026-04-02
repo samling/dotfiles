@@ -95,7 +95,7 @@ Item {
 
         BarGroup {
             id: tailscaleGroup
-            accentColor: Config.pillColor4
+            accentColor: Config.pillColor8
             Layout.fillHeight: true
 
             TailscaleIndicator {
