@@ -518,7 +518,7 @@ Scope {
 
                         cellWidth: (width) / root.columns
                         cellHeight: cellWidth * 0.65
-                        cacheBuffer: 100000
+                        cacheBuffer: 400
 
                         boundsBehavior: Flickable.StopAtBounds
 

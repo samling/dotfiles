@@ -819,7 +819,7 @@ Item {
                                     width: parent.width * (Brightness.brightnessPercent / 100)
                                     height: parent.height
                                     radius: parent.radius
-                                    color: Config.getColor("primary.yellow")
+                                    color: Config.getColor("primary.mauve")
 
                                     Behavior on width { NumberAnimation { duration: 100 } }
                                 }
@@ -884,7 +884,7 @@ Item {
                                     radius: parent.radius
                                     color: Volume.mutedState
                                         ? Config.getColor("background.tertiary")
-                                        : Config.getColor("primary.yellow")
+                                        : Config.getColor("primary.mauve")
 
                                     Behavior on width { NumberAnimation { duration: 100 } }
                                 }
