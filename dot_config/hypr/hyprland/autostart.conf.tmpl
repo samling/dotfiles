@@ -3,11 +3,6 @@
 #################
 
 # Start daemons
-#   Some daemons are started by systemd; I don't know when it's appropriate to launch them
-#   this way and when to use systemd, so it's a mix of both for now.
-#   Systemd:
-#     awww-daemon - systemctl --user enable --now awww.service
-#     awww-daemon - systemctl --user enable --now hyprpolkitagent
 #   Deprecated by ags:
 #     exec-once = systemctl --user start waybar
 #     exec-once = uwsm app -s b -- syshud -p top-right -o v
@@ -15,13 +10,13 @@
 #   Other:
 #     exec-once = uwsm app -- insync start - starts via xdg-autostart
 #exec-once = uwsm app -- astal-tray -d
-# exec-once = systemctl --user start hyprpolkitagent
-# exec-once = systemctl --user start awww
 #exec-once = systemctl --user start ags
 #exec-once = uwsm app -- blueman-applet
-#exec-once = uwsm app -- hypridle
+#exec-once = uwsm app -s b -- quickshell # Managed by systemd service
+exec-once = uwsm app -s b -- hyprpolkitagent
+exec-once = uwsm app -s b -- hypridle
+exec-once = uwsm app -s b -- awww
 exec-once = uwsm app -- udiskie --no-automount --smart-tray
-#exec-once = uwsm app -- qs # starting via systemd
 # note that passing in env vars this way *does* work
 exec-once = SHOW_DEFAULT_ICON=true uwsm app -- hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5
 #exec-once = uwsm app -- ~/.config/awww/awww_randomize_multi_daemon.sh '/home/sboynton/Pictures/Wallpapers/'
@@ -39,6 +34,9 @@ exec-once = uwsm app -- clipse -listen
 # with other clipboard managers hanging when being written to.
 # So let's just run it for now.
 exec-once = QT_QPA_PLATFORM=xcb uwsm app -- copyq --start-server
+
+# Start application mapper for keyd
+exec-once = uwsm app -- keyd-application-mapper -d
 
 # Enable dark mode
 # NOTE: Handled by nwg-look instead

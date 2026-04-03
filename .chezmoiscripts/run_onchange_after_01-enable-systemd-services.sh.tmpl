@@ -18,19 +18,8 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   {{- end -}}
   {{- if not $headless }}
   sudo systemctl enable --now greetd
-  {{- end }}
-
-  #=== User
-  #systemctl --user enable --now fumon
   systemctl --user enable --now quickshell
-
-  # These are started conditionally when running hyprland as we don't really need or want them in KDE
-  systemctl --user enable --now hyprpolkitagent
-  systemctl --user enable --now hypridle
-  systemctl --user enable --now awww
-  #systemctl --user enable --now awww_change_wallpaper.timer
-  #systemctl --user enable --now ags
-  #systemctl --user enable --now waybar
+  {{- end }}
 fi
 {{- end }}
-# rerun: 497416f1
+# rerun: cc5434f9
