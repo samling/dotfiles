@@ -38,8 +38,11 @@ Singleton {
         id: muteLedProcess
     }
 
-    onMutedStateChanged: {
+    function syncMuteLed() {
         const val = mutedState ? "1" : "0";
         muteLedProcess.exec(["sudo", "sh", "-c", "echo " + val + " > /sys/class/leds/platform::micmute/brightness"]);
     }
+
+    onMutedStateChanged: syncMuteLed()
+    onAvailableChanged: if (available) syncMuteLed()
 }
