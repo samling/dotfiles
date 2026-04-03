@@ -2,43 +2,38 @@
 ### AUTOSTART ###
 #################
 
-# Start daemons
-#   Deprecated by ags:
-#     exec-once = systemctl --user start waybar
-#     exec-once = uwsm app -s b -- syshud -p top-right -o v
-#     exec-once = uwsm app -- nm-applet --indicator
-#   Other:
-#     exec-once = uwsm app -- insync start - starts via xdg-autostart
-#exec-once = uwsm app -- astal-tray -d
-#exec-once = systemctl --user start ags
-#exec-once = uwsm app -- blueman-applet
-#exec-once = uwsm app -s b -- quickshell # Managed by systemd service
+### Start daemons
+### Note: To pass env vars, pass them to uwsm, e.g. SHOW_DEFAULT_ICON=true uwsm app -- hyprswitch ...
+###
 exec-once = uwsm app -s b -- hyprpolkitagent
 exec-once = uwsm app -s b -- hypridle
-exec-once = uwsm app -s b -- awww
+exec-once = uwsm app -- keyd-application-mapper -d
 exec-once = uwsm app -- udiskie --no-automount --smart-tray
-# note that passing in env vars this way *does* work
 exec-once = SHOW_DEFAULT_ICON=true uwsm app -- hyprswitch init --show-title --size-factor 4.5 --workspaces-per-row 5
-#exec-once = uwsm app -- ~/.config/awww/awww_randomize_multi_daemon.sh '/home/sboynton/Pictures/Wallpapers/'
 exec-once = uwsm app -s b fumon
 
-# Clipboard history
+### Clipboard history
+###
 exec-once = uwsm app -- wl-paste -p -t text --watch wl-copy
-#=== clipse
+
+### clipse
+###
 exec-once = uwsm app -- clipse -listen
-#=== cliphist
+
+### cliphist
+###
 #exec-once = uwsm app -- wl-paste --type text --watch cliphist store # Stores only text data
 #exec-once = uwsm app -- wl-paste --type image --watch cliphist store # Stores only image data
-#=== copyq
+
+### copyq
+###
 # For SOME reason having copyq running seems to fix odd issues
 # with other clipboard managers hanging when being written to.
 # So let's just run it for now.
 exec-once = QT_QPA_PLATFORM=xcb uwsm app -- copyq --start-server
 
-# Start application mapper for keyd
-exec-once = uwsm app -- keyd-application-mapper -d
-
-# Enable dark mode
+### Enable dark mode
+###
 # NOTE: Handled by nwg-look instead
 #env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
 exec-once = gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard+default"   # for GTK3 apps # TODO Exec once?
@@ -46,6 +41,7 @@ exec-once = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 exec-once = gsettings set org.gnome.desktop.interface cursor-theme BreezeX-RosePine
 exec-once = gsettings set org.gnome.desktop.interface cursor-size 24 
 
-# Load plugins
+### Load plugins
+###
 exec-once = hyprpm reload -n
 exec-once = uwsm app -- $HOME/.local/lib/import_env tmux # https://github.com/hyprwm/Hyprland/issues/3134

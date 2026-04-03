@@ -19,6 +19,7 @@ if [ $INIT_SYSTEM == "systemd" ]; then
   {{- if not $headless }}
   sudo systemctl enable --now greetd
   systemctl --user enable --now quickshell
+  systemctl --user enable --now awww
   {{- end }}
 fi
 {{- end }}
