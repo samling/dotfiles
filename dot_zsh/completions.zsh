@@ -35,6 +35,9 @@ command -v fzf >/dev/null && eval "$(fzf --zsh)"
 #=== kubectl
 command -v kubectl >/dev/null && source <(kubectl completion zsh)
 
+#=== kubecolor
+compdef kubecolor=kubectl
+
 #=== plz
 command -v plz >/dev/null && source <(plz --completion_script)
 

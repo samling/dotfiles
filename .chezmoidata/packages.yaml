@@ -245,6 +245,9 @@ packages:
       pacman: kubectl
       brew: kubectl
       apt: kubectl
+    kubecolor:
+      aur: kubecolor
+      brew: kubecolor
     kubie:
       pacman: kubie
     k9s:
