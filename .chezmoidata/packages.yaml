@@ -680,7 +680,7 @@ packages:
   ############
   hyprland:
     hyprdynamicmonitors:
-      aur: hyprdynamicmonitors
+      aur: hyprdynamicmonitors-bin
     hyprland:
       pacman: hyprland
     hypridle:
