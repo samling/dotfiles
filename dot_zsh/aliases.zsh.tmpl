@@ -2,15 +2,15 @@
 alias sudo="sudo "
 
 #=== AI
-alias serena="uvx --from git+https://github.com/oraios/serena serena"
+#alias serena="uvx --from git+https://github.com/oraios/serena serena"
 
 #=== Builtin Replacements
 alias cat="bat -pp"
 alias df="duf -hide special,fuse"
 alias diff="delta"
 # alias find="fd" # use find and fd separately
-alias grep="rg"
-alias grepall="rg -uuu --no-ignore"
+#alias grep="rg"
+#alias grepall="rg -uuu --no-ignore"
 alias journalctl="SYSTEMD_LESS=FRXMK journalctl --no-pager"
 alias top="htop"
 alias watch="viddy -d"
@@ -38,17 +38,11 @@ alias ai="aichat"
 alias cm="chezmoi"
 alias feh="feh -z --scale-down"
 alias glaze="gpk"
-alias gpt-"aichat -m openai:gpt-4o-2024-11-20"
 #alias claude="aichat -m claude:claude-3-5-sonnet-latest"
 alias jinaai="curl https://r.jina.ai -H \"Authorization: Bearer ${JINA_AI_API_KEY}\""
 alias lg="lazygit"
 alias piper="pyenv local system && pyenv exec piper"
 alias yless="jless --yaml"
-
-#=== git
-alias gaa="git add --all"
-alias gcm="git commit -am"
-alias gp="git push -u origin HEAD"
 
 #=== Hyprland
 alias hyprctl="hyprctl --instance 0" # avoids tmux-inside-hyprland issues
