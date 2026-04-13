@@ -335,7 +335,8 @@ bind ? run "comm -23 <(tmux list-keys | sort) <(tmux -L test -f /dev/null list-k
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'fcsonline/tmux-thumbs'
+set -g @plugin 'roosta/tmux-fuzzback'
+# set -g @plugin 'fcsonline/tmux-thumbs'
 
 # Plugin Options
 set -g @net_speed_interfaces "en0"
@@ -350,6 +351,8 @@ set -g @resurrect-capture-pane-contents 'on'
 set -g @resurrect-dir '~/.config/tmux-continuum-sessions'
 
 set -g @continuum-restore 'off'
+
+set -g @fuzzback-popup 1
 
 #run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
 
