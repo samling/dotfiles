@@ -26,7 +26,7 @@
     };
     Service = {
       Type = "simple";
-      ExecStart = "/bin/bash -c 'qs'";
+      ExecStart = "/etc/profiles/per-user/sboynton/bin/qs";
       Restart = "always";
       RestartSec = "10s";
     };
