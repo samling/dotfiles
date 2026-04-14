@@ -1,5 +1,5 @@
 {
-  description = "NixOS home configuration";
+  description = "NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,10 +9,25 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
-    homeConfigurations."sboynton" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      modules = [ ./home.nix ];
+  outputs = { nixpkgs, home-manager, ... }:
+    let
+      mkHost = hostname: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./shared
+          ./hosts/${hostname}
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sboynton = import ./home.nix;
+          }
+        ];
+      };
+    in
+    {
+      nixosConfigurations = {
+        nixos = mkHost "nixos";
+      };
     };
-  };
 }
