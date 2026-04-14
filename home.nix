@@ -13,6 +13,7 @@
     rofi
     wlogout
     quickshell
+    nerd-fonts.jetbrains-mono
   ];
 
   home.file.".config/hypr" = {
