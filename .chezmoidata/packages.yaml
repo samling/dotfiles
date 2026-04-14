@@ -318,15 +318,21 @@ packages:
     pavucontrol:
       pacman: pavucontrol
       apt: pavucontrol
+    chafa:
+      pacman: chafa
     feh:
       pacman: feh
       apt: feh
     mpv:
       pacman: mpv
+    timg:
+      aur: timg
     vlc:
       pacman: vlc
     vlc-plugins-all:
       pacman: vlc-plugins-all
+    yt-dlp:
+      pacman: yt-dlp
 
   # Desktop applications
   desktop:
@@ -354,6 +360,8 @@ packages:
     insync:
       aur: insync
       apt: insync
+    kitty:
+      pacman: kitty
     localsend-bin:
       aur: localsend-bin
       brew: localsend

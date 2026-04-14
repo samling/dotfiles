@@ -57,7 +57,9 @@ case "$mime" in
 		eza --group-directories-first --color=always "$filepath" 2>/dev/null
 		# tree -L 1 "$filepath" 2>/dev/null
 		;;
-	#image/jpeg | image/png)
+	image/jpeg|image/png|image/webp|image/gif)
+    kitten icat --clear --transfer-mode=memory --unicode-placeholder --stdin=no --place="${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}@0x0" "$filepath" 2>/dev/null
+    ;;
 	#	# Use magick to display images in the terminal using sixel
 	#	magick "$filepath" -geometry 800x480 sixel:-
 	#	;;
