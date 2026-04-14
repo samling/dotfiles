@@ -4,6 +4,7 @@
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
+    bluez
     kitty
     wofi
     vim
@@ -14,6 +15,19 @@
     wlogout
     quickshell
     nerd-fonts.jetbrains-mono
+    tailscale
+    brightnessctl
+    pulseaudio
+    playerctl
+    udiskie
+    blueman
+    networkmanagerapplet
+    hyprpolkitagent
+    hypridle
+    keyd
+    hyprshell
+    copyq
+    clipse
   ];
 
   home.file.".config/hypr" = {

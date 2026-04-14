@@ -91,6 +91,16 @@
     withUWSM = true;
   };
 
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+  };
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+
+  services.upower.enable = true;
   services.power-profiles-daemon.enable = true;
 
   # Open ports in the firewall.
