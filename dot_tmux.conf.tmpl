@@ -66,6 +66,12 @@ set -g prefix C-a
 unbind a
 bind a send-prefix
 
+# Allow sending C-p/C-n into a tmux pane by pressing <leader> followed by 'p' / 'n'
+bind C-p send-keys C-p
+bind C-n send-keys C-n
+bind p previous-window
+bind n next-window
+
 # Use vim keybindings in copy mode
 set -g mode-keys vi
 
