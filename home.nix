@@ -6,6 +6,13 @@
   home.packages = with pkgs; [
     kitty
     wofi
+    vim
+    git
+    fuzzel
+    ghostty
+    rofi
+    wlogout
+    quickshell
   ];
 
   home.file.".config/hypr" = {

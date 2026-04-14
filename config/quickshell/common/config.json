@@ -1,0 +1,21 @@
+{
+  "wallpaper": {
+    "directory": "/home/sboynton/Pictures/Wallpapers/"
+  },
+  "updates": {
+    "criticalPackages": [
+      "glibc",
+      "linux*",
+      "systemd",
+      "hyprland"
+    ],
+    "warningPackages": [
+      "hypr*",
+      "nvidia*",
+      "pacman",
+      "paru",
+      "uwsm",
+      "yay"
+    ]
+  }
+}
