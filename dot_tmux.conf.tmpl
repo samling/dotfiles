@@ -72,6 +72,10 @@ bind C-n send-keys C-n
 bind p previous-window
 bind n next-window
 
+# Allow sending C-l/C-r into a tmux pane by pressing <leader> followed by 'l' / 'r'
+bind C-l send-keys C-l
+bind C-r send-keys C-r
+
 # Use vim keybindings in copy mode
 set -g mode-keys vi
 
