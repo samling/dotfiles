@@ -46,6 +46,9 @@ set -as terminal-features ',rxvt-unicode-256color:clipboard'
 set -as terminal-features ',screen-256color:clipboard'
 set -as terminal-features ',tmux-256color:clipboard'
 
+# Allow tmux to pass focus events from the terminal to applications
+set -g focus-events on
+
 # Start windows and panes at 1 instead of 0
 set -g base-index 1
 set -g pane-base-index 1
@@ -122,7 +125,7 @@ set-environment -g 'IGNOREEOF' 10000
 # Set pane background to default
 set -g allow-passthrough on
 set-hook -g pane-focus-in 'select-pane -P bg=default,fg=default'
-set-hook -g pane-focus-out 'select-pane -P bg=colour0,fg=colour10'
+set-hook -g pane-focus-out 'select-pane -P bg=default,fg=default'
 
 ##################
 ### STATUS BAR ###
