@@ -28,6 +28,9 @@
     hyprshell
     copyq
     clipse
+    zinit
+    pure
+    gitstatus
   ];
 
   home.file.".config/hypr" = {

@@ -60,6 +60,7 @@
     description = "Sam Boynton";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh;
   };
 
   # Allow unfree packages
@@ -90,6 +91,8 @@
     enable = true;
     withUWSM = true;
   };
+
+  programs.zsh.enable = true;
 
   services.pipewire = {
     enable = true;
