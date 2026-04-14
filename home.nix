@@ -4,11 +4,17 @@
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
+    bat
     bluez
     kitty
     wofi
     vim
     git
+    fnm
+    lsd
+    go
+    kubectl
+    kubecolor
     fuzzel
     ghostty
     rofi
@@ -29,9 +35,9 @@
     copyq
     clipse
     zinit
-    zinit
     pure-prompt
     gitstatus
+    neovim
   ];
 
   home.file.".config/hypr" = {
@@ -43,6 +49,15 @@
     source = ./config/quickshell;
     recursive = true;
   };
+
+  home.file.".zsh" = {
+    source = ./config/zsh;
+    recursive = true;
+  };
+
+  home.file.".zshrc".source = ./config/zshrc;
+
+  home.file.".zsh/zinit".source = "${pkgs.zinit}/share/zinit";
 
   systemd.user.services.quickshell = {
     Unit = {
