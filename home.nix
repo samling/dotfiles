@@ -29,7 +29,8 @@
     copyq
     clipse
     zinit
-    pure
+    zinit
+    pure-prompt
     gitstatus
   ];
 
