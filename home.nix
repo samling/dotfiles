@@ -7,6 +7,9 @@
     kitty
     wofi
     nerd-fonts.jetbrains-mono
+    zinit
+    pure-prompt
+    gitstatus
   ];
 
   home.file.".config/hypr" = {
