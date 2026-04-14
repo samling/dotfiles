@@ -13,5 +13,10 @@
     recursive = true;
   };
 
+  home.file.".config/quickshell" = {
+    source = ./config/quickshell;
+    recursive = true;
+  };
+
   programs.home-manager.enable = true;
 }
