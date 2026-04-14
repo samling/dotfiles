@@ -1,8 +1,9 @@
 { ... }: {
   networking.hostName = "nixos";
 
-  # Import your hardware config generated during install
   imports = [ ./hardware-configuration.nix ];
 
-  # Host-specific settings go here
+  # Match your install — check /etc/nixos/configuration.nix if different
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 }
