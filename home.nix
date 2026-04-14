@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     kitty
     wofi
+    nerd-fonts.jetbrains-mono
   ];
 
   home.file.".config/hypr" = {
