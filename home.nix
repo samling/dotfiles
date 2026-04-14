@@ -18,5 +18,22 @@
     recursive = true;
   };
 
+  systemd.user.services.quickshell = {
+    Unit = {
+      Description = "Quickshell";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "/bin/bash -c 'qs'";
+      Restart = "always";
+      RestartSec = "10s";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   programs.home-manager.enable = true;
 }
