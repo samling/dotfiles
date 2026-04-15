@@ -11,6 +11,7 @@
     vim
     git
     fnm
+    duf
     lsd
     go
     kubectl
