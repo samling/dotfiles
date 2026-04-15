@@ -1,0 +1,82 @@
+local function apply_transparent_overrides()
+  local function get_hl_color(name, attr)
+    local hl = vim.api.nvim_get_hl(0, { name = name })
+    return hl[attr] and string.format('#%06x', hl[attr]) or nil
+  end
+
+  local base00 = get_hl_color('Normal', 'bg')
+  local base01 = get_hl_color('CursorLine', 'bg')
+  local base03 = get_hl_color('Comment', 'fg')
+  local base05 = get_hl_color('Normal', 'fg')
+  local base08 = get_hl_color('Constant', 'fg')
+
+  local transparent_groups = {
+    'Normal', 'NormalNC', 'NormalFloat',
+    'FloatBorder', 'FloatTitle',
+    'Pmenu', 'PmenuSbar',
+    'StatusLine', 'StatusLineNC',
+    'TabLine', 'TabLineFill', 'TabLineSel',
+    'WinBar', 'WinBarNC',
+    'SignColumn',
+    'LineNr', 'LineNrAbove', 'LineNrBelow',
+    'CursorLineNr', 'CursorLineSign',
+    'FoldColumn', 'Folded',
+    'EndOfBuffer',
+    'CursorLine', 'CursorColumn',
+    'MsgArea',
+    'DiagnosticFloatingError', 'DiagnosticFloatingWarn',
+    'DiagnosticFloatingInfo', 'DiagnosticFloatingHint', 'DiagnosticFloatingOk',
+  }
+
+  for _, group in ipairs(transparent_groups) do
+    vim.api.nvim_set_hl(0, group, { bg = 'NONE' })
+  end
+
+  vim.api.nvim_set_hl(0, 'LineNr', { fg = base08, bg = 'NONE' })
+  vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = base08, bg = 'NONE' })
+  vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = base08, bg = 'NONE' })
+  vim.api.nvim_set_hl(0, 'EndOfBuffer', { fg = base00, bg = 'NONE' })
+
+  vim.api.nvim_set_hl(0, 'WinSeparator', { fg = base03, bg = 'NONE' })
+  vim.api.nvim_set_hl(0, 'VertSplit', { fg = base03, bg = 'NONE' })
+  vim.api.nvim_set_hl(0, 'FloatBorder', { fg = base03, bg = 'NONE' })
+
+  vim.api.nvim_set_hl(0, 'Visual', { bg = base03, fg = base05 })
+  vim.api.nvim_set_hl(0, 'VisualNOS', { bg = base03, fg = base05 })
+
+  vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = base01 })
+  vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = base01 })
+  vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = base01 })
+
+  vim.api.nvim_set_hl(0, 'LspReferenceText', { bg = base01 })
+  vim.api.nvim_set_hl(0, 'LspReferenceRead', { bg = base01 })
+  vim.api.nvim_set_hl(0, 'LspReferenceWrite', { bg = base01 })
+end
+
+return {
+  'RRethy/base16-nvim',
+  lazy = false,
+  dependencies = {
+    'typicode/bg.nvim',
+  },
+  config = function()
+    require('base16-colorscheme').with_config({
+      telescope = true,
+      indentblankline = true,
+      notify = true,
+      ts_rainbow = true,
+      cmp = true,
+      illuminate = true,
+      dapui = true,
+    })
+
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      callback = function()
+        vim.schedule(apply_transparent_overrides)
+      end,
+    })
+
+    vim.cmd('colorscheme base16-catppuccin-mocha')
+    apply_transparent_overrides()
+  end,
+}

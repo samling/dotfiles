@@ -13,7 +13,10 @@
     fnm
     duf
     lsd
+    fzf
+    claude-code
     go
+    google-chrome
     kubectl
     kubecolor
     fuzzel
@@ -36,10 +39,68 @@
     copyq
     clipse
     zinit
+    fastfetch
     pure-prompt
     gitstatus
     neovim
+    tmux
+    direnv
+    gitmux
+    cmatrix
+    wl-clipboard
+    bc
+
+    # Neovim LSP servers
+    lua-language-server
+    typescript-language-server
+    rust-analyzer
+    gopls
+    terraform-ls
+    yaml-language-server
+    dockerfile-language-server-nodejs
+    buf
+    nil
+
+    # Neovim formatters
+    stylua
+    black
+    isort
+    shfmt
+    jq
+    yq
   ];
+
+  home.file.".config/tmux/plugins/tpm" = {
+    source = builtins.fetchGit {
+      url = "https://github.com/tmux-plugins/tpm";
+      rev = "99469c4a9b1ccf77fade25842dc7bafbc8ce9946";
+    };
+    recursive = true;
+  };
+
+  home.file.".tmux.conf".source = ./config/tmux/tmux.conf;
+
+  home.file.".tmux/scripts" = {
+    source = ./config/tmux/scripts;
+    recursive = true;
+  };
+
+  home.file.".tmux/kube-tmux" = {
+    source = ./config/tmux/kube-tmux;
+    recursive = true;
+  };
+
+  home.file.".gitmux.conf".source = ./config/gitmux.conf;
+
+  home.file.".config/ghostty" = {
+    source = ./config/ghostty;
+    recursive = true;
+  };
+
+  home.file.".config/nvim" = {
+    source = ./config/nvim;
+    recursive = true;
+  };
 
   home.file.".config/hypr" = {
     source = ./config/hypr;

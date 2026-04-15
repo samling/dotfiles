@@ -1,4 +1,7 @@
 # Initialize zinit
+# Declare ZINIT hash and set writable home dir for plugin downloads (zinit source is read-only from Nix store)
+typeset -A ZINIT
+ZINIT[HOME_DIR]="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit"
 source ~/.zsh/zinit/zinit.zsh
 
 # Must load before zsh-syntax-highlighting

@@ -5,9 +5,11 @@ bindkey -e
 bindkey -r '^l'
 bindkey -r '^j'
 
-# Bind UP and DOWN arrow keys
+# Bind UP and DOWN arrow keys (both CSI and SS3 escape sequences)
 bindkey "^[[A" history-substring-search-up
 bindkey "^[[B" history-substring-search-down
+bindkey "^[OA" history-substring-search-up
+bindkey "^[OB" history-substring-search-down
 
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word

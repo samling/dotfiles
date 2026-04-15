@@ -25,6 +25,27 @@
 
   services.openssh.enable = true;
 
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = ["*"];
+	settings = {
+	  main = {
+	    capslock = "overload(control, esc)";
+	  };
+	};
+      };
+    };
+  };
+  environment.etc."libinput/local-overrides.quirks".text = ''
+    [Serial Keyboards]
+    MatchUdevType=keyboard
+    MatchName=keyd*keyboard
+    AttrKeyboardIntegration=internal
+  '';
+
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";

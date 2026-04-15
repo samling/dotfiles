@@ -11,7 +11,7 @@ export ZSH_VERSION=$ZSH_VERSION
 # Note: Be careful when changing the order.
 source ~/.zsh/path.zsh
 source ~/.zsh/env.zsh
-source ~/.zsh/secret.zsh
+[ -f ~/.zsh/secret.zsh ] && source ~/.zsh/secret.zsh
 # source ~/.zsh/prompt.zsh
 source ~/.zsh/opt.zsh
 source ~/.zsh/aliases.zsh
