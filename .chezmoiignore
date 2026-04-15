@@ -14,3 +14,8 @@ tmux
 dot_tmux/plugins/**
 .tmux/plugins/**
 
+# aconfmgr is Arch-only
+{{ if ne .chezmoi.os "linux" -}}
+dot_config/aconfmgr
+{{- end }}
+
