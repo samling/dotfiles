@@ -91,5 +91,7 @@ arch = { packages = [
 
   # ai
   "aichat",
-  "llama.cpp-cuda",
+
+  # utilities
+  "graphviz",
 ] }

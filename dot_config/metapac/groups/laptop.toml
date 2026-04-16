@@ -1,6 +1,5 @@
 arch = { packages = [
   "impala",
-  "inetutils",
   "iwd",
   "powertop",
 ] }
