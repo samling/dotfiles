@@ -12,14 +12,16 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, hyprland-plugins, ... }:
+  outputs = { nixpkgs, home-manager, hyprland, hyprland-plugins, claude-code, ... }:
     let
       mkHost = hostname: nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hosts/${hostname}/configuration.nix
+          { nixpkgs.overlays = [ claude-code.overlays.default ]; }
           hyprland.nixosModules.default
           home-manager.nixosModules.home-manager
           {
