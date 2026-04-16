@@ -75,6 +75,7 @@ in {
     dockerfile-language-server
     buf
     nil
+    parsec-bin
 
     # Neovim formatters
     stylua
