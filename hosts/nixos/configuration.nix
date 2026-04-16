@@ -1,8 +1,8 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# and in the NixOS manual (accessible by running 'nixos-help').
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -15,7 +15,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Enable experimental features
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -77,7 +81,7 @@
     variant = "";
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.sboynton = {
     isNormalUser = true;
     description = "Sam Boynton";
@@ -92,8 +96,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    (catppuccin-gtk.override {
+      variant = "mocha";
+      accents = [ "lavender" ];
+      size = "standard";
+    })
+    papirus-icon-theme
+    rose-pine-cursor
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -113,6 +122,34 @@
   programs.hyprland = {
     enable = true;
     withUWSM = true;
+  };
+
+  # Greeter (regreet via cage)
+  # To disable if it loops: set programs.regreet.enable = false and rebuild from TTY (Ctrl+Alt+F2)
+  programs.regreet = {
+    enable = true;
+    settings = {
+      GTK = {
+        application_prefer_dark_theme = true;
+        cursor_theme_name = lib.mkForce "BreezeX-RosePine-Linux";
+        font_name = lib.mkForce "Cantarell 16";
+        icon_theme_name = lib.mkForce "Papirus-Light";
+        theme_name = lib.mkForce "catppuccin-mocha-lavender-standard";
+      };
+      commands = {
+        reboot = ["systemctl" "reboot"];
+        poweroff = ["systemctl" "poweroff"];
+      };
+      appearance = {
+        greeting_msg = "Welcome back!";
+      };
+      widget.clock = {
+        format = "%a %H:%M";
+        resolution = "500ms";
+        timezone = "America/Los_Angeles";
+        label_width = 150;
+      };
+    };
   };
 
   programs.zsh.enable = true;
@@ -137,7 +174,7 @@
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # on your system were taken. It's perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).

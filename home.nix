@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, hyprland-plugins, ... }: {
   home.username = "sboynton";
   home.homeDirectory = "/home/sboynton";
   home.stateVersion = "24.11";
@@ -69,7 +69,7 @@
     gopls
     terraform-ls
     yaml-language-server
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     buf
     nil
 
@@ -132,6 +132,12 @@
   home.file.".zshrc".source = ./config/zshrc;
 
   home.file.".zsh/zinit".source = "${pkgs.zinit}/share/zinit";
+
+  # Hyprland plugins - symlink .so files so hyprland.conf can load them
+  home.file.".local/share/hyprload/hyprexpo.so".source =
+    "${hyprland-plugins.packages.${pkgs.system}.hyprexpo}/lib/libhyprexpo.so";
+  home.file.".local/share/hyprload/hyprbars.so".source =
+    "${hyprland-plugins.packages.${pkgs.system}.hyprbars}/lib/libhyprbars.so";
 
   home.pointerCursor = {
     name = "BreezeX-RosePine-Linux";
