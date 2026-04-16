@@ -13,10 +13,16 @@ arch = { packages = [
   "waybar-module-pacman-updates-git",
   "wev",
   "wf-recorder",
-  "wl-clipboard",
+  "uwsm",
   "wlogout",
   "wofi-emoji",
   "ydotool",
+
+  # sway
+  "sway",
+  "swaybg",
+  "swayidle",
+  "swaylock",
 
   # hyprland
   "hyprdynamicmonitors-bin",

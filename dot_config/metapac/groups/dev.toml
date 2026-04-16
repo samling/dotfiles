@@ -17,6 +17,14 @@ arch = { packages = [
   "tree",
   "zoxide",
 
+  # build tools
+  "autoconf",
+  "automake",
+  "bison",
+  "flex",
+  "gcc",
+  "pkgconf",
+
   # development
   "aconfmgr-git",
   "asdf-vm",
@@ -43,17 +51,39 @@ arch = { packages = [
   "uv",
   "visual-studio-code-bin",
 
+  # dev utilities
+  "claude-code-seccomp",
+  "docker-sandbox-bin",
+  "expect",
+  "git-filter-repo",
+  "git-lfs",
+  "mingw-w64-gcc",
+  "pgloader",
+  "postgresql",
+  "pre-commit",
+  "trufflehog",
+  "websocat",
+
   # cloud
+  "ansible",
+  "argocd",
   "aws-cli",
   "azure-cli",
+  "cilium-cli",
   "docker",
   "docker-buildx",
   "helm",
+  "hubble-bin",
   "k9s",
+  "kopia",
+  "kube-apiserver",
   "kubecolor",
   "kubectl",
   "kubescape",
   "kubie",
+  "minikube",
+  "skopeo",
+  "talhelper",
   "terraform",
   "terragrunt",
   "vendir",
@@ -61,4 +91,5 @@ arch = { packages = [
 
   # ai
   "aichat",
+  "llama.cpp-cuda",
 ] }

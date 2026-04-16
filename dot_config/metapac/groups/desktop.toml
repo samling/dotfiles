@@ -2,6 +2,7 @@
 arch = { packages = [
   "appimagelauncher",
   "awww",
+  "aylurs-gtk-shell-git",
   "copyq",
   "discord",
   "evolution",
@@ -9,11 +10,9 @@ arch = { packages = [
   "flatpak",
   "foot",
   "ghostty",
-  "google-chrome",
   "handlr-regex",
   "insync",
   "kitty",
-  "localsend-bin",
   "meld",
   "obsidian",
   "parsec-bin",
@@ -45,5 +44,7 @@ arch = { packages = [
   "gnome-themes-extra",
 
   # gui-framework
+  "gtk3",
+  "gtk4",
   "hyprswitch",
 ] }

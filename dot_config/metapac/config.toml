@@ -5,9 +5,9 @@ hostname_groups_enabled = true
 package_manager = "paru"
 
 [hostname_groups]
-antares = ["common", "dev", "fonts", "desktop", "wayland"]
-apollo = ["common", "dev", "fonts", "desktop", "wayland", "laptop", "asus"]
-endeavor = ["common", "dev", "fonts", "desktop", "wayland"]
-icarus = ["common", "dev", "fonts", "desktop", "wayland", "laptop"]
-xen = ["common", "dev", "fonts", "desktop", "wayland", "laptop", "asus", "gaming"]
-Sam-Desktop = ["common", "dev", "fonts"]
+antares = ["common", "baremetal", "audio", "network", "printing", "xorg", "endeavouros", "media", "virtualization", "dev", "fonts", "gui-essentials", "desktop", "wayland"]
+apollo = ["common", "baremetal", "audio", "network", "printing", "xorg", "endeavouros", "media", "virtualization", "dev", "fonts", "gui-essentials", "desktop", "wayland", "laptop", "asus"]
+endeavor = ["common", "baremetal", "audio", "network", "printing", "xorg", "endeavouros", "media", "virtualization", "dev", "fonts", "gui-essentials", "desktop", "wayland"]
+icarus = ["common", "baremetal", "audio", "network", "printing", "xorg", "endeavouros", "media", "virtualization", "dev", "fonts", "gui-essentials", "desktop", "wayland", "laptop"]
+xen = ["common", "baremetal", "audio", "network", "printing", "xorg", "endeavouros", "media", "virtualization", "dev", "fonts", "gui-essentials", "desktop", "wayland", "laptop", "asus", "gaming"]
+Sam-Desktop = ["common", "dev", "gui-essentials", "virtualization"]
