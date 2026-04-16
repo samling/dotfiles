@@ -1,17 +1,29 @@
-{ pkgs, hyprland-plugins, ... }:
+{ config, pkgs, lib, hyprland-plugins, matugen, ... }:
 let
   teleport-bin = pkgs.callPackage ./pkgs/teleport-bin.nix { };
+  matugen-pkg = matugen.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   home.username = "sboynton";
   home.homeDirectory = "/home/sboynton";
   home.stateVersion = "24.11";
 
   home.packages = (with pkgs; [
+    asusctl
     bat
     bluez
+    delta
     kitty
+    distrobox
+    imagemagick
     wofi
+    watch
+    viddy
+    killall
     vim
+    htop
+    zoxide
+    inotify-tools
+    fd
     vesktop
     obsidian
     gcc
@@ -28,6 +40,8 @@ in {
     google-chrome
     kubectl
     kubecolor
+    krew
+    kubectx
     fuzzel
     ghostty
     rofi
@@ -37,6 +51,7 @@ in {
     nerd-fonts.iosevka
     tailscale
     brightnessctl
+    lm_sensors
     pulseaudio
     playerctl
     udiskie
@@ -64,6 +79,7 @@ in {
     dconf
     glib
     qt6Packages.qt6ct
+    awww
 
     # Neovim LSP servers
     lua-language-server
@@ -84,7 +100,7 @@ in {
     shfmt
     jq
     yq
-  ]) ++ [ teleport-bin ];
+  ]) ++ [ teleport-bin matugen-pkg ];
 
   home.file.".config/tmux/plugins/tpm" = {
     source = builtins.fetchGit {
@@ -125,6 +141,23 @@ in {
 
   home.file.".config/quickshell" = {
     source = ./config/quickshell;
+    recursive = true;
+  };
+
+  home.file.".config/rofi" = {
+    source = ./config/rofi;
+    recursive = true;
+  };
+
+  home.file.".config/chrome-flags.conf".source = ./config/chrome-flags.conf;
+
+  home.file.".config/awww" = {
+    source = ./config/awww;
+    recursive = true;
+  };
+
+  home.file.".config/matugen" = {
+    source = ./config/matugen;
     recursive = true;
   };
 
@@ -177,6 +210,14 @@ in {
     gtk4 = {
       theme = null;
     };
+    theme = {
+      name = "catppuccin-mocha-lavender-standard+default";
+      package = pkgs.catppuccin-gtk.override {
+        variant = "mocha";
+        accents = [ "lavender" ];
+        size = "standard";
+      };
+    };
     iconTheme = {
       name = "Papirus-Light";
       package = pkgs.papirus-icon-theme;
@@ -185,7 +226,7 @@ in {
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      icon-theme = "Papirus-Light";
+      color-scheme = "prefer-dark";
     };
   };
 
@@ -203,7 +244,7 @@ in {
 
   home.file.".config/qt6ct/qt6ct.conf".text = ''
     [Appearance]
-    icon_theme=Papirus-Light
+    icon_theme=Papirus-Dark
     style=Fusion
     custom_palette=true
     color_scheme_path=/home/sboynton/.config/qt6ct/colors/catppuccin-mocha.conf
@@ -217,6 +258,43 @@ in {
     [Troubleshooting]
     force_raster_widgets=1
   '';
+
+  systemd.user.services.awww = {
+    Unit = {
+      Description = "Animated wallpaper daemon";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.awww}/bin/awww-daemon -f xrgb";
+      Environment = [ "RUST_BACKTRACE=1" ];
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  systemd.user.services.awww-change-wallpaper = {
+    Unit = {
+      Description = "Change wallpaper using awww";
+      After = [ "awww.service" ];
+      Requires = [ "awww.service" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "%h/.config/awww/awww_randomize_multi.sh %h/Pictures/Wallpapers";
+    };
+  };
+
+  systemd.user.timers.awww-change-wallpaper = {
+    Unit.Description = "Rotate wallpaper periodically";
+    Timer = {
+      OnUnitActiveSec = "60min";
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
 
   systemd.user.services.quickshell = {
     Unit = {

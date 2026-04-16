@@ -21,7 +21,7 @@ QtObject {
     }
 
     // Primary text color for bar pill indicators
-    readonly property color barTextColor: contrastText(Colors.primary)
+    readonly property color barTextColor: contrastText(Colors.md3.primary)
 
     // User configuration system
     property var userConfig: ({})
@@ -120,26 +120,26 @@ QtObject {
         // Backgrounds — surface hierarchy
         case "background.crust":
         case "background.mantle":
-        case "background.overlay":   return Colors.surface_container_lowest
-        case "background.secondary": return Colors.surface_container
+        case "background.overlay":   return Colors.md3.surface_container_lowest
+        case "background.secondary": return Colors.md3.surface_container
         case "background.primary":
-        case "background.bar":       return Colors.surface_container_high
-        case "background.tertiary":  return Colors.surface_container_highest
-        case "background.surface":   return Colors.surface_bright
+        case "background.bar":       return Colors.md3.surface_container_high
+        case "background.tertiary":  return Colors.md3.surface_container_highest
+        case "background.surface":   return Colors.md3.surface_bright
 
         // Text — 3 tiers
         case "text.primary":
         case "text.light":
-        case "text.white":           return Colors.on_surface
-        case "text.secondary":       return Colors.tertiary
+        case "text.white":           return Colors.md3.on_surface
+        case "text.secondary":       return Colors.md3.tertiary
         case "text.tertiary":
-        case "text.muted":           return Colors.outline
+        case "text.muted":           return Colors.md3.outline
 
         // Borders
         case "border.primary":
-        case "border.accent":        return Colors.primary
+        case "border.accent":        return Colors.md3.primary
         case "border.secondary":
-        case "border.subtle":        return Colors.outline_variant
+        case "border.subtle":        return Colors.md3.outline_variant
 
         // Accent — primary for emphasis, tertiary for secondary emphasis
         case "primary.blue":
@@ -152,24 +152,24 @@ QtObject {
         case "primary.flamingo":
         case "primary.rosewater":
         case "primary.hotpink":
-        case "state.info":           return Colors.primary
+        case "state.info":           return Colors.md3.primary
         case "primary.green":
-        case "state.success":        return Colors.term_green
-        case "primary.teal":         return Colors.tertiary
+        case "state.success":        return Colors.custom.term_green
+        case "primary.teal":         return Colors.md3.tertiary
         case "primary.yellow":
-        case "state.warning":        return Colors.term_yellow
+        case "state.warning":        return Colors.custom.term_yellow
         case "primary.peach":
-        case "primary.orange":       return Colors.term_orange
+        case "primary.orange":       return Colors.custom.term_orange
         case "primary.red":
         case "primary.maroon":
         case "state.error":
-        case "state.critical":       return Colors.error
-        case "state.inactive":       return Colors.outline
+        case "state.critical":       return Colors.md3.error
+        case "state.inactive":       return Colors.md3.outline
 
         // Interactive — surface steps
-        case "interactive.default":  return Colors.surface_container_high
-        case "interactive.hover":    return Colors.surface_container_highest
-        case "interactive.pressed":  return Colors.surface_bright
+        case "interactive.default":  return Colors.md3.surface_container_high
+        case "interactive.hover":    return Colors.md3.surface_container_highest
+        case "interactive.pressed":  return Colors.md3.surface_bright
 
         // Transparency
         case "transparency.track":      return "#50ffffff"
@@ -177,36 +177,36 @@ QtObject {
         case "transparency.shadow":     return "#00000060"
 
         // Semantic aliases
-        case "workspace.active":       return Colors.primary
-        case "workspace.occupied":     return Colors.outline
-        case "workspace.empty":        return Colors.surface
+        case "workspace.active":       return Colors.md3.primary
+        case "workspace.occupied":     return Colors.md3.outline
+        case "workspace.empty":        return Colors.md3.surface
         case "battery.charging":
-        case "battery.high":           return Colors.term_green
-        case "battery.medium":         return Colors.term_yellow
-        case "battery.low":            return Colors.term_orange
-        case "battery.critical":       return Colors.error
-        case "battery.unavailable":    return Colors.outline
-        case "volume.muted":           return Colors.outline
-        case "volume.default":         return Colors.on_surface
-        case "notification.background": return Colors.surface_container
-        case "notification.border":    return Colors.outline_variant
-        case "notification.active":    return Colors.primary
-        case "notification.inactive":  return Colors.surface_container_high
-        case "notification.accent":    return Colors.tertiary
-        case "notification.text":      return Colors.on_surface
-        case "notification.close":     return Colors.error
-        case "notification.closePressed": return Colors.error_container
+        case "battery.high":           return Colors.custom.term_green
+        case "battery.medium":         return Colors.custom.term_yellow
+        case "battery.low":            return Colors.custom.term_orange
+        case "battery.critical":       return Colors.md3.error
+        case "battery.unavailable":    return Colors.md3.outline
+        case "volume.muted":           return Colors.md3.outline
+        case "volume.default":         return Colors.md3.on_surface
+        case "notification.background": return Colors.md3.surface_container
+        case "notification.border":    return Colors.md3.outline_variant
+        case "notification.active":    return Colors.md3.primary
+        case "notification.inactive":  return Colors.md3.surface_container_high
+        case "notification.accent":    return Colors.md3.tertiary
+        case "notification.text":      return Colors.md3.on_surface
+        case "notification.close":     return Colors.md3.error
+        case "notification.closePressed": return Colors.md3.error_container
         case "osd.background":         return "#80000000"
         case "osd.track":              return "#50ffffff"
-        case "osd.fill":               return Colors.on_surface
-        case "tooltip.background":     return Colors.surface_container
-        case "tooltip.border":         return Colors.outline_variant
-        case "tooltip.text":           return Colors.on_surface
+        case "osd.fill":               return Colors.md3.on_surface
+        case "tooltip.background":     return Colors.md3.surface_container
+        case "tooltip.border":         return Colors.md3.outline_variant
+        case "tooltip.text":           return Colors.md3.on_surface
         case "tooltip.shadow":         return "#00000060"
 
         default:
             console.warn("[Config] Unknown color path:", path)
-            return Colors.outline
+            return Colors.md3.outline
         }
     }
 
@@ -252,18 +252,18 @@ QtObject {
     readonly property int groupImplicitWidthPadding: pillHorizontalPadding * 2
 
     // Pill colors — alternating primary/tertiary variants
-    readonly property color pillColor1:  Colors.primary
-    readonly property color pillColor2:  Colors.tertiary
-    readonly property color pillColor3:  Colors.primary_container
-    readonly property color pillColor4:  Colors.tertiary_container
-    readonly property color pillColor5:  Qt.lighter(Colors.primary, 1.05)
-    readonly property color pillColor6:  Qt.lighter(Colors.tertiary, 1.2)
-    readonly property color pillColor7:  Qt.darker(Colors.primary, 1.2)
-    readonly property color pillColor8:  Qt.darker(Colors.tertiary, 1.2)
-    readonly property color pillColor9:  Colors.primary_fixed_dim
-    readonly property color pillColor10: Colors.tertiary_fixed_dim
-    readonly property color pillColor11: Colors.secondary
-    readonly property color pillColor12: Colors.secondary_container
+    readonly property color pillColor1:  Colors.md3.primary
+    readonly property color pillColor2:  Colors.md3.tertiary
+    readonly property color pillColor3:  Colors.md3.primary_container
+    readonly property color pillColor4:  Colors.md3.tertiary_container
+    readonly property color pillColor5:  Qt.lighter(Colors.md3.primary, 1.05)
+    readonly property color pillColor6:  Qt.lighter(Colors.md3.tertiary, 1.2)
+    readonly property color pillColor7:  Qt.darker(Colors.md3.primary, 1.2)
+    readonly property color pillColor8:  Qt.darker(Colors.md3.tertiary, 1.2)
+    readonly property color pillColor9:  Colors.md3.primary_fixed_dim
+    readonly property color pillColor10: Colors.md3.tertiary_fixed_dim
+    readonly property color pillColor11: Colors.md3.secondary
+    readonly property color pillColor12: Colors.md3.secondary_container
 
     // Workspace indicators
     readonly property int workspaceSpacing: 8
@@ -323,7 +323,7 @@ QtObject {
     readonly property string notificationInactiveColor: getColor("notification.inactive")
     readonly property string notificationActiveAccentColor: getColor("notification.accent")
     readonly property string notificationTextPrimaryColor: getColor("notification.text")
-    readonly property string notificationTextSecondaryColor: Colors.tertiary
+    readonly property string notificationTextSecondaryColor: Colors.md3.tertiary
     readonly property string notificationTextTertiaryColor: getColor("text.muted")
     readonly property string notificationCloseColor: getColor("notification.close")
     readonly property string notificationClosePressedColor: getColor("notification.closePressed")

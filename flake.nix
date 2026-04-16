@@ -13,23 +13,31 @@
       inputs.hyprland.follows = "hyprland";
     };
     claude-code.url = "github:sadjow/claude-code-nix";
+    asus-fan.url = "github:ThatOneCalculator/asus-5606-fan-state";
+    matugen.url = "github:/InioX/Matugen";
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, hyprland-plugins, claude-code, ... }:
+  outputs = { nixpkgs, home-manager, hyprland, hyprland-plugins, claude-code, asus-fan, matugen, ... }:
     let
       mkHost = hostname: nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
           ./hosts/${hostname}/configuration.nix
-          { nixpkgs.overlays = [ claude-code.overlays.default ]; }
+          {
+            nixpkgs.hostPlatform = "x86_64-linux";
+            nixpkgs.overlays = [ claude-code.overlays.default ];
+          }
           hyprland.nixosModules.default
+          asus-fan.nixosModules.default
+          {
+            services.asus-fan-state.package = asus-fan.packages.x86_64-linux.default;
+          }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.sboynton = import ./home.nix;
             home-manager.extraSpecialArgs = {
-              inherit hyprland-plugins;
+              inherit hyprland-plugins matugen;
             };
           }
         ];
@@ -38,6 +46,7 @@
     {
       nixosConfigurations = {
         nixos = mkHost "nixos";
+        xen = mkHost "xen";
       };
     };
 }

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # https://www.reddit.com/r/hyprland/comments/136gptg/hyprland_with_waybar_config_reloading/
 
