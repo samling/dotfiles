@@ -31,9 +31,11 @@ elif [ -f "$LOCK_DIR/pid" ] && ! kill -0 "$(cat "$LOCK_DIR/pid" 2>/dev/null)" 2>
 	mkdir "$LOCK_DIR" 2>/dev/null && GENERATE=1
 fi
 
-# Collect image list with stat in batch (much faster than per-file stat)
+# Collect image list with stat in batch (much faster than per-file stat).
+# IMGLIST is owned by the background subshell below (if any) — otherwise we
+# clean it up before exiting. A parent EXIT trap would race with the subshell
+# that reads IMGLIST asynchronously and wipe it mid-read.
 IMGLIST=$(mktemp)
-trap '"rm" -f "$IMGLIST"' EXIT
 
 find "$WALLPAPER_DIR" -not -path '*/.git/*' -type f \( \
 	-iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \
@@ -50,10 +52,13 @@ while IFS='	' read -r img mtime; do
 done < "$IMGLIST"
 
 # Generate missing thumbnails in the background after listing is output
-[ "$GENERATE" -eq 0 ] && exit 0
+if [ "$GENERATE" -eq 0 ]; then
+	"rm" -f "$IMGLIST"
+	exit 0
+fi
 (
 	echo "$BASHPID" > "$LOCK_DIR/pid"
-	trap '"rm" -rf "$LOCK_DIR"' EXIT
+	trap '"rm" -rf "$LOCK_DIR"; "rm" -f "$IMGLIST"' EXIT
 
 	while IFS='	' read -r img mtime; do
 		relpath="${img#"$WALLPAPER_DIR"/}"
