@@ -8,6 +8,7 @@ My ever-growing collection of dotfiles and configs.
 * `direnv`
 * [doppler cli](https://aur.archlinux.org/packages/doppler-cli-bin)
 * [chezmoi](https://github.com/twpayne/chezmoi)
+* [metapac](https://github.com/ripytide/metapac)
 
 ### Doppler CLI tl;dr
 
@@ -15,7 +16,7 @@ My ever-growing collection of dotfiles and configs.
 `doppler setup`
 
 ### Chezmoi tl;dr
-```
+```bash
 chezmoi init <repo>
 chezmoi apply {-n}          # Apply changes to ~ {Dry run}
 chezmoi archive             # Create an archive of the dotfiles
@@ -28,6 +29,13 @@ chezmoi forget ~/.my_file   # Stop managing a file
 chezmoi managed             # View managed files
 ```
 
+### Metapac tl;dr
+```bash
+metapac sync                # Install all missing packages
+metapac clean               # (Interactively) clean removed packages
+metapac unmanaged           # Show explicitly installed packages not required by metapac
+```
+
 ### Installation
 
 1. `doppler login`
@@ -37,6 +45,7 @@ chezmoi managed             # View managed files
 1. `direnv allow`
 1. `chezmoi init`
 1. `chezmoi apply {--refresh-externals}`
+1. (Optional) `metapac sync && metapac clean`
 
 ### Notes
 - See [this page](https://www.cyberciti.biz/faq/linux-unix-macos-fix-error-cant-open-display-null-with-ssh-xclip-command-in-headless/) to configure X11 forwarding over ssh
@@ -47,39 +56,10 @@ This directory contains scripts that are executed by chezmoi during apply operat
 
 ## Package Installation
 
-Packages are installed via scripts in `.chezmoiscripts`. These scripts:
-
-1. Determine the operating system (or which OS it is most like, e.g. EndeavourOS will return `arch`)
-1. Build a list of packages for each category from `.chezmoidata/packages.yaml`
-1. Installs packages using the appropriate package manager (pacman for Arch, apt for Ubuntu, etc.)
-1. Configure tools (nvim, zsh, tmux, etc.)
-1. Download plugins for above tools
-1. Put `.config` files in place
-1. And more!
-
-### Package Categories
-
-- **base**: Essential system packages, user tools, fonts, libraries, etc.
-- **laptop**: System packages that only make sense for laptops
-- **hyprland**: Packages for the Hyprland window manager (installed only if desktop.environment = "hyprland")
-- **sway**: Packages for the Sway window manager (installed only if desktop.environment = "sway")
+Packages are managed by metapac. Groups are defined in `./dot_config/metapac/groups/`.
 
 ### Adding New Packages
 
-To add a new package, update `.chezmoidata/packages.yaml` following the template in `.chezmoitemplates/package_template.yaml`.
+To add a new package, update the corresponding group file, e.g. `./dot_config/metapac/groups/40-cli-tools.toml`.
 
-Example:
-```yaml
-packages:
-  taps:
-    brew:
-      - tap/name
-  base:
-    new-tool:
-      # add package names per package manager tool here
-      # omissions will simply be skipped for that OS
-      pacman: new-tool
-      yay: new-tool
-      apt: new-tool
-      brew: new-tool
-```
+Install it with `metapac sync`. Run `metapac clean` to remove packages no longer declared.
