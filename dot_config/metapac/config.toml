@@ -1,0 +1,6 @@
+enabled_backends = ["arch"]
+
+hostname_groups_enabled = false
+
+[arch]
+package_manager = "paru"

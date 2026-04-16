@@ -1,0 +1,10 @@
+arch = { packages = [
+  "btrfs-assistant",
+  "dialog",
+  "gvfs",
+  "perl-file-mimeinfo",
+  "restic",
+  "snapper",
+  "tumbler",
+  "udiskie",
+] }

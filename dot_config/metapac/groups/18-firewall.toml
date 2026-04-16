@@ -1,0 +1,5 @@
+arch = { packages = [
+  "firewall-applet",
+  "firewalld",
+  "iptables",
+] }

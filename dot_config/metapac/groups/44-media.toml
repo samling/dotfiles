@@ -1,0 +1,16 @@
+arch = { packages = [
+  "chafa",
+  "feh",
+  "ffmpegthumbnailer",
+  "icat",
+  "libgsf",
+  "libopenraw",
+  "mirage",
+  "mpv",
+  "pavucontrol",
+  "poppler-glib",
+  "timg",
+  "vlc",
+  "vlc-plugins-all",
+  "yt-dlp",
+] }

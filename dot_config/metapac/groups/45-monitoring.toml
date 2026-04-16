@@ -1,0 +1,16 @@
+arch = { packages = [
+  "btop",
+  "bustle",
+  "d-spy",
+  "dua-cli",
+  "duf",
+  "fastfetch",
+  "glances",
+  "htop",
+  "imv",
+  "serie",
+  "syshud",
+  "tldr",
+  "viddy",
+  "viu",
+] }

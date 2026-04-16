@@ -1,0 +1,16 @@
+arch = { packages = [
+  "hyprdynamicmonitors-bin",
+  "hypridle",
+  "hyprland",
+  "hyprland-qt-support",
+  "hyprlang",
+  "hyprlock",
+  "hyprpaper",
+  "hyprpicker",
+  "hyprpolkitagent",
+  "hyprshot",
+  "hyprutils",
+  "quickshell",
+  "xdg-desktop-portal-gtk",
+  "xdg-desktop-portal-hyprland",
+] }

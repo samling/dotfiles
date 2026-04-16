@@ -1,0 +1,8 @@
+arch = { packages = [
+  "dosfstools",
+  "dracut",
+  "efibootmgr",
+  "efitools",
+  "grub",
+  "os-prober",
+] }
