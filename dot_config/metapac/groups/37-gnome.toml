@@ -1,5 +1,0 @@
-arch = { packages = [
-  "gnome-keyring",
-  "gnome-power-manager",
-  "gnome-themes-extra",
-] }

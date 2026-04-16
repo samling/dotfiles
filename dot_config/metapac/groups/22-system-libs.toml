@@ -1,4 +1,0 @@
-arch = { packages = [
-  "libconfig",
-  "libinput-tools",
-] }

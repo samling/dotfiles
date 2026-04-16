@@ -1,6 +1,13 @@
 enabled_backends = ["arch"]
-
-hostname_groups_enabled = false
+hostname_groups_enabled = true
 
 [arch]
 package_manager = "paru"
+
+[hostname_groups]
+antares = ["common", "dev", "fonts", "desktop", "wayland"]
+apollo = ["common", "dev", "fonts", "desktop", "wayland", "laptop", "asus"]
+endeavor = ["common", "dev", "fonts", "desktop", "wayland"]
+icarus = ["common", "dev", "fonts", "desktop", "wayland", "laptop"]
+xen = ["common", "dev", "fonts", "desktop", "wayland", "laptop", "asus", "gaming"]
+Sam-Desktop = ["common", "dev", "fonts"]

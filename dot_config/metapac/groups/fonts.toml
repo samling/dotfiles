@@ -1,4 +1,22 @@
+# fonts
 arch = { packages = [
+  "apple-fonts",
+  "cantarell-fonts",
+  "gsfonts",
+  "noto-fonts",
+  "noto-fonts-cjk",
+  "noto-fonts-emoji",
+  "noto-fonts-extra",
+  "ttf-bitstream-vera",
+  "ttf-dejavu",
+  "ttf-fira-sans",
+  "ttf-iosevka",
+  "ttf-iosevka-term",
+  "ttf-liberation",
+  "ttf-ms-fonts",
+  "ttf-opensans",
+
+  # nerd-fonts
   "otf-atkinsonhyperlegiblemono-nerd",
   "otf-aurulent-nerd",
   "otf-codenewroman-nerd",

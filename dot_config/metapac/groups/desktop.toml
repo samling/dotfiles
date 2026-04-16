@@ -1,3 +1,4 @@
+# desktop apps
 arch = { packages = [
   "appimagelauncher",
   "awww",
@@ -27,4 +28,22 @@ arch = { packages = [
   "virtualbox",
   "wezterm",
   "zoom",
+
+  # themes
+  "catppuccin-gtk-theme-mocha",
+  "font-manager",
+  "matugen-bin",
+  "numix-circle-icon-theme-git",
+  "nwg-look",
+  "papirus-icon-theme",
+  "python-pywal16",
+  "qt6ct",
+
+  # gnome
+  "gnome-keyring",
+  "gnome-power-manager",
+  "gnome-themes-extra",
+
+  # gui-framework
+  "hyprswitch",
 ] }

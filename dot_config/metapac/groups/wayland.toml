@@ -1,4 +1,24 @@
+# wayland
 arch = { packages = [
+  "bemoji",
+  "cage",
+  "cliphist",
+  "clipse",
+  "clipse-gui",
+  "fuzzel",
+  "grimblast-git",
+  "rofi",
+  "satty",
+  "waybar",
+  "waybar-module-pacman-updates-git",
+  "wev",
+  "wf-recorder",
+  "wl-clipboard",
+  "wlogout",
+  "wofi-emoji",
+  "ydotool",
+
+  # hyprland
   "hyprdynamicmonitors-bin",
   "hypridle",
   "hyprland",
