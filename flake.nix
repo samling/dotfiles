@@ -17,19 +17,16 @@
     matugen.url = "github:/InioX/Matugen";
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, hyprland-plugins, claude-code, asus-fan, matugen, ... }:
+  outputs = { nixpkgs, home-manager, claude-code, hyprland-plugins, matugen, ... } @ inputs:
     let
       mkHost = hostname: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
         modules = [
           ./hosts/${hostname}/configuration.nix
+          ./modules/nixos
           {
             nixpkgs.hostPlatform = "x86_64-linux";
             nixpkgs.overlays = [ claude-code.overlays.default ];
-          }
-          hyprland.nixosModules.default
-          asus-fan.nixosModules.default
-          {
-            services.asus-fan-state.package = asus-fan.packages.x86_64-linux.default;
           }
           home-manager.nixosModules.home-manager
           {
