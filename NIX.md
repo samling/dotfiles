@@ -18,6 +18,64 @@ Hosts are **switchboards** — they import `./hardware-configuration.nix`, set
 `networking.hostName`, pick a boot loader, and flip `my.*` options. All feature
 logic lives in `modules/`.
 
+## Build flow
+
+```mermaid
+flowchart TB
+    U([just deploy]):::entry
+    U --> R[nixos-rebuild switch<br/>--flake .#HOST]
+    R --> F[[flake.nix<br/>mkHost &quot;HOST&quot;]]:::flake
+
+    F --> HCFG[hosts/HOST/configuration.nix<br/>━━━━━<br/>hostname · boot loader<br/>my.* toggles<br/>stateVersion]:::host
+    F --> N[modules/nixos/default.nix]:::group
+    F --> HM[home-manager NixOS module]:::group
+
+    HM --> HB[home.nix<br/>→ modules/home]:::group
+    HM --> HHM[hosts/HOST/home.nix<br/>━━━━━<br/>my.home.* toggles<br/>hyprland.monitors]:::host
+
+    N --> nc[common.nix<br/>unconditional]:::always
+    N --> nd[desktop.nix<br/>my.desktop]:::gated
+    N --> ndv[dev.nix<br/>my.dev.docker · my.dev.nixLd]:::gated
+    N --> na[hardware/asus.nix<br/>my.hardware.asus]:::gated
+    N --> nk[hardware/keyd.nix<br/>my.hardware.keyd]:::gated
+    N --> nl[security/littlesnitch.nix<br/>services.littlesnitch]:::gated
+    N --> nw[wsl.nix<br/>my.wsl]:::gated
+
+    HB --> hc[cli.nix<br/>unconditional]:::always
+    HB --> hd[desktop.nix<br/>my.home.desktop]:::gated
+    HB --> hh[hyprland.nix<br/>my.home.hyprland]:::gated
+    HB --> hha[hardware/asus.nix<br/>my.home.hardware.asus]:::gated
+
+    HCFG -. sets .-> nd
+    HCFG -. sets .-> ndv
+    HCFG -. sets .-> na
+    HCFG -. sets .-> nk
+    HCFG -. sets .-> nl
+    HCFG -. sets .-> nw
+
+    HHM -. sets .-> hd
+    HHM -. sets .-> hh
+    HHM -. sets .-> hha
+
+    nd -. imports .-> ih[inputs.hyprland]:::input
+    na -. imports .-> ia[inputs.asus-fan]:::input
+    nw -. imports .-> iw[inputs.nixos-wsl]:::input
+
+    classDef entry fill:#cfe,stroke:#393
+    classDef flake fill:#fdc,stroke:#a60
+    classDef host fill:#ffc,stroke:#aa0
+    classDef group fill:#def,stroke:#36a
+    classDef always fill:#efe,stroke:#393
+    classDef gated fill:#fef,stroke:#a3a
+    classDef input fill:#eee,stroke:#888,stroke-dasharray:4 2
+```
+
+**Reading it:**
+- **Yellow host files** are the only things a new machine has to write. They set `my.*` options and nothing else.
+- **Green "unconditional" modules** (`common.nix`, `cli.nix`) load on every host — baseline system + CLI toolbox.
+- **Pink "gated" modules** only activate when a host flips their `my.*` toggle. Dashed arrows show which host file drives which gate.
+- **Dashed grey upstream imports** (hyprland, asus-fan, nixos-wsl) are pulled in by their feature modules, not globally — so WSL doesn't load hyprland's module and xen doesn't load nixos-wsl's.
+
 ## Bootstrap (new machine)
 
 1. Install NixOS (minimal or graphical ISO)
