@@ -92,7 +92,8 @@ unset GOROOT
 unset GOPATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin/
-export PATH=$PATH:$(go env GOPATH)/bin
+# Avoid forking `go env GOPATH`; honor GOPATH override but default to $HOME/go.
+export PATH=$PATH:${GOPATH:-$HOME/go}/bin
 if command -v asdf &> /dev/null; then
   export PATH=$PATH:$(asdf where golang)/bin
 fi
@@ -132,8 +133,9 @@ export PATH=$PATH:/snap/bin
 export KEYTIMEOUT=1
 
 #=== Hyprland
-# Update instance signature to prevent issues with stale signatures from restored tmux sessions
-if command -v hyprctl >/dev/null && command -v jq >/dev/null; then
+# Update instance signature to prevent issues with stale signatures from restored tmux sessions.
+# Skip entirely when not inside a Hyprland session (e.g. WSL) — the hyprctl+jq fork costs ~130ms.
+if [[ -n $HYPRLAND_INSTANCE_SIGNATURE ]] && command -v hyprctl >/dev/null && command -v jq >/dev/null; then
   local _hypr_sig
   _hypr_sig=$(hyprctl instances -j 2>/dev/null | jq -r '.[0].instance' 2>/dev/null)
   [ -n "$_hypr_sig" ] && export HYPRLAND_INSTANCE_SIGNATURE="$_hypr_sig"
