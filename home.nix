@@ -44,6 +44,8 @@ in {
     kubecolor
     krew
     kubectx
+    talhelper
+    talosctl
     fuzzel
     ghostty
     rofi
@@ -82,6 +84,7 @@ in {
     glib
     qt6Packages.qt6ct
     awww
+    unzip
 
     # Neovim LSP servers
     lua-language-server

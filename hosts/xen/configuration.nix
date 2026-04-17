@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/littlesnitch.nix
     ];
 
   # Bootloader.
@@ -26,6 +27,43 @@
 
   networking.hostName = "xen"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  services.littlesnitch.enable = true;
+
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+    openssl
+    curl
+    glib
+    libxml2
+    icu
+    nss
+    nspr
+    fontconfig
+    freetype
+    libx11
+    libxcomposite
+    libxcursor
+    libxdamage
+    libxext
+    libxfixes
+    libxi
+    libxrandr
+    libxrender
+    libxtst
+    alsa-lib
+    cups
+    dbus
+    expat
+    libdrm
+    libxkbcommon
+    mesa
+    pango
+    cairo
+    gtk3
+  ];
 
   services.udisks2.enable = true;
 
