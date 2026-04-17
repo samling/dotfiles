@@ -103,7 +103,15 @@ For when the repo is already set up and you want to provision another machine.
    }
    ```
 
-   For WSL / headless: drop the boot loader and every `my.desktop.*` / `my.hardware.*` toggle.
+   For WSL: drop `imports`, the boot loader, and every `my.desktop.*` / `my.hardware.*` toggle — `nixos-wsl` handles hardware. Use `my.wsl.enable = true;` instead:
+   ```nix
+   { ... }:
+   {
+     networking.hostName = "wsl";
+     my.wsl.enable = true;
+     system.stateVersion = "25.11";
+   }
+   ```
 
 3. Write `hosts/<hostname>/home.nix`:
    ```nix

@@ -6,5 +6,6 @@
     ./hardware/asus.nix
     ./hardware/keyd.nix
     ./security/littlesnitch.nix
+    ./wsl.nix
   ];
 }

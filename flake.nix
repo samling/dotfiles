@@ -15,6 +15,10 @@
     claude-code.url = "github:sadjow/claude-code-nix";
     asus-fan.url = "github:ThatOneCalculator/asus-5606-fan-state";
     matugen.url = "github:/InioX/Matugen";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, claude-code, hyprland-plugins, matugen, ... } @ inputs:
@@ -49,6 +53,7 @@
       nixosConfigurations = {
         nixos = mkHost "nixos";
         xen = mkHost "xen";
+        wsl = mkHost "wsl";
       };
     };
 }
