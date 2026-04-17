@@ -4,8 +4,25 @@ let
   cfg = config.my.home.hyprland;
   matugen-pkg = matugen.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
-  options.my.home.hyprland.enable = lib.mkEnableOption
-    "hyprland wm + shell UI (quickshell, rofi, wallpaper services)";
+  options.my.home.hyprland = {
+    enable = lib.mkEnableOption
+      "hyprland wm + shell UI (quickshell, rofi, wallpaper services)";
+
+    monitors = lib.mkOption {
+      type = lib.types.lines;
+      default = ''
+        monitor=,preferred,auto,1.0
+
+        xwayland {
+          force_zero_scaling = true
+        }
+      '';
+      description = ''
+        Full content written to ~/.config/hypr/hyprland/monitors.conf.
+        Override per-host for hidpi / multi-monitor setups.
+      '';
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     home.packages = (with pkgs; [
@@ -68,6 +85,8 @@ in {
       source = ../../config/hypr;
       recursive = true;
     };
+
+    home.file.".config/hypr/hyprland/monitors.conf".text = cfg.monitors;
 
     home.file.".config/quickshell" = {
       source = ../../config/quickshell;
