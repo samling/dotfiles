@@ -3,11 +3,20 @@
 ## Repo structure
 
 ```
-flake.nix                                    # entry point — inputs, host definitions
-home.nix                                     # home-manager config (packages, dotfiles)
-hosts/<hostname>/configuration.nix           # copied from /etc/nixos/configuration.nix
+flake.nix                                    # entry point — inputs, mkHost, host registrations
+home.nix                                     # shared home-manager base (thin importer)
+hosts/<hostname>/configuration.nix           # per-host NixOS switchboard (my.* toggles)
 hosts/<hostname>/hardware-configuration.nix  # regenerated per machine via nixos-generate-config
+hosts/<hostname>/home.nix                    # per-host home-manager toggles (my.home.*)
+modules/nixos/                               # option-gated NixOS modules
+modules/home/                                # option-gated home-manager modules
+config/                                      # static dotfile sources (hypr, nvim, tmux, zsh, …)
+pkgs/                                        # custom callPackage recipes
 ```
+
+Hosts are **switchboards** — they import `./hardware-configuration.nix`, set
+`networking.hostName`, pick a boot loader, and flip `my.*` options. All feature
+logic lives in `modules/`.
 
 ## Bootstrap (new machine)
 
@@ -27,11 +36,12 @@ hosts/<hostname>/hardware-configuration.nix  # regenerated per machine via nixos
    ```bash
    git clone <repo-url> ~/dotfiles && cd ~/dotfiles
    ```
-7. Copy `configuration.nix` and regenerate `hardware-configuration.nix` directly from the running hardware (never copy the installer's file or a stale checked-in one — UUIDs and kernel modules drift):
+7. Regenerate `hardware-configuration.nix` directly from the running hardware (never copy the installer's file or a stale checked-in one — UUIDs and kernel modules drift), then write a thin `configuration.nix` and `home.nix` switchboard (see [Adding a host](#adding-a-host) for the full templates):
    ```bash
    mkdir -p hosts/<hostname>
-   cp /etc/nixos/configuration.nix hosts/<hostname>/
    sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix
+   $EDITOR hosts/<hostname>/configuration.nix   # my.* toggles + hostname + boot + stateVersion
+   $EDITOR hosts/<hostname>/home.nix            # my.home.* toggles
    ```
 8. If reinstalling over an old install, wipe leftover partitions so systemd GPT auto-discovery doesn't try to mount them and trigger a UUID wait-job:
    ```bash
@@ -59,6 +69,76 @@ hosts/<hostname>/hardware-configuration.nix  # regenerated per machine via nixos
 13. Once it comes up clean, `nixos-rebuild switch` for subsequent changes.
 
 After this, `/etc/nixos/configuration.nix` is no longer used — the flake owns everything.
+
+## Adding a host
+
+For when the repo is already set up and you want to provision another machine.
+
+1. On the target machine, clone the repo and dump its hardware config:
+   ```bash
+   git clone <repo-url> ~/dotfiles && cd ~/dotfiles
+   mkdir -p hosts/<hostname>
+   sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix
+   ```
+
+2. Write `hosts/<hostname>/configuration.nix` as a switchboard. Typical laptop:
+   ```nix
+   { ... }:
+   {
+     imports = [ ./hardware-configuration.nix ];
+
+     networking.hostName = "<hostname>";
+
+     boot.loader.systemd-boot.enable = true;
+     boot.loader.efi.canTouchEfiVariables = true;
+
+     my.desktop.enable = true;
+     my.hardware.keyd.enable = true;
+     # my.hardware.asus.enable = true;      # Asus laptops only
+     # my.dev.docker.enable = true;
+     # my.dev.nixLd.enable = true;
+     # services.littlesnitch.enable = true;
+
+     system.stateVersion = "25.11";
+   }
+   ```
+
+   For WSL / headless: drop the boot loader and every `my.desktop.*` / `my.hardware.*` toggle.
+
+3. Write `hosts/<hostname>/home.nix`:
+   ```nix
+   { ... }:
+   {
+     my.home.desktop.enable = true;
+     my.home.hyprland.enable = true;
+     # my.home.hardware.asus.enable = true;
+
+     my.home.hyprland.monitors = ''
+       monitor=,preferred,auto,1.0
+
+       xwayland {
+         force_zero_scaling = true
+       }
+     '';
+   }
+   ```
+
+   For WSL / headless: leave it as `{ ... }: { }` — `modules/home/cli.nix` loads unconditionally, so you still get every CLI tool.
+
+4. Register the host in `flake.nix`:
+   ```nix
+   nixosConfigurations.<hostname> = mkHost "<hostname>";
+   ```
+
+5. Stage (flakes ignore untracked files), preview, build as `boot`, reboot:
+   ```bash
+   git add -A
+   just diff                                        # shows the nvd closure diff
+   sudo nixos-rebuild boot --flake .#<hostname>
+   sudo reboot
+   ```
+
+   After the first clean boot, `just deploy` (or `sudo nixos-rebuild switch`) handles subsequent changes.
 
 ## Emergency mode / wait-job on a UUID
 
