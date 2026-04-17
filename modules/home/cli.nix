@@ -12,6 +12,7 @@
     btop
     htop
     zoxide
+    gnumake
     inotify-tools
     fd
     imagemagick
@@ -48,6 +49,7 @@
     gitmux
     cmatrix
     claude-code
+    command-snippets
 
     # Kubernetes / cloud
     kubectl
@@ -106,6 +108,11 @@
 
   home.file.".config/lsd" = {
     source = ../../config/lsd;
+    recursive = true;
+  };
+
+  home.file.".config/cs" = {
+    source = ../../config/cs;
     recursive = true;
   };
 
