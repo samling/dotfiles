@@ -27,6 +27,8 @@
   networking.hostName = "xen"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  services.udisks2.enable = true;
+
   virtualisation.docker = {
     enable = true;
   };
@@ -146,7 +148,7 @@
         application_prefer_dark_theme = true;
         cursor_theme_name = lib.mkForce "BreezeX-RosePine-Linux";
         font_name = lib.mkForce "Cantarell 16";
-        icon_theme_name = lib.mkForce "Papirus-Light";
+        icon_theme_name = lib.mkForce "Papirus-Dark";
         theme_name = lib.mkForce "catppuccin-mocha-lavender-standard";
       };
       commands = {

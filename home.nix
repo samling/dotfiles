@@ -13,6 +13,7 @@ in {
     bluez
     delta
     kitty
+    thunar
     distrobox
     imagemagick
     wofi
@@ -20,6 +21,7 @@ in {
     viddy
     killall
     vim
+    btop
     htop
     zoxide
     inotify-tools
@@ -170,6 +172,10 @@ in {
 
   home.file.".zsh/zinit".source = "${pkgs.zinit}/share/zinit";
 
+  services.udiskie = {
+    enable = true;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;
@@ -211,7 +217,7 @@ in {
       theme = null;
     };
     theme = {
-      name = "catppuccin-mocha-lavender-standard+default";
+      name = "catppuccin-mocha-lavender-standard";
       package = pkgs.catppuccin-gtk.override {
         variant = "mocha";
         accents = [ "lavender" ];
@@ -219,7 +225,7 @@ in {
       };
     };
     iconTheme = {
-      name = "Papirus-Light";
+      name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
   };
@@ -242,9 +248,10 @@ in {
     inactive_colors=#ffcdd6f4, #ff1e1e2e, #ff1e1e2e, #ff313244, #ff585b70, #ff6c7086, #ffcdd6f4, #ffcdd6f4, #ffcdd6f4, #ff1e1e2e, #ff313244, #ff585b70, #ff89b4fa, #ff1e1e2e, #ff89b4fa, #fff38ba8, #ff45475a, #ffcdd6f4, #ff181825, #ffcdd6f4, #80cdd6f4
   '';
 
+  # quickshell respects qt6ct settings
   home.file.".config/qt6ct/qt6ct.conf".text = ''
     [Appearance]
-    icon_theme=Papirus-Dark
+    icon_theme=Papirus-Light
     style=Fusion
     custom_palette=true
     color_scheme_path=/home/sboynton/.config/qt6ct/colors/catppuccin-mocha.conf
@@ -308,7 +315,7 @@ in {
       Environment = [
         "XDG_DATA_DIRS=/etc/profiles/per-user/sboynton/share:/run/current-system/sw/share:/usr/share"
         "QT_QPA_PLATFORMTHEME=qt6ct"
-        "QT_ICON_THEME=Papirus-Light"
+        "QT_ICON_THEME=Papirus-Dark"
         "QT_STYLE_OVERRIDE=Fusion"
       ];
       Restart = "always";

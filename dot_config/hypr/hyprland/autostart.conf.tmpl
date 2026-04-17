@@ -36,8 +36,9 @@ exec-once = QT_QPA_PLATFORM=xcb uwsm app -- copyq --start-server
 ###
 # NOTE: Handled by nwg-look instead
 #env = QT_QPA_PLATFORMTHEME,qt6ct   # for Qt apps
-exec-once = gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard+default"   # for GTK3 apps # TODO Exec once?
-exec-once = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps # TODO exec once?
+# Handled declaratively by home-manager (gtk module + dconf.settings)
+#exec-once = gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-lavender-standard"   # for GTK3 apps
+#exec-once = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps
 exec-once = gsettings set org.gnome.desktop.interface cursor-theme BreezeX-RosePine
 exec-once = gsettings set org.gnome.desktop.interface cursor-size 24 
 

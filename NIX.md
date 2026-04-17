@@ -17,6 +17,10 @@ hosts/<hostname>/hardware-configuration.nix  # regenerated per machine via nixos
    ```nix
    nix.settings.experimental-features = [ "nix-command" "flakes" ];
    ```
+4. Set hostname in `/etc/nixos/configuration.nix`:
+    ```nix
+    networking.hostName = "xen";
+    ```
 4. Rebuild: `sudo nixos-rebuild switch`
 5. Get git temporarily: `nix-shell -p git`
 6. Clone this repo:
