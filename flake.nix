@@ -32,7 +32,12 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.sboynton = import ./home.nix;
+            home-manager.users.sboynton = {
+              imports = [
+                ./home.nix
+                ./hosts/${hostname}/home.nix
+              ];
+            };
             home-manager.extraSpecialArgs = {
               inherit hyprland-plugins matugen;
             };
