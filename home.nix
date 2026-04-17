@@ -17,6 +17,7 @@ in {
     distrobox
     imagemagick
     wofi
+    wget
     watch
     viddy
     killall
@@ -37,9 +38,13 @@ in {
     fnm
     duf
     lsd
+    eza
+    file
     fzf
     go
-    google-chrome
+    (google-chrome.override {
+      commandLineArgs = "--disable-pinch";
+    })
     kubectl
     kubecolor
     krew
@@ -85,6 +90,15 @@ in {
     qt6Packages.qt6ct
     awww
     unzip
+    hyprlock
+    hypridle
+    python3
+    mpv
+    yt-dlp
+    chafa
+    ffmpeg
+    nvd
+    wtype
 
     # Neovim LSP servers
     lua-language-server
@@ -153,8 +167,6 @@ in {
     source = ./config/rofi;
     recursive = true;
   };
-
-  home.file.".config/chrome-flags.conf".source = ./config/chrome-flags.conf;
 
   home.file.".config/awww" = {
     source = ./config/awww;
