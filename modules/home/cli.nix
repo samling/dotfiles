@@ -104,6 +104,11 @@ in {
     recursive = true;
   };
 
+  home.file.".config/lsd" = {
+    source = ../../config/lsd;
+    recursive = true;
+  };
+
   home.file.".zsh" = {
     source = ../../config/zsh;
     recursive = true;
