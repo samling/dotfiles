@@ -53,7 +53,7 @@
       nixosConfigurations = {
         nixos = mkHost "nixos";
         xen = mkHost "xen";
-        wsl = mkHost "wsl";
+        "Sam-Desktop" = mkHost "Sam-Desktop";
       };
     };
 }

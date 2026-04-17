@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  networking.hostName = "wsl";
+  networking.hostName = "Sam-Desktop";
 
   my.wsl.enable = true;
 
