@@ -1,0 +1,7 @@
+# virtualization (libvirt + qemu)
+arch = { packages = [
+  "libvirt",
+  "qemu-base",
+  "qemu-system-x86",
+  "virt-viewer",
+] }

@@ -166,7 +166,7 @@ Singleton {
         const connectProcess = Qt.createQmlObject(`
             import Quickshell.Io
             Process {
-                command: ["tailscale", "up"]
+                command: ["tailscale", "up", "--accept-routes"]
                 onExited: {
                     if (exitCode === 0) {
                         console.log("[Tailscale] Connected successfully")

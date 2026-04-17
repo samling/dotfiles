@@ -1,0 +1,7 @@
+arch = { packages = [
+  "asus-5606-fan-state-git",
+  "asus-5606-firmware-check-git",
+  "asusctl",
+  "asusctltray-git",
+  "rog-control-center",
+] }

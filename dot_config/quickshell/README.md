@@ -2,12 +2,13 @@
 
 ## Permissions
 
-Controlling the fan state and governor requires passwordless sudo:
+Controlling the fan state, governor, and mute LED requires passwordless sudo:
 
 ```bash
 # /etc/sudoers.d/quickshell
 sboynton ALL=(ALL) NOPASSWD: /usr/bin/fan_state
 sboynton ALL=(ALL) NOPASSWD: /usr/bin/cpupower
+sboynton ALL=(ALL) NOPASSWD: /usr/bin/sh -c echo [01] > /sys/class/leds/platform\:\:micmute/brightness
 ```
 
 ## Files

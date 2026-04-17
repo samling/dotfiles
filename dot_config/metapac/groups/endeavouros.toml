@@ -1,0 +1,17 @@
+# endeavouros-specific packages
+arch = { packages = [
+  "endeavouros-branding",
+  "endeavouros-keyring",
+  "endeavouros-mirrorlist",
+  "eos-apps-info",
+  "eos-dracut",
+  "eos-hooks",
+  "eos-log-tool",
+  "eos-packagelist",
+  "eos-quickstart",
+  "eos-rankmirrors",
+  "rebuild-detector",
+  "reflector",
+  "reflector-simple",
+  "welcome",
+] }

@@ -2,6 +2,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Pipewire
 
 Singleton {
@@ -31,4 +32,17 @@ Singleton {
     function setDefaultSource(node) {
         Pipewire.preferredDefaultAudioSource = node
     }
+
+    // Sync mic mute LED with audio sink mute state
+    Process {
+        id: muteLedProcess
+    }
+
+    function syncMuteLed() {
+        const val = mutedState ? "1" : "0";
+        muteLedProcess.exec(["sudo", "sh", "-c", "echo " + val + " > /sys/class/leds/platform::micmute/brightness"]);
+    }
+
+    onMutedStateChanged: syncMuteLed()
+    onAvailableChanged: if (available) syncMuteLed()
 }

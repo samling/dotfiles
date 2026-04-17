@@ -1,8 +1,0 @@
-{{- $dynamicTheme := false -}}
-{{- $hostname := .chezmoi.fqdnHostname -}}
-{{- $hostData := index .host $hostname -}}
-
-{{- if and $hostData (hasKey $hostData "dynamic_theme") -}}
-    {{- $dynamicTheme = $hostData.dynamic_theme -}}
-{{- end -}}
-{{- $dynamicTheme -}}

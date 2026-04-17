@@ -85,7 +85,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: root.panelOpen ? 0 : -width - 20
             width: parent.width
-            color: Config.getColor("background.crust")
+            color: Config.getColor("background.secondary")
             border.width: 1
             border.color: Config.getColor("border.subtle")
             radius: 12
@@ -780,6 +780,7 @@ Item {
                             ToggleButton {
                                 width: (parent.width - parent.spacing) / 2
                                 icon: "\uf294"
+                                iconSize: Config.fontSizeHeader
                                 label: "Bluetooth"
                                 status: {
                                     if (!BluetoothService.available) return "Unavailable"
@@ -818,7 +819,7 @@ Item {
                                     width: parent.width * (Brightness.brightnessPercent / 100)
                                     height: parent.height
                                     radius: parent.radius
-                                    color: Config.getColor("primary.yellow")
+                                    color: Config.getColor("primary.mauve")
 
                                     Behavior on width { NumberAnimation { duration: 100 } }
                                 }
@@ -859,7 +860,7 @@ Item {
                                 text: Volume.mutedState ? "󰖁" : (Volume.percentage > 0.5 ? "󰕾" : "󰖀")
                                 font.pixelSize: Config.fontSizeSmall
                                 font.family: Config.fontFamilyIcon
-                                color: Volume.mutedState ? Config.getColor("state.error") : Config.getColor("text.muted")
+                                color: Config.getColor("text.muted")
 
                                 MouseArea {
                                     anchors.fill: parent
@@ -882,7 +883,7 @@ Item {
                                     height: parent.height
                                     radius: parent.radius
                                     color: Volume.mutedState
-                                        ? Config.getColor("text.muted")
+                                        ? Config.getColor("background.tertiary")
                                         : Config.getColor("primary.mauve")
 
                                     Behavior on width { NumberAnimation { duration: 100 } }
@@ -1197,8 +1198,8 @@ Item {
                                         color: isActive
                                             ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.2)
                                             : profileMouse.containsMouse
-                                                ? Config.getColor("background.tertiary")
-                                                : Config.getColor("background.secondary")
+                                                ? Config.getColor("background.surface")
+                                                : Config.getColor("background.tertiary")
                                         border.width: isActive ? 1 : 0
                                         border.color: Config.getColor("primary.mauve")
 
@@ -1269,8 +1270,8 @@ Item {
                                         color: isActive
                                             ? Qt.rgba(Config.getColor("primary.mauve").r, Config.getColor("primary.mauve").g, Config.getColor("primary.mauve").b, 0.2)
                                             : fanMouse.containsMouse
-                                                ? Config.getColor("background.tertiary")
-                                                : Config.getColor("background.secondary")
+                                                ? Config.getColor("background.surface")
+                                                : Config.getColor("background.tertiary")
                                         border.width: isActive ? 1 : 0
                                         border.color: Config.getColor("primary.mauve")
 
@@ -1418,7 +1419,7 @@ Item {
                                 text: "\uf0a0"
                                 font.pixelSize: Config.fontSizeMedium
                                 font.family: Config.fontFamilyIcon
-                                color: Config.getColor("primary.teal")
+                                color: Config.getColor("primary.mauve")
                             }
 
                             Text {
@@ -1506,11 +1507,11 @@ Item {
                                     height: parent.height
                                     radius: 4
                                     color: {
-                                        if (!root.diskIndicator) return Config.getColor("primary.teal")
+                                        if (!root.diskIndicator) return Config.getColor("primary.mauve")
                                         const usage = root.diskIndicator.diskUsage
                                         if (usage > 0.9) return Config.getColor("state.error")
                                         if (usage > 0.75) return Config.getColor("state.warning")
-                                        return Config.getColor("primary.teal")
+                                        return Config.getColor("primary.mauve")
                                     }
 
                                     Behavior on width {

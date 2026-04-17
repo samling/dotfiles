@@ -245,6 +245,9 @@ packages:
       pacman: kubectl
       brew: kubectl
       apt: kubectl
+    kubecolor:
+      aur: kubecolor
+      brew: kubecolor
     kubie:
       pacman: kubie
     k9s:
@@ -315,15 +318,21 @@ packages:
     pavucontrol:
       pacman: pavucontrol
       apt: pavucontrol
+    chafa:
+      pacman: chafa
     feh:
       pacman: feh
       apt: feh
     mpv:
       pacman: mpv
+    timg:
+      aur: timg
     vlc:
       pacman: vlc
     vlc-plugins-all:
       pacman: vlc-plugins-all
+    yt-dlp:
+      pacman: yt-dlp
 
   # Desktop applications
   desktop:
@@ -352,6 +361,8 @@ packages:
     insync:
       aur: insync
       apt: insync
+    kitty:
+      pacman: kitty
     localsend-bin:
       aur: localsend-bin
       brew: localsend
@@ -678,7 +689,7 @@ packages:
   ############
   hyprland:
     hyprdynamicmonitors:
-      aur: hyprdynamicmonitors
+      aur: hyprdynamicmonitors-bin
     hyprland:
       pacman: hyprland
     hypridle:

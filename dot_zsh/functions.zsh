@@ -1,14 +1,22 @@
 function reload-zsh-configuration() {
-  #cd $HOME && source .zshrc && cd - && echo ".zshrc reloaded"
-  exec zsh && echo ".zshrc reloaded"
+  local scope="${1:-here}" # "here" (default) or "all"
 
-  # If we're in hyprland, update the instance signature to prevent
-  # issues with stale signatures from restored tmux sessions
-  if command -v -p hyprctl >/dev/null && command -v -p jq >/dev/null; then
-    # echo "Updating HYPRLAND_INSTANCE_SIGNATURE"
-    export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl instances -j | jq -r '.[0].instance')
+  if [ -n "$TMUX" ] && [ "$scope" = "all" ]; then
+    local current_pane count=0
+    current_pane=$(tmux display-message -p '#{session_name}:#{window_index}.#{pane_index}')
+    tmux list-panes -a -F '#{pane_current_command} #{session_name}:#{window_index}.#{pane_index}' \
+      | awk '/^zsh /{print $2}' \
+      | while read pane; do
+          [ "$pane" = "$current_pane" ] && continue
+          tmux send-keys -t "$pane" C-c
+          tmux send-keys -t "$pane" 'exec zsh' Enter
+          count=$((count + 1))
+        done
+    echo "Reloading zsh in $count other pane(s)..."
   fi
 
+  echo "Reloading current shell..."
+  exec zsh
 }
 
 # unlock bitwarden vault
@@ -23,7 +31,7 @@ function git-status {
 
 # show recent git branches in fzf and check out selection
 function git-recent {
-  RECENT_BRANCHES=$(for i in {1..10}; do echo -n "$i. "; git rev-parse --symbolic-full-name @{-$i} 2> /dev/null; done | fzf --tmux)
+  RECENT_BRANCHES=$(for i in {1..10}; do echo -n "$i. "; git rev-parse --symbolic-full-name @{-$i} 2> /dev/null; done | fzf --popup)
   PREV_BRANCH=$(echo $RECENT_BRANCHES | cut -d'.' -f2 | sed 's/refs\/heads\///g' | tr -d ' ')
   git checkout $PREV_BRANCH
 }
@@ -271,3 +279,22 @@ function reset_terminal_colors() {
 
   printf '\033]104\033\\\033]110\033\\\033]111\033\\\033]112\033\\'
 }
+
+# https://junegunn.github.io/fzf/tips/ripgrep-integration/
+function fzg() ( # fuzzygrep
+  RELOAD='reload:rg --column --color=always --smart-case {q} || :'
+  OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+            vim {1} +{2}     # No selection. Open the current line in Vim.
+          else
+            vim +cw -q {+f}  # Build quickfix list for the selected items.
+          fi'
+  fzf --disabled --ansi --multi \
+      --bind "start:$RELOAD" --bind "change:$RELOAD" \
+      --bind "enter:become:$OPENER" \
+      --bind "ctrl-o:execute:$OPENER" \
+      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+      --delimiter : \
+      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+      --preview-window '~4,+{2}+4/3,<80(up)' \
+      --query "$*"
+)

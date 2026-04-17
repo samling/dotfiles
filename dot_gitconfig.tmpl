@@ -10,21 +10,13 @@
 [interactive]
         diffFilter = delta --color-only
 
-{{- if eq (includeTemplate "dynamicTheme" .) "true" }}
-[include]
-        path = ~/.config/delta/themes/pywal.gitconfig
 
-[delta]
-    navigate = true
-    features = pywal unobtrusive-line-numbers decorations
-{{- else }}
 [include]
         path = ~/.config/delta/themes/catppuccin/catppuccin.gitconfig
 
 [delta]
     navigate = true
     features = catppuccin-mocha unobtrusive-line-numbers decorations
-{{- end }}
     whitespace-error-style = 22 reverse
 
 [delta "unobtrusive-line-numbers"]

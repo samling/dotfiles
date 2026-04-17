@@ -23,7 +23,8 @@ MouseArea {
     Column {
         id: row
         anchors.centerIn: parent
-        spacing: -3
+        anchors.verticalCenterOffset: 1
+        spacing: -5
 
         Row {
             anchors.right: parent.right

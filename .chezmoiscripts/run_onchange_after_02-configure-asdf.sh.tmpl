@@ -4,20 +4,9 @@
 
 echo "Configuring asdf for {{ $osID }}..."
 
-# Check if asdf is already installed
 if ! command -v asdf &> /dev/null; then
-    echo "Installing asdf..."
-    paru -Syy --noconfirm asdf-vm
-else
-    echo "asdf is already installed"
-fi
-
-# Verify asdf is now available
-if ! command -v asdf &> /dev/null; then
-    echo "Error: asdf installation failed or not found in PATH"
-    echo "Trying alternative paths..."
-else
-    ASDF_PATH="asdf"
+    echo "asdf is not installed yet — skipping. Re-run chezmoi apply after installing asdf."
+    exit 0
 fi
 
 # Enable plugins
@@ -33,20 +22,20 @@ LATEST_GO=$(asdf list all golang | grep -v rc | sed '/^[[:space:]]*$/d' | tail -
 
 echo "Installing Go ${LATEST_GO_1_24}"
 echo "========================="
-$ASDF_PATH install golang ${LATEST_GO_1_24}
+asdf install golang ${LATEST_GO_1_24}
 echo ""
 
 echo "Installing Go ${LATEST_GO_1_25}"
 echo "========================="
-$ASDF_PATH install golang ${LATEST_GO_1_25}
+asdf install golang ${LATEST_GO_1_25}
 echo ""
 
 echo "Installing Go ${LATEST_GO}"
 echo "========================="
-$ASDF_PATH install golang ${LATEST_GO}
+asdf install golang ${LATEST_GO}
 echo ""
 
 # Use latest
 echo "Setting latest Go version ${LATEST_GO} as global default"
-$ASDF_PATH set --home golang latest
+asdf set --home golang latest
 echo ""

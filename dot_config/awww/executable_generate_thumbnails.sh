@@ -1,10 +1,10 @@
 #!/bin/sh
-# Generates cached thumbnails for wallpaper images.
-# Only regenerates when the source image is newer than the cached thumbnail.
+# Lists wallpaper images and generates missing thumbnails in the background.
 #
 # Usage: generate_thumbnails.sh WALLPAPER_DIR [CACHE_DIR] [SIZE]
 #
 # Outputs one line per image: full_path<TAB>thumbnail_path<TAB>mtime_epoch
+# Thumbnail generation happens after listing is complete (non-blocking for caller).
 # Requires: magick (ImageMagick 7)
 
 WALLPAPER_DIR="$1"
@@ -18,29 +18,45 @@ fi
 
 mkdir -p "$CACHE_DIR"
 
-VALID_THUMBS=$(mktemp)
-trap '"rm" -f "$VALID_THUMBS"' EXIT
+# Collect image list with stat in batch (much faster than per-file stat)
+IMGLIST=$(mktemp)
+trap '"rm" -f "$IMGLIST"' EXIT
 
-find "$WALLPAPER_DIR" -maxdepth 1 -type f \( \
+find "$WALLPAPER_DIR" -not -path '*/.git/*' -type f \( \
 	-iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \
 	-o -iname '*.webp' -o -iname '*.bmp' -o -iname '*.gif' \
-\) | sort | while IFS= read -r img; do
-	basename=$(basename "$img")
-	thumb="$CACHE_DIR/${basename%.*}.jpg"
+\) -printf '%p\t%T@\n' > "$IMGLIST"
 
-	# Regenerate only if source is newer or thumbnail doesn't exist
-	if [ ! -f "$thumb" ] || [ "$img" -nt "$thumb" ]; then
-		magick "$img" -thumbnail "$SIZE^" -gravity center -extent "$SIZE" -quality 80 "$thumb" 2>/dev/null
-	fi
+# Output listing immediately (fast — no magick calls)
+while IFS='	' read -r img mtime; do
+	relpath="${img#"$WALLPAPER_DIR"/}"
+	thumbname=$(echo "${relpath%.*}" | tr '/' '_')
+	thumb="$CACHE_DIR/${thumbname}.jpg"
+	printf '%s\t%s\t%s\n' "$img" "$thumb" "${mtime%.*}"
+done < "$IMGLIST"
 
-	echo "$thumb" >> "$VALID_THUMBS"
-	mtime=$(stat -c '%Y' "$img" 2>/dev/null || stat -f '%m' "$img" 2>/dev/null || echo 0)
-	printf '%s\t%s\t%s\n' "$img" "$thumb" "$mtime"
-done
+# Generate missing thumbnails in the background after listing is output
+(
+	while IFS='	' read -r img mtime; do
+		relpath="${img#"$WALLPAPER_DIR"/}"
+		thumbname=$(echo "${relpath%.*}" | tr '/' '_')
+		thumb="$CACHE_DIR/${thumbname}.jpg"
+		if [ ! -f "$thumb" ] || [ "$img" -nt "$thumb" ]; then
+			magick "$img" -thumbnail "$SIZE^" -gravity center -extent "$SIZE" -quality 80 "$thumb" 2>/dev/null
+		fi
+	done < "$IMGLIST"
 
-# Remove stale thumbnails that no longer correspond to a source image
-find "$CACHE_DIR" -maxdepth 1 -name '*.jpg' -type f | while IFS= read -r cached; do
-	if ! grep -qxF "$cached" "$VALID_THUMBS"; then
-		"rm" -f "$cached"
-	fi
-done
+	# Clean stale thumbnails
+	VALID=$(mktemp)
+	while IFS='	' read -r img _; do
+		relpath="${img#"$WALLPAPER_DIR"/}"
+		echo "$CACHE_DIR/$(echo "${relpath%.*}" | tr '/' '_').jpg"
+	done < "$IMGLIST" > "$VALID"
+	find "$CACHE_DIR" -maxdepth 1 -name '*.jpg' -type f | while IFS= read -r cached; do
+		if ! grep -qxF "$cached" "$VALID"; then
+			"rm" -f "$cached"
+		fi
+	done
+	"rm" -f "$VALID"
+) < /dev/null > /dev/null 2>&1 &
+disown

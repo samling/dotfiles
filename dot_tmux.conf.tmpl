@@ -46,6 +46,9 @@ set -as terminal-features ',rxvt-unicode-256color:clipboard'
 set -as terminal-features ',screen-256color:clipboard'
 set -as terminal-features ',tmux-256color:clipboard'
 
+# Allow tmux to pass focus events from the terminal to applications
+set -g focus-events on
+
 # Start windows and panes at 1 instead of 0
 set -g base-index 1
 set -g pane-base-index 1
@@ -65,6 +68,16 @@ set -g prefix C-a
 # Allow sending C-a into a tmux pane by pressing <leader> followed by 'a'
 unbind a
 bind a send-prefix
+
+# Allow sending C-p/C-n into a tmux pane by pressing <leader> followed by 'p' / 'n'
+bind C-p send-keys C-p
+bind C-n send-keys C-n
+bind p previous-window
+bind n next-window
+
+# Allow sending C-l/C-r into a tmux pane by pressing <leader> followed by 'l' / 'r'
+bind C-l send-keys C-l
+bind C-r send-keys C-r
 
 # Use vim keybindings in copy mode
 set -g mode-keys vi
@@ -112,7 +125,7 @@ set-environment -g 'IGNOREEOF' 10000
 # Set pane background to default
 set -g allow-passthrough on
 set-hook -g pane-focus-in 'select-pane -P bg=default,fg=default'
-set-hook -g pane-focus-out 'select-pane -P bg=colour0,fg=colour10'
+set-hook -g pane-focus-out 'select-pane -P bg=default,fg=default'
 
 ##################
 ### STATUS BAR ###
@@ -335,7 +348,8 @@ bind ? run "comm -23 <(tmux list-keys | sort) <(tmux -L test -f /dev/null list-k
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'fcsonline/tmux-thumbs'
+set -g @plugin 'roosta/tmux-fuzzback'
+# set -g @plugin 'fcsonline/tmux-thumbs'
 
 # Plugin Options
 set -g @net_speed_interfaces "en0"
@@ -350,6 +364,8 @@ set -g @resurrect-capture-pane-contents 'on'
 set -g @resurrect-dir '~/.config/tmux-continuum-sessions'
 
 set -g @continuum-restore 'off'
+
+set -g @fuzzback-popup 1
 
 #run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
 

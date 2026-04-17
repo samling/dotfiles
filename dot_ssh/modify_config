@@ -1,0 +1,10 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $managed := doppler "SSH_CONFIG" "homelab" "dev_personal" -}}
+{{- $begin := "# BEGIN CHEZMOI MANAGED" -}}
+{{- $end := "# END CHEZMOI MANAGED" -}}
+
+{{ $begin }}
+{{ $managed }}
+{{ $end }}
+
+{{ .chezmoi.stdin | replaceAllRegex (printf "(?s)%s.*?%s\\n*" (regexQuoteMeta $begin) (regexQuoteMeta $end)) "" -}}

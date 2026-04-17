@@ -4,6 +4,11 @@
 
 {{- if eq $osID "arch" }}
 
+if ! pgrep -x Hyprland >/dev/null; then
+  echo "Hyprland is not running; skipping plugin setup."
+  exit 0
+fi
+
 hyprpm add https://github.com/hyprwm/hyprland-plugins
 hyprpm enable hyprbars
 

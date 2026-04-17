@@ -201,12 +201,10 @@ Singleton {
                 newNotifObject.popupDuration = duration;
                 newNotifObject.popupRemaining = duration;
                 newNotifObject.popupStartTime = Date.now();
-                if (notification.expireTimeout != 0) {
-                    newNotifObject.timer = notifTimerComponent.createObject(root, {
-                        "notificationId": newNotifObject.notificationId,
-                        "interval": duration,
-                    });
-                }
+                newNotifObject.timer = notifTimerComponent.createObject(root, {
+                    "notificationId": newNotifObject.notificationId,
+                    "interval": duration,
+                });
             }
 
             root.notify(newNotifObject);
