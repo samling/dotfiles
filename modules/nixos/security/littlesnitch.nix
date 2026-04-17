@@ -8,7 +8,7 @@ in {
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.callPackage ../../../pkgs/littlesnitch.nix { };
+      default = pkgs.littlesnitch;
       description = "The Little Snitch package to use.";
     };
 

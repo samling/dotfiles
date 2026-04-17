@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
-let
-  teleport-bin = pkgs.callPackage ../../pkgs/teleport-bin.nix { };
-in {
-  home.packages = (with pkgs; [
+{
+  home.packages = with pkgs; [
     bat
     delta
     wget
@@ -36,6 +34,8 @@ in {
     ffmpeg
     nvd
     tailscale
+    toofan
+    littlesnitch
 
     # Shell / multiplexer / editor
     zinit
@@ -75,7 +75,7 @@ in {
     shfmt
     jq
     yq
-  ]) ++ [ teleport-bin ];
+  ];
 
   home.file.".config/tmux/plugins/tpm" = {
     source = builtins.fetchGit {

@@ -30,7 +30,10 @@
           ./modules/nixos
           {
             nixpkgs.hostPlatform = "x86_64-linux";
-            nixpkgs.overlays = [ claude-code.overlays.default ];
+            nixpkgs.overlays = [
+              claude-code.overlays.default
+              (final: prev: import ./pkgs { inherit final prev; })
+            ];
           }
           home-manager.nixosModules.home-manager
           {
