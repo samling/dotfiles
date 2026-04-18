@@ -35,8 +35,11 @@
     ffmpeg
     nvd
     tailscale
+    teleport-bin
     toofan
     littlesnitch
+    vault-bin
+    pre-commit
 
     # Shell / multiplexer / editor
     zinit
@@ -124,4 +127,9 @@
   home.file.".zshrc".source = ../../config/zshrc;
 
   home.file.".zsh/zinit".source = "${pkgs.zinit}/share/zinit";
+
+  # Opt out of Teleport client auto-updates. CAU downloads a generic-Linux
+  # tsh into ~/.tsh/bin that can't run on NixOS (no dynamic loader);
+  # keep the autoPatchelf'd teleport-bin from PATH instead.
+  home.sessionVariables.TELEPORT_TOOLS_VERSION = "off";
 }
