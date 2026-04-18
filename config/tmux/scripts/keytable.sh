@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # case "$1" in
 #   "root")   echo "#[fg=colour4,bg=default]#[fg=#000000,italics,bg=colour4]NORMAL#[fg=colour4,bg=default,nobold,noitalics]" ;;
