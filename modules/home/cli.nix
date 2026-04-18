@@ -8,6 +8,10 @@
     watch
     viddy
     killall
+    read-edid
+    v4l-utils
+    libnotify
+    glib
     vim
     btop
     htop

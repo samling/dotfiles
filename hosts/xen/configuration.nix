@@ -8,6 +8,8 @@
   networking.hostName = "xen";
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.consoleMode = "0";
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
   my.desktop.enable = true;

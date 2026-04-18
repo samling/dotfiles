@@ -38,14 +38,12 @@ in {
       hypridle
       hyprshell
       hyprlock
+      hyprshell
 
       # Clipboard / input
       copyq
       clipse
       wtype
-
-      # Notifications
-      dunst
 
       # Wallpaper daemon
       awww
