@@ -1,12 +1,5 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.my.hardware.keyd;
-in {
-  options.my.hardware.keyd.enable = lib.mkEnableOption
-    "keyd with capslock→ctrl/esc remap and libinput internal-keyboard quirk";
-
-  config = lib.mkIf cfg.enable {
+{
+  flake.modules.nixos.keyd = {
     services.keyd = {
       enable = true;
       keyboards.default = {

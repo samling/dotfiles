@@ -1,14 +1,8 @@
-{ config, lib, inputs, pkgs, ... }:
+{ inputs, ... }:
+{
+  flake.modules.nixos.asus = { pkgs, ... }: {
+    imports = [ inputs.asus-fan.nixosModules.default ];
 
-let
-  cfg = config.my.hardware.asus;
-in {
-  imports = [ inputs.asus-fan.nixosModules.default ];
-
-  options.my.hardware.asus.enable = lib.mkEnableOption
-    "Asus laptop hardware (asusd daemon + fan state helper + sudo rule)";
-
-  config = lib.mkIf cfg.enable {
     services.asus-fan-state = {
       enable = true;
       package = inputs.asus-fan.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -37,5 +31,12 @@ in {
       ];
     };
     boot.kernelParams = [ "drm.edid_firmware=eDP-1:edid/edid_mclk_fix.bin" ];
+  };
+
+  flake.modules.homeManager.asus = { pkgs, ... }: {
+    home.packages = [
+      pkgs.asusctl
+      pkgs.amdgpu_top
+    ];
   };
 }

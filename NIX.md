@@ -1,22 +1,70 @@
 # NixOS Setup
 
+This config uses the [dendritic pattern](https://renatogarcia.blog.br/posts/a-simple-nix-dendritic-config.html):
+every `.nix` file under `modules/` declares one or more reusable modules via
+`flake.modules.<class>.<name>`, and `flake.nix` composes them into hosts.
+
 ## Repo structure
 
 ```
-flake.nix                                    # entry point — inputs, mkHost, host registrations
-home.nix                                     # shared home-manager base (thin importer)
-hosts/<hostname>/configuration.nix           # per-host NixOS switchboard (my.* toggles)
-hosts/<hostname>/hardware-configuration.nix  # regenerated per machine via nixos-generate-config
-hosts/<hostname>/home.nix                    # per-host home-manager toggles (my.home.*)
-modules/nixos/                               # option-gated NixOS modules
-modules/home/                                # option-gated home-manager modules
+flake.nix                                    # entry point — inputs, host composition
+modules/base/                                # reusable feature modules
+  system.nix                                 #   flake.modules.nixos.base (OS baseline)
+  cli.nix                                    #   flake.modules.homeManager.cli
+  desktop.nix                                #   nixos.desktop + homeManager.desktop
+  dev.nix                                    #   nixos.docker + nixos.nix-ld
+  hyprland.nix                               #   flake.modules.homeManager.hyprland
+  wsl.nix                                    #   flake.modules.nixos.wsl
+  hardware/{asus,keyd}.nix
+  security/littlesnitch.nix
+modules/hosts/<hostname>/
+  default.nix                                # flake.modules.nixos.<hostname> (host switchboard)
+  hardware-configuration.nix                 # regenerated via nixos-generate-config
+modules/users/<user>/default.nix             # flake.modules.homeManager.<user> (identity)
 config/                                      # static dotfile sources (hypr, nvim, tmux, zsh, …)
 pkgs/                                        # custom callPackage recipes
 ```
 
-Hosts are **switchboards** — they import `./hardware-configuration.nix`, set
-`networking.hostName`, pick a boot loader, and flip `my.*` options. All feature
-logic lives in `modules/`.
+Every `.nix` under `modules/` is auto-discovered by
+[`import-tree`](https://github.com/vic/import-tree) — drop a new file in and
+its `flake.modules.*` declarations are available on next rebuild. `hardware-configuration.nix`
+files are filtered out of the tree (they're plain NixOS modules, not flake-parts modules)
+and are imported by their host's `default.nix` directly.
+
+Modules have a **class** (`nixos`, `homeManager`, later `darwin`) and a **name**.
+One file can declare multiple classes — `desktop.nix` declares both
+`flake.modules.nixos.desktop` (system-level: portal, hyprland service, audio)
+and `flake.modules.homeManager.desktop` (user-level: GUI apps, theming). When
+a host imports `desktop` for nixos, it also imports `desktop` for homeManager —
+no platform subdirs needed.
+
+## Composition in flake.nix
+
+Hosts are **composed**, not gated. `flake.nix` lists the modules each host
+gets; unlisted modules are never evaluated.
+
+```nix
+xen = mkHost {
+  system = with config.flake.modules.nixos; [
+    base desktop docker nix-ld asus keyd littlesnitch xen
+  ];
+  home = with config.flake.modules.homeManager; [
+    sboynton cli desktop hyprland asus
+  ];
+};
+
+"Sam-Desktop" = mkHost {
+  system = with config.flake.modules.nixos; [ base wsl ]
+    ++ [ config.flake.modules.nixos."Sam-Desktop" ];
+  home = with config.flake.modules.homeManager; [ sboynton cli ];
+};
+```
+
+`mkHost` feeds the `system` list as nixos modules and pulls `home` into
+`home-manager.users.sboynton.imports`. The host's own `flake.modules.nixos.<hostname>`
+(e.g. `xen`) is just another module in the list — it sets `networking.hostName`,
+boot loader, hardware-configuration.nix import, and any HM customizations
+specific to that machine (like `my.home.hyprland.monitors`).
 
 ## Build flow
 
@@ -24,57 +72,41 @@ logic lives in `modules/`.
 flowchart TB
     U([just deploy]):::entry
     U --> R[nixos-rebuild switch<br/>--flake .#HOST]
-    R --> F[[flake.nix<br/>mkHost &quot;HOST&quot;]]:::flake
+    R --> F[[flake.nix<br/>mkHost for HOST]]:::flake
 
-    F --> HCFG[hosts/HOST/configuration.nix<br/>━━━━━<br/>hostname · boot loader<br/>my.* toggles<br/>stateVersion]:::host
-    F --> N[modules/nixos/default.nix]:::group
-    F --> HM[home-manager NixOS module]:::group
+    F --> SYS[system list<br/>base + feature modules<br/>+ HOST switchboard]:::group
+    F --> HM[home list<br/>sboynton + cli + feature modules]:::group
 
-    HM --> HB[home.nix<br/>→ modules/home]:::group
-    HM --> HHM[hosts/HOST/home.nix<br/>━━━━━<br/>my.home.* toggles<br/>hyprland.monitors]:::host
+    SYS --> bN[base system.nix<br/>kernel · locale · user · overlays]:::always
+    SYS --> hostMod[hosts/HOST/default.nix<br/>━━━━━<br/>hostname · boot loader<br/>hardware-configuration<br/>stateVersion]:::host
+    SYS --> featN[base feature modules<br/>desktop · docker · asus · …]:::feature
 
-    N --> nc[common.nix<br/>unconditional]:::always
-    N --> nd[desktop.nix<br/>my.desktop]:::gated
-    N --> ndv[dev.nix<br/>my.dev.docker · my.dev.nixLd]:::gated
-    N --> na[hardware/asus.nix<br/>my.hardware.asus]:::gated
-    N --> nk[hardware/keyd.nix<br/>my.hardware.keyd]:::gated
-    N --> nl[security/littlesnitch.nix<br/>services.littlesnitch]:::gated
-    N --> nw[wsl.nix<br/>my.wsl]:::gated
+    HM --> usr[users/sboynton<br/>identity]:::always
+    HM --> cli[base cli.nix<br/>CLI tools]:::always
+    HM --> featH[base HM modules<br/>desktop · hyprland · asus · …]:::feature
 
-    HB --> hc[cli.nix<br/>unconditional]:::always
-    HB --> hd[desktop.nix<br/>my.home.desktop]:::gated
-    HB --> hh[hyprland.nix<br/>my.home.hyprland]:::gated
-    HB --> hha[hardware/asus.nix<br/>my.home.hardware.asus]:::gated
-
-    HCFG -. sets .-> nd
-    HCFG -. sets .-> ndv
-    HCFG -. sets .-> na
-    HCFG -. sets .-> nk
-    HCFG -. sets .-> nl
-    HCFG -. sets .-> nw
-
-    HHM -. sets .-> hd
-    HHM -. sets .-> hh
-    HHM -. sets .-> hha
-
-    nd -. imports .-> ih[inputs.hyprland]:::input
-    na -. imports .-> ia[inputs.asus-fan]:::input
-    nw -. imports .-> iw[inputs.nixos-wsl]:::input
+    featN -. imports .-> ih[inputs.hyprland]:::input
+    featN -. imports .-> ia[inputs.asus-fan]:::input
+    featN -. imports .-> iw[inputs.nixos-wsl]:::input
 
     classDef entry fill:#cfe,stroke:#393
     classDef flake fill:#fdc,stroke:#a60
     classDef host fill:#ffc,stroke:#aa0
     classDef group fill:#def,stroke:#36a
     classDef always fill:#efe,stroke:#393
-    classDef gated fill:#fef,stroke:#a3a
+    classDef feature fill:#fef,stroke:#a3a
     classDef input fill:#eee,stroke:#888,stroke-dasharray:4 2
 ```
 
 **Reading it:**
-- **Yellow host files** are the only things a new machine has to write. They set `my.*` options and nothing else.
-- **Green "unconditional" modules** (`common.nix`, `cli.nix`) load on every host — baseline system + CLI toolbox.
-- **Pink "gated" modules** only activate when a host flips their `my.*` toggle. Dashed arrows show which host file drives which gate.
-- **Dashed grey upstream imports** (hyprland, asus-fan, nixos-wsl) are pulled in by their feature modules, not globally — so WSL doesn't load hyprland's module and xen doesn't load nixos-wsl's.
+- **Yellow host file** is the only thing a new machine has to write. It declares
+  `flake.modules.nixos.<hostname>` with hostname, boot loader, hardware import,
+  and any HM customization.
+- **Green "always" modules** (`base system`, `cli`, user identity) are in every host's list.
+- **Pink feature modules** are included per-host in `flake.nix` — WSL doesn't get
+  hyprland, xen doesn't get nixos-wsl.
+- **Dashed grey upstream imports** (hyprland, asus-fan, nixos-wsl) are pulled in
+  by their feature modules, so unused inputs don't evaluate.
 
 ## Bootstrap (new machine)
 
@@ -86,45 +118,41 @@ flowchart TB
    ```
 4. Set hostname in `/etc/nixos/configuration.nix`:
     ```nix
-    networking.hostName = "xen";
+    networking.hostName = "<hostname>";
     ```
-4. Rebuild: `sudo nixos-rebuild switch`
-5. Get git temporarily: `nix-shell -p git`
-6. Clone this repo:
+5. Rebuild: `sudo nixos-rebuild switch`
+6. Get git temporarily: `nix-shell -p git`
+7. Clone this repo:
    ```bash
    git clone <repo-url> ~/dotfiles && cd ~/dotfiles
    ```
-7. Regenerate `hardware-configuration.nix` directly from the running hardware (never copy the installer's file or a stale checked-in one — UUIDs and kernel modules drift), then write a thin `configuration.nix` and `home.nix` switchboard (see [Adding a host](#adding-a-host) for the full templates):
+8. Dump hardware config directly from running hardware (never copy the installer's file or a stale checked-in one — UUIDs and kernel modules drift):
    ```bash
-   mkdir -p hosts/<hostname>
-   sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix
-   $EDITOR hosts/<hostname>/configuration.nix   # my.* toggles + hostname + boot + stateVersion
-   $EDITOR hosts/<hostname>/home.nix            # my.home.* toggles
+   mkdir -p modules/hosts/<hostname>
+   sudo nixos-generate-config --show-hardware-config > modules/hosts/<hostname>/hardware-configuration.nix
+   $EDITOR modules/hosts/<hostname>/default.nix   # see "Adding a host" for template
    ```
-8. If reinstalling over an old install, wipe leftover partitions so systemd GPT auto-discovery doesn't try to mount them and trigger a UUID wait-job:
+9. If reinstalling over an old install, wipe leftover partitions so systemd GPT auto-discovery doesn't try to mount them and trigger a UUID wait-job:
    ```bash
    lsblk -f                         # find orphans not in fileSystems
    sudo wipefs -a /dev/<partition>  # for each orphan (old swap, old /home, etc.)
    ```
-9. Add a host entry in `flake.nix`:
-   ```nix
-   nixosConfigurations.<hostname> = mkHost "<hostname>";
-   ```
-10. Stage all files — flakes only see git-tracked files, unstaged edits are invisible:
+10. Register the host in `flake.nix` (see "Adding a host" for syntax).
+11. Stage all files — flakes only see git-tracked files, unstaged edits are invisible:
     ```bash
     git add -A
     ```
-11. Sanity check that the flake actually sees your hardware config (the output must match `hosts/<hostname>/hardware-configuration.nix`):
+12. Sanity check the flake sees the hardware config:
     ```bash
     nix eval --json .#nixosConfigurations.<hostname>.config.fileSystems
     nix eval --json .#nixosConfigurations.<hostname>.config.boot.initrd.availableKernelModules
     ```
-12. Build as `boot` (not `switch`) and reboot — if the new generation breaks, the previous one is still the default entry and you can roll back from the systemd-boot menu:
+13. Build as `boot` (not `switch`) and reboot — if the new generation breaks, the previous one is still the default entry and you can roll back from the systemd-boot menu:
     ```bash
     sudo nixos-rebuild boot --flake .#<hostname>
     sudo reboot
     ```
-13. Once it comes up clean, `nixos-rebuild switch` for subsequent changes.
+14. Once it comes up clean, `nixos-rebuild switch` for subsequent changes.
 
 After this, `/etc/nixos/configuration.nix` is no longer used — the flake owns everything.
 
@@ -135,65 +163,63 @@ For when the repo is already set up and you want to provision another machine.
 1. On the target machine, clone the repo and dump its hardware config:
    ```bash
    git clone <repo-url> ~/dotfiles && cd ~/dotfiles
-   mkdir -p hosts/<hostname>
-   sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix
+   mkdir -p modules/hosts/<hostname>
+   sudo nixos-generate-config --show-hardware-config > modules/hosts/<hostname>/hardware-configuration.nix
    ```
 
-2. Write `hosts/<hostname>/configuration.nix` as a switchboard. Typical laptop:
+2. Write `modules/hosts/<hostname>/default.nix`. Typical laptop:
    ```nix
-   { ... }:
    {
-     imports = [ ./hardware-configuration.nix ];
+     flake.modules.nixos.<hostname> = {
+       imports = [ ./hardware-configuration.nix ];
 
-     networking.hostName = "<hostname>";
+       networking.hostName = "<hostname>";
+       nixpkgs.hostPlatform = "x86_64-linux";
 
-     boot.loader.systemd-boot.enable = true;
-     boot.loader.efi.canTouchEfiVariables = true;
+       boot.loader.systemd-boot.enable = true;
+       boot.loader.efi.canTouchEfiVariables = true;
 
-     my.desktop.enable = true;
-     my.hardware.keyd.enable = true;
-     # my.hardware.asus.enable = true;      # Asus laptops only
-     # my.dev.docker.enable = true;
-     # my.dev.nixLd.enable = true;
-     # services.littlesnitch.enable = true;
-
-     system.stateVersion = "25.11";
+       system.stateVersion = "25.11";
+     };
    }
    ```
 
-   For WSL: drop `imports`, the boot loader, and every `my.desktop.*` / `my.hardware.*` toggle — `nixos-wsl` handles hardware. Use `my.wsl.enable = true;` instead:
+   For WSL: drop the hardware-configuration import and boot loader (`nixos-wsl` handles both):
    ```nix
-   { ... }:
    {
-     networking.hostName = "wsl";
-     my.wsl.enable = true;
-     system.stateVersion = "25.11";
+     flake.modules.nixos.<hostname> = {
+       networking.hostName = "<hostname>";
+       nixpkgs.hostPlatform = "x86_64-linux";
+       system.stateVersion = "25.11";
+     };
    }
    ```
 
-3. Write `hosts/<hostname>/home.nix`:
+3. Register and compose in `flake.nix`:
    ```nix
-   { ... }:
-   {
-     my.home.desktop.enable = true;
-     my.home.hyprland.enable = true;
-     # my.home.hardware.asus.enable = true;
-
-     my.home.hyprland.monitors = ''
-       monitor=,preferred,auto,1.0
-
-       xwayland {
-         force_zero_scaling = true
-       }
-     '';
-   }
+   <hostname> = mkHost {
+     system = with config.flake.modules.nixos; [
+       base desktop keyd      # pick the features this host needs
+       <hostname>             # the host's own module
+     ];
+     home = with config.flake.modules.homeManager; [
+       sboynton cli desktop hyprland
+     ];
+   };
    ```
 
-   For WSL / headless: leave it as `{ ... }: { }` — `modules/home/cli.nix` loads unconditionally, so you still get every CLI tool.
+   For WSL / headless, keep `system = [ base wsl <hostname> ]; home = [ sboynton cli ];`.
 
-4. Register the host in `flake.nix`:
+4. If this machine needs a hyprland monitor override or other per-host HM tweak,
+   add it to the host's `default.nix`:
    ```nix
-   nixosConfigurations.<hostname> = mkHost "<hostname>";
+   home-manager.users.sboynton.my.home.hyprland.monitors = ''
+     monitor=,preferred,auto,1.5
+
+     xwayland {
+       force_zero_scaling = true
+     }
+   '';
    ```
 
 5. Stage (flakes ignore untracked files), preview, build as `boot`, reboot:
@@ -205,6 +231,26 @@ For when the repo is already set up and you want to provision another machine.
    ```
 
    After the first clean boot, `just deploy` (or `sudo nixos-rebuild switch`) handles subsequent changes.
+
+## Adding a feature module
+
+1. Create `modules/base/<feature>.nix` (or `modules/base/<category>/<feature>.nix`).
+2. Declare one or more module classes:
+   ```nix
+   { inputs, ... }:   # optional — only if the module uses flake inputs
+   {
+     flake.modules.nixos.<feature> = { pkgs, lib, ... }: {
+       # system-level config
+     };
+
+     flake.modules.homeManager.<feature> = { pkgs, ... }: {
+       # home-manager config
+     };
+   }
+   ```
+3. Add `<feature>` to the relevant host's `system` / `home` list in `flake.nix`.
+
+No `my.*.enable` toggles — if a module is in a host's list, it's on; if not, it's never evaluated.
 
 ## Emergency mode / wait-job on a UUID
 
@@ -222,7 +268,7 @@ If boot hangs on `Timed out waiting for device /dev/disk/by-uuid/<UUID>`:
    sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations old
    sudo /run/current-system/bin/switch-to-configuration boot
    ```
-3. If nothing in the Nix config references it, it's GPT auto-discovery on an orphan partition — `wipefs` it (see Bootstrap step 8).
+3. If nothing in the Nix config references it, it's GPT auto-discovery on an orphan partition — `wipefs` it (see Bootstrap step 9).
 
 ## Daily usage
 

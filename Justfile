@@ -6,7 +6,7 @@ deploy:
 alias build := deploy
 
 diff:
-    NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild build --flake .#{{host}} --impure -o /tmp/nixos-result
+    NIXPKGS_ALLOW_UNFREE=1 nix build .#nixosConfigurations.{{host}}.config.system.build.toplevel --impure --out-link /tmp/nixos-result
     nvd diff /run/current-system /tmp/nixos-result
 
 update: && deploy
