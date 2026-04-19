@@ -34,6 +34,7 @@
         # Clipboard / input
         copyq
         clipse
+        clipse-gui
         wtype
 
         # Wallpaper daemon

@@ -5,6 +5,7 @@
       keyboards.default = {
         ids = [ "*" ];
         settings.main.capslock = "overload(control, esc)";
+        settings.main."f23+leftshift+leftmeta" = "M-A-c";
       };
     };
 

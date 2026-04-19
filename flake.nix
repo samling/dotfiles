@@ -27,6 +27,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } ({ config, lib, ... }: {
       imports = [
         (import-tree.filterNot (lib.hasSuffix "hardware-configuration.nix") ./modules)
+        (import-tree.filterNot (lib.hasSuffix "/package.nix") ./pkgs)
       ];
 
       options.flake.modules = lib.mkOption {
@@ -36,6 +37,13 @@
 
       config = {
         systems = [ "x86_64-linux" ];
+
+        perSystem = { system, ... }: {
+          _module.args.pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        };
 
         flake.nixosConfigurations = let
           mkHost = { system, home }: nixpkgs.lib.nixosSystem {

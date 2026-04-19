@@ -12,7 +12,7 @@
     nixpkgs.config.allowUnfree = true;
     nixpkgs.overlays = [
       inputs.claude-code.overlays.default
-      (final: prev: import ../../pkgs { inherit final prev; })
+      (final: prev: inputs.self.packages.${prev.stdenv.hostPlatform.system} or {})
     ];
 
     boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
