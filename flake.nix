@@ -77,6 +77,7 @@
             home = with config.flake.modules.homeManager; [
               sboynton
               cli
+              work
             ];
           };
         };

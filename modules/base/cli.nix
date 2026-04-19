@@ -40,10 +40,8 @@
       ffmpeg
       nvd
       tailscale
-      teleport-bin
       toofan
       littlesnitch
-      vault-bin
       pre-commit
 
       # Shell / multiplexer / editor
