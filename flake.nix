@@ -46,17 +46,38 @@
         in {
           xen = mkHost {
             system = with config.flake.modules.nixos; [
-              base desktop docker nix-ld asus keyd littlesnitch xen
+              base
+              desktop
+              docker
+              nix-ld
+              asus
+              keyd
+              littlesnitch
+              xen
             ];
             home = with config.flake.modules.homeManager; [
-              sboynton cli desktop hyprland asus
+              sboynton
+              cli
+              desktop
+              hyprland
+              asus
             ];
           };
 
           "Sam-Desktop" = mkHost {
-            system = with config.flake.modules.nixos; [ base wsl ]
-              ++ [ config.flake.modules.nixos."Sam-Desktop" ];
-            home = with config.flake.modules.homeManager; [ sboynton cli ];
+            system = with config.flake.modules.nixos; [
+              base
+              wsl
+              nix-ld
+            # workaround for hyphen in the name
+            # calling Sam-Desktop would try to load module "Sam" minus module "Desktop"
+            ] ++ [
+              config.flake.modules.nixos."Sam-Desktop"
+            ];
+            home = with config.flake.modules.homeManager; [
+              sboynton
+              cli
+            ];
           };
         };
       };

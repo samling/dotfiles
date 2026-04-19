@@ -12,6 +12,8 @@
       libnotify
       glib
       vim
+      gh
+      tree
       btop
       htop
       zoxide
