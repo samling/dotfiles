@@ -171,16 +171,16 @@ Item {
             }
         }
 
-        BarGroup {
-            id: updatesGroup
-            accentColor: Config.pillColor11
-            Layout.fillHeight: true
-
-            Updates {
-                id: updatesWidget
-                primaryColor: updatesGroup.textColor
-            }
-        }
+        // BarGroup {
+        //     id: updatesGroup
+        //     accentColor: Config.pillColor11
+        //     Layout.fillHeight: true
+        //
+        //     Updates {
+        //         id: updatesWidget
+        //         primaryColor: updatesGroup.textColor
+        //     }
+        // }
 
         BarGroup {
             id: notificationGroup
