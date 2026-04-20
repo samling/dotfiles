@@ -49,6 +49,10 @@
 
     programs.zsh.enable = true;
 
+    systemd.user.extraConfig = ''
+      DefaultTimeoutStopSec=10s
+    '';
+
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
   };
