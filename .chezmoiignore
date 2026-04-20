@@ -14,3 +14,11 @@ tmux
 dot_tmux/plugins/**
 .tmux/plugins/**
 
+# Ignore nix configuration
+flake.*
+modules
+pkgs
+config
+Justfile
+hyprland.png
+*.md

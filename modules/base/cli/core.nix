@@ -2,6 +2,7 @@
   flake.modules.homeManager.cli-core = { pkgs, ... }: {
     home.packages = with pkgs; [
       bat
+      chezmoi
       wget
       watch
       viddy

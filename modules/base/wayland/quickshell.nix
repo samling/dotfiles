@@ -2,11 +2,6 @@
   flake.modules.homeManager.quickshell = { pkgs, ... }: {
     home.packages = with pkgs; [ quickshell ];
 
-    home.file.".config/quickshell" = {
-      source = ../../../config/quickshell;
-      recursive = true;
-    };
-
     systemd.user.services.quickshell = {
       Unit = {
         Description = "Quickshell";

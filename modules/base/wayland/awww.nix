@@ -2,11 +2,6 @@
   flake.modules.homeManager.awww = { pkgs, ... }: {
     home.packages = with pkgs; [ awww ];
 
-    home.file.".config/awww" = {
-      source = ../../../config/awww;
-      recursive = true;
-    };
-
     systemd.user.services.awww = {
       Unit = {
         Description = "Animated wallpaper daemon";

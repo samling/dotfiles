@@ -7,7 +7,5 @@
       gitmux
       pre-commit
     ];
-
-    home.file.".gitmux.conf".source = ../../../config/gitmux.conf;
   };
 }
