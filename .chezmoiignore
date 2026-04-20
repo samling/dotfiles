@@ -22,3 +22,4 @@ config
 Justfile
 hyprland.png
 *.md
+Justfile

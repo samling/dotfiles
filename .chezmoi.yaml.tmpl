@@ -1,4 +1,6 @@
 {{- $chassisType := includeTemplate "chassis" . -}}
+sourceDir: {{ .chezmoi.homeDir }}/dotfiles
+
 diff:
   command: delta
   #exclude: scripts
