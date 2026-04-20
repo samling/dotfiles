@@ -1,0 +1,36 @@
+{
+  flake.modules.homeManager.cli-core = { pkgs, ... }: {
+    home.packages = with pkgs; [
+      bat
+      wget
+      watch
+      viddy
+      killall
+      read-edid
+      v4l-utils
+      libnotify
+      glib
+      tree
+      btop
+      htop
+      zoxide
+      inotify-tools
+      fd
+      just
+      ripgrep
+      duf
+      eza
+      file
+      fzf
+      bc
+      unzip
+      nvd
+      cmatrix
+      jq
+      yq
+      claude-code
+      toofan
+      littlesnitch
+    ];
+  };
+}

@@ -10,7 +10,8 @@ every `.nix` file under `modules/` declares one or more reusable modules via
 flake.nix                                    # entry point — inputs, host composition
 modules/base/                                # reusable feature modules
   system.nix                                 #   flake.modules.nixos.base (OS baseline)
-  cli.nix                                    #   flake.modules.homeManager.cli
+  cli.nix                                    #   flake.modules.homeManager.cli (bundle)
+  cli/{core,git,zsh,neovim,tmux,…}.nix       #   per-tool HM modules composed by cli.nix
   desktop.nix                                #   nixos.desktop + homeManager.desktop
   dev.nix                                    #   nixos.docker + nixos.nix-ld
   hyprland.nix                               #   flake.modules.homeManager.hyprland
