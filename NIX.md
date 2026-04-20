@@ -12,9 +12,11 @@ modules/base/                                # reusable feature modules
   system.nix                                 #   flake.modules.nixos.base (OS baseline)
   cli.nix                                    #   flake.modules.homeManager.cli (bundle)
   cli/{core,git,zsh,neovim,tmux,…}.nix       #   per-tool HM modules composed by cli.nix
-  desktop.nix                                #   nixos.desktop + homeManager.desktop
+  desktop.nix                                #   nixos.desktop + homeManager.desktop (imports ghostty)
+  terminals/ghostty.nix                      #   flake.modules.homeManager.ghostty
   dev.nix                                    #   nixos.docker + nixos.nix-ld
-  hyprland.nix                               #   flake.modules.homeManager.hyprland
+  hyprland.nix                               #   flake.modules.homeManager.hyprland (bundle)
+  wayland/{hyprland-core,quickshell,awww,rofi,matugen}.nix  # composed by hyprland.nix
   wsl.nix                                    #   flake.modules.nixos.wsl
   hardware/{asus,keyd}.nix
   security/littlesnitch.nix

@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 {
   flake.modules.nixos.desktop = { lib, pkgs, ... }: {
     imports = [ inputs.hyprland.nixosModules.default ];
@@ -69,10 +69,11 @@
   };
 
   flake.modules.homeManager.desktop = { pkgs, ... }: {
+    imports = with config.flake.modules.homeManager; [ ghostty ];
+
     home.packages = with pkgs; [
       # Terminals / file manager
       kitty
-      ghostty
       thunar
 
       # Browsers / chat / editors
@@ -116,11 +117,6 @@
     ];
 
     services.udiskie.enable = true;
-
-    home.file.".config/ghostty" = {
-      source = ../../config/ghostty;
-      recursive = true;
-    };
 
     home.pointerCursor = {
       name = "BreezeX-RosePine-Linux";
