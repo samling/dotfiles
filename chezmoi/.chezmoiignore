@@ -1,0 +1,5 @@
+# Dependency check, not a dotfile to deploy
+bootstrap.sh
+
+# Plugin managers handle these at runtime
+dot_tmux/plugins/**
