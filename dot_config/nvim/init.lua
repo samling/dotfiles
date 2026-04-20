@@ -27,10 +27,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Python3 ]]
---
-vim.g.python3_host_prog = "~/.pyenv/shims/python"
-
 -- [[ Plugins ]]
 --
 require('lazy').setup ({

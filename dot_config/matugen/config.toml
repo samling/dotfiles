@@ -55,4 +55,5 @@ term_orange = "#fab387"
 
 [templates.quickshell]
 input_path = "~/.config/matugen/templates/quickshell-colors"
-output_path = "~/.config/quickshell/common/Colors.qml"
+output_path = "~/.local/state/quickshell/generated/colors.json"
+

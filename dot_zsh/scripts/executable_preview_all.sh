@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Initialize variables
 source=""
@@ -44,7 +44,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-# Handle different MIME types 
+# Handle different MIME types
 case "$mime" in
 	text/*)
 		# Use bat for text files

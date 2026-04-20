@@ -53,9 +53,6 @@ set -g focus-events on
 set -g base-index 1
 set -g pane-base-index 1
 
-# Set display-panes timeout to 3000ms
-#set -g display-panes-time 3000
-
 # Set repeat timeout to 1000ms
 set -g repeat-time 3000
 
@@ -92,11 +89,7 @@ set -g lock-command "cmatrix -s -a"
 # Setup 'v' to begin selection as in Vim
 bind -T copy-mode-vi v send -X begin-selection
 
-# set -s copy-command "xclip -i -f -selection primary | xclip -i -selection clipboard"
-#set -s copy-command 'xsel -i'
-#bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xsel -bi"
-#bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xsel -bi"
-#bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xsel -bi"
+# Copy to Wayland clipboard
 bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy"
 bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "wl-copy"
 bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "wl-copy"
@@ -154,9 +147,9 @@ set-window-option -g window-status-current-style 'bold'
 sshhostname="#(~/.tmux/scripts/ssh_hostname.sh) "
 prefixhighlight="#{prefix_highlight} "
 gitstatus="#(gitmux -cfg ~/.gitmux.conf #{pane_current_path})#[bold]"
-kubestatus="#[fg=white]#(/bin/bash ~/.tmux/kube-tmux/kube.tmux 250 '#cba6f7' 'colour4') "
+kubestatus="#[fg=white]#(~/.tmux/kube-tmux/kube.tmux 250 '#cba6f7' 'colour4') "
 session="#[fg=#cba6f7,bg=default]≡ #(tmux display-message -p #S:#{pane_index}#[fg=default,bg=default]) "
-datetime="  #(date +%%H:%%M) "
+datetime="  #(date +%%H:%%M) "
 keytable="#(~/.tmux/scripts/keytable.sh #{client_key_table}) "
 
 set -g status-left "$sshhostname$keytable"
@@ -349,7 +342,6 @@ set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'roosta/tmux-fuzzback'
-# set -g @plugin 'fcsonline/tmux-thumbs'
 
 # Plugin Options
 set -g @net_speed_interfaces "en0"
@@ -357,8 +349,8 @@ set -g @net_speed_interfaces "en0"
 set -g @online_icon "#[fg=green]#(dig +short myip.opendns.com @resolver1.opendns.com)#[fg=white]"
 set -g @offline_icon "#[fg=red]!WAN#[fg=white]"
 
-set -g @prefix_highlight_output_prefix '#[fg=#cba6f7]#[bg=default]#[bg=#cba6f7]#[fg=black]'
-set -g @prefix_highlight_output_suffix '#[fg=#cba6f7]#[bg=default] '
+set -g @prefix_highlight_output_prefix '#[fg=#cba6f7]#[bg=default]#[bg=#cba6f7]#[fg=black]'
+set -g @prefix_highlight_output_suffix '#[fg=#cba6f7]#[bg=default] '
 
 set -g @resurrect-capture-pane-contents 'on'
 set -g @resurrect-dir '~/.config/tmux-continuum-sessions'
@@ -367,19 +359,8 @@ set -g @continuum-restore 'off'
 
 set -g @fuzzback-popup 1
 
-#run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
-
-set -g @thumbs-key y
-set -g @thumbs-command 'echo -n {} | xclip -i -selection clipboard'
-set -g @thumbs-bg-color black
-set -g @thumbs-fg-color blue
-set -g @thumbs-hint-bg-color blue
-set -g @thumbs-hint-fg-color black
-set -g @thumbs-select-bg-color black
-set -g @thumbs-select-fg-color blue
-
 {{ if eq .chezmoi.os "linux" }}
-set -g @fingers-copy-command 'xclip -sel clip'
+set -g @fingers-copy-command 'wl-copy'
 {{ else }}
 set -g @fingers-copy-command 'echo -n {} | pbcopy'
 {{ end }}

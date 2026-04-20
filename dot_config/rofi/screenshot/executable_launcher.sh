@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 options="$HOME/.config/rofi/screenshot/options.txt"
 scripts_dir="$HOME/.config/myshell/scripts"

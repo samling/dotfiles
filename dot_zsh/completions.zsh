@@ -3,43 +3,59 @@ fpath=($HOME/.zsh $fpath)
 fpath+=($HOME/.zsh/pure)
 
 #=== compinit
+# Fast path: skip compaudit + dump rebuild unless ~/.zcompdump is older than 24h.
+# Saves ~100ms per shell.
 autoload -U compinit bashcompinit promptinit
-compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) || ! -f ~/.zcompdump ]]; then
+  compinit
+else
+  compinit -C
+fi
 promptinit
 bashcompinit
 
-for dump in ~/.zcompdump(N.mh+24);do
-  compinit
-done
+#=== completion cache helper
+# Runs `$2…` to generate a zsh completion script, caches it under
+# ~/.cache/zsh-completions/$1, and sources the cache on subsequent shells.
+# Rebuilds when the cache is >24h old or the generating binary is newer.
+_cached_completion() {
+  local name=$1; shift
+  local cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}/zsh-completions
+  local cache=$cache_dir/$name.zsh
+  [[ -d $cache_dir ]] || mkdir -p $cache_dir
+  local bin=${commands[$1]}
+  if [[ ! -s $cache || -n $cache(#qN.mh+24) || ( -n $bin && $bin -nt $cache ) ]]; then
+    "$@" >| $cache 2>/dev/null
+  fi
+  [[ -s $cache ]] && source $cache
+}
 
 #=== asdf
-command -v asdf >/dev/null && source <(asdf completion zsh)
+command -v asdf >/dev/null && _cached_completion asdf asdf completion zsh
 
 #=== colima
-command -v colima >/dev/null && source <(colima completion zsh)
+command -v colima >/dev/null && _cached_completion colima colima completion zsh
 
 #=== direnv
-command -v direnv >/dev/null && eval "$(direnv hook zsh)"
+command -v direnv >/dev/null && _cached_completion direnv direnv hook zsh
 
 #=== flux
-command -v flux >/dev/null && source <(flux completion zsh)
+command -v flux >/dev/null && _cached_completion flux flux completion zsh
 
 #=== fx
-command -v fx >/dev/null && source <(fx --comp zsh)
+command -v fx >/dev/null && _cached_completion fx fx --comp zsh
 
 #=== fzf
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#source "$(fzf --zsh)"
-command -v fzf >/dev/null && eval "$(fzf --zsh)"
+command -v fzf >/dev/null && _cached_completion fzf fzf --zsh
 
 #=== kubectl
-command -v kubectl >/dev/null && source <(kubectl completion zsh)
+command -v kubectl >/dev/null && _cached_completion kubectl kubectl completion zsh
 
 #=== kubecolor
 compdef kubecolor=kubectl
 
 #=== plz
-command -v plz >/dev/null && source <(plz --completion_script)
+command -v plz >/dev/null && _cached_completion plz plz --completion_script
 
 #=== pure prompt
 prompt pure
@@ -62,14 +78,19 @@ prompt pure
 #eval "$(starship init zsh)"
 
 #=== talos
-command -v talosctl >/dev/null && source <(talosctl completion zsh)
-command -v talhelper >/dev/null && source <(talhelper completion zsh)
+command -v talosctl >/dev/null && _cached_completion talosctl talosctl completion zsh
+command -v talhelper >/dev/null && _cached_completion talhelper talhelper completion zsh
 
 #=== uv
-command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
+command -v uv >/dev/null && _cached_completion uv uv generate-shell-completion zsh
 
 #=== zellij
-command -v zellij >/dev/null && source <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
+# Post-process the output (strip compdef mismatch) before caching.
+if command -v zellij >/dev/null; then
+  _zellij_gen() { zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/'; }
+  _cached_completion zellij _zellij_gen
+  unset -f _zellij_gen
+fi
 
 #=== zoxide
-command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"
+command -v zoxide >/dev/null && _cached_completion zoxide zoxide init zsh --cmd cd

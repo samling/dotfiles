@@ -1,0 +1,91 @@
+snippets:
+  grep-with-custom-regex:
+    id: grep-regex
+    name: Grep with Custom Regex
+    description: Search files using a custom regular expression pattern
+    command: grep -E '<pattern>' <files>
+    variables:
+      - name: pattern
+        description: Regular expression pattern to search for
+        type: regex
+        required: true
+      - name: files
+        description: Files to search in
+        default: "*.txt"
+        required: false
+
+  sed-replace:
+    id: sed-replace
+    name: Sed Replace with Regex
+    description: Replace text using sed with a regex pattern
+    command: sed -E 's/<search_pattern>/<replacement>/<global>' <file>
+    variables:
+      - name: search_pattern
+        description: Regex pattern to search for
+        type: regex
+        required: true
+      - name: replacement
+        description: Replacement text
+        required: true
+      - name: global
+        description: Global replacement switch
+        type: "boolean"
+        default: "false"
+        transform:
+          true_value: "g"
+          false_value: ""
+      - name: file
+        description: File to process
+        required: true
+
+  sed-replace-file-in-place:
+    id: sed-replace-file-in-place
+    name: Sed Replace File In Place
+    description: Replace text in a file in-place using sed with a regex pattern
+    command: sed -i<backup> 's/<search_pattern>/<replacement>/<global>' <file>
+    variables:
+      - name: backup
+        description: Create file backup
+        type: "boolean"
+        default: "false"
+        transform:
+          true_value: ".bak"
+          false_value: ""
+      - name: search_pattern
+        description: Regex pattern to search for
+        type: regex
+        required: true
+      - name: replacement
+        description: Replacement text
+        required: true
+      - name: global
+        description: Global replacement switch
+        type: "boolean"
+        default: "false"
+        transform:
+          true_value: "g"
+          false_value: ""
+      - name: file
+        description: File to process
+        required: true
+
+  log-analyzer:
+    id: log-analyzer
+    name: Analyze Logs with Regex
+    description: Extract specific patterns from log files
+    command: |
+      awk '/<pattern>/ {print $0}' <logfile> | \
+      sed -E 's/<extract_pattern>/\1/g'
+    variables:
+      - name: pattern
+        description: Initial filter pattern (must be valid regex)
+        type: regex
+        required: true
+      - name: extract_pattern
+        description: Pattern to extract specific parts (must be valid regex with capture groups)
+        type: regex
+        default: "(.*)"
+        required: false
+      - name: logfile
+        description: Log file to analyze
+        required: true

@@ -1,0 +1,129 @@
+# Kubernetes-specific command snippets
+snippets:
+  kubectl-get-pods-by-node:
+    id: "kubectl-get-pods-by-node"
+    name: "kubectl-get-pods-by-node"
+    description: "Get Kubernetes pods on a specific node with namespace selection"
+    command: "kubectl get pods <namespace> <show_details> --field-selector=spec.nodeName=<node_name>"
+    variables:
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transform_template: "k8s-namespace"
+      - name: "node_name"
+        description: "Node name"
+        required: true
+      - name: "show_details"
+        description: "Show additional details"
+        type: "boolean"
+        transform:
+          true_value: "-o wide"
+          false_value: ""
+    tags: ["kubernetes", "pods"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-get-pod-names-and-namespaces:
+    id: "kubectl-get-pod-names-and-namespaces"
+    name: "kubectl-get-pod-names-and-namespaces"
+    description: "Get names and namespaces of pods for easy piping"
+    command: kubectl get pods <namespace> -o json | jq -r '.items[] | "\(.metadata.namespace) \(.metadata.name)"'
+    variables:
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transform_template: "k8s-namespace"
+    tags: ["kubernetes", "pods"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-port-forward:
+    id: "kubectl-port-forward"
+    name: "kubectl-port-forward"
+    description: "Forward local port to pod or service"
+    command: "kubectl port-forward <all_interfaces> <resource> <port_mapping> <namespace>"
+    variables:
+      - name: "resource_type"
+        required: true
+        description: "Resource type: [pod, svc]"
+        default: "svc"
+        validation:
+          enum: ["pod", "svc"]
+      - name: "resource_name"
+        required: true
+        description: "Resource name (e.g., my-pod, my-service)"
+      - name: "resource"
+        description: "Resource to forward to (e.g., pod/my-pod, service/my-service)"
+        computed: true
+        transform:
+          compose: "{{.resource_type}}/{{.resource_name}}"
+      - name: "host_port"
+        description: "Host port (e.g., 8080)"
+        required: true
+        type: "port"
+      - name: "target_port"
+        description: "Target port (leave empty to use host port)"
+        default: ""
+        type: "port"
+      - name: "all_interfaces"
+        description: "Bind to all interfaces"
+        type: "boolean"
+        transform:
+          true_value: "--address=0.0.0.0"
+          false_value: ""
+      - name: "port_mapping"
+        description: "Complete port mapping"
+        computed: true
+        transform:
+          compose: |
+            {{- .host_port -}}:
+            {{- if .target_port -}}
+              {{- .target_port -}}
+            {{- else -}}
+              {{- .host_port -}}
+            {{- end -}}
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transform_template: "k8s-namespace"
+    tags: ["kubernetes", "port-forward", "networking"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-create-docker-config-secret:
+    id: "kubectl-create-docker-config-secret"
+    name: "kubectl-create-docker-config-secret"
+    description: "Create docker config secret"
+    command: "kubectl create secret docker-registry <secret_name> <namespace> --docker-server=<server> --docker-username=<username> --docker-password=<password> --docker-email=<email>"
+    variables:
+      - name: "secret_name"
+        required: true
+        description: "Name of the desired imagePullSecret"
+      - name: "namespace"
+        description: "Kubernetes namespace (empty=none, 'all'=all namespaces, or specific name)"
+        type: "namespace"
+        transform_template: "k8s-namespace"
+      - name: "server"
+        required: true
+        description: "Server"
+      - name: "username"
+        required: true
+        description: "Username"
+      - name: "password"
+        required: true
+        description: "Password"
+      - name: "email"
+        required: true
+        description: "Email"
+
+  kubectl-top-pods-by-node:
+    description: "Get pod cpu and memory metrics by node"
+    command: >
+      kubectl get pods -A --field-selector spec.nodeName=<node_name> -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' > /tmp/talos03-pods.txt;
+      kubectl top pods -A --no-headers | rg -Ff /tmp/<node_name>-pods.txt | sort -k3 -rh;
+      rm -f /tmp/<node_name>-pods.txt > /dev/null
+    variables:
+      - name: "node_name"
+        required: true
+        description: "Name of the target node"
+
