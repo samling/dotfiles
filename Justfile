@@ -18,9 +18,8 @@ upgrade: && deploy
 update-pkgs:
     #!/usr/bin/env bash
     set -euo pipefail
-    for p in pkgs/*.nix; do
-      name=$(basename "$p" .nix)
-      [ "$name" = "default" ] && continue
+    for p in pkgs/*/; do
+      name=$(basename "$p")
       echo "==> $name"
       nix run nixpkgs#nix-update -- --flake "$name" || true
     done
