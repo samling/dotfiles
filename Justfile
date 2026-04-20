@@ -2,8 +2,12 @@ host := `hostname`
 
 deploy:
     NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#{{host}} --sudo --impure
+    chezmoi apply
 
 alias build := deploy
+
+apply:
+    chezmoi apply
 
 diff:
     NIXPKGS_ALLOW_UNFREE=1 nix build .#nixosConfigurations.{{host}}.config.system.build.toplevel --impure --out-link /tmp/nixos-result

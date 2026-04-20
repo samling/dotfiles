@@ -3,6 +3,7 @@
     home.packages = with pkgs; [
       bat
       chezmoi
+      doppler
       wget
       watch
       viddy
