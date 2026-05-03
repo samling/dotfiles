@@ -15,7 +15,7 @@ window-padding-y = 0
 theme = "catppuccin-mocha.conf"
 
 #=== Font
-font-family = "Iosevka Nerd Font Propo"
+font-family = "IosevkaTerm Nerd Font Propo"
 font-size = 10.5
 
 #=== Local config files

@@ -282,7 +282,7 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 //spawn-at-startup "waybar"
-spawn-at-startup "google-chrome"
+spawn-at-startup "google-chrome-stable"
 spawn-at-startup "ghostty"
 spawn-at-startup "code"
 spawn-at-startup "vesktop"
