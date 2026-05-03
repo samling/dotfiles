@@ -14,6 +14,7 @@
     nixpkgs.config.allowUnfree = true;
     nixpkgs.overlays = [
       (final: prev: inputs.self.packages.${prev.stdenv.hostPlatform.system} or {})
+      # TEMP-OVERRIDE: wireshark 4.6.5 src hash; remove once nixos-unstable advances past nixpkgs#515269.
       (final: prev: {
         wireshark = prev.wireshark.overrideAttrs (old: {
           src = prev.fetchFromGitLab {
