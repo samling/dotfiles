@@ -1,0 +1,11 @@
+[Unit]
+Description=Mirror primary selection into clipboard
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/wl-paste -p -t text --watch /usr/bin/wl-copy
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

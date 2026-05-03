@@ -11,7 +11,7 @@ application_prefer_dark_theme = true
 cursor_theme_name = "BreezeX-RosePine-Linux"
 font_name = "Cantarell 16"
 icon_theme_name = "Papirus-Dark"
-theme_name = "catppuccin-mocha-lavender-standard"
+theme_name = "catppuccin-mocha-lavender-standard+default"
 
 [commands]
 reboot = ["systemctl", "reboot"]

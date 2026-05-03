@@ -22,19 +22,31 @@ yay -S catppuccin-gtk-theme-mocha rose-pine-cursor
 Without these, GTK falls back silently and you'll get default icons/cursor
 even though the config names a theme.
 
+Note on the catppuccin theme name: the AUR package installs each variant with
+a `+default` suffix (e.g. `/usr/share/themes/catppuccin-mocha-lavender-standard+default`),
+plus `+default-hdpi` and `+default-xhdpi` variants. The configs in this repo
+reference the full `catppuccin-mocha-lavender-standard+default` name. Drop the
+suffix and GTK silently falls back to Adwaita. The symptom is GTK3 apps like
+Thunar and clipse-gui showing up in light mode while GTK4/libadwaita apps look
+fine (those ignore `gtk-theme` entirely and just track `color-scheme`).
+
 ## One-time dconf settings
 
 GTK reads these from dconf, not from a file we can ship:
 
 ```
 gsettings set org.gnome.desktop.interface icon-theme        'Papirus-Dark'
-gsettings set org.gnome.desktop.interface gtk-theme         'catppuccin-mocha-lavender-standard'
+gsettings set org.gnome.desktop.interface gtk-theme         'catppuccin-mocha-lavender-standard+default'
 gsettings set org.gnome.desktop.interface cursor-theme      'BreezeX-RosePine-Linux'
 gsettings set org.gnome.desktop.interface cursor-size        24
 gsettings set org.gnome.desktop.interface color-scheme      'prefer-dark'
 ```
 
-Verify with `gsettings get org.gnome.desktop.interface icon-theme`.
+Verify with `gsettings get org.gnome.desktop.interface gtk-theme` (the value
+must exactly match an entry in `/usr/share/themes`, including the `+default`
+suffix). Re-run these whenever the theme name in `settings.ini` changes:
+GTK3 apps prefer the dconf value over `settings.ini`, so a stale dconf entry
+silently breaks theming even when the on-disk config is correct.
 
 ## Activating the Qt env vars
 
