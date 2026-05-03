@@ -1,0 +1,27 @@
+# Reference copy of /etc/greetd/regreet.toml. Not deployed by chezmoi (regreet
+# runs as the `greeter` user, not as $USER, so a $HOME dotfile wouldn't apply).
+# After editing, install with:
+#
+#   sudo install -m 644 etc/greetd/regreet.toml /etc/greetd/regreet.toml
+#
+# Mirrors modules/graphical/regreet.nix from the previous nix setup.
+
+[GTK]
+application_prefer_dark_theme = true
+cursor_theme_name = "BreezeX-RosePine-Linux"
+font_name = "Cantarell 16"
+icon_theme_name = "Papirus-Dark"
+theme_name = "catppuccin-mocha-lavender-standard"
+
+[commands]
+reboot = ["systemctl", "reboot"]
+poweroff = ["systemctl", "poweroff"]
+
+[appearance]
+greeting_msg = "Welcome back!"
+
+[widget.clock]
+format = "%a %H:%M"
+resolution = "500ms"
+timezone = "America/Los_Angeles"
+label_width = 150

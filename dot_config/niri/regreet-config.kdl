@@ -1,0 +1,29 @@
+hotkey-overlay {
+  skip-at-startup
+}
+
+environment {
+  GTK_USE_PORTAL "0"
+  GDK_DEBUG "no-portals"
+}
+
+input{
+  keyboard {
+    xkb {
+      layout "us"
+    }
+  }
+}
+
+animations {
+  off
+}
+
+output "eDP-1" {
+  scale 1.0
+  transform "normal"
+  position x=0 y=0
+  variable-refresh-rate on-demand=false
+}
+
+spawn-at-startup "sh" "-c" "regreet; niri msg action quit --skip-confirmation"
