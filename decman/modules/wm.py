@@ -33,6 +33,7 @@ class WmModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "ghostty-nightly-bin",
+            "grimblast-git",
             "swaylock-effects",
             "wlogout",
         }

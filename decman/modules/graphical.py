@@ -72,3 +72,26 @@ class GraphicalModule(decman.Module):
             "rose-pine-cursor",
             "wallust",
         }
+
+    def after_update(self, store):
+        # Pre-create the XDG user dirs declared in chezmoi's
+        # dot_config/user-dirs.dirs. The shipped user-dirs.conf has
+        # `enabled=False` so xdg-user-dirs-update won't recreate
+        # missing dirs at login. mkdir -p is idempotent.
+        decman.prg(
+            [
+                "bash", "-c",
+                'mkdir -p '
+                '"$HOME/Downloads" '
+                '"$HOME/Documents" '
+                '"$HOME/Music" '
+                '"$HOME/Pictures" '
+                '"$HOME/Pictures/Screenshots" '
+                '"$HOME/Videos" '
+                '"$HOME/Templates" '
+                '"$HOME/Public"\n',
+            ],
+            user="sboynton",
+            mimic_login=True,
+            check=False,
+        )

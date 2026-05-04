@@ -5,11 +5,20 @@ from modules._systemd import reconcile_units
 
 
 class TailscaleModule(decman.Module):
-    """Tailscaled service + firewall-mode override.
+    """Tailscaled service + firewall-mode override + firewalld plumbing.
 
     The `tailscale` package itself is in SecurityModule. Putting it
     there alone leaves the daemon disabled — this module enables it
     and pins it to nftables (matching `modules/tailscale/tailscale.nix`).
+
+    firewalld plumbing mirrors the nix config's
+    `firewall.trustedInterfaces = ["tailscale0"]` and
+    `firewall.allowedUDPPorts = [tailscale.port]`:
+      - tailscale0 lives in the trusted zone, so peer traffic isn't
+        filtered.
+      - UDP/41641 is opened on whatever zone is active so peers can
+        establish direct connections (DERP fallback works without it
+        but pays a relay round-trip).
     """
 
     def __init__(self):
@@ -40,4 +49,48 @@ class TailscaleModule(decman.Module):
                 owner="root",
                 group="root",
             ),
+            # Override firewalld's stock trusted zone to bind tailscale0.
+            # Replaces /usr/lib/firewalld/zones/trusted.xml; the only
+            # change vs. the upstream default is the <interface> entry.
+            "/etc/firewalld/zones/trusted.xml": decman.File(
+                content=(
+                    '<?xml version="1.0" encoding="utf-8"?>\n'
+                    '<zone target="ACCEPT">\n'
+                    '  <short>Trusted</short>\n'
+                    '  <description>All network connections are accepted.</description>\n'
+                    '  <interface name="tailscale0"/>\n'
+                    '</zone>\n'
+                ),
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
+            # Custom firewalld service definition. Bound to a zone in
+            # after_update via firewall-cmd; the file alone only
+            # registers the service name + ports.
+            "/etc/firewalld/services/tailscale.xml": decman.File(
+                content=(
+                    '<?xml version="1.0" encoding="utf-8"?>\n'
+                    '<service>\n'
+                    '  <short>Tailscale</short>\n'
+                    '  <description>Tailscale WireGuard daemon (direct-connection port).</description>\n'
+                    '  <port port="41641" protocol="udp"/>\n'
+                    '</service>\n'
+                ),
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
         }
+
+    def after_update(self, store):
+        # firewall-cmd --add-service writes to /etc/firewalld/zones/<zone>.xml
+        # and is idempotent; firewalld picks up the change via its
+        # filesystem watcher (no explicit reload needed).
+        decman.prg(
+            [
+                "firewall-cmd", "--permanent",
+                "--zone=public", "--add-service=tailscale",
+            ],
+            check=False,
+        )

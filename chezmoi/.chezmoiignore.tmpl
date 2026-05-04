@@ -1,0 +1,9 @@
+{{- /* WSL-only: on non-WSL hosts the `google-chrome` AUR package
+     installs a real chrome binary plus its own .desktop entry. The
+     chezmoi-shipped wrapper here is a WSL interop shim that hands
+     URLs to the host's chrome.exe; it must not shadow the real
+     binary on a Linux desktop. */ -}}
+{{ if not (env "WSL_DISTRO_NAME") }}
+.local/bin/google-chrome
+.local/share/applications/google-chrome.desktop
+{{ end }}

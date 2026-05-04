@@ -1,3 +1,4 @@
+import decman
 from decman.extras.users import Group, User, UserManager
 
 # Kept here (not in aur_keys.py) so UsersModule can create the user
@@ -78,4 +79,16 @@ class UsersModule(UserManager):
                 home=AUR_BUILDER_HOME,
                 system=True,
             )
+        )
+
+    def after_update(self, store):
+        # UserManager's own after_update reconciles group memberships;
+        # run that first so a brand-new user lands in its groups before
+        # we touch lingering. Then enable linger so user systemd units
+        # (awww, clipse-watch, quickshell, swayidle, ...) start at boot
+        # and survive logout. enable-linger is idempotent.
+        super().after_update(store)
+        decman.prg(
+            ["loginctl", "enable-linger", "sboynton"],
+            check=False,
         )
