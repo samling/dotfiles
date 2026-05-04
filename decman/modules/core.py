@@ -65,6 +65,7 @@ class CoreModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
+            "cmatrix-git",
             "crudini",
             "icat",
             "localsend-bin",

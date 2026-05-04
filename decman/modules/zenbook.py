@@ -45,6 +45,7 @@ class ZenbookModule(decman.Module):
         return {
             "asus-5606-fan-state",
             "asusctl",
+            "rog-control-center",
         }
 
     @systemd.units
