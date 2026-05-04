@@ -13,6 +13,8 @@ class DevModule(decman.Module):
             "clang",
             "direnv",
             "fnm",
+            "github-cli",
+            "just",
             "meld",
             "neovim",
             "python",

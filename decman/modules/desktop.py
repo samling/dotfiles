@@ -14,7 +14,6 @@ class DesktopModule(decman.Module):
             "brightnessctl",
             "cantarell-fonts",
             "gsfonts",
-            "gtk-layer-shell",
             "mesa-utils",
             "noto-fonts",
             "noto-fonts-cjk",
@@ -26,6 +25,7 @@ class DesktopModule(decman.Module):
             "ttf-bitstream-vera",
             "ttf-dejavu",
             "ttf-iosevkaterm-nerd",
+            "ttf-jetbrains-mono",
             "ttf-liberation",
             "ttf-opensans",
             "upower",
@@ -33,7 +33,6 @@ class DesktopModule(decman.Module):
             "xdg-desktop-portal-gnome",
             "xdg-user-dirs",
             "xdg-utils",
-            "xdotool",
             "xf86-input-libinput",
             "xorg-server",
             "xorg-xdpyinfo",
@@ -47,8 +46,6 @@ class DesktopModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "catppuccin-gtk-theme-mocha",
-            "clipse-gui",
-            "clipse-wayland-bin",
             "rose-pine-cursor",
             "wallust",
         }

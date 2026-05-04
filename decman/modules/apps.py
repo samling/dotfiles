@@ -1,5 +1,7 @@
 import decman
-from decman.plugins import pacman, aur
+from decman.plugins import pacman, aur, systemd
+
+from modules._systemd import reconcile_units
 
 
 class AppsModule(decman.Module):
@@ -27,3 +29,10 @@ class AppsModule(decman.Module):
             "vesktop-bin",
             "visual-studio-code-bin",
         }
+
+    @systemd.user_units
+    def user_units(self) -> dict[str, set[str]]:
+        return {"sboynton": {"chrome-graceful-shutdown.service"}}
+
+    def on_change(self, store):
+        reconcile_units(self, store)

@@ -1,28 +1,29 @@
+import importlib
+import socket
+
 import decman
 
-from modules.apps import AppsModule
-from modules.archlinux import ArchlinuxModule
-from modules.audio import AudioModule
-from modules.base import BaseModule
-from modules.bluetooth import BluetoothModule
-from modules.core import CoreModule
-from modules.desktop import DesktopModule
-from modules.dev import DevModule
-from modules.endeavouros import EndeavourOSModule
-from modules.laptop import LaptopModule
-from modules.networking import NetworkingModule
-from modules.printing import PrintingModule
-from modules.security import SecurityModule
-from modules.shell import ShellModule
-from modules.system import SystemModule
-from modules.wm import WmModule
+from modules.chezmoi import ChezmoiModule
 
-# Roots for transitive-dep clusters that would otherwise be GC'd as orphans.
-# Their forward-dep closure (pactree -u) covers ~260 dep-only packages.
+# Registered first so its before_update hook (chezmoi apply) runs before any
+# host modules' updates. Module hooks fire in registration order.
+decman.modules += [ChezmoiModule()]
+
+# Toolchains and build tools we actively use. Declared so decman ensures
+# they're installed and reinstalls if removed externally. Their forward-dep
+# closures (zig→llvm20-libs, pandoc-cli→haskell-*, etc.) anchor the rest.
 decman.pacman.packages |= {
     "meson",
     "ninja",
     "pandoc-cli",
+    "rustup",
+    "zig",
+}
+
+# Transitive Python build/test infra pulled in by AUR builds. ignored_packages
+# preserves their existing --asdeps state and pacman's dep graph keeps them
+# alive; we just don't want decman to GC them.
+decman.pacman.ignored_packages |= {
     "python-build",
     "python-installer",
     "python-pygments",
@@ -34,25 +35,16 @@ decman.pacman.packages |= {
     "python-six",
     "python-tests",
     "python-wheel",
-    "rustup",
-    "zig",
 }
 
-decman.modules += [
-    AppsModule(),
-    ArchlinuxModule(),
-    AudioModule(),
-    BaseModule(),
-    BluetoothModule(),
-    CoreModule(),
-    DesktopModule(),
-    DevModule(),
-    EndeavourOSModule(),
-    LaptopModule(),
-    NetworkingModule(),
-    PrintingModule(),
-    SecurityModule(),
-    ShellModule(),
-    SystemModule(),
-    WmModule(),
-]
+_host = socket.gethostname()
+_slug = _host.replace("-", "_").lower()
+
+try:
+    importlib.import_module(f"hosts.{_slug}")
+except ModuleNotFoundError as e:
+    if e.name != f"hosts.{_slug}":
+        raise
+    raise decman.SourceError(
+        f"no host config for hostname {_host!r}; create hosts/{_slug}.py"
+    )

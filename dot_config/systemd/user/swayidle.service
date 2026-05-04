@@ -1,0 +1,18 @@
+[Unit]
+Description=Idle daemon for Wayland (swayidle)
+PartOf=graphical-session.target
+After=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swayidle -w \
+  timeout 900 'brightnessctl -s set 25%%' resume 'brightnessctl -r' \
+  timeout 900 'brightnessctl -sd rgb:kbd_backlight set 0' resume 'brightnessctl -rd rgb:kbd_backlight' \
+  timeout 1800 'systemctl suspend' \
+  before-sleep 'brightnessctl -sd rgb:kbd_backlight set 0; loginctl lock-session' \
+  lock 'pidof swaylock || swaylock -f'
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

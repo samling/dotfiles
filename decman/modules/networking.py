@@ -1,5 +1,7 @@
 import decman
-from decman.plugins import pacman
+from decman.plugins import pacman, systemd
+
+from modules._systemd import reconcile_units
 
 
 class NetworkingModule(decman.Module):
@@ -20,6 +22,7 @@ class NetworkingModule(decman.Module):
             "modemmanager",
             "netctl",
             "networkmanager",
+            "network-manager-applet",
             "networkmanager-openconnect",
             "networkmanager-openvpn",
             "nfs-utils",
@@ -27,3 +30,14 @@ class NetworkingModule(decman.Module):
             "ntp",
             "xl2tpd",
         }
+
+    @systemd.user_units
+    def user_units(self) -> dict[str, set[str]]:
+        return {
+            "sboynton": {
+                "nm-applet.service",
+            },
+        }
+
+    def on_change(self, store):
+        reconcile_units(self, store)

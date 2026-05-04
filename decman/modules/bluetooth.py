@@ -1,5 +1,7 @@
 import decman
-from decman.plugins import pacman
+from decman.plugins import pacman, systemd
+
+from modules._systemd import reconcile_units
 
 
 class BluetoothModule(decman.Module):
@@ -14,3 +16,10 @@ class BluetoothModule(decman.Module):
             "bluez",
             "bluez-utils",
         }
+
+    @systemd.units
+    def units(self) -> set[str]:
+        return {"bluetooth.service"}
+
+    def on_change(self, store):
+        reconcile_units(self, store)

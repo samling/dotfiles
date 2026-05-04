@@ -1,1 +1,7 @@
+decman/
 etc/
+flake-modules/
+hosts/
+modules/
+pkgs/
+roles/
