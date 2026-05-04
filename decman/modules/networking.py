@@ -5,6 +5,13 @@ from modules._systemd import reconcile_units
 
 
 class NetworkingModule(decman.Module):
+    """Generic networking CLI tools and protocols that make sense
+    everywhere (bind, dnsmasq, nfs, mdns, sshd, scanners).
+
+    NetworkManager + WiFi/cellular daemons + host firewall live in
+    host_networking — WSL roles must omit that module since WSL2
+    inherits its network stack from Windows.
+    """
 
     def __init__(self):
         super().__init__("networking")
@@ -12,39 +19,26 @@ class NetworkingModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
+            "arp-scan",
             "bind",
             "dnsmasq",
             "ethtool",
-            "firewall-applet",
-            "firewalld",
-            "iwd",
-            "modemmanager",
-            "netctl",
-            "networkmanager",
-            "network-manager-applet",
-            "networkmanager-openconnect",
-            "networkmanager-openvpn",
+            "ipcalc",
             "nfs-utils",
             "nftables",
+            "nmap",
             "nss-mdns",
             "ntp",
-            "xl2tpd",
+            "openbsd-netcat",
+            "smbclient",
+            "traceroute",
+            "websocat",
         }
 
     @systemd.units
     def units(self) -> set[str]:
         return {
-            "NetworkManager.service",
-            "firewalld.service",
             "sshd.service",
-        }
-
-    @systemd.user_units
-    def user_units(self) -> dict[str, set[str]]:
-        return {
-            "sboynton": {
-                "nm-applet.service",
-            },
         }
 
     def on_change(self, store):

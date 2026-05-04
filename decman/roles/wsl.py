@@ -2,6 +2,7 @@ from modules.archlinux import ArchlinuxModule
 from modules.base import BaseModule
 from modules.claude_code import ClaudeCodeModule
 from modules.core import CoreModule
+from modules.data import DataModule
 from modules.dev import DevModule
 from modules.docker import DockerModule
 from modules.editors import EditorsModule
@@ -17,6 +18,11 @@ from modules.users import UsersModule
 from modules.virtualization import VirtualizationModule
 from modules.work import WorkModule
 
+# Deliberately omits host_* and gui_* modules: WSL2 boots the
+# Microsoft kernel (no dracut/initramfs/EFI), inherits its network
+# stack from Windows (no NetworkManager/iwd), has no real PCI/USB
+# tree, and runs no compositor of its own (GUI apps via WSLg work
+# but feh/imv/obs make no sense headless).
 MODULES = [
     UsersModule(extra_groups=(
         "docker",
@@ -29,6 +35,7 @@ MODULES = [
     BaseModule(),
     ClaudeCodeModule(),
     CoreModule(),
+    DataModule(),
     DevModule(),
     DockerModule(),
     EditorsModule(),

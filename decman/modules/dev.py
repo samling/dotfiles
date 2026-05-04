@@ -10,6 +10,7 @@ class DevModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
+            "ansible",
             "clang",
             "direnv",
             "distrobox",
@@ -19,9 +20,15 @@ class DevModule(decman.Module):
             "go",
             "just",
             "lazygit",
+            "llvm",
+            "luarocks",
             "make",
             "meld",
+            "mingw-w64-gcc",
             "neovim",
+            "nvm",
+            "patchelf",
+            "pyenv",
             "python",
             "python-defusedxml",
             "python-jinja",
@@ -36,10 +43,12 @@ class DevModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
+            "asdf-vm",
             # devbox-bin tracks Jetify's prebuilt release tarball; the
             # source-build `devbox` PKGBUILD has had recurring sha256
             # drift against upstream re-rolls.
             "devbox-bin",
+            "pet-git",
             # qmk-udev-rules-git is broken (its PKGBUILD references
             # util/udev/50-qmk.rules which qmk_firmware no longer ships
             # at that path). The `qmk` pacman package above already

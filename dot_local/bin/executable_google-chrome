@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Hand URLs to the host's Chrome via WSL interop instead of running a
+# Linux Chrome under WSLg. chrome.exe accepts http(s) URLs directly.
+exec "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$@"

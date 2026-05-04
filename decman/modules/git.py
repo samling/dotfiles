@@ -14,6 +14,8 @@ class GitModule(decman.Module):
     def pkgs(self) -> set[str]:
         return {
             "git-delta",
+            "git-filter-repo",
+            "git-lfs",
             "pre-commit",
         }
 

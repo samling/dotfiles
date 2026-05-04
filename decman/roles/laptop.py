@@ -8,6 +8,7 @@ from modules.chat import ChatModule
 from modules.claude_code import ClaudeCodeModule
 from modules.clipboard import ClipboardModule
 from modules.core import CoreModule
+from modules.data import DataModule
 from modules.dev import DevModule
 from modules.docker import DockerModule
 from modules.editors import EditorsModule
@@ -16,6 +17,12 @@ from modules.endeavouros import EndeavourOSModule
 from modules.games import GamesModule
 from modules.git import GitModule
 from modules.graphical import GraphicalModule
+from modules.gui_media import MediaGuiModule
+from modules.gui_security import SecurityGuiModule
+from modules.host_disks import DisksModule
+from modules.host_hardware import HardwareModule
+from modules.host_kernel import KernelModule
+from modules.host_networking import HostNetworkingModule
 from modules.kubernetes import KubernetesModule
 from modules.laptop import LaptopModule
 from modules.locale import LocaleModule
@@ -71,7 +78,9 @@ MODULES = [
     ClaudeCodeModule(),
     ClipboardModule(),
     CoreModule(),
+    DataModule(),
     DevModule(),
+    DisksModule(),
     DockerModule(),
     EditorsModule(),
     EditorsGuiModule(),
@@ -79,14 +88,19 @@ MODULES = [
     GamesModule(),
     GitModule(),
     GraphicalModule(),
+    HardwareModule(),
+    HostNetworkingModule(),
+    KernelModule(),
     KubernetesModule(),
     LaptopModule(),
     MediaModule(),
+    MediaGuiModule(),
     NetworkingModule(),
     NiriModule(),
     PrintingModule(),
     RemoteDesktopModule(),
     SecurityModule(),
+    SecurityGuiModule(),
     ShellModule(),
     SyncModule(),
     SystemModule(),

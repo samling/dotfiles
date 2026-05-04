@@ -10,19 +10,12 @@ class BaseModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
+        # Universal baseline only. Kernel/firmware/EFI/filesystem tools
+        # live in host_kernel, host_disks — WSL roles can't include those.
         return {
             "base",
             "base-devel",
-            "btrfs-progs",
-            "dosfstools",
-            "efibootmgr",
-            "efitools",
             "git",
-            "linux",
-            "linux-firmware",
-            "linux-headers",
-            "linux-lts",
-            "linux-lts-headers",
         }
 
     @aur.packages

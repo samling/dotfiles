@@ -12,6 +12,8 @@ class ShellModule(decman.Module):
         return {
             "fastfetch",
             "tmux",
+            "wl-clipboard",
+            "zellij",
             "zsh",
         }
 

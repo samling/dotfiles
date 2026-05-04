@@ -1,5 +1,5 @@
 import decman
-from decman.plugins import pacman
+from decman.plugins import pacman, aur
 
 
 class ClaudeCodeModule(decman.Module):
@@ -7,10 +7,9 @@ class ClaudeCodeModule(decman.Module):
 
     `claude-code` itself isn't packaged here — install via the
     official npm/installer or a CustomPackage(pkgbuild_directory=...)
-    pointing at a local PKGBUILD. The seccomp blob and apply-seccomp
-    helper that the nix `claude-seccomp` derivation builds aren't
-    captured either; if you rely on sandbox.seccomp.bpfPath in
-    ~/.claude/settings.json those need to land at:
+    pointing at a local PKGBUILD. claude-code-seccomp ships the
+    apply-seccomp helper and BPF blob that sandbox.seccomp.bpfPath
+    in ~/.claude/settings.json points at — installs to:
       ~/.local/share/claude-code/seccomp/x64/apply-seccomp
       ~/.local/share/claude-code/seccomp/x64/seccomp-unix-block.bpf
     """
@@ -24,4 +23,10 @@ class ClaudeCodeModule(decman.Module):
             "bubblewrap",
             "libseccomp",
             "socat",
+        }
+
+    @aur.packages
+    def aurpkgs(self) -> set[str]:
+        return {
+            "claude-code-seccomp",
         }

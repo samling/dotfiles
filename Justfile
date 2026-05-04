@@ -3,8 +3,8 @@ host := `hostname`
 apply:
     sudo decman
 
-update:
-    paru -Syy
+dry-run:
+    sudo decman --dry-run
 
-upgrade:
-    paru -Syu
+update:
+    sudo DECMAN_NO_UPGRADE=1 decman

@@ -12,6 +12,11 @@ export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p
 #=== Default editor
 export EDITOR="nvim"
 
+#=== Default browser (WSL: hand URLs to host Chrome via interop wrapper)
+if [ -n "${WSL_DISTRO_NAME:-}" ]; then
+  export BROWSER="$HOME/.local/bin/google-chrome"
+fi
+
 #=== fzf
 # Enable separate tmux pane for fzf
 export FZF_TMUX=0 # '1' will open a new tmux pane for fzf completion

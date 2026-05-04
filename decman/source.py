@@ -1,16 +1,25 @@
 import importlib
+import os
 import socket
 
 import decman
 
 from modules import _aur_prompts
 from modules._aur_commands import SemiUnattended
+from modules._pacman_commands import NoUpgrade
 from modules.aur_keys import AurKeysModule
 from modules.chezmoi import ChezmoiModule
 
 # Skip per-package interaction during AUR builds (less pauses, dep prompts);
 # pacman's overall install/upgrade/remove summary prompts are kept.
 decman.aur.commands = SemiUnattended()
+
+# Opt-out of pacman -Syu for this run. Useful when adding/removing
+# packages whose closures you don't want to upgrade in the same apply.
+# Usage: sudo DECMAN_NO_UPGRADE=1 decman
+# (sudo strips env by default, hence inlining the var after sudo.)
+if os.environ.get("DECMAN_NO_UPGRADE"):
+    decman.pacman.commands = NoUpgrade()
 
 # Auto-answer decman's per-package "Review PKGBUILD?" / "Build this package?"
 # prompts. Top-level "Proceed?" prompts still ask.
@@ -41,7 +50,9 @@ decman.pacman.packages |= {
 # alive; we just don't want decman to GC them.
 decman.pacman.ignored_packages |= {
     "python-build",
+    "python-iniconfig",
     "python-installer",
+    "python-pluggy",
     "python-pygments",
     "python-pyproject-hooks",
     "python-pytest",
@@ -50,6 +61,7 @@ decman.pacman.ignored_packages |= {
     "python-setuptools-scm",
     "python-six",
     "python-tests",
+    "python-vcs-versioning",
     "python-wheel",
 }
 

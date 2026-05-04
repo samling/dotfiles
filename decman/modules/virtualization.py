@@ -15,13 +15,16 @@ class VirtualizationModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         # iptables-nft / nftables / dnsmasq are declared by NetworkingModule
-        # since they're not virtualization-specific.
+        # since they're not virtualization-specific. edk2-ovmf is in
+        # host_disks (EFI firmware).
         return {
-            "edk2-ovmf",
             "libvirt",
+            "qemu-base",
             "qemu-desktop",
+            "qemu-system-x86",
             "swtpm",
             "virt-manager",
+            "virt-viewer",
         }
 
     @systemd.units

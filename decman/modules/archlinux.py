@@ -10,17 +10,19 @@ class ArchlinuxModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
-            "downgrade",
             "pacman-contrib",
-            "paru",
             "pkgfile",
             "rebuild-detector",
             "reflector",
-            "reflector-simple",
-            "yay",
         }
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        # Runtime dep of decman itself.
-        return {"python-iniparse-git"}
+        return {
+            "downgrade",
+            "paru",
+            # Runtime dep of decman itself.
+            "python-iniparse-git",
+            "reflector-simple",
+            "yay",
+        }

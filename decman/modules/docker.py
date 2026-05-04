@@ -1,5 +1,5 @@
 import decman
-from decman.plugins import pacman, systemd
+from decman.plugins import pacman, aur, systemd
 
 from modules._systemd import reconcile_units
 
@@ -18,6 +18,12 @@ class DockerModule(decman.Module):
             "docker",
             "docker-buildx",
             "docker-compose",
+        }
+
+    @aur.packages
+    def aurpkgs(self) -> set[str]:
+        return {
+            "docker-sandbox-bin",
         }
 
     @systemd.units

@@ -10,7 +10,14 @@ class WorkModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        return set()
+        return {
+            "aws-cli",
+            "azure-cli",
+            "certbot",
+            "cilium-cli",
+            "terraform",
+            "terragrunt",
+        }
 
     @aur.packages
     def aurpkgs(self) -> set[str]:

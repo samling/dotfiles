@@ -1,0 +1,15 @@
+decman/
+etc/
+flake-modules/
+hosts/
+modules/
+pkgs/
+roles/
+
+{{- /* WSL-only: home-manager already provisions a Chrome wrapper +
+     desktop entry on non-WSL hosts. Keep chezmoi out of those paths
+     there to avoid shadowing the nix-managed versions. */ -}}
+{{ if not (env "WSL_DISTRO_NAME") }}
+.local/bin/google-chrome
+.local/share/applications/google-chrome.desktop
+{{ end }}
