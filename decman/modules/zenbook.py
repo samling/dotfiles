@@ -1,4 +1,5 @@
 import hashlib
+import os
 
 import decman
 from decman.plugins import pacman, aur, systemd
@@ -61,6 +62,11 @@ class ZenbookModule(decman.Module):
         return h.hexdigest()
 
     def on_change(self, store):
+        # asusd.service has ReadWritePaths=/etc/asusd/; namespace setup
+        # fails (status=226/NAMESPACE) if the dir is missing, and the
+        # asusctl package doesn't ship it.
+        os.makedirs("/etc/asusd", mode=0o755, exist_ok=True)
+
         reconcile_units(self, store)
 
         # Rebuild initrds (and re-emit boot entries) only when the EDID
