@@ -52,13 +52,24 @@ class UsersModule(UserManager):
         for g in managed_groups:
             self.add_group(Group(groupname=g, system=True))
 
+        # Pass groups to User() as well as add_user_to_group(): decman's
+        # _ensure_user_matches treats User.groups=() (the default) as
+        # "supplementary groups should be empty" and runs
+        # `usermod -r --groups <existing>` in before_update, stripping
+        # all current memberships. after_update then fails to restore
+        # them because its store-vs-declared diff sees no change.
+        # Setting groups here makes before_update a no-op; the
+        # add_user_to_group calls keep after_update's bookkeeping in
+        # sync so drift still gets reconciled.
+        all_groups = self.BASELINE_GROUPS + tuple(extra_groups)
         self.add_user(
             User(
                 username="sboynton",
                 shell="/usr/bin/zsh",
+                groups=all_groups,
             )
         )
-        for g in self.BASELINE_GROUPS + tuple(extra_groups):
+        for g in all_groups:
             self.add_user_to_group("sboynton", g)
 
         self.add_user(

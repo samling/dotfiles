@@ -99,8 +99,10 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin/
 # Avoid forking `go env GOPATH`; honor GOPATH override but default to $HOME/go.
 export PATH=$PATH:${GOPATH:-$HOME/go}/bin
-if command -v asdf &> /dev/null; then
+if asdf plugin list 2>/dev/null | grep -qx golang; then
   export PATH=$PATH:$(asdf where golang)/bin
+else
+  echo "golang not installed with asdf"
 fi
 
 #=== Krew
