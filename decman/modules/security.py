@@ -9,8 +9,18 @@ class SecurityModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        return {"tailscale"}
+        return {
+            "bitwarden-cli",
+            "tailscale",
+            "wireshark-qt",
+        }
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        return {"doppler-cli-bin"}
+        return {
+            "doppler-cli-bin",
+            # littlesnitch is a custom nix package; no AUR equivalent.
+            # Ship via CustomPackage(pkgbuild_directory=...) once a
+            # PKGBUILD exists. vkv is in AUR as vkv-bin.
+            # "vkv-bin",
+        }

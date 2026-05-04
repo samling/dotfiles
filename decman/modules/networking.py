@@ -17,7 +17,6 @@ class NetworkingModule(decman.Module):
             "ethtool",
             "firewall-applet",
             "firewalld",
-            "iptables",
             "iwd",
             "modemmanager",
             "netctl",
@@ -26,9 +25,18 @@ class NetworkingModule(decman.Module):
             "networkmanager-openconnect",
             "networkmanager-openvpn",
             "nfs-utils",
+            "nftables",
             "nss-mdns",
             "ntp",
             "xl2tpd",
+        }
+
+    @systemd.units
+    def units(self) -> set[str]:
+        return {
+            "NetworkManager.service",
+            "firewalld.service",
+            "sshd.service",
         }
 
     @systemd.user_units

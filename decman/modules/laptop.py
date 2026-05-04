@@ -1,10 +1,15 @@
 import decman
-from decman.plugins import pacman, aur, systemd
+from decman.plugins import pacman, systemd
 
 from modules._systemd import reconcile_units
 
 
 class LaptopModule(decman.Module):
+    """Generic laptop concerns — applies to any portable, no
+    vendor-specific assumptions. Vendor-specific quirks (EDID, fan
+    control, asus-wmi, etc.) belong in a host-scoped module like
+    ZenbookModule.
+    """
 
     def __init__(self):
         super().__init__("laptop")
@@ -12,10 +17,6 @@ class LaptopModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {"keyd"}
-
-    @aur.packages
-    def aurpkgs(self) -> set[str]:
-        return {"asus-5606-fan-state"}
 
     @systemd.units
     def units(self) -> set[str]:
@@ -50,9 +51,11 @@ class LaptopModule(decman.Module):
                 owner="root",
                 group="root",
             ),
-            "/etc/sudoers.d/asus": decman.File(
-                source_file="../etc/sudoers.d/asus",
-                permissions=0o440,
+            # Run keyd as the keyd group so keyd-application-mapper
+            # (running as the user) can talk to the keyd socket.
+            "/etc/systemd/system/keyd.service.d/group.conf": decman.File(
+                content="[Service]\nGroup=keyd\n",
+                permissions=0o644,
                 owner="root",
                 group="root",
             ),

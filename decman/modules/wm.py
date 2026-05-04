@@ -14,17 +14,18 @@ class WmModule(decman.Module):
         return {
             "awww",
             "cage",
+            "fuzzel",
             "greetd",
             "greetd-regreet",
             "grim",
             "kitty",
-            "niri",
             "quickshell",
             "rofi",
             "satty",
             "slurp",
             "swayidle",
             "wf-recorder",
+            "wofi",
             "xterm",
         }
 
@@ -33,12 +34,14 @@ class WmModule(decman.Module):
         return {
             "ghostty-nightly-bin",
             "swaylock-effects",
+            "wlogout",
         }
 
     @systemd.user_units
     def user_units(self) -> dict[str, set[str]]:
         return {
             "sboynton": {
+                "awww-change-wallpaper.timer",
                 "awww.service",
                 "quickshell.service",
                 "swayidle.service",

@@ -3,7 +3,23 @@ import socket
 
 import decman
 
+from modules import _aur_prompts
+from modules._aur_commands import SemiUnattended
+from modules.aur_keys import AurKeysModule
 from modules.chezmoi import ChezmoiModule
+
+# Skip per-package interaction during AUR builds (less pauses, dep prompts);
+# pacman's overall install/upgrade/remove summary prompts are kept.
+decman.aur.commands = SemiUnattended()
+
+# Auto-answer decman's per-package "Review PKGBUILD?" / "Build this package?"
+# prompts. Top-level "Proceed?" prompts still ask.
+_aur_prompts.install()
+
+# Point AUR builds at the aurbuilder user's gpg keyring (created by
+# UsersModule, populated by AurKeysModule). Has to happen before host
+# modules load so makepkg's chroot sees the right env.
+AurKeysModule.configure()
 
 # Registered first so its before_update hook (chezmoi apply) runs before any
 # host modules' updates. Module hooks fire in registration order.

@@ -1,5 +1,5 @@
 import decman
-from decman.plugins import pacman
+from decman.plugins import pacman, aur
 
 
 class DevModule(decman.Module):
@@ -12,9 +12,14 @@ class DevModule(decman.Module):
         return {
             "clang",
             "direnv",
+            "distrobox",
             "fnm",
+            "gcc",
             "github-cli",
+            "go",
             "just",
+            "lazygit",
+            "make",
             "meld",
             "neovim",
             "python",
@@ -24,5 +29,21 @@ class DevModule(decman.Module):
             "python-pillow",
             "python-pyqt5",
             "python-reportlab",
+            "qmk",
             "uv",
+        }
+
+    @aur.packages
+    def aurpkgs(self) -> set[str]:
+        return {
+            # devbox-bin tracks Jetify's prebuilt release tarball; the
+            # source-build `devbox` PKGBUILD has had recurring sha256
+            # drift against upstream re-rolls.
+            "devbox-bin",
+            # qmk-udev-rules-git is broken (its PKGBUILD references
+            # util/udev/50-qmk.rules which qmk_firmware no longer ships
+            # at that path). The `qmk` pacman package above already
+            # installs /usr/lib/udev/rules.d/50-qmk.rules, so the AUR
+            # package is redundant anyway.
+            "qmk-hid",
         }

@@ -1,5 +1,7 @@
 import decman
-from decman.plugins import pacman
+from decman.plugins import pacman, systemd
+
+from modules._systemd import reconcile_units
 
 
 class SystemModule(decman.Module):
@@ -31,6 +33,7 @@ class SystemModule(decman.Module):
             "jfsutils",
             "kernel-install-for-dracut",
             "less",
+            "lm_sensors",
             "logrotate",
             "lsb-release",
             "lsscsi",
@@ -58,4 +61,42 @@ class SystemModule(decman.Module):
             "which",
             "wireless-regdb",
             "xfsprogs",
+            "zram-generator",
+        }
+
+    @systemd.units
+    def units(self) -> set[str]:
+        # systemd-oomd is enabled by default on most setups but listing
+        # it here makes the dependency explicit. zram is generator-driven
+        # (no service to enable).
+        return {"systemd-oomd.service"}
+
+    def on_change(self, store):
+        reconcile_units(self, store)
+
+    def files(self) -> dict[str, decman.File]:
+        return {
+            # zram swap. ram/2 is what NixOS' zramSwap.enable defaults
+            # to; cap at 8G so a 64G workstation doesn't reserve 32G.
+            "/etc/systemd/zram-generator.conf": decman.File(
+                content=(
+                    "[zram0]\n"
+                    "zram-size = min(ram / 2, 8192)\n"
+                    "compression-algorithm = zstd\n"
+                ),
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
+            # Mirrors `systemd.oomd.enableUserSlices = true`.
+            "/etc/systemd/system/user-.slice.d/50-oomd.conf": decman.File(
+                content=(
+                    "[Slice]\n"
+                    "ManagedOOMSwap=auto\n"
+                    "ManagedOOMMemoryPressure=kill\n"
+                ),
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
         }
