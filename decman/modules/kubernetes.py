@@ -33,8 +33,9 @@ class KubernetesModule(decman.Module):
         }
 
     def after_update(self, store):
-        # Idempotent; timedatectl is a no-op if zone already matches.
         decman.prg(
-            ["krew", "install", "stern neat radar"],
+            ["kubectl", "krew", "install", "stern", "neat", "radar"],
+            user="sboynton",
+            mimic_login=True,
             check=False,
         )
