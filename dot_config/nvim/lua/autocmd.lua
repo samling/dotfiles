@@ -38,7 +38,24 @@ vim.api.nvim_create_autocmd({ "BufNew", "BufReadPost", "BufNewFile" }, {
         },
         cache_enabled = 0,
       }
-    elseif (is_unix == 1 or is_wsl == 1) and vim.fn.executable "wl-copy" == 1 then
+    elseif is_wsl == 1 and vim.fn.executable "win32yank.exe" == 1 then
+      -- WSL: route through win32yank.exe (a Windows-side process) so
+      -- Win+V / clipboard-history tools record the change. wl-copy
+      -- via WSLg only updates the clipboard *value* and doesn't fire
+      -- Windows-side change events that history watchers hook.
+      vim.g.clipboard = {
+        name = "win32yank-wsl",
+        copy = {
+          ["+"] = "win32yank.exe -i --crlf",
+          ["*"] = "win32yank.exe -i --crlf",
+        },
+        paste = {
+          ["+"] = "win32yank.exe -o --lf",
+          ["*"] = "win32yank.exe -o --lf",
+        },
+        cache_enabled = 0,
+      }
+    elseif is_unix == 1 and vim.fn.executable "wl-copy" == 1 then
       vim.g.clipboard = {
         copy = {
           ["+"] = "wl-copy",
@@ -63,7 +80,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     local cmd
     if is_mac == 1 then
       cmd = { "pbcopy" }
-    elseif is_windows == 1 and is_wsl ~= 1 then
+    elseif (is_windows == 1 or is_wsl == 1) and vim.fn.executable("win32yank.exe") == 1 then
       cmd = { "win32yank.exe", "-i", "--crlf" }
     elseif vim.fn.executable("wl-copy") == 1 then
       cmd = { "wl-copy" }
@@ -72,7 +89,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
     local text = table.concat(event.regcontents, "\n")
     if event.regtype == "V" then text = text .. "\n" end
-    vim.system(cmd, { stdin = text })
+    vim.system(cmd, { stdin = text, detach = true })
   end,
   desc = "Async mirror yanks to system clipboard",
 })

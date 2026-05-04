@@ -1,5 +1,5 @@
 import decman
-from decman.plugins import pacman
+from decman.plugins import aur, pacman
 
 
 class WindowsModule(decman.Module):
@@ -15,4 +15,10 @@ class WindowsModule(decman.Module):
     def pkgs(self) -> set[str]:
         return {
             "mingw-w64-gcc",
+        }
+
+    @aur.packages
+    def aurpkgs(self) -> set[str]:
+        return {
+            "win32yank-bin",
         }

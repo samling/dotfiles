@@ -24,6 +24,9 @@ class EditorsModule(decman.Module):
             "rust-analyzer",
             "shfmt",
             "stylua",
+            # nvim-treesitter shells out to the tree-sitter CLI to
+            # build parsers when :TSUpdate / :TSInstall fires.
+            "tree-sitter-cli",
             "typescript-language-server",
             "typst",
             "vim",
