@@ -18,7 +18,6 @@ class CoreModule(decman.Module):
             "btop",
             "chezmoi",
             "cmake",
-            "cmatrix",
             "cpio",
             "dua-cli",
             "duf",
@@ -72,6 +71,7 @@ class CoreModule(decman.Module):
             "mmdr-bin",
             "ntfysh-bin",
             "timg",
+            "neo-matrix",
             "toofan-bin",
             "viddy",
             # Custom packages from chezmoi pkgs/ — not yet on AUR; ship as

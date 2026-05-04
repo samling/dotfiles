@@ -16,6 +16,7 @@ from modules.shell import ShellModule
 from modules.system import SystemModule
 from modules.users import UsersModule
 from modules.virtualization import VirtualizationModule
+from modules.windows import WindowsModule
 from modules.work import WorkModule
 
 # Deliberately omits host_* and gui_* modules: WSL2 boots the
@@ -47,5 +48,6 @@ MODULES = [
     ShellModule(),
     SystemModule(),
     VirtualizationModule(),
+    WindowsModule(),
     WorkModule(),
 ]

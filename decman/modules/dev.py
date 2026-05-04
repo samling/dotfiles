@@ -24,7 +24,6 @@ class DevModule(decman.Module):
             "luarocks",
             "make",
             "meld",
-            "mingw-w64-gcc",
             "neovim",
             "nvm",
             "patchelf",
@@ -48,7 +47,12 @@ class DevModule(decman.Module):
             # source-build `devbox` PKGBUILD has had recurring sha256
             # drift against upstream re-rolls.
             "devbox-bin",
-            "pet-git",
+            # pet-git's pkgver() returns `date +%Y%m%d`, which decman
+            # can't match against the AUR-registered version, so the
+            # build fails with "pkg file cannot be determined". The
+            # non-git `pet-bin` ships a prebuilt binary with a static
+            # version from upstream releases.
+            "pet-bin",
             # qmk-udev-rules-git is broken (its PKGBUILD references
             # util/udev/50-qmk.rules which qmk_firmware no longer ships
             # at that path). The `qmk` pacman package above already

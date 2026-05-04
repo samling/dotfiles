@@ -31,12 +31,6 @@ class LaptopModule(decman.Module):
 
     def files(self) -> dict[str, decman.File]:
         return {
-            "/etc/keyd/app.conf": decman.File(
-                source_file="../etc/keyd/app.conf",
-                permissions=0o644,
-                owner="root",
-                group="root",
-            ),
             "/etc/keyd/default.conf": decman.File(
                 source_file="../etc/keyd/default.conf",
                 permissions=0o644,

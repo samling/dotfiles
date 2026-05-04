@@ -20,5 +20,6 @@ class EndeavourOSModule(decman.Module):
             "eos-packagelist",
             "eos-quickstart",
             "eos-rankmirrors",
+            "reflector-simple",
             "welcome",
         }

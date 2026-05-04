@@ -26,7 +26,7 @@ class DataModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
-            "kopia",
+            "kopia-bin",
             "pgloader",
             "vendir",
             "ytt",
