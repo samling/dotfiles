@@ -1,0 +1,20 @@
+# Maintainer: Sam Boynton <sboynton@nvidia.com>
+pkgname=vkv-bin
+_pkgname=vkv
+pkgver=0.9.3
+pkgrel=1
+pkgdesc="List, compare, move, import, document, backup & encrypt secrets from a HashiCorp Vault KV engine"
+arch=('x86_64' 'aarch64')
+url="https://github.com/FalcoSuessgott/vkv"
+license=('MIT')
+provides=('vkv')
+conflicts=('vkv')
+source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_Linux_x86_64.tar.gz")
+source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_Linux_arm64.tar.gz")
+sha256sums_x86_64=('646ca9390f96210a065b33bfed62215c8a6567d41452e68898cb83dca9757682')
+sha256sums_aarch64=('a5d80ce35eb96408d67be22ea6ec8293cfd52219ee1771ffa049fbf9d980c27d')
+
+package() {
+    install -Dm755 "$srcdir/${_pkgname}" "$pkgdir/usr/bin/${_pkgname}"
+    install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
+}

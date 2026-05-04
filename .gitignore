@@ -8,3 +8,5 @@ log
 .serena
 .infisical*
 result
+__pycache__/
+*.pyc

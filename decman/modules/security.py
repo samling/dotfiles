@@ -1,5 +1,11 @@
+from pathlib import Path
+
 import decman
 from decman.plugins import pacman, aur
+
+# Absolute path to the repo's pkgbuilds/ dir. decman chdirs into a
+# temp build dir before copying PKGBUILDs, so relative paths break.
+_PKGBUILDS = Path(__file__).resolve().parents[2] / "pkgbuilds"
 
 
 class SecurityModule(decman.Module):
@@ -33,11 +39,20 @@ class SecurityModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "doppler-cli-bin",
+            "littlesnitch-bin",
             "trufflehog",
-            # littlesnitch is a custom nix package; no AUR equivalent.
-            # Ship via CustomPackage(pkgbuild_directory=...) once a
-            # PKGBUILD exists. vkv is in AUR as vkv-bin.
-            # "vkv-bin",
+        }
+
+    @aur.custom_packages
+    def custompkgs(self) -> set[aur.CustomPackage]:
+        return {
+            # FalcoSuessgott/vkv has no AUR package. PKGBUILD pulls the
+            # prebuilt binary from the GitHub release (same source the
+            # old nix derivation used).
+            aur.CustomPackage(
+                pkgname="vkv-bin",
+                pkgbuild_directory=str(_PKGBUILDS / "vkv-bin"),
+            ),
         }
 
     def after_update(self, store):

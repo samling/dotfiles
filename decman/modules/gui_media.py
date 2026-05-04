@@ -26,4 +26,7 @@ class MediaGuiModule(decman.Module):
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        return {"spotify"}
+        return {
+            "ie-r",
+            "spotify",
+        }

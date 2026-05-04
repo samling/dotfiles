@@ -1,5 +1,11 @@
+from pathlib import Path
+
 import decman
 from decman.plugins import pacman, aur
+
+# Absolute path to the repo's pkgbuilds/ dir. decman chdirs into a
+# temp build dir before copying PKGBUILDs, so relative paths break.
+_PKGBUILDS = Path(__file__).resolve().parents[2] / "pkgbuilds"
 
 
 class CoreModule(decman.Module):
@@ -74,7 +80,16 @@ class CoreModule(decman.Module):
             "neo-matrix",
             "toofan-bin",
             "viddy",
-            # Custom packages from chezmoi pkgs/ — not yet on AUR; ship as
-            # CustomPackage(pkgbuild_directory=...) once PKGBUILDs exist:
-            #   gitoverit
+            # gitoverit still has no PKGBUILD; not yet on AUR.
+        }
+
+    @aur.custom_packages
+    def custompkgs(self) -> set[aur.CustomPackage]:
+        return {
+            # samling/command-snippets, no AUR package. PKGBUILD pulls
+            # the prebuilt binary from the GitHub release.
+            aur.CustomPackage(
+                pkgname="command-snippets-bin",
+                pkgbuild_directory=str(_PKGBUILDS / "command-snippets-bin"),
+            ),
         }
