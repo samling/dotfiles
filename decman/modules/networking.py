@@ -1,5 +1,5 @@
 import decman
-from decman.plugins import pacman, systemd
+from decman.plugins import aur, pacman, systemd
 
 from modules._systemd import reconcile_units
 
@@ -33,6 +33,12 @@ class NetworkingModule(decman.Module):
             "smbclient",
             "traceroute",
             "websocat",
+        }
+
+    @aur.packages
+    def aurpkgs(self) -> set[str]:
+        return {
+            "sshp",
         }
 
     @systemd.units
