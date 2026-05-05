@@ -35,6 +35,7 @@ class WmModule(decman.Module):
             "ghostty-nightly-bin",
             "swaylock-effects",
             "wlogout",
+            "wlrctl",
         }
 
     @systemd.user_units

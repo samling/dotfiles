@@ -9,4 +9,107 @@ cat | jq --arg home "$HOME" '
   | .sandbox.seccomp.applyPath = "\($home)/.local/share/claude-code/seccomp/x64/apply-seccomp"
   | .sandbox.enabled = true
   | .sandbox.autoAllowBashIfSandboxed = true
+  | .hooks = {
+      "SessionStart": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "UserPromptSubmit": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "PreToolUse": [
+        {
+          "matcher": "*",
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "PostToolUse": [
+        {
+          "matcher": "*",
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "PostToolUseFailure": [
+        {
+          "matcher": "*",
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "PostToolBatch": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "PermissionRequest": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "PermissionDenied": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "Notification": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "SubagentStart": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "SubagentStop": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "Stop": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "StopFailure": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ],
+      "SessionEnd": [
+        {
+          "hooks": [
+            { "type": "command", "command": "/home/sboynton/Documents/Programming/agent-status/scripts/debug.sh" }
+          ]
+        }
+      ]
+    }
 '
