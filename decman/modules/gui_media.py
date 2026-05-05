@@ -54,9 +54,10 @@ class MediaGuiModule(decman.Module):
         }
 
     def after_update(self, store):
-        # Bind the Spotify Connect service + the built-in mDNS service
-        # to the active zone. firewall-cmd writes the change to the
-        # zone XML and firewalld's filesystem watcher reloads it.
+        # firewalld doesn't watch /etc/firewalld/services/, so reload
+        # to pick up spotify-connect.xml before --add-service validates
+        # against the loaded service list.
+        decman.prg(["firewall-cmd", "--reload"], check=False)
         for svc in ("spotify-connect", "mdns"):
             decman.prg(
                 [

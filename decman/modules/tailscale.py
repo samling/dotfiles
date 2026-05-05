@@ -84,9 +84,10 @@ class TailscaleModule(decman.Module):
         }
 
     def after_update(self, store):
-        # firewall-cmd --add-service writes to /etc/firewalld/zones/<zone>.xml
-        # and is idempotent; firewalld picks up the change via its
-        # filesystem watcher (no explicit reload needed).
+        # firewalld doesn't watch /etc/firewalld/services/, so reload
+        # to pick up tailscale.xml before --add-service validates
+        # against the loaded service list.
+        decman.prg(["firewall-cmd", "--reload"], check=False)
         decman.prg(
             [
                 "firewall-cmd", "--permanent",
