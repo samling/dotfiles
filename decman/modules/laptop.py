@@ -45,6 +45,15 @@ class LaptopModule(decman.Module):
                 owner="root",
                 group="root",
             ),
+            # keyd's virtual pointer advertises ABS_X/ABS_Y, so joydev
+            # spawns /dev/input/jsN and Parsec misdetects it as a gamepad.
+            # Hide the js node and clear the joystick udev tag.
+            "/etc/udev/rules.d/99-keyd-no-joystick.rules": decman.File(
+                source_file="../etc/keyd/99-keyd-no-joystick.rules",
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
             # Run keyd as the keyd group so keyd-application-mapper
             # (running as the user) can talk to the keyd socket.
             "/etc/systemd/system/keyd.service.d/group.conf": decman.File(
