@@ -84,14 +84,22 @@ class TailscaleModule(decman.Module):
         }
 
     def after_update(self, store):
+        # Skip if already bound so steady-state runs don't print
+        # ALREADY_ENABLED noise. pty=False captures output silently
+        # unless the command fails.
+        already = decman.prg(
+            ["firewall-cmd", "--permanent", "--zone=public",
+             "--query-service=tailscale"],
+            pty=False, check=False,
+        ).strip() == "yes"
+        if already:
+            return
         # firewalld doesn't watch /etc/firewalld/services/, so reload
         # to pick up tailscale.xml before --add-service validates
         # against the loaded service list.
-        decman.prg(["firewall-cmd", "--reload"], check=False)
+        decman.prg(["firewall-cmd", "--reload"], pty=False, check=False)
         decman.prg(
-            [
-                "firewall-cmd", "--permanent",
-                "--zone=public", "--add-service=tailscale",
-            ],
-            check=False,
+            ["firewall-cmd", "--permanent",
+             "--zone=public", "--add-service=tailscale"],
+            pty=False, check=False,
         )

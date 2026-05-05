@@ -54,15 +54,26 @@ class MediaGuiModule(decman.Module):
         }
 
     def after_update(self, store):
+        # Skip services already bound to the zone so steady-state runs
+        # don't print ALREADY_ENABLED noise. pty=False captures output
+        # silently unless the command fails.
+        needed = [
+            svc for svc in ("spotify-connect", "mdns")
+            if decman.prg(
+                ["firewall-cmd", "--permanent", "--zone=public",
+                 f"--query-service={svc}"],
+                pty=False, check=False,
+            ).strip() != "yes"
+        ]
+        if not needed:
+            return
         # firewalld doesn't watch /etc/firewalld/services/, so reload
         # to pick up spotify-connect.xml before --add-service validates
         # against the loaded service list.
-        decman.prg(["firewall-cmd", "--reload"], check=False)
-        for svc in ("spotify-connect", "mdns"):
+        decman.prg(["firewall-cmd", "--reload"], pty=False, check=False)
+        for svc in needed:
             decman.prg(
-                [
-                    "firewall-cmd", "--permanent",
-                    "--zone=public", f"--add-service={svc}",
-                ],
-                check=False,
+                ["firewall-cmd", "--permanent",
+                 "--zone=public", f"--add-service={svc}"],
+                pty=False, check=False,
             )

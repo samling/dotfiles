@@ -32,6 +32,7 @@ class SecurityModule(decman.Module):
             # flow to auto-unlock, so on first use create the login
             # keyring with an empty password (see role docstring).
             "gnome-keyring",
+            "seahorse", # keyring configurator
             "tailscale",
         }
 
@@ -71,7 +72,7 @@ class SecurityModule(decman.Module):
                 'mkdir -p "$(dirname "$kr")"\n'
                 'export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/bus"\n'
                 'gnome-keyring-daemon --replace --components=secrets,pkcs11 --unlock '
-                '< /dev/null > /dev/null\n'
+                '< /dev/null > /dev/null 2>&1\n'
             ],
             user="sboynton",
             mimic_login=True,
