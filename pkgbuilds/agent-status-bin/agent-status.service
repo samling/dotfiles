@@ -5,8 +5,8 @@ After=default.target
 
 [Service]
 Type=simple
-StateDirectory=agent-status
-ExecStart=/usr/bin/agent-status --state %S/agent-status/state.json server
+ConfigurationDirectory=agent-status
+ExecStart=/usr/bin/agent-status server
 Restart=on-failure
 RestartSec=2
 

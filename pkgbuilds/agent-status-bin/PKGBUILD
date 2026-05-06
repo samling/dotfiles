@@ -2,7 +2,7 @@
 pkgname=agent-status-bin
 _pkgname=agent-status
 pkgver=0.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="API and live status board for Claude Code session management"
 arch=('x86_64' 'aarch64')
 url="https://github.com/samling/agent-status"
