@@ -3,7 +3,7 @@ alias sudo="sudo "
 
 #=== AI
 #alias serena="uvx --from git+https://github.com/oraios/serena serena"
-alias claude='claude --append-system-prompt "$(uvx --python 3.13 --from git+https://github.com/oraios/serena serena prompts print-cc-system-prompt-override)"'
+#alias claude='claude --append-system-prompt "$(uvx --python 3.13 --from git+https://github.com/oraios/serena serena prompts print-cc-system-prompt-override)"'
 
 #=== Builtin Replacements
 alias cat="bat -pp"
