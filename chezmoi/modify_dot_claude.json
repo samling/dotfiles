@@ -1,0 +1,58 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $config := dict -}}
+{{- if .chezmoi.stdin -}}
+{{-   $config = fromJson .chezmoi.stdin -}}
+{{- end -}}
+
+{{- /* Get secrets */ -}}
+{{- $context7ApiKey := doppler "CONTEXT7_API_KEY" "homelab" "dev_personal" -}}
+{{- $perplexityApiKey := doppler "PERPLEXITYAI_NVDA_API_KEY" "homelab" "dev_personal" -}}
+{{- $githubClaudeCodePAT := doppler "GITHUB_CLAUDE_CODE_PAT" "homelab" "dev_personal" -}}
+
+{{- /* Define your MCP servers here */ -}}
+{{- $mcpServers := dict
+    "context7" (dict
+        "type" "http"
+        "url" "https://mcp.context7.com/mcp"
+        "headers" (dict
+            "CONTEXT7_API_KEY" $context7ApiKey
+        )
+    )
+    "serena" (dict
+        "type" "stdio"
+        "command" "uvx"
+        "args" (list "--from" "git+https://github.com/oraios/serena" "serena" "start-mcp-server" "--context=claude-code" "--project-from-cwd")
+    )
+    "sequential-thinking" (dict
+        "type" "stdio"
+        "command" "npx"
+        "args" (list "-y" "@modelcontextprotocol/server-sequential-thinking")
+    )
+    "perplexity" (dict
+        "type" "stdio"
+        "command" "npx"
+        "args" (list "-y" "perplexity-mcp")
+        "env" (dict
+            "PERPLEXITY_API_KEY" $perplexityApiKey
+        )
+    )
+    "slop-guard" (dict
+      "type" "stdio"
+      "command" "uvx"
+      "args" (list "slop-guard")
+    )
+    "github" (dict
+      "type" "http"
+      "url" "https://api.githubcopilot.com/mcp"
+      "headers" (dict
+        "Authorization" (printf "Bearer %s" $githubClaudeCodePAT)
+      )
+    )
+    "nixos" (dict
+      "command" "uvx"
+      "args" (list "mcp-nixos")
+    )
+-}}
+
+{{- $config = $config | setValueAtPath "mcpServers" $mcpServers -}}
+{{ $config | toPrettyJson }}

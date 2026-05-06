@@ -1,0 +1,16 @@
+[Unit]
+Description=Quickshell
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/qs
+Environment=QT_QPA_PLATFORMTHEME=qt6ct
+Environment=QT_ICON_THEME=Papirus-Dark
+Environment=QT_STYLE_OVERRIDE=Fusion
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=graphical-session.target

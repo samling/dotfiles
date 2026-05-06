@@ -1,0 +1,11 @@
+[Unit]
+Description=clipse image clipboard watcher
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/wl-paste -t image/png --watch /usr/bin/clipse -wl-store
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Send SIGTERM to Chrome on session end so it flushes session state
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/true
+ExecStop=%h/.config/systemd/user/scripts/chrome-graceful-stop.sh
+
+[Install]
+WantedBy=graphical-session.target

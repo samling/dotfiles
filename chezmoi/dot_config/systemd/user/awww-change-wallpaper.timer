@@ -1,0 +1,8 @@
+[Unit]
+Description=Rotate wallpaper periodically
+
+[Timer]
+OnUnitActiveSec=60min
+
+[Install]
+WantedBy=timers.target

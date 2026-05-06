@@ -1,5 +1,0 @@
-arch = { packages = [
-  "impala",
-  "iwd",
-  "powertop",
-] }

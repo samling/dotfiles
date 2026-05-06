@@ -1,65 +1,99 @@
 ### Dotfiles
 
-My ever-growing collection of dotfiles and configs.
+Personal NixOS + home-manager configuration, with a chezmoi/doppler layer for the few things that don't belong in the Nix store (SSH config tweaks, Claude settings, secret-derived env files).
 
-### Prereqs
-* `git`
-* `make`
-* `direnv`
-* [doppler cli](https://aur.archlinux.org/packages/doppler-cli-bin)
-* [chezmoi](https://github.com/twpayne/chezmoi)
-* [metapac](https://github.com/ripytide/metapac)
+### Layout
 
-### Doppler CLI tl;dr
+| File(s)/Folder(s) | Description |
+| --- | --- |
+| `flake.nix` | inputs + import-tree entry point |
+| `flake-modules/` | framework glue - option declarations, the homeManager↔NixOS bridge |
+| `modules/<module>/` | leaf NixOS + home-manager config. Folder name == module name |
+| `roles/<role>.nix` | role bundles - each picks a list of modules a host wants together |
+| `hosts/<host>/` | one `configuration.nix` (+ optional `hardware-configuration.nix`) per machine |
+| `config/` | static dotfile sources imported by home-manager modules |
+| `pkgs/` | custom `callPackage` recipes |
+| `chezmoi/` | dotfiles kept out of the Nix store |
 
-`doppler login`
-`doppler setup`
+See [NIX.md](./NIX.md) for the architecture in detail.
 
-### Chezmoi tl;dr
-```bash
-chezmoi init <repo>
-chezmoi apply {-n}          # Apply changes to ~ {Dry run}
-chezmoi archive             # Create an archive of the dotfiles
-chezmoi cd                  # cd to chezmoi source path
-chezmoi merge               # Merge changes made to local copy with chezmoi-managed file
-chezmoi update              # Pull latest version from git and apply changes
+### Provisioning NixOS
 
-chezmoi add ~/.my_file      # Manage new file
-chezmoi forget ~/.my_file   # Stop managing a file
-chezmoi managed             # View managed files
-```
+A full path from a blank NixOS install to a daily-driver machine.
 
-### Metapac tl;dr
-```bash
-metapac sync                # Install all missing packages
-metapac clean               # (Interactively) clean removed packages
-metapac unmanaged           # Show explicitly installed packages not required by metapac
-```
+#### 1. Bootstrap NixOS into the flake
 
-### Installation
+1. Install NixOS (minimal or graphical ISO), boot, log in.
+2. Configure wireless with `nmtui`
+3. Enable flakes (only change required in `/etc/nixos`):
+    ```nix
+    # /etc/nixos/configuration.nix
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    ```
+    Then `sudo nixos-rebuild switch`.
+4. Clone this repo:
+    ```bash
+    nix-shell -p git vim just doppler gh nh
+    git clone https://github.com/samling/dotfiles ~/dotfiles && cd ~/dotfiles
+    ```
+5. Dump this machine's hardware config from the running hardware:
+    ```bash
+    mkdir -p hosts/<hostname>
+    sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix
+    ```
+6. Write `hosts/<hostname>/configuration.nix` - pick a role from `roles/` (or write a new one), import it alongside the hardware config, and add any host-specific overrides. `flake.nixosConfigurations.<hostname>` is auto-derived from `configurations.nixos.<hostname>` - no `flake.nix` edit needed. See [NIX.md → Adding a host](./NIX.md#adding-a-host).
+7. Stage everything (nix ignores untracked files):
+    ```bash
+    git add -A
+    ```
+8. Build as `boot`. This keeps the current generation as default so you can roll back from the systemd-boot menu if the new one breaks. Reboot, then switch for future changes:
+    ```bash
+    just boot
+    sudo reboot
+    just apply
+    ```
 
+After the first clean boot, `/etc/nixos/configuration.nix` is no longer consulted; the flake owns everything.
+
+#### 2. Post-Deploy Steps
+
+Configure `gh`:
+1. `gh auth login`
+1. `cp .envrc.tmpl .envrc`
+1. `direnv allow`
+
+Configure `doppler`:
 1. `doppler login`
 1. `doppler setup`
-1. `doppler secrets substitute ./.envrc.tmpl > .envrc`
-1. Enable direnv with `eval "$(direnv hook bash)"`
-1. `direnv allow`
-1. `chezmoi init`
-1. `chezmoi apply {--refresh-externals}`
-1. (Optional) `metapac sync && metapac clean`
+
+Configure and run `chezmoi`:
+1. `chezmoi init --source $(pwd)`
+1. `chezmoi apply`
+
+### Daily use
+
+```
+just boot          # nh os boot for the current host
+just apply/deploy  # nh os switch for the current host
+just diff          # preview the nvd closure diff without activating
+just update-lock   # nix flake update (bumps flake.lock only)
+just bump-pkgs     # nix-update for each package in ./pkgs/ (no apply, no commit)
+just update        # `just bump-pkgs` + diff + confirm + `just apply` + commit
+just upgrade       # `just update-lock` + `just bump-pkgs` + diff + confirm + `just apply` + commit
+```
+
+### Chezmoi reference
+
+```
+chezmoi init --source $(pwd) # initialize chezmoi in the current directory
+chezmoi apply {-n}           # apply changes to ~ (dry run with -n)
+chezmoi merge                # merge local edits back into chezmoi source
+chezmoi update               # pull latest + apply
+chezmoi add ~/.my_file       # manage a new file
+chezmoi forget ~/.my_file    # remove a file
+chezmoi managed              # list managed files
+```
 
 ### Notes
-- See [this page](https://www.cyberciti.biz/faq/linux-unix-macos-fix-error-cant-open-display-null-with-ssh-xclip-command-in-headless/) to configure X11 forwarding over ssh
 
-# Chezmoi Scripts
-
-This directory contains scripts that are executed by chezmoi during apply operations.
-
-## Package Installation
-
-Packages are managed by metapac. Groups are defined in `./dot_config/metapac/groups/`.
-
-### Adding New Packages
-
-To add a new package, update the corresponding group file, e.g. `./dot_config/metapac/groups/40-cli-tools.toml`.
-
-Install it with `metapac sync`. Run `metapac clean` to remove packages no longer declared.
+- X11 forwarding over SSH: see [this guide](https://www.cyberciti.biz/faq/linux-unix-macos-fix-error-cant-open-display-null-with-ssh-xclip-command-in-headless/).

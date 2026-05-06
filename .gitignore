@@ -6,3 +6,7 @@ log
 *.code-workspace
 .bwpass
 .serena
+.infisical*
+result
+__pycache__/
+*.pyc

@@ -1,0 +1,3 @@
+sboynton ALL=(ALL) NOPASSWD: /usr/bin/fan_state
+sboynton ALL=(ALL) NOPASSWD: /usr/bin/cpupower
+sboynton ALL=(ALL) NOPASSWD: /usr/bin/sh -c echo [01] > /sys/class/leds/platform\:\:micmute/brightness

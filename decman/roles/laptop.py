@@ -111,3 +111,4 @@ MODULES = [
     VirtualizationModule(),
     WmModule(),
 ]
+

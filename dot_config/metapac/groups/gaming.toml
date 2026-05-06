@@ -1,5 +1,0 @@
-arch = { packages = [
-  "moonlight-qt",
-  "steam",
-  "vulkan-radeon",
-] }

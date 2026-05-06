@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+cat | yq '.excluded_tools = [
+  "replace_lines",
+  "replace_content",
+  "replace_symbol_body"
+]'
