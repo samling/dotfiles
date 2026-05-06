@@ -1,8 +1,8 @@
 # Maintainer: Sam Boynton <sboynton@nvidia.com>
 pkgname=agent-status-bin
 _pkgname=agent-status
-pkgver=0.1.1
-pkgrel=2
+pkgver=0.1.2
+pkgrel=1
 pkgdesc="API and live status board for Claude Code session management"
 arch=('x86_64' 'aarch64')
 url="https://github.com/samling/agent-status"
@@ -12,9 +12,9 @@ conflicts=('agent-status')
 source=("agent-status.service")
 source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-amd64.tar.gz")
 source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-arm64.tar.gz")
-sha256sums=('SKIP')
-sha256sums_x86_64=('fb078175a3c959a8dd4c37e83b65b3289a46d37edabdb23e07e11fc0685c486b')
-sha256sums_aarch64=('1111f981f17072d3ad621cf4d0030accf936e912769a1699874b1886f598bed3')
+sha256sums=('c7c29b11e6efade28b11007cd1ebb6755530870a36d3e2659c56ff8debf52c57')
+sha256sums_x86_64=('3594cb15f5de8d5bbb7426be6fc804fbeba65d200b5f2992d222676382f6ab35')
+sha256sums_aarch64=('d48c384109b935763b7578893c4008042eeaea43235ddcf7d186456c6bca60c6')
 
 package() {
     local _suffix
