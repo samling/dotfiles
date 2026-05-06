@@ -1,0 +1,28 @@
+# Maintainer: Sam Boynton <sboynton@nvidia.com>
+pkgname=agent-status-bin
+_pkgname=agent-status
+pkgver=0.1.1
+pkgrel=1
+pkgdesc="API and live status board for Claude Code session management"
+arch=('x86_64' 'aarch64')
+url="https://github.com/samling/agent-status"
+license=('unknown')
+provides=('agent-status')
+conflicts=('agent-status')
+source=("agent-status.service")
+source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-amd64.tar.gz")
+source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-arm64.tar.gz")
+sha256sums=('SKIP')
+sha256sums_x86_64=('fb078175a3c959a8dd4c37e83b65b3289a46d37edabdb23e07e11fc0685c486b')
+sha256sums_aarch64=('1111f981f17072d3ad621cf4d0030accf936e912769a1699874b1886f598bed3')
+
+package() {
+    local _suffix
+    [[ $CARCH == x86_64 ]] && _suffix=linux-amd64
+    [[ $CARCH == aarch64 ]] && _suffix=linux-arm64
+    local _dist="${_pkgname}_${pkgver}_${_suffix}"
+
+    install -Dm755 "$srcdir/${_dist}/${_pkgname}" "$pkgdir/usr/bin/${_pkgname}"
+    install -Dm644 "$srcdir/${_dist}/README.md" "$pkgdir/usr/share/doc/${pkgname}/README.md"
+    install -Dm644 "$srcdir/agent-status.service" "$pkgdir/usr/lib/systemd/user/agent-status.service"
+}

@@ -1,5 +1,13 @@
+from pathlib import Path
+
 import decman
-from decman.plugins import pacman, aur
+from decman.plugins import pacman, aur, systemd
+
+from modules._systemd import reconcile_units
+
+# Absolute path to the repo's pkgbuilds/ dir. decman chdirs into a
+# temp build dir before copying PKGBUILDs, so relative paths break.
+_PKGBUILDS = Path(__file__).resolve().parents[2] / "pkgbuilds"
 
 
 class ClaudeCodeModule(decman.Module):
@@ -12,6 +20,10 @@ class ClaudeCodeModule(decman.Module):
     in ~/.claude/settings.json points at — installs to:
       ~/.local/share/claude-code/seccomp/x64/apply-seccomp
       ~/.local/share/claude-code/seccomp/x64/seccomp-unix-block.bpf
+
+    agent-status-bin pulls the prebuilt binary from the upstream
+    GitHub release; agent-status.service is the per-user collector
+    the Claude Code hooks POST session events to.
     """
 
     def __init__(self):
@@ -30,3 +42,23 @@ class ClaudeCodeModule(decman.Module):
         return {
             "claude-code-seccomp",
         }
+
+    @aur.custom_packages
+    def custompkgs(self) -> set[aur.CustomPackage]:
+        return {
+            aur.CustomPackage(
+                pkgname="agent-status-bin",
+                pkgbuild_directory=str(_PKGBUILDS / "agent-status-bin"),
+            ),
+        }
+
+    @systemd.user_units
+    def user_units(self) -> dict[str, set[str]]:
+        return {
+            "sboynton": {
+                "agent-status.service",
+            },
+        }
+
+    def on_change(self, store):
+        reconcile_units(self, store)

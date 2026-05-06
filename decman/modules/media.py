@@ -23,5 +23,6 @@ class MediaModule(decman.Module):
             "ffmpegthumbnailer",
             "imagemagick",
             "mpv",
+            "oxipng",
             "yt-dlp",
         }
