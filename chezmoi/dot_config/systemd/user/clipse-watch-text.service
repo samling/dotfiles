@@ -1,0 +1,15 @@
+[Unit]
+# clipse's `-listen` spawns two `wl-paste --watch clipse -wl-store` processes
+# as detached children and exits, which Type=simple can't supervise. We run
+# the watchers directly so each is a real foregrounded systemd-managed process
+# with proper restart semantics.
+Description=clipse text clipboard watcher
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/wl-paste -t text --watch /usr/bin/clipse -wl-store
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

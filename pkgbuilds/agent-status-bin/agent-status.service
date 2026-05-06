@@ -1,0 +1,14 @@
+[Unit]
+Description=agent-status HTTP collector for Claude Code
+Documentation=https://github.com/samling/agent-status
+After=default.target
+
+[Service]
+Type=simple
+ConfigurationDirectory=agent-status
+ExecStart=/usr/bin/agent-status server
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

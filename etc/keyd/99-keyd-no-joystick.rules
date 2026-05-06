@@ -1,0 +1,6 @@
+# keyd's virtual pointer advertises ABS_X/ABS_Y so the kernel's joydev
+# module spawns /dev/input/jsN, which Parsec (and other gamepad probes)
+# then misdetects as a gamepad emitting phantom "L Stick" events. Hide
+# the legacy joystick node and clear the joystick tag.
+ACTION=="add|change", SUBSYSTEM=="input", ATTRS{name}=="keyd virtual pointer", ENV{ID_INPUT_JOYSTICK}="", ENV{ID_INPUT_MOUSE}="1"
+KERNEL=="js[0-9]*", ATTRS{name}=="keyd virtual pointer", MODE="0000"

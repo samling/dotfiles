@@ -1,0 +1,200 @@
+#!/usr/bin/env bash
+cat | jq --arg home "$HOME" '
+  .statusLine = {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
+  }
+  | .sandbox.seccomp.bpfPath   = "/usr/lib/claude-code-seccomp/unix-block.bpf"
+  | .sandbox.seccomp.applyPath = "/usr/lib/claude-code-seccomp/apply-seccomp"
+  | .sandbox.enabled = true
+  | .sandbox.autoAllowBashIfSandboxed = true
+  | .outputStyle = "sboynton"
+  | .permissions = {
+      "allow": [
+        "Bash(find *)",
+        "Bash(grep *)",
+        "Bash(head *)",
+        "Bash(kubectl get *)",
+        "Bash(go get *)",
+        "Bash(go mod *)",
+        "Bash(make *)",
+        "Bash(ls *)",
+        "Bash(sed *)",
+        "Bash(pkill *)",
+        "Read",
+        "Update",
+        "WebFetch",
+        "mcp__serena__list_dir",
+        "mcp__serena__find_file",
+        "mcp__serena__search_for_pattern",
+        "mcp__serena__get_symbols_overview",
+        "mcp__serena__find_symbol",
+        "mcp__serena__find_referencing_symbols",
+        "mcp__serena__replace_symbol_body",
+        "mcp__serena__insert_after_symbol",
+        "mcp__serena__insert_before_symbol",
+        "mcp__gitlab__authenticate",
+        "mcp__gitlab__gitlab_coderabbit_ai_prompt",
+        "mcp__gitlab__gitlab_get_commit",
+        "mcp__gitlab__gitlab_get_epic",
+        "mcp__gitlab__gitlab_get_file_contents",
+        "mcp__gitlab__gitlab_get_issue",
+        "mcp__gitlab__gitlab_get_job_log",
+        "mcp__gitlab__gitlab_get_job_log_metadata",
+        "mcp__gitlab__gitlab_get_job_log_paginated",
+        "mcp__gitlab__gitlab_get_merge_request",
+        "mcp__gitlab__gitlab_get_merge_request_diffs",
+        "mcp__gitlab__gitlab_get_pipeline_tree",
+        "mcp__gitlab__gitlab_get_project_details",
+        "mcp__gitlab__gitlab_get_repo_tree",
+        "mcp__gitlab__gitlab_greptile_ai_suggestions",
+        "mcp__gitlab__gitlab_health",
+        "mcp__gitlab__gitlab_list_commits",
+        "mcp__gitlab__gitlab_list_epics",
+        "mcp__gitlab__gitlab_list_issues",
+        "mcp__gitlab__gitlab_list_merge_requests",
+        "mcp__gitlab__gitlab_list_pipelines_jobs",
+        "mcp__gitlab__gitlab_list_projects",
+        "mcp__gitlab__gitlab_search_repositories",
+        "mcp__googledrive__gdrive_get_file",
+        "mcp__googledrive__gdrive_get_metadata",
+        "mcp__googledrive__gdrive_search",
+        "mcp__googledrive__health_check",
+        "mcp__jira__authenticate",
+        "mcp__jira__jira_clone_issue",
+        "mcp__jira__jira_create_issue",
+        "mcp__jira__jira_get_editmeta",
+        "mcp__jira__jira_get_issue",
+        "mcp__jira__jira_get_transitions",
+        "mcp__jira__jira_health",
+        "mcp__jira__jira_search",
+        "mcp__jira__jira_transition_issue",
+        "mcp__jira__jira_update_issue",
+        "mcp__nvbugs__nvbugs_bugnemo_find_similar_bugs",
+        "mcp__nvbugs__nvbugs_check_connection",
+        "mcp__nvbugs__nvbugs_get_bug_details",
+        "mcp__nvbugs__nvbugs_get_unique_entities",
+        "mcp__nvbugs__nvbugs_search",
+        "mcp__nvbugs__nvbugs_update_bug",
+        "mcp__onedrive__health_check",
+        "mcp__onedrive__onedrive_get_file",
+        "mcp__onedrive__onedrive_get_metadata",
+        "mcp__onedrive__onedrive_search",
+        "mcp__outlook__outlook_get_conversation",
+        "mcp__outlook__outlook_get_event",
+        "mcp__outlook__outlook_get_message",
+        "mcp__outlook__outlook_health_check",
+        "mcp__outlook__outlook_list_calendar_view",
+        "mcp__outlook__outlook_list_events",
+        "mcp__outlook__outlook_list_messages",
+        "mcp__sharepoint__health_check",
+        "mcp__sharepoint__sharepoint_get_file",
+        "mcp__sharepoint__sharepoint_get_metadata",
+        "mcp__sharepoint__sharepoint_search"
+      ]
+    }
+  | .hooks = {
+      "SessionStart": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "UserPromptSubmit": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "PreToolUse": [
+        {
+          "matcher": "*",
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "PostToolUse": [
+        {
+          "matcher": "*",
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "PostToolUseFailure": [
+        {
+          "matcher": "*",
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "PostToolBatch": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "PermissionRequest": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "PermissionDenied": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "Notification": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "SubagentStart": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "SubagentStop": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "Stop": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "StopFailure": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ],
+      "SessionEnd": [
+        {
+          "hooks": [
+            { "type": "command", "command": "{{ .chezmoi.homeDir }}/.claude/scripts/post-agent-status.sh" }
+          ]
+        }
+      ]
+    }
+'

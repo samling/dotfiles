@@ -1,0 +1,23 @@
+hotkey-overlay {
+  skip-at-startup
+}
+
+environment {
+  GTK_USE_PORTAL "0"
+  GDK_DEBUG "no-portals"
+}
+
+input{
+  keyboard {
+    xkb {
+      layout "us"
+    }
+  }
+}
+
+output "eDP-1" {
+  scale 1.600000
+  transform "normal"
+}
+
+spawn-at-startup "sh" "-c" "/usr/bin/regreet; pkill -f niri"
