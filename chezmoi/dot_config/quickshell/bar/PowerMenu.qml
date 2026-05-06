@@ -19,7 +19,7 @@ MouseArea {
         root.menuOpen = !root.menuOpen
     }
 
-    // NixOS logo
+    // Arch logo
     Text {
         id: logoText
         anchors.centerIn: parent
@@ -30,7 +30,7 @@ MouseArea {
         font.weight: Font.Bold
         font.family: Config.fontFamilyIcon
         textFormat: Text.PlainText
-        text: "\uf313"
+        text: "\uf303"
 
         Behavior on color {
             ColorAnimation { duration: Config.colorAnimationDuration }
