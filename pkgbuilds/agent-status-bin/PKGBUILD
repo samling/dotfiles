@@ -1,7 +1,7 @@
 # Maintainer: Sam Boynton <sboynton@nvidia.com>
 pkgname=agent-status-bin
 _pkgname=agent-status
-pkgver=0.1.4
+pkgver=0.2.1
 pkgrel=1
 pkgdesc="API and live status board for Claude Code session management"
 arch=('x86_64' 'aarch64')
@@ -13,8 +13,8 @@ source=("agent-status.service")
 source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-amd64.tar.gz")
 source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-arm64.tar.gz")
 sha256sums=('c7c29b11e6efade28b11007cd1ebb6755530870a36d3e2659c56ff8debf52c57')
-sha256sums_x86_64=('03f455d467bad47fbc760498ab0a2ea782a23b81dda059e7749e1a5e1cc109bd')
-sha256sums_aarch64=('b1dbc81dfbfd944eadcfcda7c5f38bb096a602ed678e9603b2d071cb7a6fcccc')
+sha256sums_x86_64=('4725e9007c5b874164cd7ec9947763dba9c4045fcd982c65a3eda8a795ce15c2')
+sha256sums_aarch64=('0c57d39aac03fea1436687b300da6ea672a9c0ea7999dcdd48fece1c86be2423')
 
 package() {
     local _suffix
