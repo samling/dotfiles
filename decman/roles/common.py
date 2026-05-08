@@ -13,7 +13,10 @@ Roles compose this list with their own role-specific modules:
 
 Deliberate exclusions:
 - UsersModule: extra_groups/managed_groups vary per role.
-- AurKeysModule: only laptops build AUR packages; WSL doesn't.
+- AurKeysModule: which validpgpkeys-using AUR packages a role
+  installs (spotify, wlogout, ...) is role-specific, so the
+  per-package fetch_*() calls live in the role file. (Both roles
+  build AUR packages; only signature-verified ones need this.)
 - LocaleModule: trivially identical, but each role places it
   immediately after UsersModule (and after _aur_keys() on laptop)
   before the bulk of modules register, so it stays in the role file

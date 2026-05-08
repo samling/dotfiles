@@ -291,6 +291,7 @@ spawn-at-startup "obsidian"
 // Background services
 spawn-sh-at-startup	"killall niri-float-sticky; niri-float-sticky -disable-auto-stick"
 spawn-at-startup "ie-r"
+spawn-at-startup "flameshot"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
