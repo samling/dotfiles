@@ -19,6 +19,7 @@ Deliberate exclusions:
   before the bulk of modules register, so it stays in the role file
   to keep that ordering visible.
 """
+from modules.ai_tools import AIToolsModule
 from modules.archlinux import ArchlinuxModule
 from modules.base import BaseModule
 from modules.claude_code import ClaudeCodeModule
@@ -38,6 +39,7 @@ from modules.system import SystemModule
 from modules.virtualization import VirtualizationModule
 
 MODULES = [
+    AIToolsModule(),
     ArchlinuxModule(),
     BaseModule(),
     ClaudeCodeModule(),
