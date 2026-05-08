@@ -36,12 +36,17 @@ class UsersModule(UserManager):
 
     # Arch's NetworkManager uses polkit for authorization; there's no
     # `networkmanager` group (that's a NixOS/Debian convention).
-    BASELINE_GROUPS: tuple[str, ...] = (
-        "audio",
-        "input",
-        "video",
-        "wheel",
-    )
+    #
+    # `audio`, `input`, and `video` are intentionally NOT included
+    # despite being part of the NixOS baseline. On Arch with
+    # systemd-logind, the active session user gets per-device ACLs
+    # (uaccess) on /dev/snd/*, /dev/input/event*, and /dev/dri/*
+    # automatically. Static membership in those groups gives blanket
+    # cross-session RW access, which (a) is unnecessary, and (b) breaks
+    # apps like Parsec/libmatoya that rely on permission-based
+    # heuristics to distinguish gamepads from touchpads/mice. See
+    # snowcone-ltd/libmatoya#80.
+    BASELINE_GROUPS: tuple[str, ...] = ("wheel",)
 
     def __init__(
         self,

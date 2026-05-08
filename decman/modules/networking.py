@@ -39,6 +39,7 @@ class NetworkingModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "sshp",
+            "python-pssh",
         }
 
     @systemd.units
