@@ -1,5 +1,5 @@
 import decman
-from decman.plugins import pacman
+from decman.plugins import aur, pacman
 
 
 class GamesModule(decman.Module):
@@ -14,7 +14,15 @@ class GamesModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        return {"steam"}
+        return {
+          "steam",
+        }
+
+    @aur.packages
+    def aurpkgs(self) -> set[str]:
+        return {
+          "stepmania",
+        }
 
     def files(self) -> dict[str, decman.File]:
         # firewalld zone drop-in. firewalld is already pulled in by
