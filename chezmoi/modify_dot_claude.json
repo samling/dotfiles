@@ -54,5 +54,10 @@
     )
 -}}
 
-{{- $config = $config | setValueAtPath "mcpServers" $mcpServers -}}
+{{- $existing := dict -}}
+{{- if hasKey $config "mcpServers" -}}
+{{-   $existing = get $config "mcpServers" -}}
+{{- end -}}
+{{- $merged := mergeOverwrite $existing $mcpServers -}}
+{{- $config = $config | setValueAtPath "mcpServers" $merged -}}
 {{ $config | toPrettyJson }}
