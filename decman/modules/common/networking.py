@@ -9,8 +9,8 @@ class NetworkingModule(decman.Module):
     everywhere (bind, dnsmasq, nfs, mdns, sshd, scanners).
 
     NetworkManager + WiFi/cellular daemons + host firewall live in
-    host_networking — WSL roles must omit that module since WSL2
-    inherits its network stack from Windows.
+    `modules.host.networking` — WSL roles must omit that module
+    since WSL2 inherits its network stack from Windows.
     """
 
     def __init__(self):

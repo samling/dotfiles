@@ -7,8 +7,8 @@ import decman
 from modules import _aur_prompts
 from modules._aur_commands import SemiUnattended
 from modules._pacman_commands import NoUpgrade
-from modules.aur_keys import AurKeysModule
-from modules.chezmoi import ChezmoiModule
+from modules.common.aur_keys import AurKeysModule
+from modules.common.chezmoi import ChezmoiModule
 
 # Skip per-package interaction during AUR builds (less pauses, dep prompts);
 # pacman's overall install/upgrade/remove summary prompts are kept.

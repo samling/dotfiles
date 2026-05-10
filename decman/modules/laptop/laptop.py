@@ -5,10 +5,10 @@ from modules._systemd import reconcile_units
 
 
 class LaptopModule(decman.Module):
-    """Generic laptop concerns — applies to any portable, no
-    vendor-specific assumptions. Vendor-specific quirks (EDID, fan
-    control, asus-wmi, etc.) belong in a host-scoped module like
-    ZenbookModule.
+    """Generic laptop concerns. Applies to any portable, no
+    vendor-specific assumptions. Vendor quirks (EDID, fan control,
+    asus-wmi, etc.) belong under `modules/hardware/` and are
+    registered by the host file, not this role.
     """
 
     def __init__(self):

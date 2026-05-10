@@ -1,13 +1,8 @@
-from pathlib import Path
-
 import decman
 from decman.plugins import pacman, aur, systemd
 
+from modules._paths import PKGBUILDS as _PKGBUILDS
 from modules._systemd import reconcile_units
-
-# Absolute path to the repo's pkgbuilds/ dir. decman chdirs into a
-# temp build dir before copying PKGBUILDs, so relative paths break.
-_PKGBUILDS = Path(__file__).resolve().parents[2] / "pkgbuilds"
 
 
 class ClaudeCodeModule(decman.Module):

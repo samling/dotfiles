@@ -7,12 +7,14 @@ from modules._systemd import reconcile_units
 class SecurityGuiModule(decman.Module):
     """GUI-only security tools.
 
-    Split from SecurityModule so headless/WSL roles don't pull the Qt
-    bits of wireshark. The CLI `tshark` is in the upstream `wireshark-cli`
-    package, add that to SecurityModule if needed on WSL.
+    Split from `modules.common.security` so headless/WSL roles don't
+    pull the Qt bits of wireshark. The CLI `tshark` ships in the
+    upstream `wireshark-cli` package — add that to the common module
+    if it's needed on WSL.
 
-    The `littlesnitch-bin` AUR package stays registered in SecurityModule
-    but its systemd service is no longer auto-enabled.
+    The `littlesnitch-bin` AUR package stays registered in
+    `modules.common.security` but its systemd service is no longer
+    auto-enabled.
     """
 
     def __init__(self):

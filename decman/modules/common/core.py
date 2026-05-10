@@ -1,11 +1,7 @@
-from pathlib import Path
-
 import decman
 from decman.plugins import pacman, aur
 
-# Absolute path to the repo's pkgbuilds/ dir. decman chdirs into a
-# temp build dir before copying PKGBUILDs, so relative paths break.
-_PKGBUILDS = Path(__file__).resolve().parents[2] / "pkgbuilds"
+from modules._paths import PKGBUILDS as _PKGBUILDS
 
 
 class CoreModule(decman.Module):

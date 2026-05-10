@@ -16,7 +16,7 @@ class VirtualizationModule(decman.Module):
     def pkgs(self) -> set[str]:
         # iptables-nft / nftables / dnsmasq are declared by NetworkingModule
         # since they're not virtualization-specific. edk2-ovmf is in
-        # host_disks (EFI firmware).
+        # modules.host.disks (EFI firmware).
         return {
             "libvirt",
             "qemu-base",

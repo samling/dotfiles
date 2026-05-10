@@ -6,10 +6,10 @@ class MediaGuiModule(decman.Module):
     """GUI media apps: image viewers, OBS, Spotify, media-key control.
 
     Split out of MediaModule so headless/WSL roles don't pull in GUI
-    Electron/Qt apps. spotify's PKGBUILD has validpgpkeys; the role
-    file must register AurKeysModule(.fetch_spotify()) before this
-    module so the aurbuilder keyring contains Spotify's signing key
-    by the time makechrootpkg fires.
+    Electron/Qt apps. spotify's PKGBUILD has validpgpkeys; the
+    AurKeysModule constructed by `roles.common._aur_keys` already
+    fetches Spotify's signing key into the aurbuilder keyring, so
+    nothing role-side is needed for the build to succeed.
 
     Spotify Connect needs TCP/57621 (peer sync) and UDP/5353 (mDNS
     discovery) reachable to talk to other devices on the LAN; the

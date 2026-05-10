@@ -94,6 +94,63 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Async mirror yanks to system clipboard",
 })
 
+-- Pull system clipboard into the unnamed register so plain `p` pastes
+-- content yanked in another nvim instance. Async (no UI block); fires on
+-- focus regain and just before paste so we don't poll continuously.
+local function pull_clipboard_cmd()
+  if is_mac == 1 then
+    return { "pbpaste" }
+  elseif (is_windows == 1 or is_wsl == 1) and vim.fn.executable("win32yank.exe") == 1 then
+    return { "win32yank.exe", "-o", "--lf" }
+  elseif vim.fn.executable("wl-paste") == 1 then
+    return { "wl-paste", "--no-newline" }
+  end
+end
+
+local function apply_clipboard(text)
+  if text == nil or text == vim.fn.getreg('"') then return end
+  local regtype = text:find("\n", 1, true) and "V" or "v"
+  vim.fn.setreg('"', text, regtype)
+  vim.fn.setreg("0", text, regtype)
+end
+
+local function sync_clipboard_async()
+  local cmd = pull_clipboard_cmd()
+  if not cmd then return end
+  vim.system(cmd, { text = true }, function(obj)
+    if obj.code ~= 0 then return end
+    vim.schedule(function() apply_clipboard(obj.stdout or "") end)
+  end)
+end
+
+local function sync_clipboard_sync()
+  local cmd = pull_clipboard_cmd()
+  if not cmd then return end
+  local ok, obj = pcall(function()
+    return vim.system(cmd, { text = true }):wait(150)
+  end)
+  if not ok or not obj or obj.code ~= 0 then return end
+  apply_clipboard(obj.stdout or "")
+end
+
+vim.api.nvim_create_autocmd({ "FocusGained", "VimEnter" }, {
+  callback = sync_clipboard_async,
+  desc = "Pull system clipboard into unnamed reg on focus",
+})
+
+-- Sync right before paste so yank-in-A / paste-in-B works even when no
+-- FocusGained fires (e.g. tmux pane switch under non-focus-aware terms).
+-- Only fires on default register (no explicit "x prefix), so register
+-- workflows like "ap stay untouched.
+vim.keymap.set({ "n", "x" }, "p", function()
+  if vim.v.register == '"' then sync_clipboard_sync() end
+  return "p"
+end, { expr = true, desc = "Paste after syncing system clipboard" })
+vim.keymap.set({ "n", "x" }, "P", function()
+  if vim.v.register == '"' then sync_clipboard_sync() end
+  return "P"
+end, { expr = true, desc = "Paste-before after syncing system clipboard" })
+
 -- Force remove hyphen as keyword
 vim.api.nvim_create_autocmd("FileType", {
   callback = function()

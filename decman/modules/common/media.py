@@ -7,9 +7,10 @@ class MediaModule(decman.Module):
     yt-dlp, mpv. mpv is included even in headless roles because it
     works on WSLg and is the canonical local player.
 
-    GUI media apps (feh, imv, obs-studio, playerctl, spotify) live in
-    gui_media. Roles that want them must register
-    AurKeysModule(.fetch_spotify()) before MediaGuiModule loads.
+    GUI media apps (feh, imv, obs-studio, playerctl, spotify) live
+    in `modules.gui.media`. The validpgpkeys signers needed to
+    build spotify/wlogout are imported by `roles.common._aur_keys`
+    so MediaGuiModule loading after COMMON sees the keys ready.
     """
 
     def __init__(self):

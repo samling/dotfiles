@@ -13,37 +13,54 @@ Roles compose this list with their own role-specific modules:
 
 Deliberate exclusions:
 - UsersModule: extra_groups/managed_groups vary per role.
-- AurKeysModule: which validpgpkeys-using AUR packages a role
-  installs (spotify, wlogout, ...) is role-specific, so the
-  per-package fetch_*() calls live in the role file. (Both roles
-  build AUR packages; only signature-verified ones need this.)
 - LocaleModule: trivially identical, but each role places it
-  immediately after UsersModule (and after _aur_keys() on laptop)
-  before the bulk of modules register, so it stays in the role file
-  to keep that ordering visible.
+  immediately after UsersModule before the bulk of modules
+  register, so it stays in the role file to keep that ordering
+  visible.
+
+AurKeysModule lives in COMMON via `_aur_keys()` even though only
+GUI roles consume the keys it imports (spotify, wlogout). The
+per-host cost is two GPG entries in the aurbuilder keyring on
+runs that don't actually build those packages — negligible — and
+having one canonical list of validpgpkeys signers is worth more
+than the saved keystrokes.
 """
-from modules.ai_tools import AIToolsModule
-from modules.archlinux import ArchlinuxModule
-from modules.base import BaseModule
-from modules.claude_code import ClaudeCodeModule
-from modules.codex import CodexModule
-from modules.core import CoreModule
-from modules.data import DataModule
-from modules.dev import DevModule
-from modules.docker import DockerModule
-from modules.editors import EditorsModule
-from modules.git import GitModule
-from modules.kubernetes import KubernetesModule
-from modules.media import MediaModule
-from modules.networking import NetworkingModule
-from modules.security import SecurityModule
-from modules.shell import ShellModule
-from modules.system import SystemModule
-from modules.virtualization import VirtualizationModule
+from modules.common.ai_tools import AIToolsModule
+from modules.common.archlinux import ArchlinuxModule
+from modules.common.aur_keys import AurKeysModule
+from modules.common.base import BaseModule
+from modules.common.claude_code import ClaudeCodeModule
+from modules.common.codex import CodexModule
+from modules.common.core import CoreModule
+from modules.common.data import DataModule
+from modules.common.dev import DevModule
+from modules.common.docker import DockerModule
+from modules.common.editors import EditorsModule
+from modules.common.filesystems import FilesystemsModule
+from modules.common.git import GitModule
+from modules.common.kubernetes import KubernetesModule
+from modules.common.media import MediaModule
+from modules.common.networking import NetworkingModule
+from modules.common.security import SecurityModule
+from modules.common.shell import ShellModule
+from modules.common.system import SystemModule
+from modules.common.virtualization import VirtualizationModule
+
+
+def _aur_keys() -> AurKeysModule:
+    """AurKeysModule preconfigured with every validpgpkeys signer
+    any of our roles needs. Add new fetches here, not in role files.
+    """
+    keys = AurKeysModule()
+    keys.fetch_spotify()
+    keys.fetch_wlogout()
+    return keys
+
 
 MODULES = [
     AIToolsModule(),
     ArchlinuxModule(),
+    _aur_keys(),
     BaseModule(),
     ClaudeCodeModule(),
     CodexModule(),
@@ -52,6 +69,7 @@ MODULES = [
     DevModule(),
     DockerModule(),
     EditorsModule(),
+    FilesystemsModule(),
     GitModule(),
     KubernetesModule(),
     MediaModule(),

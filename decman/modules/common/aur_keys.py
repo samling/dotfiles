@@ -14,9 +14,10 @@ makechrootpkg. Wiring:
   - UsersModule creates the `aurbuilder` system user with a real home.
   - source.py calls `AurKeysModule.configure()` which sets
     GNUPGHOME + decman.aur.makepkg_user.
-  - The role file constructs an AurKeysModule instance, calls
-    `fetch_spotify()` (and friends), and registers it AFTER
-    UsersModule so before_update sees the user already extant.
+  - `roles/common.py`'s `_aur_keys()` constructs an AurKeysModule
+    instance, calls `fetch_spotify()` (and friends), and registers
+    it through COMMON. Each role file places UsersModule before
+    *COMMON, so before_update sees aurbuilder already extant.
     GPGReceiver silently no-ops if the user doesn't exist yet.
 """
 
@@ -25,7 +26,7 @@ import os
 import decman
 from decman.extras.gpg import GPGReceiver
 
-from modules.users import (
+from modules.common.users import (
     AUR_BUILDER_GNUPG_HOME,
     AUR_BUILDER_USER,
 )

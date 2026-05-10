@@ -10,8 +10,11 @@ class BaseModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        # Universal baseline only. Kernel/firmware/EFI/filesystem tools
-        # live in host_kernel, host_disks — WSL roles can't include those.
+        # Universal baseline only. Kernel/firmware live in
+        # modules.host.kernel; block-device tooling (RAID/EFI/SMART)
+        # in modules.host.disks — WSL roles omit both. Generic FS
+        # userland (mkfs.*/fsck.*) lives in modules.common.filesystems
+        # and ships everywhere.
         return {
             "base",
             "base-devel",

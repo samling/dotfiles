@@ -7,10 +7,11 @@ from modules._systemd import reconcile_units
 class SystemModule(decman.Module):
     """Generic CLI system utilities that work everywhere.
 
-    Hardware-specific bits (kernel, fs tools, hwinfo, raid, lvm,
-    crypto, microcode, firmware, zram) live in host_kernel,
-    host_disks, host_hardware. Host-only roles add those modules
-    explicitly; WSL omits them.
+    Hardware-specific bits (kernel, hwinfo, raid, lvm, crypto,
+    microcode, firmware, zram) live under `modules/host/`; the gui
+    role pulls them in, WSL omits them. Generic filesystem userland
+    (mkfs.*, fsck.*, ntfs-3g) lives in `modules.common.filesystems`
+    and ships everywhere.
     """
 
     def __init__(self):

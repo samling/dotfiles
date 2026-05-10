@@ -1,38 +1,16 @@
-from modules.audio import AudioModule
-from modules.aur_keys import AurKeysModule
-from modules.bluetooth import BluetoothModule
-from modules.browsers import BrowsersModule
-from modules.chat import ChatModule
-from modules.clipboard import ClipboardModule
-from modules.editors_gui import EditorsGuiModule
-from modules.endeavouros import EndeavourOSModule
-from modules.games import GamesModule
-from modules.graphical import GraphicalModule
-from modules.gui_media import MediaGuiModule
-from modules.gui_security import SecurityGuiModule
-from modules.host_disks import DisksModule
-from modules.host_hardware import HardwareModule
-from modules.host_kernel import KernelModule
-from modules.host_networking import HostNetworkingModule
-from modules.laptop import LaptopModule
-from modules.locale import LocaleModule
-from modules.niri import NiriModule
-from modules.printing import PrintingModule
-from modules.remote_desktop import RemoteDesktopModule
-from modules.sync import SyncModule
-from modules.tailscale import TailscaleModule
-from modules.udisks import UdisksModule
-from modules.users import UsersModule
-from modules.wm import WmModule
-from roles.common import MODULES as COMMON
+"""Modules for a portable host. Layers laptop-specific bits on top
+of the gui role.
 
-
-def _aur_keys() -> AurKeysModule:
-    keys = AurKeysModule()
-    keys.fetch_spotify()
-    keys.fetch_wlogout()
-    return keys
-
+Vendor-specific quirks (asusd, EDID firmware, fnlock, etc.) belong
+in a host-scoped module under `modules/hardware/`, not here. This
+file keeps to concerns that apply to every laptop we'd care to
+manage: keyd remapping, the keyd group, the Parsec/joydev udev
+workaround.
+"""
+from modules.common.locale import LocaleModule
+from modules.common.users import UsersModule
+from modules.laptop.laptop import LaptopModule
+from roles.gui import GUI_GROUPS, GUI_MODULES
 
 MODULES = [
     # Users first so its before_update creates managed groups; the
@@ -40,43 +18,10 @@ MODULES = [
     # provide each group (docker, libvirt, kvm, keyd, wireshark) are
     # installed.
     UsersModule(
-        extra_groups=(
-            "docker",
-            "keyd",
-            "kvm",
-            "libvirt",
-            "wireshark",
-        ),
+        extra_groups=GUI_GROUPS + ("keyd",),
         managed_groups=("keyd",),
     ),
-    # AurKeysModule must follow UsersModule so the aurbuilder user
-    # exists by the time GPGReceiver tries to import keys for it.
-    _aur_keys(),
     LocaleModule(),
-
-    *COMMON,
-
-    AudioModule(),
-    BluetoothModule(),
-    BrowsersModule(),
-    ChatModule(),
-    ClipboardModule(),
-    DisksModule(),
-    EditorsGuiModule(),
-    EndeavourOSModule(),
-    GamesModule(),
-    GraphicalModule(),
-    HardwareModule(),
-    HostNetworkingModule(),
-    KernelModule(),
+    *GUI_MODULES,
     LaptopModule(),
-    MediaGuiModule(),
-    NiriModule(),
-    PrintingModule(),
-    RemoteDesktopModule(),
-    SecurityGuiModule(),
-    SyncModule(),
-    TailscaleModule(),
-    UdisksModule(),
-    WmModule(),
 ]
