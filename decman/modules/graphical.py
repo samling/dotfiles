@@ -62,6 +62,7 @@ class GraphicalModule(decman.Module):
             "xorg-xinput",
             "xorg-xkill",
             "xorg-xrandr",
+            "yazi",
         }
 
     @aur.packages
