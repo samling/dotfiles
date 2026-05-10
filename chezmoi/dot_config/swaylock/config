@@ -9,7 +9,10 @@ datestr=%A, %B %d
 font=JetBrains Mono
 font-size=32
 screenshots
-effect-blur=7x5
+effect-scale=0.5
+effect-blur=7x3
+effect-scale=2
+effect-vignette=0.5:0.5
 fade-in=0.2
 
 # Catppuccin Mocha (https://github.com/catppuccin/swaylock)

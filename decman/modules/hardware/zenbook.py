@@ -43,7 +43,8 @@ class ZenbookModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
-            "asus-5606-fan-state",
+            "asus-5606-fan-state-git",
+            "asus-5606-firmware-check-git",
             "asusctl",
             "rog-control-center",
         }
