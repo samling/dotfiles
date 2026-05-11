@@ -47,10 +47,14 @@ workspace "2:Terminal" {
 workspace "3:Code" {
   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
 }
-workspace "4:Chat" {
+workspace "4:Meetings" {
   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
 }
-workspace "5:Notes" {
-  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+
+workspace "1:Chat" {
+  open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
+}
+workspace "2:Notes" {
+  open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
 }
 

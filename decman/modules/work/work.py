@@ -26,7 +26,7 @@ class WorkModule(decman.Module):
         # internal and not present in AUR — install separately if needed.
         return {
             "cursor-bin",
-            "globalprotect-openconnect",
+            "globalprotect-openconnect-git",
             "slack-desktop",
             "teams-for-linux-bin",
             "teleport-bin",

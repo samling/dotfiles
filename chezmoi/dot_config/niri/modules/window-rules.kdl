@@ -8,14 +8,15 @@ window-rule {
 }
 
 window-rule {
-  match app-id="google-chrome"
-  open-on-workspace "1:Web"
+    geometry-corner-radius 12
+    clip-to-geometry true
 }
 
+//=== WEB
+
 window-rule {
-  match app-id=r#"^com\.mitchellh\.ghostty$"#
-  open-on-workspace "2:Terminal"
-  draw-border-with-background false
+  match app-id="google-chrome"
+  open-on-workspace "Web"
 }
 
 window-rule {
@@ -23,37 +24,6 @@ window-rule {
   open-floating true;
   open-focused true;
   default-floating-position x=32 y=150 relative-to="top-right"
-}
-
-window-rule {
-  match app-id="code"
-  open-on-workspace "3:Code"
-}
-
-window-rule {
-  match app-id="vesktop"
-  open-on-workspace "4:Chat"
-}
-
-window-rule {
-  match app-id="obsidian"
-  open-on-workspace "5:Notes"
-}
-
-window-rule {
-  match app-id="feh"
-  open-floating true;
-  open-focused true;
-}
-
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
-window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
 }
 
 // Open the Firefox picture-in-picture player as floating by default.
@@ -71,7 +41,72 @@ window-rule {
     open-floating true
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
+//===TERMINAL
+
+window-rule {
+  match app-id=r#"^com\.mitchellh\.ghostty$"#
+  open-on-workspace "Terminal"
+  draw-border-with-background false
+}
+
+//=== CODE
+
+window-rule {
+  match app-id="code"
+  open-on-workspace "Code"
+}
+
+window-rule {
+  match app-id="cursor"
+  open-on-workspace "Code"
+}
+
+//=== CHAT
+
+window-rule {
+  match app-id="vesktop"
+  open-on-workspace "Chat"
+}
+
+window-rule {
+  match app-id="slack"
+  open-on-workspace "Chat"
+}
+
+//=== NOTES
+
+window-rule {
+  match app-id="obsidian"
+  open-on-workspace "Notes"
+}
+
+//=== MEETINGS
+
+window-rule {
+  match app-id="teams-for-linux"
+  open-on-workspace "Meetings"
+}
+
+
+//=== MISC
+
+window-rule {
+  match app-id="feh"
+  open-floating true;
+  open-focused true;
+}
+
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
+window-rule {
+    // This regular expression is intentionally made as specific as possible,
+    // since this is the default config, and we want no false positives.
+    // You can get away with just app-id="wezterm" if you want.
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+// Open clipse-gui as floating by default.
 window-rule {
     // This app-id regular expression will work for both:
     // - host Firefox (app-id is "firefox")
@@ -90,11 +125,4 @@ window-rule {
 
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
-}
-
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
 }

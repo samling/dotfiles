@@ -9,6 +9,7 @@ spawn-at-startup "google-chrome-stable"
 spawn-at-startup "ghostty"
 spawn-at-startup "code"
 spawn-at-startup "vesktop"
+spawn-at-startup "slack"
 spawn-at-startup "obsidian"
 
 // Background services
