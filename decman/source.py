@@ -52,6 +52,13 @@ decman.pacman.ignored_packages |= {
     "python-build",
     "python-iniconfig",
     "python-installer",
+    # The jaraco.* family has reverse deps outside our declared set
+    # on CachyOS (pactree -ru flagged non-ufw consumers); ignore so
+    # decman doesn't GC them when ufw is removed.
+    "python-jaraco.collections",
+    "python-jaraco.context",
+    "python-jaraco.functools",
+    "python-jaraco.text",
     "python-pluggy",
     "python-pygments",
     "python-pyproject-hooks",
