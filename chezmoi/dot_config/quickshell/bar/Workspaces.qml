@@ -13,9 +13,17 @@ Item {
     property color inactiveColor: Qt.darker(Config.barTextColor, 1.4)
     property color urgentColor: Config.stateOrangeColor
 
+    // Optional: restrict the rendered workspaces to a single output name.
+    // Empty string shows all outputs (the bar's default).
+    property string outputFilter: ""
+
     // Niri's workspace axis is vertical; render the column accordingly.
     // Hyprland workspaces are flat numbered → horizontal row.
     readonly property bool vertical: Compositor.isNiri
+
+    readonly property var workspaceList: outputFilter === ""
+        ? Compositor.workspaces
+        : Compositor.workspaces.filter(w => w.output === outputFilter)
 
     function activeMonitorIndex(workspaceId) {
         const mons = Compositor.monitors
@@ -48,7 +56,7 @@ Item {
             spacing: 0
 
             Repeater {
-                model: root.vertical ? Compositor.workspaces : null
+                model: root.vertical ? root.workspaceList : null
                 delegate: workspaceLabel
             }
         }
@@ -60,7 +68,7 @@ Item {
             spacing: 8
 
             Repeater {
-                model: !root.vertical ? Compositor.workspaces : null
+                model: !root.vertical ? root.workspaceList : null
                 delegate: workspaceLabel
             }
         }

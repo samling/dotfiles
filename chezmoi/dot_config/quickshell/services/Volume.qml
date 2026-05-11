@@ -33,14 +33,31 @@ Singleton {
         Pipewire.preferredDefaultAudioSource = node
     }
 
-    // Sync mic mute LED with audio sink mute state
+    // Sync mic mute LED with audio sink mute state.
+    // Detect the platform LED once at startup; skipping the sudo call when
+    // the LED is absent avoids password prompts that faillock the user.
+    property bool muteLedAvailable: false
+
     Process {
         id: muteLedProcess
     }
 
+    Process {
+        id: muteLedDetectProcess
+        command: ["sh", "-c", "test -e /sys/class/leds/platform::micmute/brightness && echo yes || echo no"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: {
+                muteLedAvailable = this.text.trim() === "yes"
+                if (muteLedAvailable && available) syncMuteLed()
+            }
+        }
+    }
+
     function syncMuteLed() {
+        if (!muteLedAvailable) return
         const val = mutedState ? "1" : "0";
-        muteLedProcess.exec(["sudo", "sh", "-c", "echo " + val + " > /sys/class/leds/platform::micmute/brightness"]);
+        muteLedProcess.exec(["sudo", "-n", "sh", "-c", "echo " + val + " > /sys/class/leds/platform::micmute/brightness"]);
     }
 
     onMutedStateChanged: syncMuteLed()

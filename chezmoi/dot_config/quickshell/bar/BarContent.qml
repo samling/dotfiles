@@ -6,12 +6,34 @@ import qs.services
 
 Item {
     id: root
-    property var screen: root.QsWindow.window?.screen
+    property ShellScreen screen
 
-    InfoPanel {
-        cpuIndicator: cpuWidget
-        memIndicator: memoryWidget
-        diskIndicator: diskWidget
+    // Singleton bar components (right-side indicators, info panel,
+    // clock, power menu) only render on the configured primary monitor.
+    // When no primary is configured every screen is primary, so
+    // single-monitor setups behave as before.
+    readonly property bool isPrimary: Config.primaryScreenName === ""
+        || (root.screen && root.screen.name === Config.primaryScreenName)
+
+    // GPU stats service (non-visible). Polls nvidia-smi when present and
+    // feeds the InfoPanel's GPU section.
+    GpuIndicator { id: gpuWidget }
+
+    // InfoPanel is a singleton: instantiating on every monitor would
+    // open all of them when GlobalStates.sidebarRightOpen flips.
+    Loader {
+        active: root.isPrimary
+        sourceComponent: infoPanelComponent
+    }
+
+    Component {
+        id: infoPanelComponent
+        InfoPanel {
+            cpuIndicator: cpuWidget
+            memIndicator: memoryWidget
+            diskIndicator: diskWidget
+            gpuIndicator: gpuWidget
+        }
     }
 
     // Left section
@@ -29,6 +51,7 @@ Item {
             id: powerGroup
             accentColor: Config.pillColor1
             Layout.fillHeight: true
+            visible: root.isPrimary
 
             PowerMenu {
                 id: powerMenuWidget
@@ -69,6 +92,7 @@ Item {
     // Middle section
     RowLayout {
         id: middleSection
+        visible: root.isPrimary
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -92,6 +116,7 @@ Item {
     // Right section
     RowLayout {
         id: rightSection
+        visible: root.isPrimary
         anchors {
             top: parent.top
             bottom: parent.bottom

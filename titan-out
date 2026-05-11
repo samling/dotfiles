@@ -4,9 +4,7 @@
 [DECMAN] INFO: Running step 'pacman'.
 [DECMAN] SUMMARY: Removing pacman packages:
 [DECMAN]     
-[DECMAN]     python-autocommand python-jaraco.collections python-jaraco.context
-[DECMAN]     python-jaraco.functools python-jaraco.text python-more-itertools
-[DECMAN]     python-pkg_resources python-platformdirs ufw ufw-extras
+[DECMAN]     ufw ufw-extras
 [DECMAN]     
 [DECMAN] SUMMARY: Setting previously explicitly installed packages as dependencies:
 [DECMAN]     
@@ -67,17 +65,16 @@
 [DECMAN] INFO: Running step 'systemd'.
 [DECMAN] SUMMARY: Enabling systemd units:
 [DECMAN]     
-[DECMAN]     firewalld.service bluetooth.service tailscaled.service
-[DECMAN]     NetworkManager.service docker.service libvirtd.service
-[DECMAN]     systemd-oomd.service sshd.service
+[DECMAN]     NetworkManager.service docker.service firewalld.service sshd.service
+[DECMAN]     bluetooth.service tailscaled.service libvirtd.service greetd.service
+[DECMAN]     systemd-oomd.service
 [DECMAN]     
 [DECMAN] SUMMARY: Enabling systemd units for sboynton:
 [DECMAN]     
-[DECMAN]     agent-status.service udiskie.service swayidle.service
-[DECMAN]     clipse-watch-image.service chrome-graceful-shutdown.service
-[DECMAN]     wl-paste-primary.service awww.service nm-applet.service
-[DECMAN]     clipse-watch-text.service quickshell.service
-[DECMAN]     awww-change-wallpaper.timer
+[DECMAN]     chrome-graceful-shutdown.service nm-applet.service
+[DECMAN]     clipse-watch-text.service awww.service awww-change-wallpaper.timer
+[DECMAN]     wl-paste-primary.service swayidle.service udiskie.service
+[DECMAN]     quickshell.service clipse-watch-image.service agent-status.service
 [DECMAN]     
 [DECMAN] INFO: Reloading systemd daemon.
 [DECMAN] INFO: Reloading systemd daemon for users.

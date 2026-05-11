@@ -2,12 +2,13 @@ import decman
 from decman.plugins import pacman, aur
 
 
-def _has_repo(name: str) -> bool:
+def has_repo(name: str) -> bool:
     """True if /etc/pacman.conf has the named repo section enabled.
 
-    Used to flip paru/yay/downgrade between the AUR (pure Arch) and
-    a downstream-distro native repo (EOS, CachyOS) so we don't
-    needlessly rebuild packages the distro already ships as binaries.
+    Used by modules whose packages may ship as native binaries on some
+    Arch derivatives (EOS, CachyOS) and need to be declared via
+    @pacman.packages there but @aur.packages elsewhere, so decman
+    doesn't needlessly rebuild from AUR.
     """
     try:
         with open("/etc/pacman.conf") as f:
@@ -23,7 +24,7 @@ def _has_repo(name: str) -> bool:
 
 
 def _has_eos_repo() -> bool:
-    return _has_repo("endeavouros")
+    return has_repo("endeavouros")
 
 
 def _has_native_aur_helper_repo() -> bool:
@@ -31,7 +32,7 @@ def _has_native_aur_helper_repo() -> bool:
     binaries (currently EOS or CachyOS). On other Arch derivatives,
     these come from the AUR.
     """
-    return _has_eos_repo() or _has_repo("cachyos")
+    return _has_eos_repo() or has_repo("cachyos")
 
 
 _NATIVE_OR_AUR = {"downgrade", "paru", "yay"}
@@ -58,7 +59,7 @@ class ArchlinuxModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         base = {
             # Runtime dep of decman itself.
-            "python-iniparse-git",
+            # "python-iniparse-git",
         }
         if not _has_native_aur_helper_repo():
             base |= _NATIVE_OR_AUR

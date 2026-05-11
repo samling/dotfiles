@@ -18,6 +18,7 @@ Item {
     property var cpuIndicator
     property var memIndicator
     property var diskIndicator
+    property var gpuIndicator
 
     property bool panelOpen: GlobalStates.sidebarRightOpen
 
@@ -1176,6 +1177,7 @@ Item {
 
                             Column {
                                 spacing: 2
+                                visible: root.cpuIndicator && root.cpuIndicator.fanControlAvailable
                                 Text {
                                     text: "Fan"
                                     color: Config.getColor("text.muted")
@@ -1196,6 +1198,7 @@ Item {
                         Column {
                             width: parent.width - 24
                             spacing: 4
+                            visible: Config.showPowerProfile && root.cpuIndicator && root.cpuIndicator.powerProfileAvailable
 
                             Text {
                                 text: "Power Profile"
@@ -1267,6 +1270,7 @@ Item {
                         Column {
                             width: parent.width - 24
                             spacing: 4
+                            visible: root.cpuIndicator && root.cpuIndicator.fanControlAvailable
 
                             Text {
                                 text: "Fan Mode"
@@ -1341,6 +1345,193 @@ Item {
                             width: parent.width - 24
                             height: 1
                             color: Config.getColor("border.subtle")
+                        }
+
+                        // ── GPU Section ──
+                        Column {
+                            id: gpuSection
+                            width: parent.width - 24
+                            spacing: 8
+                            visible: Config.showGpu && root.gpuIndicator && root.gpuIndicator.gpuAvailable
+
+                            RowLayout {
+                                width: parent.width
+                                spacing: 8
+
+                                Text {
+                                    text: ""
+                                    font.pixelSize: Config.fontSizeMedium
+                                    font.family: Config.fontFamilyIcon
+                                    color: Config.getColor("text.primary")
+                                }
+
+                                Text {
+                                    text: root.gpuIndicator && root.gpuIndicator.gpuName
+                                        ? root.gpuIndicator.gpuName.replace(/^NVIDIA GeForce /, "")
+                                        : "GPU"
+                                    color: Config.getColor("text.primary")
+                                    font.pixelSize: Config.fontSizeMedium
+                                    font.weight: Font.DemiBold
+                                    font.family: Config.fontFamilyMonospace
+                                    elide: Text.ElideRight
+                                    Layout.fillWidth: true
+                                }
+                            }
+
+                            // Stats row 1: Usage, Temp, Power
+                            RowLayout {
+                                width: parent.width
+                                spacing: 16
+
+                                Column {
+                                    spacing: 2
+                                    Text {
+                                        text: "Usage"
+                                        color: Config.getColor("text.muted")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                    Text {
+                                        text: root.gpuIndicator ? Math.round(root.gpuIndicator.gpuUsage * 100) + "%" : "—"
+                                        color: Config.getColor("text.primary")
+                                        font.pixelSize: Config.fontSizeLarge
+                                        font.weight: Font.Bold
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                }
+
+                                Column {
+                                    spacing: 2
+                                    Text {
+                                        text: "Temp"
+                                        color: Config.getColor("text.muted")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                    Text {
+                                        text: root.gpuIndicator && root.gpuIndicator.gpuTemp > 0
+                                            ? Math.round(root.gpuIndicator.gpuTemp) + "°C"
+                                            : "—"
+                                        color: Config.getColor("text.primary")
+                                        font.pixelSize: Config.fontSizeLarge
+                                        font.weight: Font.Bold
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                }
+
+                                Column {
+                                    spacing: 2
+                                    Text {
+                                        text: "Power"
+                                        color: Config.getColor("text.muted")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                    Text {
+                                        text: root.gpuIndicator && root.gpuIndicator.powerDraw > 0
+                                            ? Math.round(root.gpuIndicator.powerDraw) + "W"
+                                            : "—"
+                                        color: Config.getColor("text.primary")
+                                        font.pixelSize: Config.fontSizeLarge
+                                        font.weight: Font.Bold
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                }
+
+                                Column {
+                                    spacing: 2
+                                    visible: root.gpuIndicator && root.gpuIndicator.fanSpeed >= 0
+                                    Text {
+                                        text: "Fan"
+                                        color: Config.getColor("text.muted")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                    Text {
+                                        text: root.gpuIndicator ? Math.round(root.gpuIndicator.fanSpeed) + "%" : "—"
+                                        color: Config.getColor("text.primary")
+                                        font.pixelSize: Config.fontSizeLarge
+                                        font.weight: Font.Bold
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                }
+                            }
+
+                            // VRAM label + usage bar
+                            Column {
+                                width: parent.width
+                                spacing: 4
+
+                                RowLayout {
+                                    width: parent.width
+
+                                    Text {
+                                        text: "VRAM"
+                                        color: Config.getColor("text.muted")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                        Layout.fillWidth: true
+                                    }
+
+                                    Text {
+                                        text: root.gpuIndicator
+                                            ? (root.gpuIndicator.vramUsed / 1024).toFixed(1) + "G / "
+                                              + (root.gpuIndicator.vramTotal / 1024).toFixed(1) + "G"
+                                            : "—"
+                                        color: Config.getColor("text.muted")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                }
+
+                                Rectangle {
+                                    width: parent.width
+                                    height: 16
+                                    radius: 4
+                                    color: Config.getColor("background.crust")
+                                    border.width: 1
+                                    border.color: Config.getColor("primary.mauve")
+                                    clip: true
+
+                                    Rectangle {
+                                        width: parent.width * (root.gpuIndicator ? root.gpuIndicator.vramUsage : 0)
+                                        height: parent.height
+                                        radius: 4
+                                        color: {
+                                            if (!root.gpuIndicator) return Config.getColor("primary.mauve")
+                                            const usage = root.gpuIndicator.vramUsage
+                                            if (usage > 0.9) return Config.getColor("state.error")
+                                            if (usage > 0.75) return Config.getColor("state.warning")
+                                            return Config.getColor("primary.mauve")
+                                        }
+
+                                        Behavior on width {
+                                            NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
+                                        }
+
+                                        Behavior on color {
+                                            ColorAnimation { duration: 300 }
+                                        }
+                                    }
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: root.gpuIndicator ? Math.round(root.gpuIndicator.vramUsage * 100) + "%" : "—"
+                                        color: Config.getColor("text.primary")
+                                        font.pixelSize: Config.fontSizeSmall
+                                        font.weight: Font.Bold
+                                        font.family: Config.fontFamilyMonospace
+                                    }
+                                }
+                            }
+                        }
+
+                        // ── Separator (after GPU) ──
+                        Rectangle {
+                            width: parent.width - 24
+                            height: 1
+                            color: Config.getColor("border.subtle")
+                            visible: gpuSection.visible
                         }
 
                         // ── Memory Section ──

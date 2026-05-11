@@ -7,3 +7,8 @@
 .local/bin/google-chrome
 .local/share/applications/google-chrome.desktop
 {{ end }}
+
+{{- /* Per-host quickshell overrides (e.g. bar.primaryMonitor). Lives
+     next to the chezmoi-managed config.json so Config.qml can pick
+     it up, but is never tracked or removed by chezmoi. */ -}}
+.config/quickshell/common/config.local.json

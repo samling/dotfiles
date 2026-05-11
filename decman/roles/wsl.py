@@ -1,7 +1,6 @@
 from modules.common.locale import LocaleModule
 from modules.common.users import UsersModule
 from modules.wsl.windows import WindowsModule
-from modules.wsl.work import WorkModule
 from roles.common import MODULES as COMMON
 
 # Deliberately omits host.* and gui.* modules: WSL2 boots the
@@ -28,5 +27,4 @@ MODULES = [
     *COMMON,
 
     WindowsModule(),
-    WorkModule(),
 ]

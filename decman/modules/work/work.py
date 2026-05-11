@@ -24,6 +24,7 @@ class WorkModule(decman.Module):
         # vault-bin tracks Hashicorp's official binary; nvault is
         # internal and not present in AUR — install separately if needed.
         return {
+            "slack-desktop",
             "teleport-bin",
             "vault-bin",
         }

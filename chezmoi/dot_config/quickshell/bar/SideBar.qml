@@ -61,6 +61,7 @@ Scope {
                         activeColor: pill.textColor
                         activeSecondaryColor: pill.textColor
                         inactiveColor: Qt.darker(pill.textColor, 1.4)
+                        outputFilter: sideLoader.modelData.name
                     }
                 }
             }
