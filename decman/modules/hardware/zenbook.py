@@ -89,6 +89,15 @@ class ZenbookModule(decman.Module):
                 owner="root",
                 group="root",
             ),
+            # asusd daemon config. Quiet profile on battery with
+            # balance_performance EPP keeps the machine responsive on
+            # wake without unmuting the fans.
+            "/etc/asusd/asusd.ron": decman.File(
+                source_file="../etc/asusd/asusd.ron",
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
             # asus_wmi: don't toggle Fn-lock on at boot.
             "/etc/modprobe.d/asus.conf": decman.File(
                 content="options asus_wmi fnlock_default=N\n",
