@@ -1,0 +1,102 @@
+[DECMAN] SUMMARY: Running before_update -hooks.
+[DECMAN] INFO: Running step 'files'.
+[DECMAN] SUMMARY: Updating files.
+[DECMAN] INFO: Running step 'pacman'.
+[DECMAN] SUMMARY: Removing pacman packages:
+[DECMAN]     
+[DECMAN]     alacritty awesome-terminal-fonts bluez-hid2hci bluez-obex
+[DECMAN]     cachyos-fish-config cachyos-hello cachyos-hooks
+[DECMAN]     cachyos-kernel-manager cachyos-keyring cachyos-micro-settings
+[DECMAN]     cachyos-mirrorlist cachyos-packageinstaller
+[DECMAN]     cachyos-plymouth-bootanimation cachyos-plymouth-theme
+[DECMAN]     cachyos-rate-mirrors cachyos-settings cachyos-v3-mirrorlist
+[DECMAN]     cachyos-v4-mirrorlist cachyos-wallpapers cachyos-zsh-config chwd
+[DECMAN]     cpupower fsarchiver lib32-nvidia-utils lib32-opencl-nvidia
+[DECMAN]     lib32-vulkan-icd-loader lib32-vulkan-radeon libva-nvidia-driver
+[DECMAN]     limine limine-mkinitcpio-hook linux-cachyos linux-cachyos-headers
+[DECMAN]     linux-cachyos-lts linux-cachyos-lts-headers
+[DECMAN]     linux-cachyos-lts-nvidia-open linux-cachyos-nvidia-open micro
+[DECMAN]     mkinitcpio nvidia-settings opencl-nvidia os-prober paru plymouth pv
+[DECMAN]     python-autocommand python-jaraco.collections python-jaraco.context
+[DECMAN]     python-jaraco.functools python-jaraco.text python-more-itertools
+[DECMAN]     python-pkg_resources python-platformdirs shelly ttf-meslo-nerd ufw
+[DECMAN]     ufw-extras vlc-plugins-all xf86-video-amdgpu
+[DECMAN]     
+[DECMAN] SUMMARY: Setting previously explicitly installed packages as dependencies:
+[DECMAN]     
+[DECMAN]     bluez-libs egl-wayland nvidia-utils vulkan-icd-loader wpa_supplicant
+[DECMAN]     
+[DECMAN] SUMMARY: Upgrading packages.
+[DECMAN] SUMMARY: Installing pacman packages:
+[DECMAN]     
+[DECMAN]     7zip aichat ansible argocd arp-scan aspell awww b43-fwcutter bat bc
+[DECMAN]     bitwarden-cli blueman brightnessctl bubblewrap buf cage chafa clang
+[DECMAN]     cmake cpio cups-browsed dconf dialog direnv distrobox docker
+[DECMAN]     docker-buildx docker-compose dockerfile-language-server dracut
+[DECMAN]     dua-cli ex-vi-compat eza fd feh ffmpeg file firefox firewall-applet
+[DECMAN]     firewalld flameshot fnm fuzzel fx fzf gcc git-delta git-filter-repo
+[DECMAN]     git-lfs github-cli glib2 glow gnome-keyring gnome-power-manager go
+[DECMAN]     gopls grc greetd greetd-regreet grim gron gvfs haveged helm htop
+[DECMAN]     imagemagick imv inotify-tools inxi ipcalc jc jq k9s
+[DECMAN]     kernel-install-for-dracut kitty krew kube-apiserver kubectl kubectx
+[DECMAN]     kubie lazygit libnotify libseccomp libvirt linux linux-headers
+[DECMAN]     linux-lts linux-lts-headers llvm lm_sensors lsd lsof
+[DECMAN]     lua-language-server luarocks make markdownlint mermaid-cli meson
+[DECMAN]     minikube moreutils mpv neovim network-manager-applet
+[DECMAN]     networkmanager-openconnect nftables ninja niri nmap noto-fonts-extra
+[DECMAN]     ntfs-3g ntp nvm nwg-look obs-studio obsidian openai-codex
+[DECMAN]     openbsd-netcat oxipng pandoc-cli papirus-icon-theme patchelf
+[DECMAN]     pipewire-jack playerctl postgresql pre-commit psmisc pyenv
+[DECMAN]     python-black python-isort python-jinja python-pillow qemu-base
+[DECMAN]     qemu-desktop qemu-system-x86 qmk qt6ct quickshell ranger read-edid
+[DECMAN]     restic rhash rofi rtkit rust-analyzer rustup sane satty seahorse
+[DECMAN]     serie shfmt skopeo slurp smbclient socat steam stylua swayidle swtpm
+[DECMAN]     systemd-sysvcompat tailscale talhelper thunar thunar-archive-plugin
+[DECMAN]     thunar-volman tldr tmux traceroute tree tree-sitter-cli
+[DECMAN]     ttf-iosevkaterm-nerd ttf-jetbrains-mono tumbler
+[DECMAN]     typescript-language-server typst udiskie udisks2 uv v4l-utils
+[DECMAN]     virt-manager virt-viewer viu websocat wf-recorder whois
+[DECMAN]     wireless-regdb wireshark-qt wl-clipboard wofi wtype
+[DECMAN]     xdg-desktop-portal xdg-desktop-portal-gnome xdg-desktop-portal-gtk
+[DECMAN]     xf86-input-libinput xfconf xorg-server xorg-xdpyinfo xorg-xinit
+[DECMAN]     xorg-xinput xorg-xkill xorg-xrandr xterm xwayland-satellite xxhash
+[DECMAN]     yaml-language-server yazi yt-dlp zellij zig zip zoxide
+[DECMAN]     zram-generator zsh
+[DECMAN]     
+[DECMAN] INFO: Running step 'aur'.
+[DECMAN] SUMMARY: Upgrading foreign packages.
+[DECMAN] SUMMARY: Installing foreign packages:
+[DECMAN]     
+[DECMAN]     agent-status-bin asdf-vm bruno-bin catppuccin-gtk-theme-mocha
+[DECMAN]     claude-code-seccomp clipse-gui clipse-wayland-bin cmatrix-git
+[DECMAN]     command-snippets-bin devbox-bin docker-sandbox-bin downgrade fatrace
+[DECMAN]     ghostty-nightly-bin gitmux gitstatus-bin google-chrome hubble-bin
+[DECMAN]     icat ie-r insync kopia-bin kubecolor kubescape libinput-gestures
+[DECMAN]     littlesnitch-bin localsend-bin matugen-bin mmdr-bin neo-matrix
+[DECMAN]     niri-float-sticky ntfysh-bin parsec-bin paru pet-bin pgloader
+[DECMAN]     python-iniparse-git python-pssh qmk-hid rose-pine-cursor rtk spotify
+[DECMAN]     sshp stepmania swaylock-effects talosctl-bin terraform-ls timg
+[DECMAN]     toofan-bin trufflehog vendir vesktop-bin viddy
+[DECMAN]     visual-studio-code-bin vkv-bin wallust wlogout wlrctl yay ytt zinit
+[DECMAN]     zsh-pure-prompt
+[DECMAN]     
+[DECMAN] INFO: Running step 'systemd'.
+[DECMAN] SUMMARY: Enabling systemd units:
+[DECMAN]     
+[DECMAN]     sshd.service tailscaled.service bluetooth.service libvirtd.service
+[DECMAN]     firewalld.service systemd-oomd.service docker.service
+[DECMAN]     NetworkManager.service
+[DECMAN]     
+[DECMAN] SUMMARY: Enabling systemd units for sboynton:
+[DECMAN]     
+[DECMAN]     nm-applet.service awww-change-wallpaper.timer awww.service
+[DECMAN]     clipse-watch-text.service udiskie.service quickshell.service
+[DECMAN]     chrome-graceful-shutdown.service swayidle.service
+[DECMAN]     wl-paste-primary.service agent-status.service
+[DECMAN]     clipse-watch-image.service
+[DECMAN]     
+[DECMAN] INFO: Reloading systemd daemon.
+[DECMAN] INFO: Reloading systemd daemon for users.
+[DECMAN] SUMMARY: Running on_enable -hooks.
+[DECMAN] SUMMARY: Running on_change -hooks.
+[DECMAN] SUMMARY: Running after_update -hooks.

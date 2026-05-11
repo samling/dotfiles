@@ -1,4 +1,9 @@
+root := justfile_directory()
 host := `hostname`
+
+init:
+    chezmoi init --source={{root}}
+    sudo decman --source={{root}}/decman/source.py
 
 apply:
     sudo decman
