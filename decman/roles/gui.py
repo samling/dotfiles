@@ -50,6 +50,16 @@ GUI_GROUPS: tuple[str, ...] = (
     "wireshark",
 )
 
+# Subset of GUI_GROUPS that aren't present until their owning package
+# installs (docker → docker.service sysusers, libvirt → libvirt-daemon
+# sysusers, qemu-base → kvm via /usr/lib/sysusers.d/qemu.conf,
+# wireshark-cli → wireshark via .install). On a fresh host the
+# packages haven't installed yet when UserManager runs useradd, so
+# `--groups docker,...` fails. UsersModule pre-creates anything in
+# `ensured_groups` with `groupadd --system`; later sysusers files
+# matching the same name are no-ops.
+GUI_ENSURED_GROUPS: tuple[str, ...] = GUI_GROUPS
+
 # Module list shared by the gui role and anything that extends it
 # (currently just `roles/laptop.py`). UsersModule and LocaleModule
 # are constructed by each leaf role so per-host group membership
@@ -83,7 +93,10 @@ GUI_MODULES = [
 # quirks build their own MODULES from GUI_MODULES + extras, or use
 # `roles/laptop.py`.
 MODULES = [
-    UsersModule(extra_groups=GUI_GROUPS),
+    UsersModule(
+        extra_groups=GUI_GROUPS,
+        ensured_groups=GUI_ENSURED_GROUPS,
+    ),
     LocaleModule(),
     *GUI_MODULES,
 ]
