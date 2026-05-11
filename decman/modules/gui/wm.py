@@ -38,6 +38,14 @@ class WmModule(decman.Module):
             "wlrctl",
         }
 
+    @systemd.units
+    def units(self) -> set[str]:
+        # greetd is the login manager. Enable it system-wide so a
+        # fresh host (titan) boots into the regreet TUI on tty1
+        # instead of getty. Idempotent on hosts that already have it
+        # enabled (xen).
+        return {"greetd.service"}
+
     @systemd.user_units
     def user_units(self) -> dict[str, set[str]]:
         return {
