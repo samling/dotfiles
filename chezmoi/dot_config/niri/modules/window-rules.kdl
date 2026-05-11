@@ -15,6 +15,7 @@ window-rule {
 window-rule {
   match app-id=r#"^com\.mitchellh\.ghostty$"#
   open-on-workspace "2:Terminal"
+  draw-border-with-background false
 }
 
 window-rule {
