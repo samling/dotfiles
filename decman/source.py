@@ -4,11 +4,6 @@ import socket
 import subprocess
 
 import decman
-# `decman/__init__.py` rebinds `decman.plugins` to the available
-# plugins dict, which shadows the submodule attribute - both
-# `from decman import plugins` and `import decman.plugins as ...`
-# then give back the dict. Pull the helper out by name instead.
-from decman.plugins import run_methods_with_attribute as _run_methods
 
 from modules import _aur_prompts
 from modules._aur_commands import SemiUnattended
@@ -104,9 +99,23 @@ except ModuleNotFoundError as e:
 # isn't populated until `plugin.process_modules` runs later in the
 # apply lifecycle - well after source.py finishes evaluating.
 def _declared_pacman_pkgs() -> set[str]:
+    # Imported inside the function: decman runs source.py via
+    # `exec(content)` from inside `_execute_source` (decman.app),
+    # which makes module-level imports land in exec's local frame
+    # rather than this function's __globals__. Looking up a
+    # closure'd helper at call time then fails with NameError. Keep
+    # the lookup local to dodge that.
+    #
+    # `decman/__init__.py` also rebinds `decman.plugins` to the
+    # available_plugins() dict, shadowing the submodule attribute -
+    # `import decman.plugins as p` or `from decman import plugins`
+    # both yield the dict, not the submodule. Pull the helper out
+    # by name to bypass the shadow.
+    from decman.plugins import run_methods_with_attribute
+
     pkgs = set(decman.pacman.packages)
     for mod in decman.modules:
-        pkgs |= set().union(*_run_methods(mod, "__pacman__packages__"))
+        pkgs |= set().union(*run_methods_with_attribute(mod, "__pacman__packages__"))
     return pkgs
 
 
