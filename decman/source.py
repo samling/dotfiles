@@ -79,21 +79,33 @@ except ModuleNotFoundError as e:
     )
 
 
-# Auto-ignore every currently-installed `python-*` package that no
-# declared module asks for. Decman's GC otherwise treats them as
-# orphan-able when their original consumer (e.g. ufw) leaves the
-# declared set, which is whack-a-mole: each removal cascades a new
-# batch of jaraco / autocommand / pkg_resources / platformdirs /
-# more-itertools / ... transitive deps into the remove list, and
-# any one of those may have non-obvious reverse-deps outside our
-# managed set.
+# Auto-ignore every currently-installed `python-*` package that
+# (a) no declared module asks for and (b) pacman has marked as a
+# dependency (--asdeps), not as explicit. Decman's GC otherwise
+# treats undeclared python-* as orphan-able when their original
+# consumer (e.g. ufw) leaves the declared set, which is whack-a-mole:
+# each removal cascades a new batch of jaraco / autocommand /
+# pkg_resources / platformdirs / more-itertools / ... transitive
+# deps into the remove list, and any one of those may have
+# non-obvious reverse-deps outside our managed set.
 #
-# Intersect with the declared set so this DOESN'T block installs of
-# python-* packages we actually declare (python-black, python-isort,
-# python-jinja, python-pillow, ...): `ignored_packages` is also
-# subtracted from `to_install` in `decman.plugins.pacman.apply`, so
-# unconditionally ignoring would silently skip installing declared
-# python pkgs that aren't on the host yet.
+# Two filters matter:
+#
+# - Intersect with the declared set so this DOESN'T block installs
+#   of python-* packages we actually declare (python-black,
+#   python-isort, python-jinja, python-pillow, ...).
+#   `ignored_packages` is subtracted from `to_install` in
+#   `decman.plugins.pacman.apply`, so unconditionally ignoring would
+#   silently skip installing declared python pkgs not yet present.
+#
+# - Restrict to --asdeps via `pacman -Qdq` so that DECLARING a
+#   python-* package, applying, then removing the declaration still
+#   uninstalls it. Decman runs `pacman -D --asexplicit <pkgs>` on
+#   every declared install (decman/plugins/pacman.py: PacmanInterface
+#   .install), so anything decman-managed stays --asexplicit and is
+#   excluded from the auto-ignore set. Caveat: if you manually flip
+#   a python-* to --asdeps after the fact, it'll fall into the
+#   auto-ignore bucket and stop being GC'd.
 #
 # Walks decman.modules directly here because `decman.pacman.packages`
 # isn't populated until `plugin.process_modules` runs later in the
@@ -120,16 +132,19 @@ def _declared_pacman_pkgs() -> set[str]:
 
 
 try:
-    _installed = set(
-        subprocess.check_output(["pacman", "-Qq"], text=True).splitlines()
+    # -Qdq: dep-installed pkgs only (--asdeps). Skips --asexplicit so
+    # decman-managed python-* packages still flow through the normal
+    # remove path when their declaration is dropped.
+    _dep_installed = set(
+        subprocess.check_output(["pacman", "-Qdq"], text=True).splitlines()
     )
 except (FileNotFoundError, subprocess.CalledProcessError):
     # Pre-bootstrap (no pacman yet) or pacman db locked. Skip the
     # auto-ignore; the curated list above still covers the worst
     # offenders.
-    _installed = set()
+    _dep_installed = set()
 
 _declared = _declared_pacman_pkgs()
 decman.pacman.ignored_packages |= {
-    p for p in _installed if p.startswith("python-")
+    p for p in _dep_installed if p.startswith("python-")
 } - _declared

@@ -11,6 +11,7 @@ class ShellModule(decman.Module):
     def pkgs(self) -> set[str]:
         return {
             "fastfetch",
+            "fish",
             "tmux",
             "wl-clipboard",
             "zellij",
