@@ -1,8 +1,14 @@
 import importlib
 import os
 import socket
+import subprocess
 
 import decman
+# `decman/__init__.py` rebinds `decman.plugins` to the available
+# plugins dict, which shadows the submodule attribute - both
+# `from decman import plugins` and `import decman.plugins as ...`
+# then give back the dict. Pull the helper out by name instead.
+from decman.plugins import run_methods_with_attribute as _run_methods
 
 from modules import _aur_prompts
 from modules._aur_commands import SemiUnattended
@@ -52,13 +58,6 @@ decman.pacman.ignored_packages |= {
     "python-build",
     "python-iniconfig",
     "python-installer",
-    # The jaraco.* family has reverse deps outside our declared set
-    # on CachyOS (pactree -ru flagged non-ufw consumers); ignore so
-    # decman doesn't GC them when ufw is removed.
-    "python-jaraco.collections",
-    "python-jaraco.context",
-    "python-jaraco.functools",
-    "python-jaraco.text",
     "python-pluggy",
     "python-pygments",
     "python-pyproject-hooks",
@@ -83,3 +82,45 @@ except ModuleNotFoundError as e:
     raise decman.SourceError(
         f"no host config for hostname {_host!r}; create hosts/{_slug}.py"
     )
+
+
+# Auto-ignore every currently-installed `python-*` package that no
+# declared module asks for. Decman's GC otherwise treats them as
+# orphan-able when their original consumer (e.g. ufw) leaves the
+# declared set, which is whack-a-mole: each removal cascades a new
+# batch of jaraco / autocommand / pkg_resources / platformdirs /
+# more-itertools / ... transitive deps into the remove list, and
+# any one of those may have non-obvious reverse-deps outside our
+# managed set.
+#
+# Intersect with the declared set so this DOESN'T block installs of
+# python-* packages we actually declare (python-black, python-isort,
+# python-jinja, python-pillow, ...): `ignored_packages` is also
+# subtracted from `to_install` in `decman.plugins.pacman.apply`, so
+# unconditionally ignoring would silently skip installing declared
+# python pkgs that aren't on the host yet.
+#
+# Walks decman.modules directly here because `decman.pacman.packages`
+# isn't populated until `plugin.process_modules` runs later in the
+# apply lifecycle - well after source.py finishes evaluating.
+def _declared_pacman_pkgs() -> set[str]:
+    pkgs = set(decman.pacman.packages)
+    for mod in decman.modules:
+        pkgs |= set().union(*_run_methods(mod, "__pacman__packages__"))
+    return pkgs
+
+
+try:
+    _installed = set(
+        subprocess.check_output(["pacman", "-Qq"], text=True).splitlines()
+    )
+except (FileNotFoundError, subprocess.CalledProcessError):
+    # Pre-bootstrap (no pacman yet) or pacman db locked. Skip the
+    # auto-ignore; the curated list above still covers the worst
+    # offenders.
+    _installed = set()
+
+_declared = _declared_pacman_pkgs()
+decman.pacman.ignored_packages |= {
+    p for p in _installed if p.startswith("python-")
+} - _declared
