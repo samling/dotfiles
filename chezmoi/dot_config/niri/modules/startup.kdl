@@ -9,8 +9,12 @@ spawn-at-startup "google-chrome-stable"
 spawn-at-startup "ghostty"
 spawn-at-startup "code"
 spawn-at-startup "vesktop"
-spawn-at-startup "slack"
 spawn-at-startup "obsidian"
+
+// Work
+spawn-at-startup "cursor"
+spawn-at-startup "slack"
+spawn-at-startup "teams-for-linux-manual"
 
 // Background services
 spawn-sh-at-startup	"killall niri-float-sticky; niri-float-sticky -disable-auto-stick"
