@@ -2,12 +2,12 @@ import decman
 from decman.plugins import pacman, aur
 
 
-def _has_eos_repo() -> bool:
-    """True if /etc/pacman.conf has the endeavouros repo enabled.
+def _has_repo(name: str) -> bool:
+    """True if /etc/pacman.conf has the named repo section enabled.
 
-    The same packages (paru, yay, downgrade, reflector-simple) ship from
-    the EOS native repo on EndeavourOS but must be built from the AUR on
-    pure Arch. Switch the declaration based on what's actually available.
+    Used to flip paru/yay/downgrade between the AUR (pure Arch) and
+    a downstream-distro native repo (EOS, CachyOS) so we don't
+    needlessly rebuild packages the distro already ships as binaries.
     """
     try:
         with open("/etc/pacman.conf") as f:
@@ -15,14 +15,26 @@ def _has_eos_repo() -> bool:
                 stripped = line.strip()
                 if stripped.startswith("#"):
                     continue
-                if stripped == "[endeavouros]":
+                if stripped == f"[{name}]":
                     return True
     except FileNotFoundError:
         pass
     return False
 
 
-_EOS_OR_AUR = {"downgrade", "paru", "yay"}
+def _has_eos_repo() -> bool:
+    return _has_repo("endeavouros")
+
+
+def _has_native_aur_helper_repo() -> bool:
+    """True if the host distro ships paru / yay / downgrade as native
+    binaries (currently EOS or CachyOS). On other Arch derivatives,
+    these come from the AUR.
+    """
+    return _has_eos_repo() or _has_repo("cachyos")
+
+
+_NATIVE_OR_AUR = {"downgrade", "paru", "yay"}
 
 
 class ArchlinuxModule(decman.Module):
@@ -38,8 +50,8 @@ class ArchlinuxModule(decman.Module):
             "rebuild-detector",
             "reflector",
         }
-        if _has_eos_repo():
-            base |= _EOS_OR_AUR
+        if _has_native_aur_helper_repo():
+            base |= _NATIVE_OR_AUR
         return base
 
     @aur.packages
@@ -48,6 +60,6 @@ class ArchlinuxModule(decman.Module):
             # Runtime dep of decman itself.
             "python-iniparse-git",
         }
-        if not _has_eos_repo():
-            base |= _EOS_OR_AUR
+        if not _has_native_aur_helper_repo():
+            base |= _NATIVE_OR_AUR
         return base

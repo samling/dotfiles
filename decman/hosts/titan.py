@@ -1,16 +1,28 @@
 import decman
 
+from modules.hardware.nvidia import NvidiaModule
+from modules.host.cachyos import CachyOSModule
+from modules.host.mkinitcpio import MkinitcpioModule
 from roles.gui import MODULES
 
-# CachyOS on bare metal. The default gui role covers the desktop
-# stack; no LaptopModule / ZenbookModule (not portable hardware) and
-# no EndeavourOSModule (CachyOS, not EOS).
+# CachyOS on bare metal with an nvidia GPU.
 #
-# CachyOS-specific packages (cachyos-keyring, cachyos-mirrorlist,
-# cachyos-v3-mirrorlist, cachyos-v4-mirrorlist, linux-cachyos,
-# linux-cachyos-headers, cachyos-settings, ...) are intentionally
-# NOT declared here yet. Add them as drift surfaces — e.g. when
-# decman queues one for removal — so the declared set stays
-# truthful instead of preemptively absorbing whatever the CachyOS
-# ISO happens to ship today.
-decman.modules += MODULES
+# Composition on top of the gui role:
+#
+# - MkinitcpioModule supplies the initramfs builder (CachyOS default,
+#   also vanilla Arch default).
+# - CachyOSModule supplies the cachyos kernels (linux-cachyos +
+#   linux-cachyos-lts + their nvidia-open module variants), limine
+#   bootloader, plymouth splash, and a pile of installer-shipped
+#   packages pinned so decman doesn't remove them on first apply.
+# - NvidiaModule supplies the nvidia userspace (utils, settings,
+#   opencl, libva, vulkan ICDs, lib32 variants for steam/wine).
+#
+# No ArchKernelModule - linux / linux-lts would just sit alongside
+# the cachyos kernels wasting disk. Pruning the installer-shipped
+# extras pinned in CachyOSModule is a follow-up.
+decman.modules += MODULES + [
+    MkinitcpioModule(),
+    CachyOSModule(),
+    NvidiaModule(),
+]

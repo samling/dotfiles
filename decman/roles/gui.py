@@ -68,6 +68,11 @@ GUI_MODULES = [
     *COMMON,
     DisksModule(),
     HardwareModule(),
+    # KernelModule covers firmware / microcode / zram - universal
+    # across bare-metal hosts. The kernel packages themselves
+    # (`linux` vs `linux-cachyos` vs ...) and the initramfs builder
+    # (`mkinitcpio` vs `dracut`) are host-level choices and are
+    # registered explicitly from `hosts/<name>.py`.
     KernelModule(),
     HostNetworkingModule(),
     AudioModule(),
