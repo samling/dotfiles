@@ -25,13 +25,21 @@ class CachyOSModule(decman.Module):
        `linux-cachyos*`.
 
     3. Installer-shipped extras we're not actively using but want
-       decman to leave in place (alacritty, micro, ufw, vlc-plugins,
+       decman to leave in place (alacritty, micro, vlc-plugins,
        fsarchiver, ...). These are stock-Arch packages, not
        CachyOS-specific, but they came with the ISO and pruning them
        is a separate decision from "stage titan under decman."
        Anything in this group can be lifted into a proper module
        (BluetoothModule, FontsModule, ...) later when it earns its
        way in.
+
+       ufw / ufw-extras are deliberately NOT pinned here:
+       `modules/host/networking.py` already declares firewalld and
+       enables firewalld.service, and `gui/tailscale.py`,
+       `gui/games.py`, `gui/media.py` all drop zones/services into
+       /etc/firewalld/. Two firewall daemons can't sensibly coexist,
+       and ufw has no config / no enabled service on titan, so
+       decman is allowed to remove them on first apply.
 
     Paired with `NvidiaModule` for the nvidia userspace and
     `KernelModule` for firmware/microcode/zram - this module does not
@@ -108,8 +116,6 @@ class CachyOSModule(decman.Module):
             "pv",
             "shelly",
             "ttf-meslo-nerd",
-            "ufw",
-            "ufw-extras",
             "vlc-plugins-all",
             "xf86-video-amdgpu",
         }
