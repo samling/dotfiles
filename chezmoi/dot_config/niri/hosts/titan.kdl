@@ -38,23 +38,23 @@ output "HDMI-A-1" {
     position x=6000 y=1920
 }
 
-workspace "1:Web" {
+workspace "Web" {
   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
 }
-workspace "2:Terminal" {
+workspace "Terminal" {
   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
 }
-workspace "3:Code" {
+workspace "Code" {
   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
 }
-workspace "4:Meetings" {
+workspace "Meetings" {
   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
 }
 
-workspace "1:Chat" {
+workspace "Chat" {
   open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
 }
-workspace "2:Notes" {
+workspace "Notes" {
   open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
 }
 
