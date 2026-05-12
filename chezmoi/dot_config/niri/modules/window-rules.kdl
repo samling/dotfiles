@@ -97,7 +97,7 @@ window-rule {
 window-rule {
     match app-id="steam"
     match title="Friends List"
-    is-floating true
+    open-floating true
 }
 
 //=== MISC

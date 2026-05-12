@@ -19,5 +19,6 @@ class EditorsGuiModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "bruno-bin",
+            "postman-bin",
             "visual-studio-code-bin",
         }
