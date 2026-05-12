@@ -5,7 +5,7 @@
 - `mv` is aliased to `mv -i` - use `"mv"` to bypass the confirmation prompt.
 
 ## Conversational & Writing Directives
-- Don't use emdashes, ever. Replace them with normal punctuation: periods, commas, semicolons, hyphens, etc.
+- Don't use emdashes, ever. Replace them with hyphens (`-`). Not commas, not semicolons, not periods - hyphens specifically.
 - No emdashes.
 - DO NOT USE EMDASHES.
 

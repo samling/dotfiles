@@ -17,6 +17,12 @@ spawn-at-startup "slack"
 spawn-at-startup "teams-for-linux-manual"
 
 // Background services
+// Shrink xdg-desktop-portal-gnome file picker (GTK4 dialog) by 15%.
+// Injected into the dbus activation environment so the portal - which
+// is dbus-activated, not a niri child - inherits it. Applied on top of
+// each output's Wayland scale, so the dialog shrinks proportionally on
+// every monitor regardless of per-output scale.
+spawn-sh-at-startup "dbus-update-activation-environment --systemd GDK_DPI_SCALE=0.85"
 spawn-sh-at-startup	"killall niri-float-sticky; niri-float-sticky -disable-auto-stick"
 spawn-at-startup "ie-r"
 spawn-at-startup "flameshot"
