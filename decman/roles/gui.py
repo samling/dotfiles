@@ -44,6 +44,12 @@ from roles.common import MODULES as COMMON
 # Baseline supplementary groups for any GUI host. `roles/laptop.py`
 # extends this with `keyd`.
 GUI_GROUPS: tuple[str, ...] = (
+    # `disk` grants access to /dev/loop-control, which docker-sandbox's
+    # EROFS snapshotter opens to allocate loopback devices for rwlayer
+    # mounts. Broader than ideal (covers every block device on the
+    # host) but matches Docker Desktop's own setup. A udev rule scoped
+    # to KERNEL=="loop*" would be tighter if this ever grows uncomfortable.
+    "disk",
     "docker",
     "kvm",
     "libvirt",

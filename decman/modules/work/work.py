@@ -26,6 +26,7 @@ class WorkModule(decman.Module):
         # internal and not present in AUR — install separately if needed.
         return {
             "cursor-bin",
+            "dcvviewer-bin",
             "globalprotect-openconnect-git",
             "slack-desktop",
             "teams-for-linux-bin",

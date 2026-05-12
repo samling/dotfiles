@@ -18,12 +18,12 @@ Deliberate exclusions:
   register, so it stays in the role file to keep that ordering
   visible.
 
-AurKeysModule lives in COMMON via `_aur_keys()` even though only
-GUI roles consume the keys it imports (spotify, wlogout). The
-per-host cost is two GPG entries in the aurbuilder keyring on
-runs that don't actually build those packages — negligible — and
-having one canonical list of validpgpkeys signers is worth more
-than the saved keystrokes.
+AurKeysModule lives in COMMON even though only GUI roles consume
+some of the keys it imports (spotify, wlogout, ...). The per-host
+cost is a handful of GPG entries in the aurbuilder keyring on
+runs that don't actually build those packages - negligible - and
+having one canonical list of validpgpkeys signers (decman/modules/
+common/aur_keys.toml) is worth more than the saved keystrokes.
 """
 from modules.common.ai_tools import AIToolsModule
 from modules.common.archlinux import ArchlinuxModule
@@ -47,20 +47,10 @@ from modules.common.system import SystemModule
 from modules.common.virtualization import VirtualizationModule
 
 
-def _aur_keys() -> AurKeysModule:
-    """AurKeysModule preconfigured with every validpgpkeys signer
-    any of our roles needs. Add new fetches here, not in role files.
-    """
-    keys = AurKeysModule()
-    keys.fetch_spotify()
-    keys.fetch_wlogout()
-    return keys
-
-
 MODULES = [
     AIToolsModule(),
     ArchlinuxModule(),
-    _aur_keys(),
+    AurKeysModule(),
     BaseModule(),
     ClaudeCodeModule(),
     CodexModule(),

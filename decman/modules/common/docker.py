@@ -18,6 +18,8 @@ class DockerModule(decman.Module):
             "docker",
             "docker-buildx",
             "docker-compose",
+            "erofs-utils",
+            "libkrun",
         }
 
     @aur.packages
@@ -32,3 +34,17 @@ class DockerModule(decman.Module):
 
     def on_change(self, store):
         reconcile_units(self, store)
+
+    def files(self) -> dict[str, decman.File]:
+        return {
+            # docker-sandbox's EROFS snapshotter mounts rwlayer.img files
+            # via loopback. The loop module isn't autoloaded on CachyOS, so
+            # the sandboxd daemon fails on /dev/loop-control with ENOENT
+            # the first time it tries to start a container.
+            "/etc/modules-load.d/loop.conf": decman.File(
+                content="loop\n",
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
+        }

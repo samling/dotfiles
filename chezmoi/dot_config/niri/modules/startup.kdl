@@ -14,7 +14,7 @@ spawn-at-startup "obsidian"
 // Work
 spawn-at-startup "cursor"
 spawn-at-startup "slack"
-spawn-at-startup "teams-for-linux-manual"
+//spawn-at-startup "teams-for-linux-manual"
 
 // Background services
 // Shrink xdg-desktop-portal-gnome file picker (GTK4 dialog) by 15%.

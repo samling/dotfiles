@@ -1,0 +1,32 @@
+# AUR signing keys imported into the aurbuilder keyring before any
+# AUR build runs. Each [[entries]] block represents one fingerprint
+# trusted for one or more AUR packages.
+#
+# Maintained by `just sync-aur-keys` (scans @aur.packages PKGBUILDs,
+# prompts before appending new entries). Hand-edit for non-keyserver
+# entries that need `uri = "..."` instead.
+#
+# Fields:
+#   fingerprint   required, 40-char hex (no spaces)
+#   package       optional, AUR pkg(s) the key is for - documentation only
+#   uri           optional, fetch the key from this HTTPS URL
+#                 (instead of the default keyserver)
+#   keyserver     optional, override the default keyserver
+#                 (hkps://keyserver.ubuntu.com)
+#   note          optional, free-text reason for trusting the key
+
+[[entries]]
+package = "spotify"
+fingerprint = "E1096BCBFF6D418796DE78515384CE82BA52C83A"
+uri = "https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.gpg"
+note = "Spotify's debian-repo signing key (per decman/docs/extras.md)."
+
+[[entries]]
+package = "wlogout"
+fingerprint = "F4FDB18A9937358364B276E9E25D679AF73C6D2F"
+note = "Haden Collins, AUR maintainer for wlogout."
+
+[[entries]]
+package = "libjpeg6-turbo"
+fingerprint = "7D6293CC6378786E1B5C496885C7044E033FDE16"
+note = "libjpeg-turbo Project signing key. Transitive dep via dcvviewer-bin."
