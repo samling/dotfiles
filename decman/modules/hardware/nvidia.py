@@ -29,6 +29,7 @@ class NvidiaModule(decman.Module):
             "nvidia-settings",
             "nvidia-utils",
             "opencl-nvidia",
+            "openrgb",
             "vulkan-icd-loader",
 
             # 32-bit userspace for steam / wine / lutris.
