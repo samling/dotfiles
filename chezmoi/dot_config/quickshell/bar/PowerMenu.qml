@@ -49,12 +49,31 @@ MouseArea {
         onTriggered: root._popupLoaded = false
     }
 
-    // Delay screenshot launch until after popup is hidden
+    // Delay screenshot launch until after popup is hidden so the menu doesn't
+    // appear in monitor/region captures. Mirrors the Print/Ctrl+Print/Alt+Print
+    // binds in niri's binds.kdl.
     property string _screenshotMode: ""
     Timer {
         id: screenshotTimer
         interval: 300
-        onTriggered: Quickshell.execDetached(["/home/sboynton/.config/hypr/scripts/screenshot", root._screenshotMode])
+        onTriggered: {
+            let cmd
+            switch (root._screenshotMode) {
+                case "monitor":
+                    cmd = ["sh", "-c", "grim -o \"$(niri msg --json focused-output | jq -r .name)\" - | satty --filename -"]
+                    break
+                case "window":
+                    cmd = ["niri", "msg", "action", "screenshot-window"]
+                    break
+                case "region":
+                    cmd = ["sh", "-c", "grim -g \"$(slurp -d)\" - | satty --filename - --output-filename ~/Pictures/Screenshots/Screenshot-$(date +%Y-%m-%d-%H-%M-%S).png"]
+                    break
+                case "all":
+                    cmd = ["sh", "-c", "grim - | satty --filename -"]
+                    break
+            }
+            if (cmd) Quickshell.execDetached(cmd)
+        }
     }
     function takeScreenshot(mode) {
         menuOpen = false
@@ -331,12 +350,12 @@ MouseArea {
                             onActivated: root.takeScreenshot("region")
                         }
 
-                        // Active (same as window — captures focused window)
+                        // All outputs stitched together
                         PowerMenuButton {
                             icon: "\uf065"
-                            label: "Active"
+                            label: "All"
                             accentColor: Config.getColor("primary.teal")
-                            onActivated: root.takeScreenshot("window")
+                            onActivated: root.takeScreenshot("all")
                         }
                     }
                 }

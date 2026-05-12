@@ -279,8 +279,9 @@ binds {
 
     //Print { screenshot; }
     //Ctrl+Print { screenshot-screen; }
-    //Alt+Print { screenshot-window; }
-    Print { spawn-sh "QT_SCALE_FACTOR=0.66 flameshot gui"; }
+    Print { spawn-sh "grim -g \"$(slurp -d)\" - | satty --filename - --output-filename ~/Pictures/Screenshots/Screenshot-$(date +%Y-%m-%d-%H-%M-%S).png"; }
+    Ctrl+Print { spawn-sh "grim -o \"$(niri msg --json focused-output | jq -r .name)\" - | satty --filename -"; }
+    Alt+Print { screenshot-window; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here

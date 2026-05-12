@@ -1,0 +1,30 @@
+# Maintainer: basluc <basluc.arch@gmail.com>
+
+pkgname=docker-sbx-bin
+pkgdesc="Docker Sandboxes run AI coding agents in isolated microVM sandboxes"
+pkgver=0.28.3
+pkgrel=1
+arch=('x86_64')
+url="https://github.com/docker/sbx-releases"
+license=('custom:Proprietary')
+depends=('e2fsprogs')
+provides=('sbx')
+conflicts=('sbx')
+source=("docker-sandbox::${url}/releases/download/v${pkgver}/DockerSandboxes-linux.tar.gz")
+sha256sums=('bc8000d99d0d8d25dc0d393bd5dfc21d67fa3bf08e086ba70b294de9156a5831')
+
+package() {
+  local src="${srcdir}/docker-sbx"
+  local libexec="${pkgdir}/usr/libexec"
+
+  install -Dm755 "${src}/sbx" "${pkgdir}/usr/bin/sbx"
+  install -Dm644 "${src}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
+  install -Dm755 "${src}/containerd-shim-nerdbox-v1" "${libexec}/containerd-shim-nerdbox-v1"
+  install -Dm755 "${src}/mkfs.erofs" "${libexec}/mkfs.erofs"
+  install -Dm755 "${src}/libkrun.so" "${libexec}/lib/libkrun.so"
+
+  for f in "${src}"/nerdbox-kernel-* "${src}"/nerdbox-initrd-*; do
+    [ -f "$f" ] && install -Dm644 "$f" "${libexec}/$(basename "$f")"
+  done
+}

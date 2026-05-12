@@ -24,7 +24,6 @@ class MediaGuiModule(decman.Module):
     def pkgs(self) -> set[str]:
         return {
             "feh",
-            "flameshot",
             "imv",
             "obs-studio",
             "playerctl",
