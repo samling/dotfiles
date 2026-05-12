@@ -1,3 +1,5 @@
+import grp
+
 import decman
 from decman.extras.users import Group, User, UserManager
 
@@ -29,9 +31,22 @@ class UsersModule(UserManager):
             runs (typically because a package installed in the same
             run created it).
         managed_groups: groups decman itself should ensure exist. Use
-            this for groups not created by any package — e.g. `keyd`,
+            this for groups not created by any package - e.g. `keyd`,
             which the upstream PKGBUILD doesn't create but keyd.service
-            wants to drop privileges into.
+            wants to drop privileges into. Removing one from this set
+            later causes decman to `groupdel` it, which can orphan
+            files owned by package-installed daemons. Don't list groups
+            that ship with a package here; use `ensured_groups` instead.
+        ensured_groups: groups to create with `groupadd --system` if
+            missing, without registering them as decman-managed. Used
+            for the chicken-and-egg case on first bootstrap: the
+            package that normally creates the group (docker, libvirt,
+            wireshark-cli, qemu-base for kvm, ...) hasn't been
+            installed yet at the time UserManager's before_update
+            runs, so `usermod --groups docker` would fail. Removing
+            a name from `ensured_groups` later is a no-op (decman
+            doesn't track it), so files stay owned by whatever GID
+            the package's sysusers/install script settled on.
     """
 
     # Arch's NetworkManager uses polkit for authorization; there's no
@@ -52,8 +67,11 @@ class UsersModule(UserManager):
         self,
         extra_groups: tuple[str, ...] = (),
         managed_groups: tuple[str, ...] = (),
+        ensured_groups: tuple[str, ...] = (),
     ):
         super().__init__()
+
+        self._ensured_groups = tuple(ensured_groups)
 
         for g in managed_groups:
             self.add_group(Group(groupname=g, system=True))
@@ -85,6 +103,20 @@ class UsersModule(UserManager):
                 system=True,
             )
         )
+
+    def before_update(self, store):
+        # Pre-create groups that a package will (later) install via
+        # its own sysusers/.install. Done before UserManager runs
+        # useradd/usermod, so `--groups docker,libvirt,...` doesn't
+        # fail on a fresh host where those packages aren't installed
+        # yet. Idempotent: `getent group` skips if present, and a
+        # later sysusers file matching the same name is a no-op.
+        for g in self._ensured_groups:
+            try:
+                grp.getgrnam(g)
+            except KeyError:
+                decman.prg(["groupadd", "--system", g], check=True)
+        super().before_update(store)
 
     def after_update(self, store):
         # UserManager's own after_update reconciles group memberships;

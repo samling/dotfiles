@@ -2,6 +2,14 @@ import decman
 from decman.plugins import pacman, aur, systemd
 
 from modules._systemd import reconcile_units
+from modules.common.archlinux import has_repo
+
+# Packages CachyOS ships as native binaries. On cachyos hosts they
+# come from the sync repo (declared @pacman); on EOS / vanilla Arch
+# they still come from AUR. Declaring conditionally in both places
+# keeps decman from rebuilding from source on cachyos and from
+# orphan-removing the sync-installed copy.
+_NATIVE_OR_AUR = {"swaylock-effects", "wlogout"}
 
 
 class WmModule(decman.Module):
@@ -11,7 +19,7 @@ class WmModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        return {
+        base = {
             "awww",
             "cage",
             "fuzzel",
@@ -28,15 +36,27 @@ class WmModule(decman.Module):
             "wofi",
             "xterm",
         }
+        if has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
+        return base
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        return {
+        base = {
             "ghostty-nightly-bin",
-            "swaylock-effects",
-            "wlogout",
             "wlrctl",
         }
+        if not has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
+        return base
+
+    @systemd.units
+    def units(self) -> set[str]:
+        # greetd is the login manager. Enable it system-wide so a
+        # fresh host (titan) boots into the regreet TUI on tty1
+        # instead of getty. Idempotent on hosts that already have it
+        # enabled (xen).
+        return {"greetd.service"}
 
     @systemd.user_units
     def user_units(self) -> dict[str, set[str]]:

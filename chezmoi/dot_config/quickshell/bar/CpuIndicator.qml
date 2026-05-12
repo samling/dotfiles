@@ -11,13 +11,20 @@ SystemIndicator {
     property string powerProfile: ""
     property real cpuTemp: 0
     property string fanState: "standard"
+    property bool fanControlAvailable: false
 
-    readonly property var fanModes: [
+    // True only when power-profiles-daemon is running AND reports a known
+    // profile. On desktops without PPD (or without ACPI platform-profile
+    // support) the binary returns an empty stdout, which keeps this false.
+    readonly property bool powerProfileAvailable:
+        ["performance", "balanced", "power-saver"].indexOf(powerProfile) !== -1
+
+    readonly property var fanModes: fanControlAvailable ? [
         { value: "1", label: "Quiet",    icon: "󱑱" },
         { value: "0", label: "Standard", icon: "󱑲" },
         { value: "2", label: "High",     icon: "󱑳" },
         { value: "3", label: "Full",     icon: "󱑴" },
-    ]
+    ] : []
 
     readonly property var powerProfileModes: [
         { value: "performance",  label: "Performance", icon: "\uf0e7" },
@@ -94,11 +101,26 @@ SystemIndicator {
         }
     }
 
+    // Detect whether fan_state is installed. Skipping the sudo calls when
+    // it's absent avoids password prompts that otherwise faillock the user.
+    Process {
+        id: fanStateDetectProc
+        command: ["sh", "-c", "command -v fan_state >/dev/null 2>&1 && echo yes || echo no"]
+        running: true
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.fanControlAvailable = this.text.trim() === "yes"
+                if (root.fanControlAvailable) fanStateGetProc.running = true
+            }
+        }
+    }
+
     // Get current fan state
     Process {
         id: fanStateGetProc
-        command: ["sudo", "fan_state", "get"]
-        running: true
+        command: ["sudo", "-n", "fan_state", "get"]
+        running: false
 
         stdout: StdioCollector {
             onStreamFinished: {
@@ -111,11 +133,11 @@ SystemIndicator {
     Process {
         id: fanStateSetProc
         property string mode: "0"
-        command: ["sudo", "fan_state", "set", mode]
+        command: ["sudo", "-n", "fan_state", "set", mode]
 
         stdout: StdioCollector {
             onStreamFinished: {
-                fanStateGetProc.running = true
+                if (root.fanControlAvailable) fanStateGetProc.running = true
             }
         }
     }
@@ -134,6 +156,7 @@ SystemIndicator {
     }
 
     function setFanState(mode) {
+        if (!fanControlAvailable) return
         fanStateSetProc.mode = mode
         fanStateSetProc.running = true
     }
@@ -158,6 +181,5 @@ SystemIndicator {
         cpuProc.running = true
         powerProfileGetProc.running = true
         cpuTempProc.running = true
-        fanStateGetProc.running = true
     }
 }

@@ -21,6 +21,9 @@ bindkey '^[^?' backward-kill-word
 bindkey -r "^p"
 bindkey -r "^n"
 
+# unbind ctrl-l (clear screen)
+bindkey -r "^[^L"
+
 #========= C-x C-e to edit the current command in $EDITOR
 
 autoload -U edit-command-line

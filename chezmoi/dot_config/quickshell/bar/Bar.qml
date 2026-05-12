@@ -43,6 +43,7 @@ Scope {
 
                     BarContent {
                         id: barContent
+                        screen: barLoader.modelData
                         implicitHeight: Config.barHeight
                         anchors {
                             top: parent.top

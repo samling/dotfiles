@@ -31,13 +31,39 @@ QtObject {
     // Primary text color for bar pill indicators
     readonly property color barTextColor: contrastText(Colors.wallust.color12)
 
-    // User configuration system
-    property var userConfig: ({})
+    // User configuration system.
+    //
+    // Two layers, merged with local taking precedence:
+    //   config.json       — chezmoi-managed defaults (do not edit directly)
+    //   config.local.json — untracked per-host overrides (set e.g. bar.primaryMonitor)
+    //
+    // Either file may be absent; missing keys fall through to the other layer.
+    property var _baseConfig: ({})
+    property var _localConfig: ({})
+    readonly property var userConfig: deepMerge(_baseConfig, _localConfig)
     property bool userConfigInitialized: false
 
     // Updates configuration
     readonly property var criticalPackages: userConfig.updates?.criticalPackages || []
     readonly property var warningPackages: userConfig.updates?.warningPackages || []
+
+    // Primary monitor for "singleton" bar components (info panel, system
+    // indicators, clock, power menu). Set bar.primaryMonitor to a Wayland
+    // output name (e.g. "DP-1") in config.local.json. When unset, every
+    // screen is treated as primary so single-monitor setups (and users who
+    // want everything mirrored) get the full bar on every output.
+    readonly property string primaryScreenName: userConfig.bar?.primaryMonitor || ""
+
+    // Whether to show the InfoPanel's Power Profile toggle. PPD often
+    // reports all three profiles on desktops too (with a `placeholder`
+    // PlatformDriver that does nothing), so auto-detection isn't reliable.
+    // Set bar.showPowerProfile to false in config.local.json on desktops.
+    readonly property bool showPowerProfile: userConfig.bar?.showPowerProfile !== false
+
+    // Whether to show the InfoPanel's GPU section. Auto-hides anyway when
+    // nvidia-smi isn't installed or reports no GPU; this flag lets you
+    // suppress it explicitly even when a GPU is detected.
+    readonly property bool showGpu: userConfig.bar?.showGpu !== false
 
     property FileView userConfigFile: FileView {
         path: Qt.resolvedUrl("config.json")
@@ -45,28 +71,66 @@ QtObject {
 
         onLoaded: {
             try {
-                config.userConfig = JSON.parse(text())
+                config._baseConfig = JSON.parse(text())
                 if (config.userConfigInitialized) {
-                    console.log("[Config] *** FILE CHANGED *** User config reloaded")
+                    console.log("[Config] *** FILE CHANGED *** Base config reloaded")
                 } else {
-                    console.log("[Config] Initial user config load")
+                    console.log("[Config] Initial base config load")
                     config.userConfigInitialized = true
                 }
             } catch (e) {
                 console.error("[Config] Failed to parse config.json:", e)
-                config.userConfig = getDefaultUserConfig()
+                config._baseConfig = getDefaultUserConfig()
             }
         }
 
         onFileChanged: {
-            console.log("[Config] User config file change detected, reloading...")
+            console.log("[Config] Base config file change detected, reloading...")
             reload()
         }
 
         onLoadFailed: {
             console.log("[Config] config.json not found, using defaults")
-            config.userConfig = getDefaultUserConfig()
+            config._baseConfig = getDefaultUserConfig()
         }
+    }
+
+    property FileView localConfigFile: FileView {
+        path: Qt.resolvedUrl("config.local.json")
+        watchChanges: true
+
+        onLoaded: {
+            try {
+                config._localConfig = JSON.parse(text())
+                console.log("[Config] Local config loaded")
+            } catch (e) {
+                console.error("[Config] Failed to parse config.local.json:", e)
+                config._localConfig = ({})
+            }
+        }
+
+        onFileChanged: {
+            console.log("[Config] Local config file change detected, reloading...")
+            reload()
+        }
+
+        onLoadFailed: {
+            // Local config is optional; no warning.
+            config._localConfig = ({})
+        }
+    }
+
+    // Deep-merge two plain objects: keys in `overlay` win; objects recurse;
+    // arrays and primitives are replaced wholesale. null/undefined overlay
+    // leaves base untouched.
+    function deepMerge(base, overlay) {
+        if (overlay === null || overlay === undefined) return base
+        if (typeof base !== 'object' || base === null || Array.isArray(base)) return overlay
+        if (typeof overlay !== 'object' || Array.isArray(overlay)) return overlay
+        const out = {}
+        for (const k in base) out[k] = base[k]
+        for (const k in overlay) out[k] = deepMerge(base[k], overlay[k])
+        return out
     }
 
     function getDefaultUserConfig() {

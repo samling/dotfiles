@@ -5,9 +5,22 @@ from modules._systemd import reconcile_units
 
 
 class KernelModule(decman.Module):
-    """Linux kernel, kernel firmware, microcode, initramfs, zram.
+    """Microcode, kernel firmware blobs, zram-generator.
 
-    Hardware-host concerns. Do NOT include in WSL roles — WSL2 boots
+    Distro-agnostic bits every hardware-host wants regardless of which
+    kernel / initramfs / bootloader it boots. The kernel packages
+    themselves and the initramfs/bootloader stack live in separate
+    modules:
+
+    - `ArchKernelModule` (linux + linux-lts + dracut + kernel-install-
+      for-dracut) for stock Arch / EndeavourOS hosts.
+    - `CachyOSModule` (linux-cachyos + mkinitcpio + limine) for hosts
+      that boot the CachyOS kernel stack.
+
+    Splitting here means a host that wants the CachyOS stack can drop
+    the Arch one without losing microcode/firmware/zram.
+
+    Hardware-host concerns. Do NOT include in WSL roles - WSL2 boots
     the Microsoft kernel, dracut has no /boot to write to, and zram
     duplicates the .wslconfig swap setting.
     """
@@ -20,13 +33,7 @@ class KernelModule(decman.Module):
         return {
             "amd-ucode",
             "b43-fwcutter",
-            "dracut",
-            "kernel-install-for-dracut",
-            "linux",
             "linux-firmware",
-            "linux-headers",
-            "linux-lts",
-            "linux-lts-headers",
             "sof-firmware",
             "wireless-regdb",
             "zram-generator",

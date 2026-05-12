@@ -1,6 +1,7 @@
 import importlib
 import os
 import socket
+import subprocess
 
 import decman
 
@@ -76,3 +77,74 @@ except ModuleNotFoundError as e:
     raise decman.SourceError(
         f"no host config for hostname {_host!r}; create hosts/{_slug}.py"
     )
+
+
+# Auto-ignore every currently-installed `python-*` package that
+# (a) no declared module asks for and (b) pacman has marked as a
+# dependency (--asdeps), not as explicit. Decman's GC otherwise
+# treats undeclared python-* as orphan-able when their original
+# consumer (e.g. ufw) leaves the declared set, which is whack-a-mole:
+# each removal cascades a new batch of jaraco / autocommand /
+# pkg_resources / platformdirs / more-itertools / ... transitive
+# deps into the remove list, and any one of those may have
+# non-obvious reverse-deps outside our managed set.
+#
+# Two filters matter:
+#
+# - Intersect with the declared set so this DOESN'T block installs
+#   of python-* packages we actually declare (python-black,
+#   python-isort, python-jinja, python-pillow, ...).
+#   `ignored_packages` is subtracted from `to_install` in
+#   `decman.plugins.pacman.apply`, so unconditionally ignoring would
+#   silently skip installing declared python pkgs not yet present.
+#
+# - Restrict to --asdeps via `pacman -Qdq` so that DECLARING a
+#   python-* package, applying, then removing the declaration still
+#   uninstalls it. Decman runs `pacman -D --asexplicit <pkgs>` on
+#   every declared install (decman/plugins/pacman.py: PacmanInterface
+#   .install), so anything decman-managed stays --asexplicit and is
+#   excluded from the auto-ignore set. Caveat: if you manually flip
+#   a python-* to --asdeps after the fact, it'll fall into the
+#   auto-ignore bucket and stop being GC'd.
+#
+# Walks decman.modules directly here because `decman.pacman.packages`
+# isn't populated until `plugin.process_modules` runs later in the
+# apply lifecycle - well after source.py finishes evaluating.
+def _declared_pacman_pkgs() -> set[str]:
+    # Imported inside the function: decman runs source.py via
+    # `exec(content)` from inside `_execute_source` (decman.app),
+    # which makes module-level imports land in exec's local frame
+    # rather than this function's __globals__. Looking up a
+    # closure'd helper at call time then fails with NameError. Keep
+    # the lookup local to dodge that.
+    #
+    # `decman/__init__.py` also rebinds `decman.plugins` to the
+    # available_plugins() dict, shadowing the submodule attribute -
+    # `import decman.plugins as p` or `from decman import plugins`
+    # both yield the dict, not the submodule. Pull the helper out
+    # by name to bypass the shadow.
+    from decman.plugins import run_methods_with_attribute
+
+    pkgs = set(decman.pacman.packages)
+    for mod in decman.modules:
+        pkgs |= set().union(*run_methods_with_attribute(mod, "__pacman__packages__"))
+    return pkgs
+
+
+try:
+    # -Qdq: dep-installed pkgs only (--asdeps). Skips --asexplicit so
+    # decman-managed python-* packages still flow through the normal
+    # remove path when their declaration is dropped.
+    _dep_installed = set(
+        subprocess.check_output(["pacman", "-Qdq"], text=True).splitlines()
+    )
+except (FileNotFoundError, subprocess.CalledProcessError):
+    # Pre-bootstrap (no pacman yet) or pacman db locked. Skip the
+    # auto-ignore; the curated list above still covers the worst
+    # offenders.
+    _dep_installed = set()
+
+_declared = _declared_pacman_pkgs()
+decman.pacman.ignored_packages |= {
+    p for p in _dep_installed if p.startswith("python-")
+} - _declared

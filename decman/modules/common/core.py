@@ -52,7 +52,7 @@ class CoreModule(decman.Module):
             "ripgrep",
             "rsync",
             "s-nail",
-            "tldr",
+            "tealdeer",
             "tree",
             "unrar",
             "unzip",

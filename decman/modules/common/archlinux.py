@@ -2,12 +2,13 @@ import decman
 from decman.plugins import pacman, aur
 
 
-def _has_eos_repo() -> bool:
-    """True if /etc/pacman.conf has the endeavouros repo enabled.
+def has_repo(name: str) -> bool:
+    """True if /etc/pacman.conf has the named repo section enabled.
 
-    The same packages (paru, yay, downgrade, reflector-simple) ship from
-    the EOS native repo on EndeavourOS but must be built from the AUR on
-    pure Arch. Switch the declaration based on what's actually available.
+    Used by modules whose packages may ship as native binaries on some
+    Arch derivatives (EOS, CachyOS) and need to be declared via
+    @pacman.packages there but @aur.packages elsewhere, so decman
+    doesn't needlessly rebuild from AUR.
     """
     try:
         with open("/etc/pacman.conf") as f:
@@ -15,14 +16,26 @@ def _has_eos_repo() -> bool:
                 stripped = line.strip()
                 if stripped.startswith("#"):
                     continue
-                if stripped == "[endeavouros]":
+                if stripped == f"[{name}]":
                     return True
     except FileNotFoundError:
         pass
     return False
 
 
-_EOS_OR_AUR = {"downgrade", "paru", "yay"}
+def _has_eos_repo() -> bool:
+    return has_repo("endeavouros")
+
+
+def _has_native_aur_helper_repo() -> bool:
+    """True if the host distro ships paru / yay / downgrade as native
+    binaries (currently EOS or CachyOS). On other Arch derivatives,
+    these come from the AUR.
+    """
+    return _has_eos_repo() or has_repo("cachyos")
+
+
+_NATIVE_OR_AUR = {"downgrade", "paru", "yay"}
 
 
 class ArchlinuxModule(decman.Module):
@@ -38,16 +51,16 @@ class ArchlinuxModule(decman.Module):
             "rebuild-detector",
             "reflector",
         }
-        if _has_eos_repo():
-            base |= _EOS_OR_AUR
+        if _has_native_aur_helper_repo():
+            base |= _NATIVE_OR_AUR
         return base
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
         base = {
             # Runtime dep of decman itself.
-            "python-iniparse-git",
+            # "python-iniparse-git",
         }
-        if not _has_eos_repo():
-            base |= _EOS_OR_AUR
+        if not _has_native_aur_helper_repo():
+            base |= _NATIVE_OR_AUR
         return base

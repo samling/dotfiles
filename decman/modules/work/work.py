@@ -15,6 +15,7 @@ class WorkModule(decman.Module):
             "azure-cli",
             "certbot",
             "cilium-cli",
+            "libfido2",
             "terraform",
             "terragrunt",
         }
@@ -24,6 +25,10 @@ class WorkModule(decman.Module):
         # vault-bin tracks Hashicorp's official binary; nvault is
         # internal and not present in AUR — install separately if needed.
         return {
+            "cursor-bin",
+            "globalprotect-openconnect-git",
+            "slack-desktop",
+            "teams-for-linux-bin",
             "teleport-bin",
             "vault-bin",
         }
