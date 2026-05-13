@@ -1,8 +1,9 @@
-function __ctrl_c_preserve --description 'cancel: prepend partial cmd to fish_killring; recover with C-y'
-    set -l buf (commandline)
-    if test -n "$buf"
-        # Push to the head of the kill-ring; yank (C-y) pulls it back.
-        set -p fish_killring $buf
+function __ctrl_c_preserve --description 'C-c: clear input in place if partial, new prompt if empty'
+    if test -z (commandline)
+        # empty line: print ^C, give a fresh prompt below
+        commandline -f cancel-commandline
+    else
+        # partial input: clear the buffer in place, preserve the prompt line
+        commandline ""
     end
-    commandline -f cancel-commandline
 end
