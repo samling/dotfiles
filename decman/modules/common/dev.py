@@ -11,6 +11,7 @@ class DevModule(decman.Module):
     def pkgs(self) -> set[str]:
         return {
             "ansible",
+            "bun",
             "clang",
             "direnv",
             "distrobox",
@@ -60,3 +61,16 @@ class DevModule(decman.Module):
             # package is redundant anyway.
             "qmk-hid",
         }
+
+    def after_update(self, store):
+        # uv is declared above, so by the time after_update runs it's on PATH.
+        # uv tool install is idempotent when the resolved version matches; the
+        # cost is one network roundtrip to check @latest each apply.
+        print("Installing serena-agent via uv")
+        decman.prg(
+            ["uv", "tool", "install", "-p", "3.13",
+             "serena-agent@latest", "--prerelease=allow"],
+            user="sboynton",
+            mimic_login=True,
+            check=True,
+        )

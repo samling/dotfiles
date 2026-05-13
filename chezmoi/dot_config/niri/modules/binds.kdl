@@ -69,14 +69,21 @@ binds {
 
     Mod+W repeat=false { close-window; }
 
-    Mod+Left  { focus-column-or-monitor-left; }
+    // Ergonomics of bindings:
+    //
+    // Mod - focus column
+    // Mod+Shift - move column
+    // Mod+Ctrl - focus monitor
+    // Mod+Shift+Ctrl - move column to focused monitor
+
+    Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-or-workspace-down; }
     Mod+Up    { focus-window-or-workspace-up; }
-    Mod+Right { focus-column-or-monitor-right; }
-    Mod+H     { focus-column-or-monitor-left; }
+    Mod+Right { focus-column-right; }
+    Mod+H     { focus-column-left; }
     Mod+J     { focus-window-or-workspace-down; }
     Mod+K     { focus-window-or-workspace-up; }
-    Mod+L     { focus-column-or-monitor-right; }
+    Mod+L     { focus-column-right; }
 
     Mod+Shift+Left  { move-column-left; }
     Mod+Shift+Down  { move-window-down-or-to-workspace-down; }

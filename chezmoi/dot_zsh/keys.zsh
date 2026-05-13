@@ -56,3 +56,12 @@ zle -N cs-exec-widget
 
 # Bind Ctrl+S to the widget
 bindkey '^S' cs-exec-widget
+
+#========= fzf.fish-style search widgets (defined in functions.zsh)
+# These override the stock Ctrl-T / Ctrl-R bindings that `fzf --zsh` installs
+# in completions.zsh, which is why keys.zsh is sourced after completions.zsh.
+bindkey '^T'   __fzf_search_directory   # files under cwd (token-aware)
+bindkey '^R'   __fzf_search_history     # timestamped history
+bindkey '^[^L' __fzf_search_git_log     # Alt-Ctrl-L: commit hashes
+bindkey '^[^S' __fzf_search_git_status  # Alt-Ctrl-S: changed paths
+bindkey '^[^P' __fzf_search_processes   # Alt-Ctrl-P: pids

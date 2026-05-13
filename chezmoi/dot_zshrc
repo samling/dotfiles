@@ -18,8 +18,11 @@ source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
 source ~/.zsh/fnm.zsh
 source ~/.zsh/plugins.zsh
-source ~/.zsh/keys.zsh
 source ~/.zsh/completions.zsh
+# keys.zsh must come after completions.zsh: `fzf --zsh` (sourced there) installs
+# the stock Ctrl-T / Ctrl-R bindings, which keys.zsh's fzf-fish-style widgets
+# then override.
+source ~/.zsh/keys.zsh
 #source ~/.zsh/zellij.zsh
 
 # Source ${HOME}/dotfiles-private/zshrc.*.local files

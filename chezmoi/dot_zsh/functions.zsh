@@ -280,6 +280,257 @@ function reset_terminal_colors() {
   printf '\033]104\033\\\033]110\033\\\033]111\033\\\033]112\033\\'
 }
 
+# ============================================================================
+# fzf.fish-style search widgets (port of https://github.com/PatrickF1/fzf.fish)
+# Bindings live in keys.zsh; preview helpers in ~/.zsh/scripts/fzf_preview_*.sh.
+#
+# Per-widget option overrides honored just like fzf.fish:
+#   $fzf_directory_opts $fzf_git_log_opts $fzf_git_status_opts
+#   $fzf_processes_opts $fzf_history_opts $fzf_fd_opts
+#   $fzf_git_log_format $fzf_history_time_format
+#   $fzf_diff_highlighter $fzf_preview_file_cmd $fzf_preview_dir_cmd
+# ============================================================================
+
+# Whitespace tokenization. Sets reply=(token prefix suffix).
+__fzf_fish_current_token() {
+  local lbuf="$LBUFFER" rbuf="$RBUFFER" left right
+  left="${lbuf##*[[:space:]]}"
+  right="${rbuf%%[[:space:]]*}"
+  reply=("${left}${right}" "${lbuf%"$left"}" "${rbuf#"$right"}")
+}
+
+__fzf_fish_replace_token() {
+  local replacement="$1"
+  local -a reply
+  __fzf_fish_current_token
+  LBUFFER="${reply[2]}${replacement}"
+  RBUFFER="${reply[3]}"
+}
+
+# Shell-quote each element only if needed, then join with spaces.
+__fzf_fish_join_quoted() {
+  local -a out
+  local p
+  for p in "$@"; do out+=("${(q-)p}"); done
+  print -r -- "${(j: :)out}"
+}
+
+# Search Directory: fd + bat preview; token-aware (dir/<cursor> searches inside).
+__fzf_search_directory() {
+  emulate -L zsh
+  setopt local_options no_nomatch
+  local fd_cmd
+  fd_cmd=$(command -v fdfind || command -v fd || print -r -- fd)
+
+  local -a reply
+  __fzf_fish_current_token
+  local token="${reply[1]}"
+  # Tilde-expand only (no eval) to avoid running arbitrary buffer text.
+  local expanded_token="${~token}"
+
+  local -a fd_args fzf_args
+  fd_args=(--color=always)
+  [[ -n "${fzf_fd_opts:-}" ]] && fd_args+=(${=fzf_fd_opts})
+  fzf_args=(--multi --ansi --layout=reverse)
+
+  local result
+  if [[ "$expanded_token" == */ && -d "$expanded_token" ]]; then
+    fd_args+=(--base-directory="$expanded_token")
+    fzf_args+=(--prompt="Directory ${expanded_token}> "
+               --preview="${HOME}/.zsh/scripts/fzf_preview_file.sh ${(q)expanded_token}{}")
+    [[ -n "${fzf_directory_opts:-}" ]] && fzf_args+=(${=fzf_directory_opts})
+    result=$("$fd_cmd" "${fd_args[@]}" 2>/dev/null | SHELL=/bin/bash fzf "${fzf_args[@]}")
+    if [[ $? -eq 0 && -n "$result" ]]; then
+      local -a paths prefixed
+      paths=("${(@f)result}")
+      local p
+      for p in "${paths[@]}"; do
+        [[ -n "$p" ]] && prefixed+=("${expanded_token}${p}")
+      done
+      __fzf_fish_replace_token "$(__fzf_fish_join_quoted "${prefixed[@]}")"
+    fi
+  else
+    fzf_args+=(--prompt='Directory> '
+               --query="$expanded_token"
+               --preview="${HOME}/.zsh/scripts/fzf_preview_file.sh {}")
+    [[ -n "${fzf_directory_opts:-}" ]] && fzf_args+=(${=fzf_directory_opts})
+    result=$("$fd_cmd" "${fd_args[@]}" 2>/dev/null | SHELL=/bin/bash fzf "${fzf_args[@]}")
+    if [[ $? -eq 0 && -n "$result" ]]; then
+      local -a paths kept
+      paths=("${(@f)result}")
+      local p
+      for p in "${paths[@]}"; do
+        [[ -n "$p" ]] && kept+=("$p")
+      done
+      __fzf_fish_replace_token "$(__fzf_fish_join_quoted "${kept[@]}")"
+    fi
+  fi
+  zle reset-prompt
+}
+zle -N __fzf_search_directory
+
+# Search Git Log: insert selected commit hash(es).
+__fzf_search_git_log() {
+  emulate -L zsh
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    zle -M '_fzf_search_git_log: Not in a git repository.'
+    return
+  fi
+  local fmt="${fzf_git_log_format:-%C(bold blue)%h%C(reset) - %C(cyan)%ad%C(reset) %C(yellow)%d%C(reset) %C(normal)%s%C(reset)  %C(dim normal)[%an]%C(reset)}"
+  local preview_cmd='git show --color=always --stat --patch {1}'
+  [[ -n "${fzf_diff_highlighter:-}" ]] && preview_cmd="$preview_cmd | $fzf_diff_highlighter"
+
+  local -a reply
+  __fzf_fish_current_token
+  local query="${reply[1]}"
+
+  local -a fzf_args
+  fzf_args=(--ansi --multi --scheme=history
+            --prompt='Git Log> '
+            --preview="$preview_cmd"
+            --query="$query")
+  [[ -n "${fzf_git_log_opts:-}" ]] && fzf_args+=(${=fzf_git_log_opts})
+
+  local selected
+  selected=$(git log --no-show-signature --color=always --format=format:"$fmt" --date=short \
+             | SHELL=/bin/bash fzf "${fzf_args[@]}") || { zle reset-prompt; return }
+
+  local -a hashes
+  local line abbrev full
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    abbrev="${line%% *}"
+    full=$(git rev-parse "$abbrev" 2>/dev/null) || continue
+    hashes+=("$full")
+  done <<< "$selected"
+
+  (( ${#hashes} )) && __fzf_fish_replace_token "${(j: :)hashes}"
+  zle reset-prompt
+}
+zle -N __fzf_search_git_log
+
+# Search Git Status: insert selected path(s); handles "R old -> new" renames.
+__fzf_search_git_status() {
+  emulate -L zsh
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    zle -M '_fzf_search_git_status: Not in a git repository.'
+    return
+  fi
+
+  local -a reply
+  __fzf_fish_current_token
+  local query="${reply[1]}"
+
+  local -a fzf_args
+  fzf_args=(--ansi --multi
+            --prompt='Git Status> '
+            --query="$query"
+            --preview="${HOME}/.zsh/scripts/fzf_preview_changed_file.sh {}"
+            --nth='2..')
+  [[ -n "${fzf_git_status_opts:-}" ]] && fzf_args+=(${=fzf_git_status_opts})
+
+  local selected
+  selected=$(git -c color.status=always status --short \
+             | fzf_diff_highlighter="${fzf_diff_highlighter:-}" SHELL=/bin/bash \
+               fzf "${fzf_args[@]}") || { zle reset-prompt; return }
+
+  local -a paths
+  local line
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    if [[ "${line:0:1}" == 'R' ]]; then
+      paths+=("${line##* -> }")
+    else
+      paths+=("${line:3}")
+    fi
+  done <<< "$selected"
+
+  (( ${#paths} )) && __fzf_fish_replace_token "$(__fzf_fish_join_quoted "${paths[@]}")"
+  zle reset-prompt
+}
+zle -N __fzf_search_git_status
+
+# Search Processes: insert selected pid(s).
+__fzf_search_processes() {
+  emulate -L zsh
+  local ps_cmd
+  ps_cmd=$(command -v ps || print -r -- ps)
+  local ps_preview_fmt='pid,ppid=PARENT,user,%cpu,rss=RSS_IN_KB,start=START_TIME,command'
+
+  local -a reply
+  __fzf_fish_current_token
+  local query="${reply[1]}"
+
+  local -a fzf_args
+  fzf_args=(--multi --ansi
+            --prompt='Processes> '
+            --query="$query"
+            --header-lines=1
+            --preview="$ps_cmd -o '$ps_preview_fmt' -p {1} || echo 'Cannot preview {1} because it exited.'"
+            --preview-window='bottom:4:wrap')
+  [[ -n "${fzf_processes_opts:-}" ]] && fzf_args+=(${=fzf_processes_opts})
+
+  local selected
+  selected=$("$ps_cmd" -A -opid,command \
+             | SHELL=/bin/bash fzf "${fzf_args[@]}") || { zle reset-prompt; return }
+
+  local -a pids
+  local line pid
+  while IFS= read -r line; do
+    pid="${line## }"
+    pid="${pid%% *}"
+    [[ -n "$pid" ]] && pids+=("$pid")
+  done <<< "$selected"
+
+  (( ${#pids} )) && __fzf_fish_replace_token "${(j: :)pids}"
+  zle reset-prompt
+}
+zle -N __fzf_search_processes
+
+# Search History: timestamped picker; replaces the whole buffer.
+# Multi-line commands are joined with " ↵ " for fzf display and restored on selection.
+__fzf_search_history() {
+  emulate -L zsh
+  local fmt="${fzf_history_time_format:-%m-%d %H:%M:%S}"
+  local query="${LBUFFER}${RBUFFER}"
+
+  local selected
+  selected=$(
+    fc -rl -t "$fmt" 1 2>/dev/null |
+      awk '
+        /^[[:space:]]*[0-9]+\*?[[:space:]]/ {
+          if (buf != "") print buf
+          sub(/^[[:space:]]*[0-9]+\*?[[:space:]]+/, "")
+          if (match($0, /  +/)) {
+            ts = substr($0, 1, RSTART - 1)
+            cmd = substr($0, RSTART + RLENGTH)
+            buf = ts " │ " cmd
+          } else {
+            buf = $0
+          }
+          next
+        }
+        { buf = buf " ↵ " $0 }
+        END { if (buf != "") print buf }
+      ' |
+      SHELL=/bin/bash fzf \
+        --no-multi \
+        --scheme=history \
+        --prompt='History> ' \
+        --query="$query" \
+        --preview='printf "%s\n" {} | sed -e "s/^[^│]*│ //" -e "s/ ↵ /\n/g" | bat --color=always -pl bash --paging=never' \
+        --preview-window='bottom:3:wrap' \
+        ${=fzf_history_opts:-}
+  ) || { zle reset-prompt; return }
+
+  local cmd="${selected#*│ }"
+  cmd="${cmd// ↵ /$'\n'}"
+  LBUFFER="$cmd"
+  RBUFFER=""
+  zle reset-prompt
+}
+zle -N __fzf_search_history
+
 # https://junegunn.github.io/fzf/tips/ripgrep-integration/
 function fzg() ( # fuzzygrep
   RELOAD='reload:rg --column --color=always --smart-case {q} || :'

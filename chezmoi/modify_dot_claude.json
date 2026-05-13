@@ -20,8 +20,8 @@
     )
     "serena" (dict
         "type" "stdio"
-        "command" "uvx"
-        "args" (list "--from" "git+https://github.com/oraios/serena" "serena" "start-mcp-server" "--context=claude-code" "--project-from-cwd")
+        "command" "serena"
+        "args" (list "start-mcp-server" "--context=claude-code" "--project-from-cwd")
     )
     "sequential-thinking" (dict
         "type" "stdio"
