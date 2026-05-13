@@ -19,6 +19,9 @@ end
 set -gx FZF_TMUX 0
 set -gx FZF_TMUX_OPTS ""
 
+# fzf.fish reads fish variables for its widgets, not FZF_CTRL_T_OPTS.
+set -g fzf_directory_opts --layout=reverse
+
 set -gx FZF_ALT_C_OPTS "--preview 'ls {1..} | bat --color=always -pl sh' \
   --walker-skip .git,node_modules,target \
   --preview-window 'wrap,down,5' \
