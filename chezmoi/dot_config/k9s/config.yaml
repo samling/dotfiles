@@ -1,6 +1,6 @@
 k9s:
   ui:
-    skin: catppuccin-mocha
+    skin: catppuccin-mocha-transparent
   thresholds:
     cpu:
       warn: 75

@@ -39,30 +39,15 @@ Scope {
                     bottom: true
                 }
 
-                Rectangle {
-                    id: pill
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        left: parent.left
-                        leftMargin: Config.sideBarLeftMargin
-                        right: parent.right
-                    }
-                    height: workspaces.implicitHeight + Config.pillHorizontalPadding * 2
-                    color: Config.pillColor2
-                    radius: Config.pillRadius
-                    border.width: 2
-                    border.color: Qt.darker(color, 1.3)
-
-                    readonly property color textColor: Config.contrastText(color)
-
-                    Workspaces {
-                        id: workspaces
-                        anchors.centerIn: parent
-                        activeColor: pill.textColor
-                        activeSecondaryColor: pill.textColor
-                        inactiveColor: Qt.darker(pill.textColor, 1.4)
-                        outputFilter: sideLoader.modelData.name
-                    }
+                Workspaces {
+                    id: workspaces
+                    anchors.left: parent.left
+                    anchors.leftMargin: Config.sideBarLeftMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    activeColor: Config.niriWorkspaceTextColor
+                    activeSecondaryColor: Config.niriWorkspaceTextColor
+                    inactiveColor: Qt.darker(Config.niriWorkspaceTextColor, 1.4)
+                    outputFilter: sideLoader.modelData.name
                 }
             }
         }

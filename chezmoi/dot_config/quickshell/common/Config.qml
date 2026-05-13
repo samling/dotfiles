@@ -302,12 +302,29 @@ QtObject {
     readonly property int barRadius: 1
     readonly property string barBackgroundColor: "transparent"
 
-    // Niri-only side bar (left edge). Asymmetric: a small left margin
-    // for breathing room from the screen edge, then the pill (sized to
-    // match horizontal pills' 24-px short axis), flush against the
-    // window on the right.
-    readonly property int sideBarLeftMargin: barContentLeftMargin
-    readonly property int sideBarPillWidth: barHeight - pillVerticalMargin * 2
+    // Niri workspace cells. Each cell sits in a fixed-height slot in the
+    // column; on hover the hovered cell elongates vertically (toward its
+    // neighbors) with cosine falloff so the bar stays exactly cellBase
+    // wide. Width is fixed - magnification is only along the stack axis,
+    // which keeps the side bar's horizontal footprint as narrow as the
+    // buttons themselves. influenceCells is the half-width of the
+    // falloff in cell-pitches.
+    readonly property int niriWorkspaceCellBase: 22
+    readonly property int niriWorkspaceCellMax: 36
+    readonly property int niriWorkspaceCellSpacing: 4
+    readonly property real niriWorkspaceMagInfluenceCells: 1.8
+    readonly property int niriWorkspaceCornerRadius: 7
+    // Buttons reuse the color the pill used to have, so they read as
+    // little versions of the original. Text picks a contrasting fg.
+    readonly property color niriWorkspaceButtonColor: pillColor2
+    readonly property color niriWorkspaceTextColor: contrastText(pillColor2)
+
+    // Niri-only side bar (left edge). The panel is just wide enough for
+    // the buttons plus a small breathing-room margin from the screen
+    // edge; nothing pokes out sideways, so apps tile flush against the
+    // bar's right edge.
+    readonly property int sideBarLeftMargin: 3
+    readonly property int sideBarPillWidth: niriWorkspaceCellBase
     readonly property int sideBarWidth: sideBarLeftMargin + sideBarPillWidth
 
     // Bar layout spacing

@@ -27,6 +27,8 @@ class ClipboardModule(decman.Module):
             "sboynton": {
                 "clipse-watch-image.service",
                 "clipse-watch-text.service",
-                "wl-paste-primary.service",
+                # wl-paste-primary.service intentionally omitted: it mirrors the
+                # primary selection (highlight) into the clipboard, which makes
+                # every highlight overwrite the Ctrl-C buffer.
             },
         }
