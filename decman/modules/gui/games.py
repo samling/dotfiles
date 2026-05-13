@@ -15,6 +15,7 @@ class GamesModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
+          "moonlight-qt",
           "steam",
         }
 
