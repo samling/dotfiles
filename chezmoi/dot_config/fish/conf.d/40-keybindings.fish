@@ -9,6 +9,10 @@ function fish_user_key_bindings
     # C-s: command-snippets widget
     bind \cs cs-exec-widget
 
+    # C-c: preserve partial command to the kill-ring before cancelling.
+    # Recover with C-y (yank). On empty line, behaves as default cancel.
+    bind \cc __ctrl_c_preserve
+
     # C-t: fzf file/directory search (replaces fish default `transpose-chars`).
     # fzf.fish ships _fzf_search_directory and binds it to Alt-C-F by default;
     # we override Ctrl-T here to match zsh muscle memory.
