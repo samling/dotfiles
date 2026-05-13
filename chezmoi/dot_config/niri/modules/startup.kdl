@@ -25,6 +25,9 @@ spawn-at-startup "slack"
 spawn-sh-at-startup "dbus-update-activation-environment --systemd GDK_DPI_SCALE=0.85"
 spawn-sh-at-startup	"killall niri-float-sticky; niri-float-sticky -disable-auto-stick"
 spawn-at-startup "ie-r"
+spawn-at-startup "openrgb"
+spawn-at-startup "sunshine"
+spawn-at-startup "steam"
 //spawn-at-startup "flameshot"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:

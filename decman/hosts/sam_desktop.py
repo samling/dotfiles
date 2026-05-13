@@ -12,3 +12,7 @@ from roles.wsl import MODULES
 # counterpart on WSL. roles/wsl.py already omits the rest of host.*
 # (disks, hardware, networking) for the same reason.
 decman.modules += MODULES
+
+# Per-host packages. Layered on top of role / module packages.
+decman.pacman.packages |= set()
+decman.aur.packages |= set()

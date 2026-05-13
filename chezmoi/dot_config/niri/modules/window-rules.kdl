@@ -94,10 +94,29 @@ window-rule {
     default-floating-position x=10 y=10 relative-to="bottom-right"
 }
 
+// window-rule {
+//     match app-id="steam"
+//     match title="Friends List"
+//     open-floating true
+//     open-on-workspace "Games"
+// }
+//
 window-rule {
-    match app-id="steam"
-    match title="Friends List"
-    open-floating true
+    match app-id="steam" title="^Steam$"
+    open-on-workspace "Games"
+}
+
+// always open Big Picture mode on the Dell monitor
+window-rule {
+    match app-id="steam" title="^Steam Big Picture Mode$"
+    open-focused true
+    open-on-output "DP-3" // Dell Inc. DELL U2719DX 3TQSPS2
+}
+
+// open games in fullscreen
+window-rule {
+    match app-id=r#"^steam_app_\d+$"#
+    open-fullscreen true
 }
 
 //=== MISC

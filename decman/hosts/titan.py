@@ -32,3 +32,9 @@ decman.modules += MODULES + [
     NvidiaModule(),
     WorkModule(),
 ]
+
+# Per-host packages. Layered on top of role / module packages.
+decman.pacman.packages |= set()
+decman.aur.packages |= {
+    "sunshine-beta-bin",
+}

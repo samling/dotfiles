@@ -3,4 +3,4 @@ cat | yq '.excluded_tools = [
   "replace_lines",
   "replace_content",
   "replace_symbol_body"
-]'
+] | .web_dashboard = false'

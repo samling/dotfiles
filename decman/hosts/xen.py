@@ -19,3 +19,7 @@ decman.modules += MODULES + [
     EndeavourOSModule(),
     ZenbookModule(),
 ]
+
+# Per-host packages. Layered on top of role / module packages.
+decman.pacman.packages |= set()
+decman.aur.packages |= set()

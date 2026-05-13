@@ -50,6 +50,9 @@ workspace "Code" {
 workspace "Meetings" {
   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
 }
+workspace "Games" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
 
 workspace "Chat" {
   open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
