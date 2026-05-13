@@ -286,8 +286,8 @@ function reset_terminal_colors() {
 #
 # Per-widget option overrides honored just like fzf.fish:
 #   $fzf_directory_opts $fzf_git_log_opts $fzf_git_status_opts
-#   $fzf_processes_opts $fzf_history_opts $fzf_fd_opts
-#   $fzf_git_log_format $fzf_history_time_format
+#   $fzf_git_branch_opts $fzf_processes_opts $fzf_history_opts $fzf_fd_opts
+#   $fzf_git_log_format $fzf_git_branch_format $fzf_history_time_format
 #   $fzf_diff_highlighter $fzf_preview_file_cmd $fzf_preview_dir_cmd
 # ============================================================================
 
@@ -408,6 +408,67 @@ __fzf_search_git_log() {
   zle reset-prompt
 }
 zle -N __fzf_search_git_log
+
+# Search Git Branches: insert selected branch name(s). Local + remote, sorted
+# by most-recent commit. Symbolic refs (origin/HEAD) are dropped via the
+# %(if)%(symref) conditional, so they don't appear in the picker.
+__fzf_search_git_branches() {
+  emulate -L zsh
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    zle -M '_fzf_search_git_branches: Not in a git repository.'
+    return
+  fi
+  local fmt="${fzf_git_branch_format:-%(color:bold blue)%(refname:short)%(color:reset) %(color:cyan)%(committerdate:relative)%(color:reset) %(color:yellow)%(upstream:track)%(color:reset) %(subject)  %(color:dim normal)[%(authorname)]%(color:reset)}"
+  local preview_cmd='git log --color=always --oneline --graph --decorate -20 {1}'
+
+  local -a reply
+  __fzf_fish_current_token
+  local query="${reply[1]}"
+
+  local -a fzf_args
+  fzf_args=(--ansi --multi
+            --prompt='Git Branches> '
+            --preview="$preview_cmd"
+            --query="$query")
+  [[ -n "${fzf_git_branch_opts:-}" ]] && fzf_args+=(${=fzf_git_branch_opts})
+
+  local selected
+  selected=$(git for-each-ref --color=always \
+               --sort=-committerdate \
+               --format="%(if)%(symref)%(then)%(else)${fmt}%(end)" \
+               refs/heads refs/remotes \
+             | awk 'NF' \
+             | SHELL=/bin/bash fzf "${fzf_args[@]}") || { zle reset-prompt; return }
+
+  local -a branches
+  local line name
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    name="${line%% *}"
+    [[ -n "$name" ]] && branches+=("$name")
+  done <<< "$selected"
+
+  (( ${#branches} )) && __fzf_fish_replace_token "$(__fzf_fish_join_quoted "${branches[@]}")"
+  zle reset-prompt
+}
+zle -N __fzf_search_git_branches
+
+# Tab dispatcher: when the current command is a git subcommand whose first
+# positional arg is a branch/ref, invoke __fzf_search_git_branches so the
+# picker matches Alt-Ctrl-B. Otherwise fall through to fzf-tab's completion.
+# Skips interception once a `--` boundary appears (user wants file completion).
+__fzf_tab_dispatch() {
+  emulate -L zsh
+  if [[ "$LBUFFER" =~ '(^|[;&|]|&&|\|\|)[[:space:]]*git[[:space:]]+(checkout|switch|rebase|merge|cherry-pick)[[:space:]]+([^|;&]*)$' ]]; then
+    local tail="${match[3]}"
+    if [[ "$tail" != *' -- '* && "$tail" != '-- '* && "$tail" != '--' ]]; then
+      __fzf_search_git_branches
+      return
+    fi
+  fi
+  zle fzf-tab-complete
+}
+zle -N __fzf_tab_dispatch
 
 # Search Git Status: insert selected path(s); handles "R old -> new" renames.
 __fzf_search_git_status() {

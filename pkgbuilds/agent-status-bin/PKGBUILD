@@ -1,7 +1,7 @@
 # Maintainer: Sam Boynton <sboynton@nvidia.com>
 pkgname=agent-status-bin
 _pkgname=agent-status
-pkgver=0.5.0
+pkgver=0.5.2
 pkgrel=1
 pkgdesc="API and live status board for AI agent session management"
 arch=('x86_64' 'aarch64')
@@ -13,8 +13,8 @@ source=("agent-status.service")
 source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-amd64.tar.gz")
 source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}_${pkgver}_linux-arm64.tar.gz")
 sha256sums=('c7c29b11e6efade28b11007cd1ebb6755530870a36d3e2659c56ff8debf52c57')
-sha256sums_x86_64=('42d1fbec3b5350c61c27268235be2ddae07ab099ade6237c7f729c856ab5fef9')
-sha256sums_aarch64=('c4a808e74fc92b0e1c653107f2e95b307e94d78eb361624dab064d239b276f5b')
+sha256sums_x86_64=('2f07a2dc8f4db52496d7fd248eeb391dc4d56f2ded18a700310e46754b502f71')
+sha256sums_aarch64=('4477a64f4588a392a0e1ce75f7251662fb4dd62dd615c3d95d005ef7cc984791')
 
 package() {
     local _suffix

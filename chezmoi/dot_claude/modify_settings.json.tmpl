@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 cat | jq --arg home "$HOME" '
   .statusLine = {
-    "type": "command",
     "command": "~/.claude/statusline.sh",
-    "padding": 0
+    "padding": 0,
+    "type": "command"
   }
   | .sandbox.seccomp.bpfPath   = "/usr/lib/claude-code-seccomp/unix-block.bpf"
   | .sandbox.seccomp.applyPath = "/usr/lib/claude-code-seccomp/apply-seccomp"
@@ -96,13 +96,13 @@ cat | jq --arg home "$HOME" '
     }
   | .hooks //= {}
   | .hooks.PreToolUse = (((.hooks.PreToolUse // []) | map(select((.hooks // []) | any(.command // "" | contains("serena-hooks")) | not))) + [
-      {"matcher": "", "hooks": [{"type": "command", "command": "serena-hooks remind --client=claude-code"}]},
-      {"matcher": "mcp__serena__*", "hooks": [{"type": "command", "command": "serena-hooks auto-approve --client=claude-code"}]}
+      {"hooks": [{"command": "serena-hooks remind --client=claude-code", "type": "command"}], "matcher": ""},
+      {"hooks": [{"command": "serena-hooks auto-approve --client=claude-code", "type": "command"}], "matcher": "mcp__serena__*"}
     ])
   | .hooks.SessionStart = (((.hooks.SessionStart // []) | map(select((.hooks // []) | any(.command // "" | contains("serena-hooks")) | not))) + [
-      {"matcher": "", "hooks": [{"type": "command", "command": "serena-hooks activate --client=claude-code"}]}
+      {"hooks": [{"command": "serena-hooks activate --client=claude-code", "type": "command"}], "matcher": ""}
     ])
   | .hooks.Stop = (((.hooks.Stop // []) | map(select((.hooks // []) | any(.command // "" | contains("serena-hooks")) | not))) + [
-      {"matcher": "", "hooks": [{"type": "command", "command": "serena-hooks cleanup --client=claude-code"}]}
+      {"hooks": [{"command": "serena-hooks cleanup --client=claude-code", "type": "command"}], "matcher": ""}
     ])
 '

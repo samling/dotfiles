@@ -62,6 +62,11 @@ bindkey '^S' cs-exec-widget
 # in completions.zsh, which is why keys.zsh is sourced after completions.zsh.
 bindkey '^T'   __fzf_search_directory   # files under cwd (token-aware)
 bindkey '^R'   __fzf_search_history     # timestamped history
-bindkey '^[^L' __fzf_search_git_log     # Alt-Ctrl-L: commit hashes
-bindkey '^[^S' __fzf_search_git_status  # Alt-Ctrl-S: changed paths
-bindkey '^[^P' __fzf_search_processes   # Alt-Ctrl-P: pids
+bindkey '^[^L' __fzf_search_git_log      # Alt-Ctrl-L: commit hashes
+bindkey '^[^B' __fzf_search_git_branches # Alt-Ctrl-B: branch names
+bindkey '^[^S' __fzf_search_git_status   # Alt-Ctrl-S: changed paths
+bindkey '^[^P' __fzf_search_processes    # Alt-Ctrl-P: pids
+
+# Tab: route `git (checkout|switch|rebase|merge|cherry-pick) <branch>` through
+# the same picker as Alt-Ctrl-B; everything else falls through to fzf-tab.
+bindkey '^I' __fzf_tab_dispatch
