@@ -57,22 +57,9 @@ MouseArea {
         id: screenshotTimer
         interval: 300
         onTriggered: {
-            let cmd
-            switch (root._screenshotMode) {
-                case "monitor":
-                    cmd = ["sh", "-c", "grim -o \"$(niri msg --json focused-output | jq -r .name)\" - | satty --filename -"]
-                    break
-                case "window":
-                    cmd = ["niri", "msg", "action", "screenshot-window"]
-                    break
-                case "region":
-                    cmd = ["sh", "-c", "grim -g \"$(slurp -d)\" - | satty --filename - --output-filename ~/Pictures/Screenshots/Screenshot-$(date +%Y-%m-%d-%H-%M-%S).png"]
-                    break
-                case "all":
-                    cmd = ["sh", "-c", "grim - | satty --filename -"]
-                    break
+            if (root._screenshotMode) {
+                Quickshell.execDetached(["sh", "-c", "$HOME/.local/bin/screenshot " + root._screenshotMode])
             }
-            if (cmd) Quickshell.execDetached(cmd)
         }
     }
     function takeScreenshot(mode) {
