@@ -53,6 +53,7 @@ class GraphicalModule(decman.Module):
             "xdg-desktop-portal-gnome",
             "xdg-desktop-portal-gtk",
             "xdg-desktop-portal-hyprland",
+            "xdg-desktop-portal-wlr",
             "xdg-user-dirs",
             "xdg-utils",
             "xf86-input-libinput",

@@ -37,7 +37,7 @@ MouseArea {
 
         // Count
         Text {
-            text: root.notificationCount > 99 ? "99" : root.notificationCount.toString()
+            text: root.notificationCount.toString()
             color: root.primaryColor
             font.pixelSize: Config.fontSizeBase
             font.weight: Font.DemiBold

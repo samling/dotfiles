@@ -239,7 +239,7 @@ Item {
                                 Text {
                                     id: badgeText
                                     anchors.centerIn: parent
-                                    text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
+                                    text: root.notificationCount.toString()
                                     color: Config.getColor("background.crust")
                                     font.pixelSize: Config.fontSizeSmall
                                     font.weight: Font.Bold
@@ -346,35 +346,7 @@ Item {
                                     id: clearAllMouse
                                     anchors.fill: parent
                                     hoverEnabled: true
-                                    onClicked: {
-                                        // Iterate the model, not realized delegates: ListView
-                                        // virtualizes, so itemAtIndex returns null for offscreen
-                                        // rows. Animate visible rows; discard the rest directly.
-                                        const ids = Notifications.list.map(n => n.notificationId)
-                                        for (let i = 0; i < ids.length; i++) {
-                                            const notifId = ids[i]
-                                            const delay = i * 50
-                                            const timer = Qt.createQmlObject(
-                                                'import QtQuick; Timer { interval: ' + delay + '; running: true; repeat: false }',
-                                                root
-                                            )
-                                            timer.triggered.connect(function() {
-                                                let animated = false
-                                                for (let j = 0; j < notifList.count; j++) {
-                                                    const item = notifList.itemAtIndex(j)
-                                                    if (item && item.modelData && item.modelData.notificationId === notifId) {
-                                                        item.dismiss()
-                                                        animated = true
-                                                        break
-                                                    }
-                                                }
-                                                if (!animated) {
-                                                    Notifications.discardNotification(notifId)
-                                                }
-                                                timer.destroy()
-                                            })
-                                        }
-                                    }
+                                    onClicked: Notifications.discardAllNotifications()
                                 }
                             }
                         }

@@ -104,12 +104,33 @@ Singleton {
     property var popupList: list.filter((notif) => notif.popup);
     property bool popupInhibited: (GlobalStates?.sidebarRightOpen ?? false) || silent
     property var latestTimeForApp: ({})
+    property var _pendingDismissNotifications: []
+    readonly property int _dismissBatchSize: 25
     
     property Component notifComponent: Component {
         Notif {}
     }
     property Component notifTimerComponent: Component {
         NotifTimer {}
+    }
+
+    Timer {
+        id: dismissAllTimer
+        interval: 1
+        repeat: true
+        onTriggered: {
+            const batch = root._pendingDismissNotifications.splice(0, root._dismissBatchSize)
+            batch.forEach((notif) => {
+                try {
+                    notif.dismiss()
+                } catch (e) {
+                    console.log("[Notifications] Failed to dismiss tracked notification: " + e)
+                }
+            })
+            if (root._pendingDismissNotifications.length === 0) {
+                stop()
+            }
+        }
     }
 
     function stringifyList(list) {
@@ -236,12 +257,14 @@ Singleton {
     }
 
     function discardAllNotifications() {
+        const trackedNotifications = notifServer.trackedNotifications.values.map((notif) => notif)
         root.list = []
         triggerListChange()
-        notifFileView.setText(stringifyList(root.list));
-        notifServer.trackedNotifications.values.forEach((notif) => {
-            notif.dismiss()
-        })
+        notifFileView.setText("[]");
+        root._pendingDismissNotifications = trackedNotifications
+        if (trackedNotifications.length > 0) {
+            dismissAllTimer.restart()
+        }
         root.discardAll();
     }
 

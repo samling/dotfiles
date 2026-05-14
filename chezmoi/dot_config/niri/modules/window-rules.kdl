@@ -125,6 +125,12 @@ window-rule {
 //=== MISC
 
 window-rule {
+  match app-id=r#"^com\.gabm\.satty$"#
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
   match app-id="feh"
   open-floating true;
   open-focused true;

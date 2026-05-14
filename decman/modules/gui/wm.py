@@ -43,6 +43,7 @@ class WmModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         base = {
+            "flameshot-git",
             "ghostty-nightly-bin",
             "wlrctl",
         }

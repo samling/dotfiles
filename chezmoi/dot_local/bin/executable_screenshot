@@ -2,9 +2,8 @@
 # Take a screenshot, pipe through satty for annotation. Saves PNG to
 # ~/Pictures/Screenshots.
 #
-# Region capture goes through grim + slurp, querying niri for the focused
-# output's logical scale so fractional displays produce native-resolution
-# output. Window/monitor use niri's IPC directly (scale-correct internally).
+# Region capture goes through grim + slurp and matches the scale of the
+# selected output. Window/monitor use niri's IPC directly.
 #
 # Usage: screenshot <region|window|monitor|all>
 
@@ -18,8 +17,32 @@ OUTPUT_FILE="${OUTPUT_DIR}/Screenshot-$(date +%Y-%m-%d-%H-%M-%S).png"
 
 mkdir -p "$OUTPUT_DIR"
 
-focused_scale() {
-  niri msg --json focused-output | jq -r '.logical.scale // 1'
+region_scale() {
+  local geometry=$1
+  local position=${geometry%% *}
+  local size=${geometry#* }
+  local x=${position%,*}
+  local y=${position#*,}
+  local width=${size%x*}
+  local height=${size#*x}
+
+  niri msg --json outputs | jq -r \
+    --argjson x "$x" \
+    --argjson y "$y" \
+    --argjson width "$width" \
+    --argjson height "$height" '
+      def min(a; b): if a < b then a else b end;
+      def max(a; b): if a > b then a else b end;
+      [
+        .[] | .logical as $output
+        | (min($x + $width; $output.x + $output.width) - max($x; $output.x)) as $overlap_width
+        | (min($y + $height; $output.y + $output.height) - max($y; $output.y)) as $overlap_height
+        | select($overlap_width > 0 and $overlap_height > 0)
+        | { area: ($overlap_width * $overlap_height), scale: ($output.scale // 1) }
+      ]
+      | sort_by(.area)
+      | last.scale // 1
+    '
 }
 
 # niri msg returns before its screenshot UI writes the file, so poll the
@@ -49,7 +72,8 @@ capture_via_niri() {
 
 case "$MODE" in
   region)
-    grim -s "$(focused_scale)" -g "$(slurp -d)" - \
+    region=$(slurp -d)
+    grim -s "$(region_scale "$region")" -g "$region" - \
       | satty --filename - --output-filename "$OUTPUT_FILE"
     ;;
   window)  capture_via_niri screenshot-window ;;

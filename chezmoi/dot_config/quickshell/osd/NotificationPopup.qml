@@ -10,41 +10,45 @@ import Quickshell.Hyprland
 Scope {
     id: notificationPopup
 
+    readonly property var popupScreen: Config.primaryScreenName === ""
+        ? Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name) ?? null
+        : Quickshell.screens.find(s => s.name === Config.primaryScreenName) ?? null
+
     LazyLoader {
         active: (Notifications.popupList.length > 0) && !GlobalStates.screenLocked
         component: PanelWindow {
             id: root
-        screen: Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name) ?? null
+            screen: notificationPopup.popupScreen
 
-        WlrLayershell.namespace: "quickshell:notificationPopup"
-        WlrLayershell.layer: WlrLayer.Overlay
-        exclusiveZone: 0
+            WlrLayershell.namespace: "quickshell:notificationPopup"
+            WlrLayershell.layer: WlrLayer.Overlay
+            exclusiveZone: 0
 
-        anchors {
-            top: true
-            right: true
-        }
-
-        mask: Region {
-            item: listview.contentItem
-        }
-
-        color: "transparent"
-        implicitWidth: 450
-        implicitHeight: Math.min(listview.realContentHeight + 8, screen ? screen.height * 0.6 : 400)
-
-        NotificationListView {
-            id: listview
             anchors {
-                top: parent.top
-                right: parent.right
-                rightMargin: 4
-                topMargin: 4
+                top: true
+                right: true
             }
-            implicitWidth: parent.width - 8
-            implicitHeight: parent.height - 8
-            popup: true
-        }
+
+            mask: Region {
+                item: listview.contentItem
+            }
+
+            color: "transparent"
+            implicitWidth: 450
+            implicitHeight: Math.min(listview.realContentHeight + 8, screen ? screen.height * 0.6 : 400)
+
+            NotificationListView {
+                id: listview
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    rightMargin: 4
+                    topMargin: 4
+                }
+                implicitWidth: parent.width - 8
+                implicitHeight: parent.height - 8
+                popup: true
+            }
         }
     }
 }
