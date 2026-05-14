@@ -16,7 +16,9 @@ class ChatModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        base: set[str] = set()
+        base = {
+            "signal-desktop"
+        }
         if has_repo("cachyos"):
             base |= _NATIVE_OR_AUR
         return base
