@@ -4,6 +4,11 @@
 # walked by chezmoi. The .chezmoiroot file at the repo root tells
 # chezmoi to descend into chezmoi/.
 sourceDir: {{ .chezmoi.homeDir }}/.local/share/dotfiles
+{{- $localFile := joinPath .chezmoi.homeDir ".config/chezmoi/local.yaml" }}
+{{- if stat $localFile }}
+data:
+{{ include $localFile | indent 2 }}
+{{- end }}
 
 #diff:
 #  command: delta

@@ -94,13 +94,12 @@ window-rule {
     default-floating-position x=10 y=10 relative-to="bottom-right"
 }
 
-// window-rule {
-//     match app-id="steam"
-//     match title="Friends List"
-//     open-floating true
-//     open-on-workspace "Games"
-// }
-//
+window-rule {
+    match app-id="steam" title="Friends List"
+    open-floating true
+    open-on-workspace "Games"
+}
+
 window-rule {
     match app-id="steam" title="^Steam$"
     open-on-workspace "Games"
