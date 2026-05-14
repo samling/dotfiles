@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Make `dot_codex/modify_config.toml` idempotently merge the Serena MCP server into `~/.codex/config.toml` while preserving existing Codex config state.
+**Goal:** Make `dot_codex/modify_private_config.toml` idempotently merge the Serena MCP server into `~/.codex/config.toml` while preserving existing Codex config state and private file mode.
 
-**Architecture:** Use chezmoi's modify-template mechanism so the file is interpreted as a template rather than executed as a plain script. The template parses existing TOML from `.chezmoi.stdin`, sets only `mcp_servers.serena`, and emits the complete merged TOML.
+**Architecture:** Use chezmoi's modify-template mechanism so the file is interpreted as a template rather than executed as a plain script. The template parses existing TOML from `.chezmoi.stdin`, sets only `mcp_servers.serena`, and emits the complete merged TOML. Use the `modify_private_` source prefix so chezmoi keeps the target at mode `0600`.
 
 **Tech Stack:** chezmoi v2 template functions, TOML, Git.
 
@@ -12,20 +12,24 @@
 
 ### File Structure
 
-- Modify: `modify_config.toml`
+- Create: `modify_private_config.toml`
   - Responsibility: modify-template source for `~/.codex/config.toml`.
-  - It reads existing TOML from stdin, merges the desired MCP server table, and writes TOML.
+  - It reads existing TOML from stdin, merges the desired MCP server table, writes TOML, and keeps the target private.
+- Delete: `modify_config.toml`
+  - Responsibility: modify-template source for `~/.codex/config.toml`.
+  - It is replaced because it maps to mode `0644`.
 - Reference: `docs/superpowers/specs/2026-05-14-codex-config-mcp-merge-design.md`
   - Responsibility: approved design for this change.
 
-### Task 1: Convert Static TOML To Modify Template
+### Task 1: Convert Static TOML To Private Modify Template
 
 **Files:**
-- Modify: `modify_config.toml`
+- Create: `modify_private_config.toml`
+- Delete: `modify_config.toml`
 
-- [ ] **Step 1: Replace the file contents with a chezmoi modify-template**
+- [ ] **Step 1: Replace the static file with a private chezmoi modify-template**
 
-Set `modify_config.toml` to exactly:
+Delete `modify_config.toml` and create `modify_private_config.toml` with exactly:
 
 ```gotemplate
 {{- /* chezmoi:modify-template */ -}}
@@ -52,7 +56,7 @@ Set `modify_config.toml` to exactly:
 Run:
 
 ```bash
-chezmoi execute-template --with-stdin --file modify_config.toml < /home/sboynton/.codex/config.toml
+chezmoi execute-template --with-stdin --file modify_private_config.toml < /home/sboynton/.codex/config.toml
 ```
 
 Expected: command exits 0 and the output includes the existing `projects`, `hooks`, and `plugins` tables plus:
@@ -79,18 +83,18 @@ Expected: command exits 0. The output may show `M /home/sboynton/.codex/config.t
 Run:
 
 ```bash
-git diff -- modify_config.toml
+git diff -- modify_config.toml modify_private_config.toml
 ```
 
-Expected: the only source change in `modify_config.toml` is the conversion from static TOML to the merge template.
+Expected: the source change replaces `modify_config.toml` with `modify_private_config.toml`, and the new file contains only the merge template.
 
 - [ ] **Step 5: Commit the implementation**
 
 Run:
 
 ```bash
-git add modify_config.toml
-git commit -m "Merge Codex MCP config idempotently" -- modify_config.toml
+git add modify_config.toml modify_private_config.toml
+git commit -m "Merge Codex MCP config idempotently" -- modify_config.toml modify_private_config.toml
 ```
 
-Expected: a commit containing only `chezmoi/dot_codex/modify_config.toml`.
+Expected: a commit containing the `chezmoi/dot_codex/modify_config.toml` removal and `chezmoi/dot_codex/modify_private_config.toml` addition.

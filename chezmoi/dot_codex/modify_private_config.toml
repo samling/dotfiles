@@ -1,0 +1,17 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $config := dict -}}
+{{- if .chezmoi.stdin -}}
+{{-   $config = fromToml .chezmoi.stdin -}}
+{{- end -}}
+
+{{- $mcpServers := dict -}}
+{{- if hasKey $config "mcp_servers" -}}
+{{-   $mcpServers = get $config "mcp_servers" -}}
+{{- end -}}
+{{- $mcpServers = setValueAtPath "serena" (dict
+  "startup_timeout_sec" 15
+  "command" "serena"
+  "args" (list "start-mcp-server" "--project-from-cwd" "--context=codex")
+) $mcpServers -}}
+{{- $config = setValueAtPath "mcp_servers" $mcpServers $config -}}
+{{ $config | toToml }}

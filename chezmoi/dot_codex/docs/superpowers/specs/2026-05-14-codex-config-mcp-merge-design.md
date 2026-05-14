@@ -12,7 +12,7 @@ The live Codex config already contains unrelated local state such as trusted pro
 
 ## Approach
 
-Convert `modify_config.toml` into a `chezmoi:modify-template`.
+Replace `modify_config.toml` with `modify_private_config.toml`, using a `chezmoi:modify-template`. The `modify_` attribute keeps the file as a merge operation, and the `private_` attribute keeps `~/.codex/config.toml` at mode `0600`.
 
 The template will:
 
@@ -44,3 +44,4 @@ Validate the template by running it through `chezmoi execute-template --with-std
 - Existing top-level tables remain present.
 - `[mcp_servers.serena]` is added with the expected values.
 - Running `chezmoi status` for `~/.codex/config.toml` no longer fails with `exec format error`.
+- `chezmoi diff` does not report a target mode change from `0600` to `0644`.
