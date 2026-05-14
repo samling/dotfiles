@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-cat | yq -p toml -o toml '.features.codex_hooks = true | .mcp_servers.serena = {
-  "startup_timeout_sec": 15,
-  "command": "serena",
-  "args": ["start-mcp-server", "--project-from-cwd", "--context=codex"]
-}'
