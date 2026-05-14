@@ -4,16 +4,18 @@ from modules.hardware.zenbook import ZenbookModule
 from modules.host.arch_kernel import ArchKernelModule
 from modules.host.dracut import DracutModule
 from modules.host.endeavouros import EndeavourOSModule
-from roles.laptop import MODULES
+from modules.host.keyd import KeydModule
+from roles.gui import MODULES
 
-# Asus UM5606 (Ryzen AI / Radeon 880M) running EndeavourOS.
-# ArchKernelModule supplies the kernel packages (linux + linux-lts);
-# DracutModule supplies the initramfs builder (EOS default; vanilla
-# Arch / CachyOS use MkinitcpioModule instead);
-# EndeavourOSModule pulls EOS keyring / mirrorlist / branding;
-# ZenbookModule layers vendor quirks (asusd, EDID firmware, fnlock,
-# fan control) on top of the generic laptop role.
+# Asus UM5606 (Ryzen AI / Radeon 880M) on EndeavourOS.
+# - ArchKernelModule: linux + linux-lts.
+# - DracutModule: initramfs (EOS default; vanilla/Cachy use mkinitcpio).
+# - EndeavourOSModule: EOS keyring/mirrorlist/branding.
+# - ZenbookModule: vendor quirks (asusd, EDID, fnlock, fan).
+# - KeydModule: per-host config via etc/keyd/<hostname>.conf. Declares
+#   its own `keyd` group needs; UsersModule picks them up by scan.
 decman.modules += MODULES + [
+    KeydModule(),
     ArchKernelModule(),
     DracutModule(),
     EndeavourOSModule(),

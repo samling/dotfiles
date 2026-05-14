@@ -6,8 +6,9 @@ etc.) and the graphical-session stack (Wayland compositor, audio,
 browsers, fonts, the rest).
 
 `MODULES` exported here is the role's full list — it works as-is for
-desktops. `roles/laptop.py` reuses `GUI_MODULES` and `GUI_GROUPS` to
-layer keyd on top without re-listing every module.
+desktops. Laptop hosts (currently just xen) compose their own list
+inline from `GUI_MODULES` + `GUI_GROUPS` since they need a tweaked
+UsersModule (e.g. for the `keyd` group).
 
 Deliberate exclusions from GUI_MODULES:
 - EndeavourOSModule: distro-specific. EOS hosts register it in their
@@ -41,8 +42,8 @@ from modules.host.kernel import KernelModule
 from modules.host.networking import HostNetworkingModule
 from roles.common import MODULES as COMMON
 
-# Baseline supplementary groups for any GUI host. `roles/laptop.py`
-# extends this with `keyd`.
+# Baseline supplementary groups for any GUI host. Hosts can extend
+# this (e.g. xen adds `keyd`).
 GUI_GROUPS: tuple[str, ...] = (
     "docker",
     "kvm",
@@ -60,10 +61,9 @@ GUI_GROUPS: tuple[str, ...] = (
 # matching the same name are no-ops.
 GUI_ENSURED_GROUPS: tuple[str, ...] = GUI_GROUPS
 
-# Module list shared by the gui role and anything that extends it
-# (currently just `roles/laptop.py`). UsersModule and LocaleModule
-# are constructed by each leaf role so per-host group membership
-# and ordering stay explicit there.
+# Module list shared by the gui role and any host composing its own
+# (currently xen). UsersModule and LocaleModule are constructed by
+# the leaf so per-host group membership stays explicit.
 GUI_MODULES = [
     *COMMON,
     DisksModule(),
@@ -94,9 +94,8 @@ GUI_MODULES = [
     WmModule(),
 ]
 
-# Default gui role (desktop). Hosts wanting EOS branding or laptop
-# quirks build their own MODULES from GUI_MODULES + extras, or use
-# `roles/laptop.py`.
+# Default gui role (desktop). Hosts needing extra groups (xen + keyd)
+# or distro/vendor extras build their own list inline from GUI_MODULES.
 MODULES = [
     UsersModule(
         extra_groups=GUI_GROUPS,

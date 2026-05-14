@@ -1,5 +1,5 @@
 #=== General
-background-opacity = 0.8
+background-opacity = 0.9
 background-blur = true
 mouse-hide-while-typing = true
 scrollback-limit = 10000000

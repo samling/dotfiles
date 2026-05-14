@@ -14,29 +14,29 @@
     profile_custom_epp: Performance,
     profile_performance_epp: Performance,
     ac_profile_tunings: {
-        Performance: (
-            enabled: false,
-            group: {},
-        ),
         Balanced: (
             enabled: false,
             group: {},
         ),
         Quiet: (
+            enabled: false,
+            group: {},
+        ),
+        Performance: (
             enabled: false,
             group: {},
         ),
     },
     dc_profile_tunings: {
-        Performance: (
-            enabled: false,
-            group: {},
-        ),
         Balanced: (
             enabled: false,
             group: {},
         ),
         Quiet: (
+            enabled: false,
+            group: {},
+        ),
+        Performance: (
             enabled: false,
             group: {},
         ),
