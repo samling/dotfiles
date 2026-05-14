@@ -66,6 +66,8 @@ setopt IGNORE_EOF               # Prevent ZSH from quitting with ctrl-d
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion
 #zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive tab completion only if there are no case-sensitive matches
+zstyle ':completion:*' tag-order '! files directories all-files globbed-files default' '*'
+
 
 # fzf-tab
 zstyle ':fzf-tab:*' use-fzf-default-opts yes

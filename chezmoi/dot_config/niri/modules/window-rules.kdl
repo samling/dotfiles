@@ -15,7 +15,7 @@ window-rule {
 //=== WEB
 
 window-rule {
-  match app-id="google-chrome"
+  match at-startup=true app-id="google-chrome"
   open-on-workspace "Web"
 }
 
@@ -44,46 +44,50 @@ window-rule {
 //===TERMINAL
 
 window-rule {
-  match app-id=r#"^com\.mitchellh\.ghostty$"#
+  match at-startup=true app-id=r#"^com\.mitchellh\.ghostty$"#
   open-on-workspace "Terminal"
+}
+
+window-rule {
+  match app-id=r#"^com\.mitchellh\.ghostty$"#
   draw-border-with-background false
 }
 
 //=== CODE
 
 window-rule {
-  match app-id="code"
+  match at-startup=true app-id="code"
   open-on-workspace "Code"
 }
 
 window-rule {
-  match app-id="cursor"
+  match at-startup=true app-id="cursor"
   open-on-workspace "Code"
 }
 
 //=== CHAT
 
 window-rule {
-  match app-id="vesktop"
+  match at-startup=true app-id="vesktop"
   open-on-workspace "Chat"
 }
 
 window-rule {
-  match app-id="slack"
+  match at-startup=true app-id="slack"
   open-on-workspace "Chat"
 }
 
 //=== NOTES
 
 window-rule {
-  match app-id="obsidian"
+  match at-startup=true app-id="obsidian"
   open-on-workspace "Notes"
 }
 
 //=== MEETINGS
 
 window-rule {
-  match app-id="teams-for-linux"
+  match at-startup=true app-id="teams-for-linux"
   open-on-workspace "Meetings"
 }
 
@@ -101,7 +105,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="steam" title="^Steam$"
+    match at-startup=true app-id="steam" title="^Steam$"
     open-on-workspace "Games"
 }
 

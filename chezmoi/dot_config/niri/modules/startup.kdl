@@ -11,11 +11,6 @@ spawn-at-startup "code"
 spawn-at-startup "vesktop"
 spawn-at-startup "obsidian"
 
-// Work
-spawn-at-startup "cursor"
-spawn-at-startup "slack"
-//spawn-at-startup "teams-for-linux-manual"
-
 // Background services
 // Shrink xdg-desktop-portal-gnome file picker (GTK4 dialog) by 15%.
 // Injected into the dbus activation environment so the portal - which
@@ -25,9 +20,6 @@ spawn-at-startup "slack"
 spawn-sh-at-startup "dbus-update-activation-environment --systemd GDK_DPI_SCALE=0.85"
 spawn-sh-at-startup	"killall niri-float-sticky; niri-float-sticky -disable-auto-stick"
 spawn-at-startup "ie-r"
-spawn-at-startup "openrgb -p 5090FE-min_brightness"
-spawn-at-startup "sunshine"
-spawn-at-startup "steam"
 //spawn-at-startup "flameshot"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:

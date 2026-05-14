@@ -61,3 +61,13 @@ workspace "Notes" {
   open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
 }
 
+
+// Work
+spawn-at-startup "cursor"
+spawn-at-startup "slack"
+//spawn-at-startup "teams-for-linux-manual"
+
+// Gaming
+spawn-at-startup "openrgb -p 5090FE-min_brightness"
+spawn-at-startup "sunshine"
+spawn-at-startup "steam"

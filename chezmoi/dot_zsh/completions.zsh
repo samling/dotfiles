@@ -53,6 +53,15 @@ command -v kubectl >/dev/null && _cached_completion kubectl kubectl completion z
 #=== kubecolor
 command -v kubecolor >/dev/null && compdef kubecolor=kubectl
 
+#=== niri
+if command -v niri >/dev/null; then
+  _niri_gen() {
+    niri completions zsh | sed "s/line\[2\]/line[1]/g; /'::command/d"
+  }
+  _cached_completion niri _niri_gen
+  unset -f _niri_gen
+fi
+
 #=== plz
 command -v plz >/dev/null && _cached_completion plz plz --completion_script
 
