@@ -368,6 +368,7 @@ __fzf_search_directory() {
   zle reset-prompt
 }
 zle -N __fzf_search_directory
+zle -N fzf-search-directory __fzf_search_directory
 
 # Search Git Log: insert selected commit hash(es).
 __fzf_search_git_log() {
@@ -408,6 +409,7 @@ __fzf_search_git_log() {
   zle reset-prompt
 }
 zle -N __fzf_search_git_log
+zle -N fzf-search-git-log __fzf_search_git_log
 
 # Search Git Branches: insert selected branch name(s). Local + remote, sorted
 # by most-recent commit. Symbolic refs (origin/HEAD) are dropped via the
@@ -452,6 +454,7 @@ __fzf_search_git_branches() {
   zle reset-prompt
 }
 zle -N __fzf_search_git_branches
+zle -N fzf-search-git-branches __fzf_search_git_branches
 
 # Tab dispatcher: when the current command is a git subcommand whose first
 # positional arg is a branch/ref, invoke __fzf_search_git_branches so the
@@ -469,6 +472,7 @@ __fzf_tab_dispatch() {
   zle fzf-tab-complete
 }
 zle -N __fzf_tab_dispatch
+zle -N fzf-tab-dispatch __fzf_tab_dispatch
 
 # Search Git Status: insert selected path(s); handles "R old -> new" renames.
 __fzf_search_git_status() {
@@ -510,6 +514,7 @@ __fzf_search_git_status() {
   zle reset-prompt
 }
 zle -N __fzf_search_git_status
+zle -N fzf-search-git-status __fzf_search_git_status
 
 # Search Processes: insert selected pid(s).
 __fzf_search_processes() {
@@ -547,6 +552,7 @@ __fzf_search_processes() {
   zle reset-prompt
 }
 zle -N __fzf_search_processes
+zle -N fzf-search-processes __fzf_search_processes
 
 # Search History: timestamped picker; replaces the whole buffer.
 # Multi-line commands are joined with " ↵ " for fzf display and restored on selection.
@@ -591,6 +597,7 @@ __fzf_search_history() {
   zle reset-prompt
 }
 zle -N __fzf_search_history
+zle -N fzf-search-history __fzf_search_history
 
 # https://junegunn.github.io/fzf/tips/ripgrep-integration/
 function fzg() ( # fuzzygrep

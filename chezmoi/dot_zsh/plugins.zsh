@@ -13,6 +13,17 @@ zinit light zsh-users/zsh-syntax-highlighting
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 zinit light zsh-users/zsh-autosuggestions
 
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(
+  fzf-search-directory
+  fzf-search-git-log
+  fzf-search-git-branches
+  fzf-search-git-status
+  fzf-search-processes
+  fzf-search-history
+  fzf-tab-dispatch
+  cs-exec-widget
+)
+
 zinit snippet OMZP::git-auto-fetch
 
 zinit light Aloxaf/fzf-tab
