@@ -412,16 +412,45 @@ zle -N __fzf_search_git_log
 zle -N fzf-search-git-log __fzf_search_git_log
 
 # Search Git Branches: insert selected branch name(s). Local + remote, sorted
-# by most-recent commit. Symbolic refs (origin/HEAD) are dropped via the
-# %(if)%(symref) conditional, so they don't appear in the picker.
+# by most-recent commit. Symbolic refs such as origin/HEAD are dropped.
+__fzf_git_checkout_branch_lines() {
+  emulate -L zsh
+  local metadata_fmt="${fzf_git_checkout_branch_metadata_format:-%(color:cyan)%(committerdate:relative)%(color:reset) %(color:yellow)%(upstream:track)%(color:reset) %(subject)  %(color:dim normal)[%(authorname)]%(color:reset)}"
+  local -A local_branches
+  local branch
+  while IFS= read -r branch; do
+    [[ -n "$branch" ]] && local_branches[$branch]=1
+  done < <(git for-each-ref --format='%(refname:short)' refs/heads)
+
+  local ref short symref metadata display preview remote_note
+  while IFS=$'\t' read -r ref short symref metadata; do
+    [[ -z "$ref" || "$symref" != "-" ]] && continue
+    display="$short"
+    preview="$short"
+    remote_note=""
+    if [[ "$ref" == refs/remotes/* ]]; then
+      display="${ref#refs/remotes/}"
+      display="${display#*/}"
+      [[ -n "${local_branches[$display]}" ]] && continue
+      remote_note=" "$'\033[2m'"[${short}]"$'\033[0m'
+    fi
+    print -r -- "${display}"$'\t'"${preview}"$'\t'$'\033[1;34m'"${display}"$'\033[0m'"${remote_note} ${metadata}"
+  done < <(git for-each-ref --color=always \
+             --sort=-committerdate \
+             --format="%(refname)%09%(refname:short)%09%(if)%(symref)%(then)%(symref)%(else)-%(end)%09${metadata_fmt}" \
+             refs/heads refs/remotes)
+}
+
 __fzf_search_git_branches() {
   emulate -L zsh
   if ! git rev-parse --git-dir >/dev/null 2>&1; then
     zle -M '_fzf_search_git_branches: Not in a git repository.'
     return
   fi
+  local mode="${1:-ref}"
   local fmt="${fzf_git_branch_format:-%(color:bold blue)%(refname:short)%(color:reset) %(color:cyan)%(committerdate:relative)%(color:reset) %(color:yellow)%(upstream:track)%(color:reset) %(subject)  %(color:dim normal)[%(authorname)]%(color:reset)}"
   local preview_cmd='git log --color=always --oneline --graph --decorate -20 {1}'
+  [[ "$mode" == checkout ]] && preview_cmd='git log --color=always --oneline --graph --decorate -20 {2}'
 
   local -a reply
   __fzf_fish_current_token
@@ -432,21 +461,32 @@ __fzf_search_git_branches() {
             --prompt='Git Branches> '
             --preview="$preview_cmd"
             --query="$query")
+  [[ "$mode" == checkout ]] && fzf_args+=(--delimiter=$'\t' --with-nth='3..')
   [[ -n "${fzf_git_branch_opts:-}" ]] && fzf_args+=(${=fzf_git_branch_opts})
 
   local selected
-  selected=$(git for-each-ref --color=always \
-               --sort=-committerdate \
-               --format="%(if)%(symref)%(then)%(else)${fmt}%(end)" \
-               refs/heads refs/remotes \
-             | awk 'NF' \
-             | SHELL=/bin/bash fzf "${fzf_args[@]}") || { zle reset-prompt; return }
+  if [[ "$mode" == checkout ]]; then
+    selected=$(__fzf_git_checkout_branch_lines \
+               | awk 'NF' \
+               | SHELL=/bin/bash fzf "${fzf_args[@]}") || { zle reset-prompt; return }
+  else
+    selected=$(git for-each-ref --color=always \
+                 --sort=-committerdate \
+                 --format="%(if)%(symref)%(then)%(else)${fmt}%(end)" \
+                 refs/heads refs/remotes \
+               | awk 'NF' \
+               | SHELL=/bin/bash fzf "${fzf_args[@]}") || { zle reset-prompt; return }
+  fi
 
   local -a branches
   local line name
   while IFS= read -r line; do
     [[ -z "$line" ]] && continue
-    name="${line%% *}"
+    if [[ "$mode" == checkout ]]; then
+      name="${line%%$'\t'*}"
+    else
+      name="${line%% *}"
+    fi
     [[ -n "$name" ]] && branches+=("$name")
   done <<< "$selected"
 
@@ -463,9 +503,14 @@ zle -N fzf-search-git-branches __fzf_search_git_branches
 __fzf_tab_dispatch() {
   emulate -L zsh
   if [[ "$LBUFFER" =~ '(^|[;&|]|&&|\|\|)[[:space:]]*git[[:space:]]+(checkout|switch|rebase|merge|cherry-pick)[[:space:]]+([^|;&]*)$' ]]; then
+    local subcommand="${match[2]}"
     local tail="${match[3]}"
     if [[ "$tail" != *' -- '* && "$tail" != '-- '* && "$tail" != '--' ]]; then
-      __fzf_search_git_branches
+      if [[ "$subcommand" == checkout || "$subcommand" == switch ]]; then
+        __fzf_search_git_branches checkout
+      else
+        __fzf_search_git_branches
+      fi
       return
     fi
   fi

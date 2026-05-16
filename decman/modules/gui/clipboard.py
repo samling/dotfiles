@@ -18,7 +18,7 @@ class ClipboardModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "clipse-gui",
-            "clipse-wayland-bin",
+            #"clipse-wayland-bin",
         }
 
     @systemd.user_units

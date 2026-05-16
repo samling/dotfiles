@@ -28,6 +28,7 @@ class KubernetesModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
+            "flux-bin",
             "hubble-bin",
             "kubecolor",
             "kubescape",
