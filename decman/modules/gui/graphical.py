@@ -19,6 +19,7 @@ class GraphicalModule(decman.Module):
             "cantarell-fonts",
             "dconf",
             "gnome-power-manager",
+            "gpu-screen-recorder",
             "gsfonts",
             "gvfs",
             # libdvdcss / libgsf / libopenraw / poppler-glib are tumbler
