@@ -47,6 +47,7 @@ class CoreModule(decman.Module):
             "moreutils",
             "plocate",
             "psmisc",
+            "qalculate-qt",
             "ranger",
             "rhash",
             "ripgrep",
