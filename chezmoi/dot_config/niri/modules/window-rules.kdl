@@ -136,6 +136,19 @@ window-rule {
   open-focused true;
 }
 
+window-rule {
+  match app-id="thunar" title="File Operation Progress"
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
+  match app-id="calibre-ebook-viewer" title="E-bok viewer"
+  open-floating true;
+  open-focused true;
+}
+
+
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 window-rule {

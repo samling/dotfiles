@@ -9,10 +9,12 @@ class AIToolsModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
+            "aichat",
             "opencode",
         }
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
+            "pi-coding-agent",
             "rtk",
         }

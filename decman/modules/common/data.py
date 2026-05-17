@@ -6,8 +6,7 @@ class DataModule(decman.Module):
     """Data tooling: databases, backups, container images, AI clients.
 
     Catch-all for data-adjacent CLI utilities that don't fit DevModule
-    or KubernetesModule cleanly. AI clients live here too since they
-    operate over data pipelines (ai > inference > model files).
+    or KubernetesModule cleanly.
     """
 
     def __init__(self):
@@ -16,7 +15,7 @@ class DataModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
-            "aichat",
+            "calibre",
             "postgresql",
             "restic",
             "serie",
