@@ -1,0 +1,8 @@
+[Unit]
+Description=Change wallpaper using awww
+After=awww.service
+Requires=awww.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/awww/awww_randomize_multi.sh %h/Pictures/Wallpapers

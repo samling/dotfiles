@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+cat | jq '
+  .hooks //= {}
+  | .hooks.PreToolUse = (((.hooks.PreToolUse // []) | map(select((.hooks // []) | any(.command // "" | contains("serena-hooks")) | not))) + [
+      {"hooks": [{"command": "serena-hooks remind --client=codex", "type": "command"}], "matcher": ""},
+      {"hooks": [{"command": "serena-hooks auto-approve --client=codex", "type": "command"}], "matcher": "mcp__serena__*"}
+    ])
+  | .hooks.SessionStart = (((.hooks.SessionStart // []) | map(select((.hooks // []) | any(.command // "" | contains("serena-hooks")) | not))) + [
+      {"hooks": [{"command": "serena-hooks activate --client=codex", "type": "command"}], "matcher": ""}
+    ])
+  | .hooks.Stop = (((.hooks.Stop // []) | map(select((.hooks // []) | any(.command // "" | contains("serena-hooks")) | not))) + [
+      {"hooks": [{"command": "serena-hooks cleanup --client=codex", "type": "command"}], "matcher": ""}
+    ])
+'

@@ -1,0 +1,32 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $config := dict -}}
+{{- if .chezmoi.stdin -}}
+{{-   $config = fromJson .chezmoi.stdin -}}
+{{- end -}}
+
+{{- /* Get secrets */ -}}
+{{- $githubClaudeCodePAT := doppler "GITHUB_CLAUDE_CODE_PAT" "homelab" "dev_personal" -}}
+
+{{- /* Define your MCP servers here */ -}}
+{{- $mcpServers := dict
+    "serena" (dict
+        "type" "stdio"
+        "command" "serena"
+        "args" (list "start-mcp-server" "--context=claude-code" "--project-from-cwd")
+    )
+    "github" (dict
+      "type" "http"
+      "url" "https://api.githubcopilot.com/mcp"
+      "headers" (dict
+        "Authorization" (printf "Bearer %s" $githubClaudeCodePAT)
+      )
+    )
+-}}
+
+{{- $existing := dict -}}
+{{- if hasKey $config "mcpServers" -}}
+{{-   $existing = get $config "mcpServers" -}}
+{{- end -}}
+{{- $merged := mergeOverwrite $existing $mcpServers -}}
+{{- $config = $config | setValueAtPath "mcpServers" $merged -}}
+{{ $config | toPrettyJson }}

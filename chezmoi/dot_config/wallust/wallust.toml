@@ -1,0 +1,19 @@
+# wallust v3 config.
+#
+# Runs alongside matugen in ~/.config/awww/set_wallpaper.sh.
+# Matugen handles MD3/semantic colors (harmonized to a single seed);
+# wallust provides the raw image-extracted palette that preserves
+# minority hues the matugen quantizer discards.
+
+# kmeans clusters image pixels into N groups, giving a diverse palette
+# rather than MD3-style single-seed harmonization.
+backend = "kmeans"
+
+# LCH separates hue from lightness cleanly; better than LAB for hue-diverse palettes.
+color_space = "lch"
+
+# 16-color dark palette.
+palette = "dark16"
+
+[templates]
+quickshell = { template = 'quickshell-colors.json', target = '~/.local/state/quickshell/generated/wallust.json' }

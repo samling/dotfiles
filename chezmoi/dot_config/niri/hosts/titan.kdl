@@ -1,0 +1,72 @@
+// Output configuration for host: titan
+// Run `niri msg outputs` to enumerate connected outputs and their modes.
+//
+// Layout (logical px):
+//                ┌────────────┐
+//                │   DP-1     │
+//                │  2560×1440 │
+//   ┌────────────┴────────────┴───────────┬─────────────┬──────────┐
+//   │           DP-2                      │    DP-3     │ HDMI-A-1 │
+//   │         3440×1440                   │  2560×1440  │ 1706×960 │
+//   └─────────────────────────────────────┴─────────────┴──────────┘
+
+output "DP-1" {
+    mode "2560x1440@119.998"
+    scale 1
+    transform "normal"
+    position x=440 y=0
+}
+
+output "DP-2" {
+    mode "3440x1440@143.923"
+    scale 1
+    transform "normal"
+    position x=0 y=1440
+}
+
+output "DP-3" {
+    mode "2560x1440@59.951"
+    scale 1
+    transform "normal"
+    position x=3440 y=1440
+}
+
+output "HDMI-A-1" {
+    mode "3840x2160@59.997"
+    scale 2.25
+    transform "normal"
+    position x=6000 y=1920
+}
+
+workspace "Web" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Terminal" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Code" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Meetings" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Games" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+
+workspace "Chat" {
+  open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
+}
+workspace "Notes" {
+  open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
+}
+
+
+// Work
+spawn-at-startup "cursor"
+spawn-at-startup "slack"
+//spawn-at-startup "teams-for-linux-manual"
+
+// Gaming
+spawn-at-startup "openrgb -p 5090FE-min_brightness"
+spawn-at-startup "steam"

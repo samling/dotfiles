@@ -1,0 +1,60 @@
+
+pragma ComponentBehavior: Bound
+
+import QtQuick
+import Quickshell
+import Quickshell.Wayland
+import qs.common
+
+Scope {
+    id: bar
+
+    Variants {
+        model: Quickshell.screens
+
+        LazyLoader {
+            id: barLoader
+            active: true
+            required property ShellScreen modelData
+            component: PanelWindow {
+                id: barRoot
+                screen: barLoader.modelData
+                implicitHeight: Config.barHeight
+                color: "transparent"
+                
+                // Layer configuration for proper popup handling.
+                // Top (not Bottom) so niri renders the bar once instead
+                // of once per workspace — otherwise the bar animates
+                // along with workspace switches.
+                WlrLayershell.namespace: "quickshell:bar"
+                WlrLayershell.layer: WlrLayer.Top
+                exclusiveZone: Config.barHeight
+                
+                anchors {
+                    top: true
+                    left: true
+                    right: true
+                }
+
+                MouseArea {
+                    id: hoverRegion
+                    hoverEnabled: true
+                    anchors.fill: parent
+
+                    BarContent {
+                        id: barContent
+                        screen: barLoader.modelData
+                        implicitHeight: Config.barHeight
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            right: parent.right
+                            bottom: undefined
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

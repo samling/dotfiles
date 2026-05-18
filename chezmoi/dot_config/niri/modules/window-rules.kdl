@@ -1,0 +1,186 @@
+// Window rules let you adjust behavior for individual windows.
+// Find more information on the wiki:
+// https://niri-wm.github.io/niri/Configuration:-Window-Rules
+
+window-rule {
+  match at-startup=true
+  open-maximized true
+}
+
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+//=== WEB
+
+window-rule {
+  match at-startup=true app-id="google-chrome"
+  open-on-workspace "Web"
+}
+
+window-rule {
+  match app-id=r#"^chrome-.*"#
+  open-floating true;
+  open-focused true;
+  default-floating-position x=32 y=150 relative-to="top-right"
+}
+
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+    // This app-id regular expression will work for both:
+    // - host Firefox (app-id is "firefox")
+    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Open the Chrome picture-in-picture player as floating by default.
+window-rule {
+    match app-id="" title="^Picture in picture"
+    open-floating true
+}
+
+//===TERMINAL
+
+window-rule {
+  match at-startup=true app-id=r#"^com\.mitchellh\.ghostty$"#
+  open-on-workspace "Terminal"
+}
+
+window-rule {
+  match app-id=r#"^com\.mitchellh\.ghostty$"#
+  draw-border-with-background false
+}
+
+//=== CODE
+
+window-rule {
+  match at-startup=true app-id="code"
+  open-on-workspace "Code"
+}
+
+window-rule {
+  match at-startup=true app-id="cursor"
+  open-on-workspace "Code"
+}
+
+//=== CHAT
+
+window-rule {
+  match at-startup=true app-id="vesktop"
+  open-on-workspace "Chat"
+}
+
+window-rule {
+  match at-startup=true app-id="slack"
+  open-on-workspace "Chat"
+}
+
+//=== NOTES
+
+window-rule {
+  match at-startup=true app-id="obsidian"
+  open-on-workspace "Notes"
+}
+
+//=== MEETINGS
+
+window-rule {
+  match at-startup=true app-id="teams-for-linux"
+  open-on-workspace "Meetings"
+}
+
+//=== GAMES
+
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\\d+_desktop$"#
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+window-rule {
+    match app-id="steam" title="Friends List"
+    open-floating true
+    open-on-workspace "Games"
+}
+
+window-rule {
+    match at-startup=true app-id="steam" title="^Steam$"
+    open-on-workspace "Games"
+}
+
+// always open Big Picture mode on the Dell monitor
+window-rule {
+    match app-id="steam" title="^Steam Big Picture Mode$"
+    open-focused true
+    open-on-output "DP-3" // Dell Inc. DELL U2719DX 3TQSPS2
+}
+
+// open games in fullscreen
+window-rule {
+    match app-id=r#"^steam_app_\d+$"#
+    open-fullscreen true
+}
+
+//=== MISC
+
+window-rule {
+  match app-id=r#"^com\.gabm\.satty$"#
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
+  match app-id="feh"
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
+  match app-id="thunar" title="File Operation Progress"
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
+  match app-id="calibre-ebook-viewer" title="E-book viewer"
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
+  match app-id=r#"^io\.github\.Qalculate\.qalculate-qt$"#
+  open-floating true;
+  open-focused true;
+}
+
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
+window-rule {
+    // This regular expression is intentionally made as specific as possible,
+    // since this is the default config, and we want no false positives.
+    // You can get away with just app-id="wezterm" if you want.
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+// Open clipse-gui as floating by default.
+window-rule {
+    // This app-id regular expression will work for both:
+    // - host Firefox (app-id is "firefox")
+    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+    match app-id="clipse-gui"
+    open-floating true
+}
+
+// Example: block out two password managers from screen capture.
+// (This example rule is commented out with a "/-" in front.)
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+
+    // Use this instead if you want them visible on third-party screenshot tools.
+    // block-out-from "screencast"
+}

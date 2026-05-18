@@ -1,0 +1,33 @@
+{{- $githubPAT := doppler "GITHUB_CLAUDE_CODE_PAT" "homelab" "dev_personal" -}}
+#!/usr/bin/env bash
+github_authorization={{ printf "Bearer %s" $githubPAT | quote }}
+export GITHUB_AUTHORIZATION="$github_authorization"
+
+input=$(cat)
+if [ -z "$input" ]; then
+  input='{}'
+fi
+
+jq '
+  .plugin = (((.plugin // []) | map(select(. != "superpowers@git+https://github.com/obra/superpowers.git"))) + ["superpowers@git+https://github.com/obra/superpowers.git"])
+  | .mcp = ((.mcp // {}) * {
+      "github": {
+        "type": "remote",
+        "enabled": true,
+        "url": "https://api.githubcopilot.com/mcp/",
+        "headers": {
+          "Authorization": env.GITHUB_AUTHORIZATION
+        }
+      },
+      "serena": {
+        "enabled": true,
+        "type": "local",
+        "command": [
+          "serena",
+          "start-mcp-server",
+          "--context=ide",
+          "--project-from-cwd"
+        ]
+      }
+    })
+' <<< "$input"

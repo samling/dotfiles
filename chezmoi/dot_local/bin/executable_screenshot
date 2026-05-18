@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# Take a screenshot, pipe through satty for annotation. Saves PNG to
+# ~/Pictures/Screenshots.
+#
+# Region capture goes through grim + slurp and matches the scale of the
+# selected output. Window/monitor use niri's IPC directly.
+#
+# Usage: screenshot <region|window|monitor|all>
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+MODE="${1:-region}"
+OUTPUT_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
+OUTPUT_FILE="${OUTPUT_DIR}/Screenshot-$(date +%Y-%m-%d-%H-%M-%S).png"
+
+mkdir -p "$OUTPUT_DIR"
+
+region_scale() {
+  local geometry=$1
+  local position=${geometry%% *}
+  local size=${geometry#* }
+  local x=${position%,*}
+  local y=${position#*,}
+  local width=${size%x*}
+  local height=${size#*x}
+
+  niri msg --json outputs | jq -r \
+    --argjson x "$x" \
+    --argjson y "$y" \
+    --argjson width "$width" \
+    --argjson height "$height" '
+      def min(a; b): if a < b then a else b end;
+      def max(a; b): if a > b then a else b end;
+      [
+        .[] | .logical as $output
+        | (min($x + $width; $output.x + $output.width) - max($x; $output.x)) as $overlap_width
+        | (min($y + $height; $output.y + $output.height) - max($y; $output.y)) as $overlap_height
+        | select($overlap_width > 0 and $overlap_height > 0)
+        | { area: ($overlap_width * $overlap_height), scale: ($output.scale // 1) }
+      ]
+      | sort_by(.area)
+      | last.scale // 1
+    '
+}
+
+# niri msg returns before its screenshot UI writes the file, so poll the
+# target path. Cap the wait so a cancelled selection doesn't hang forever.
+wait_for_file() {
+  local file=$1
+  local timeout_s=${2:-120}
+  local deadline=$(( $(date +%s) + timeout_s ))
+  while [ "$(date +%s)" -lt "$deadline" ]; do
+    [ -s "$file" ] && return 0
+    sleep 0.1
+  done
+  return 1
+}
+
+capture_via_niri() {
+  local action=$1
+  local tmp
+  tmp=$(mktemp --suffix=.png)
+  trap "rm -f '$tmp'" EXIT
+
+  niri msg action "$action" --path "$tmp"
+  if wait_for_file "$tmp"; then
+    satty --filename "$tmp" --output-filename "$OUTPUT_FILE"
+  fi
+}
+
+case "$MODE" in
+  region)
+    region=$(slurp -d)
+    grim -s "$(region_scale "$region")" -g "$region" - \
+      | satty --filename - --output-filename "$OUTPUT_FILE"
+    ;;
+  window)  capture_via_niri screenshot-window ;;
+  monitor) capture_via_niri screenshot-screen ;;
+  all)
+    grim - | satty --filename - --output-filename "$OUTPUT_FILE"
+    ;;
+  *)
+    echo "Unknown mode: $MODE (expected region|window|monitor|all)" >&2
+    exit 1
+    ;;
+esac

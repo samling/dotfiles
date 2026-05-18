@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=imv
+GenericName=Image Viewer
+Exec=imv-open %F
+Icon=imv
+Terminal=false
+Categories=Graphics;Viewer;
+MimeType=image/jpeg;image/png;image/gif;image/bmp;image/webp;image/tiff;

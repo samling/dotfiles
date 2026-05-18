@@ -1,0 +1,8 @@
+k9s:
+  ui:
+    skin: catppuccin-mocha-transparent
+  thresholds:
+    cpu:
+      warn: 75
+    memory:
+      warn: 75

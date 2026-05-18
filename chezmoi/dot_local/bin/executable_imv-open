@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Wrapper around imv that opens the whole containing directory when a
+# single file is passed, so left/right walks siblings instead of
+# closing on the only loaded entry. Mirrors the imvOpen wrapper that
+# used to live in modules/common/media.nix.
+set -eu
+
+if [ "$#" -eq 1 ] && [ -f "$1" ]; then
+  exec imv -n "$1" "$(dirname -- "$1")"
+fi
+
+exec imv -- "$@"

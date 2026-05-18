@@ -1,7 +1,0 @@
-[Unit]
-Description=Change wallpaper using AWWW
-After=awww.service
-
-[Service]
-Type=oneshot
-ExecStart=/home/sboynton/.config/awww/awww_randomize_multi.sh /home/sboynton/Pictures/Wallpapers

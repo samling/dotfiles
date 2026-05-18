@@ -1,0 +1,16 @@
+// This config is in the KDL format: https://kdl.dev
+// Split into modules under ~/.config/niri/modules/.
+// Per-host monitor configuration lives under ~/.config/niri/hosts/<hostname>.kdl;
+// the include line below is rendered by chezmoi for the current host only.
+//
+// Check the wiki for a full description of the configuration:
+// https://niri-wm.github.io/niri/Configuration:-Introduction
+
+include "modules/input.kdl"
+
+include "hosts/{{ .chezmoi.hostname }}.kdl"
+
+include "modules/layout.kdl"
+include "modules/startup.kdl"
+include "modules/window-rules.kdl"
+include "modules/binds.kdl"

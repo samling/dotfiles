@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+input=$(cat)
+if [ -z "$input" ]; then
+  input='{}'
+fi
+
+jq '
+  .theme = "system"
+' <<< "$input"

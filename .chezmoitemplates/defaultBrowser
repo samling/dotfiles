@@ -1,8 +1,0 @@
-{{- $defaultBrowser := "firefox" -}}              {{/* Default to firefox */}}
-{{- $hostname := .chezmoi.fqdnHostname -}}        {{/* Get the current hostname */}}
-{{- $hostData := index .host $hostname -}}   {{/* Get data for the current host */}}
-
-{{- if and $hostData (hasKey $hostData "default_browser") -}}
-    {{- $defaultBrowser = $hostData.default_browser -}}
-{{- end -}}
-{{- $defaultBrowser -}}

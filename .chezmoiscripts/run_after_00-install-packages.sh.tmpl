@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# metapac groups hash: {{ $content := "" }}{{ range glob (joinPath .chezmoi.sourceDir "dot_config/metapac/groups/*.toml") }}{{ $content = printf "%s%s" $content (include .) }}{{ end }}{{ $content | sha256sum }}
-
-echo "Syncing packages with metapac..."
-metapac sync
-metapac clean
-echo "Package sync finished."
-# rerun: 0452b78b
