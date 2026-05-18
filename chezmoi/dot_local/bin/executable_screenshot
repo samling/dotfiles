@@ -14,7 +14,6 @@ set -o nounset
 MODE="${1:-region}"
 OUTPUT_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
 OUTPUT_FILE="${OUTPUT_DIR}/Screenshot-$(date +%Y-%m-%d-%H-%M-%S).png"
-DEBUG_RAW_FILE="${OUTPUT_FILE%.png}.raw.png"
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -67,7 +66,6 @@ capture_via_niri() {
 
   niri msg action "$action" --path "$tmp"
   if wait_for_file "$tmp"; then
-    [ -n "${SCREENSHOT_DEBUG:-}" ] && cp "$tmp" "$DEBUG_RAW_FILE"
     satty --filename "$tmp" --output-filename "$OUTPUT_FILE"
   fi
 }
@@ -75,23 +73,13 @@ capture_via_niri() {
 case "$MODE" in
   region)
     region=$(slurp -d)
-    if [ -n "${SCREENSHOT_DEBUG:-}" ]; then
-      grim -s "$(region_scale "$region")" -g "$region" "$DEBUG_RAW_FILE"
-      satty --filename "$DEBUG_RAW_FILE" --output-filename "$OUTPUT_FILE"
-    else
-      grim -s "$(region_scale "$region")" -g "$region" - \
-        | satty --filename - --output-filename "$OUTPUT_FILE"
-    fi
+    grim -s "$(region_scale "$region")" -g "$region" - \
+      | satty --filename - --output-filename "$OUTPUT_FILE"
     ;;
   window)  capture_via_niri screenshot-window ;;
   monitor) capture_via_niri screenshot-screen ;;
   all)
-    if [ -n "${SCREENSHOT_DEBUG:-}" ]; then
-      grim "$DEBUG_RAW_FILE"
-      satty --filename "$DEBUG_RAW_FILE" --output-filename "$OUTPUT_FILE"
-    else
-      grim - | satty --filename - --output-filename "$OUTPUT_FILE"
-    fi
+    grim - | satty --filename - --output-filename "$OUTPUT_FILE"
     ;;
   *)
     echo "Unknown mode: $MODE (expected region|window|monitor|all)" >&2
