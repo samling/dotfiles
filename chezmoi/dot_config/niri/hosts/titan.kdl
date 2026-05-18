@@ -69,5 +69,4 @@ spawn-at-startup "slack"
 
 // Gaming
 spawn-at-startup "openrgb -p 5090FE-min_brightness"
-spawn-at-startup "sunshine"
 spawn-at-startup "steam"

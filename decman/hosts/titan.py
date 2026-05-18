@@ -1,10 +1,29 @@
 import decman
+from decman.plugins import systemd
 
+from modules._systemd import reconcile_units
 from modules.hardware.nvidia import NvidiaModule
 from modules.host.cachyos import CachyOSModule
 from modules.host.mkinitcpio import MkinitcpioModule
 from modules.work.work import WorkModule
 from roles.gui import MODULES
+
+
+class TitanServicesModule(decman.Module):
+
+    def __init__(self):
+        super().__init__("titan_services")
+
+    @systemd.user_units
+    def user_units(self) -> dict[str, set[str]]:
+        return {
+            "sboynton": {
+                "sunshine.service",
+            },
+        }
+
+    def on_change(self, store):
+        reconcile_units(self, store)
 
 # CachyOS on bare metal with an nvidia GPU. Also the work machine,
 # so WorkModule layers in the work-only toolchain (aws/azure/teleport
@@ -30,6 +49,7 @@ decman.modules += MODULES + [
     MkinitcpioModule(),
     CachyOSModule(),
     NvidiaModule(),
+    TitanServicesModule(),
     WorkModule(),
 ]
 

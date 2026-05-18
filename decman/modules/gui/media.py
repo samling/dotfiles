@@ -34,7 +34,6 @@ class MediaGuiModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
-            "davinci-resolve",
             "ie-r",
             "spotify",
         }
