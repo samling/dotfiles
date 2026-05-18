@@ -23,15 +23,18 @@ class MediaGuiModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
+            "darktable",
             "feh",
             "imv",
             "obs-studio",
             "playerctl",
+            "rawtherapee",
         }
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
+            "davinci-resolve",
             "ie-r",
             "spotify",
         }

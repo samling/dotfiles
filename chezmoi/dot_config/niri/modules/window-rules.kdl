@@ -143,11 +143,16 @@ window-rule {
 }
 
 window-rule {
-  match app-id="calibre-ebook-viewer" title="E-bok viewer"
+  match app-id="calibre-ebook-viewer" title="E-book viewer"
   open-floating true;
   open-focused true;
 }
 
+window-rule {
+  match app-id=r#"^io\.github\.Qalculate\.qalculate-qt$"#
+  open-floating true;
+  open-focused true;
+}
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.

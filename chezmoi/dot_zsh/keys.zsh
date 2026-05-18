@@ -28,8 +28,39 @@ bindkey -r "^[^L"
 
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey '^xe' edit-command-line
-bindkey '^x^e' edit-command-line
+
+__ctrl_x_clear_prefix_prompt() {
+    if (( ${+__ctrl_x_saved_rprompt} )); then
+        RPROMPT="$__ctrl_x_saved_rprompt"
+        unset __ctrl_x_saved_rprompt
+        zle reset-prompt
+    fi
+}
+
+__ctrl_x_prefix() {
+    (( ${+__ctrl_x_saved_rprompt} )) || __ctrl_x_saved_rprompt="${RPROMPT-}"
+    if [[ -n "$__ctrl_x_saved_rprompt" ]]; then
+        RPROMPT="%F{yellow}[C-x]%f ${__ctrl_x_saved_rprompt}"
+    else
+        RPROMPT="%F{yellow}[C-x]%f"
+    fi
+    zle reset-prompt
+    local key
+    read -k 1 key
+    __ctrl_x_clear_prefix_prompt
+    if [[ "$key" == e || "$key" == $'\x05' ]]; then
+        zle edit-command-line
+    elif [[ "$key" == $'\r' || "$key" == $'\n' ]]; then
+        zle accept-line
+    elif [[ "$key" == $'\e' ]]; then
+        return 0
+    else
+        zle -U "$key"
+    fi
+}
+zle -N __ctrl_x_prefix
+
+bindkey '^X' __ctrl_x_prefix
 
 #========= C-s to bring up the cs menu
 # Disable terminal flow control (Ctrl+S/Ctrl+Q)

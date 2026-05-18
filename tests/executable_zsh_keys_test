@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+
+REPO_ROOT="$repo_root" zsh -f <<'ZSH'
+setopt errexit pipefail nounset
+
+assert_equal() {
+  local actual=$1
+  local expected=$2
+  local description=$3
+  if [[ $actual != $expected ]]; then
+    print -u2 -- "not ok - ${description}"
+    print -u2 -- "expected: ${expected}"
+    print -u2 -- "actual:   ${actual}"
+    return 1
+  fi
+}
+
+fzf-search-directory() { :; }
+fzf-search-history() { :; }
+fzf-search-git-log() { :; }
+fzf-search-git-branches() { :; }
+fzf-search-git-status() { :; }
+fzf-search-processes() { :; }
+fzf-tab-dispatch() { :; }
+
+unsetopt errexit
+source "${REPO_ROOT}/chezmoi/dot_zsh/keys.zsh"
+source_status=$?
+setopt errexit
+(( source_status == 0 ))
+
+assert_equal "$(bindkey -M emacs '^X')" '"^X" __ctrl_x_prefix' 'Ctrl-X invokes feedback widget'
+! bindkey -l | grep -qx 'ctrl-x-prefix'
+functions __ctrl_x_prefix | grep -q '__ctrl_x_saved_rprompt'
+functions __ctrl_x_prefix | grep -q 'RPROMPT=.*\[C-x\]'
+! functions __ctrl_x_prefix | grep -q 'RPS1'
+! functions __ctrl_x_prefix | grep -q 'zle -M'
+! functions __ctrl_x_prefix | grep -q 'zle -K'
+functions __ctrl_x_prefix | grep -q 'read -k 1'
+functions __ctrl_x_prefix | grep -q 'zle edit-command-line'
+functions __ctrl_x_prefix | grep -q 'zle accept-line'
+functions __ctrl_x_prefix | grep -Fq '[[ "$key" == $'"'"'\e'"'"' ]]'
+ZSH
+
+printf 'ok - Ctrl-X shows right-prompt feedback without exposing an inline keymap name\n'

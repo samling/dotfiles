@@ -30,3 +30,8 @@ note = "Haden Collins, AUR maintainer for wlogout."
 package = "libjpeg6-turbo"
 fingerprint = "7D6293CC6378786E1B5C496885C7044E033FDE16"
 note = "libjpeg-turbo Project signing key. Transitive dep via dcvviewer-bin."
+
+[[entries]]
+package = "libpng12"
+fingerprint = "8048643BA2C840F4F92A195FF54984BFA16C640F"
+note = "Glenn Randers-Pehrson. Transitive dep via davinci-resolve."
