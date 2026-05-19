@@ -35,6 +35,9 @@ command -v asdf >/dev/null && _cached_completion asdf asdf completion zsh
 #=== colima
 command -v colima >/dev/null && _cached_completion colima colima completion zsh
 
+#=== command-snippets
+command -v cs >/dev/null && _cached_completion cs cs completion zsh
+
 #=== direnv
 command -v direnv >/dev/null && _cached_completion direnv direnv hook zsh
 
