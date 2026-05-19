@@ -5,8 +5,15 @@ init:
     chezmoi init --source={{root}}
     sudo decman --source={{root}}/decman/source.py
 
+[linux]
 apply:
     sudo decman
+
+# macOS counterpart to decman: brew bundle + pyinfra config modules.
+[macos]
+apply:
+    command -v uv >/dev/null 2>&1 || brew install uv
+    DOTFILES_ROOT={{root}} uvx pyinfra @local {{root}}/macos/deploy.py
 
 dry-run:
     sudo decman --dry-run

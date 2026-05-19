@@ -2,7 +2,11 @@
 # Point HOME_DIR at a writable location since /usr/share/zinit is system-owned.
 typeset -A ZINIT
 ZINIT[HOME_DIR]="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit"
+{{- if eq .chezmoi.os "darwin" }}
+source /opt/homebrew/opt/zinit/zinit.zsh
+{{- else }}
 source /usr/share/zinit/zinit.zsh
+{{- end }}
 
 # Must load before zsh-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search

@@ -3,14 +3,18 @@ set -euo pipefail
 tmp=$(mktemp); trap 'rm -f "$tmp"' EXIT
 cat > "$tmp"
 for mime in image/jpeg image/png image/gif image/bmp image/webp image/tiff; do
-  crudini --set "$tmp" "Default Applications" "$mime" imv.desktop
+  if command -v crudini >/dev/null; then
+    crudini --set "$tmp" "Default Applications" "$mime" imv.desktop
+  fi
 done
 # Hand http(s) and friends to the Windows Chrome interop wrapper on WSL,
 # so xdg-open / $BROWSER consumers (e.g. tsh) launch the host browser
 # instead of a Linux Chrome under WSLg.
 if [ -n "${WSL_DISTRO_NAME:-}" ]; then
   for mime in text/html x-scheme-handler/http x-scheme-handler/https x-scheme-handler/about x-scheme-handler/unknown; do
-    crudini --set "$tmp" "Default Applications" "$mime" google-chrome.desktop
+    if command -v crudini >/dev/null; then
+      crudini --set "$tmp" "Default Applications" "$mime" google-chrome.desktop
+    fi
   done
 fi
 # xdg-mime's shell parser uses `grep "^key="` and won't match `key = value`,
