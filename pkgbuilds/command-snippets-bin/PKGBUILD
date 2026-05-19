@@ -1,7 +1,7 @@
 # Maintainer: Sam Boynton <sboynton@nvidia.com>
 pkgname=command-snippets-bin
 _pkgname=cs
-pkgver=0.2.0
+pkgver=0.2.1
 pkgrel=1
 pkgdesc="Fuzzy-searchable command snippet manager"
 arch=('x86_64' 'aarch64')
@@ -11,8 +11,8 @@ provides=('command-snippets' 'cs')
 conflicts=('command-snippets' 'cs')
 source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}-v${pkgver}-linux-amd64.tar.gz")
 source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}-v${pkgver}-linux-arm64.tar.gz")
-sha256sums_x86_64=('d83cae1ef598d482f34e3db72e62849a3b997e7ec287d38e28d07bea5ac918d9')
-sha256sums_aarch64=('10ebacafecf262000d1c4bc3b9840aea0d7a397b32a34464d08bef489cb1d4ea')
+sha256sums_x86_64=('ea29895ea22a6abef20616edc003e1e31121a2a861cf0de3906b40a6d1abe5fd')
+sha256sums_aarch64=('695539e2d2a3ab519591b1400770cb2b85746fbe4979e4a301a0462e58cf328d')
 
 package() {
     install -Dm755 "$srcdir/${_pkgname}" "$pkgdir/usr/bin/${_pkgname}"

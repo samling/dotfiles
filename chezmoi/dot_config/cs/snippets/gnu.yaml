@@ -3,7 +3,7 @@ snippets:
     id: grep-regex
     name: Grep with Custom Regex
     description: Search files using a custom regular expression pattern
-    command: grep -E '<pattern>' <files>
+    command: grep -E ${pattern_arg} ${files_arg}
     variables:
       - name: pattern
         description: Regular expression pattern to search for
@@ -13,12 +13,17 @@ snippets:
         description: Files to search in
         default: "*.txt"
         required: false
+    computed:
+      pattern_arg:
+        value: "quote(pattern)"
+      files_arg:
+        value: "files"
 
   sed-replace:
     id: sed-replace
     name: Sed Replace with Regex
     description: Replace text using sed with a regex pattern
-    command: sed -E 's/<search_pattern>/<replacement>/<global>' <file>
+    command: sed -E ${script_arg} ${file_arg}
     variables:
       - name: search_pattern
         description: Regex pattern to search for
@@ -31,26 +36,21 @@ snippets:
         description: Global replacement switch
         type: "boolean"
         default: "false"
-        transform:
-          true_value: "g"
-          false_value: ""
       - name: file
         description: File to process
         required: true
+    computed:
+      script_arg:
+        value: 'quote("s/" + search_pattern + "/" + replacement + "/" + (global == "true" ? "g" : ""))'
+      file_arg:
+        value: "file"
 
   sed-replace-file-in-place:
     id: sed-replace-file-in-place
     name: Sed Replace File In Place
     description: Replace text in a file in-place using sed with a regex pattern
-    command: sed -i<backup> 's/<search_pattern>/<replacement>/<global>' <file>
+    command: sed -i ${script_arg} ${file_arg}
     variables:
-      - name: backup
-        description: Create file backup
-        type: "boolean"
-        default: "false"
-        transform:
-          true_value: ".bak"
-          false_value: ""
       - name: search_pattern
         description: Regex pattern to search for
         type: regex
@@ -62,20 +62,20 @@ snippets:
         description: Global replacement switch
         type: "boolean"
         default: "false"
-        transform:
-          true_value: "g"
-          false_value: ""
       - name: file
         description: File to process
         required: true
+    computed:
+      script_arg:
+        value: 'quote("s/" + search_pattern + "/" + replacement + "/" + (global == "true" ? "g" : ""))'
+      file_arg:
+        value: "file"
 
   log-analyzer:
     id: log-analyzer
     name: Analyze Logs with Regex
     description: Extract specific patterns from log files
-    command: |
-      awk '/<pattern>/ {print $0}' <logfile> | \
-      sed -E 's/<extract_pattern>/\1/g'
+    command: awk ${awk_script} ${logfile_arg} | sed -E ${sed_script}
     variables:
       - name: pattern
         description: Initial filter pattern (must be valid regex)
@@ -89,3 +89,10 @@ snippets:
       - name: logfile
         description: Log file to analyze
         required: true
+    computed:
+      awk_script:
+        value: 'quote("/" + pattern + "/ {print $0}")'
+      logfile_arg:
+        value: "logfile"
+      sed_script:
+        value: 'quote("s/" + extract_pattern + "/\\1/g")'

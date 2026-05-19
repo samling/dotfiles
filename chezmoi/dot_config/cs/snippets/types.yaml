@@ -7,7 +7,7 @@ variable_types:
     default: "8080"
 
   log_level:
-    description: "Application log level" 
+    description: "Application log level"
     validation:
       enum: ["debug", "info", "warn", "error"]
     default: "info"

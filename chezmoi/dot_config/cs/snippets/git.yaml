@@ -4,17 +4,19 @@ snippets:
     id: "git-log-oneline"
     name: "git-log-oneline"
     description: "Show git log in one line format with optional limits"
-    command: "git log --oneline <limit> <branch>"
+    command: "git log --oneline ${limit_arg} ${branch_arg}"
     variables:
       - name: "limit"
         description: "Number of commits to show"
         default: "10"
-        transform:
-          empty_value: ""
-          value_pattern: "-{{.Value}}"
       - name: "branch"
         description: "Branch or commit range (optional)"
         default: ""
+    computed:
+      limit_arg:
+        value: 'limit == "" ? "" : "-" + limit'
+      branch_arg:
+        value: "branch"
     tags: ["git", "log", "history"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
@@ -23,7 +25,7 @@ snippets:
     id: "git-branch-create"
     name: "git-branch-create"
     description: "Create and switch to new git branch"
-    command: "git checkout -b <branch_name> <base_branch>"
+    command: "git checkout -b ${branch_name_arg} ${base_branch_arg}"
     variables:
       - name: "branch_name"
         description: "New branch name"
@@ -31,6 +33,11 @@ snippets:
       - name: "base_branch"
         description: "Base branch to branch from"
         default: "main"
+    computed:
+      branch_name_arg:
+        value: "branch_name"
+      base_branch_arg:
+        value: "base_branch"
     tags: ["git", "branch", "create"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
@@ -39,24 +46,20 @@ snippets:
     id: "git-commit-amend"
     name: "git-commit-amend"
     description: "Amend the last commit"
-    command: "git commit --amend <no_edit> <message_flag>"
+    command: "git commit --amend ${no_edit_arg} ${message_arg}"
     variables:
       - name: "no_edit"
         description: "Don't edit commit message"
         type: "boolean"
         default: "false"
-        transform:
-          true_value: "--no-edit"
-          false_value: ""
       - name: "new_message"
         description: "New commit message (optional)"
         default: ""
-      - name: "message_flag"
-        description: "Message flag for commit"
-        computed: true
-        transform:
-          compose: |
-            {{- if .new_message -}}-m "{{.new_message}}"{{end -}}
+    computed:
+      no_edit_arg:
+        value: 'boolFlag("--no-edit", no_edit)'
+      message_arg:
+        value: 'flag("-m", new_message)'
     tags: ["git", "commit", "amend"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
@@ -65,7 +68,7 @@ snippets:
     id: "git-checkout"
     name: "git-checkout"
     description: "Checkout git branch with optional remote"
-    command: "git checkout <branch_ref>"
+    command: "git checkout ${branch_ref}"
     variables:
       - name: "branch"
         description: "Branch name"
@@ -73,11 +76,9 @@ snippets:
       - name: "remote"
         description: "Remote name"
         default: "origin"
-      - name: "branch_ref"
-        description: "Full branch reference"
-        computed: true
-        transform:
-          compose: "{{.remote}}/{{.branch}}"
+    computed:
+      branch_ref:
+        value: 'remote == "" ? branch : remote + "/" + branch'
     tags: ["git", "checkout"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
