@@ -1,6 +1,11 @@
 import decman
 from decman.plugins import aur, pacman
 
+from modules.common.archlinux import has_repo
+
+
+_NATIVE_OR_AUR = {"lib32-gamescope-plus"}
+
 
 class GamesModule(decman.Module):
     """Steam + the firewall ports it needs for Remote Play.
@@ -14,16 +19,23 @@ class GamesModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        return {
+        base = {
+          "gamescope",
           "moonlight-qt",
           "steam",
         }
+        if has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
+        return base
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        return {
+        base = {
           "stepmania",
         }
+        if not has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
+        return base
 
     def files(self) -> dict[str, decman.File]:
         # firewalld zone drop-in. firewalld is already pulled in by

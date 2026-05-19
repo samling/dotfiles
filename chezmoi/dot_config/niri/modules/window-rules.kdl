@@ -94,7 +94,7 @@ window-rule {
 //=== GAMES
 
 window-rule {
-    match app-id="steam" title=r#"^notificationtoasts_\\d+_desktop$"#
+    match app-id="^steam$" title=r#"^notificationtoasts_\d+_desktop$"#
     default-floating-position x=10 y=10 relative-to="bottom-right"
 }
 
@@ -113,8 +113,15 @@ window-rule {
 window-rule {
     match app-id="steam" title="^Steam Big Picture Mode$"
     open-focused true
-    open-on-output "DP-3" // Dell Inc. DELL U2719DX 3TQSPS2
+    open-on-output "DP-1"
 }
+
+// always open gamescope Big Picture mode on the Dell monitor
+//window-rule {
+//    match app-id="gamescope"
+//    open-focused true
+//    open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
+//}
 
 // open games in fullscreen
 window-rule {

@@ -2,6 +2,7 @@ import decman
 from decman.plugins import systemd
 
 from modules._systemd import reconcile_units
+from modules.common.archlinux import has_repo
 from modules.hardware.nvidia import NvidiaModule
 from modules.host.cachyos import CachyOSModule
 from modules.host.mkinitcpio import MkinitcpioModule
@@ -53,8 +54,14 @@ decman.modules += MODULES + [
     WorkModule(),
 ]
 
-# Per-host packages. Layered on top of role / module packages.
-decman.pacman.packages |= set()
-decman.aur.packages |= {
-    "sunshine-beta-bin",
+
+_NATIVE_OR_AUR = {
+  "sunshine"
 }
+
+# Per-host packages. Layered on top of role / module packages.
+decman.pacman.packages |= _NATIVE_OR_AUR if has_repo("cachyos") else set()
+decman.aur.packages |= {
+    "icu76", # sunshine dependency
+    "rustdesk-server-bin",
+} | (set() if has_repo("cachyos") else _NATIVE_OR_AUR)

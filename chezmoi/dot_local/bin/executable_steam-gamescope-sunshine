@@ -1,0 +1,77 @@
+#!/bin/sh
+
+set -eu
+
+usage() {
+  printf 'usage: %s <command> [args...]\n' "${0##*/}" >&2
+}
+
+detect_resolution() {
+  outputs_json="$(niri msg --json outputs)"
+
+  if [ -n "${GAMESCOPE_OUTPUT:-}" ]; then
+    output_name="$GAMESCOPE_OUTPUT"
+    selected_output_json="$(printf '%s' "$outputs_json" | jq -er --arg name "$output_name" '.[$name] // (to_entries[] | select(.value.name == $name) | .value)')"
+  else
+    selected_output_json="$(niri msg --json focused-output)"
+    output_name="$(printf '%s' "$selected_output_json" | jq -r '.name')"
+  fi
+
+  if [ -n "${SUNSHINE_CLIENT_WIDTH:-}" ] && [ -n "${SUNSHINE_CLIENT_HEIGHT:-}" ]; then
+    width="$SUNSHINE_CLIENT_WIDTH"
+    height="$SUNSHINE_CLIENT_HEIGHT"
+    fps="${SUNSHINE_CLIENT_FPS:-60}"
+    return
+  fi
+
+  width="$(printf '%s' "$selected_output_json" | jq -r '.logical.width')"
+  height="$(printf '%s' "$selected_output_json" | jq -r '.logical.height')"
+  refresh_millihz="$(printf '%s' "$selected_output_json" | jq -r '.modes[.current_mode].refresh_rate')"
+  fps="$(((refresh_millihz + 500) / 1000))"
+}
+
+shepherd_window() {
+  target_pid="$1"
+  target_output="$2"
+  attempts=0
+
+  while [ "$attempts" -lt 100 ]; do
+    window_id="$(niri msg --json windows | jq -er --argjson pid "$target_pid" '.[] | select(.pid == $pid) | .id' 2>/dev/null || true)"
+
+    if [ -n "$window_id" ]; then
+      niri msg action move-window-to-monitor --id "$window_id" "$target_output" >/dev/null 2>&1 || true
+      niri msg action focus-window --id "$window_id" >/dev/null 2>&1 || true
+      return 0
+    fi
+
+    attempts=$((attempts + 1))
+    sleep 0.1
+  done
+
+  return 0
+}
+
+if [ "$#" -eq 0 ]; then
+  usage
+  exit 2
+fi
+
+detect_resolution
+shepherd_window "$$" "$output_name" &
+
+run_gamescope() {
+  exec gamescope -f \
+    -W "$width" \
+    -H "$height" \
+    -w "$width" \
+    -h "$height" \
+    -r "$fps" \
+    --force-grab-cursor \
+    -- "$@"
+}
+
+if [ -n "${GAMESCOPE_LOG:-}" ]; then
+  run_gamescope "$@" >"$GAMESCOPE_LOG" 2>&1
+fi
+
+run_gamescope "$@"
