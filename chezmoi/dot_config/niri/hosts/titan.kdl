@@ -68,5 +68,5 @@ spawn-at-startup "slack"
 //spawn-at-startup "teams-for-linux-manual"
 
 // Gaming
-spawn-at-startup "openrgb -p 5090FE-min_brightness"
+spawn-at-startup "openrgb -p \"5090FE-min_brightness\" --start-minimized"
 spawn-at-startup "steam"
