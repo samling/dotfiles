@@ -10,7 +10,7 @@ class AIToolsModule(decman.Module):
     def pkgs(self) -> set[str]:
         return {
             "aichat",
-            "opencode",
+            # "opencode", # out of date in AUR
         }
     @aur.packages
     def aurpkgs(self) -> set[str]:

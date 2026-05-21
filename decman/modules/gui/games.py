@@ -4,7 +4,9 @@ from decman.plugins import aur, pacman
 from modules.common.archlinux import has_repo
 
 
-_NATIVE_OR_AUR = {"lib32-gamescope-plus"}
+_NATIVE_OR_AUR = {
+  "lib32-gamescope",
+}
 
 
 class GamesModule(decman.Module):

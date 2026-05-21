@@ -33,6 +33,7 @@ class WmModule(decman.Module):
             "slurp",
             "swayidle",
             "wf-recorder",
+            "wlr-randr",
             "wofi",
             "xterm",
         }

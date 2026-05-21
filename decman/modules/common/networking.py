@@ -31,6 +31,7 @@ class NetworkingModule(decman.Module):
             "ntp",
             "openbsd-netcat",
             "smbclient",
+            "tcpdump",
             "traceroute",
             "websocat",
         }
