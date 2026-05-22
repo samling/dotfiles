@@ -28,17 +28,21 @@ window-rule {
 
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
+  // This app-id regular expression will work for both:
+  // - host Firefox (app-id is "firefox")
+  // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+  match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+  open-floating true
+  open-focused false
+  default-floating-position x=32 y=32 relative-to="bottom-right"
 }
 
 // Open the Chrome picture-in-picture player as floating by default.
 window-rule {
-    match app-id="" title="^Picture in picture"
-    open-floating true
+  match app-id="" title="^Picture in picture"
+  open-floating true
+  open-focused false
+  default-floating-position x=32 y=32 relative-to="bottom-right"
 }
 
 //===TERMINAL
@@ -96,6 +100,7 @@ window-rule {
 window-rule {
     match app-id="^steam$" title=r#"^notificationtoasts_\d+_desktop$"#
     default-floating-position x=10 y=10 relative-to="bottom-right"
+    open-focused false
 }
 
 window-rule {
