@@ -58,6 +58,7 @@ class CoreModule(decman.Module):
             "unrar",
             "unzip",
             "viu",
+            "wakeonlan",
             "wget",
             "whois",
             "xxhash",

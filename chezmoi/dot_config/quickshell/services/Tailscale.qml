@@ -96,8 +96,6 @@ Singleton {
             onStreamFinished: {
                 if (text.length > 0) {
                     console.warn("[Tailscale] Status check error:", text)
-                    tailscale.connected = false
-                    tailscale.connectedPeers = []
                 }
             }
         }
