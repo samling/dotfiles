@@ -24,4 +24,6 @@ decman.modules += MODULES + [
 
 # Per-host packages. Layered on top of role / module packages.
 decman.pacman.packages |= set()
-decman.aur.packages |= set()
+decman.aur.packages |= {
+    "lib32-gamescope-plus",
+}

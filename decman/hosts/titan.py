@@ -56,6 +56,7 @@ decman.modules += MODULES + [
 
 
 _NATIVE_OR_AUR = {
+  "lib32-gamescope",
   "sunshine"
 }
 
