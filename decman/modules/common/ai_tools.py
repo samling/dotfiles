@@ -16,5 +16,5 @@ class AIToolsModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "pi-coding-agent",
-            "rtk",
+            "rtk-bin",
         }
