@@ -24,6 +24,7 @@ class GamesModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         base = {
+          "heroic-games-launcher-bin",
           "stepmania",
         }
         return base
