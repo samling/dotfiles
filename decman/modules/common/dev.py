@@ -15,7 +15,6 @@ class DevModule(decman.Module):
             "clang",
             "direnv",
             "distrobox",
-            "fnm",
             "hl",
             "gcc",
             "github-cli",
