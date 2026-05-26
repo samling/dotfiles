@@ -16,6 +16,7 @@ class DevModule(decman.Module):
             "direnv",
             "distrobox",
             "fnm",
+            "hl",
             "gcc",
             "github-cli",
             "go",
