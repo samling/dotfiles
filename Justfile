@@ -3,10 +3,12 @@ host := `hostname`
 
 init:
     chezmoi init --source={{root}}
+    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo decman --source={{root}}/decman/source.py
 
 [linux]
 apply:
+    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo decman
 
 # macOS counterpart to decman: brew bundle + pyinfra config modules.
@@ -16,9 +18,11 @@ apply:
     DOTFILES_ROOT={{root}} uvx pyinfra @local {{root}}/macos/deploy.py
 
 dry-run:
+    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py --dry-run
     sudo decman --dry-run
 
 update:
+    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo DECMAN_NO_UPGRADE=1 decman
 
 # Discover validpgpkeys from @aur.packages PKGBUILDs (or pass specific

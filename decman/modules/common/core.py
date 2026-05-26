@@ -80,6 +80,7 @@ class CoreModule(decman.Module):
             "neo-matrix",
             "toofan-bin",
             "viddy",
+            "xembedsniproxy",
             # gitoverit still has no PKGBUILD; not yet on AUR.
         }
 
