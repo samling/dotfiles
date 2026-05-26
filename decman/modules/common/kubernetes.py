@@ -22,6 +22,7 @@ class KubernetesModule(decman.Module):
             "kubectx",
             "kubie",
             "minikube",
+            "talosctl",
             "talhelper",
         }
 
@@ -32,7 +33,7 @@ class KubernetesModule(decman.Module):
             "hubble-bin",
             "kubecolor",
             "kubescape",
-            "talosctl-bin",
+            "vcluster-bin",
         }
 
     def after_update(self, store):
