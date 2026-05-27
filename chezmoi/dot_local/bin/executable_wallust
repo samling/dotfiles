@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+wallust_bin=${WALLUST_BIN:-/usr/bin/wallust}
+
+args=("$@")
+has_background_ignore=false
+
+for ((i = 0; i < ${#args[@]}; i++)); do
+  case "${args[$i]}" in
+    -I|--ignore-sequence)
+      if [[ ${args[$((i + 1))]:-} == background ]]; then
+        has_background_ignore=true
+      fi
+      ;;
+    --ignore-sequence=background)
+      has_background_ignore=true
+      ;;
+  esac
+done
+
+if [[ $has_background_ignore == false ]]; then
+  args+=(--ignore-sequence background)
+fi
+
+exec "$wallust_bin" "${args[@]}"

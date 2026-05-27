@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell.Io
 import qs.common
+import qs.services
 
 SystemIndicator {
     id: root
@@ -11,7 +12,7 @@ SystemIndicator {
     property string powerProfile: ""
     property real cpuTemp: 0
     property string fanState: "standard"
-    property bool fanControlAvailable: false
+    readonly property bool fanControlAvailable: ProgramChecker.fanStateAvailable
 
     // True only when power-profiles-daemon is running AND reports a known
     // profile. On desktops without PPD (or without ACPI platform-profile
@@ -101,21 +102,6 @@ SystemIndicator {
         }
     }
 
-    // Detect whether fan_state is installed. Skipping the sudo calls when
-    // it's absent avoids password prompts that otherwise faillock the user.
-    Process {
-        id: fanStateDetectProc
-        command: ["sh", "-c", "command -v fan_state >/dev/null 2>&1 && echo yes || echo no"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                root.fanControlAvailable = this.text.trim() === "yes"
-                if (root.fanControlAvailable) fanStateGetProc.running = true
-            }
-        }
-    }
-
     // Get current fan state
     Process {
         id: fanStateGetProc
@@ -181,5 +167,10 @@ SystemIndicator {
         cpuProc.running = true
         powerProfileGetProc.running = true
         cpuTempProc.running = true
+        if (root.fanControlAvailable) fanStateGetProc.running = true
+    }
+
+    onFanControlAvailableChanged: {
+        if (root.fanControlAvailable) fanStateGetProc.running = true
     }
 }

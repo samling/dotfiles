@@ -45,6 +45,8 @@ class WmModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         base = {
             "ghostty-nightly-bin",
+            #"noctalia-git",
+            #"noctalia-shell",
             "wayle-bin",
             "wlrctl",
         }
@@ -66,7 +68,7 @@ class WmModule(decman.Module):
             "sboynton": {
                 "awww-change-wallpaper.timer",
                 "awww.service",
-                # "quickshell.service",
+                "quickshell.service",
                 "swayidle.service",
             },
         }
