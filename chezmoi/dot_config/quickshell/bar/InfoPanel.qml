@@ -111,78 +111,12 @@ Item {
                 anchors.fill: parent
                 spacing: 0
 
-                // ── Header ──
-                Rectangle {
+                InfoPanelHeader {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 44
                     Layout.margins: 1
                     Layout.bottomMargin: 0
-                    color: Config.getColor("background.mantle")
-                    radius: 11
-
-                    // Square off bottom corners
-                    Rectangle {
-                        anchors.bottom: parent.bottom
-                        width: parent.width
-                        height: 12
-                        color: parent.color
-                    }
-
-                    RowLayout {
-                        anchors.fill: parent
-                        anchors.leftMargin: 16
-                        anchors.rightMargin: 12
-                        spacing: 12
-
-                        Text {
-                            text: "\uf0e4"
-                            font.pixelSize: Config.fontSizeHeader
-                            font.family: Config.fontFamilyIcon
-                            color: Config.getColor("text.primary")
-                        }
-
-                        Text {
-                            text: "System"
-                            color: Config.getColor("text.primary")
-                            font.pixelSize: Config.fontSizeHeader
-                            font.weight: Font.DemiBold
-                            font.family: Config.fontFamilyMonospace
-                            Layout.fillWidth: true
-                        }
-
-                        // Close button
-                        Rectangle {
-                            width: 28
-                            height: 28
-                            radius: 6
-                            color: closeMouse.containsMouse
-                                ? Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.2)
-                                : "transparent"
-                            border.color: closeMouse.containsMouse ? Config.getColor("state.error") : Config.getColor("border.subtle")
-                            border.width: 1
-
-                            Behavior on color { ColorAnimation { duration: 100 } }
-                            Behavior on border.color { ColorAnimation { duration: 100 } }
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "✕"
-                                color: closeMouse.containsMouse ? Config.getColor("state.error") : Config.getColor("text.muted")
-                                font.pixelSize: Config.fontSizeMedium
-                                font.weight: Font.Bold
-                                font.family: Config.fontFamilyMonospace
-
-                                Behavior on color { ColorAnimation { duration: 100 } }
-                            }
-
-                            MouseArea {
-                                id: closeMouse
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                onClicked: GlobalStates.sidebarRightOpen = false
-                            }
-                        }
-                    }
+                    onCloseRequested: GlobalStates.sidebarRightOpen = false
                 }
 
                 Rectangle {
@@ -1898,122 +1832,10 @@ Item {
                 }
             }
 
-            // ── Sub-panel overlay (slides in from right) ──
-            Item {
-                id: subPanelContainer
+            InfoPanelSubPanel {
                 anchors.fill: parent
-                clip: true
-                visible: root.activeSubPanel !== "" || subPanelSlideAnim.running
-
-                Rectangle {
-                    id: subPanelContent
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: parent.width
-                    x: root.activeSubPanel !== "" ? 0 : width
-                    color: Config.getColor("background.crust")
-                    radius: 12
-
-                    Behavior on x {
-                        NumberAnimation {
-                            id: subPanelSlideAnim
-                            duration: 250
-                            easing.type: Easing.OutCubic
-                        }
-                    }
-
-                    // Sub-panel header
-                    Rectangle {
-                        id: subPanelHeader
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        height: 44
-                        color: Config.getColor("background.mantle")
-                        radius: 12
-                        z: 1
-
-                        Rectangle {
-                            anchors.bottom: parent.bottom
-                            width: parent.width
-                            height: 12
-                            color: parent.color
-                        }
-
-                        RowLayout {
-                            anchors.fill: parent
-                            anchors.leftMargin: 12
-                            anchors.rightMargin: 12
-                            spacing: 8
-
-                            Rectangle {
-                                width: 28
-                                height: 28
-                                radius: 6
-                                color: subBackMouse.containsMouse
-                                    ? Config.getColor("background.tertiary")
-                                    : "transparent"
-
-                                Behavior on color { ColorAnimation { duration: 100 } }
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: "\uf053"
-                                    font.pixelSize: Config.fontSizeMedium
-                                    font.family: Config.fontFamilyIcon
-                                    color: subBackMouse.containsMouse
-                                        ? Config.getColor("text.primary")
-                                        : Config.getColor("text.muted")
-
-                                    Behavior on color { ColorAnimation { duration: 100 } }
-                                }
-
-                                MouseArea {
-                                    id: subBackMouse
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    onClicked: root.activeSubPanel = ""
-                                }
-                            }
-
-                            Text {
-                                text: root.activeSubPanel === "wifi" ? "\uf1eb"
-                                    : root.activeSubPanel === "bluetooth" ? "\uf294"
-                                    : ""
-                                font.pixelSize: Config.fontSizeHeader
-                                font.family: Config.fontFamilyIcon
-                                color: Config.getColor("primary.mauve")
-                            }
-
-                            Text {
-                                text: root.activeSubPanel === "wifi" ? "WiFi"
-                                    : root.activeSubPanel === "bluetooth" ? "Bluetooth"
-                                    : ""
-                                color: Config.getColor("text.primary")
-                                font.pixelSize: Config.fontSizeHeader
-                                font.weight: Font.DemiBold
-                                font.family: Config.fontFamilyMonospace
-                                Layout.fillWidth: true
-                            }
-                        }
-                    }
-
-                    WifiPanel {
-                        anchors.top: subPanelHeader.bottom
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        visible: root.activeSubPanel === "wifi"
-                    }
-
-                    BluetoothPanel {
-                        anchors.top: subPanelHeader.bottom
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        visible: root.activeSubPanel === "bluetooth"
-                    }
-                }
+                activeSubPanel: root.activeSubPanel
+                onActiveSubPanelChangeRequested: (value) => root.activeSubPanel = value
             }
         }
     }
