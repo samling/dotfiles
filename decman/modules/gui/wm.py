@@ -22,6 +22,7 @@ class WmModule(decman.Module):
         base = {
             "awww",
             "cage",
+            "dms-shell-niri",
             "fuzzel",
             "greetd",
             "greetd-regreet",
