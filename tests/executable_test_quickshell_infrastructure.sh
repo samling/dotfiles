@@ -29,7 +29,8 @@ require_text "$qs/services/Log.qml" 'function scoped(scope)'
 require_text "$qs/services/Proc.qml" 'function run(id, command, callback, debounceMs, timeoutMs)'
 require_text "$qs/services/ProgramChecker.qml" 'property bool fanStateAvailable'
 require_text "$qs/services/ProgramChecker.qml" 'fanStateAvailable: "fan_state"'
-require_text "$qs/bar/CpuIndicator.qml" 'ProgramChecker.fanStateAvailable'
+require_text "$qs/services/SystemStats.qml" 'ProgramChecker.fanStateAvailable'
+require_text "$qs/bar/CpuIndicator.qml" 'SystemStats.fanControlAvailable'
 
 if grep -Fq 'command -v fan_state' "$qs/bar/CpuIndicator.qml"; then
   printf 'CpuIndicator.qml still performs its own fan_state dependency check\n' >&2
