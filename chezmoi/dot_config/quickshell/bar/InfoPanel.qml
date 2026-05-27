@@ -20,14 +20,14 @@ Item {
     property var diskIndicator
     property var gpuIndicator
 
-    property bool panelOpen: GlobalStates.sidebarRightOpen
+    property bool panelOpen: PopoutCoordinator.infoPanelOpen
 
     readonly property int notificationCount: Notifications.list.length
     readonly property bool hasNotifications: notificationCount > 0
 
     property bool expandAllState: true
     property bool notificationsExpanded: false
-    property string activeSubPanel: ""
+    property string activeSubPanel: PopoutCoordinator.infoPanelSubPanel
     property int _timeRefreshTick: 0
     property bool sinkDropdownOpen: false
     property bool sourceDropdownOpen: false
@@ -45,7 +45,7 @@ Item {
         if (panelOpen) {
             _timeRefreshTick++
         } else {
-            activeSubPanel = ""
+            PopoutCoordinator.setInfoPanelSubPanel("")
             sinkDropdownOpen = false
             sourceDropdownOpen = false
         }
@@ -73,7 +73,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.AllButtons
-            onPressed: GlobalStates.sidebarRightOpen = false
+            onPressed: PopoutCoordinator.closeInfoPanel()
         }
 
         // The panel
@@ -116,7 +116,7 @@ Item {
                     Layout.preferredHeight: 44
                     Layout.margins: 1
                     Layout.bottomMargin: 0
-                    onCloseRequested: GlobalStates.sidebarRightOpen = false
+                    onCloseRequested: PopoutCoordinator.closeInfoPanel()
                 }
 
                 Rectangle {
@@ -702,7 +702,7 @@ Item {
                                 active: Wifi.connected
                                 accentColor: Config.getColor("primary.mauve")
                                 onClicked: Wifi.toggle()
-                                onExpandClicked: root.activeSubPanel = "wifi"
+                                onExpandClicked: PopoutCoordinator.openInfoPanelSubPanel("wifi")
                             }
 
                             ToggleButton {
@@ -720,7 +720,7 @@ Item {
                                 active: BluetoothService.enabled
                                 accentColor: Config.getColor("primary.mauve")
                                 onClicked: BluetoothService.toggle()
-                                onExpandClicked: root.activeSubPanel = "bluetooth"
+                                onExpandClicked: PopoutCoordinator.openInfoPanelSubPanel("bluetooth")
                             }
                         }
 
@@ -1835,7 +1835,7 @@ Item {
             InfoPanelSubPanel {
                 anchors.fill: parent
                 activeSubPanel: root.activeSubPanel
-                onActiveSubPanelChangeRequested: (value) => root.activeSubPanel = value
+                onActiveSubPanelChangeRequested: (value) => PopoutCoordinator.setInfoPanelSubPanel(value)
             }
         }
     }
