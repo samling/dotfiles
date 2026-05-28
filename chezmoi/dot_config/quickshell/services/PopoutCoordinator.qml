@@ -9,11 +9,13 @@ Singleton {
 
     property bool infoPanelOpen: GlobalStates.sidebarRightOpen
     property bool wallpaperPickerOpen: GlobalStates.wallpaperPickerOpen
+    property bool settingsOpen: false
     property string infoPanelSubPanel: ""
 
     function closeAll() {
         closeInfoPanel()
         closeWallpaperPicker()
+        closeSettings()
     }
 
     function openInfoPanel() {
@@ -51,5 +53,20 @@ Singleton {
     function toggleWallpaperPicker() {
         if (GlobalStates.wallpaperPickerOpen) closeWallpaperPicker()
         else openWallpaperPicker()
+    }
+
+    function openSettings() {
+        closeInfoPanel()
+        closeWallpaperPicker()
+        settingsOpen = true
+    }
+
+    function closeSettings() {
+        settingsOpen = false
+    }
+
+    function toggleSettings() {
+        if (settingsOpen) closeSettings()
+        else openSettings()
     }
 }
