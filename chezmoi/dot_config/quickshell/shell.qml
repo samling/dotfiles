@@ -21,25 +21,32 @@ ShellRoot {
 
 	IpcHandler {
 		target: "wallpaper"
-		function toggle(): void { PopoutCoordinator.toggleWallpaperPicker() }
-		function open(): void { PopoutCoordinator.openWallpaperPicker() }
-		function close(): void { PopoutCoordinator.closeWallpaperPicker() }
+		function toggle(): void { PopoutCoordinator.dispatch("wallpaper-picker.toggle") }
+		function open(): void { PopoutCoordinator.dispatch("wallpaper-picker.open") }
+		function close(): void { PopoutCoordinator.dispatch("wallpaper-picker.close") }
 	}
 
 	IpcHandler {
 		target: "settings"
-		function toggle(): void { PopoutCoordinator.toggleSettings() }
-		function open(): void { PopoutCoordinator.openSettings() }
-		function close(): void { PopoutCoordinator.closeSettings() }
+		function toggle(): void { PopoutCoordinator.dispatch("settings.toggle") }
+		function open(): void { PopoutCoordinator.dispatch("settings.open") }
+		function close(): void { PopoutCoordinator.dispatch("settings.close") }
+	}
+
+	IpcHandler {
+		target: "power"
+		function toggle(): void { PopoutCoordinator.dispatch("power.toggle") }
+		function open(): void { PopoutCoordinator.dispatch("power.open") }
+		function close(): void { PopoutCoordinator.dispatch("power.close") }
 	}
 
 	IpcHandler {
 		target: "panel"
-		function closeAll(): void { PopoutCoordinator.closeAll() }
-		function toggleInfo(): void { PopoutCoordinator.toggleInfoPanel() }
-		function openWifi(): void { PopoutCoordinator.openInfoPanelSubPanel("wifi") }
-		function openBluetooth(): void { PopoutCoordinator.openInfoPanelSubPanel("bluetooth") }
-		function toggleSettings(): void { PopoutCoordinator.toggleSettings() }
+		function closeAll(): void { PopoutCoordinator.dispatch("close-all") }
+		function toggleInfo(): void { PopoutCoordinator.dispatch("info-panel.toggle") }
+		function openWifi(): void { PopoutCoordinator.dispatch("wifi.open") }
+		function openBluetooth(): void { PopoutCoordinator.dispatch("bluetooth.open") }
+		function toggleSettings(): void { PopoutCoordinator.dispatch("settings.toggle") }
 	}
 
 	IpcHandler {

@@ -1,4 +1,5 @@
 import qs.common
+import qs.services
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -13,10 +14,10 @@ MouseArea {
     hoverEnabled: true
 
     // Toggle menu popup
-    property bool menuOpen: false
+    property bool menuOpen: PopoutCoordinator.powerOpen
 
     onClicked: {
-        root.menuOpen = !root.menuOpen
+        PopoutCoordinator.togglePower()
     }
 
     // Arch logo
@@ -63,7 +64,7 @@ MouseArea {
         }
     }
     function takeScreenshot(mode) {
-        menuOpen = false
+        PopoutCoordinator.closePower()
         _screenshotMode = mode
         screenshotTimer.start()
     }
@@ -114,7 +115,7 @@ MouseArea {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                root.menuOpen = false
+                PopoutCoordinator.closePower()
             }
         }
 
@@ -217,7 +218,7 @@ MouseArea {
                             label: "Lock"
                             accentColor: Config.getColor("primary.teal")
                             onActivated: {
-                                root.menuOpen = false
+                                PopoutCoordinator.closePower()
                                 Qt.callLater(function() {
                                     const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
@@ -237,7 +238,7 @@ MouseArea {
                             label: "Logout"
                             accentColor: Config.getColor("primary.teal")
                             onActivated: {
-                                root.menuOpen = false
+                                PopoutCoordinator.closePower()
                                 Qt.callLater(function() {
                                     const proc = Qt.createQmlObject(`
                                         import Quickshell.Io
@@ -257,7 +258,7 @@ MouseArea {
                             label: "Restart"
                             accentColor: Config.getColor("primary.teal")
                             onActivated: {
-                                root.menuOpen = false
+                                PopoutCoordinator.closePower()
                                 root.confirmAction("Restart?", "systemctl", "reboot")
                             }
                         }
@@ -268,7 +269,7 @@ MouseArea {
                             label: "Shutdown"
                             accentColor: Config.getColor("primary.teal")
                             onActivated: {
-                                root.menuOpen = false
+                                PopoutCoordinator.closePower()
                                 root.confirmAction("Shutdown?", "systemctl", "poweroff")
                             }
                         }
