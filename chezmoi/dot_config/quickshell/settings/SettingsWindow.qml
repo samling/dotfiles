@@ -38,13 +38,13 @@ PanelWindow {
 
     Rectangle {
         id: modal
-        width: Math.min(parent.width - 80, 900)
-        height: Math.min(parent.height - 80, 620)
+        width: Math.min(parent.width - Style.spacing.window * 2, 900)
+        height: Math.min(parent.height - Style.spacing.window * 2, 620)
         anchors.centerIn: parent
-        radius: 16
-        color: Config.getColor("background.secondary")
+        radius: Style.radius.xl
+        color: Style.color.panel
         border.width: 1
-        border.color: Config.getColor("border.subtle")
+        border.color: Style.color.border
         clip: true
 
         MouseArea { anchors.fill: parent }
@@ -60,14 +60,14 @@ PanelWindow {
 
                 RowLayout {
                     anchors.fill: parent
-                    anchors.leftMargin: 18
-                    anchors.rightMargin: 12
-                    spacing: 12
+                    anchors.leftMargin: Style.spacing.xl + Style.spacing.xs / 2
+                    anchors.rightMargin: Style.spacing.lg
+                    spacing: Style.spacing.lg
 
                     Text {
                         text: "Settings"
                         color: Config.getColor("text.primary")
-                        font.pixelSize: Config.fontSizeHeader
+                        font.pixelSize: Style.fontSize.header
                         font.weight: Font.DemiBold
                         font.family: Config.fontFamilyMonospace
                         Layout.fillWidth: true
@@ -76,20 +76,20 @@ PanelWindow {
                     Rectangle {
                         Layout.preferredWidth: 280
                         Layout.preferredHeight: 34
-                        radius: 9
+                        radius: Style.radius.md + 1
                         color: Config.getColor("background.secondary")
                         border.width: 1
-                        border.color: searchInput.activeFocus ? Config.getColor("primary.mauve") : Config.getColor("border.subtle")
+                        border.color: searchInput.activeFocus ? Style.color.accent : Style.color.border
 
                         TextInput {
                             id: searchInput
                             anchors.fill: parent
-                            anchors.leftMargin: 10
-                            anchors.rightMargin: 10
+                            anchors.leftMargin: Style.spacing.lg - 2
+                            anchors.rightMargin: Style.spacing.lg - 2
                             verticalAlignment: TextInput.AlignVCenter
                             text: root.query
                             color: Config.getColor("text.primary")
-                            font.pixelSize: Config.fontSizeSmall
+                            font.pixelSize: Style.fontSize.small
                             font.family: Config.fontFamilyMonospace
                             onTextChanged: root.query = text
                         }
@@ -98,14 +98,14 @@ PanelWindow {
                     Rectangle {
                         Layout.preferredWidth: 30
                         Layout.preferredHeight: 30
-                        radius: 8
+                        radius: Style.radius.md
                         color: closeMouse.containsMouse ? Config.getColor("background.tertiary") : "transparent"
 
                         Text {
                             anchors.centerIn: parent
                             text: "x"
                             color: Config.getColor("text.muted")
-                            font.pixelSize: Config.fontSizeMedium
+                            font.pixelSize: Style.fontSize.medium
                             font.family: Config.fontFamilyMonospace
                         }
 
@@ -127,8 +127,8 @@ PanelWindow {
                 Column {
                     Layout.preferredWidth: 170
                     Layout.fillHeight: true
-                    padding: 10
-                    spacing: 6
+                    padding: Style.spacing.lg - 2
+                    spacing: Style.spacing.sm
 
                     Repeater {
                         model: SettingsRegistry.pages
@@ -137,14 +137,14 @@ PanelWindow {
                             required property var modelData
                             width: parent.width - 20
                             height: 34
-                            radius: 9
-                            color: root.selectedPage === modelData.id ? Config.getColor("primary.mauve") : (pageMouse.containsMouse ? Config.getColor("background.tertiary") : "transparent")
+                            radius: Style.radius.md + 1
+                            color: root.selectedPage === modelData.id ? Style.color.accent : (pageMouse.containsMouse ? Style.color.surfaceRaised : "transparent")
 
                             Text {
                                 anchors.centerIn: parent
                                 text: modelData.label
-                                color: root.selectedPage === parent.modelData.id ? Config.contrastText(Config.getColor("primary.mauve")) : Config.getColor("text.primary")
-                                font.pixelSize: Config.fontSizeSmall
+                                color: root.selectedPage === parent.modelData.id ? Config.contrastText(Style.color.accent) : Style.color.text
+                                font.pixelSize: Style.fontSize.small
                                 font.weight: root.selectedPage === parent.modelData.id ? Font.Bold : Font.Normal
                                 font.family: Config.fontFamilyMonospace
                             }
@@ -165,22 +165,22 @@ PanelWindow {
                 Rectangle {
                     Layout.preferredWidth: 1
                     Layout.fillHeight: true
-                    color: Config.getColor("border.subtle")
+                    color: Style.color.border
                 }
 
                 Flickable {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    contentHeight: controlsColumn.implicitHeight + 24
+                    contentHeight: controlsColumn.implicitHeight + Style.spacing.lg * 2
                     clip: true
                     boundsBehavior: Flickable.StopAtBounds
 
                     Column {
                         id: controlsColumn
-                        width: parent.width - 24
-                        x: 12
-                        y: 12
-                        spacing: 8
+                        width: parent.width - Style.spacing.lg * 2
+                        x: Style.spacing.lg
+                        y: Style.spacing.lg
+                        spacing: Style.spacing.md
 
                         Repeater {
                             model: root.pageFields

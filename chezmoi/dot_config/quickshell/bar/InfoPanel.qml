@@ -82,14 +82,14 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.right: parent.right
-            anchors.topMargin: 4
-            anchors.bottomMargin: 4
-            anchors.rightMargin: root.panelOpen ? 4 : -width - 20
+            anchors.topMargin: Style.spacing.xs
+            anchors.bottomMargin: Style.spacing.xs
+            anchors.rightMargin: root.panelOpen ? Style.spacing.xs : -width - 20
             width: root.panelWidth
             color: Config.getColor("background.secondary")
             border.width: 1
             border.color: Config.getColor("border.subtle")
-            radius: 12
+            radius: Style.radius.lg
             clip: true
 
             // Absorb clicks on bare panel areas so they don't fall through to
@@ -121,8 +121,8 @@ Item {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.leftMargin: 12
-                    Layout.rightMargin: 12
+                    Layout.leftMargin: Style.spacing.lg
+                    Layout.rightMargin: Style.spacing.lg
                     Layout.preferredHeight: 1
                     color: Config.getColor("border.subtle")
                     visible: root.activeSubPanel === ""
@@ -141,11 +141,11 @@ Item {
                         // Notification section header
                         RowLayout {
                             Layout.fillWidth: true
-                            Layout.leftMargin: 12
-                            Layout.rightMargin: 12
-                            Layout.topMargin: 8
-                            Layout.bottomMargin: 4
-                            spacing: 8
+                            Layout.leftMargin: Style.spacing.lg
+                            Layout.rightMargin: Style.spacing.lg
+                            Layout.topMargin: Style.spacing.md
+                            Layout.bottomMargin: Style.spacing.xs
+                            spacing: Style.spacing.md
 
                             Text {
                                 text: "🔔\uFE0E"

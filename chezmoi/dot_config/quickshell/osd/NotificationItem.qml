@@ -25,8 +25,8 @@ Rectangle {
     // Tick counter to force timestamp re-evaluation
     property int _timeRefreshTick: 0
 
-    implicitHeight: contentColumn.implicitHeight + 24 + (isPopup ? progressBar.height : 0)
-    radius: 8
+    implicitHeight: contentColumn.implicitHeight + Style.spacing.lg * 2 + (isPopup ? progressBar.height : 0)
+    radius: Style.radius.md
     color: isCritical
         ? Qt.tint(Config.getColor("background.surface"), Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.25))
         : isLow
@@ -104,37 +104,38 @@ Rectangle {
     ColumnLayout {
         id: contentColumn
         anchors.fill: parent
-        anchors.margins: 12
-        anchors.bottomMargin: isPopup ? 12 + progressBar.height : 12
-        spacing: 8
+        anchors.margins: Style.spacing.lg
+        anchors.bottomMargin: isPopup ? Style.spacing.lg + progressBar.height : Style.spacing.lg
+        spacing: Style.spacing.md
 
         // Top row: App icon, App name, Time, Close button
         RowLayout {
             Layout.fillWidth: true
-            spacing: 10
+            spacing: Style.spacing.lg
 
             // App icon container
             Rectangle {
-                Layout.preferredWidth: 28
-                Layout.preferredHeight: 28
-                radius: 6
+                property string resolvedIcon: Style.notificationIcon(root.notificationObject, root.imgSource)
+                Layout.preferredWidth: Style.icon.notification
+                Layout.preferredHeight: Style.icon.notification
+                radius: Style.radius.sm
                 color: root.isCritical
                     ? Qt.tint(Config.getColor("background.mantle"), Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.5))
                     : Config.getColor("background.mantle")
                 border.color: Config.getColor("border.subtle")
                 border.width: 1
-                visible: (appIconImage.status === Image.Ready) || (root.notificationObject?.appName !== "")
+                visible: resolvedIcon !== "" || (root.notificationObject?.appName !== "")
 
                 Image {
                     id: appIconImage
                     property bool usingImage: !root.notificationObject?.appIcon && root.hasImage
                     anchors.centerIn: parent
-                    source: (root.notificationObject?.appIcon || root.imgSource) ?? ""
+                    source: parent.resolvedIcon
                     fillMode: Image.PreserveAspectFit
-                    width: 18
-                    height: 18
-                    sourceSize.width: 18
-                    sourceSize.height: 18
+                    width: Style.icon.app
+                    height: Style.icon.app
+                    sourceSize.width: Style.icon.app
+                    sourceSize.height: Style.icon.app
                     asynchronous: true
                     cache: true
                 }
@@ -144,7 +145,7 @@ Rectangle {
                     anchors.centerIn: parent
                     text: root.notificationObject?.appName?.charAt(0)?.toUpperCase() ?? "?"
                     color: Config.getColor("text.primary")
-                    font.pixelSize: Config.fontSizeMedium
+                    font.pixelSize: Style.fontSize.medium
                     font.weight: Font.Bold
                     font.family: Config.fontFamilyMonospace
                     visible: appIconImage.status !== Image.Ready
@@ -154,12 +155,12 @@ Rectangle {
             // App name and timestamp
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Style.spacing.md
 
                 Text {
                     text: root.notificationObject?.appName ?? "Unknown"
                     color: Config.getColor("text.muted")
-                    font.pixelSize: Config.fontSizeBase
+                    font.pixelSize: Style.fontSize.base
                     font.weight: Font.Medium
                     font.family: Config.fontFamilyMonospace
                     elide: Text.ElideRight
@@ -169,7 +170,7 @@ Rectangle {
                 Text {
                     text: root.formatTimestamp(root.notificationObject?.time ?? 0, root._timeRefreshTick)
                     color: Config.getColor("text.muted")
-                    font.pixelSize: Config.fontSizeSmall
+                    font.pixelSize: Style.fontSize.small
                     font.family: Config.fontFamilyMonospace
                     visible: root.notificationObject?.time !== undefined
                 }
@@ -178,9 +179,9 @@ Rectangle {
             // Close button
             Rectangle {
                 id: closeButton
-                Layout.preferredWidth: 22
-                Layout.preferredHeight: 22
-                radius: 6
+                Layout.preferredWidth: Style.icon.button
+                Layout.preferredHeight: Style.icon.button
+                radius: Style.radius.sm
                 color: closeArea.containsMouse
                     ? Qt.rgba(Config.getColor("state.error").r, Config.getColor("state.error").g, Config.getColor("state.error").b, 0.2)
                     : "transparent"
@@ -200,7 +201,7 @@ Rectangle {
                     anchors.centerIn: parent
                     text: "✕"
                     color: closeArea.containsMouse ? Config.getColor("state.error") : Config.getColor("text.muted")
-                    font.pixelSize: Config.fontSizeSmall
+                    font.pixelSize: Style.fontSize.small
                     font.weight: Font.Bold
                     font.family: Config.fontFamilyMonospace
 
@@ -245,7 +246,7 @@ Rectangle {
         // Content row: Small icon (if any) + Message text
         RowLayout {
             Layout.fillWidth: true
-            spacing: 10
+            spacing: Style.spacing.lg
 
             // Small notification icon (for icon URLs or small images)
             Rectangle {
@@ -253,19 +254,19 @@ Rectangle {
                 // Show for icon URLs OR small images (but not if large image is shown)
                 property bool showIcon: root.hasImage && !appIconImage.usingImage && (root.isIconUrl || (notificationImage.ready && !notificationImage.isLargeImage))
                 visible: showIcon
-                Layout.preferredWidth: 40
-                Layout.preferredHeight: 40
+                Layout.preferredWidth: Style.icon.notificationContainer
+                Layout.preferredHeight: Style.icon.notificationContainer
                 Layout.alignment: Qt.AlignTop
-                radius: 8
-                color: Config.getColor("background.tertiary")
+                radius: Style.radius.md
+                color: Style.color.surfaceRaised
 
                 Image {
                     anchors.centerIn: parent
-                    source: root.imgSource
-                    width: 28
-                    height: 28
-                    sourceSize.width: 28
-                    sourceSize.height: 28
+                    source: Style.iconSource(root.imgSource)
+                    width: Style.icon.notification
+                    height: Style.icon.notification
+                    sourceSize.width: Style.icon.notification
+                    sourceSize.height: Style.icon.notification
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                     cache: true
@@ -275,13 +276,13 @@ Rectangle {
             // Message content
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 4
+                spacing: Style.spacing.xs
 
                 // Summary (title)
                 Text {
                     text: root.notificationObject?.summary ?? ""
                     color: Config.getColor("text.primary")
-                    font.pixelSize: Config.fontSizeLarge
+                    font.pixelSize: Style.fontSize.large
                     font.weight: Font.DemiBold
                     font.family: Config.fontFamilyMonospace
                     wrapMode: Text.WordWrap
@@ -294,14 +295,14 @@ Rectangle {
                 // Body text with expand/collapse
                 RowLayout {
                     Layout.fillWidth: true
-                    spacing: 4
+                    spacing: Style.spacing.xs
                     visible: bodyText.text !== ""
 
                     Text {
                         id: bodyText
                         text: root.notificationObject?.body ?? ""
                         color: Config.getColor("text.primary")
-                        font.pixelSize: Config.fontSizeMedium
+                        font.pixelSize: Style.fontSize.medium
                         font.family: Config.fontFamilyMonospace
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
@@ -315,7 +316,7 @@ Rectangle {
                         Layout.preferredWidth: 20
                         Layout.preferredHeight: 20
                         Layout.alignment: Qt.AlignTop
-                        radius: 4
+                        radius: Style.radius.xs
                         color: expandArea.containsMouse ? Config.getColor("background.surface") : "transparent"
                         visible: bodyText.truncated || root.bodyExpanded
 
@@ -327,7 +328,7 @@ Rectangle {
                             anchors.centerIn: parent
                             text: root.bodyExpanded ? "▴" : "▾"
                             color: expandArea.containsMouse ? Config.getColor("text.primary") : Config.getColor("text.muted")
-                            font.pixelSize: Config.fontSizeSmall
+                            font.pixelSize: Style.fontSize.small
                             font.family: Config.fontFamilyMonospace
 
                             Behavior on color {
@@ -349,8 +350,8 @@ Rectangle {
         // Action buttons
         RowLayout {
             Layout.fillWidth: true
-            Layout.topMargin: 4
-            spacing: 6
+            Layout.topMargin: Style.spacing.xs
+            spacing: Style.spacing.sm
             visible: root.notificationObject?.actions.length > 0
 
             Repeater {
@@ -361,7 +362,7 @@ Rectangle {
                     required property var modelData
                     Layout.fillWidth: true
                     Layout.preferredHeight: 28
-                    radius: 6
+                    radius: Style.radius.sm
                     color: buttonArea.containsMouse
                         ? Config.getColor("background.surface")
                         : Config.getColor("background.tertiary")
@@ -384,7 +385,7 @@ Rectangle {
                         color: buttonArea.containsMouse
                             ? Config.getColor("primary.lavender")
                             : Config.getColor("text.primary")
-                        font.pixelSize: Config.fontSizeBase
+                        font.pixelSize: Style.fontSize.base
                         font.weight: Font.Medium
                         font.family: Config.fontFamilyMonospace
 
