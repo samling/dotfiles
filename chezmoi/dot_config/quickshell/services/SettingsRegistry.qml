@@ -7,10 +7,10 @@ Singleton {
     id: root
 
     readonly property var fields: [
-        { path: "updates.criticalPackages", label: "Critical packages", type: "list", defaultValue: [], page: "updates" },
-        { path: "updates.warningPackages", label: "Warning packages", type: "list", defaultValue: [], page: "updates" },
+        { path: "updates.criticalPackages", label: "Critical packages", type: "list", editor: "stringList", defaultValue: [], page: "updates" },
+        { path: "updates.warningPackages", label: "Warning packages", type: "list", editor: "stringList", defaultValue: [], page: "updates" },
         { path: "bar.primaryMonitor", label: "Primary monitor", type: "string", defaultValue: "", page: "bar" },
-        { path: "bar.layout", label: "Bar layout", type: "object", defaultValue: WidgetRegistry.defaultLayout(), page: "bar" },
+        { path: "bar.layout", label: "Bar layout", type: "object", editor: "barLayout", defaultValue: WidgetRegistry.defaultLayout(), page: "bar" },
         { path: "bar.showPowerProfile", label: "Show power profile", type: "bool", defaultValue: true, page: "bar" },
         { path: "bar.showGpu", label: "Show GPU", type: "bool", defaultValue: true, page: "bar" },
         { path: "wallpaper.directory", label: "Wallpaper directory", type: "path", defaultValue: "", page: "wallpaper" },
@@ -62,8 +62,33 @@ Singleton {
         if (item.type === "real") return typeof value === "number" && inRange(item, value)
         if (item.type === "string" || item.type === "path" || item.type === "color") return typeof value === "string"
         if (item.type === "enum") return item.options && item.options.indexOf(value) !== -1
+        if (item.editor === "stringList") return validateStringList(value)
+        if (path === "bar.layout") return validateBarLayout(value)
         if (item.type === "list") return Array.isArray(value)
         if (item.type === "object") return value !== null && typeof value === "object" && !Array.isArray(value)
+        return true
+    }
+
+    function validateStringList(value) {
+        if (!Array.isArray(value)) return false
+        return value.every((item) => typeof item === "string")
+    }
+
+    function validateBarLayout(value) {
+        if (value === null || typeof value !== "object" || Array.isArray(value)) return false
+        const sections = WidgetRegistry.sections
+        const seen = []
+        for (let i = 0; i < sections.length; i++) {
+            const section = sections[i]
+            if (value[section] === undefined) continue
+            if (!Array.isArray(value[section])) return false
+            for (let j = 0; j < value[section].length; j++) {
+                const widgetId = value[section][j]
+                if (typeof widgetId !== "string") return false
+                if (seen.indexOf(widgetId) !== -1) return false
+                seen.push(widgetId)
+            }
+        }
         return true
     }
 

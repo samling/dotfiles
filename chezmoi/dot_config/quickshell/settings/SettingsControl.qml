@@ -10,9 +10,11 @@ Rectangle {
     readonly property var currentValue: SettingsStore.value(field.path)
     readonly property var defaultValue: SettingsRegistry.defaultValue(field.path)
     readonly property bool overridden: !SettingsRegistry.equal(currentValue, defaultValue)
+    readonly property bool dedicatedEditor: root.field.editor === "stringList" || root.field.editor === "barLayout"
+    readonly property bool structuredField: !dedicatedEditor && (root.field.type === "list" || root.field.type === "object")
 
     width: parent ? parent.width : 520
-    height: Math.max(64, content.implicitHeight + 20)
+    height: Math.max(root.field.editor === "barLayout" ? 270 : ((dedicatedEditor || structuredField) ? 150 : 64), content.implicitHeight + 20)
     radius: 10
     color: Config.getColor("background.secondary")
     border.width: 1
@@ -45,9 +47,12 @@ Rectangle {
         }
 
         Loader {
-            Layout.preferredWidth: 220
-            Layout.preferredHeight: 34
-            sourceComponent: root.field.type === "bool" ? boolControl : (root.field.type === "enum" ? enumControl : textControl)
+            Layout.preferredWidth: root.dedicatedEditor || root.structuredField ? Math.min(560, Math.max(360, root.width * 0.6)) : 220
+            Layout.preferredHeight: root.field.editor === "barLayout" ? 240 : (root.dedicatedEditor || root.structuredField ? 120 : 34)
+            sourceComponent: root.field.editor === "stringList" ? stringListControl
+                : (root.field.editor === "barLayout" ? barLayoutControl
+                : (root.field.type === "bool" ? boolControl
+                : (root.field.type === "enum" ? enumControl : textControl)))
         }
 
         Rectangle {
@@ -102,34 +107,73 @@ Rectangle {
     }
 
     Component {
+        id: stringListControl
+        StringListEditor { field: root.field }
+    }
+
+    Component {
+        id: barLayoutControl
+        BarLayoutEditor { field: root.field }
+    }
+
+    Component {
         id: textControl
         Rectangle {
             radius: 8
             color: Config.getColor("background.mantle")
             border.width: 1
-            border.color: input.activeFocus ? Config.getColor("primary.mauve") : Config.getColor("border.subtle")
+            border.color: textInput.activeFocus || structuredInput.activeFocus ? Config.getColor("primary.mauve") : Config.getColor("border.subtle")
+            clip: true
 
             TextInput {
-                id: input
+                id: textInput
                 anchors.fill: parent
                 anchors.leftMargin: 8
                 anchors.rightMargin: 8
                 verticalAlignment: TextInput.AlignVCenter
+                visible: !root.structuredField
                 color: Config.getColor("text.primary")
                 selectedTextColor: Config.getColor("background.crust")
                 selectionColor: Config.getColor("primary.mauve")
                 font.pixelSize: Config.fontSizeSmall
                 font.family: Config.fontFamilyMonospace
-                text: root.field.type === "list" || root.field.type === "object" ? JSON.stringify(root.currentValue) : String(root.currentValue ?? "")
+                text: String(root.currentValue ?? "")
 
                 onEditingFinished: {
                     let next = text
                     if (root.field.type === "int") next = parseInt(text)
                     else if (root.field.type === "real") next = parseFloat(text)
-                    else if (root.field.type === "list" || root.field.type === "object") {
-                        try { next = JSON.parse(text) } catch (_) { next = root.currentValue }
-                    }
                     SettingsStore.setValue(root.field.path, next)
+                }
+            }
+
+            Flickable {
+                anchors.fill: parent
+                anchors.margins: 8
+                visible: root.structuredField
+                clip: true
+                contentWidth: width
+                contentHeight: structuredInput.contentHeight
+                boundsBehavior: Flickable.StopAtBounds
+
+                TextEdit {
+                    id: structuredInput
+                    width: parent.width
+                    color: Config.getColor("text.primary")
+                    selectedTextColor: Config.getColor("background.crust")
+                    selectionColor: Config.getColor("primary.mauve")
+                    font.pixelSize: Config.fontSizeSmall
+                    font.family: Config.fontFamilyMonospace
+                    text: JSON.stringify(root.currentValue, null, 2)
+                    wrapMode: TextEdit.Wrap
+
+                    onActiveFocusChanged: {
+                        if (!activeFocus) {
+                            let next = root.currentValue
+                            try { next = JSON.parse(text) } catch (_) { next = root.currentValue }
+                            SettingsStore.setValue(root.field.path, next)
+                        }
+                    }
                 }
             }
         }
