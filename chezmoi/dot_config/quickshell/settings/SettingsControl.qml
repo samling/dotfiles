@@ -120,13 +120,13 @@ Rectangle {
                 selectionColor: Config.getColor("primary.mauve")
                 font.pixelSize: Config.fontSizeSmall
                 font.family: Config.fontFamilyMonospace
-                text: root.field.type === "list" ? JSON.stringify(root.currentValue) : String(root.currentValue ?? "")
+                text: root.field.type === "list" || root.field.type === "object" ? JSON.stringify(root.currentValue) : String(root.currentValue ?? "")
 
                 onEditingFinished: {
                     let next = text
                     if (root.field.type === "int") next = parseInt(text)
                     else if (root.field.type === "real") next = parseFloat(text)
-                    else if (root.field.type === "list") {
+                    else if (root.field.type === "list" || root.field.type === "object") {
                         try { next = JSON.parse(text) } catch (_) { next = root.currentValue }
                     }
                     SettingsStore.setValue(root.field.path, next)

@@ -10,6 +10,7 @@ Singleton {
         { path: "updates.criticalPackages", label: "Critical packages", type: "list", defaultValue: [], page: "updates" },
         { path: "updates.warningPackages", label: "Warning packages", type: "list", defaultValue: [], page: "updates" },
         { path: "bar.primaryMonitor", label: "Primary monitor", type: "string", defaultValue: "", page: "bar" },
+        { path: "bar.layout", label: "Bar layout", type: "object", defaultValue: WidgetRegistry.defaultLayout(), page: "bar" },
         { path: "bar.showPowerProfile", label: "Show power profile", type: "bool", defaultValue: true, page: "bar" },
         { path: "bar.showGpu", label: "Show GPU", type: "bool", defaultValue: true, page: "bar" },
         { path: "wallpaper.directory", label: "Wallpaper directory", type: "path", defaultValue: "", page: "wallpaper" },
@@ -62,6 +63,7 @@ Singleton {
         if (item.type === "string" || item.type === "path" || item.type === "color") return typeof value === "string"
         if (item.type === "enum") return item.options && item.options.indexOf(value) !== -1
         if (item.type === "list") return Array.isArray(value)
+        if (item.type === "object") return value !== null && typeof value === "object" && !Array.isArray(value)
         return true
     }
 

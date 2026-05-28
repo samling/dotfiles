@@ -14,10 +14,40 @@ Item {
     // single-monitor setups behave as before.
     readonly property bool isPrimary: Config.primaryScreenName === ""
         || (root.screen && root.screen.name === Config.primaryScreenName)
+    readonly property var barLayout: SettingsStore.effectiveSettings.bar?.layout || WidgetRegistry.defaultLayout()
+    readonly property var leftWidgets: WidgetRegistry.widgetsForSection("left", root.barLayout)
+    readonly property var centerWidgets: WidgetRegistry.widgetsForSection("center", root.barLayout)
+    readonly property var rightWidgets: WidgetRegistry.widgetsForSection("right", root.barLayout)
+    readonly property var primaryOnlyWidgets: ["power", "clock", "network-system", "tray", "tailscale", "battery", "volume", "updates", "notifications"]
+
+    function componentForWidget(widgetId) {
+        if (widgetId === "power") return powerComponent
+        if (widgetId === "workspaces") return workspacesComponent
+        if (widgetId === "clock") return clockComponent
+        if (widgetId === "network-system") return networkSystemComponent
+        if (widgetId === "tray") return trayComponent
+        if (widgetId === "tailscale") return tailscaleComponent
+        if (widgetId === "battery") return batteryComponent
+        if (widgetId === "volume") return volumeComponent
+        if (widgetId === "updates") return updatesComponent
+        if (widgetId === "notifications") return notificationComponent
+        return null
+    }
+
+    function shouldShowWidget(widgetId) {
+        if (root.primaryOnlyWidgets.indexOf(widgetId) !== -1) return root.isPrimary
+        if (widgetId === "workspaces") return !Compositor.isNiri
+        return true
+    }
 
     // GPU stats service (non-visible). Polls nvidia-smi when present and
     // feeds the InfoPanel's GPU section.
     GpuIndicator { id: gpuWidget }
+
+    // InfoPanel data source is independent from the visible bar layout.
+    CpuIndicator { id: infoPanelCpuWidget; visible: false }
+    MemoryIndicator { id: infoPanelMemoryWidget; visible: false }
+    DiskIndicator { id: infoPanelDiskWidget; visible: false }
 
     // InfoPanel is a singleton: instantiating on every monitor would
     // open all of them when GlobalStates.sidebarRightOpen flips.
@@ -29,10 +59,147 @@ Item {
     Component {
         id: infoPanelComponent
         InfoPanel {
-            cpuIndicator: cpuWidget
-            memIndicator: memoryWidget
-            diskIndicator: diskWidget
+            cpuIndicator: infoPanelCpuWidget
+            memIndicator: infoPanelMemoryWidget
+            diskIndicator: infoPanelDiskWidget
             gpuIndicator: gpuWidget
+        }
+    }
+
+    Component {
+        id: migratedWidgetDelegate
+
+        Loader {
+            required property var modelData
+            Layout.fillHeight: true
+            active: root.shouldShowWidget(modelData.id)
+            visible: root.shouldShowWidget(modelData.id)
+            sourceComponent: root.componentForWidget(modelData.id)
+        }
+    }
+
+    Component {
+        id: clockComponent
+
+        BarGroup {
+            id: clockGroup
+            accentColor: Config.pillColor1
+
+            ClockWidget {
+                primaryColor: clockGroup.textColor
+                secondaryColor: clockGroup.textColor
+            }
+        }
+    }
+
+    Component {
+        id: powerComponent
+
+        BarGroup {
+            id: powerWidgetGroup
+            accentColor: Config.pillColor1
+
+            PowerMenu {
+                primaryColor: powerWidgetGroup.textColor
+            }
+        }
+    }
+
+    Component {
+        id: workspacesComponent
+
+        BarGroup {
+            id: workspacesWidgetGroup
+            accentColor: Config.pillColor2
+
+            Workspaces {
+                activeColor: workspacesWidgetGroup.textColor
+                activeSecondaryColor: workspacesWidgetGroup.textColor
+                inactiveColor: Qt.darker(workspacesWidgetGroup.textColor, 1.4)
+            }
+        }
+    }
+
+    Component {
+        id: networkSystemComponent
+
+        NetworkSystemGroup {}
+    }
+
+    Component {
+        id: trayComponent
+
+        BarGroup {
+            id: trayWidgetGroup
+            accentColor: Config.pillColor9
+
+            SysTray {}
+        }
+    }
+
+    Component {
+        id: tailscaleComponent
+
+        BarGroup {
+            id: tailscaleWidgetGroup
+            accentColor: Config.pillColor8
+
+            TailscaleIndicator {
+                connectedColor: tailscaleWidgetGroup.textColor
+                disconnectedColor: Qt.lighter(tailscaleWidgetGroup.textColor, 1.4)
+            }
+        }
+    }
+
+    Component {
+        id: batteryComponent
+
+        BarGroup {
+            id: batteryGroup
+            accentColor: Config.pillColor9
+
+            BatteryIndicator {
+                primaryColor: batteryGroup.textColor
+            }
+        }
+    }
+
+    Component {
+        id: volumeComponent
+
+        BarGroup {
+            id: volumeGroup
+            accentColor: Config.pillColor10
+
+            VolumeIndicator {
+                primaryColor: volumeGroup.textColor
+            }
+        }
+    }
+
+    Component {
+        id: notificationComponent
+
+        BarGroup {
+            id: notificationGroup
+            accentColor: Config.pillColor12
+
+            NotificationButton {
+                primaryColor: notificationGroup.textColor
+            }
+        }
+    }
+
+    Component {
+        id: updatesComponent
+
+        BarGroup {
+            id: updatesWidgetGroup
+            accentColor: Config.pillColor11
+
+            Updates {
+                primaryColor: updatesWidgetGroup.textColor
+            }
         }
     }
 
@@ -47,32 +214,9 @@ Item {
         }
         spacing: Config.pillSpacing
 
-        BarGroup {
-            id: powerGroup
-            accentColor: Config.pillColor1
-            Layout.fillHeight: true
-            visible: root.isPrimary
-
-            PowerMenu {
-                id: powerMenuWidget
-                primaryColor: powerGroup.textColor
-            }
-        }
-
-        // Under niri, the workspaces widget moves to the left side bar,
-        // so this pill collapses entirely.
-        BarGroup {
-            id: workspacesGroup
-            accentColor: Config.pillColor2
-            Layout.fillHeight: true
-            visible: !Compositor.isNiri
-
-            Workspaces {
-                id: workspacesWidget
-                activeColor: workspacesGroup.textColor
-                activeSecondaryColor: workspacesGroup.textColor
-                inactiveColor: Qt.darker(workspacesGroup.textColor, 1.4)
-            }
+        Repeater {
+            model: root.leftWidgets
+            delegate: migratedWidgetDelegate
         }
 
         BarGroup {
@@ -100,16 +244,9 @@ Item {
         }
         spacing: Config.pillSpacing
 
-        BarGroup {
-            id: clockGroup
-            accentColor: Config.pillColor1
-            Layout.fillHeight: true
-
-            ClockWidget {
-                id: clockWidget
-                primaryColor: clockGroup.textColor
-                secondaryColor: clockGroup.textColor
-            }
+        Repeater {
+            model: root.centerWidgets
+            delegate: migratedWidgetDelegate
         }
     }
 
@@ -125,114 +262,9 @@ Item {
         }
         spacing: Config.pillSpacing
 
-        BarGroup {
-            id: sysTrayGroup
-            accentColor: Config.pillColor9
-            Layout.fillHeight: true
-
-            SysTray {
-                id: sysTrayWidget
-            }
-        }
-
-        BarGroup {
-            id: tailscaleGroup
-            accentColor: Config.pillColor8
-            Layout.fillHeight: true
-
-            TailscaleIndicator {
-                id: tailscaleWidget
-                connectedColor: tailscaleGroup.textColor
-                disconnectedColor: Qt.lighter(tailscaleGroup.textColor, 1.4)
-            }
-        }
-
-        BarGroup {
-            id: networkGroup
-            accentColor: Config.pillColor5
-            Layout.fillHeight: true
-
-            NetworkIndicator {
-                id: networkWidget
-                primaryColor: networkGroup.textColor
-            }
-        }
-
-        BarGroup {
-            id: cpuGroup
-            accentColor: Config.pillColor6
-            Layout.fillHeight: true
-
-            CpuIndicator {
-                id: cpuWidget
-                primaryColor: cpuGroup.textColor
-            }
-        }
-
-        BarGroup {
-            id: memoryGroup
-            accentColor: Config.pillColor7
-            Layout.fillHeight: true
-
-            MemoryIndicator {
-                id: memoryWidget
-                primaryColor: memoryGroup.textColor
-            }
-        }
-
-        BarGroup {
-            id: diskGroup
-            accentColor: Config.pillColor8
-            Layout.fillHeight: true
-
-            DiskIndicator {
-                id: diskWidget
-                primaryColor: diskGroup.textColor
-            }
-        }
-
-        BarGroup {
-            id: batteryGroup
-            accentColor: Config.pillColor9
-            Layout.fillHeight: true
-
-            BatteryIndicator {
-                id: batteryWidget
-                primaryColor: batteryGroup.textColor
-            }
-        }
-
-        BarGroup {
-            id: volumeGroup
-            accentColor: Config.pillColor10
-            Layout.fillHeight: true
-
-            VolumeIndicator {
-                id: volumeWidget
-                primaryColor: volumeGroup.textColor
-            }
-        }
-
-        BarGroup {
-            id: updatesGroup
-            accentColor: Config.pillColor11
-            Layout.fillHeight: true
-        
-            Updates {
-                id: updatesWidget
-                primaryColor: updatesGroup.textColor
-            }
-        }
-
-        BarGroup {
-            id: notificationGroup
-            accentColor: Config.pillColor12
-            Layout.fillHeight: true
-
-            NotificationButton {
-                id: notificationButton
-                primaryColor: notificationGroup.textColor
-            }
+        Repeater {
+            model: root.rightWidgets
+            delegate: migratedWidgetDelegate
         }
     }
 }
