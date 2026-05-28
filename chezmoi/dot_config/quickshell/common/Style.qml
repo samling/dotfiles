@@ -4,20 +4,20 @@ import QtQuick
 
 QtObject {
     readonly property var spacing: ({
-        xs: 4,
-        sm: 6,
-        md: 8,
-        lg: 12,
-        xl: 16,
-        window: 40
+        xs: Config.scaleSpacing(4),
+        sm: Config.scaleSpacing(6),
+        md: Config.scaleSpacing(8),
+        lg: Config.scaleSpacing(12),
+        xl: Config.scaleSpacing(16),
+        window: Config.scaleSpacing(40)
     })
 
     readonly property var radius: ({
-        xs: 4,
-        sm: 6,
-        md: 8,
-        lg: 12,
-        xl: 16,
+        xs: Config.scaleRadius(4),
+        sm: Config.scaleRadius(6),
+        md: Config.scaleRadius(8),
+        lg: Config.scaleRadius(12),
+        xl: Config.scaleRadius(16),
         pill: Config.pillRadius
     })
 

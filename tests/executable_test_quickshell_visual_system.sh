@@ -23,8 +23,16 @@ require_text() {
 }
 
 require_file "$style"
+require_text "$qs/common/Config.qml" 'readonly property real fontScale'
+require_text "$qs/common/Config.qml" 'readonly property real spacingScale'
+require_text "$qs/common/Config.qml" 'readonly property real radiusScale'
+require_text "$qs/common/Config.qml" 'scaleFont('
+require_text "$qs/common/Config.qml" 'scaleSpacing('
+require_text "$qs/common/Config.qml" 'scaleRadius('
 require_text "$style" 'readonly property var spacing'
+require_text "$style" 'Config.scaleSpacing'
 require_text "$style" 'readonly property var radius'
+require_text "$style" 'Config.scaleRadius'
 require_text "$style" 'readonly property var fontSize'
 require_text "$style" 'readonly property var icon'
 require_text "$style" 'readonly property var color'
