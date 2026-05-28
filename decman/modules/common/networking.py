@@ -24,6 +24,7 @@ class NetworkingModule(decman.Module):
             "dnsmasq",
             "ethtool",
             "ipcalc",
+            "net-tools",
             "nfs-utils",
             "nftables",
             "nmap",

@@ -46,7 +46,7 @@ class WmModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         base = {
             "ghostty-nightly-bin",
-            #"noctalia-git",
+            "noctalia-git",
             #"noctalia-shell",
             "wayle-bin",
             "wlrctl",

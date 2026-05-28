@@ -1,0 +1,6 @@
+{"type":"server-started","port":54306,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:54306","screen_dir":"/home/sboynton/.local/share/dotfiles/.superpowers/brainstorm/2303439-1779924649/content","state_dir":"/home/sboynton/.local/share/dotfiles/.superpowers/brainstorm/2303439-1779924649/state"}
+{"type":"screen-added","file":"/home/sboynton/.local/share/dotfiles/.superpowers/brainstorm/2303439-1779924649/content/waiting.html"}
+{"type":"screen-added","file":"/home/sboynton/.local/share/dotfiles/.superpowers/brainstorm/2303439-1779924649/content/settings-layout-options.html"}
+{"source":"user-event","type":"click","text":"Centered Modal\n        \n          \n            \n              \n              \n              \n              \n            \n            \n              \n              \n              \n            \n          \n        \n      \n    \n    \n      Centered Modal\n      More room, clearer navigation, better for deep settings. Feels more like Dank/Noctalia.","choice":"center-modal","id":null,"timestamp":1779924822473}
+{"type":"screen-added","file":"/home/sboynton/.local/share/dotfiles/.superpowers/brainstorm/2303439-1779924649/content/settings-architecture-map.html"}
+{"type":"server-stopped","reason":"idle timeout"}
