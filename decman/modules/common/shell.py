@@ -12,6 +12,7 @@ class ShellModule(decman.Module):
         return {
             "fastfetch",
             "fish",
+            "starship",
             "tmux",
             "wl-clipboard",
             "zellij",

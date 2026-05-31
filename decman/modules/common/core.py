@@ -77,6 +77,7 @@ class CoreModule(decman.Module):
             "localsend-bin",
             "mmdr-bin",
             "ntfysh-bin",
+            "smem",
             "timg",
             "neo-matrix",
             "toofan-bin",
