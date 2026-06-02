@@ -5,6 +5,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import qs.common
+import qs.services
 
 Scope {
     id: pickerScope
@@ -18,9 +19,9 @@ Scope {
     }
 
     Connections {
-        target: GlobalStates
+        target: PopoutCoordinator
         function onWallpaperPickerOpenChanged() {
-            if (!GlobalStates.wallpaperPickerOpen) {
+            if (!PopoutCoordinator.wallpaperPickerOpen) {
                 pickerScope.keepAlive = true
                 pickerUnloadDelay.start()
             }
@@ -33,13 +34,13 @@ Scope {
         LazyLoader {
             id: pickerLoader
             required property ShellScreen modelData
-            active: GlobalStates.wallpaperPickerOpen || pickerScope.keepAlive
+            active: PopoutCoordinator.wallpaperPickerOpen || pickerScope.keepAlive
         component: PanelWindow {
         id: root
 
         screen: pickerLoader.modelData
 
-        visible: GlobalStates.wallpaperPickerOpen
+        visible: PopoutCoordinator.wallpaperPickerOpen
 
         anchors {
             top: true
@@ -49,10 +50,10 @@ Scope {
         }
 
         margins {
-            top: 40
-            right: 40
-            left: 40
-            bottom: 40
+            top: Style.spacing.window
+            right: Style.spacing.window
+            left: Style.spacing.window
+            bottom: Style.spacing.window
         }
 
         color: "transparent"
@@ -62,8 +63,8 @@ Scope {
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
         readonly property int columns: 5
-        readonly property real thumbnailSpacing: 8
-        readonly property real panelPadding: 16
+        readonly property real thumbnailSpacing: Style.spacing.md
+        readonly property real panelPadding: Style.spacing.xl
 
         // Wallpaper directory from user config, falling back to ~/Pictures/Wallpapers
         readonly property string wallpaperDir: {
@@ -145,7 +146,7 @@ Scope {
         // Click outside to close
         MouseArea {
             anchors.fill: parent
-            onClicked: GlobalStates.wallpaperPickerOpen = false
+            onClicked: PopoutCoordinator.closeWallpaperPicker()
         }
 
         function applySelection() {
@@ -159,7 +160,7 @@ Scope {
                 `, pickerScope)
                 proc.command = [root.configDir + "/awww/set_wallpaper.sh", imagePath]
                 proc.running = true
-                GlobalStates.wallpaperPickerOpen = false
+                PopoutCoordinator.closeWallpaperPicker()
             }
         }
 
@@ -178,8 +179,8 @@ Scope {
             height: Math.min(parent.height, 700)
             color: Config.getColor("background.crust")
             border.width: 1
-            border.color: Config.getColor("border.subtle")
-            radius: 12
+            border.color: Style.color.border
+            radius: Style.radius.lg
             clip: true
 
             // Prevent clicks from closing
@@ -197,7 +198,7 @@ Scope {
                     width: parent.width
                     height: 48
                     color: Config.getColor("background.mantle")
-                    radius: 12
+                    radius: Style.radius.lg
 
                     // Square off bottom corners
                     Rectangle {
@@ -209,9 +210,9 @@ Scope {
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 16
-                        anchors.rightMargin: 12
-                        spacing: 12
+                        anchors.leftMargin: Style.spacing.xl
+                        anchors.rightMargin: Style.spacing.lg
+                        spacing: Style.spacing.lg
 
                         Text {
                             text: "🖼"
@@ -284,7 +285,7 @@ Scope {
                                 id: closeMouseArea
                                 anchors.fill: parent
                                 hoverEnabled: true
-                                onClicked: GlobalStates.wallpaperPickerOpen = false
+                                onClicked: PopoutCoordinator.closeWallpaperPicker()
                             }
                         }
                     }
@@ -528,7 +529,7 @@ Scope {
                             let idx = gridView.currentIndex
 
                             if (event.key === Qt.Key_Escape) {
-                                GlobalStates.wallpaperPickerOpen = false
+                                PopoutCoordinator.closeWallpaperPicker()
                                 event.accepted = true
                                 return
                             }

@@ -16,7 +16,7 @@ MouseArea {
     hoverEnabled: true
 
     onClicked: {
-        GlobalStates.sidebarRightOpen = !GlobalStates.sidebarRightOpen
+        PopoutCoordinator.toggleInfoPanel()
     }
 
     RowLayout {

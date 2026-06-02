@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.services
 
 QtObject {
     id: config
@@ -31,17 +32,17 @@ QtObject {
     // Primary text color for bar pill indicators
     readonly property color barTextColor: contrastText(Colors.wallust.color12)
 
-    // User configuration system.
-    //
-    // Two layers, merged with local taking precedence:
-    //   config.json       — chezmoi-managed defaults (do not edit directly)
-    //   config.local.json — untracked per-host overrides (set e.g. bar.primaryMonitor)
-    //
-    // Either file may be absent; missing keys fall through to the other layer.
+    // Registry-backed user configuration. SettingsStore loads one active
+    // per-host settings file containing only values that differ from
+    // SettingsRegistry defaults. Keep this `userConfig` alias while existing
+    // shell components are migrated gradually.
     property var _baseConfig: ({})
     property var _localConfig: ({})
-    readonly property var userConfig: deepMerge(_baseConfig, _localConfig)
-    property bool userConfigInitialized: false
+    readonly property var userConfig: SettingsStore.effectiveSettings
+    readonly property bool userConfigInitialized: SettingsStore.loaded
+    readonly property real fontScale: userConfig.ui?.fontScale || 1.0
+    readonly property real spacingScale: userConfig.ui?.spacingScale || 1.0
+    readonly property real radiusScale: userConfig.ui?.radiusScale || 1.0
 
     // Updates configuration
     readonly property var criticalPackages: userConfig.updates?.criticalPackages || []
@@ -64,61 +65,6 @@ QtObject {
     // nvidia-smi isn't installed or reports no GPU; this flag lets you
     // suppress it explicitly even when a GPU is detected.
     readonly property bool showGpu: userConfig.bar?.showGpu !== false
-
-    property FileView userConfigFile: FileView {
-        path: Qt.resolvedUrl("config.json")
-        watchChanges: true
-
-        onLoaded: {
-            try {
-                config._baseConfig = JSON.parse(text())
-                if (config.userConfigInitialized) {
-                    console.log("[Config] *** FILE CHANGED *** Base config reloaded")
-                } else {
-                    console.log("[Config] Initial base config load")
-                    config.userConfigInitialized = true
-                }
-            } catch (e) {
-                console.error("[Config] Failed to parse config.json:", e)
-                config._baseConfig = getDefaultUserConfig()
-            }
-        }
-
-        onFileChanged: {
-            console.log("[Config] Base config file change detected, reloading...")
-            reload()
-        }
-
-        onLoadFailed: {
-            console.log("[Config] config.json not found, using defaults")
-            config._baseConfig = getDefaultUserConfig()
-        }
-    }
-
-    property FileView localConfigFile: FileView {
-        path: Qt.resolvedUrl("config.local.json")
-        watchChanges: true
-
-        onLoaded: {
-            try {
-                config._localConfig = JSON.parse(text())
-                console.log("[Config] Local config loaded")
-            } catch (e) {
-                console.error("[Config] Failed to parse config.local.json:", e)
-                config._localConfig = ({})
-            }
-        }
-
-        onFileChanged: {
-            console.log("[Config] Local config file change detected, reloading...")
-            reload()
-        }
-
-        onLoadFailed: {
-            // Local config is optional; no warning.
-            config._localConfig = ({})
-        }
-    }
 
     // Deep-merge two plain objects: keys in `overlay` win; objects recurse;
     // arrays and primitives are replaced wholesale. null/undefined overlay
@@ -182,6 +128,18 @@ QtObject {
         if (matchesPatternList(packageName, criticalPackages)) return 2
         if (matchesPatternList(packageName, warningPackages)) return 1
         return 0
+    }
+
+    function scaleFont(value) {
+        return Math.max(1, Math.round(value * fontScale))
+    }
+
+    function scaleSpacing(value) {
+        return Math.max(0, Math.round(value * spacingScale))
+    }
+
+    function scaleRadius(value) {
+        return Math.max(0, Math.round(value * radiusScale))
     }
     
     // getColor(path) — semantic color lookup, routed to wallust's
@@ -287,19 +245,19 @@ QtObject {
     readonly property string fontFamilyIcon: "JetBrainsMono Nerd Font Propo"
 
     // Font size scale
-    readonly property int fontSizeSmall: 11      // timestamps, version strings, priority icons
-    readonly property int fontSizeBase: 11       // bar indicator text
-    readonly property int fontSizeMedium: 12     // tooltips, notification body, secondary text
-    readonly property int fontSizeLarge: 13      // notification summary, emphasized text
-    readonly property int fontSizeHeader: 14     // panel headers
-    readonly property int fontSizeIconSmall: 16  // bar icon glyphs
-    readonly property int fontSizeIconMedium: 18 // menu button icons
-    readonly property int fontSizeIconLarge: 24  // OSD icons
-    readonly property int fontSizeIconXL: 32     // loading spinners, empty state icons
+    readonly property int fontSizeSmall: scaleFont(11)      // timestamps, version strings, priority icons
+    readonly property int fontSizeBase: scaleFont(11)       // bar indicator text
+    readonly property int fontSizeMedium: scaleFont(12)     // tooltips, notification body, secondary text
+    readonly property int fontSizeLarge: scaleFont(13)      // notification summary, emphasized text
+    readonly property int fontSizeHeader: scaleFont(14)     // panel headers
+    readonly property int fontSizeIconSmall: scaleFont(16)  // bar icon glyphs
+    readonly property int fontSizeIconMedium: scaleFont(18) // menu button icons
+    readonly property int fontSizeIconLarge: scaleFont(24)  // OSD icons
+    readonly property int fontSizeIconXL: scaleFont(32)     // loading spinners, empty state icons
 
     // Bar dimensions
-    readonly property int barHeight: 34
-    readonly property int barRadius: 1
+    readonly property int barHeight: scaleSpacing(34)
+    readonly property int barRadius: scaleRadius(1)
     readonly property string barBackgroundColor: "transparent"
 
     // Niri workspace cells. Each cell sits in a fixed-height slot in the
@@ -309,11 +267,11 @@ QtObject {
     // which keeps the side bar's horizontal footprint as narrow as the
     // buttons themselves. influenceCells is the half-width of the
     // falloff in cell-pitches.
-    readonly property int niriWorkspaceCellBase: 22
-    readonly property int niriWorkspaceCellMax: 36
-    readonly property int niriWorkspaceCellSpacing: 4
+    readonly property int niriWorkspaceCellBase: scaleSpacing(22)
+    readonly property int niriWorkspaceCellMax: scaleSpacing(36)
+    readonly property int niriWorkspaceCellSpacing: scaleSpacing(4)
     readonly property real niriWorkspaceMagInfluenceCells: 1.8
-    readonly property int niriWorkspaceCornerRadius: 7
+    readonly property int niriWorkspaceCornerRadius: scaleRadius(7)
     // Buttons reuse the color the pill used to have, so they read as
     // little versions of the original. Text picks a contrasting fg.
     readonly property color niriWorkspaceButtonColor: pillColor2
@@ -323,20 +281,20 @@ QtObject {
     // the buttons plus a small breathing-room margin from the screen
     // edge; nothing pokes out sideways, so apps tile flush against the
     // bar's right edge.
-    readonly property int sideBarLeftMargin: 3
+    readonly property int sideBarLeftMargin: scaleSpacing(3)
     readonly property int sideBarPillWidth: niriWorkspaceCellBase
     readonly property int sideBarWidth: sideBarLeftMargin + sideBarPillWidth
 
     // Bar layout spacing
-    readonly property int barContentLeftMargin: 4
-    readonly property int barContentRightMargin: 4
-    readonly property int barContentSpacing: 4
+    readonly property int barContentLeftMargin: scaleSpacing(4)
+    readonly property int barContentRightMargin: scaleSpacing(4)
+    readonly property int barContentSpacing: scaleSpacing(4)
 
     // Pill (BarGroup) styling
-    readonly property int pillVerticalMargin: 5
-    readonly property int pillHorizontalPadding: 8
-    readonly property int pillRadius: 6
-    readonly property int pillSpacing: 4
+    readonly property int pillVerticalMargin: scaleSpacing(5)
+    readonly property int pillHorizontalPadding: scaleSpacing(8)
+    readonly property int pillRadius: scaleRadius(6)
+    readonly property int pillSpacing: scaleSpacing(4)
 
     // Legacy BarGroup compat
     readonly property int groupBackgroundMarginLeft: 0
@@ -344,8 +302,8 @@ QtObject {
     readonly property int groupBorderWidth: 0
     readonly property int groupRadius: pillRadius
     readonly property string groupBorderColor: "transparent"
-    readonly property int groupColumnSpacing: 4
-    readonly property int groupRowSpacing: 12
+    readonly property int groupColumnSpacing: scaleSpacing(4)
+    readonly property int groupRowSpacing: scaleSpacing(12)
     readonly property int groupImplicitWidthPadding: pillHorizontalPadding * 2
 
     // Pill colors — each pill picks a different slot from wallust's
@@ -365,10 +323,10 @@ QtObject {
     readonly property color pillColor12: Colors.wallust.color1
 
     // Workspace indicators
-    readonly property int workspaceSpacing: 8
-    readonly property int workspaceWidth: 18
-    readonly property int workspaceHeight: 14
-    readonly property int workspaceRadius: 4
+    readonly property int workspaceSpacing: scaleSpacing(8)
+    readonly property int workspaceWidth: scaleSpacing(18)
+    readonly property int workspaceHeight: scaleSpacing(14)
+    readonly property int workspaceRadius: scaleRadius(4)
     readonly property int workspaceFontSize: fontSizeBase
     readonly property int workspaceBorderWidth: 2
     readonly property string workspaceActiveColor: getColor("workspace.active")
@@ -382,7 +340,7 @@ QtObject {
 
     // Battery indicator
     readonly property int batteryFontSize: fontSizeBase
-    readonly property int batterySpacing: 4
+    readonly property int batterySpacing: scaleSpacing(4)
     readonly property string batteryTextColor: getColor("text.white")
     
     // Battery gauge (circular)

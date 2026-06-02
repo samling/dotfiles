@@ -69,7 +69,7 @@ fi
 command -v plz >/dev/null && _cached_completion plz plz --completion_script
 
 #=== pure prompt
-prompt pure
+#prompt pure
 
 #=== pyenv
 #if command -v pyenv &> /dev/null; then
@@ -86,7 +86,7 @@ prompt pure
 #fi
 
 #=== starship prompt
-#eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 
 #=== talos
 command -v talosctl >/dev/null && _cached_completion talosctl talosctl completion zsh

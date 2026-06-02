@@ -106,6 +106,12 @@ Singleton {
     property var latestTimeForApp: ({})
     property var _pendingDismissNotifications: []
     readonly property int _dismissBatchSize: 25
+    readonly property var log: Log.scoped("Notifications")
+    readonly property var notificationConfig: Config.userConfig.notifications || ({})
+    readonly property int maxHistoryCount: notificationConfig.maxHistoryCount || 100
+    readonly property int maxHistoryAgeDays: notificationConfig.maxHistoryAgeDays || 14
+    readonly property bool dedupeEnabled: notificationConfig.dedupe !== false
+    readonly property var rules: notificationConfig.rules || []
     
     property Component notifComponent: Component {
         Notif {}
@@ -124,7 +130,7 @@ Singleton {
                 try {
                     notif.dismiss()
                 } catch (e) {
-                    console.log("[Notifications] Failed to dismiss tracked notification: " + e)
+                    root.log.warn("Failed to dismiss tracked notification:", e)
                 }
             })
             if (root._pendingDismissNotifications.length === 0) {
@@ -135,6 +141,76 @@ Singleton {
 
     function stringifyList(list) {
         return JSON.stringify(list.map((notif) => notifToJSON(notif)), null, 2);
+    }
+
+    function persistList() {
+        notifFileView.setText(stringifyList(root.list));
+    }
+
+    function applyRetentionLimits(list) {
+        const now = Date.now()
+        const maxAgeMs = maxHistoryAgeDays > 0 ? maxHistoryAgeDays * 24 * 60 * 60 * 1000 : 0
+        let kept = list.filter((notif) => maxAgeMs === 0 || !notif.time || now - notif.time <= maxAgeMs)
+        if (maxHistoryCount > 0 && kept.length > maxHistoryCount) {
+            kept = kept.slice(kept.length - maxHistoryCount)
+        }
+        return kept
+    }
+
+    function notificationContentKey(notif) {
+        return [notif.appName || "", notif.summary || "", notif.body || ""].join("\u001f").toLowerCase()
+    }
+
+    function textMatches(value, pattern) {
+        if (!pattern) return true
+        const text = (value || "").toString().toLowerCase()
+        const needle = pattern.toString().toLowerCase()
+        return text.indexOf(needle) !== -1
+    }
+
+    function ruleMatches(rule, notif) {
+        let constrained = false
+        if (rule.app || rule.appName) {
+            constrained = true
+            if (!textMatches(notif.appName, rule.app || rule.appName)) return false
+        }
+        if (rule.summary || rule.title) {
+            constrained = true
+            if (!textMatches(notif.summary, rule.summary || rule.title)) return false
+        }
+        if (rule.body) {
+            constrained = true
+            if (!textMatches(notif.body, rule.body)) return false
+        }
+        if (rule.match) {
+            constrained = true
+            if (!textMatches((notif.appName || "") + " " + (notif.summary || "") + " " + (notif.body || ""), rule.match)) return false
+        }
+        return constrained
+    }
+
+    function matchingRuleActions(notif) {
+        const actions = []
+        rules.forEach((rule) => {
+            if (!ruleMatches(rule, notif)) return
+            if (rule.action) actions.push(rule.action)
+            if (rule.block) actions.push("block")
+            if (rule.mute) actions.push("mute")
+            if (rule.hidePopup) actions.push("hidePopup")
+            if (rule.privacy) actions.push("privacy")
+        })
+        return actions
+    }
+
+    function hasAction(actions, action) {
+        return actions.indexOf(action) !== -1
+    }
+
+    function applyPrivacy(notif) {
+        notif.summary = "Notification"
+        notif.body = "Hidden by privacy rule"
+        notif.image = ""
+        return notif
     }
     
     onListChanged: {
@@ -207,16 +283,53 @@ Singleton {
 
         onNotification: (notification) => {
             notification.tracked = true
+            const incoming = {
+                "appIcon": notification.appIcon ?? "",
+                "appName": notification.appName ?? "",
+                "body": notification.body ?? "",
+                "image": notification.image ?? "",
+                "summary": notification.summary ?? "",
+                "time": Date.now(),
+                "urgency": notification.urgency.toString() ?? "normal",
+            }
+            const ruleActions = matchingRuleActions(incoming)
+
+            if (hasAction(ruleActions, "block")) {
+                root.log.debug("Blocked notification", incoming.appName, incoming.summary)
+                notification.dismiss()
+                return
+            }
+
+            if (dedupeEnabled) {
+                const incomingKey = notificationContentKey(incoming)
+                const duplicateIndex = root.list.findIndex((notif) => notificationContentKey(notif) === incomingKey)
+                if (duplicateIndex !== -1) {
+                    root.list[duplicateIndex].time = incoming.time
+                    triggerListChange()
+                    persistList()
+                    notification.dismiss()
+                    return
+                }
+            }
+
+            if (hasAction(ruleActions, "privacy")) applyPrivacy(incoming)
+
             const newNotifObject = notifComponent.createObject(root, {
                 "notificationId": notification.id + root.idOffset,
                 "notification": notification,
-                "time": Date.now(),
+                "appIcon": incoming.appIcon,
+                "appName": incoming.appName,
+                "body": incoming.body,
+                "image": incoming.image,
+                "summary": incoming.summary,
+                "time": incoming.time,
+                "urgency": incoming.urgency,
             });
-			root.list = [...root.list, newNotifObject];
+			root.list = applyRetentionLimits([...root.list, newNotifObject]);
 			triggerListChange()
 
             // Popup
-            if (!root.popupInhibited) {
+            if (!root.popupInhibited && !hasAction(ruleActions, "mute") && !hasAction(ruleActions, "hidePopup")) {
                 const duration = notification.expireTimeout < 0 ? 5000 : (notification.expireTimeout || 5000);
                 newNotifObject.popup = true;
                 newNotifObject.popupDuration = duration;
@@ -229,13 +342,12 @@ Singleton {
             }
 
             root.notify(newNotifObject);
-            // console.log(notifToString(newNotifObject));
-            notifFileView.setText(stringifyList(root.list));
+            persistList();
         }
     }
 
     function discardNotification(id) {
-        console.log("[Notifications] Discarding notification with ID: " + id);
+        root.log.debug("Discarding notification with ID:", id)
         const index = root.list.findIndex((notif) => notif.notificationId === id);
 
         // Defer if locked (e.g., mid-animation)
@@ -260,7 +372,7 @@ Singleton {
         const trackedNotifications = notifServer.trackedNotifications.values.map((notif) => notif)
         root.list = []
         triggerListChange()
-        notifFileView.setText("[]");
+        persistList();
         root._pendingDismissNotifications = trackedNotifications
         if (trackedNotifications.length > 0) {
             dismissAllTimer.restart()
@@ -291,35 +403,35 @@ Singleton {
     }
 
     function attemptInvokeAction(id, notifIdentifier) {
-        console.log("[Notifications] Attempting to invoke action with identifier: " + notifIdentifier + " for notification ID: " + id);
-        console.log("[Notifications] idOffset: " + root.idOffset);
-        console.log("[Notifications] Tracked notifications: " + JSON.stringify(notifServer.trackedNotifications.values.map(n => ({id: n.id, offset_id: n.id + root.idOffset, actions: n.actions.map(a => a.identifier)}))));
+        root.log.debug("Attempting to invoke action", notifIdentifier, "for notification ID", id)
+        root.log.debug("idOffset", root.idOffset)
+        root.log.debug("Tracked notifications", notifServer.trackedNotifications.values.map(n => ({id: n.id, offset_id: n.id + root.idOffset, actions: n.actions.map(a => a.identifier)})))
         const notifServerIndex = notifServer.trackedNotifications.values.findIndex((notif) => notif.id + root.idOffset === id);
-        console.log("Notification server index: " + notifServerIndex);
+        root.log.debug("Notification server index", notifServerIndex)
         if (notifServerIndex !== -1) {
             const notifServerNotif = notifServer.trackedNotifications.values[notifServerIndex];
             const action = notifServerNotif.actions.find((action) => action.identifier === notifIdentifier);
-            console.log("Action found: " + JSON.stringify(action));
+            root.log.debug("Action found", action)
             if (action) {
                 try {
-                    console.log("[Notifications] Invoking action: " + action.text);
+                    root.log.debug("Invoking action", action.text)
                     action.invoke();
-                    console.log("[Notifications] Action invoked successfully");
+                    root.log.debug("Action invoked successfully")
                     
                     // Add a small delay before dismissing to let the action complete
                     Qt.callLater(() => {
                         root.discardNotification(id);
                     });
                 } catch (e) {
-                    console.log("[Notifications] Error invoking action: " + e);
+                    root.log.warn("Error invoking action", e)
                     root.discardNotification(id);
                 }
             } else {
-                console.log("[Notifications] Action not found with identifier: " + notifIdentifier);
+                root.log.warn("Action not found with identifier", notifIdentifier)
             }
         }
         else {
-            console.log("Notification not found in server: " + id)
+            root.log.warn("Notification not found in server", id)
         }
     }
 
@@ -340,7 +452,7 @@ Singleton {
         path: Qt.resolvedUrl(filePath)
         onLoaded: {
             const fileContents = notifFileView.text()
-            root.list = JSON.parse(fileContents).map((notif) => {
+            root.list = applyRetentionLimits(JSON.parse(fileContents).map((notif) => {
                 return notifComponent.createObject(root, {
                     "notificationId": notif.notificationId,
                     "actions": [], // Notification actions are meaningless if they're not tracked by the server or the sender is dead
@@ -352,24 +464,24 @@ Singleton {
                     "time": notif.time,
                     "urgency": notif.urgency,
                 });
-            });
+            }));
             // Find largest notificationId
             let maxId = 0
             root.list.forEach((notif) => {
                 maxId = Math.max(maxId, notif.notificationId)
             })
 
-            console.log("[Notifications] File loaded")
+            root.log.debug("File loaded")
             root.idOffset = maxId
             root.initDone()
         }
         onLoadFailed: (error) => {
             if(error == FileViewError.FileNotFound) {
-                console.log("[Notifications] File not found, creating new file.")
+                root.log.debug("File not found, creating new file")
                 root.list = []
                 notifFileView.setText(stringifyList(root.list));
             } else {
-                console.log("[Notifications] Error loading file: " + error)
+                root.log.error("Error loading file", error)
             }
         }
     }

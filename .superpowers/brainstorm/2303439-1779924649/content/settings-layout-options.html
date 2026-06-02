@@ -1,0 +1,77 @@
+<h2>Settings Menu Direction</h2>
+<p class="subtitle">Pick the shell settings surface that best fits how you want to use this day-to-day.</p>
+
+<div class="cards">
+  <div class="card" data-choice="attached-panel" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Attached Panel</div>
+        <div class="mockup-body" style="display:flex;gap:10px;min-height:220px;background:#111827;padding:12px">
+          <div style="width:48px;border-radius:14px;background:#1f2937;display:flex;flex-direction:column;gap:8px;padding:8px">
+            <div style="height:28px;border-radius:10px;background:#89b4fa"></div>
+            <div style="height:28px;border-radius:10px;background:#374151"></div>
+            <div style="height:28px;border-radius:10px;background:#374151"></div>
+          </div>
+          <div style="flex:1;border-radius:16px;background:#1f2937;padding:12px">
+            <div style="height:18px;width:45%;border-radius:8px;background:#cdd6f4;margin-bottom:12px"></div>
+            <div style="height:42px;border-radius:12px;background:#273449;margin-bottom:8px"></div>
+            <div style="height:42px;border-radius:12px;background:#273449;margin-bottom:8px"></div>
+            <div style="height:42px;border-radius:12px;background:#273449"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Attached Panel</h3>
+      <p>Slides from the current bar/control-center area. Best for quick tweaks and feels integrated with the shell.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="center-modal" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Centered Modal</div>
+        <div class="mockup-body" style="min-height:220px;background:#111827;padding:22px;display:flex;align-items:center;justify-content:center">
+          <div style="width:82%;height:170px;border-radius:20px;background:#1f2937;box-shadow:0 18px 50px rgba(0,0,0,.45);display:flex;overflow:hidden">
+            <div style="width:140px;background:#172033;padding:12px">
+              <div style="height:20px;border-radius:8px;background:#cdd6f4;margin-bottom:14px"></div>
+              <div style="height:24px;border-radius:8px;background:#89b4fa;margin-bottom:8px"></div>
+              <div style="height:24px;border-radius:8px;background:#374151;margin-bottom:8px"></div>
+              <div style="height:24px;border-radius:8px;background:#374151"></div>
+            </div>
+            <div style="flex:1;padding:14px">
+              <div style="height:28px;border-radius:10px;background:#273449;margin-bottom:10px"></div>
+              <div style="height:28px;border-radius:10px;background:#273449;margin-bottom:10px"></div>
+              <div style="height:28px;border-radius:10px;background:#273449"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Centered Modal</h3>
+      <p>More room, clearer navigation, better for deep settings. Feels more like Dank/Noctalia.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="launcher-settings" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Launcher-Style Settings</div>
+        <div class="mockup-body" style="min-height:220px;background:#111827;padding:18px">
+          <div style="height:38px;border-radius:16px;background:#1f2937;border:1px solid #89b4fa;margin-bottom:12px;display:flex;align-items:center;padding:0 14px;color:#6b7280">Search settings...</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="height:58px;border-radius:14px;background:#1f2937"></div>
+            <div style="height:58px;border-radius:14px;background:#1f2937"></div>
+            <div style="height:58px;border-radius:14px;background:#1f2937"></div>
+            <div style="height:58px;border-radius:14px;background:#1f2937"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Launcher-Style</h3>
+      <p>Search-first command palette for settings. Fast and keyboard-friendly, but weaker for browsing/discoverability.</p>
+    </div>
+  </div>
+</div>

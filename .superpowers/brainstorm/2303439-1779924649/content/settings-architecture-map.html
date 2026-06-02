@@ -1,0 +1,68 @@
+<h2>Registry-First Settings Architecture</h2>
+<p class="subtitle">Proposed data flow: settings, widgets, popouts, and UI controls all originate from central metadata.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Source of Truth and Generated UI</div>
+  <div class="mockup-body" style="padding:22px;background:#0f172a;color:#cdd6f4">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;align-items:stretch">
+      <div style="border:1px solid #89b4fa;border-radius:16px;padding:16px;background:#172033">
+        <h3 style="margin-top:0;color:#89b4fa">Settings Registry</h3>
+        <p>Field metadata, defaults, labels, ranges, enum options, validation, grouping.</p>
+        <div style="height:8px;border-radius:4px;background:#89b4fa;margin-top:18px"></div>
+      </div>
+      <div style="border:1px solid #a6e3a1;border-radius:16px;padding:16px;background:#172033">
+        <h3 style="margin-top:0;color:#a6e3a1">Widget Registry</h3>
+        <p>Widget IDs, component paths, section constraints, default config, visible settings.</p>
+        <div style="height:8px;border-radius:4px;background:#a6e3a1;margin-top:18px"></div>
+      </div>
+      <div style="border:1px solid #f9e2af;border-radius:16px;padding:16px;background:#172033">
+        <h3 style="margin-top:0;color:#f9e2af">Popout Registry</h3>
+        <p>Surface IDs, lifecycle behavior, IPC actions, one-open-at-a-time rules.</p>
+        <div style="height:8px;border-radius:4px;background:#f9e2af;margin-top:18px"></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-size:28px;margin:18px 0;color:#94a3b8">↓</div>
+
+    <div style="border:1px solid #cba6f7;border-radius:18px;padding:18px;background:#1f2937;text-align:center">
+      <h3 style="margin-top:0;color:#cba6f7">Settings Store</h3>
+      <p style="margin-bottom:0">Loads JSON, applies defaults, validates unknown values, persists edits, separates user settings from runtime state.</p>
+    </div>
+
+    <div style="text-align:center;font-size:28px;margin:18px 0;color:#94a3b8">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+      <div style="border-radius:16px;padding:16px;background:#273449">
+        <h3 style="margin-top:0">Settings Window</h3>
+        <p>Generated pages and controls from schemas.</p>
+      </div>
+      <div style="border-radius:16px;padding:16px;background:#273449">
+        <h3 style="margin-top:0">Bar / Widgets</h3>
+        <p>Declarative sections and widget instances.</p>
+      </div>
+      <div style="border-radius:16px;padding:16px;background:#273449">
+        <h3 style="margin-top:0">Popouts / IPC</h3>
+        <p>Coordinator reads registered surfaces and actions.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this fits your goal</h4>
+    <ul>
+      <li>Hardcoded controls become metadata-driven.</li>
+      <li>Widgets and settings can evolve together.</li>
+      <li>Closer to Dank/Noctalia scale without copying their style.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Risk to manage</h4>
+    <ul>
+      <li>Too much generic UI can feel bland.</li>
+      <li>Registry scope must be limited in the first slice.</li>
+      <li>Migration from current Config must be staged.</li>
+    </ul>
+  </div>
+</div>

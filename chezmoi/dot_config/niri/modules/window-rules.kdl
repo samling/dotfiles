@@ -196,3 +196,12 @@ window-rule {
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
 }
+
+layer-rule { 
+   match namespace="noctalia-bar-default"
+
+    background-effect {
+        xray false
+        blur false
+    }
+}

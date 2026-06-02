@@ -1,0 +1,77 @@
+<h2>Settings List Editors</h2>
+<p class="subtitle">Three implementation approaches for add/remove/reorder without hand-editing JSON.</p>
+
+<div class="cards">
+  <div class="card" data-choice="recommended" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Recommended: typed editors by schema</div>
+        <div class="mockup-body">
+          <div style="display:grid;gap:14px">
+            <div style="border:1px solid #555;border-radius:10px;padding:12px">
+              <strong>Critical packages</strong>
+              <div style="display:grid;gap:8px;margin-top:10px">
+                <div style="display:flex;gap:8px;align-items:center"><button class="mock-button">↑</button><button class="mock-button">↓</button><input class="mock-input" value="linux" style="flex:1"><button class="mock-button">Remove</button></div>
+                <div style="display:flex;gap:8px;align-items:center"><button class="mock-button">↑</button><button class="mock-button">↓</button><input class="mock-input" value="nvidia" style="flex:1"><button class="mock-button">Remove</button></div>
+                <button class="mock-button">Add package</button>
+              </div>
+            </div>
+            <div style="border:1px solid #555;border-radius:10px;padding:12px">
+              <strong>Bar layout</strong>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px">
+                <div><em>Left</em><div class="placeholder">power ↑ ↓ x<br>workspaces ↑ ↓ x<br>+ Add</div></div>
+                <div><em>Center</em><div class="placeholder">clock ↑ ↓ x<br>+ Add</div></div>
+                <div><em>Right</em><div class="placeholder">tray ↑ ↓ x<br>volume ↑ ↓ x<br>+ Add</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Typed Editors (Recommended)</h3>
+      <p>Use schema metadata to choose list, widget-layout, or raw JSON controls. Add/remove/reorder works cleanly, while JSON remains the persisted format.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="generic-array" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Generic array editor</div>
+        <div class="mockup-body">
+          <div style="border:1px solid #555;border-radius:10px;padding:12px">
+            <strong>Any list field</strong>
+            <div style="display:grid;gap:8px;margin-top:10px">
+              <div style="display:flex;gap:8px"><button class="mock-button">↑</button><button class="mock-button">↓</button><input class="mock-input" value="item" style="flex:1"><button class="mock-button">x</button></div>
+              <button class="mock-button">Add item</button>
+            </div>
+          </div>
+          <p style="margin-top:12px">Bar layout stays JSON or gets a minimal object editor later.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Generic Lists First</h3>
+      <p>Fastest for ignored/critical packages, but does not solve bar layout well because that is a structured object, not one list.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dragdrop" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Drag/drop layout builder</div>
+        <div class="mockup-body">
+          <div class="split">
+            <div class="placeholder">Available widgets<br>clock<br>volume<br>battery</div>
+            <div class="placeholder">Drop zones<br>Left | Center | Right</div>
+          </div>
+          <p style="margin-top:12px">More polished, but more interaction code and edge cases.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Drag/Drop Builder</h3>
+      <p>Best long-term UX, but highest complexity. Overkill for the first version unless drag/drop is essential now.</p>
+    </div>
+  </div>
+</div>

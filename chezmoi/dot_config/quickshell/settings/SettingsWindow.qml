@@ -1,0 +1,199 @@
+import QtQuick
+import QtQuick.Layouts
+import Quickshell
+import Quickshell.Wayland
+import qs.common
+import qs.services
+
+PanelWindow {
+    id: root
+
+    visible: PopoutCoordinator.settingsOpen
+    color: "transparent"
+    exclusiveZone: 0
+
+    WlrLayershell.namespace: "quickshell:settings"
+    WlrLayershell.layer: WlrLayer.Overlay
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+
+    anchors {
+        top: true
+        right: true
+        bottom: true
+        left: true
+    }
+
+    property string selectedPage: ShellState.lastSettingsPage || "bar"
+    property string query: ""
+    readonly property var pageFields: SettingsRegistry.fieldsForPage(selectedPage).filter((field) => {
+        if (!query) return true
+        const needle = query.toLowerCase()
+        return field.path.toLowerCase().indexOf(needle) !== -1 || (field.label || "").toLowerCase().indexOf(needle) !== -1
+    })
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: PopoutCoordinator.closeSettings()
+    }
+
+    Rectangle {
+        id: modal
+        width: Math.min(parent.width - Style.spacing.window * 2, 900)
+        height: Math.min(parent.height - Style.spacing.window * 2, 620)
+        anchors.centerIn: parent
+        radius: Style.radius.xl
+        color: Style.color.panel
+        border.width: 1
+        border.color: Style.color.border
+        clip: true
+
+        MouseArea { anchors.fill: parent }
+
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 0
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 56
+                color: Config.getColor("background.mantle")
+
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.leftMargin: Style.spacing.xl + Style.spacing.xs / 2
+                    anchors.rightMargin: Style.spacing.lg
+                    spacing: Style.spacing.lg
+
+                    Text {
+                        text: "Settings"
+                        color: Config.getColor("text.primary")
+                        font.pixelSize: Style.fontSize.header
+                        font.weight: Font.DemiBold
+                        font.family: Config.fontFamilyMonospace
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        Layout.preferredWidth: 280
+                        Layout.preferredHeight: 34
+                        radius: Style.radius.md + 1
+                        color: Config.getColor("background.secondary")
+                        border.width: 1
+                        border.color: searchInput.activeFocus ? Style.color.accent : Style.color.border
+
+                        TextInput {
+                            id: searchInput
+                            anchors.fill: parent
+                            anchors.leftMargin: Style.spacing.lg - 2
+                            anchors.rightMargin: Style.spacing.lg - 2
+                            verticalAlignment: TextInput.AlignVCenter
+                            text: root.query
+                            color: Config.getColor("text.primary")
+                            font.pixelSize: Style.fontSize.small
+                            font.family: Config.fontFamilyMonospace
+                            onTextChanged: root.query = text
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.preferredWidth: 30
+                        Layout.preferredHeight: 30
+                        radius: Style.radius.md
+                        color: closeMouse.containsMouse ? Config.getColor("background.tertiary") : "transparent"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "x"
+                            color: Config.getColor("text.muted")
+                            font.pixelSize: Style.fontSize.medium
+                            font.family: Config.fontFamilyMonospace
+                        }
+
+                        MouseArea {
+                            id: closeMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: PopoutCoordinator.closeSettings()
+                        }
+                    }
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                spacing: 0
+
+                Column {
+                    Layout.preferredWidth: 170
+                    Layout.fillHeight: true
+                    padding: Style.spacing.lg - 2
+                    spacing: Style.spacing.sm
+
+                    Repeater {
+                        model: SettingsRegistry.pages
+
+                        Rectangle {
+                            required property var modelData
+                            width: parent.width - 20
+                            height: 34
+                            radius: Style.radius.md + 1
+                            color: root.selectedPage === modelData.id ? Style.color.accent : (pageMouse.containsMouse ? Style.color.surfaceRaised : "transparent")
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: modelData.label
+                                color: root.selectedPage === parent.modelData.id ? Config.contrastText(Style.color.accent) : Style.color.text
+                                font.pixelSize: Style.fontSize.small
+                                font.weight: root.selectedPage === parent.modelData.id ? Font.Bold : Font.Normal
+                                font.family: Config.fontFamilyMonospace
+                            }
+
+                            MouseArea {
+                                id: pageMouse
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onClicked: {
+                                    root.selectedPage = modelData.id
+                                    ShellState.lastSettingsPage = modelData.id
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Rectangle {
+                    Layout.preferredWidth: 1
+                    Layout.fillHeight: true
+                    color: Style.color.border
+                }
+
+                Flickable {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    contentHeight: controlsColumn.implicitHeight + Style.spacing.lg * 2
+                    clip: true
+                    boundsBehavior: Flickable.StopAtBounds
+
+                    Column {
+                        id: controlsColumn
+                        width: parent.width - Style.spacing.lg * 2
+                        x: Style.spacing.lg
+                        y: Style.spacing.lg
+                        spacing: Style.spacing.md
+
+                        Repeater {
+                            model: root.pageFields
+
+                            SettingsControl {
+                                required property var modelData
+                                width: controlsColumn.width
+                                field: modelData
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

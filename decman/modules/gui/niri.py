@@ -24,6 +24,7 @@ class NiriModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "libinput-gestures",
+            "monique",
             "niri-float-sticky",
         }
 

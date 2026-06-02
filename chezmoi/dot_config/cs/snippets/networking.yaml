@@ -1,0 +1,15 @@
+# Kubernetes-specific command snippets
+snippets:
+  netstat-find-process-by-port:
+    id: "netstat-find-process-by-port"
+    name: "netstat-find-process-by-port"
+    description: "Find process by port number"
+    command: "sudo netstat -tulpn ${port_number}"
+    variables:
+      - name: "port_number"
+        description: "Port (e.g., 8080)"
+        required: true
+        type: "port"
+    tags: ["networking", "netstat"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
