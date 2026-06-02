@@ -45,11 +45,15 @@
         email = samlingx@gmail.com
         name = Sam Boynton
 
-[includeIf "gitdir:~/Documents/NVIDIA/"]
-        path = ~/work-dotfiles/linux/config/git/gitconfig
 [init]
 	defaultBranch = main
+
 [credential]
 	helper = store
+
 [pull]
-       rebase = false
+   rebase = false
+
+[includeIf "gitdir:~/Documents/NVIDIA/**"]
+  path = ~/work-dotfiles/linux/config/git/gitconfig
+
