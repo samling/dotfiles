@@ -47,16 +47,19 @@
         signingkey = /home/sboynton/.ssh/id_ed25519.pub
 
 [init]
-	defaultBranch = main
+  	defaultBranch = main
 
 [credential]
-	helper = store
+  	helper = store
+
+[push]
+    autoSetupRemote = true
 
 [pull]
    rebase = false
 
 [includeIf "gitdir:~/Documents/NVIDIA/**"]
-  path = ~/work-dotfiles/linux/config/git/gitconfig
+    path = ~/work-dotfiles/linux/config/git/gitconfig
 
 [gpg]
     format = ssh
