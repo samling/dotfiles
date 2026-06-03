@@ -9,6 +9,7 @@
 - Limit comments and docstrings to 1-2 lines.
 - Don't refer to problems as "classic [problem]".
 - Don't use the phrase "belt and suspenders".
+- Don't use the term/phrase "shape of".
 
 ## Coding instructions
 - If I correct you or give you an instruction, don't reference it as context in resulting comments. For example, if I tell you "don't poll for this, use event-driven methods instead", don't leave a comment in the code such as "# (no polling)". The reader has no context of the conversation that led to this design decision.

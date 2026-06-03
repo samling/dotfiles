@@ -26,6 +26,7 @@ class CoreModule(decman.Module):
             "eza",
             "fd",
             "file",
+            "font-manager",
             "fx",
             "fzf",
             "glances",

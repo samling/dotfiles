@@ -1,6 +1,9 @@
 import decman
 from decman.plugins import aur, pacman
 
+from modules.common.archlinux import has_repo
+
+_NATIVE_OR_AUR = {"heroic-games-launcher-bin"}
 
 class GamesModule(decman.Module):
     """Steam + the firewall ports it needs for Remote Play.
@@ -19,14 +22,17 @@ class GamesModule(decman.Module):
           "moonlight-qt",
           "steam",
         }
+        if has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
         return base
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
         base = {
-          "heroic-games-launcher-bin",
           "stepmania",
         }
+        if not has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
         return base
 
     def files(self) -> dict[str, decman.File]:
