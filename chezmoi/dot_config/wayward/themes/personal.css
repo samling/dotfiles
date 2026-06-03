@@ -1,0 +1,91 @@
+.bar {
+  /* margin-top: 8px; */
+  /* min-height: 32px; */
+  background: transparent;
+  padding: 0px;
+}
+
+.bar-region {
+  border-radius: 8px;
+  font-family: "IosevkaTerm Nerd Font Propo";
+  font-weight: 100;
+  font-size: 14px;
+  background-color: #1e1e2e
+}
+
+.bar-region-start.horizontal {
+  border-radius: 0px 0px 8px 0px;
+}
+
+.bar-region-start.vertical {
+  border-radius: 0px 0px 8px 0px;
+}
+
+.bar-region-center.horizontal {
+  border-radius: 0px 0px 8px 8px;
+}
+
+.bar-region-center.vertical {
+  border-radius: 0px 8px 8px 0px;
+}
+
+.bar-region-end.horizontal {
+  border-radius: 0px 0px 0px 8px;
+}
+
+.bar-region-end.vertical {
+  border-radius: 0px 8px 0px 0px;
+}
+
+.bar-item {
+  padding: 0 8px;
+}
+
+.bar.vertical .bar-region {
+  margin: 0;
+  padding: 4px;
+  min-width: 20px;
+}
+
+.bar.vertical .bar-item {
+  padding: 0;
+}
+
+.bar.vertical .workspaces-content {
+  border-spacing: 0.2em;
+}
+
+.bar.vertical .workspace {
+  padding: 0.1em 0.3em;
+}
+
+.workspace {
+    color: inherit;
+    background-color: rgba(138, 180, 248, 0.5);
+}
+
+.workspace.active {
+    color: #f1f3f4;
+}
+
+.workspaces-overlay {
+    background: transparent;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.workspace-label {
+    background: transparent;
+    padding: 0;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.workspaces-indicator-layer {
+    background: transparent;
+}
+
+.workspace-indicator {
+    background-color: rgba(138, 180, 248, 0.5);
+    border-radius: 0.4em;
+}
