@@ -3,19 +3,19 @@ theme = "personal"
 [[bars]]
 name = "top-bar"
 edge = "top"
-start = []
-center = ["clock"]
-end = ["systray"]
+start = ["workspaces"]
+center = []
+end = ["systray", "battery", "clock"]
 
-[[bars]]
-name = "left-bar"
-edge = "left"
-start = []
-center = ["workspaces"]
-end = []
+# [[bars]]
+# name = "left-bar"
+# edge = "left"
+# start = []
+# center = ["workspaces"]
+# end = []
 
 
 [widgets.workspaces]
 indicator_effect = "slide"
 indicator_duration_ms = 160
-label_format = "%I"
+label_format = "%L"

@@ -1,16 +1,18 @@
 .bar {
   /* margin-top: 8px; */
   /* min-height: 32px; */
-  background: transparent;
+  /* background-color: #1e1e2e; */
+  background-color: rgba(30, 30, 46, 0.7);
   padding: 0px;
 }
 
 .bar-region {
   border-radius: 8px;
-  font-family: "IosevkaTerm Nerd Font Propo";
+  /* font-family: "IosevkaTerm Nerd Font Propo"; */
+  font-family: "JetBrainsMono";
   font-weight: 100;
-  font-size: 14px;
-  background-color: #1e1e2e
+  font-size: 12px;
+  /* background-color: #1e1e2e; */
 }
 
 .bar-region-start.horizontal {
@@ -61,7 +63,6 @@
 
 .workspace {
     color: inherit;
-    background-color: rgba(138, 180, 248, 0.5);
 }
 
 .workspace.active {
@@ -74,18 +75,7 @@
     margin-bottom: 4px;
 }
 
-.workspace-label {
-    background: transparent;
-    padding: 0;
-    padding-top: 1px;
-    padding-bottom: 1px;
-}
-
-.workspaces-indicator-layer {
-    background: transparent;
-}
-
 .workspace-indicator {
-    background-color: rgba(138, 180, 248, 0.5);
+    background-color: rgba(137, 180, 250, 0.5);
     border-radius: 0.4em;
 }
