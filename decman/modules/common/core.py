@@ -73,6 +73,7 @@ class CoreModule(decman.Module):
         return {
             "cmatrix-git",
             "crudini",
+            "dredge-bin",
             "fatrace",
             "icat",
             "localsend-bin",
