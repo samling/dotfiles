@@ -36,6 +36,7 @@ class MediaGuiModule(decman.Module):
         return {
             "ie-r",
             "spotify",
+            "qview",
         }
 
     def files(self) -> dict[str, decman.File]:

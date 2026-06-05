@@ -2,9 +2,9 @@
 set -euo pipefail
 tmp=$(mktemp); trap 'rm -f "$tmp"' EXIT
 cat > "$tmp"
-for mime in image/jpeg image/png image/gif image/bmp image/webp image/tiff; do
+for mime in image/jpg image/jpeg image/png image/gif image/bmp image/webp image/tiff; do
   if command -v crudini >/dev/null; then
-    crudini --set "$tmp" "Default Applications" "$mime" imv.desktop
+    crudini --set "$tmp" "Default Applications" "$mime" com.interversehq.qView.desktop
   fi
 done
 # Hand http(s) and friends to the Windows Chrome interop wrapper on WSL,

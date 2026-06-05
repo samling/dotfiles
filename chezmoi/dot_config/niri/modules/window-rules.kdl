@@ -149,7 +149,38 @@ window-rule {
 }
 
 window-rule {
+  match app-id="imv"
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
+  match app-id="mpv"
+  open-floating true;
+  open-focused true;
+}
+
+window-rule {
+  match app-id=r#"^com\.interversehq\.qView$"#
+  open-floating true;
+  open-focused true;
+}
+
+//=== Thunar
+window-rule {
+  match app-id="thunar"
+  open-floating true;
+  open-focused true;
+  default-column-width { proportion 0.5; }
+  default-window-height { proportion 0.5; }
+}
+window-rule {
   match app-id="thunar" title="File Operation Progress"
+  open-floating true;
+  open-focused false;
+}
+window-rule {
+  match app-id=r#"^org\.gnome\.FileRoller"#
   open-floating true;
   open-focused true;
 }

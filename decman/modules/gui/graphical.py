@@ -18,6 +18,7 @@ class GraphicalModule(decman.Module):
             "brightnessctl",
             "cantarell-fonts",
             "dconf",
+            "file-roller",
             "gnome-power-manager",
             "gpu-screen-recorder",
             "gsfonts",
