@@ -70,7 +70,7 @@ class WmModule(decman.Module):
             "sboynton": {
                 "awww-change-wallpaper.timer",
                 "awww.service",
-                "quickshell.service",
+                #"quickshell.service",
                 "swayidle.service",
             },
         }
