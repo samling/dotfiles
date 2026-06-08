@@ -15,6 +15,10 @@ class TitanServicesModule(decman.Module):
     def __init__(self):
         super().__init__("titan_services")
 
+    @systemd.units
+    def units(self) -> set[str]:
+        return {"apcupsd.service"}
+
     @systemd.user_units
     def user_units(self) -> dict[str, set[str]]:
         return {
@@ -56,12 +60,15 @@ decman.modules += MODULES + [
 
 
 _NATIVE_OR_AUR = {
-  "lib32-gamescope",
-  "sunshine"
+    "lib32-gamescope",
+    "sunshine",
 }
 
 # Per-host packages. Layered on top of role / module packages.
-decman.pacman.packages |= _NATIVE_OR_AUR if has_repo("cachyos") else set()
+decman.pacman.packages |= {
+    "apcupsd",
+} | (_NATIVE_OR_AUR if has_repo("cachyos") else set())
+
 decman.aur.packages |= {
     "icu76", # sunshine dependency
     "rustdesk-server-bin",

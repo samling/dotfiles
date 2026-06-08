@@ -37,6 +37,7 @@ class DevModule(decman.Module):
             "python-pyqt5",
             "python-reportlab",
             "qmk",
+            "tig",
             "uv",
         }
 

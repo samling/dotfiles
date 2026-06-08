@@ -47,6 +47,7 @@ class CoreModule(decman.Module):
             "markdownlint",
             "moreutils",
             "ncdu",
+            "nut",
             "plocate",
             "psmisc",
             "qalculate-qt",
