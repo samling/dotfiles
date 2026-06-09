@@ -116,11 +116,9 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 #=== Kubernetes
 # Consume all *.yaml kubeconfigs in ${HOME}/.kube/kubeconfigs
-if command -v fd &> /dev/null; then
-  export KUBECONFIG=${HOME}/.kube/config:$(for YAML in $(fd . ${HOME}/.kube/kubeconfigs -e yaml -e yml); do echo -n ":${YAML}"; done)
-else
-  export KUBECONFIG=${HOME}/.kube/config:$(for YAML in $(find ${HOME}/.kube/kubeconfigs \( -iname \*.yml -o -iname \*.yaml \)) ; do echo -n ":${YAML}"; done)
-fi
+kubeconfigs=("$HOME/.kube/config" "$HOME"/.kube/kubeconfigs/*.(yaml|yml)(N))
+export KUBECONFIG="${(j.:.)kubeconfigs}"
+unset kubeconfigs
 
 #=== Locales
 export LANG=en_US.UTF-8

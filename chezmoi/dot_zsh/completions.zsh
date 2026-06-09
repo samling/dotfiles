@@ -4,13 +4,13 @@ fpath=($HOME/.zsh $fpath)
 #=== compinit
 # Fast path: skip compaudit + dump rebuild unless ~/.zcompdump is older than 24h.
 # Saves ~100ms per shell.
-autoload -U compinit bashcompinit promptinit
-if [[ -n ~/.zcompdump(#qN.mh+24) || ! -f ~/.zcompdump ]]; then
+autoload -U compinit bashcompinit #promptinit
+if [[ -n ~/.zcompdump(#qNmh-24) || ! -f ~/.zcompdump ]]; then
   compinit
 else
   compinit -C
 fi
-promptinit
+# promptinit
 bashcompinit
 
 #=== completion cache helper
@@ -59,10 +59,14 @@ command -v kubecolor >/dev/null && compdef kubecolor=kubectl
 #=== niri
 if command -v niri >/dev/null; then
   _niri_gen() {
+    unfunction _niri_gen
     niri completions zsh | sed "s/line\[2\]/line[1]/g; /'::command/d"
   }
-  _cached_completion niri _niri_gen
-  unset -f _niri_gen
+  _niri_lazy() {
+    unfunction _niri_lazy
+    _cached_completion niri _niri_gen
+  }
+  compdef _niri_lazy
 fi
 
 #=== plz
@@ -93,7 +97,14 @@ command -v talosctl >/dev/null && _cached_completion talosctl talosctl completio
 command -v talhelper >/dev/null && _cached_completion talhelper talhelper completion zsh
 
 #=== uv
-command -v uv >/dev/null && _cached_completion uv uv generate-shell-completion zsh
+if command -v uv >/dev/null; then
+  _uv_lazy() {
+    unfunction _uv_lazy
+    _cached_completion uv uv generate-shell-completion zsh
+    (( $+functions[_uv] )) && -uv "$@"
+  }
+  compdef _uv_lazy uv
+fi
 
 #=== vault
 command -v vault >/dev/null && complete -o nospace -C vault vault

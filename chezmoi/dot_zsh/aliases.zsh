@@ -25,10 +25,17 @@ alias vi=nvim
 alias vim=nvim
 
 #=== cd
-# Create aliases for up to 15 directories (offset by 1: '..'='cd ../', '...'='cd ../../', etc.)
-for i in {2..25}; do
-  alias "$(printf '%0.s.' $(seq 1 $i))"="cd $(printf '../%.0s' $(seq 1 $((i-1))))"
+# Create aliases for up to 25 directories (offset by 1: '..'='cd ../', '...'='cd ../../', etc.)
+for ((i = 2; i <= 25; i++)); do
+  dots=${(l:i::.:)}
+  up=""
+  for ((j = 1; j < i; j++)); do
+    up+="../"
+  done
+  alias "$dots=cd $up"
 done
+unset i j dots up
+
 alias .="cd ." # Don't go anywhere with one dot
 
 #=== Defaults
