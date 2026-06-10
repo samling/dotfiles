@@ -197,6 +197,12 @@ window-rule {
   open-focused true;
 }
 
+window-rule {
+  match app-id="wayward" title="Wayward Settings"
+  open-floating true;
+  open-focused true;
+}
+
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 window-rule {
