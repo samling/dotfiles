@@ -1,6 +1,7 @@
 import decman
 from decman.plugins import pacman, aur, systemd
 
+from modules._paths import PKGBUILDS as _PKGBUILDS
 from modules._systemd import reconcile_units
 from modules.common.archlinux import has_repo
 
@@ -56,6 +57,15 @@ class WmModule(decman.Module):
             base |= _NATIVE_OR_AUR
         return base
 
+    @aur.custom_packages
+    def custompkgs(self) -> set[aur.CustomPackage]:
+        return {
+            aur.CustomPackage(
+                pkgname="wayward-bin",
+                pkgbuild_directory=str(_PKGBUILDS / "wayward-bin")
+            ),
+        }
+
     @systemd.units
     def units(self) -> set[str]:
         # greetd is the login manager. Enable it system-wide so a
@@ -72,6 +82,7 @@ class WmModule(decman.Module):
                 "awww.service",
                 #"quickshell.service",
                 "swayidle.service",
+                "wayward.service",
             },
         }
 

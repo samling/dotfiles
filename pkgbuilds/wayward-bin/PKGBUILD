@@ -1,0 +1,30 @@
+# Maintainer: Sam Boynton <sboynton@nvidia.com>
+pkgname=wayward-bin
+_pkgname=wayward
+pkgver=0.2.2
+pkgrel=1
+pkgdesc="An opinionated Wayland shell"
+arch=('x86_64')
+url="https://github.com/samling/wayward-rs"
+license=('unknown')
+depends=(
+  'dbus'
+  'gtk4'
+  'gtk4-layer-shell'
+  'libpulse'
+  'libudev.so'
+  'wayland'
+)
+provides=('wayward')
+conflicts=('wayward')
+source=(
+  "$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}-v$pkgver-x86_64-unknown-linux-gnu.tar.gz"
+  'wayward.service'
+)
+sha256sums=('45f857820567c39909655ae7baf8c661176fece3c2a72034c56b3c0eb41b04e1'
+            '5dd33397922a7eca4d1c0a7f6615a43c8b5f97107d2779a5d17c6f80f63983d7')
+
+package() {
+  install -Dm755 "$srcdir/${_pkgname}" "$pkgdir/usr/bin/${_pkgname}"
+  install -Dm644 "$srcdir/wayward.service" "$pkgdir/usr/lib/systemd/user/wayward.service"
+}
