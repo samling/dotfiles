@@ -5,7 +5,7 @@ import subprocess
 
 import decman
 
-from modules import _aur_prompts
+from modules import _aur_prompts, _aur_risk_policy
 from modules._aur_commands import SemiUnattended
 from modules._pacman_commands import NoUpgrade
 from modules.common.aur_keys import AurKeysModule
@@ -22,9 +22,13 @@ decman.aur.commands = SemiUnattended()
 if os.environ.get("DECMAN_NO_UPGRADE"):
     decman.pacman.commands = NoUpgrade()
 
-# Auto-answer decman's per-package "Review PKGBUILD?" / "Build this package?"
-# prompts. Top-level "Proceed?" prompts still ask.
+# Keep decman's per-package PKGBUILD review/diff prompt interactive, but
+# auto-confirm the final "Build this package?" prompt after review.
 _aur_prompts.install()
+
+# Warn and require confirmation before building AUR packages that were modified
+# recently or whose maintainer changed since the last accepted run.
+_aur_risk_policy.install()
 
 # Point AUR builds at the aurbuilder user's gpg keyring (created by
 # UsersModule, populated by AurKeysModule). Has to happen before host

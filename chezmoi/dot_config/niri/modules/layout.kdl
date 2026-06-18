@@ -5,6 +5,8 @@ layout {
     // Set gaps around windows in logical pixels.
     gaps 8
 
+    background-color "transparent"
+
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
     //   or right edge of the screen.
@@ -152,5 +154,20 @@ layout {
         // right 64
         // top 64
         // bottom 64
+    }
+}
+
+// Make the wallpaper stationary, rather than moving with workspaces.
+layer-rule {
+    // This is for swaybg; change for other wallpaper tools.
+    // Find the right namespace by running niri msg layers.
+    match namespace="^awww-daemon$"
+    place-within-backdrop true
+}
+
+// Optionally, disable the workspace shadows in the overview.
+overview {
+    workspace-shadow {
+        off
     }
 }

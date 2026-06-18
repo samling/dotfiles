@@ -13,7 +13,16 @@ class SemiUnattended(aur.AurCommands):
         return ["cat", file]
 
     def git_diff(self, from_commit):
-        return ["git", "diff", "--stat", from_commit]
+        return [
+            "git",
+            "show",
+            "--oneline",
+            "--patch",
+            "HEAD",
+            "--",
+            "PKGBUILD",
+            ".SRCINFO",
+        ]
 
     def install_as_dependencies(self, pkgs):
         return ["pacman", "-S", "--needed", "--asdeps", "--noconfirm", *pkgs]
