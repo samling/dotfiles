@@ -178,6 +178,8 @@ window-rule {
   match app-id="thunar" title="File Operation Progress"
   open-floating true;
   open-focused false;
+  default-column-width { proportion 0.3; }
+  default-window-height { proportion 0.1; }
 }
 window-rule {
   match app-id=r#"^org\.gnome\.FileRoller"#
