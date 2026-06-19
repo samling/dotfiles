@@ -9,6 +9,9 @@ claude() {
 }
 alias oc="opencode"
 
+#=== Arch Linux
+alias yay="yay --diffmenu --answerdiff All --save"
+
 #=== Builtin Replacements
 alias cat="bat -pp"
 alias df="duf -hide special,fuse"
