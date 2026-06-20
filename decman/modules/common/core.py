@@ -26,6 +26,8 @@ class CoreModule(decman.Module):
             "eza",
             "fd",
             "file",
+            "flatpak",
+            "flatpak-builder",
             "font-manager",
             "fx",
             "fzf",
