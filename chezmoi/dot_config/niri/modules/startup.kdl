@@ -3,6 +3,8 @@
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
+spawn-at-startup "sunsetr"
+
 // This line starts waybar, a commonly used bar for Wayland compositors.
 //spawn-at-startup "waybar"
 spawn-sh-at-startup "for i in $(seq 1 100); do busctl --user get-name-owner org.freedesktop.Notifications >/dev/null 2>&1 && break; sleep 0.1; done; google-chrome-stable"

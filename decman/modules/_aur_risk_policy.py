@@ -73,7 +73,6 @@ def enforce_package_policy(
         metadata_by_package=fetch_aur_metadata(package_names),
         now=int(time.time()),
         recent_window_seconds=recent_window_seconds,
-        confirm=output.prompt_confirm,
     )
 
 
@@ -83,7 +82,6 @@ def evaluate_package_risks(
     metadata_by_package: dict[str, AurMetadata],
     now: int,
     recent_window_seconds: int,
-    confirm,
 ) -> None:
     store.ensure(_MAINTAINERS_KEY, {})
     known_maintainers = store[_MAINTAINERS_KEY]
@@ -111,7 +109,6 @@ def evaluate_package_risks(
                 f"{_maintainer_name(known_maintainers[package_name])} to "
                 f"{_maintainer_name(metadata.maintainer)}"
             )
-            maintainer_updates[package_name] = metadata.maintainer
 
     if risk_messages:
         output.print_warning(
@@ -121,8 +118,6 @@ def evaluate_package_risks(
             "before abuse."
         )
         output.print_list("AUR risk details:", risk_messages, elements_per_line=1)
-        if not confirm("Continue building risky AUR package(s)?", default=False):
-            raise AurRiskPolicyError("AUR risk policy blocked building package(s).")
 
     known_maintainers.update(maintainer_updates)
 

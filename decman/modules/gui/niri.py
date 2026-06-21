@@ -26,6 +26,7 @@ class NiriModule(decman.Module):
             "libinput-gestures",
             "monique",
             "niri-float-sticky",
+            "sunsetr",
         }
 
     @systemd.user_units
