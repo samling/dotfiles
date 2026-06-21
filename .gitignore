@@ -10,3 +10,5 @@ log
 result
 __pycache__/
 *.pyc
+docs/superpowers
+.superpowers
