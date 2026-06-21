@@ -37,6 +37,7 @@ class NiriModule(decman.Module):
         return {
             "sboynton": {
                 "hyprpolkitagent.service",
+                "sunsetr.service",
             },
         }
 
