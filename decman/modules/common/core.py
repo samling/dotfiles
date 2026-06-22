@@ -85,6 +85,7 @@ class CoreModule(decman.Module):
             "smem",
             "timg",
             "neo-matrix",
+            "samsung-unified-driver-printer",
             "toofan-bin",
             "viddy",
             "xembedsniproxy",
