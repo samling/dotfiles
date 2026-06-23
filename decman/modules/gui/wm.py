@@ -29,6 +29,7 @@ class WmModule(decman.Module):
             "greetd-regreet",
             "grim",
             "kitty",
+            "qt6-virtualkeyboard",
             "quickshell",
             "rofi",
             "satty",
