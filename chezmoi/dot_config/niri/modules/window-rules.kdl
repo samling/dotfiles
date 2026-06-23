@@ -81,6 +81,20 @@ window-rule {
   open-on-workspace "Chat"
 }
 
+window-rule {
+  match at-startup=true app-id="slack" title="Slack - Huddle Preview"
+  open-on-workspace "Chat"
+  open-floating true
+  open-focused false
+}
+
+window-rule {
+  match at-startup=true app-id="slack" title=r#"^Huddle:.*$"#
+  open-on-workspace "Chat"
+  open-floating true
+  open-focused false
+}
+
 //=== NOTES
 
 window-rule {
