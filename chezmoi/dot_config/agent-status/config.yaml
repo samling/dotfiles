@@ -1,0 +1,80 @@
+# agent-status config
+#
+# All keys are optional. Precedence (high → low):
+#   1. CLI flags (--addr, --port, --notify, ...)
+#   2. AGENT_STATUS_* environment variables (AGENT_STATUS_SERVER_ADDR, ...)
+#   3. This file
+#   4. Built-in defaults
+#
+# To find the file agent-status is currently using, look at startup
+# logs: "config: loaded /path/to/config.yaml". The default search
+# location is $XDG_CONFIG_HOME/agent-status/config.yaml.
+
+# Path to the persistent state file. Defaults to
+# $XDG_STATE_HOME/agent-status/state.json (or ~/.local/state/agent-status/
+# state.json when XDG_STATE_HOME is unset, per the XDG Base Directory
+# Specification). The collector is the sole writer; clients (TUI, focus
+# subcommand, statusline) read live state via the HTTP API instead.
+# state: ~/.local/state/agent-status/state.json
+
+# Logging for the collector and CLI clients. Each key has a matching
+# CLI flag (--log-level, --log-format) and env var (LOG_LEVEL,
+# LOG_FORMAT) that takes precedence over this file.
+log:
+  # Minimum log level: debug | info | warn | error.
+  level: info
+  # Output format: text (human-friendly key=value) or json.
+  format: text
+
+server:
+  # Listen address and port for the HTTP collector. The collector
+  # exposes POST /hook for agent processes plus GET /state and
+  # GET /state/{session_id} for clients (TUI, focus subcommand,
+  # statusline). Bound to localhost; do not expose to the network.
+  addr: 127.0.0.1
+  port: "7878"
+
+  # Desktop notifications when sessions enter the waiting state. One
+  # toast fires per waiting session; each toast carries a "Focus"
+  # action that brings that session's window to the foreground via
+  # the focus subcommand. Requires libnotify (notify-send) on Linux.
+  notify:
+    enabled: true
+    # Delay between a session entering waiting and its first
+    # notification. Each session has its own initial timer; re-entering
+    # waiting later starts a fresh delay.
+    initial-delay: 300s
+    # Cadence of repeat notifications while a session stays waiting.
+    # Set to 0 to fire only once per waiting episode.
+    repeat: 5m
+    # Go text/template strings. Each notification renders against a
+    # single waiting session. Available fields:
+    #   .Session.SessionID  the session id
+    #   .Session.Agent      "claude-code", "codex", ...
+    #   .Session.PID        the agent process pid
+    #   .Session.LastEvent  the most recent hook event name
+    #   .Status             derived status: active | waiting | idle
+    title: agent-status
+    body: "{{.Session.Agent}} session waiting for input"
+    # Label for the focus action button shown on each notification.
+    action-label: Focus
+
+ui:
+  # TUI refresh interval.
+  interval: 500ms
+  # Exit the TUI after focusing a session. Useful when launched in a
+  # tmux popup so the popup auto-closes on focus.
+  quit-after-focus: false
+  # Debug log written to $XDG_STATE_HOME/agent-status/ui.log
+  # (or ~/.local/state/agent-status/ui.log when XDG_STATE_HOME is
+  # unset). Disabled by default; the file fills quickly. Enable
+  # with --log on the ui subcommand or by setting enabled: true.
+  log:
+    enabled: false
+
+statusline:
+  # Go template applied to the statusline view. Available fields:
+  # .Total, .Active, .Waiting, .Idle, .Connected, .Sessions.
+  format: "{{.Active}}/{{.Waiting}}/{{.Idle}}"
+  # Emit JSON instead of evaluating the template.
+  json: false
