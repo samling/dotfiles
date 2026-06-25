@@ -32,7 +32,7 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+Space hotkey-overlay-title="Run an Application: rofi" { spawn-sh "rofi -show drun"; }
     Mod+E hotkey-overlay-title="Open a File Manager: thunar" { spawn "thunar"; }
-    Mod+Shift+Q hotkey-overlay-title="Toggle Wallpaper Picker" { spawn "qs" "ipc" "call" "wallpaper" "toggle"; }
+    //Mod+Shift+Q hotkey-overlay-title="Toggle Wallpaper Picker" { spawn "qs" "ipc" "call" "wallpaper" "toggle"; }
     Mod+Shift+Ctrl+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock" "-f"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -67,23 +67,32 @@ binds {
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
 
-    Mod+W repeat=false { close-window; }
+    Mod+Q repeat=false { close-window; }
 
     // Ergonomics of bindings:
     //
     // Mod - focus column
-    // Mod+Shift - move column
+    // Mod+Shift - move window to column
     // Mod+Ctrl - focus monitor
-    // Mod+Shift+Ctrl - move column to focused monitor
+    // Mod+Shift+Ctrl - move window to monitor
 
+    // Arrow key navigation
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-or-workspace-down; }
     Mod+Up    { focus-window-or-workspace-up; }
     Mod+Right { focus-column-right; }
+
+    // Vim navigation
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-or-workspace-down; }
     Mod+K     { focus-window-or-workspace-up; }
     Mod+L     { focus-column-right; }
+
+    // WASD navigation
+    Mod+A     { focus-column-left; }
+    Mod+W     { focus-window-or-workspace-up; }
+    Mod+S     { focus-window-or-workspace-down; }
+    Mod+D     { focus-column-right; }
 
     Mod+Shift+Left  { move-column-left; }
     Mod+Shift+Down  { move-window-down-or-to-workspace-down; }
