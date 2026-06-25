@@ -4,12 +4,12 @@ host := `hostname`
 init:
     chezmoi init --source={{root}}
     python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
-    sudo decman --source={{root}}/decman/source.py
+    sudo SYSTEMD_LOG_LEVEL=warning decman --source={{root}}/decman/source.py
 
 [linux]
 apply:
     python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
-    sudo decman
+    sudo SYSTEMD_LOG_LEVEL=warning decman
 
 # macOS counterpart to decman: brew bundle + pyinfra config modules.
 [macos]
@@ -19,11 +19,11 @@ apply:
 
 dry-run:
     python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py --dry-run
-    sudo decman --dry-run
+    sudo SYSTEMD_LOG_LEVEL=warning decman --dry-run
 
 update:
     python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
-    sudo DECMAN_NO_UPGRADE=1 decman
+    sudo DECMAN_NO_UPGRADE=1 SYSTEMD_LOG_LEVEL=warning decman
 
 # Discover validpgpkeys from @aur.packages PKGBUILDs (or pass specific
 # package names for transitive deps) and append unknown fingerprints
