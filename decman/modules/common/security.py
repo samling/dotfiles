@@ -1,7 +1,8 @@
 import decman
-from decman.plugins import pacman, aur
+from decman.plugins import pacman, aur, systemd
 
 from modules._paths import PKGBUILDS as _PKGBUILDS
+from modules._systemd import reconcile_units
 
 
 class SecurityModule(decman.Module):
@@ -52,6 +53,13 @@ class SecurityModule(decman.Module):
                 pkgbuild_directory=str(_PKGBUILDS / "vkv-bin"),
             ),
         }
+
+    @systemd.units
+    def units(self) -> set[str]:
+        return {"littlesnitch.service"}
+
+    def on_change(self, store):
+        reconcile_units(self, store)
 
     def after_update(self, store):
         # Create the login keyring with an empty password so libsecret
