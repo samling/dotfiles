@@ -662,3 +662,6 @@ function fzg() ( # fuzzygrep
       --preview-window '~4,+{2}+4/3,<80(up)' \
       --query "$*"
 )
+
+
+

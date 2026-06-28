@@ -101,3 +101,17 @@ bindkey '^[^P' fzf-search-processes    # Alt-Ctrl-P: pids
 # Tab: route `git (checkout|switch|rebase|merge|cherry-pick) <branch>` through
 # the same picker as Alt-Ctrl-B; everything else falls through to fzf-tab.
 bindkey '^I' fzf-tab-dispatch
+
+# Shell-GPT integration ZSH v0.2
+_sgpt_zsh() {
+if [[ -n "$BUFFER" ]]; then
+    _sgpt_prev_cmd=$BUFFER
+    BUFFER+="⌛"
+    zle -I && zle redisplay
+    BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd" --no-interaction)
+    zle end-of-line
+fi
+}
+zle -N _sgpt_zsh
+bindkey '^I' _sgpt_zsh
+# Shell-GPT integration ZSH v0.2
