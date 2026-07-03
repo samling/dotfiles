@@ -37,9 +37,10 @@ class SecurityModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
+            "ctrld-bin",
             "doppler-cli-bin",
             "littlesnitch-bin",
-            "trufflehog",
+            "trufflehog-bin",
         }
 
     @aur.custom_packages

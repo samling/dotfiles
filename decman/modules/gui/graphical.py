@@ -39,6 +39,7 @@ class GraphicalModule(decman.Module):
             "poppler-glib",
             "power-profiles-daemon",
             "qt6ct",
+            "rpi-imager",
             "thunar",
             "thunar-archive-plugin",
             "thunar-volman",

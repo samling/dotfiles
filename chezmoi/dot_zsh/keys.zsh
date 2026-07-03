@@ -113,5 +113,6 @@ if [[ -n "$BUFFER" ]]; then
 fi
 }
 zle -N _sgpt_zsh
-bindkey '^I' _sgpt_zsh
+# Ctrl-I is the same key sequence as Tab in terminals, so use Alt-i here.
+bindkey '^[i' _sgpt_zsh
 # Shell-GPT integration ZSH v0.2
