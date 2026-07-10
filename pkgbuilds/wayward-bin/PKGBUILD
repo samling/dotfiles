@@ -1,7 +1,7 @@
 # Maintainer: Sam Boynton <sboynton@nvidia.com>
 pkgname=wayward-bin
 _pkgname=wayward
-pkgver=0.3.3
+pkgver=0.3.4
 pkgrel=1
 pkgdesc="An opinionated Wayland shell"
 arch=('x86_64')

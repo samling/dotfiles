@@ -47,5 +47,15 @@ class HostNetworkingModule(decman.Module):
             },
         }
 
+    def files(self) -> dict[str, decman.File]:
+        return {
+            "/etc/NetworkManager/dispatcher.d/09-timezone": decman.File(
+                source_file="../etc/NetworkManager/dispatcher.d/09-timezone",
+                permissions=0o755,
+                owner="root",
+                group="root",
+            ),
+        }
+
     def on_change(self, store):
         reconcile_units(self, store)

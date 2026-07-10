@@ -1,8 +1,8 @@
-output "eDP-1" {
-    mode "2880x1800@120.000"
-    scale 1.5
-    transform "normal"
-}
+// output "eDP-1" {
+//     mode "2880x1800@120.000"
+//     scale 1.5
+//     transform "normal"
+// }
 
 workspace "Web"
 workspace "Terminal"
