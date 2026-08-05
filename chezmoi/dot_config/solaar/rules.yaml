@@ -1,0 +1,7 @@
+%YAML 1.3
+---
+- Key: [Mouse Gesture Button, pressed]
+- KeyPress:
+  - [Super_L, o]
+  - click
+...

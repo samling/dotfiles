@@ -11,10 +11,9 @@ class GuiHardwareModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        # return {
-        #     "solaar"
-        # }
-        return set()
+        return {
+            "solaar"
+        }
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
