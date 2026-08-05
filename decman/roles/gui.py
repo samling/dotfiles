@@ -27,6 +27,7 @@ from modules.gui.clipboard import ClipboardModule
 from modules.gui.editors import EditorsGuiModule
 from modules.gui.games import GamesModule
 from modules.gui.graphical import GraphicalModule
+from modules.gui.hardware import GuiHardwareModule
 from modules.gui.media import MediaGuiModule
 from modules.gui.niri import NiriModule
 from modules.gui.printing import PrintingModule
@@ -83,6 +84,7 @@ GUI_MODULES = [
     EditorsGuiModule(),
     GamesModule(),
     GraphicalModule(),
+    GuiHardwareModule(),
     MediaGuiModule(),
     NiriModule(),
     PrintingModule(),

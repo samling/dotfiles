@@ -24,7 +24,10 @@ class BrowsersModule(decman.Module):
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        return {"google-chrome"}
+        return {
+            "google-chrome",
+            "prisma-access-browser-bin"
+        }
 
     @systemd.user_units
     def user_units(self) -> dict[str, set[str]]:

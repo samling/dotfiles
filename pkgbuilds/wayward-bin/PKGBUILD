@@ -21,7 +21,7 @@ source=(
   "$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}-v$pkgver-x86_64-unknown-linux-gnu.tar.gz"
   'wayward.service'
 )
-sha256sums=('43570c762e4c2310e5f52fdbc85d59df6385549e1da3eb964d92e4308a509a90'
+sha256sums=('3fb441a9f0ba3e9a46905fd476bc4b4927cc2c228d5e402042d89fa7f0e5a059'
             '5dd33397922a7eca4d1c0a7f6615a43c8b5f97107d2779a5d17c6f80f63983d7')
 
 package() {
