@@ -15,5 +15,6 @@ class AIToolsModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         return {
+            "dabri",
             "rtk-bin",
         }
