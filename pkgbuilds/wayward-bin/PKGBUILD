@@ -1,7 +1,7 @@
 # Maintainer: Sam Boynton <sboynton@nvidia.com>
 pkgname=wayward-bin
 _pkgname=wayward
-pkgver=0.3.4
+pkgver=0.3.5
 pkgrel=1
 pkgdesc="An opinionated Wayland shell"
 arch=('x86_64')
@@ -21,7 +21,7 @@ source=(
   "$pkgname-$pkgver-x86_64.tar.gz::$url/releases/download/v$pkgver/${_pkgname}-v$pkgver-x86_64-unknown-linux-gnu.tar.gz"
   'wayward.service'
 )
-sha256sums=('3fb441a9f0ba3e9a46905fd476bc4b4927cc2c228d5e402042d89fa7f0e5a059'
+sha256sums=('19beb671bd45e58d1bc45fd010c691f0c3af291a8b73da758c3dd27ef757e02c'
             '5dd33397922a7eca4d1c0a7f6615a43c8b5f97107d2779a5d17c6f80f63983d7')
 
 package() {

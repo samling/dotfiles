@@ -100,3 +100,12 @@ snippets:
     tags: ["kubernetes", "pods", "advanced"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
+
+  kubectl-get-node-labels:
+    id: "kubectl-get-node-labels"
+    name: "kubectl-get-node-labels"
+    description: "Show kubernetes node labels as nested lists"
+    command: "kubectl get nodes -o yaml | yq '.items[] | {.metadata.name: .metadata.labels}'"
+    tags: ["kubernetes", "nodes", "labels", "advanced"]
+    created_at: "2025-01-01T00:00:00Z"
+    updated_at: "2025-01-01T00:00:00Z"
