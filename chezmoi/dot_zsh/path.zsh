@@ -40,6 +40,9 @@ PATH=$PATH:${HOME}/.fzf/bin
 #=== Opencode
 PATH=$PATH:${HOME}/.opencode/bin/
 
+#=== Pi
+PATH=$PATH:${HOME}/.local/share/pi-node/current/bin
+
 # Final path export
 #
 export PATH

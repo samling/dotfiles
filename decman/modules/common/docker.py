@@ -40,14 +40,20 @@ class DockerModule(decman.Module):
             "erofs-utils",
         }
 
-    @aur.custom_packages
-    def custompkgs(self) -> set[aur.CustomPackage]:
+    @aur.packages
+    def aurpkgs(self) -> set[str]:
         return {
-            aur.CustomPackage(
-                pkgname="docker-sbx-bin",
-                pkgbuild_directory=str(_PKGBUILDS / "docker-sbx-bin"),
-            ),
+            "docker-sbx"
         }
+
+    # @aur.custom_packages
+    # def custompkgs(self) -> set[aur.CustomPackage]:
+    #     return {
+    #         aur.CustomPackage(
+    #             pkgname="docker-sbx-bin",
+    #             pkgbuild_directory=str(_PKGBUILDS / "docker-sbx-bin"),
+    #         ),
+    #     }
 
     @systemd.units
     def units(self) -> set[str]:
