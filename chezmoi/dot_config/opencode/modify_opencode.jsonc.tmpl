@@ -19,15 +19,5 @@ jq '
           "Authorization": env.GITHUB_AUTHORIZATION
         }
       },
-      "serena": {
-        "enabled": true,
-        "type": "local",
-        "command": [
-          "serena",
-          "start-mcp-server",
-          "--context=ide",
-          "--project-from-cwd"
-        ]
-      }
     })
 ' <<< "$input"

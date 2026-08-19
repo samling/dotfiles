@@ -2,11 +2,6 @@
 alias sudo="sudo "
 
 #=== AI
-#alias serena="uvx --from git+https://github.com/oraios/serena serena"
-#alias claude='claude --append-system-prompt "$(uvx --python 3.13 --from git+https://github.com/oraios/serena serena prompts print-cc-system-prompt-override)"'
-claude() {
-  command claude --system-prompt="$(serena prompts print-cc-system-prompt-override)" "$@"
-}
 alias oc="opencode"
 
 #=== Arch Linux

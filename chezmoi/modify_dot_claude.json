@@ -9,11 +9,6 @@
 
 {{- /* Define your MCP servers here */ -}}
 {{- $mcpServers := dict
-    "serena" (dict
-        "type" "stdio"
-        "command" "serena"
-        "args" (list "start-mcp-server" "--context=claude-code" "--project-from-cwd")
-    )
     "github" (dict
       "type" "http"
       "url" "https://api.githubcopilot.com/mcp"
