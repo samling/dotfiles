@@ -52,6 +52,7 @@ class CoreModule(decman.Module):
             "nut",
             "plocate",
             "psmisc",
+            "pv",
             "qalculate-qt",
             "ranger",
             "rhash",
