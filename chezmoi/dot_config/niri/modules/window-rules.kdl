@@ -148,6 +148,12 @@ window-rule {
     open-fullscreen true
 }
 
+// open moonlight maximized
+window-rule {
+    match title="Moonlight"
+    open-maximized true
+}
+
 //=== MISC
 
 window-rule {
