@@ -71,6 +71,19 @@ class ZenbookModule(decman.Module):
 
         reconcile_units(self, store)
 
+        decman.prg(["udevadm", "control", "--reload-rules"], check=True)
+        decman.prg(
+            [
+                "udevadm",
+                "trigger",
+                "--action=change",
+                "--subsystem-match=usb",
+                "--attr-match=idVendor=046d",
+                "--attr-match=idProduct=c539",
+            ],
+            check=True,
+        )
+
         # Rebuild initrds (and re-emit boot entries) only when the EDID
         # blob or the dracut drop-in actually changed. reinstall-kernels
         # iterates every installed kernel and is slow.
@@ -101,6 +114,18 @@ class ZenbookModule(decman.Module):
             # asus_wmi: don't toggle Fn-lock on at boot.
             "/etc/modprobe.d/asus.conf": decman.File(
                 content="options asus_wmi fnlock_default=N\n",
+                permissions=0o644,
+                owner="root",
+                group="root",
+            ),
+            # This receiver wakes the laptop on mouse movement, including
+            # while the lid is closed. Keep all other wake sources unchanged.
+            "/etc/udev/rules.d/90-logitech-lightspeed-no-wakeup.rules": decman.File(
+                content=(
+                    'ACTION=="add|change", SUBSYSTEM=="usb", '
+                    'ATTR{idVendor}=="046d", ATTR{idProduct}=="c539", '
+                    'TEST=="power/wakeup", ATTR{power/wakeup}="disabled"\n'
+                ),
                 permissions=0o644,
                 owner="root",
                 group="root",

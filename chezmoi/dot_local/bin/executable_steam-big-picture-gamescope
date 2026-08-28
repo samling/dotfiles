@@ -9,6 +9,48 @@
 ###
 ### This should also skip any scopebuddy invocation with SCB_NOSCOPE=1 in the launch options.
 
+STEAM_WAS_RUNNING=false
+if pgrep -x steam >/dev/null; then
+    STEAM_WAS_RUNNING=true
+fi
+
+GAMESCOPE_PID=""
+CLEANUP_DONE=false
+
+cleanup() {
+    local exit_status=$?
+
+    trap - EXIT TERM INT HUP
+
+    if $CLEANUP_DONE; then
+        exit "$exit_status"
+    fi
+    CLEANUP_DONE=true
+
+    if [[ -n "$GAMESCOPE_PID" ]] && kill -0 "$GAMESCOPE_PID" 2>/dev/null; then
+        kill -TERM "$GAMESCOPE_PID" 2>/dev/null || true
+        wait "$GAMESCOPE_PID" 2>/dev/null || true
+    fi
+
+    if $STEAM_WAS_RUNNING; then
+        while pgrep -x steam >/dev/null; do
+            sleep 0.25
+        done
+
+        systemd-run \
+            --user \
+            --quiet \
+            --collect \
+            --unit="steam-after-sunshine-${BASHPID}" \
+            -- \
+            /usr/bin/steam -silent
+    fi
+
+    exit "$exit_status"
+}
+
+trap cleanup EXIT TERM INT HUP
+
 # Shut down any desktop Steam instance.
 steam -shutdown >/dev/null 2>&1 || true
 
@@ -47,8 +89,6 @@ gamescope \
 
 GAMESCOPE_PID=$!
 
-trap 'kill -TERM "$GAMESCOPE_PID" 2>/dev/null || true' TERM INT HUP EXIT
-
 # Wait for a NEW Gamescope window.
 WINDOW_ID=""
 
@@ -86,7 +126,6 @@ niri msg action fullscreen-window --id "$WINDOW_ID"
 niri msg action focus-window --id "$WINDOW_ID"
 
 wait "$GAMESCOPE_PID"
-
 
 
 
