@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+
+STEAM_WAS_RUNNING=false
+if pgrep -x steam >/dev/null; then
+    STEAM_WAS_RUNNING=true
+fi
+
+GAMESCOPE_PID=""
+CLEANUP_DONE=false
+
+cleanup() {
+    local exit_status=$?
+
+    trap - EXIT TERM INT HUP
+
+    if $CLEANUP_DONE; then
+        exit "$exit_status"
+    fi
+    CLEANUP_DONE=true
+
+    if [[ -n "$GAMESCOPE_PID" ]] && kill -0 "$GAMESCOPE_PID" 2>/dev/null; then
+        kill -TERM "$GAMESCOPE_PID" 2>/dev/null || true
+        wait "$GAMESCOPE_PID" 2>/dev/null || true
+    fi
+
+    # Restore desktop Steam only if it was running before streaming.
+    if $STEAM_WAS_RUNNING; then
+        while pgrep -x steam >/dev/null; do
+            sleep 0.25
+        done
+
+        systemd-run \
+            --user \
+            --quiet \
+            --collect \
+            --unit="steam-after-sunshine-${BASHPID}" \
+            -- \
+            /usr/bin/steam -silent
+    fi
+
+    exit "$exit_status"
+}
+
+trap cleanup EXIT TERM INT HUP
+
+# Steam is single-instance. It must be gone before launching it inside Gamescope.
+steam -shutdown >/dev/null 2>&1 || true
+
+while pgrep -x steam >/dev/null; do
+    sleep 0.25
+done
+
+WIDTH="${SUNSHINE_CLIENT_WIDTH:-2560}"
+HEIGHT="${SUNSHINE_CLIENT_HEIGHT:-1440}"
+FPS="${SUNSHINE_CLIENT_FPS:-60}"
+
+# Remember Gamescope windows that already exist.
+mapfile -t OLD_IDS < <(
+    niri msg --json windows |
+        jq -r '.[] | select(.app_id == "gamescope") | .id'
+)
+
+gamescope \
+    --steam \
+    --grab \
+    --force-grab-cursor \
+    --force-windows-fullscreen \
+    -W "$WIDTH" \
+    -H "$HEIGHT" \
+    -w "$WIDTH" \
+    -h "$HEIGHT" \
+    -r "$FPS" \
+    -- \
+    env \
+        SCB_NOSCOPE=1 \
+        SCB_CONF=gamemode.conf \
+        steam -gamepadui &
+
+GAMESCOPE_PID=$!
+
+# Find the new Gamescope window.
+WINDOW_ID=""
+
+for _ in {1..100}; do
+    while read -r id; do
+        already_existed=false
+
+        for old_id in "${OLD_IDS[@]}"; do
+            if [[ "$id" == "$old_id" ]]; then
+                already_existed=true
+                break
+            fi
+        done
+
+        if ! $already_existed; then
+            WINDOW_ID="$id"
+            break 2
+        fi
+    done < <(
+        niri msg --json windows |
+            jq -r '.[] | select(.app_id == "gamescope") | .id'
+    )
+
+    kill -0 "$GAMESCOPE_PID" 2>/dev/null || exit 1
+    sleep 0.1
+done
+
+if [[ -z "$WINDOW_ID" ]]; then
+    echo "Could not find new Gamescope window" >&2
+    exit 1
+fi
+
+# The virtual display should now be the active output, so no monitor move is needed.
+niri msg action fullscreen-window --id "$WINDOW_ID"
+niri msg action focus-window --id "$WINDOW_ID"
+
+wait "$GAMESCOPE_PID"
