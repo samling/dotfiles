@@ -35,7 +35,8 @@ cleanup() {
             --collect \
             --unit="steam-after-sunshine-${BASHPID}" \
             -- \
-            /usr/bin/steam -silent
+            /usr/bin/steam -silent -pipewire -pipewire-dmabuf
+
     fi
 
     exit "$exit_status"
