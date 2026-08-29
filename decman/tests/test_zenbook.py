@@ -45,6 +45,19 @@ def test_zenbook_reloads_and_triggers_udev_on_change(monkeypatch):
     module.on_change(store)
 
     assert calls == [
+        (
+            [
+                "systemctl",
+                "disable",
+                "--now",
+                "power-profiles-daemon.service",
+            ],
+            {"check": True},
+        ),
+        (
+            ["systemctl", "mask", "power-profiles-daemon.service"],
+            {"check": True},
+        ),
         (["udevadm", "control", "--reload-rules"], {"check": True}),
         (
             [

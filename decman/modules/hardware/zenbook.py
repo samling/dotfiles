@@ -69,6 +69,21 @@ class ZenbookModule(decman.Module):
         # asusctl package doesn't ship it.
         os.makedirs("/etc/asusd", mode=0o755, exist_ok=True)
 
+        # asusd and PPD race over the platform profile and AMD EPP settings.
+        decman.prg(
+            [
+                "systemctl",
+                "disable",
+                "--now",
+                "power-profiles-daemon.service",
+            ],
+            check=True,
+        )
+        decman.prg(
+            ["systemctl", "mask", "power-profiles-daemon.service"],
+            check=True,
+        )
+
         reconcile_units(self, store)
 
         decman.prg(["udevadm", "control", "--reload-rules"], check=True)
