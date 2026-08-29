@@ -12,3 +12,4 @@ __pycache__/
 *.pyc
 docs/superpowers
 .superpowers
+.worktrees/
