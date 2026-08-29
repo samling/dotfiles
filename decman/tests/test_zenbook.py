@@ -12,6 +12,12 @@ class Store(dict):
         self.setdefault(key, default)
 
 
+def test_zenbook_masks_power_profiles_daemon():
+    assert zenbook.ZenbookModule().symlinks() == {
+        "/etc/systemd/system/power-profiles-daemon.service": "/dev/null",
+    }
+
+
 def test_zenbook_disables_wakeup_for_logitech_lightspeed_receiver():
     rule = zenbook.ZenbookModule().files()[
         "/etc/udev/rules.d/90-logitech-lightspeed-no-wakeup.rules"
@@ -24,13 +30,17 @@ def test_zenbook_disables_wakeup_for_logitech_lightspeed_receiver():
     )
 
 
-def test_zenbook_reloads_and_triggers_udev_on_change(monkeypatch):
-    calls = []
+def test_zenbook_stops_ppd_before_reconciling_and_reloads_udev(monkeypatch):
+    events = []
     module = zenbook.ZenbookModule()
     store = Store(initrd_inputs_hash="unchanged")
 
     monkeypatch.setattr(zenbook.os, "makedirs", lambda *args, **kwargs: None)
-    monkeypatch.setattr(zenbook, "reconcile_units", lambda *args: None)
+    monkeypatch.setattr(
+        zenbook,
+        "reconcile_units",
+        lambda module, store: events.append(("reconcile_units", module, store)),
+    )
     monkeypatch.setattr(
         zenbook.ZenbookModule,
         "_initrd_inputs_hash",
@@ -39,13 +49,14 @@ def test_zenbook_reloads_and_triggers_udev_on_change(monkeypatch):
     monkeypatch.setattr(
         zenbook.decman,
         "prg",
-        lambda cmd, **kwargs: calls.append((cmd, kwargs)),
+        lambda cmd, **kwargs: events.append(("prg", cmd, kwargs)),
     )
 
     module.on_change(store)
 
-    assert calls == [
+    assert events == [
         (
+            "prg",
             [
                 "systemctl",
                 "disable",
@@ -54,12 +65,14 @@ def test_zenbook_reloads_and_triggers_udev_on_change(monkeypatch):
             ],
             {"check": True},
         ),
+        ("reconcile_units", module, store),
         (
-            ["systemctl", "mask", "power-profiles-daemon.service"],
+            "prg",
+            ["udevadm", "control", "--reload-rules"],
             {"check": True},
         ),
-        (["udevadm", "control", "--reload-rules"], {"check": True}),
         (
+            "prg",
             [
                 "udevadm",
                 "trigger",

@@ -56,6 +56,11 @@ class ZenbookModule(decman.Module):
             "lactd.service",
         }
 
+    def symlinks(self) -> dict[str, str]:
+        return {
+            "/etc/systemd/system/power-profiles-daemon.service": "/dev/null",
+        }
+
     def _initrd_inputs_hash(self) -> str:
         h = hashlib.sha256()
         with open(self._EDID_BLOB_PATH, "rb") as f:
@@ -77,10 +82,6 @@ class ZenbookModule(decman.Module):
                 "--now",
                 "power-profiles-daemon.service",
             ],
-            check=True,
-        )
-        decman.prg(
-            ["systemctl", "mask", "power-profiles-daemon.service"],
             check=True,
         )
 
