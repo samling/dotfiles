@@ -60,6 +60,10 @@ mapfile -t OLD_IDS < <(
         jq -r '.[] | select(.app_id == "gamescope") | .id'
 )
 
+if ! wayward dismiss-notifications; then
+    echo "Could not dismiss Wayward notification popups" >&2
+fi
+
 gamescope \
     --steam \
     --grab \
