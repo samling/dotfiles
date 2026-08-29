@@ -61,6 +61,18 @@ class ZenbookModule(decman.Module):
             "/etc/systemd/system/power-profiles-daemon.service": "/dev/null",
         }
 
+    def before_update(self, store):
+        # The unit may not exist until packages are installed later in this run.
+        decman.prg(
+            [
+                "systemctl",
+                "disable",
+                "--now",
+                "power-profiles-daemon.service",
+            ],
+            check=False,
+        )
+
     def _initrd_inputs_hash(self) -> str:
         h = hashlib.sha256()
         with open(self._EDID_BLOB_PATH, "rb") as f:
@@ -78,8 +90,7 @@ class ZenbookModule(decman.Module):
         decman.prg(
             [
                 "systemctl",
-                "disable",
-                "--now",
+                "stop",
                 "power-profiles-daemon.service",
             ],
             check=True,

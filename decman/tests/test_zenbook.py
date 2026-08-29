@@ -18,6 +18,30 @@ def test_zenbook_masks_power_profiles_daemon():
     }
 
 
+def test_zenbook_disables_power_profiles_daemon_before_update(monkeypatch):
+    calls = []
+    module = zenbook.ZenbookModule()
+    monkeypatch.setattr(
+        zenbook.decman,
+        "prg",
+        lambda cmd, **kwargs: calls.append((cmd, kwargs)),
+    )
+
+    module.before_update(Store())
+
+    assert calls == [
+        (
+            [
+                "systemctl",
+                "disable",
+                "--now",
+                "power-profiles-daemon.service",
+            ],
+            {"check": False},
+        ),
+    ]
+
+
 def test_zenbook_disables_wakeup_for_logitech_lightspeed_receiver():
     rule = zenbook.ZenbookModule().files()[
         "/etc/udev/rules.d/90-logitech-lightspeed-no-wakeup.rules"
@@ -59,8 +83,7 @@ def test_zenbook_stops_ppd_before_reconciling_and_reloads_udev(monkeypatch):
             "prg",
             [
                 "systemctl",
-                "disable",
-                "--now",
+                "stop",
                 "power-profiles-daemon.service",
             ],
             {"check": True},
