@@ -3,6 +3,7 @@
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
+spawn-at-startup "noctalia"
 spawn-at-startup "sunsetr"
 spawn-at-startup "solaar"
 

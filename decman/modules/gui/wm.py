@@ -29,6 +29,7 @@ class WmModule(decman.Module):
             "greetd-regreet",
             "grim",
             "kitty",
+            "noctalia",
             "qt6-virtualkeyboard",
             "quickshell",
             "rofi",
@@ -84,7 +85,7 @@ class WmModule(decman.Module):
                 "awww.service",
                 #"quickshell.service",
                 "swayidle.service",
-                "wayward.service",
+                # "wayward.service",
             },
         }
 
