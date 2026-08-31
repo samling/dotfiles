@@ -140,11 +140,7 @@ requestRefresh = function()
 	end
 
 	if apiKey == "" then
-		publish({
-			status = "unavailable",
-			symbol = symbol,
-			error = "API key is not configured",
-		})
+		publishFailure("API key is not configured")
 		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 		return
 	end

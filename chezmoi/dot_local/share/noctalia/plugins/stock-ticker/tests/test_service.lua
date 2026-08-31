@@ -415,6 +415,52 @@ do
 end
 
 do
+	local service = loadService({
+		config = { symbol = "NVDA", api_key = "key" },
+		decodeResults = { quote = validNvda },
+		now = 1700000400,
+	})
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.state.quote.status, "ready")
+	service.config.api_key = ""
+	service.callbacks.onConfigChanged()
+	assertEqual(#service.requests, 1)
+	assertEqual(service.state.quote.status, "stale")
+	assertEqual(service.state.quote.symbol, "NVDA")
+	assertEqual(service.state.quote.price, 119.43)
+	assertEqual(service.state.quote.percent_change, 2.41)
+	assertEqual(service.state.quote.refreshed_at, 1700000400)
+	assertEqual(service.state.quote.error, "API key is not configured")
+	service.config.api_key = "new-key"
+	service.callbacks.onConfigChanged()
+	assertEqual(#service.requests, 2)
+	assertEqual(service.state.quote.status, "stale")
+	service.now = 1700000500
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.state.quote.refreshed_at, 1700000500)
+	assertEqual(service.state.quote.error, nil)
+end
+
+do
+	local service = loadService({
+		config = { symbol = "NVDA", api_key = "key" },
+		decodeResults = { quote = validNvda },
+	})
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	service.config.symbol = "AMD"
+	service.config.api_key = ""
+	service.callbacks.onConfigChanged()
+	assertEqual(#service.requests, 1)
+	assertEqual(service.state.quote.status, "unavailable")
+	assertEqual(service.state.quote.symbol, "AMD")
+	assertEqual(service.state.quote.price, nil)
+	assertEqual(service.state.quote.percent_change, nil)
+	assertEqual(service.state.quote.refreshed_at, nil)
+	assertEqual(service.state.quote.error, "API key is not configured")
+end
+
+do
 	local failures = {
 		{
 			name = "invalid JSON",
