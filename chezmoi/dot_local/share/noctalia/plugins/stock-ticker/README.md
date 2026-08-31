@@ -37,7 +37,11 @@ Stock Ticker is a Noctalia bar widget for one US-listed stock or ETF. It shows t
    end = [ "network", "sysmon", "stock-ticker" ]
    ```
 
-4. Provide the Twelve Data key using either the `TWELVE_DATA_API_KEY` environment variable or the **Settings -> Plugins -> Stock Ticker** string setting. A nonempty environment variable takes precedence. The plugin setting is stored in plain configuration, so prefer the environment variable when the configuration must not contain the key.
+4. Provide the Twelve Data key using either the `TWELVE_DATA_API_KEY` environment variable or the **Settings -> Plugins -> Stock Ticker** string setting. A nonempty environment variable takes precedence, with the plugin setting as the fallback.
+
+   For the environment method, `TWELVE_DATA_API_KEY` must be present in the environment inherited by the Noctalia process when it starts. Exporting or changing it in an unrelated shell does not update an already running Noctalia process; restart or relaunch Noctalia after adding, changing, or removing it.
+
+   If a session or service manager starts Noctalia, configure the variable or a protected `EnvironmentFile` there. Keep secrets out of `sam.toml` and version control. The plugin setting is stored in plain configuration, so prefer the environment variable when the configuration must not contain the key.
 
    Configure the symbol in the same plugin settings. It defaults to `NVDA`.
 
