@@ -1,0 +1,6 @@
+{
+  "settings.symbol.label": "Stock symbol",
+  "settings.symbol.description": "US-listed stock or ETF symbol to display.",
+  "settings.api_key.label": "Twelve Data API key",
+  "settings.api_key.description": "Used when TWELVE_DATA_API_KEY is not set. This value is stored as plain configuration."
+}

@@ -1,0 +1,35 @@
+id           = "sboynton/stock-ticker"
+name         = "Stock Ticker"
+version      = "0.1.0"
+plugin_api   = 24
+author       = "sboynton"
+license      = "MIT"
+icon         = "chart-line"
+description  = "A compact single-stock quote for the Noctalia bar."
+tags         = ["bar", "finance", "stocks"]
+dependencies = ["xdg-open"]
+
+[[setting]]
+key             = "symbol"
+type            = "string"
+label_key       = "settings.symbol.label"
+description_key = "settings.symbol.description"
+default         = "NVDA"
+
+[[setting]]
+key             = "api_key"
+type            = "string"
+label_key       = "settings.api_key.label"
+description_key = "settings.api_key.description"
+default         = ""
+
+[[service]]
+id    = "quotes"
+entry = "service.luau"
+
+[[widget]]
+id    = "ticker"
+entry = "widget.luau"
+
+  [widget.actions]
+  right = "plugin sboynton/stock-ticker:quotes all open"
