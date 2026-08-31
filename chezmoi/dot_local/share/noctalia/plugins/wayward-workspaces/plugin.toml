@@ -1,0 +1,132 @@
+id           = "sboynton/wayward-workspaces"
+name         = "Wayward Workspaces"
+version      = "0.2.0"
+plugin_api   = 24
+author       = "sboynton"
+license      = "MIT"
+icon         = "layout-grid"
+description  = "A Niri workspace switcher styled after Wayward."
+tags         = ["bar", "niri", "workspaces"]
+dependencies = ["niri"]
+
+[[service]]
+id    = "niri-workspaces"
+entry = "service.luau"
+
+[[widget]]
+id    = "workspaces"
+entry = "widget.luau"
+
+  [[widget.setting]]
+  key             = "label_format"
+  type            = "string"
+  label_key       = "settings.label_format.label"
+  description_key = "settings.label_format.description"
+  default         = "%L"
+
+  [[widget.setting]]
+  key             = "show_all_outputs"
+  type            = "bool"
+  label_key       = "settings.show_all_outputs.label"
+  description_key = "settings.show_all_outputs.description"
+  default         = false
+
+  [[widget.setting]]
+  key             = "hide_empty"
+  type            = "bool"
+  label_key       = "settings.hide_empty.label"
+  description_key = "settings.hide_empty.description"
+  default         = false
+
+  [[widget.setting]]
+  key             = "background_color"
+  type            = "color"
+  label_key       = "settings.background_color.label"
+  description_key = "settings.background_color.description"
+  default         = "on_surface"
+
+  [[widget.setting]]
+  key             = "background_opacity"
+  type            = "double"
+  label_key       = "settings.background_opacity.label"
+  description_key = "settings.background_opacity.description"
+  default         = 0.10
+  min             = 0.0
+  max             = 1.0
+  step            = 0.05
+
+  [[widget.setting]]
+  key             = "active_color"
+  type            = "color"
+  label_key       = "settings.active_color.label"
+  description_key = "settings.active_color.description"
+  default         = "primary"
+
+  [[widget.setting]]
+  key             = "active_opacity"
+  type            = "double"
+  label_key       = "settings.active_opacity.label"
+  description_key = "settings.active_opacity.description"
+  default         = 0.75
+  min             = 0.0
+  max             = 1.0
+  step            = 0.05
+
+  [[widget.setting]]
+  key             = "text_color"
+  type            = "color"
+  label_key       = "settings.text_color.label"
+  description_key = "settings.text_color.description"
+  default         = "on_surface"
+
+  [[widget.setting]]
+  key             = "urgent_color"
+  type            = "color"
+  label_key       = "settings.urgent_color.label"
+  description_key = "settings.urgent_color.description"
+  default         = "error"
+
+  [[widget.setting]]
+  key             = "gap"
+  type            = "int"
+  label_key       = "settings.gap.label"
+  description_key = "settings.gap.description"
+  default         = 5
+  min             = 0
+  max             = 32
+
+  [[widget.setting]]
+  key             = "outer_padding"
+  type            = "int"
+  label_key       = "settings.outer_padding.label"
+  description_key = "settings.outer_padding.description"
+  default         = 4
+  min             = 0
+  max             = 32
+
+  [[widget.setting]]
+  key             = "item_padding"
+  type            = "int"
+  label_key       = "settings.item_padding.label"
+  description_key = "settings.item_padding.description"
+  default         = 8
+  min             = 0
+  max             = 32
+
+  [[widget.setting]]
+  key             = "background_radius"
+  type            = "int"
+  label_key       = "settings.background_radius.label"
+  description_key = "settings.background_radius.description"
+  default         = 4
+  min             = 0
+  max             = 32
+
+  [[widget.setting]]
+  key             = "item_radius"
+  type            = "int"
+  label_key       = "settings.item_radius.label"
+  description_key = "settings.item_radius.description"
+  default         = 2
+  min             = 0
+  max             = 32

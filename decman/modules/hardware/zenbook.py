@@ -53,6 +53,7 @@ class ZenbookModule(decman.Module):
     def units(self) -> set[str]:
         return {
             "asusd.service",
+            "asus-fan-permissions.service",
             "lactd.service",
         }
 
