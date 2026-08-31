@@ -1,6 +1,7 @@
 local Quote = require("./lib/quote.luau")
 
 local STATE_QUOTE = "quote"
+local MINIMUM_SCHEDULING_INTERVAL_MS = 16
 local REFRESH_INTERVAL_MS = 300000
 local REQUEST_WATCHDOG_INTERVAL_MS = 60000
 
@@ -11,6 +12,7 @@ local nextRequestId = 0
 local activeRequestId = nil
 local activeRequestGeneration = nil
 local refreshPending = false
+local replacementScheduled = false
 local snapshot = nil
 
 local function publish(value)
@@ -59,6 +61,12 @@ end
 
 local requestRefresh
 
+local function schedulePendingReplacement()
+	refreshPending = false
+	replacementScheduled = true
+	noctalia.setUpdateInterval(MINIMUM_SCHEDULING_INTERVAL_MS)
+end
+
 local function clearActiveRequest()
 	activeRequestId = nil
 	activeRequestGeneration = nil
@@ -106,8 +114,7 @@ local function finishRequest(requestId, requestGeneration, response)
 	end
 
 	if refreshPending then
-		refreshPending = false
-		requestRefresh()
+		schedulePendingReplacement()
 	else
 		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 	end
@@ -118,6 +125,7 @@ requestRefresh = function()
 		refreshPending = true
 		return
 	end
+	replacementScheduled = false
 
 	if symbol == "" then
 		publish({
@@ -161,8 +169,7 @@ requestRefresh = function()
 			publishFailure("Could not queue quote request")
 		end
 		if refreshPending then
-			refreshPending = false
-			requestRefresh()
+			schedulePendingReplacement()
 		else
 			noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 		end
@@ -179,10 +186,17 @@ publish({
 noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 
 function update()
+	if replacementScheduled and activeRequestId == nil then
+		replacementScheduled = false
+		requestRefresh()
+		return
+	end
+
 	if activeRequestId ~= nil then
 		local expiredGeneration = activeRequestGeneration
 		clearActiveRequest()
 		refreshPending = false
+		replacementScheduled = false
 		if expiredGeneration == generation then
 			publishFailure("Quote request timed out")
 		end

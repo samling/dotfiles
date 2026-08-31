@@ -34,6 +34,7 @@ local function loadService(options)
 		environment = copy(options.environment or {}),
 		decodeResults = copy(options.decodeResults or {}),
 		httpAccepted = options.httpAccepted ~= false,
+		onHttp = options.onHttp,
 		openerAvailable = options.openerAvailable ~= false,
 		runAccepted = options.runAccepted ~= false,
 		now = options.now or 1700000000,
@@ -45,6 +46,7 @@ local function loadService(options)
 		logs = {},
 		interval = nil,
 		intervals = {},
+		deadlineGeneration = 0,
 		requiredModule = nil,
 	}
 
@@ -63,6 +65,11 @@ local function loadService(options)
 				request = copy(request),
 				callback = callback,
 			})
+			if context.onHttp ~= nil then
+				local onHttp = context.onHttp
+				context.onHttp = nil
+				onHttp(context)
+			end
 			return context.httpAccepted
 		end,
 		json = {
@@ -84,6 +91,9 @@ local function loadService(options)
 			end,
 		},
 		setUpdateInterval = function(interval)
+			if context.interval ~= interval then
+				context.deadlineGeneration = context.deadlineGeneration + 1
+			end
 			context.interval = interval
 			table.insert(context.intervals, interval)
 		end,
@@ -128,6 +138,13 @@ local function loadService(options)
 		assert(request ~= nil, "missing HTTP request " .. tostring(index))
 		request.callback(response)
 	end
+	function context:tick(generation)
+		if generation ~= nil and generation ~= self.deadlineGeneration then
+			return false
+		end
+		self.callbacks.update()
+		return true
+	end
 
 	return context
 end
@@ -164,6 +181,7 @@ do
 	assertEqual(service.requiredModule, "./lib/quote.luau")
 	assertEqual(service.intervals[1], 300000)
 	assertEqual(service.intervals[2], 60000)
+	assertEqual(service.deadlineGeneration, 2)
 	assertEqual(service.interval, 60000)
 	assertEqual(service.states[1].key, "quote")
 	assertEqual(service.states[1].value.status, "loading")
@@ -175,6 +193,7 @@ do
 	assertEqual(#service.requests, 1)
 	assertEqual(service.intervals[3], 300000)
 	assertEqual(service.interval, 300000)
+	assertEqual(service.deadlineGeneration, 3)
 end
 
 do
@@ -212,13 +231,79 @@ do
 	service.config.api_key = "replacement-key-2"
 	service.callbacks.onConfigChanged()
 	assertEqual(#service.requests, 1)
+	local predecessorDeadline = service.deadlineGeneration
 	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 1)
+	assertEqual(service.interval, 16)
+	assertEqual(service.deadlineGeneration, predecessorDeadline + 1)
+	local handoffDeadline = service.deadlineGeneration
+	assertEqual(service:tick(handoffDeadline), true)
 	assertEqual(#service.requests, 2)
 	assertContains(service.requests[2].request.url, "apikey=replacement-key-2")
-	assertEqual(service.intervals[3], 60000)
+	assertEqual(service.interval, 60000)
+	assertEqual(service.deadlineGeneration, handoffDeadline + 1)
+	assertEqual(service:tick(predecessorDeadline), false)
+	assertEqual(#service.requests, 2)
 	service:respond(2, { ok = true, status = 200, body = "quote" })
 	assertEqual(#service.requests, 2)
-	assertEqual(service.intervals[4], 300000)
+	assertEqual(service.interval, 300000)
+end
+
+do
+	local service = loadService({ decodeResults = { quote = validNvda } })
+	service.callbacks.onIpc("refresh", {})
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 1)
+	assertEqual(service.interval, 16)
+	service:tick(service.deadlineGeneration)
+	assertEqual(#service.requests, 2)
+	service.callbacks.onIpc("refresh", {})
+	service.callbacks.onIpc("refresh", {})
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 2)
+	assertEqual(service.interval, 16)
+	service:tick(service.deadlineGeneration)
+	assertEqual(#service.requests, 3)
+	service:respond(3, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 300000)
+end
+
+do
+	local service = loadService({ decodeResults = { quote = validNvda } })
+	service.callbacks.onIpc("refresh", {})
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 1)
+	assertEqual(service.interval, 16)
+	local handoffDeadline = service.deadlineGeneration
+	service.callbacks.onIpc("refresh", {})
+	assertEqual(#service.requests, 2)
+	assertEqual(service.interval, 60000)
+	assertEqual(service.deadlineGeneration, handoffDeadline + 1)
+	assertEqual(service:tick(handoffDeadline), false)
+	assertEqual(#service.requests, 2)
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 300000)
+end
+
+do
+	local service = loadService({
+		config = { symbol = "NVDA", api_key = "old-key" },
+		decodeResults = { quote = validNvda },
+	})
+	service.callbacks.onIpc("refresh", {})
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 16)
+	local handoffDeadline = service.deadlineGeneration
+	service.config.api_key = "new-key"
+	service.callbacks.onConfigChanged()
+	assertEqual(#service.requests, 2)
+	assertContains(service.requests[2].request.url, "apikey=new-key")
+	assertEqual(service.interval, 60000)
+	assertEqual(service.deadlineGeneration, handoffDeadline + 1)
+	assertEqual(service:tick(handoffDeadline), false)
+	assertEqual(#service.requests, 2)
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 300000)
 end
 
 do
@@ -275,6 +360,9 @@ do
 	assertEqual(service.state.quote.status, "unavailable")
 	assertEqual(service.state.quote.error, "Quote request timed out")
 	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 2)
+	assertEqual(service.interval, 16)
+	service:tick(service.deadlineGeneration)
 	assertEqual(#service.requests, 3)
 	service:respond(3, { ok = true, status = 200, body = "quote" })
 	assertEqual(service.state.quote.status, "ready")
@@ -363,6 +451,22 @@ do
 	queueFailure.callbacks.update()
 	assertEqual(#queueFailure.requests, 2)
 	assertEqual(queueFailure.interval, 60000)
+
+	local queuedPending = loadService({
+		httpAccepted = false,
+		decodeResults = { quote = validNvda },
+		onHttp = function(context)
+			context.callbacks.onIpc("refresh", {})
+		end,
+	})
+	assertEqual(#queuedPending.requests, 1)
+	assertEqual(queuedPending.interval, 16)
+	queuedPending.httpAccepted = true
+	queuedPending:tick(queuedPending.deadlineGeneration)
+	assertEqual(#queuedPending.requests, 2)
+	assertEqual(queuedPending.interval, 60000)
+	queuedPending:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(queuedPending.interval, 300000)
 end
 
 do
@@ -427,6 +531,9 @@ do
 	assertEqual(service.state.quote.status, "loading")
 	assertEqual(service.state.quote.symbol, "AMD")
 	service:respond(1, { ok = true, status = 200, body = "nvda" })
+	assertEqual(#service.requests, 1)
+	assertEqual(service.interval, 16)
+	service:tick(service.deadlineGeneration)
 	assertEqual(#service.requests, 2)
 	assertEqual(service.state.quote.status, "loading")
 	assertEqual(service.state.quote.symbol, "AMD")
