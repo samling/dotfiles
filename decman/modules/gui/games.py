@@ -18,7 +18,6 @@ class GamesModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         base = {
-          "gamescope",
           "moonlight-qt",
           "steam",
         }
@@ -29,9 +28,10 @@ class GamesModule(decman.Module):
     @aur.packages
     def aurpkgs(self) -> set[str]:
         base = set()
-        # base = {
-        #   "stepmania",
-        # }
+        base = {
+          "gamescope-git",
+          "scopebuddy"
+        }
         if not has_repo("cachyos"):
             base |= _NATIVE_OR_AUR
         return base

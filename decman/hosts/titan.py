@@ -60,7 +60,6 @@ decman.modules += MODULES + [
 
 
 _NATIVE_OR_AUR = {
-    "lib32-gamescope",
     "sunshine",
 }
 
@@ -71,5 +70,6 @@ decman.pacman.packages |= {
 
 decman.aur.packages |= {
     "icu76", # sunshine dependency
+    "lib32-gamescope-plus",
     "rustdesk-server-bin",
 } | (set() if has_repo("cachyos") else _NATIVE_OR_AUR)
