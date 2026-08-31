@@ -23,6 +23,8 @@ local options = {
 
 local workspaces = noctalia.state.get(STATE_WORKSPACES) or {}
 local status = noctalia.state.get(STATE_STATUS) or "connecting"
+local outputName = barWidget.outputName()
+local isVertical = barWidget.isVertical()
 
 local function colorWithOpacity(color, opacity)
 	if type(color) ~= "string" or color == "" or opacity <= 0 then
@@ -114,7 +116,6 @@ local function renderStatus()
 end
 
 local function render()
-	local outputName = barWidget.outputName()
 	local visible = Workspaces.visible(workspaces, outputName, options.showAllOutputs, options.hideEmpty)
 
 	if #visible == 0 then
@@ -152,7 +153,7 @@ local function render()
 		)
 	end
 
-	local container = barWidget.isVertical() and ui.column or ui.row
+	local container = isVertical and ui.column or ui.row
 	barWidget.setVisible(true)
 	barWidget.render(container({
 		gap = options.gap,
@@ -164,6 +165,7 @@ local function render()
 end
 
 function update()
+	isVertical = barWidget.isVertical()
 	render()
 end
 

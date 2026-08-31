@@ -97,12 +97,14 @@ ui = {
 
 local rendered = nil
 local visible = nil
+local widgetOutputName = "eDP-1"
+local widgetIsVertical = false
 barWidget = {
 	outputName = function()
-		return "eDP-1"
+		return widgetOutputName
 	end,
 	isVertical = function()
-		return false
+		return widgetIsVertical
 	end,
 	setVisible = function(value)
 		visible = value
@@ -121,6 +123,19 @@ assert(rendered.props.fill == "on_surface/0.1")
 assert(rendered.children[1].children[1].props.text == "Web")
 assert(rendered.children[1].props.fill == "#00000000")
 assert(rendered.children[2].props.fill == "#336699BF")
+
+widgetOutputName = nil
+watchers.workspaces(state.workspaces)
+assert(#rendered.children == 2)
+widgetOutputName = "eDP-1"
+
+widgetIsVertical = true
+update()
+assert(rendered.kind == "column")
+widgetIsVertical = false
+watchers.workspaces(state.workspaces)
+assert(rendered.kind == "column")
+widgetIsVertical = true
 
 rendered.children[1].props.onClick()
 assert(commands[1][4] == "focus-workspace")
