@@ -28,9 +28,11 @@ limits are less explicit than Twelve Data's current published limits.
 
 The plugin has two entries and one pure helper module:
 
-- `service.luau` is the singleton owner of HTTP requests, refresh timing,
-  configuration changes, shared state, and action IPC.
-- `widget.luau` watches shared state, renders the quote, and updates its tooltip.
+- `service.luau`, declared with the entry ID `quotes`, is the singleton owner of
+  HTTP requests, refresh timing, configuration changes, shared state, and action
+  IPC.
+- `widget.luau`, declared with the entry ID `ticker`, watches shared state,
+  renders the quote, and updates its tooltip.
 - `lib/quote.luau` builds the provider request and normalizes, validates, and
   formats quote data without depending on the Noctalia runtime.
 
@@ -89,11 +91,12 @@ For a fresh quote, a horizontal bar renders:
 NVDA  $119.43  +2.41%
 ```
 
-The daily percentage is enclosed in a low-opacity chip based on the theme's
-positive, negative, or neutral color. The price always uses a dollar sign and
-two decimal places. The percentage always uses two decimal places and an
-explicit plus or minus sign. A vertical bar uses a centered column with the
-symbol, price, and chip in that order.
+The daily percentage is enclosed in a low-opacity chip. A gain uses `#4CAF50`, a
+loss uses Noctalia's `error` role, and no change uses `on_surface_variant`; the
+chip background derives from the same color at 14 percent opacity. The price
+always uses a dollar sign and two decimal places. The percentage always uses two
+decimal places and an explicit plus or minus sign. A vertical bar uses a
+centered column with the symbol, price, and chip in that order.
 
 The tooltip includes the symbol and the local time of the last successful
 refresh, formatted with Noctalia's configured time format. A stale snapshot
@@ -101,8 +104,9 @@ adds the latest refresh error. An unavailable snapshot explains whether the
 cause is missing configuration, authentication, rate limiting, an invalid
 symbol, malformed provider data, or a network failure.
 
-Before the first valid quote, the widget stays visible as the symbol, `--`, and
-a muted `Unavailable` chip. It is never hidden solely because data is missing.
+While the first request is in flight, the widget stays visible as the symbol,
+`--`, and a muted `Loading` chip. If that request fails, the chip changes to
+`Unavailable`. The widget is never hidden solely because data is missing.
 
 ## Actions
 
@@ -117,6 +121,10 @@ The service handles the `open` event by URL-encoding the current symbol and
 launching `https://finance.yahoo.com/quote/<symbol>` with `xdg-open` through an
 argv array. It also handles a `refresh` event so users may bind any gesture to
 an immediate guarded refresh.
+
+The manifest declares `xdg-open` as an external dependency. If it is missing,
+the user-triggered `open` event reports one error notification and does not run
+a shell fallback.
 
 There is no default left-click action or `onClick()` implementation, reserving
 left-click for a future dropdown. Noctalia's standard Actions section remains
