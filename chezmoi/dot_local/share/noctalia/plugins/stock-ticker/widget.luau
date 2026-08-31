@@ -22,6 +22,10 @@ end
 local snapshot = snapshotOrFallback(noctalia.state.get(STATE_QUOTE))
 local isVertical = barWidget.isVertical()
 
+local function finiteNumber(value)
+	return type(value) == "number" and value == value and value ~= math.huge and value ~= -math.huge
+end
+
 local function colorWithChipOpacity(color)
 	if string.match(color, "^#%x%x%x%x%x%x$") ~= nil then
 		return color .. string.format("%02X", math.floor(CHIP_OPACITY * 255 + 0.5))
@@ -32,7 +36,7 @@ end
 
 local function tooltip(symbol)
 	local lines = { symbol ~= "" and symbol or "Stock Ticker" }
-	if snapshot.refreshed_at ~= nil then
+	if finiteNumber(snapshot.refreshed_at) then
 		table.insert(lines, "Last refreshed: " .. noctalia.formatTime(noctalia.timeFormat(), snapshot.refreshed_at))
 	elseif snapshot.status == "loading" then
 		table.insert(lines, "Loading quote")
@@ -47,11 +51,20 @@ end
 
 local function render()
 	local symbol = Quote.normalizeSymbol(snapshot.symbol)
+	if symbol == "" then
+		symbol = configuredSymbol
+	end
+	local labelFontSize = isVertical and 8 or nil
+	local chipPadding = isVertical and 1 or 7
+	local chipRadius = isVertical and 4 or 6
 	local fields = {
-		ui.label({ text = symbol ~= "" and symbol or "--" }),
+		ui.label({
+			text = symbol ~= "" and symbol or "--",
+			fontSize = labelFontSize,
+		}),
 	}
 
-	if type(snapshot.price) == "number" and type(snapshot.percent_change) == "number" then
+	if finiteNumber(snapshot.price) and finiteNumber(snapshot.percent_change) then
 		local movement = Quote.movement(snapshot.percent_change)
 		local sourceColor = "on_surface_variant"
 		if movement == "gain" then
@@ -65,19 +78,21 @@ local function render()
 			ui.label({
 				text = Quote.formatPrice(snapshot.price),
 				color = "on_surface_variant",
+				fontSize = labelFontSize,
 			})
 		)
 		table.insert(
 			fields,
 			ui.row({
-				paddingH = 7,
-				radius = 6,
+				paddingH = chipPadding,
+				radius = chipRadius,
 				align = "center",
 				fill = colorWithChipOpacity(sourceColor),
 			}, {
 				ui.label({
 					text = Quote.formatPercent(snapshot.percent_change),
 					color = sourceColor,
+					fontSize = labelFontSize,
 				}),
 			})
 		)
@@ -87,19 +102,21 @@ local function render()
 			ui.label({
 				text = "--",
 				color = "on_surface_variant",
+				fontSize = labelFontSize,
 			})
 		)
 		table.insert(
 			fields,
 			ui.row({
-				paddingH = 7,
-				radius = 6,
+				paddingH = chipPadding,
+				radius = chipRadius,
 				align = "center",
 				fill = colorWithChipOpacity("on_surface_variant"),
 			}, {
 				ui.label({
 					text = snapshot.status == "loading" and "Loading" or "Unavailable",
 					color = "on_surface_variant",
+					fontSize = labelFontSize,
 				}),
 			})
 		)
@@ -109,7 +126,7 @@ local function render()
 	barWidget.setVisible(true)
 	barWidget.setTooltip(tooltip(symbol))
 	barWidget.render(container({
-		gap = 7,
+		gap = isVertical and 2 or 7,
 		align = "center",
 	}, fields))
 end

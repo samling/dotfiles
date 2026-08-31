@@ -26,6 +26,26 @@ local function loadWidget(options)
 		stateGetKeys = {},
 		timeFormatCalls = 0,
 		formatTimeCalls = {},
+		quoteCalls = {
+			formatPrice = 0,
+			formatPercent = 0,
+			movement = 0,
+		},
+	}
+	local quoteModule = {
+		normalizeSymbol = Quote.normalizeSymbol,
+		formatPrice = function(value)
+			context.quoteCalls.formatPrice = context.quoteCalls.formatPrice + 1
+			return Quote.formatPrice(value)
+		end,
+		formatPercent = function(value)
+			context.quoteCalls.formatPercent = context.quoteCalls.formatPercent + 1
+			return Quote.formatPercent(value)
+		end,
+		movement = function(value)
+			context.quoteCalls.movement = context.quoteCalls.movement + 1
+			return Quote.movement(value)
+		end,
 	}
 
 	local environment = setmetatable({
@@ -47,6 +67,14 @@ local function loadWidget(options)
 				return "HH:mm"
 			end,
 			formatTime = function(format, timestamp)
+				if
+					type(timestamp) ~= "number"
+					or timestamp ~= timestamp
+					or timestamp == math.huge
+					or timestamp == -math.huge
+				then
+					error("formatTime expected a finite timestamp")
+				end
 				table.insert(context.formatTimeCalls, { format = format, timestamp = timestamp })
 				return "10:13 PM"
 			end,
@@ -74,7 +102,7 @@ local function loadWidget(options)
 		require = function(module)
 			context.requiredModule = module
 			assertEqual(module, "./lib/quote.luau")
-			return Quote
+			return quoteModule
 		end,
 	}, { __index = _G })
 	environment._G = environment
@@ -111,9 +139,11 @@ local function assertQuoteContent(context, symbol, price, fill, change, color)
 	assertEqual(#rendered.children, 3)
 	assertEqual(rendered.children[1].kind, "label")
 	assertEqual(rendered.children[1].props.text, symbol)
+	assertEqual(rendered.children[1].props.fontSize, nil)
 	assertEqual(rendered.children[2].kind, "label")
 	assertEqual(rendered.children[2].props.text, price)
 	assertEqual(rendered.children[2].props.color, "on_surface_variant")
+	assertEqual(rendered.children[2].props.fontSize, nil)
 	assertEqual(rendered.children[3].kind, "row")
 	assertEqual(rendered.children[3].props.paddingH, 7)
 	assertEqual(rendered.children[3].props.radius, 6)
@@ -122,6 +152,7 @@ local function assertQuoteContent(context, symbol, price, fill, change, color)
 	assertEqual(#rendered.children[3].children, 1)
 	assertEqual(rendered.children[3].children[1].props.text, change)
 	assertEqual(rendered.children[3].children[1].props.color, color)
+	assertEqual(rendered.children[3].children[1].props.fontSize, nil)
 end
 
 do
@@ -153,7 +184,21 @@ do
 	widget.vertical = true
 	widget.callbacks.update()
 	assertEqual(widget.rendered.kind, "column")
-	assertQuoteContent(widget, "NVDA", "$119.43", "#4CAF5024", "+2.41%", "#4CAF50")
+	assertEqual(widget.rendered.props.gap, 2)
+	assertEqual(widget.rendered.props.align, "center")
+	assertEqual(#widget.rendered.children, 3)
+	assertEqual(widget.rendered.children[1].props.text, "NVDA")
+	assertEqual(widget.rendered.children[1].props.fontSize, 8)
+	assertEqual(widget.rendered.children[2].props.text, "$119.43")
+	assertEqual(widget.rendered.children[2].props.color, "on_surface_variant")
+	assertEqual(widget.rendered.children[2].props.fontSize, 8)
+	assertEqual(widget.rendered.children[3].props.paddingH, 1)
+	assertEqual(widget.rendered.children[3].props.radius, 4)
+	assertEqual(widget.rendered.children[3].props.align, "center")
+	assertEqual(widget.rendered.children[3].props.fill, "#4CAF5024")
+	assertEqual(widget.rendered.children[3].children[1].props.text, "+2.41%")
+	assertEqual(widget.rendered.children[3].children[1].props.color, "#4CAF50")
+	assertEqual(widget.rendered.children[3].children[1].props.fontSize, 8)
 	assertEqual(widget.callbacks.onClick, nil)
 	assertEqual(widget.callbacks.onRightClick, nil)
 	assertNoClickHandlers(widget.rendered)
@@ -218,6 +263,10 @@ do
 	local empty = loadWidget({ config = { symbol = " nvda " }, state = { quote = {} } })
 	assertQuoteContent(empty, "NVDA", "--", "on_surface_variant/0.14", "Loading", "on_surface_variant")
 
+	local partial = loadWidget({ config = { symbol = " nvda " }, state = { quote = { status = "loading" } } })
+	assertQuoteContent(partial, "NVDA", "--", "on_surface_variant/0.14", "Loading", "on_surface_variant")
+	assertEqual(partial.tooltip, "NVDA\nLoading quote")
+
 	local noSymbol = loadWidget({ config = { symbol = "   " } })
 	assertQuoteContent(noSymbol, "--", "--", "on_surface_variant/0.14", "Loading", "on_surface_variant")
 	assertEqual(noSymbol.tooltip, "Stock Ticker\nLoading quote")
@@ -236,6 +285,67 @@ do
 	assertQuoteContent(widget, "AMD", "--", "on_surface_variant/0.14", "Loading", "on_surface_variant")
 	assertEqual(widget.tooltip, "AMD\nLoading quote")
 	assertNoClickHandlers(widget.rendered)
+end
+
+do
+	local invalidTimestamps = {
+		"1700000000",
+		true,
+		{},
+		0 / 0,
+		math.huge,
+		-math.huge,
+	}
+	for _, timestamp in ipairs(invalidTimestamps) do
+		local succeeded, widget = pcall(loadWidget, {
+			state = {
+				quote = {
+					status = "ready",
+					symbol = "NVDA",
+					price = 119.43,
+					percent_change = 2.41,
+					refreshed_at = timestamp,
+				},
+			},
+		})
+		assert(succeeded, widget)
+		assertEqual(widget.tooltip, "NVDA")
+		assertEqual(widget.timeFormatCalls, 0)
+		assertEqual(#widget.formatTimeCalls, 0)
+	end
+end
+
+do
+	local malformedQuotes = {
+		{ price = "119.43", percent_change = 2.41 },
+		{ price = true, percent_change = 2.41 },
+		{ price = {}, percent_change = 2.41 },
+		{ price = 0 / 0, percent_change = 2.41 },
+		{ price = math.huge, percent_change = 2.41 },
+		{ price = -math.huge, percent_change = 2.41 },
+		{ price = 119.43, percent_change = "2.41" },
+		{ price = 119.43, percent_change = true },
+		{ price = 119.43, percent_change = {} },
+		{ price = 119.43, percent_change = 0 / 0 },
+		{ price = 119.43, percent_change = math.huge },
+		{ price = 119.43, percent_change = -math.huge },
+	}
+	for _, values in ipairs(malformedQuotes) do
+		local widget = loadWidget({
+			state = {
+				quote = {
+					status = "ready",
+					symbol = "NVDA",
+					price = values.price,
+					percent_change = values.percent_change,
+				},
+			},
+		})
+		assertQuoteContent(widget, "NVDA", "--", "on_surface_variant/0.14", "Unavailable", "on_surface_variant")
+		assertEqual(widget.quoteCalls.formatPrice, 0)
+		assertEqual(widget.quoteCalls.formatPercent, 0)
+		assertEqual(widget.quoteCalls.movement, 0)
+	end
 end
 
 print("widget tests passed")
