@@ -125,7 +125,9 @@ requestRefresh = function()
 		refreshPending = true
 		return
 	end
-	replacementScheduled = false
+	if replacementScheduled then
+		return
+	end
 
 	if symbol == "" then
 		publish({

@@ -269,40 +269,55 @@ do
 end
 
 do
-	local service = loadService({ decodeResults = { quote = validNvda } })
+	local service = loadService({
+		config = { symbol = "NVDA", api_key = "old-key" },
+		decodeResults = { nvda = validNvda, msft = validMsft },
+	})
 	service.callbacks.onIpc("refresh", {})
-	service:respond(1, { ok = true, status = 200, body = "quote" })
+	service:respond(1, { ok = true, status = 200, body = "nvda" })
 	assertEqual(#service.requests, 1)
 	assertEqual(service.interval, 16)
 	local handoffDeadline = service.deadlineGeneration
-	service.callbacks.onIpc("refresh", {})
-	assertEqual(#service.requests, 2)
-	assertEqual(service.interval, 60000)
-	assertEqual(service.deadlineGeneration, handoffDeadline + 1)
-	assertEqual(service:tick(handoffDeadline), false)
-	assertEqual(#service.requests, 2)
-	service:respond(2, { ok = true, status = 200, body = "quote" })
-	assertEqual(service.interval, 300000)
-end
 
-do
-	local service = loadService({
-		config = { symbol = "NVDA", api_key = "old-key" },
-		decodeResults = { quote = validNvda },
-	})
-	service.callbacks.onIpc("refresh", {})
-	service:respond(1, { ok = true, status = 200, body = "quote" })
-	assertEqual(service.interval, 16)
-	local handoffDeadline = service.deadlineGeneration
 	service.config.api_key = "new-key"
 	service.callbacks.onConfigChanged()
+	assertEqual(#service.requests, 1)
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.state.quote.symbol, "NVDA")
+	service.callbacks.onIpc("refresh", {})
+	service.config.symbol = "AMD"
+	service.callbacks.onConfigChanged()
+	assertEqual(service.state.quote.status, "loading")
+	assertEqual(service.state.quote.symbol, "AMD")
+	service.config.symbol = "MSFT"
+	service.config.api_key = "latest-key"
+	service.callbacks.onConfigChanged()
+	service.callbacks.onIpc("refresh", {})
+	assertEqual(#service.requests, 1)
+	assertEqual(service.interval, 16)
+	assertEqual(service.deadlineGeneration, handoffDeadline)
+	assertEqual(service.state.quote.status, "loading")
+	assertEqual(service.state.quote.symbol, "MSFT")
+	assertEqual(#service.logs, 0)
+
+	service.callbacks.update()
 	assertEqual(#service.requests, 2)
-	assertContains(service.requests[2].request.url, "apikey=new-key")
+	assertContains(service.requests[2].request.url, "symbol=MSFT")
+	assertContains(service.requests[2].request.url, "apikey=latest-key")
 	assertEqual(service.interval, 60000)
 	assertEqual(service.deadlineGeneration, handoffDeadline + 1)
-	assertEqual(service:tick(handoffDeadline), false)
+	assertEqual(service.state.quote.error, nil)
+	assertEqual(#service.logs, 0)
+
+	service.callbacks.onIpc("refresh", {})
+	service:respond(2, { ok = true, status = 200, body = "msft" })
 	assertEqual(#service.requests, 2)
-	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 16)
+	service.callbacks.update()
+	assertEqual(#service.requests, 3)
+	assertContains(service.requests[3].request.url, "symbol=MSFT")
+	service:respond(3, { ok = true, status = 200, body = "msft" })
+	assertEqual(service.state.quote.status, "ready")
 	assertEqual(service.interval, 300000)
 end
 
