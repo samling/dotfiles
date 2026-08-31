@@ -12,6 +12,7 @@ assertEqual(
 	Quote.requestUrl("brk/b", "key with space"),
 	"https://api.twelvedata.com/quote?symbol=BRK%2FB&apikey=key%20with%20space"
 )
+assertEqual(Quote.requestUrl("A%B", "k%y"), "https://api.twelvedata.com/quote?symbol=A%25B&apikey=k%25y")
 assertEqual(Quote.requestUrl("", "key"), nil)
 assertEqual(Quote.requestUrl("NVDA", ""), nil)
 
@@ -74,6 +75,7 @@ assertEqual(Quote.formatPrice(119.4), "$119.40")
 assertEqual(Quote.formatPercent(2.4), "+2.40%")
 assertEqual(Quote.formatPercent(-2.4), "-2.40%")
 assertEqual(Quote.formatPercent(0), "+0.00%")
+assertEqual(Quote.formatPercent(-0.0), "+0.00%")
 
 assertEqual(Quote.movement(2.4), "gain")
 assertEqual(Quote.movement(-2.4), "loss")

@@ -10,7 +10,6 @@ local function percentEncode(value)
 			local allowed = (byte >= 48 and byte <= 57)
 				or (byte >= 65 and byte <= 90)
 				or (byte >= 97 and byte <= 122)
-				or character == "%"
 				or character == "-"
 				or character == "."
 				or character == "_"
@@ -144,6 +143,10 @@ function M.formatPrice(value)
 end
 
 function M.formatPercent(value)
+	if value == 0 then
+		value = 0
+	end
+
 	return string.format("%+.2f%%", value)
 end
 
