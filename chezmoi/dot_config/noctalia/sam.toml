@@ -34,7 +34,7 @@ order = [ "default" ]
     concave_edge_corners = true
     contact_shadow = false
     enabled = true
-    end = [ "network", "sysmon", "bluetooth", "volume", "brightness", "battery", "tray", "bar", "widget", "notifications" ]
+    end = [ "network", "sysmon", "stock-ticker", "bluetooth", "volume", "brightness", "battery", "tray", "bar", "widget", "notifications" ]
     font_scale = 0.89999997615814209
     font_weight = 500
     hover_highlight = true
@@ -351,6 +351,9 @@ scale = 1.0
 [plugin_settings."rylos/tailnet"]
 panel_placement = "floating"
 
+[plugin_settings."sboynton/stock-ticker"]
+symbol = "NVDA"
+
 [plugin_settings."thatonecalculator/um5606_fan_state"]
 show_label = true
 
@@ -366,6 +369,7 @@ enabled = [
     "thatonecalculator/um5606_fan_state",
     "yuuto/arch-updater",
     "sboynton/wayward-workspaces",
+    "sboynton/stock-ticker",
     "harveywuk/airpods",
     "frai3mega/battery-graph"
 ]
@@ -708,6 +712,9 @@ type = "screenshot"
 [widget.spacer]
 interactive = false
 type = "spacer"
+
+[widget.stock-ticker]
+type = "sboynton/stock-ticker:ticker"
 
 [widget.sysmon]
 stat = "disk_used_pct"
