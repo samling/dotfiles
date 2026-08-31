@@ -647,7 +647,7 @@ display_mode = "graphic"
 type = "battery"
 
 [widget.control-center]
-custom_image = "/home/sboynton/Downloads/icons8-arch-linux-48.png"
+custom_image = "/home/sboynton/.local/share/dotfiles/chezmoi/dot_config/noctalia/icons8-arch-linux-48.png"
 glyph = "brand-ansible"
 type = "control-center"
 
