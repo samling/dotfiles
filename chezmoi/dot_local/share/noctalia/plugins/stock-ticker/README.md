@@ -8,18 +8,44 @@ Stock Ticker is a Noctalia bar widget for one US-listed stock or ETF. It shows t
 - A free [Twelve Data API key](https://twelvedata.com/register)
 - `xdg-open` for the default right-click action
 
-## Configuration
+## Setup
 
-Provide the Twelve Data key using either the `TWELVE_DATA_API_KEY` environment variable or the **Settings -> Plugins -> Stock Ticker** string setting. A nonempty environment variable takes precedence. The plugin setting is stored in plain configuration, so prefer the environment variable when the configuration must not contain the key.
+1. Enable the plugin:
 
-Configure the symbol in the same plugin settings. It defaults to `NVDA`.
+   ```sh
+   noctalia msg plugins enable sboynton/stock-ticker
+   ```
 
-Add the widget to the bar configuration:
+2. Define the widget in the Noctalia configuration:
 
-```toml
-[widget.stock-ticker]
-type = "sboynton/stock-ticker:ticker"
-```
+   ```toml
+   [widget.stock-ticker]
+   type = "sboynton/stock-ticker:ticker"
+   ```
+
+3. Add `"stock-ticker"` to one existing bar region: `start`, `center`, or `end`. Preserve every item already in that array; add the widget name rather than replacing the existing entries. For example, change:
+
+   ```toml
+   [bar.default]
+   end = [ "network", "sysmon" ]
+   ```
+
+   to:
+
+   ```toml
+   [bar.default]
+   end = [ "network", "sysmon", "stock-ticker" ]
+   ```
+
+4. Provide the Twelve Data key using either the `TWELVE_DATA_API_KEY` environment variable or the **Settings -> Plugins -> Stock Ticker** string setting. A nonempty environment variable takes precedence. The plugin setting is stored in plain configuration, so prefer the environment variable when the configuration must not contain the key.
+
+   Configure the symbol in the same plugin settings. It defaults to `NVDA`.
+
+5. After manual TOML edits, reload the configuration:
+
+   ```sh
+   noctalia msg config-reload
+   ```
 
 The tooltip reports the last successful refresh. After a refresh failure, the widget retains the last successful quote as stale data.
 
