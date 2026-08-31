@@ -120,6 +120,7 @@ local function loadService(options)
 	chunk()
 
 	context.callbacks = environment
+	environment.update()
 	function context:respond(index, response)
 		local request = self.requests[index]
 		assert(request ~= nil, "missing HTTP request " .. tostring(index))
@@ -145,6 +146,14 @@ local validAmd = {
 	},
 }
 
+local validMsft = {
+	value = {
+		symbol = "MSFT",
+		close = "507.28",
+		percent_change = "0.75",
+	},
+}
+
 do
 	local service = loadService({
 		environment = { TWELVE_DATA_API_KEY = " env-key " },
@@ -158,6 +167,8 @@ do
 	assertEqual(#service.requests, 1)
 	assertContains(service.requests[1].request.url, "apikey=env-key")
 	assertEqual(service.requests[1].request.headers[1], "Accept: application/json")
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 1)
 end
 
 do
@@ -196,6 +207,38 @@ do
 	assertEqual(#service.requests, 2)
 	service:respond(2, { ok = true, status = 200, body = "quote" })
 	assertEqual(#service.requests, 2)
+end
+
+do
+	local service = loadService({ decodeResults = { quote = validNvda } })
+	service.now = 1700000059
+	service.callbacks.update()
+	assertEqual(#service.requests, 1)
+	service.now = 1700000060
+	service.callbacks.update()
+	assertEqual(#service.requests, 2)
+	assertEqual(service.state.quote.status, "unavailable")
+	assertEqual(service.state.quote.error, "Quote request timed out")
+	assertEqual(service.logs[#service.logs], "Stock ticker: Quote request timed out")
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 2)
+	assertEqual(service.state.quote.status, "ready")
+end
+
+do
+	local service = loadService({ decodeResults = { quote = validNvda } })
+	service.now = 1700000060
+	service.callbacks.update()
+	assertEqual(#service.requests, 2)
+	service.callbacks.onIpc("refresh", {})
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 2)
+	assertEqual(service.state.quote.status, "unavailable")
+	assertEqual(service.state.quote.error, "Quote request timed out")
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 3)
+	service:respond(3, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.state.quote.status, "ready")
 end
 
 do
@@ -248,7 +291,7 @@ do
 		{
 			name = "HTTP",
 			decodeResults = { denied = { value = { message = "secret provider body" } } },
-			response = { ok = false, status = 503, body = "denied" },
+			response = { ok = true, status = 503, body = "denied" },
 			expected = "Quote request failed (HTTP 503)",
 		},
 		{
@@ -300,6 +343,12 @@ do
 	assertEqual(snapshot.refreshed_at, 1700000200)
 	assertEqual(snapshot.error, "Provider rejected the request")
 	assertEqual(service.logs[#service.logs], "Stock ticker: Provider rejected the request")
+	service.now = 1700001000
+	service.callbacks.update()
+	service:respond(3, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.state.quote.refreshed_at, 1700001000)
+	assertEqual(service.state.quote.error, nil)
 end
 
 do
@@ -346,12 +395,49 @@ do
 end
 
 do
+	local service = loadService({
+		config = { symbol = "NVDA", api_key = "key" },
+		decodeResults = { nvda = validNvda, msft = validMsft },
+	})
+	service.config.symbol = "AMD"
+	service.callbacks.onConfigChanged()
+	service.config.symbol = " msft "
+	service.callbacks.onConfigChanged()
+	assertEqual(#service.requests, 1)
+	assertEqual(service.state.quote.status, "loading")
+	assertEqual(service.state.quote.symbol, "MSFT")
+	service.now = 1700000060
+	service.callbacks.update()
+	assertEqual(#service.requests, 2)
+	assertContains(service.requests[2].request.url, "symbol=MSFT")
+	assertEqual(service.state.quote.status, "loading")
+	assertEqual(service.state.quote.symbol, "MSFT")
+	assertEqual(service.state.quote.error, nil)
+	service:respond(1, { ok = true, status = 200, body = "nvda" })
+	assertEqual(#service.requests, 2)
+	assertEqual(service.state.quote.status, "loading")
+	assertEqual(service.state.quote.symbol, "MSFT")
+	service:respond(2, { ok = true, status = 200, body = "msft" })
+	assertEqual(#service.requests, 2)
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.state.quote.symbol, "MSFT")
+end
+
+do
 	local service = loadService({ config = { symbol = " brk/b ", api_key = "key" } })
 	service.callbacks.onIpc("open", {})
 	assertEqual(#service.commands, 1)
 	assertEqual(#service.commands[1], 2)
 	assertEqual(service.commands[1][1], "xdg-open")
 	assertEqual(service.commands[1][2], "https://finance.yahoo.com/quote/BRK%2FB")
+	assert(service.runCallback ~= nil, "expected an xdg-open completion callback")
+	service.runCallback({ exitCode = 1 })
+	assertEqual(service.notifications[1].message, "Could not open Yahoo Finance")
+
+	local successful = loadService()
+	successful.callbacks.onIpc("open", {})
+	successful.runCallback({ exitCode = 0 })
+	assertEqual(#successful.notifications, 0)
 
 	local missingSymbol = loadService({ config = { symbol = "", api_key = "key" } })
 	missingSymbol.callbacks.onIpc("open", {})
@@ -365,6 +451,7 @@ do
 	local rejected = loadService({ runAccepted = false })
 	rejected.callbacks.onIpc("open", {})
 	assertEqual(rejected.notifications[1].message, "Could not open Yahoo Finance")
+	assertEqual(#rejected.notifications, 1)
 end
 
 do

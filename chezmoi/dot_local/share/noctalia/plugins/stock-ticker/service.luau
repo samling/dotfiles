@@ -2,11 +2,15 @@ local Quote = require("./lib/quote.luau")
 
 local STATE_QUOTE = "quote"
 local REFRESH_INTERVAL_MS = 300000
+local REQUEST_WATCHDOG_SECONDS = 60
 
 local symbol = ""
 local apiKey = ""
 local generation = 0
-local requestInFlight = false
+local nextRequestId = 0
+local activeRequestId = nil
+local activeRequestGeneration = nil
+local activeRequestStartedAt = nil
 local refreshPending = false
 local snapshot = nil
 
@@ -56,8 +60,18 @@ end
 
 local requestRefresh
 
-local function finishRequest(requestGeneration, response)
-	requestInFlight = false
+local function clearActiveRequest()
+	activeRequestId = nil
+	activeRequestGeneration = nil
+	activeRequestStartedAt = nil
+end
+
+local function finishRequest(requestId, requestGeneration, response)
+	if requestId ~= activeRequestId then
+		return
+	end
+
+	clearActiveRequest()
 
 	if requestGeneration == generation then
 		local status = 0
@@ -100,9 +114,18 @@ local function finishRequest(requestGeneration, response)
 end
 
 requestRefresh = function()
-	if requestInFlight then
-		refreshPending = true
-		return
+	if activeRequestId ~= nil then
+		if os.time() - activeRequestStartedAt < REQUEST_WATCHDOG_SECONDS then
+			refreshPending = true
+			return
+		end
+
+		local expiredGeneration = activeRequestGeneration
+		clearActiveRequest()
+		refreshPending = false
+		if expiredGeneration == generation then
+			publishFailure("Quote request timed out")
+		end
 	end
 
 	if symbol == "" then
@@ -124,16 +147,24 @@ requestRefresh = function()
 	end
 
 	local requestGeneration = generation
-	requestInFlight = true
+	nextRequestId = nextRequestId + 1
+	local requestId = nextRequestId
+	activeRequestId = requestId
+	activeRequestGeneration = requestGeneration
+	activeRequestStartedAt = os.time()
 	local accepted = noctalia.http({
 		url = Quote.requestUrl(symbol, apiKey),
 		headers = { "Accept: application/json" },
 	}, function(response)
-		finishRequest(requestGeneration, response)
+		finishRequest(requestId, requestGeneration, response)
 	end)
 
 	if not accepted then
-		requestInFlight = false
+		if requestId ~= activeRequestId then
+			return
+		end
+
+		clearActiveRequest()
 		if requestGeneration == generation then
 			publishFailure("Could not queue quote request")
 		end
@@ -150,7 +181,6 @@ publish({
 	symbol = symbol,
 })
 noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
-requestRefresh()
 
 function update()
 	requestRefresh()
@@ -191,8 +221,21 @@ function onIpc(event, payload)
 			return
 		end
 
-		if not noctalia.runAsync({ "xdg-open", Quote.yahooUrl(symbol) }) then
-			noctalia.notifyError("Stock Ticker", "Could not open Yahoo Finance")
+		local failureNotified = false
+		local function notifyOpenFailure()
+			if not failureNotified then
+				failureNotified = true
+				noctalia.notifyError("Stock Ticker", "Could not open Yahoo Finance")
+			end
+		end
+
+		local accepted = noctalia.runAsync({ "xdg-open", Quote.yahooUrl(symbol) }, function(result)
+			if result.exitCode ~= 0 then
+				notifyOpenFailure()
+			end
+		end)
+		if not accepted then
+			notifyOpenFailure()
 		end
 	end
 end
