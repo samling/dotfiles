@@ -70,6 +70,25 @@ assertEqual(Quote.errorMessage(200, { status = "error", message = "invalid api k
 assertEqual(Quote.errorMessage(429, { message = "invalid api key" }), "Authentication failed")
 assertEqual(Quote.errorMessage(200, { status = "error", message = "rate limit exceeded" }), "Rate limit reached")
 assertEqual(Quote.errorMessage(0, { status = "error", message = "symbol not found" }), "Invalid symbol")
+assertEqual(
+	Quote.errorMessage(404, {
+		status = "error",
+		code = 404,
+		message = "**symbol** or **figi** parameter is missing or invalid",
+	}),
+	"Invalid symbol"
+)
+assertEqual(
+	Quote.errorMessage(200, { status = "error", message = "Request could not be completed" }),
+	"Provider rejected the request"
+)
+assertEqual(
+	Quote.errorMessage(200, {
+		status = "error",
+		message = "The symbol was accepted, but exchange parameter is missing or invalid",
+	}),
+	"Provider rejected the request"
+)
 
 assertEqual(Quote.formatPrice(119.4), "$119.40")
 assertEqual(Quote.formatPercent(2.4), "+2.40%")

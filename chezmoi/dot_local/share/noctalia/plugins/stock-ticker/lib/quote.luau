@@ -84,8 +84,11 @@ function M.errorMessage(httpStatus, payload)
 		return "Rate limit reached"
 	end
 
-	local invalidSymbol = string.find(message, "invalid symbol", 1, true) ~= nil
-		or (string.find(message, "symbol", 1, true) ~= nil and string.find(message, "not found", 1, true) ~= nil)
+	local plainMessage = string.gsub(message, "%*", "")
+	local invalidSymbol = string.find(plainMessage, "invalid symbol", 1, true) ~= nil
+		or string.find(plainMessage, "symbol not found", 1, true) ~= nil
+		or string.find(plainMessage, "symbol parameter is missing or invalid", 1, true) ~= nil
+		or string.find(plainMessage, "symbol or figi parameter is missing or invalid", 1, true) ~= nil
 	if invalidSymbol then
 		return "Invalid symbol"
 	end
@@ -99,7 +102,7 @@ function M.errorMessage(httpStatus, payload)
 	end
 
 	if type(payload) == "table" and string.lower(tostring(payload.status or "")) == "error" then
-		return "Quote provider error"
+		return "Provider rejected the request"
 	end
 
 	return nil
