@@ -44,6 +44,7 @@ local function loadService(options)
 		notifications = {},
 		logs = {},
 		interval = nil,
+		intervals = {},
 		requiredModule = nil,
 	}
 
@@ -84,6 +85,7 @@ local function loadService(options)
 		},
 		setUpdateInterval = function(interval)
 			context.interval = interval
+			table.insert(context.intervals, interval)
 		end,
 		runAsync = function(command, callback)
 			table.insert(context.commands, copy(command))
@@ -160,7 +162,9 @@ do
 		decodeResults = { quote = validNvda },
 	})
 	assertEqual(service.requiredModule, "./lib/quote.luau")
-	assertEqual(service.interval, 300000)
+	assertEqual(service.intervals[1], 300000)
+	assertEqual(service.intervals[2], 60000)
+	assertEqual(service.interval, 60000)
 	assertEqual(service.states[1].key, "quote")
 	assertEqual(service.states[1].value.status, "loading")
 	assertEqual(service.states[1].value.symbol, "NVDA")
@@ -169,6 +173,8 @@ do
 	assertEqual(service.requests[1].request.headers[1], "Accept: application/json")
 	service:respond(1, { ok = true, status = 200, body = "quote" })
 	assertEqual(#service.requests, 1)
+	assertEqual(service.intervals[3], 300000)
+	assertEqual(service.interval, 300000)
 end
 
 do
@@ -199,35 +205,68 @@ end
 
 do
 	local service = loadService({ decodeResults = { quote = validNvda } })
-	service.callbacks.update()
-	service.callbacks.update()
 	service.callbacks.onIpc("refresh", {})
+	service.callbacks.onIpc("refresh", {})
+	service.config.api_key = "replacement-key-1"
+	service.callbacks.onConfigChanged()
+	service.config.api_key = "replacement-key-2"
+	service.callbacks.onConfigChanged()
 	assertEqual(#service.requests, 1)
 	service:respond(1, { ok = true, status = 200, body = "quote" })
 	assertEqual(#service.requests, 2)
+	assertContains(service.requests[2].request.url, "apikey=replacement-key-2")
+	assertEqual(service.intervals[3], 60000)
 	service:respond(2, { ok = true, status = 200, body = "quote" })
 	assertEqual(#service.requests, 2)
+	assertEqual(service.intervals[4], 300000)
 end
 
 do
 	local service = loadService({ decodeResults = { quote = validNvda } })
-	service.now = 1700000059
-	service.callbacks.update()
+	service.now = 2000000000
+	service.callbacks.onIpc("refresh", {})
+	service.callbacks.onIpc("refresh", {})
+	service.config.api_key = "forward-key-1"
+	service.callbacks.onConfigChanged()
+	service.config.api_key = "forward-key-2"
+	service.callbacks.onConfigChanged()
 	assertEqual(#service.requests, 1)
-	service.now = 1700000060
+	assertEqual(#service.intervals, 2)
+	assertEqual(service.interval, 60000)
+	assertEqual(service.state.quote.status, "loading")
+	assertEqual(service.state.quote.error, nil)
+	service.callbacks.update()
+	assertEqual(#service.requests, 2)
+	assertEqual(service.intervals[3], 60000)
+	assertContains(service.requests[2].request.url, "apikey=forward-key-2")
+	assertEqual(service.state.quote.status, "loading")
+	assertEqual(service.state.quote.error, nil)
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 2)
+	assertEqual(#service.intervals, 3)
+	assertEqual(service.interval, 60000)
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(#service.requests, 2)
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.intervals[4], 300000)
+	assertEqual(service.interval, 300000)
+end
+
+do
+	local service = loadService({ decodeResults = { quote = validNvda } })
 	service.callbacks.update()
 	assertEqual(#service.requests, 2)
 	assertEqual(service.state.quote.status, "unavailable")
 	assertEqual(service.state.quote.error, "Quote request timed out")
 	assertEqual(service.logs[#service.logs], "Stock ticker: Quote request timed out")
+	assertEqual(service.intervals[3], 60000)
 	service:respond(2, { ok = true, status = 200, body = "quote" })
-	assertEqual(#service.requests, 2)
 	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.interval, 300000)
 end
 
 do
 	local service = loadService({ decodeResults = { quote = validNvda } })
-	service.now = 1700000060
 	service.callbacks.update()
 	assertEqual(#service.requests, 2)
 	service.callbacks.onIpc("refresh", {})
@@ -317,9 +356,13 @@ do
 	local queueFailure = loadService({ httpAccepted = false })
 	assertEqual(queueFailure.state.quote.status, "unavailable")
 	assertEqual(queueFailure.state.quote.error, "Could not queue quote request")
+	assertEqual(queueFailure.intervals[1], 300000)
+	assertEqual(queueFailure.intervals[2], 300000)
+	assertEqual(queueFailure.interval, 300000)
 	queueFailure.httpAccepted = true
 	queueFailure.callbacks.update()
 	assertEqual(#queueFailure.requests, 2)
+	assertEqual(queueFailure.interval, 60000)
 end
 
 do
@@ -406,7 +449,6 @@ do
 	assertEqual(#service.requests, 1)
 	assertEqual(service.state.quote.status, "loading")
 	assertEqual(service.state.quote.symbol, "MSFT")
-	service.now = 1700000060
 	service.callbacks.update()
 	assertEqual(#service.requests, 2)
 	assertContains(service.requests[2].request.url, "symbol=MSFT")

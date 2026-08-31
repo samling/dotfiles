@@ -2,7 +2,7 @@ local Quote = require("./lib/quote.luau")
 
 local STATE_QUOTE = "quote"
 local REFRESH_INTERVAL_MS = 300000
-local REQUEST_WATCHDOG_SECONDS = 60
+local REQUEST_WATCHDOG_INTERVAL_MS = 60000
 
 local symbol = ""
 local apiKey = ""
@@ -10,7 +10,6 @@ local generation = 0
 local nextRequestId = 0
 local activeRequestId = nil
 local activeRequestGeneration = nil
-local activeRequestStartedAt = nil
 local refreshPending = false
 local snapshot = nil
 
@@ -63,7 +62,6 @@ local requestRefresh
 local function clearActiveRequest()
 	activeRequestId = nil
 	activeRequestGeneration = nil
-	activeRequestStartedAt = nil
 end
 
 local function finishRequest(requestId, requestGeneration, response)
@@ -110,22 +108,15 @@ local function finishRequest(requestId, requestGeneration, response)
 	if refreshPending then
 		refreshPending = false
 		requestRefresh()
+	else
+		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 	end
 end
 
 requestRefresh = function()
 	if activeRequestId ~= nil then
-		if os.time() - activeRequestStartedAt < REQUEST_WATCHDOG_SECONDS then
-			refreshPending = true
-			return
-		end
-
-		local expiredGeneration = activeRequestGeneration
-		clearActiveRequest()
-		refreshPending = false
-		if expiredGeneration == generation then
-			publishFailure("Quote request timed out")
-		end
+		refreshPending = true
+		return
 	end
 
 	if symbol == "" then
@@ -134,6 +125,7 @@ requestRefresh = function()
 			symbol = symbol,
 			error = "Symbol is not configured",
 		})
+		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 		return
 	end
 
@@ -143,6 +135,7 @@ requestRefresh = function()
 			symbol = symbol,
 			error = "API key is not configured",
 		})
+		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 		return
 	end
 
@@ -151,7 +144,6 @@ requestRefresh = function()
 	local requestId = nextRequestId
 	activeRequestId = requestId
 	activeRequestGeneration = requestGeneration
-	activeRequestStartedAt = os.time()
 	local accepted = noctalia.http({
 		url = Quote.requestUrl(symbol, apiKey),
 		headers = { "Accept: application/json" },
@@ -171,7 +163,11 @@ requestRefresh = function()
 		if refreshPending then
 			refreshPending = false
 			requestRefresh()
+		else
+			noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 		end
+	else
+		noctalia.setUpdateInterval(REQUEST_WATCHDOG_INTERVAL_MS)
 	end
 end
 
@@ -183,6 +179,15 @@ publish({
 noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
 
 function update()
+	if activeRequestId ~= nil then
+		local expiredGeneration = activeRequestGeneration
+		clearActiveRequest()
+		refreshPending = false
+		if expiredGeneration == generation then
+			publishFailure("Quote request timed out")
+		end
+	end
+
 	requestRefresh()
 end
 
