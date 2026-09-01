@@ -74,6 +74,7 @@ decman.pacman.packages |= {
 decman.aur.packages |= {
     "icu76", # sunshine dependency
     "rustdesk-server-bin",
+    "scopebuddy",
 } | (set() if has_repo("cachyos") else _NATIVE_OR_AUR)
 
 decman.pacman.commands = IgnoreUpgradePackages(
