@@ -16,6 +16,7 @@ class GitModule(decman.Module):
             "git-delta",
             "git-filter-repo",
             "git-lfs",
+            "glab",
             "pre-commit",
         }
 
