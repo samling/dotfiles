@@ -20,3 +20,20 @@ class NoUpgrade(PacmanCommands):
 
     def upgrade(self) -> list[str]:
         return ["true"]
+
+
+class IgnoreUpgradePackages:
+    """Add pacman upgrade ignores while preserving all other commands."""
+
+    def __init__(self, commands: PacmanCommands, packages: set[str]):
+        self._commands = commands
+        self._packages = packages
+
+    def __getattr__(self, name):
+        return getattr(self._commands, name)
+
+    def upgrade(self) -> list[str]:
+        command = self._commands.upgrade()
+        if command == ["true"] or not self._packages:
+            return command
+        return [*command, "--ignore", ",".join(sorted(self._packages))]

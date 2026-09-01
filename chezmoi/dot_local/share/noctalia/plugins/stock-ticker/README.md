@@ -1,6 +1,6 @@
 # Stock Ticker
 
-Stock Ticker is a Noctalia bar widget for one US-listed stock or ETF. It shows the configured symbol, latest price, and daily percentage change. One shared service refreshes quotes for all widget bars every five minutes.
+Stock Ticker is a Noctalia bar widget for one US-listed stock or ETF. It shows the configured symbol, latest price, and daily percentage change. One shared service refreshes quotes for all widget bars at the configured interval, which defaults to five minutes.
 
 ## Requirements
 
@@ -43,7 +43,7 @@ Stock Ticker is a Noctalia bar widget for one US-listed stock or ETF. It shows t
 
    If a session or service manager starts Noctalia, configure the variable or a protected `EnvironmentFile` there. Keep secrets out of `sam.toml` and version control. The plugin setting is stored in plain configuration, so prefer the environment variable when the configuration must not contain the key.
 
-   Configure the symbol in the same plugin settings. It defaults to `NVDA`.
+   Configure the symbol and refresh interval in the same plugin settings. The symbol defaults to `NVDA`; the refresh interval accepts 1–1440 minutes and defaults to 5. Changes to the interval apply to the next scheduled refresh.
 
 5. After manual TOML edits, reload the configuration:
 

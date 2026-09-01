@@ -1,6 +1,6 @@
 id           = "sboynton/stock-ticker"
 name         = "Stock Ticker"
-version      = "0.1.0"
+version      = "0.2.0"
 plugin_api   = 24
 author       = "sboynton"
 license      = "MIT"
@@ -22,6 +22,15 @@ type            = "string"
 label_key       = "settings.api_key.label"
 description_key = "settings.api_key.description"
 default         = ""
+
+[[setting]]
+key             = "refresh_interval_minutes"
+type            = "int"
+label_key       = "settings.refresh_interval_minutes.label"
+description_key = "settings.refresh_interval_minutes.description"
+default         = 5
+min             = 1
+max             = 1440
 
 [[service]]
 id    = "quotes"

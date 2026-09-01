@@ -1,6 +1,8 @@
 {
   "settings.symbol.label": "Stock symbol",
   "settings.symbol.description": "US-listed stock or ETF symbol to display.",
+  "settings.refresh_interval_minutes.label": "Refresh interval (minutes)",
+  "settings.refresh_interval_minutes.description": "How often to request a new quote, from 1 minute to 24 hours.",
   "settings.api_key.label": "Twelve Data API key",
   "settings.api_key.description": "Used when TWELVE_DATA_API_KEY is not set. This value is stored as plain configuration."
 }

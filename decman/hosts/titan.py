@@ -1,6 +1,7 @@
 import decman
 from decman.plugins import systemd
 
+from modules._pacman_commands import IgnoreUpgradePackages
 from modules._systemd import reconcile_units
 from modules.common.archlinux import has_repo
 from modules.hardware.nvidia import NvidiaModule
@@ -60,6 +61,7 @@ decman.modules += MODULES + [
 
 
 _NATIVE_OR_AUR = {
+    "lib32-gamescope-plus",
     "sunshine",
 }
 
@@ -70,6 +72,10 @@ decman.pacman.packages |= {
 
 decman.aur.packages |= {
     "icu76", # sunshine dependency
-    "lib32-gamescope-plus",
     "rustdesk-server-bin",
 } | (set() if has_repo("cachyos") else _NATIVE_OR_AUR)
+
+decman.pacman.commands = IgnoreUpgradePackages(
+    decman.pacman.commands,
+    {"lib32-gamescope"},
+)

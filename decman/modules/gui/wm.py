@@ -81,8 +81,8 @@ class WmModule(decman.Module):
     def user_units(self) -> dict[str, set[str]]:
         return {
             "sboynton": {
-                "awww-change-wallpaper.timer",
-                "awww.service",
+                # "awww-change-wallpaper.timer",
+                # "awww.service",
                 #"quickshell.service",
                 "swayidle.service",
                 # "wayward.service",

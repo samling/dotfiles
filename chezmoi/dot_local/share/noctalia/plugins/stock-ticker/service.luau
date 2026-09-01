@@ -2,11 +2,15 @@ local Quote = require("./lib/quote.luau")
 
 local STATE_QUOTE = "quote"
 local MINIMUM_SCHEDULING_INTERVAL_MS = 16
-local REFRESH_INTERVAL_MS = 300000
+local DEFAULT_REFRESH_INTERVAL_MINUTES = 5
+local MINIMUM_REFRESH_INTERVAL_MINUTES = 1
+local MAXIMUM_REFRESH_INTERVAL_MINUTES = 1440
+local MILLISECONDS_PER_MINUTE = 60000
 local REQUEST_WATCHDOG_INTERVAL_MS = 60000
 
 local symbol = ""
 local apiKey = ""
+local refreshIntervalMs = DEFAULT_REFRESH_INTERVAL_MINUTES * MILLISECONDS_PER_MINUTE
 local generation = 0
 local nextRequestId = 0
 local activeRequestId = nil
@@ -20,6 +24,18 @@ local function publish(value)
 	noctalia.state.set(STATE_QUOTE, value)
 end
 
+local function resolveRefreshIntervalMs()
+	local configuredMinutes = tonumber(noctalia.getConfig("refresh_interval_minutes"))
+	if configuredMinutes == nil or configuredMinutes ~= configuredMinutes then
+		configuredMinutes = DEFAULT_REFRESH_INTERVAL_MINUTES
+	end
+
+	configuredMinutes = math.floor(configuredMinutes)
+	configuredMinutes = math.max(MINIMUM_REFRESH_INTERVAL_MINUTES, configuredMinutes)
+	configuredMinutes = math.min(MAXIMUM_REFRESH_INTERVAL_MINUTES, configuredMinutes)
+	return configuredMinutes * MILLISECONDS_PER_MINUTE
+end
+
 local function resolveConfig()
 	local resolvedSymbol = Quote.normalizeSymbol(noctalia.getConfig("symbol"))
 	local environmentKey = Quote.trim(noctalia.getenv("TWELVE_DATA_API_KEY"))
@@ -29,7 +45,7 @@ local function resolveConfig()
 		resolvedKey = environmentKey
 	end
 
-	return resolvedSymbol, resolvedKey
+	return resolvedSymbol, resolvedKey, resolveRefreshIntervalMs()
 end
 
 local function publishFailure(message)
@@ -116,7 +132,7 @@ local function finishRequest(requestId, requestGeneration, response)
 	if refreshPending then
 		schedulePendingReplacement()
 	else
-		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
+		noctalia.setUpdateInterval(refreshIntervalMs)
 	end
 end
 
@@ -135,13 +151,13 @@ requestRefresh = function()
 			symbol = symbol,
 			error = "Symbol is not configured",
 		})
-		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
+		noctalia.setUpdateInterval(refreshIntervalMs)
 		return
 	end
 
 	if apiKey == "" then
 		publishFailure("API key is not configured")
-		noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
+		noctalia.setUpdateInterval(refreshIntervalMs)
 		return
 	end
 
@@ -169,19 +185,19 @@ requestRefresh = function()
 		if refreshPending then
 			schedulePendingReplacement()
 		else
-			noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
+			noctalia.setUpdateInterval(refreshIntervalMs)
 		end
 	else
 		noctalia.setUpdateInterval(REQUEST_WATCHDOG_INTERVAL_MS)
 	end
 end
 
-symbol, apiKey = resolveConfig()
+symbol, apiKey, refreshIntervalMs = resolveConfig()
 publish({
 	status = "loading",
 	symbol = symbol,
 })
-noctalia.setUpdateInterval(REFRESH_INTERVAL_MS)
+noctalia.setUpdateInterval(refreshIntervalMs)
 
 function update()
 	if replacementScheduled and activeRequestId == nil then
@@ -204,14 +220,31 @@ function update()
 end
 
 function onConfigChanged()
-	local newSymbol, newApiKey = resolveConfig()
-	if newSymbol == symbol and newApiKey == apiKey then
+	local newSymbol, newApiKey, newRefreshIntervalMs = resolveConfig()
+	local credentialsChanged = newSymbol ~= symbol or newApiKey ~= apiKey
+	local intervalChanged = newRefreshIntervalMs ~= refreshIntervalMs
+	if not credentialsChanged and not intervalChanged then
+		if snapshot ~= nil then
+			publish(snapshot)
+		end
 		return
 	end
 
 	local symbolChanged = newSymbol ~= symbol
 	symbol = newSymbol
 	apiKey = newApiKey
+	refreshIntervalMs = newRefreshIntervalMs
+
+	if not credentialsChanged then
+		if snapshot ~= nil then
+			publish(snapshot)
+		end
+		if activeRequestId == nil and not replacementScheduled then
+			noctalia.setUpdateInterval(refreshIntervalMs)
+		end
+		return
+	end
+
 	generation = generation + 1
 
 	if symbolChanged then

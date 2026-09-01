@@ -158,10 +158,17 @@ layout {
 }
 
 // Make the wallpaper stationary, rather than moving with workspaces.
+// layer-rule {
+//     // This is for swaybg; change for other wallpaper tools.
+//     // Find the right namespace by running niri msg layers.
+//     match namespace="^awww-daemon$"
+//     place-within-backdrop true
+// }
+
 layer-rule {
     // This is for swaybg; change for other wallpaper tools.
     // Find the right namespace by running niri msg layers.
-    match namespace="^awww-daemon$"
+    match namespace="^noctalia-wallpaper$"
     place-within-backdrop true
 }
 

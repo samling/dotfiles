@@ -3,7 +3,10 @@ from decman.plugins import aur, pacman
 
 from modules.common.archlinux import has_repo
 
-_NATIVE_OR_AUR = {"heroic-games-launcher-bin"}
+_NATIVE_OR_AUR = {
+    "gamescope-git",
+    "heroic-games-launcher-bin",
+}
 
 class GamesModule(decman.Module):
     """Steam + the firewall ports it needs for Remote Play.
@@ -27,9 +30,7 @@ class GamesModule(decman.Module):
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        base = set()
         base = {
-          "gamescope-git",
           "scopebuddy"
         }
         if not has_repo("cachyos"):

@@ -1,6 +1,9 @@
 import decman
 from decman.plugins import pacman, aur
 
+from modules.common.archlinux import has_repo
+
+_NATIVE_OR_AUR = {"qview"}
 
 class MediaGuiModule(decman.Module):
     """GUI media apps: image viewers, OBS, Spotify, media-key control.
@@ -22,7 +25,7 @@ class MediaGuiModule(decman.Module):
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        return {
+        base = {
             "darktable",
             "feh",
             "imv",
@@ -30,14 +33,19 @@ class MediaGuiModule(decman.Module):
             "playerctl",
             "rawtherapee",
         }
+        if has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
+        return base
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        return {
+        base = {
             "ie-r",
             "spotify",
-            "qview",
         }
+        if not has_repo("cachyos"):
+            base |= _NATIVE_OR_AUR
+        return base
 
     def files(self) -> dict[str, decman.File]:
         return {

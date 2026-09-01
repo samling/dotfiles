@@ -197,6 +197,48 @@ do
 end
 
 do
+	local service = loadService({
+		config = { symbol = "NVDA", api_key = "key", refresh_interval_minutes = 15 },
+		decodeResults = { quote = validNvda },
+	})
+	assertEqual(service.intervals[1], 900000)
+	assertEqual(service.interval, 60000)
+	service:respond(1, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 900000)
+
+	service.config.refresh_interval_minutes = 10
+	service.callbacks.onConfigChanged()
+	assertEqual(#service.requests, 1)
+	assertEqual(service.interval, 600000)
+
+	service.callbacks.update()
+	assertEqual(#service.requests, 2)
+	assertEqual(service.interval, 60000)
+	service.config.refresh_interval_minutes = 20
+	service.callbacks.onConfigChanged()
+	assertEqual(service.interval, 60000)
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 1200000)
+end
+
+do
+	local minimum = loadService({
+		config = { symbol = "NVDA", api_key = "key", refresh_interval_minutes = 0 },
+	})
+	assertEqual(minimum.intervals[1], 60000)
+
+	local maximum = loadService({
+		config = { symbol = "NVDA", api_key = "key", refresh_interval_minutes = 1441 },
+	})
+	assertEqual(maximum.intervals[1], 86400000)
+
+	local fallback = loadService({
+		config = { symbol = "NVDA", api_key = "key", refresh_interval_minutes = "invalid" },
+	})
+	assertEqual(fallback.intervals[1], 300000)
+end
+
+do
 	local environmentKey = loadService({
 		config = { symbol = "NVDA", api_key = " setting-key " },
 		environment = { TWELVE_DATA_API_KEY = " environment-key " },
@@ -220,6 +262,14 @@ do
 	assertEqual(snapshot.percent_change, 2.41)
 	assertEqual(snapshot.refreshed_at, 1700000123)
 	assertEqual(snapshot.error, nil)
+
+	local publicationCount = #service.states
+	service.state.quote = nil
+	service.callbacks.onConfigChanged()
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.state.quote.refreshed_at, 1700000123)
+	assertEqual(#service.states, publicationCount + 1)
+	assertEqual(#service.requests, 1)
 end
 
 do
