@@ -4,7 +4,6 @@ from decman.plugins import aur, pacman
 from modules.common.archlinux import has_repo
 
 _NATIVE_OR_AUR = {
-    "gamescope-git",
     "heroic-games-launcher-bin",
 }
 
