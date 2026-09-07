@@ -23,7 +23,6 @@ class KubernetesModule(decman.Module):
             "kubie",
             "minikube",
             "talosctl",
-            "talhelper",
         }
 
     @aur.packages
@@ -33,6 +32,7 @@ class KubernetesModule(decman.Module):
             "hubble-bin",
             "kubecolor",
             "kubescape",
+            "omnictl-bin",
             "vcluster-bin",
         }
 

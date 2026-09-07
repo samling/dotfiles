@@ -37,7 +37,9 @@ class ZenbookModule(decman.Module):
     def pacmanpkgs(self) -> set[str]:
         return {
             "amdgpu_top",
+            "asusctl",
             "lact",
+            "rog-control-center",
         }
 
     @aur.packages
@@ -45,8 +47,6 @@ class ZenbookModule(decman.Module):
         return {
             "asus-5606-fan-state-git",
             "asus-5606-firmware-check-git",
-            "asusctl",
-            "rog-control-center",
         }
 
     @systemd.units
