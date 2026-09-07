@@ -23,5 +23,6 @@ class AIToolsModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         return {
             "dabri",
+            "paseo-desktop-bin",
             "rtk-bin",
         }
