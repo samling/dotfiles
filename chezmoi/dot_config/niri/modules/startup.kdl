@@ -6,7 +6,6 @@
 spawn-at-startup "noctalia"
 spawn-at-startup "sunsetr"
 spawn-at-startup "solaar"
-spawn-at-startup "zsh" "-lic" "exec paseo daemon start --web-ui --list 0.0.0.0:6767"
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 //spawn-at-startup "waybar"

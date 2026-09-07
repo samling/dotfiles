@@ -1,6 +1,7 @@
 import decman
-from decman.plugins import aur, pacman
+from decman.plugins import aur, pacman, systemd
 
+from modules._systemd import reconcile_units
 from modules.common.archlinux import has_repo
 
 _NATIVE_OR_AUR = {"chatgpt-desktop-bin"}
@@ -26,3 +27,14 @@ class AIToolsModule(decman.Module):
             "paseo-desktop-bin",
             "rtk-bin",
         }
+
+    @systemd.user_units
+    def user_units(self) -> dict[str, set[str]]:
+        return {
+            "sboynton": {
+                "paseo.service",
+            },
+        }
+
+    def on_change(self, store):
+        reconcile_units(self, store)

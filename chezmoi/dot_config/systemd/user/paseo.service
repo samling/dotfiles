@@ -1,0 +1,14 @@
+[Unit]
+Description=Paseo daemon
+
+[Service]
+Type=simple
+WorkingDirectory=%h
+# Load shell-configured agent paths on each start. %H is this machine's hostname.
+# Configure a Paseo password before enabling LAN access.
+ExecStart=/usr/bin/zsh -lic 'exec /usr/bin/paseo daemon start --foreground --web-ui --listen 0.0.0.0:6767 --hostnames %H,%H.local'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
