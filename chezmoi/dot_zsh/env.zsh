@@ -115,9 +115,16 @@ fi
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 #=== Kubernetes
-# Consume all *.yaml kubeconfigs in ${HOME}/.kube/kubeconfigs
+# Consume all *.yaml kubeconfigs in ${HOME}/.kube/kubeconfigs.
+# Keep the merged config separately so a tmux pane can override KUBECONFIG
+# without losing the global context used by kubectx and the tmux status bar.
 kubeconfigs=("$HOME/.kube/config" "$HOME"/.kube/kubeconfigs/*.(yaml|yml)(N))
-export KUBECONFIG="${(j.:.)kubeconfigs}"
+export KUBECONFIG_GLOBAL="${(j.:.)kubeconfigs}"
+if [[ -n "${KUBECONFIG_PANE:-}" ]]; then
+  export KUBECONFIG="$KUBECONFIG_PANE:$KUBECONFIG_GLOBAL"
+else
+  export KUBECONFIG="$KUBECONFIG_GLOBAL"
+fi
 unset kubeconfigs
 
 #=== Locales

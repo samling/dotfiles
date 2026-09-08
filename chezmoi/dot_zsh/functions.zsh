@@ -114,6 +114,52 @@ function cleanssh() {
 function startssh() {
   eval $(ssh-agent)
 }
+# Log in to a Teleport Kubernetes cluster using a kubeconfig scoped to the
+# current tmux pane. A function is required because it must export KUBECONFIG
+# in the calling shell; a standalone script cannot change its parent shell.
+function tsh-kube-pane() {
+  emulate -L zsh
+
+  if [[ -z "${TMUX_PANE:-}" || -z "${TMUX:-}" ]]; then
+    print -u2 -- "tsh-kube-pane: this command must be run inside tmux"
+    return 1
+  fi
+
+  local global_kubeconfig="${KUBECONFIG_GLOBAL:-${KUBECONFIG:-}}"
+  if [[ -z "$global_kubeconfig" ]]; then
+    print -u2 -- "tsh-kube-pane: the global KUBECONFIG is empty"
+    return 1
+  fi
+
+  local tmux_server="${${TMUX#*,}%%,*}"
+  local pane_id="${TMUX_PANE#%}"
+  local pane_dir="${XDG_RUNTIME_DIR:-/tmp}/tsh-kube-pane-${UID}"
+  local pane_kubeconfig="${pane_dir}/${tmux_server}-${pane_id}.yaml"
+
+  command mkdir -p -- "$pane_dir" || return
+  command chmod 700 -- "$pane_dir" || return
+
+  # Keep Teleport's generated entries in the pane file. The shell exposes it
+  # first in KUBECONFIG, followed by all global configs, so kubectx still sees
+  # every context while writing current-context only to the pane overlay.
+  if [[ ! -s "$pane_kubeconfig" ]]; then
+    print -r -- $'apiVersion: v1\nkind: Config\npreferences: {}' >| "$pane_kubeconfig" || return
+    command chmod 600 -- "$pane_kubeconfig" || return
+  fi
+
+  KUBECONFIG="$pane_kubeconfig" command tsh kube login "$@" || return
+  export KUBECONFIG_PANE="$pane_kubeconfig"
+  export KUBECONFIG="$pane_kubeconfig:$global_kubeconfig"
+  print -r -- "Pane kube context: $(command kubectl config current-context 2>/dev/null)"
+}
+
+# Return this shell to the merged global kubeconfig. The pane file is retained
+# so another tsh-kube-pane call in the same pane can reuse its local contexts.
+function tsh-kube-global() {
+  unset KUBECONFIG_PANE
+  export KUBECONFIG="$KUBECONFIG_GLOBAL"
+  print -r -- "Global kube context: $(command kubectl config current-context 2>/dev/null)"
+}
 
 # watch kubernetes shorthand
 function wk() {
