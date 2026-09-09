@@ -153,9 +153,16 @@ function tsh-kube-pane() {
   print -r -- "Pane kube context: $(command kubectl config current-context 2>/dev/null)"
 }
 
-# Return this shell to the merged global kubeconfig. The pane file is retained
-# so another tsh-kube-pane call in the same pane can reuse its local contexts.
-function tsh-kube-global() {
+# Undo a manual export KUBECONFIG=... or a tsh-kube-pane override in this shell.
+# The pane file is retained so tsh-kube-pane can reuse its local contexts.
+function kube-reset() {
+  emulate -L zsh
+
+  if [[ -z "${KUBECONFIG_GLOBAL:-}" ]]; then
+    print -u2 -- "kube-reset: the global KUBECONFIG is empty"
+    return 1
+  fi
+
   unset KUBECONFIG_PANE
   export KUBECONFIG="$KUBECONFIG_GLOBAL"
   print -r -- "Global kube context: $(command kubectl config current-context 2>/dev/null)"
