@@ -4,7 +4,6 @@ import urllib.parse
 
 import requests
 from decman.core import output
-from decman.plugins.aur.error import ForeignPackageManagerError
 from decman.plugins.aur.fpm import ForeignPackageManager
 
 
@@ -25,6 +24,12 @@ class AurMetadata:
 
     @classmethod
     def from_rpc_result(cls, result: dict) -> "AurMetadata":
+        if not isinstance(result["Name"], str) or not isinstance(result["PackageBase"], str):
+            raise ValueError("Invalid AUR package name or base")
+        if result.get("Maintainer") is not None and not isinstance(result["Maintainer"], str):
+            raise ValueError("Invalid AUR maintainer")
+        if result.get("LastModified") is not None and not isinstance(result["LastModified"], int):
+            raise ValueError("Invalid AUR modification timestamp")
         return cls(
             name=result["Name"],
             package_base=result["PackageBase"],
@@ -52,10 +57,10 @@ def install(recent_window_seconds: int = _DEFAULT_RECENT_WINDOW_SECONDS) -> None
                 recent_window_seconds=recent_window_seconds,
             )
         except AurRiskPolicyError as error:
-            raise ForeignPackageManagerError(str(error)) from error
+            output.print_warning(f"{error} AUR risk checks unavailable; continuing to batch confirmation.")
         return result
 
-    wrapped.__aur_risk_policy_wrapped__ = True
+    setattr(wrapped, "__aur_risk_policy_wrapped__", True)
     ForeignPackageManager.resolve_dependencies = wrapped
 
 
@@ -71,7 +76,7 @@ def enforce_package_policy(
         package_names,
         store,
         metadata_by_package=fetch_aur_metadata(package_names),
-        now=int(time.time()),
+        now=time.time_ns() // 1_000_000_000,
         recent_window_seconds=recent_window_seconds,
     )
 
@@ -98,24 +103,22 @@ def evaluate_package_risks(
         if metadata.last_modified is not None and metadata.last_modified >= recent_cutoff:
             risk_messages.append(
                 f"{package_name}: modified {_format_duration(now - metadata.last_modified)} ago "
-                f"(inside {_format_duration(recent_window_seconds)} review window)"
+                f"(inside {_format_duration(recent_window_seconds)} warning window)"
             )
 
-        if package_name not in known_maintainers:
-            maintainer_updates[package_name] = metadata.maintainer
-        elif known_maintainers[package_name] != metadata.maintainer:
+        if package_name in known_maintainers and known_maintainers[package_name] != metadata.maintainer:
             risk_messages.append(
                 f"{package_name}: maintainer changed from "
                 f"{_maintainer_name(known_maintainers[package_name])} to "
                 f"{_maintainer_name(metadata.maintainer)}"
             )
+        # Track observations, not approvals: this policy only warns.
+        maintainer_updates[package_name] = metadata.maintainer
 
     if risk_messages:
         output.print_warning(
-            "AUR package risk policy flagged package(s). Recent AUR changes are "
-            "not automatically bad, but they deserve PKGBUILD review before build "
-            "because compromised or transferred packages often change shortly "
-            "before abuse."
+            "AUR package warning: recent updates or maintainer changes detected. "
+            "Continuing without per-package review; the batch confirmation still applies."
         )
         output.print_list("AUR risk details:", risk_messages, elements_per_line=1)
 
@@ -134,17 +137,19 @@ def fetch_aur_metadata(package_names: set[str], timeout: int = 30) -> dict[str, 
         output.print_debug(f"AUR risk metadata URL = {url}")
         try:
             response = requests.get(url, timeout=timeout)
+            response.raise_for_status()
             data = response.json()
-        except Exception as error:
+            if data.get("type") == "error":
+                raise AurRiskPolicyError(f"AUR RPC returned error: {data.get('error')}")
+
+            for result in data["results"]:
+                item = AurMetadata.from_rpc_result(result)
+                metadata[item.name] = item
+                metadata.setdefault(item.package_base, item)
+        except AurRiskPolicyError:
+            raise
+        except (requests.RequestException, ValueError, KeyError, TypeError, AttributeError) as error:
             raise AurRiskPolicyError("Failed to fetch AUR risk metadata.") from error
-
-        if data.get("type") == "error":
-            raise AurRiskPolicyError(f"AUR RPC returned error: {data.get('error')}")
-
-        for result in data.get("results", []):
-            item = AurMetadata.from_rpc_result(result)
-            metadata[item.name] = item
-            metadata.setdefault(item.package_base, item)
 
     return metadata
 

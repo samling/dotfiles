@@ -6,13 +6,15 @@ import subprocess
 import decman
 
 from modules import _aur_prompts, _aur_risk_policy
-from modules._aur_commands import SemiUnattended
+from modules._aur_commands import SemiUnattended, install_cache
 from modules._pacman_commands import NoUpgrade
 from modules.common.aur_keys import AurKeysModule
 from modules.common.chezmoi import ChezmoiModule
 
 # Skip per-package interaction during AUR builds (less pauses, dep prompts);
 # pacman's overall install/upgrade/remove summary prompts are kept.
+assert decman.aur is not None
+assert decman.pacman is not None
 decman.aur.commands = SemiUnattended()
 
 # Opt-out of pacman -Syu for this run. Useful when adding/removing
@@ -22,13 +24,17 @@ decman.aur.commands = SemiUnattended()
 if os.environ.get("DECMAN_NO_UPGRADE"):
     decman.pacman.commands = NoUpgrade()
 
-# Keep decman's per-package PKGBUILD review/diff prompt interactive, but
-# auto-confirm the final "Build this package?" prompt after review.
+# Skip both per-package prompts; keep Decman's "Proceed?" for each complete
+# AUR batch (upgrades and new installs can be separate), and pacman's prompts.
 _aur_prompts.install()
 
-# Warn and require confirmation before building AUR packages that were modified
-# recently or whose maintainer changed since the last accepted run.
+# Non-blocking warnings for changes in the last 3 days or maintainer changes.
+# Metadata lookup failures also warn rather than aborting the build batch.
 _aur_risk_policy.install()
+
+# Persist each completed build. Explicit recovery mode can also reuse matching
+# cached VCS builds: sudo DECMAN_AUR_RESUME=1 decman (not for routine updates).
+install_cache(resume=os.environ.get("DECMAN_AUR_RESUME") == "1")
 
 # Point AUR builds at the aurbuilder user's gpg keyring (created by
 # UsersModule, populated by AurKeysModule). Has to happen before host
@@ -129,6 +135,7 @@ def _declared_pacman_pkgs() -> set[str]:
     # by name to bypass the shadow.
     from decman.plugins import run_methods_with_attribute
 
+    assert decman.pacman is not None
     pkgs = set(decman.pacman.packages)
     for mod in decman.modules:
         pkgs |= set().union(*run_methods_with_attribute(mod, "__pacman__packages__"))
