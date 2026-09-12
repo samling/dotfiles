@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+# Dedicated Sunshine trial: HDMI-A-1, 1920x1080@60, physical displays preserved.
+set -euo pipefail
+
+check_output() {
+    niri msg --json outputs | jq -e '
+        .["HDMI-A-1"] as $o |
+        if $o.current_mode == null then false else
+            $o.modes[$o.current_mode] as $m |
+            $m.width == 1920 and $m.height == 1080 and
+            $m.refresh_rate >= 59500 and $m.refresh_rate <= 60500 and
+            $o.logical.scale == 1
+        end' >/dev/null
+}
+
+send_display_command() {
+    printf '%s\n' "$1" | timeout 20s nc -U /tmp/sunshineVD.sock
+}
+
+case "${1:-}" in
+    --check-output)
+        check_output
+        exit
+        ;;
+    --prepare-display)
+        if [[ -e /opt/sunshine-vd/virt_display.state ]] ||
+           [[ "$(cat /sys/class/drm/card1-HDMI-A-1/status)" != disconnected ]]; then
+            echo 'Refusing HDMI trial: a virtual session or connected HDMI output already exists.' >&2
+            exit 1
+        fi
+        if ! send_display_command '--connect,-d,card1,--port,HDMI-A-1,--preserve-displays,--width,1920,--height,1080,--refresh-rate,60' ||
+           ! check_output; then
+            echo 'HDMI-A-1 did not reach 1920x1080@60 at scale 1; rolling back.' >&2
+            send_display_command '--disconnect' || true
+            exit 1
+        fi
+        exit
+        ;;
+    --cleanup-display)
+        send_display_command '--disconnect'
+        exit
+        ;;
+    '') ;;
+    *) echo "Unknown argument: $1" >&2; exit 2 ;;
+esac
+
+# Do not stop desktop Steam if display preparation failed.
+if ! check_output; then
+    echo 'HDMI-A-1 must be active at 1920x1080@60, scale 1, before launching Steam.' >&2
+    exit 1
+fi
+HOST_WAYLAND_DISPLAY="${WAYLAND_DISPLAY:?Niri WAYLAND_DISPLAY must be set}"
+[[ -r /usr/lib32/libextest.so ]] || { echo 'Install lib32-extest first.' >&2; exit 1; }
+
+STEAM_WAS_RUNNING=false
+if pgrep -x steam >/dev/null; then
+    STEAM_WAS_RUNNING=true
+fi
+GAMESCOPE_PID=""
+
+wait_for_steam_exit() {
+    local deadline=$((SECONDS + 30))
+    while pgrep -x steam >/dev/null; do
+        if (( SECONDS >= deadline )); then
+            echo 'Steam did not exit within 30 seconds.' >&2
+            return 1
+        fi
+        sleep 0.25
+    done
+}
+
+cleanup() {
+    local exit_status=$?
+    trap - EXIT TERM INT HUP
+    if [[ -n "$GAMESCOPE_PID" ]] && kill -0 "$GAMESCOPE_PID" 2>/dev/null; then
+        kill -TERM "$GAMESCOPE_PID" 2>/dev/null || true
+        wait "$GAMESCOPE_PID" 2>/dev/null || true
+    fi
+    if $STEAM_WAS_RUNNING && wait_for_steam_exit; then
+        systemd-run --user --quiet --collect \
+            --unit="steam-after-sunshine-${BASHPID}" -- /usr/bin/steam -silent || true
+    fi
+    exit "$exit_status"
+}
+trap cleanup EXIT
+trap 'exit 143' TERM HUP
+trap 'exit 130' INT
+
+steam -shutdown >/dev/null 2>&1 || true
+wait_for_steam_exit
+mapfile -t OLD_IDS < <(niri msg --json windows | jq -r '.[] | select(.app_id == "gamescope") | .id')
+
+gamescope --steam --grab --force-grab-cursor --force-windows-fullscreen \
+    -W 1920 -H 1080 -w 1920 -h 1080 -r 60 -- \
+    env SCB_NOSCOPE=1 WAYLAND_DISPLAY="$HOST_WAYLAND_DISPLAY" \
+        LD_PRELOAD=/usr/lib32/libextest.so steam -gamepadui &
+GAMESCOPE_PID=$!
+
+WINDOW_ID=""
+for _ in {1..100}; do
+    while read -r id; do
+        already_existed=false
+        for old_id in "${OLD_IDS[@]}"; do
+            if [[ "$id" == "$old_id" ]]; then
+                already_existed=true
+                break
+            fi
+        done
+        if ! $already_existed; then
+            WINDOW_ID="$id"
+            break 2
+        fi
+    done < <(niri msg --json windows | jq -r '.[] | select(.app_id == "gamescope") | .id')
+    kill -0 "$GAMESCOPE_PID" 2>/dev/null || exit 1
+    sleep 0.1
+done
+[[ -n "$WINDOW_ID" ]] || { echo 'Could not find new Gamescope window.' >&2; exit 1; }
+niri msg action move-window-to-monitor --id "$WINDOW_ID" HDMI-A-1
+niri msg action fullscreen-window --id "$WINDOW_ID"
+niri msg action focus-window --id "$WINDOW_ID"
+wait "$GAMESCOPE_PID"

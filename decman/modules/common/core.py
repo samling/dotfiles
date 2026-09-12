@@ -89,7 +89,7 @@ class CoreModule(decman.Module):
             "samsung-unified-driver-printer",
             "toofan-bin",
             "viddy",
-            "xembedsniproxy",
+            # "xembedsniproxy",
             # gitoverit still has no PKGBUILD; not yet on AUR.
         }
 

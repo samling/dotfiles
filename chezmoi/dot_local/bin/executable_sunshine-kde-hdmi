@@ -1,0 +1,155 @@
+#!/usr/bin/env python3
+"""Sunshine prep/undo for KDE HDMI 1080p60; never launch or wrap Steam."""
+import copy
+import fcntl
+import json
+import os
+from pathlib import Path
+import socket
+import subprocess
+import sys
+import time
+
+RUNTIME = Path(os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"))
+SESSION = RUNTIME / "sunshine-kde-hdmi.json"
+DAEMON_STATE = Path("/opt/sunshine-vd/virt_display.state")
+CONNECTOR = Path("/sys/class/drm/card1-HDMI-A-1/status")
+CONNECT = "--connect,-d,card1,--port,HDMI-A-1,--preserve-displays,--width,1920,--height,1080,--refresh-rate,60"
+
+
+def outputs():
+    result = subprocess.check_output(["kscreen-doctor", "--json"], text=True, timeout=5)
+    return json.loads(result)["outputs"]
+
+
+def active_mode(output):
+    return next((m for m in output.get("modes", [])
+                 if m["id"] == output.get("currentModeId")), None)
+
+
+def valid_output(items):
+    for output in items:
+        if output["name"] != "HDMI-A-1":
+            continue
+        mode = active_mode(output)
+        return bool(output.get("enabled") and output.get("connected") and mode
+                    and mode["size"] == {"width": 1920, "height": 1080}
+                    and abs(mode["refreshRate"] - 60) <= 0.5
+                    and output.get("scale") == 1)
+    return False
+
+
+def physical_snapshot(items):
+    result = {}
+    for output in items:
+        if output["name"] == "HDMI-A-1":
+            continue
+        mode = active_mode(output)
+        entry = {key: output.get(key) for key in (
+            "connected", "enabled", "pos", "scale", "rotation", "priority",
+            "vrrPolicy", "hdr", "wcg", "brightness", "replicationSource")}
+        entry["mode"] = None if mode is None else {
+            "size": mode["size"], "refreshRate": mode["refreshRate"]}
+        result[output["name"]] = entry
+    return copy.deepcopy(result)
+
+
+def identity():
+    try:
+        stat = DAEMON_STATE.stat()
+        return [stat.st_dev, stat.st_ino, stat.st_mtime_ns]
+    except FileNotFoundError:
+        return None
+
+
+def send(command):
+    # Socket EOF is not an acknowledgment: callers also check state/output.
+    with socket.socket(socket.AF_UNIX) as client:
+        client.settimeout(20)
+        client.connect("/tmp/sunshineVD.sock")
+        client.sendall((command + "\n").encode())
+        client.shutdown(socket.SHUT_WR)
+        while client.recv(4096):
+            pass
+
+
+def cleanup():
+    if not SESSION.exists():
+        return
+    recorded = json.loads(SESSION.read_text())["identity"]
+    current = identity()
+    if current is not None:
+        if recorded != current:
+            raise RuntimeError("Daemon ownership changed; refusing to disconnect another session")
+        send("--disconnect")
+    for _ in range(40):
+        active = any(o["name"] == "HDMI-A-1" and o.get("enabled") for o in outputs())
+        if identity() is None and not active:
+            SESSION.unlink()
+            return
+        time.sleep(0.25)
+    raise RuntimeError("Virtual display cleanup incomplete; ownership record retained")
+
+
+def prepare():
+    if "KDE" not in os.environ.get("XDG_CURRENT_DESKTOP", "").split(":"):
+        raise RuntimeError("This profile requires a KDE Plasma session")
+    if SESSION.exists() or DAEMON_STATE.exists():
+        raise RuntimeError("Existing virtual-display session; refusing to adopt it")
+    if CONNECTOR.read_text().strip() != "disconnected":
+        raise RuntimeError("HDMI-A-1 must be explicitly disconnected")
+    before = physical_snapshot(outputs())
+    if not before:
+        raise RuntimeError("No physical display baseline available")
+    # This user-owned record prevents this profile's undo from cleaning up a
+    # different profile's daemon state. A crash before identity is saved fails closed.
+    with SESSION.open("x") as stream:
+        json.dump({"identity": None}, stream)
+    try:
+        try:
+            send(CONNECT)
+        finally:
+            session_identity = identity()
+            SESSION.write_text(json.dumps({"identity": session_identity}))
+        if session_identity is None:
+            raise RuntimeError("Daemon did not publish cleanup ownership")
+        stable = 0
+        for _ in range(40):
+            items = outputs()
+            if physical_snapshot(items) != before:
+                raise RuntimeError("Physical display settings changed; removing virtual output")
+            if identity() != session_identity:
+                raise RuntimeError("Daemon ownership changed during display preparation")
+            stable = stable + 1 if valid_output(items) else 0
+            if stable >= 3:
+                return
+            time.sleep(0.25)
+        raise RuntimeError("HDMI-A-1 did not reach 1920x1080@60, scale 1")
+    except Exception:
+        cleanup()
+        raise
+
+
+def main():
+    os.umask(0o077)
+    if len(sys.argv) != 2 or sys.argv[1] not in (
+            "--prepare-display", "--cleanup-display", "--check-output"):
+        print("Usage: sunshine-kde-hdmi --prepare-display|--cleanup-display|--check-output", file=sys.stderr)
+        return 2
+    if sys.argv[1] == "--check-output":
+        return 0 if valid_output(outputs()) else 1
+    with (RUNTIME / "sunshine-kde-hdmi.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        if sys.argv[1] == "--prepare-display":
+            prepare()
+        else:
+            cleanup()
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
+        print(f"sunshine-kde-hdmi: {error}", file=sys.stderr)
+        sys.exit(1)

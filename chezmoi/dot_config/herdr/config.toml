@@ -1,0 +1,159 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[keys]
+# Set prefix to ctrl+a to match tmux configuration
+prefix = "ctrl+a"
+
+# Direct Ctrl navigation, plus prefix-based navigation.
+# These direct shortcuts also take precedence over keys used by pane apps.
+focus_pane_left = ["prefix+h", "ctrl+h"]
+focus_pane_down = ["prefix+j", "ctrl+j"]
+focus_pane_up = ["prefix+k", "ctrl+k"]
+focus_pane_right = ["prefix+l", "ctrl+l"]
+
+next_tab = ["prefix+n", "ctrl+n"]
+previous_tab = ["prefix+p", "ctrl+p"]
+split_vertical = "prefix+d"
+split_horizontal = "prefix+shift+d"
+new_tab = "prefix+t"
+# X closes a tab with confirmation below; W is unbound.
+close_tab = ""
+rename_tab = "prefix+shift+t"
+rename_pane = "prefix+shift+p"
+detach = "prefix+x"
+zoom = "prefix+shift+z"
+# tmux uses lowercase z for synchronization, not zoom; leave it unbound.
+
+new_workspace = "prefix+shift+n"
+workspace_picker = "prefix+s"
+rename_workspace = "prefix+shift+s"
+# Avoid colliding with the stacked split shortcut.
+close_workspace = "prefix+shift+q"
+
+reload_config = "prefix+r"
+toggle_sidebar = "prefix+shift+b"
+help = "prefix+?"
+settings = "prefix+alt+s"
+goto = ["prefix+g", "ctrl+space"]
+# tmux's r reloads; R is Herdr's repeatable resize mode.
+resize_mode = "prefix+shift+r"
+resize_pane_left = "prefix+shift+h"
+resize_pane_down = "prefix+shift+j"
+resize_pane_up = "prefix+shift+k"
+resize_pane_right = "prefix+shift+l"
+# Herdr normally swaps with HJKL; disable those defaults to avoid collisions.
+swap_pane_left = ""
+swap_pane_down = ""
+swap_pane_up = ""
+swap_pane_right = ""
+last_pane = 'ctrl+\'
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+switch_tab = ["prefix+1..9", "alt+1..9"]
+navigate_pane_left = "h"
+navigate_pane_down = "ctrl+j"
+navigate_pane_up = "ctrl+k"
+navigate_pane_right = "l"
+# Picker: plain j/k select workspaces; Ctrl+j/k retain pane movement.
+navigate_workspace_up = ["k", "up"]
+navigate_workspace_down = ["j", "down"]
+copy_mode = "prefix+["
+# Both e and E use Herdr's full scrollback editor ($EDITOR).
+edit_scrollback = ["prefix+e", "prefix+shift+e"]
+new_worktree = "prefix+shift+g"
+
+# Disable the immediate-close shortcut; use the confirmation popup instead.
+close_pane = ""
+
+[[keys.command]]
+key = "prefix+w"
+type = "popup"
+description = "close pane (confirm)"
+width = 60
+height = 7
+command = '''
+target=${HERDR_ACTIVE_PANE_ID:?No active pane}
+printf 'Close pane %s? [y/N] (then Enter): ' "$target"
+IFS= read -r answer || exit 0
+case "$answer" in
+  y|Y) "${HERDR_BIN_PATH:-herdr}" pane close "$target" ;;
+esac
+'''
+
+[[keys.command]]
+key = "prefix+shift+x"
+type = "popup"
+description = "close tab (confirm)"
+width = 60
+height = 7
+command = '''
+target=${HERDR_ACTIVE_TAB_ID:?No active tab}
+printf 'Close tab %s and all its panes? [y/N]: ' "$target"
+IFS= read -r answer || exit 0
+case "$answer" in
+  y|Y) "${HERDR_BIN_PATH:-herdr}" tab close "$target" ;;
+esac
+'''
+
+[[keys.command]]
+key = "prefix+b"
+type = "popup"
+description = "break pane into new tab (confirm)"
+width = 60
+height = 7
+command = '''
+target=${HERDR_ACTIVE_PANE_ID:?No active pane}
+printf 'Move pane %s into a new tab? [y/N]: ' "$target"
+IFS= read -r answer || exit 0
+case "$answer" in
+  y|Y) "${HERDR_BIN_PATH:-herdr}" pane move "$target" --new-tab --focus ;;
+esac
+'''
+
+# Unlike tmux's scratch session, this popup shell exits rather than detaches.
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+description = "temporary shell popup (exit to close)"
+width = "80%"
+height = "80%"
+command = 'exec "${SHELL:-/bin/sh}"'
+
+# Send intercepted control keys to the focused application, like tmux.
+[[keys.command]]
+key = "prefix+a"
+type = "shell"
+description = "send Ctrl+a to pane"
+command = '"${HERDR_BIN_PATH:-herdr}" pane send-keys "${HERDR_ACTIVE_PANE_ID:?No active pane}" ctrl+a'
+
+[[keys.command]]
+key = "prefix+ctrl+n"
+type = "shell"
+description = "send Ctrl+n to pane"
+command = '"${HERDR_BIN_PATH:-herdr}" pane send-keys "${HERDR_ACTIVE_PANE_ID:?No active pane}" ctrl+n'
+
+[[keys.command]]
+key = "prefix+ctrl+p"
+type = "shell"
+description = "send Ctrl+p to pane"
+command = '"${HERDR_BIN_PATH:-herdr}" pane send-keys "${HERDR_ACTIVE_PANE_ID:?No active pane}" ctrl+p'
+
+[[keys.command]]
+key = "prefix+ctrl+l"
+type = "shell"
+description = "send Ctrl+l to pane"
+command = '"${HERDR_BIN_PATH:-herdr}" pane send-keys "${HERDR_ACTIVE_PANE_ID:?No active pane}" ctrl+l'
+
+[[keys.command]]
+key = "prefix+ctrl+r"
+type = "shell"
+description = "send Ctrl+r to pane"
+command = '"${HERDR_BIN_PATH:-herdr}" pane send-keys "${HERDR_ACTIVE_PANE_ID:?No active pane}" ctrl+r'
+
+[ui]
+# Keep workspace-close confirmation enabled for prefix+Q.
+confirm_close = true

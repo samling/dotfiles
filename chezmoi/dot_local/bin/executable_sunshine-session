@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Keep desktop-specific capture out of the shared Sunshine configuration.
+set -euo pipefail
+
+if [[ "${XDG_SESSION_TYPE:-}" == wayland && ":${XDG_CURRENT_DESKTOP:-}:" == *:KDE:* ]]; then
+    exec sunshine "$@" capture=kwin
+fi
+
+# Niri and other desktops use the shared configuration (automatic capture).
+exec sunshine "$@"
