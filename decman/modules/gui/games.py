@@ -29,7 +29,10 @@ class GamesModule(decman.Module):
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        base = set()
+        base = {
+            "lib32-extest",
+            "virtualhere-client",
+        }
         if not has_repo("cachyos"):
             base |= _NATIVE_OR_AUR
         return base

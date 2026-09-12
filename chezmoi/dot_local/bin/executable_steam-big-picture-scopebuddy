@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# Niri/Sunshine: plain Steam Big Picture, with gamescope only in per-game scb options.
+# Use SCB_NOSCOPE=0 scb -- %command% in each game's Steam launch options.
+# Display creation/cleanup belongs to the Sunshine profile, not this launcher.
+set -euo pipefail
+
+STREAM_OUTPUT="${SUNSHINE_STREAM_OUTPUT:-HDMI-A-1}"
+if ! niri msg --json outputs | jq -e --arg output "$STREAM_OUTPUT" \
+    '.[$output] != null and .[$output].current_mode != null' >/dev/null; then
+    echo "Streaming output $STREAM_OUTPUT must already be active; leaving Steam alone." >&2
+    exit 1
+fi
+
+STEAM_WAS_RUNNING=false
+if pgrep -x steam >/dev/null; then
+    STEAM_WAS_RUNNING=true
+fi
+STEAM_PID=""
+RESTORE_DESKTOP=false
+
+wait_for_steam_exit() {
+    local deadline=$((SECONDS + 30))
+    while pgrep -x steam >/dev/null; do
+        if (( SECONDS >= deadline )); then
+            echo 'Steam did not exit within 30 seconds; not forcing it closed.' >&2
+            return 1
+        fi
+        sleep 0.25
+    done
+}
+
+cleanup() {
+    local exit_status=$?
+    trap - EXIT TERM INT HUP
+    if [[ -n "$STEAM_PID" ]] && kill -0 "$STEAM_PID" 2>/dev/null; then
+        steam -shutdown >/dev/null 2>&1 || true
+        if ! wait_for_steam_exit; then
+            exit "$exit_status"
+        fi
+    fi
+    if $RESTORE_DESKTOP && ! pgrep -x steam >/dev/null; then
+        systemd-run --user --quiet --collect \
+            --unit="steam-after-sunshine-${BASHPID}" -- /usr/bin/steam -silent || true
+    fi
+    exit "$exit_status"
+}
+trap cleanup EXIT
+trap 'exit 143' TERM HUP
+trap 'exit 130' INT
+
+mapfile -t OLD_IDS < <(niri msg --json windows | jq -r '.[] | select(.app_id == "steam") | .id')
+if $STEAM_WAS_RUNNING; then
+    steam -shutdown >/dev/null 2>&1 || true
+    wait_for_steam_exit
+    RESTORE_DESKTOP=true
+fi
+
+# A fresh Steam process is necessary for this environment to take effect.
+# Steam adds its own overlay preload to games later; do not preload extest here.
+env -u LD_PRELOAD SCB_NOSCOPE=0 steam -gamepadui &
+STEAM_PID=$!
+
+WINDOW_ID=""
+for _ in {1..300}; do
+    while read -r id; do
+        if [[ " ${OLD_IDS[*]} " != *" $id "* ]]; then
+            WINDOW_ID="$id"
+            break
+        fi
+    done < <(niri msg --json windows | jq -r \
+        '.[] | select(.app_id == "steam" and (.title | contains("Big Picture"))) | .id')
+    [[ -n "$WINDOW_ID" ]] && break
+    if ! kill -0 "$STEAM_PID" 2>/dev/null; then
+        echo 'Steam exited before its Big Picture window appeared.' >&2
+        exit 1
+    fi
+    sleep 0.1
+done
+
+if [[ -z "$WINDOW_ID" ]]; then
+    echo 'Could not find the new Steam Big Picture window within 30 seconds.' >&2
+    exit 1
+fi
+niri msg action move-window-to-monitor --id "$WINDOW_ID" "$STREAM_OUTPUT"
+niri msg action fullscreen-window --id "$WINDOW_ID"
+niri msg action focus-window --id "$WINDOW_ID"
+wait "$STEAM_PID"

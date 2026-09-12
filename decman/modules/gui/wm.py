@@ -30,6 +30,7 @@ class WmModule(decman.Module):
             "grim",
             "kitty",
             "noctalia",
+            "plasma-desktop",
             "qt6-virtualkeyboard",
             "quickshell",
             "rofi",

@@ -114,16 +114,38 @@ function cleanssh() {
 function startssh() {
   eval $(ssh-agent)
 }
+# Create or reuse the kubeconfig overlay assigned to the current tmux pane.
+# The path is printed so callers can decide whether to use it alone or merge it
+# with the global kubeconfigs.
+function _kube-pane-overlay() {
+  emulate -L zsh
+
+  if [[ -z "${TMUX_PANE:-}" || -z "${TMUX:-}" ]]; then
+    print -u2 -- "kube pane: this command must be run inside tmux"
+    return 1
+  fi
+
+  local tmux_server="${${TMUX#*,}%%,*}"
+  local pane_id="${TMUX_PANE#%}"
+  local pane_dir="${XDG_RUNTIME_DIR:-/tmp}/kube-pane-${UID}"
+  local pane_kubeconfig="${pane_dir}/${tmux_server}-${pane_id}.yaml"
+
+  command mkdir -p -- "$pane_dir" || return
+  command chmod 700 -- "$pane_dir" || return
+
+  if [[ ! -s "$pane_kubeconfig" ]]; then
+    print -r -- $'apiVersion: v1\nkind: Config\npreferences: {}' >| "$pane_kubeconfig" || return
+    command chmod 600 -- "$pane_kubeconfig" || return
+  fi
+
+  print -r -- "$pane_kubeconfig"
+}
+
 # Log in to a Teleport Kubernetes cluster using a kubeconfig scoped to the
 # current tmux pane. A function is required because it must export KUBECONFIG
 # in the calling shell; a standalone script cannot change its parent shell.
 function tsh-kube-pane() {
   emulate -L zsh
-
-  if [[ -z "${TMUX_PANE:-}" || -z "${TMUX:-}" ]]; then
-    print -u2 -- "tsh-kube-pane: this command must be run inside tmux"
-    return 1
-  fi
 
   local global_kubeconfig="${KUBECONFIG_GLOBAL:-${KUBECONFIG:-}}"
   if [[ -z "$global_kubeconfig" ]]; then
@@ -131,21 +153,8 @@ function tsh-kube-pane() {
     return 1
   fi
 
-  local tmux_server="${${TMUX#*,}%%,*}"
-  local pane_id="${TMUX_PANE#%}"
-  local pane_dir="${XDG_RUNTIME_DIR:-/tmp}/tsh-kube-pane-${UID}"
-  local pane_kubeconfig="${pane_dir}/${tmux_server}-${pane_id}.yaml"
-
-  command mkdir -p -- "$pane_dir" || return
-  command chmod 700 -- "$pane_dir" || return
-
-  # Keep Teleport's generated entries in the pane file. The shell exposes it
-  # first in KUBECONFIG, followed by all global configs, so kubectx still sees
-  # every context while writing current-context only to the pane overlay.
-  if [[ ! -s "$pane_kubeconfig" ]]; then
-    print -r -- $'apiVersion: v1\nkind: Config\npreferences: {}' >| "$pane_kubeconfig" || return
-    command chmod 600 -- "$pane_kubeconfig" || return
-  fi
+  local pane_kubeconfig
+  pane_kubeconfig=$(_kube-pane-overlay) || return
 
   KUBECONFIG="$pane_kubeconfig" command tsh kube login "$@" || return
   export KUBECONFIG_PANE="$pane_kubeconfig"
@@ -153,8 +162,27 @@ function tsh-kube-pane() {
   print -r -- "Pane kube context: $(command kubectl config current-context 2>/dev/null)"
 }
 
-# Undo a manual export KUBECONFIG=... or a tsh-kube-pane override in this shell.
-# The pane file is retained so tsh-kube-pane can reuse its local contexts.
+# Pick or name a context while keeping current-context local to this tmux pane.
+# With no argument, kubectl ctx opens the same interactive picker as the kx alias.
+function kx-pane() {
+  emulate -L zsh
+
+  local global_kubeconfig="${KUBECONFIG_GLOBAL:-${KUBECONFIG:-}}"
+  if [[ -z "$global_kubeconfig" ]]; then
+    print -u2 -- "kx-pane: the global KUBECONFIG is empty"
+    return 1
+  fi
+
+  local pane_kubeconfig
+  pane_kubeconfig=$(_kube-pane-overlay) || return
+
+  export KUBECONFIG_PANE="$pane_kubeconfig"
+  export KUBECONFIG="$pane_kubeconfig:$global_kubeconfig"
+  FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --reverse" command kubectl ctx "$@"
+}
+
+# Undo a manual KUBECONFIG export or any pane-scoped override in this shell.
+# The pane file is retained so pane commands can reuse its local context.
 function kube-reset() {
   emulate -L zsh
 

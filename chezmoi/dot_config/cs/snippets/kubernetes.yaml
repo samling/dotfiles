@@ -101,6 +101,25 @@ snippets:
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
 
+  kubectl-get-pods-with-labels:
+    id: "kubectl-get-pods-with-labels"
+    name: "kubectl-get-pods-with-labels"
+    description: "List pods with the standard columns plus all labels"
+    command: "kubectl get pods --show-labels ${namespace_arg}"
+    variables:
+      - name: "namespace"
+        description: "Namespace name (empty for current, all for all namespaces)"
+        default: ""
+    computed:
+      namespace_arg:
+        cases:
+          - when: namespace == "all"
+            value: "-A"
+          - when: namespace != ""
+            value: '${flag("-n", namespace)}'
+          - default: true
+    tags: ["kubernetes", "pods", "labels"]
+
   kubectl-get-node-labels:
     id: "kubectl-get-node-labels"
     name: "kubectl-get-node-labels"
