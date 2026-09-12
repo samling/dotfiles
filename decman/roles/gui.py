@@ -5,12 +5,13 @@ machine needs (kernel, RAID/EFI/SMART, real-hardware NetworkManager,
 etc.) and the graphical-session stack (Wayland compositor, audio,
 browsers, fonts, the rest).
 
-`MODULES` exported here is the role's full list — it works as-is for
-desktops. Laptop hosts (currently just xen) compose their own list
-inline from `GUI_MODULES` + `GUI_GROUPS` since they need a tweaked
-UsersModule (e.g. for the `keyd` group).
+`MODULES` exported here is the non-gaming role's full list. Hosts add
+work, gaming, distro and hardware modules explicitly; modules can
+request extra user groups (e.g. keyd) through UsersModule discovery.
 
 Deliberate exclusions from GUI_MODULES:
+- GamesModule: opt-in from gaming hosts (titan and xen), not a desktop
+  requirement. This also excludes Moonlight and VirtualHere by default.
 - EndeavourOSModule: distro-specific. EOS hosts register it in their
   `hosts/<name>.py` so a stock-Arch desktop can join the gui role
   cleanly.
@@ -25,7 +26,6 @@ from modules.gui.browsers import BrowsersModule
 from modules.gui.chat import ChatModule
 from modules.gui.clipboard import ClipboardModule
 from modules.gui.editors import EditorsGuiModule
-from modules.gui.games import GamesModule
 from modules.gui.graphical import GraphicalModule
 from modules.gui.hardware import GuiHardwareModule
 from modules.gui.media import MediaGuiModule
@@ -62,9 +62,8 @@ GUI_GROUPS: tuple[str, ...] = (
 # matching the same name are no-ops.
 GUI_ENSURED_GROUPS: tuple[str, ...] = GUI_GROUPS
 
-# Module list shared by the gui role and any host composing its own
-# (currently xen). UsersModule and LocaleModule are constructed by
-# the leaf so per-host group membership stays explicit.
+# Shared non-gaming GUI stack. UsersModule and LocaleModule are added
+# below so baseline group membership and registration order stay explicit.
 GUI_MODULES = [
     *COMMON,
     DisksModule(),
@@ -82,7 +81,6 @@ GUI_MODULES = [
     ChatModule(),
     ClipboardModule(),
     EditorsGuiModule(),
-    GamesModule(),
     GraphicalModule(),
     GuiHardwareModule(),
     MediaGuiModule(),
@@ -96,8 +94,7 @@ GUI_MODULES = [
     WmModule(),
 ]
 
-# Default gui role (desktop). Hosts needing extra groups (xen + keyd)
-# or distro/vendor extras build their own list inline from GUI_MODULES.
+# Default GUI role. Hosts append their optional modules to this list.
 MODULES = [
     UsersModule(
         extra_groups=GUI_GROUPS,

@@ -1,9 +1,13 @@
+from typing import cast
+
 import decman
 from decman.plugins import systemd
+from decman.plugins.pacman import PacmanCommands
 
 from modules._pacman_commands import IgnoreUpgradePackages
 from modules._systemd import reconcile_units
 from modules.common.archlinux import has_repo
+from modules.gui.games import GamesModule
 from modules.hardware.nvidia import NvidiaModule
 from modules.host.cachyos import CachyOSModule
 from modules.host.mkinitcpio import MkinitcpioModule
@@ -55,6 +59,7 @@ class TitanServicesModule(decman.Module):
 # the cachyos kernels wasting disk. Pruning the installer-shipped
 # extras pinned in CachyOSModule is a follow-up.
 decman.modules += MODULES + [
+    GamesModule(),
     MkinitcpioModule(),
     CachyOSModule(),
     NvidiaModule(),
@@ -70,6 +75,8 @@ _NATIVE_OR_AUR = {
 }
 
 # Per-host packages. Layered on top of role / module packages.
+assert decman.pacman is not None
+assert decman.aur is not None
 decman.pacman.packages |= {
     "apcupsd",
 } | (_NATIVE_OR_AUR if has_repo("cachyos") else set())
@@ -81,7 +88,8 @@ decman.aur.packages |= {
     "virtualhere-client-bin",
 } | (set() if has_repo("cachyos") else _NATIVE_OR_AUR)
 
-decman.pacman.commands = IgnoreUpgradePackages(
-    decman.pacman.commands,
-    {"lib32-gamescope"},
+# The wrapper forwards the PacmanCommands interface via __getattr__.
+decman.pacman.commands = cast(
+    PacmanCommands,
+    IgnoreUpgradePackages(decman.pacman.commands, {"lib32-gamescope"}),
 )

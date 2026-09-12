@@ -1,5 +1,6 @@
 import decman
 
+from modules.gui.games import GamesModule
 from modules.hardware.zenbook import ZenbookModule
 from modules.host.arch_kernel import ArchKernelModule
 from modules.host.dracut import DracutModule
@@ -15,6 +16,7 @@ from roles.gui import MODULES
 # - KeydModule: per-host config via etc/keyd/<hostname>.conf. Declares
 #   its own `keyd` group needs; UsersModule picks them up by scan.
 decman.modules += MODULES + [
+    GamesModule(),
     KeydModule(),
     ArchKernelModule(),
     DracutModule(),
@@ -23,7 +25,7 @@ decman.modules += MODULES + [
 ]
 
 # Per-host packages. Layered on top of role / module packages.
-decman.pacman.packages |= set()
+assert decman.aur is not None
 decman.aur.packages |= {
     "lib32-gamescope-plus",
 }
