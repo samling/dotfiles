@@ -18,7 +18,10 @@ class TitanServicesModule(decman.Module):
 
     @systemd.units
     def units(self) -> set[str]:
-        return {"apcupsd.service"}
+        return {
+            "apcupsd.service",
+
+        }
 
     @systemd.user_units
     def user_units(self) -> dict[str, set[str]]:
@@ -75,6 +78,7 @@ decman.aur.packages |= {
     "icu76", # sunshine dependency
     "rustdesk-server-bin",
     "scopebuddy",
+    "virtualhere-client-bin",
 } | (set() if has_repo("cachyos") else _NATIVE_OR_AUR)
 
 decman.pacman.commands = IgnoreUpgradePackages(

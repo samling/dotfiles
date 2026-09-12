@@ -1,7 +1,8 @@
 import decman
-from decman.plugins import aur, pacman
+from decman.plugins import aur, pacman, systemd
 
 from modules.common.archlinux import has_repo
+from modules._systemd import reconcile_units
 
 _NATIVE_OR_AUR = {
     "heroic-games-launcher-bin",
@@ -16,6 +17,10 @@ class GamesModule(decman.Module):
 
     def __init__(self):
         super().__init__("games")
+
+    @systemd.units
+    def units(self) -> set[str]:
+        return {"virtualhere.service"}
 
     @pacman.packages
     def pkgs(self) -> set[str]:
@@ -32,6 +37,7 @@ class GamesModule(decman.Module):
         base = {
             "lib32-extest",
             "virtualhere-client",
+            "virtualhere-server-bin"
         }
         if not has_repo("cachyos"):
             base |= _NATIVE_OR_AUR
