@@ -37,11 +37,13 @@ class NvidiaModule(decman.Module):
             "openrgb",
             "vulkan-icd-loader",
         }
+
         if self.include_32bit:
+            # 32-bit userspace for steam / wine / lutris.
             packages |= {
-                # 32-bit userspace for steam / wine / lutris.
                 "lib32-nvidia-utils",
                 "lib32-opencl-nvidia",
                 "lib32-vulkan-icd-loader",
             }
+
         return packages
