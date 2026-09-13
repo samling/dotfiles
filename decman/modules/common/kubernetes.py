@@ -32,7 +32,6 @@ class KubernetesModule(decman.Module):
             "hubble-bin",
             "kubecolor",
             "kubescape",
-            "omnictl-bin",
             "vcluster-bin",
         }
 
