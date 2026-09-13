@@ -17,13 +17,14 @@ Personal dotfiles mainly for Arch Linux-based and MacOS machines.
 Install prerequisites:
 
 ```bash
-{yay/paru} -S just chezmoi go-yq doppler-cli-bin decman crudini
+{yay/paru} -S just chezmoi go-yq doppler-cli-bin decman crudini github-cli direnv
 ```
 
 Configure `gh`:
 
 1. `gh auth login`
 1. `cp .envrc.tmpl .envrc`
+1. `eval "$(direnv hook bash)"`
 1. `direnv allow`
 
 Configure `doppler`:
