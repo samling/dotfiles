@@ -17,12 +17,13 @@ class NvidiaModule(decman.Module):
     is a per-machine fact.
     """
 
-    def __init__(self):
+    def __init__(self, *, include_32bit: bool = True):
         super().__init__("hardware_nvidia")
+        self.include_32bit = include_32bit
 
     @pacman.packages
     def pkgs(self) -> set[str]:
-        return {
+        packages = {
             # 64-bit userspace.
             "egl-wayland",
             "libva-nvidia-driver",
@@ -31,9 +32,14 @@ class NvidiaModule(decman.Module):
             "opencl-nvidia",
             "openrgb",
             "vulkan-icd-loader",
-
-            # 32-bit userspace for steam / wine / lutris.
-            "lib32-nvidia-utils",
-            "lib32-opencl-nvidia",
-            "lib32-vulkan-icd-loader",
         }
+
+        if self.include_32bit:
+            # 32-bit userspace for steam / wine / lutris.
+            packages |= {
+                "lib32-nvidia-utils",
+                "lib32-opencl-nvidia",
+                "lib32-vulkan-icd-loader",
+            }
+
+        return packages

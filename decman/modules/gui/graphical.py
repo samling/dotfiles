@@ -76,7 +76,7 @@ class GraphicalModule(decman.Module):
             "catppuccin-gtk-theme-mocha",
             "matugen-bin",
             "rose-pine-cursor",
-            "wallust",
+            "wallust-git",
         }
 
     def after_update(self, store):
