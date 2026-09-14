@@ -27,13 +27,13 @@ class TitanServicesModule(decman.Module):
 
         }
 
-    @systemd.user_units
-    def user_units(self) -> dict[str, set[str]]:
-        return {
-            "sboynton": {
-                "sunshine.service",
-            },
-        }
+    #@systemd.user_units
+    #def user_units(self) -> dict[str, set[str]]:
+    #    return {
+    #        "sboynton": {
+    #            "sunshine.service",
+    #        },
+    #    }
 
     def on_change(self, store):
         reconcile_units(self, store)
@@ -85,7 +85,7 @@ decman.aur.packages |= {
     "icu76", # sunshine dependency
     "rustdesk-server-bin",
     "scopebuddy",
-    "virtualhere-client-bin",
+    #"virtualhere-client-bin",
 } | (set() if has_repo("cachyos") else _NATIVE_OR_AUR)
 
 # The wrapper forwards the PacmanCommands interface via __getattr__.

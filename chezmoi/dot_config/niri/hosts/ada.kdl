@@ -24,12 +24,12 @@
 //     position x=0 y=1440
 // }
 
-output "DP-7" {
-    mode "2560x1440@59.951"
-    scale 1
-    transform "normal"
-    position x=3440 y=1440
-}
+// output "DP-7" {
+//     mode "2560x1440@59.951"
+//     scale 1
+//     transform "normal"
+//     position x=3440 y=1440
+// }
 
 // output "HDMI-A-1" {
 //     // Dedicated Sunshine virtual output; EDID supplies the 60 Hz trial mode.
@@ -39,21 +39,21 @@ output "DP-7" {
 //     position x=6000 y=1920
 // }
 
-// workspace "Web" {
-//   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
-// }
-// workspace "Terminal" {
-//   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
-// }
-// workspace "Code" {
-//   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
-// }
-// workspace "Meetings" {
-//   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
-// }
-// workspace "Games" {
-//   open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
-// }
+workspace "Web" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Terminal" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Code" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Meetings" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
+workspace "Games" {
+  open-on-output "LG Electronics LG ULTRAGEAR 201NTMX84123"
+}
 
 workspace "Chat" {
   open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"

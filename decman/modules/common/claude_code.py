@@ -38,22 +38,22 @@ class ClaudeCodeModule(decman.Module):
             "claude-code-seccomp",
         }
 
-    @aur.custom_packages
-    def custompkgs(self) -> set[aur.CustomPackage]:
-        return {
-            aur.CustomPackage(
-                pkgname="agent-status-bin",
-                pkgbuild_directory=str(_PKGBUILDS / "agent-status-bin"),
-            ),
-        }
-
-    @systemd.user_units
-    def user_units(self) -> dict[str, set[str]]:
-        return {
-            "sboynton": {
-                "agent-status.service",
-            },
-        }
+    # @aur.custom_packages
+    # def custompkgs(self) -> set[aur.CustomPackage]:
+    #     return {
+    #         aur.CustomPackage(
+    #             pkgname="agent-status-bin",
+    #             pkgbuild_directory=str(_PKGBUILDS / "agent-status-bin"),
+    #         ),
+    #     }
+    #
+    # @systemd.user_units
+    # def user_units(self) -> dict[str, set[str]]:
+    #     return {
+    #         "sboynton": {
+    #             "agent-status.service",
+    #         },
+    #     }
 
     def on_change(self, store):
         reconcile_units(self, store)
