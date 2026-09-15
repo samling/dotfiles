@@ -18,9 +18,9 @@ class GamesModule(decman.Module):
     def __init__(self):
         super().__init__("games")
 
-    @systemd.units
-    def units(self) -> set[str]:
-        return {"virtualhere.service"}
+    #@systemd.units
+    #def units(self) -> set[str]:
+    #    return {"virtualhere.service"}
 
     @pacman.packages
     def pkgs(self) -> set[str]:
@@ -36,8 +36,8 @@ class GamesModule(decman.Module):
     def aurpkgs(self) -> set[str]:
         base = {
             "lib32-extest",
-            "virtualhere-client",
-            "virtualhere-server-bin"
+            #"virtualhere-client",
+            #"virtualhere-server-bin"
         }
         if not has_repo("cachyos"):
             base |= _NATIVE_OR_AUR

@@ -11,6 +11,13 @@ apply:
     python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo SYSTEMD_LOG_LEVEL=warning decman
 
+# Retry a failed AUR batch, reusing matching cached development builds too.
+# Recovery only: cached VCS packages may not contain the latest upstream commits.
+[linux]
+resume-aur:
+    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
+    sudo DECMAN_AUR_RESUME=1 SYSTEMD_LOG_LEVEL=warning decman
+
 # macOS counterpart to decman: brew bundle + pyinfra config modules.
 [macos]
 apply:

@@ -57,7 +57,8 @@ global_context=$(KUBECONFIG="$KUBECONFIG_GLOBAL" command kubectl config current-
 [ -n "$pane_context" ] && [ "$pane_context" != "$global_context" ] || exit 1
 printf ' ⎈ %s' "$pane_context"
 '''
-when = true
+# Identical config paths cannot produce a pane-specific context.
+when = '[ "${KUBECONFIG:-}" != "${KUBECONFIG_GLOBAL:-}" ]'
 format = "[$output]($style)"
 style = "bold yellow"
 shell = ["bash", "--noprofile", "--norc"]
