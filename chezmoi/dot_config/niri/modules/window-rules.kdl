@@ -49,11 +49,13 @@ window-rule {
 
 window-rule {
   match at-startup=true app-id=r#"^com\.mitchellh\.ghostty$"#
+  match at-startup=true app-id=r#"^foot(client)?$"#
   open-on-workspace "Terminal"
 }
 
 window-rule {
   match app-id=r#"^com\.mitchellh\.ghostty$"#
+  match app-id=r#"^foot(client)?$"#
   draw-border-with-background false
 }
 

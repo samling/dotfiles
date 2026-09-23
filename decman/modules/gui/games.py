@@ -5,7 +5,7 @@ from modules.common.archlinux import has_repo
 from modules._systemd import reconcile_units
 
 _NATIVE_OR_AUR = {
-    "heroic-games-launcher-bin",
+    "heroic-games-launcher",
 }
 
 class GamesModule(decman.Module):

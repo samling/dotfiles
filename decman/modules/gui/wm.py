@@ -24,6 +24,7 @@ class WmModule(decman.Module):
             "awww",
             "cage",
             #"dms-shell-niri",
+            "foot",
             "fuzzel",
             "greetd",
             "greetd-regreet",
@@ -85,6 +86,8 @@ class WmModule(decman.Module):
                 # "awww-change-wallpaper.timer",
                 # "awww.service",
                 #"quickshell.service",
+                # Socket activation starts foot-server.service on the first footclient.
+                "foot-server.socket",
                 "swayidle.service",
                 # "wayward.service",
             },
