@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+jq -s --arg host '{{ .chezmoi.hostname }}' '
+  (.[0] // {})
+  | .daemon.listen = "0.0.0.0:6767"
+  | .daemon.hostnames = [$host, ($host + ".local")]
+  | .features.webUi.enabled = true
+'
