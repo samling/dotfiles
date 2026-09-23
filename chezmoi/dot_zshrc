@@ -55,8 +55,15 @@ if [[ ! -z ${LOCAL_DOTFILES} && ${LOCAL_DOTFILES} != "${HOME}/.zshrc.*" ]]; then
 fi
 
 # auto-start ssh-agent
+ssh_keys=()
+for pub in ~/.ssh/*.pub(N); do
+  [[ -f "${pub%.pub}" ]] && ssh_keys+=("${pub%.pub}")
+done
+
+eval "$(keychain --eval --quiet "${ssh_keys[@]}")"
+unset ssh_keys pub
 # set SSH_AUTH_SOCK env var to a fixed value
-export SSH_AUTH_SOCK=~/.ssh/ssh-agent.sock
+#export SSH_AUTH_SOCK=~/.ssh/ssh-agent.sock
 # test whether $SSH_AUTH_SOCK is valid
 #ssh-add -l 2>/dev/null >/dev/null
 # if not valid, then start ssh-agent using $SSH_AUTH_SOCK

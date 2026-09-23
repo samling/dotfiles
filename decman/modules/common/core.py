@@ -42,6 +42,7 @@ class CoreModule(decman.Module):
             "inxi",
             "jc",
             "jq",
+            "keychain",
             "libnotify",
             "lsd",
             "lsof",
