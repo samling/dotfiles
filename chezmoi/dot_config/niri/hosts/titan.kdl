@@ -56,10 +56,10 @@ workspace "Games" {
 }
 
 workspace "Chat" {
-  open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
+  open-on-output "Hewlett Packard DELL U2719DX 0x0000F3B1"
 }
 workspace "Notes" {
-  open-on-output "Dell Inc. DELL U2719DX 3TQSPS2"
+  open-on-output "Hewlett Packard DELL U2719DX 0x0000F3B1"
 }
 
 
