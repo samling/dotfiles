@@ -16,7 +16,7 @@ class WorkModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         base = {
-            "aws-cli",
+            "aws-cli-v2",
             "azure-cli",
             "certbot",
             "cilium-cli",

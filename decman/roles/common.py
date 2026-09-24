@@ -30,6 +30,7 @@ from modules.common.archlinux import ArchlinuxModule
 from modules.common.aur_keys import AurKeysModule
 from modules.common.base import BaseModule
 from modules.common.claude_code import ClaudeCodeModule
+from modules.common.cloud import CloudModule
 from modules.common.codex import CodexModule
 from modules.common.core import CoreModule
 from modules.common.data import DataModule
@@ -53,6 +54,7 @@ MODULES = [
     AurKeysModule(),
     BaseModule(),
     ClaudeCodeModule(),
+    CloudModule(),
     CodexModule(),
     CoreModule(),
     DataModule(),
