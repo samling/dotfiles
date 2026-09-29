@@ -41,6 +41,7 @@ local function loadService(options)
 		requests = {},
 		states = {},
 		state = {},
+		watchers = {},
 		commands = {},
 		notifications = {},
 		logs = {},
@@ -88,6 +89,15 @@ local function loadService(options)
 			set = function(key, value)
 				context.state[key] = copy(value)
 				table.insert(context.states, { key = key, value = copy(value) })
+				if context.watchers[key] ~= nil then
+					context.watchers[key](copy(value))
+				end
+			end,
+			get = function(key)
+				return copy(context.state[key])
+			end,
+			watch = function(key, callback)
+				context.watchers[key] = callback
 			end,
 		},
 		setUpdateInterval = function(interval)
@@ -722,6 +732,59 @@ do
 	service.callbacks.onIpc("unknown", {})
 	assertEqual(#service.requests, 2)
 	assertEqual(#service.commands, 0)
+end
+
+-- Exercise the real panel -> shared state -> service path after an offline startup.
+do
+	local service = loadService({
+		config = { symbol = "NVDA", api_key = "key", refresh_interval_minutes = 1440 },
+		decodeResults = { quote = validNvda },
+	})
+	service:respond(1, { ok = false, status = 0, body = "" })
+	assertEqual(service.state.quote.status, "unavailable")
+	assertEqual(service.interval, 86400000)
+
+	local closed = 0
+	local environment = setmetatable({
+		noctalia = service.callbacks.noctalia,
+		panel = {
+			close = function()
+				closed = closed + 1
+			end,
+		},
+	}, { __index = _G })
+	local chunk, loadError = loadfile("panel.luau", "t", environment)
+	assert(chunk ~= nil, loadError)
+	chunk()
+
+	environment.onRefresh()
+	assertEqual(closed, 1)
+	assertEqual(#service.requests, 2, "manual refresh must not wait for the daily timer")
+	assertEqual(service.interval, 60000)
+
+	-- Repeated clicks share the existing in-flight request and queue only one replacement.
+	environment.onRefresh()
+	environment.onRefresh()
+	assertEqual(#service.requests, 2)
+	service:respond(2, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.state.quote.error, nil)
+	assertEqual(service.interval, 16)
+	service:tick(service.deadlineGeneration)
+	assertEqual(#service.requests, 3)
+	service:respond(3, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.interval, 86400000)
+
+	-- A failed manual refresh retains the quote, and the next click can recover it.
+	environment.onRefresh()
+	service:respond(4, { ok = false, status = 0, body = "" })
+	assertEqual(service.state.quote.status, "stale")
+	assertEqual(service.state.quote.price, 119.43)
+	environment.onRefresh()
+	assertEqual(#service.requests, 5)
+	service:respond(5, { ok = true, status = 200, body = "quote" })
+	assertEqual(service.state.quote.status, "ready")
+	assertEqual(service.state.quote.error, nil)
 end
 
 local function assertNoSecret(value, secret, path, seen)

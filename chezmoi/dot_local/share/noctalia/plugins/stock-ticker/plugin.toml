@@ -41,4 +41,13 @@ id    = "ticker"
 entry = "widget.luau"
 
   [widget.actions]
+  left = "panel-toggle sboynton/stock-ticker:menu"
   right = "plugin sboynton/stock-ticker:quotes all open"
+
+[[panel]]
+id              = "menu"
+entry           = "panel.luau"
+width           = 200
+height          = 70
+placement       = "attached"
+open_near_click = true

@@ -1,6 +1,7 @@
 local Quote = require("./lib/quote.luau")
 
 local STATE_QUOTE = "quote"
+local STATE_REFRESH_REQUEST = "refresh_request"
 local MINIMUM_SCHEDULING_INTERVAL_MS = 16
 local DEFAULT_REFRESH_INTERVAL_MINUTES = 5
 local MINIMUM_REFRESH_INTERVAL_MINUTES = 1
@@ -256,6 +257,10 @@ function onConfigChanged()
 
 	requestRefresh()
 end
+
+noctalia.state.watch(STATE_REFRESH_REQUEST, function()
+	requestRefresh()
+end)
 
 function onIpc(event, payload)
 	if event == "refresh" then

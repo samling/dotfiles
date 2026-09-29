@@ -55,7 +55,9 @@ The tooltip reports the last successful refresh. After a refresh failure, the wi
 
 ## Actions
 
-Right-click opens the symbol on Yahoo Finance by default. Left-click is unbound and reserved for a future ticker selector. All gestures can be remapped per widget. For example, to refresh all quotes on left-click and disable right-click:
+Left-click opens a dropdown with a **Refresh** button. Refresh retries the quote immediately without waiting for the configured interval, including when the initial request failed because the network was not ready. The dropdown closes after selecting Refresh; all ticker widgets share the updated quote. Requests made while a fetch is in progress are coalesced into one follow-up fetch.
+
+Right-click opens the symbol on Yahoo Finance. All gestures can be remapped per widget; existing left-click overrides take precedence over the dropdown. For example, to refresh directly on left-click and disable right-click:
 
 ```toml
 [widget.stock-ticker.actions]
@@ -69,10 +71,11 @@ Run these commands from the plugin directory:
 
 ```sh
 noctalia plugins lint .
-stylua --check service.luau widget.luau lib/quote.luau tests/test_quote.lua tests/test_service.lua tests/test_widget.lua
+stylua --check service.luau widget.luau panel.luau lib/quote.luau tests/test_quote.lua tests/test_service.lua tests/test_widget.lua tests/test_panel.lua
 lua tests/test_quote.lua
 lua tests/test_service.lua
 lua tests/test_widget.lua
+lua tests/test_panel.lua
 ```
 
 After editing `plugin.toml`, reload the manifest with `noctalia msg config-reload`.

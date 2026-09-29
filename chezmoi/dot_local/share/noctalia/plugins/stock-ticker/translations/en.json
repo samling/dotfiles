@@ -1,4 +1,5 @@
 {
+  "menu.refresh": "Refresh",
   "settings.symbol.label": "Stock symbol",
   "settings.symbol.description": "US-listed stock or ETF symbol to display.",
   "settings.refresh_interval_minutes.label": "Refresh interval (minutes)",
