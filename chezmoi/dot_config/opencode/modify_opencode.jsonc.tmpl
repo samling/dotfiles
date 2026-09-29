@@ -9,7 +9,7 @@ if [ -z "$input" ]; then
 fi
 
 jq '
-  .plugin = (((.plugin // []) | map(select(. != "superpowers@git+https://github.com/obra/superpowers.git"))) + ["superpowers@git+https://github.com/obra/superpowers.git"])
+  .plugin = (((.plugin // []) | map(select(. != "superpowers@git+https://github.com/obra/superpowers.git" and . != "compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git"))) + ["compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git"])
   | .mcp = ((.mcp // {}) * {
       "github": {
         "type": "remote",

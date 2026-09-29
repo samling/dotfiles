@@ -2,7 +2,10 @@
 #!/usr/bin/env bash
 github_authorization={{ printf "Bearer %s" $githubPAT | quote }}
 export GITHUB_AUTHORIZATION="$github_authorization"
-cat | yq -p toml -o toml 'del(.features.codex_hooks) | .features.hooks = true | .mcp_servers.github = {
+cat | yq -p toml -o toml 'del(.features.codex_hooks, .plugins."superpowers@openai-curated") | .features.hooks = true | .plugins."compound-engineering@compound-engineering-plugin".enabled = true | .marketplaces."compound-engineering-plugin" = {
+  "source_type": "git",
+  "source": "https://github.com/EveryInc/compound-engineering-plugin.git"
+} | .mcp_servers.github = {
   "url": "https://api.githubcopilot.com/mcp/",
   "http_headers": {"Authorization": strenv(GITHUB_AUTHORIZATION)}
 }'

@@ -10,6 +10,14 @@ cat | jq --arg home "$HOME" '
   | .sandbox.enabled = true
   | .sandbox.autoAllowBashIfSandboxed = true
   | .outputStyle = "sboynton"
+  | del(.enabledPlugins."superpowers@claude-plugins-official")
+  | .enabledPlugins."compound-engineering@compound-engineering-plugin" = true
+  | .extraKnownMarketplaces."compound-engineering-plugin" = {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
+    }
   | .permissions = {
       "allow": [
         "Bash(find *)",

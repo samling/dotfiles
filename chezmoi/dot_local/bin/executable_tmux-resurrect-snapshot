@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""Keep dated layout/scrollback pairs after tmux-resurrect finishes saving."""
+
+import argparse
+import fcntl
+import gzip
+import json
+import os
+import shutil
+import sys
+import tarfile
+import tempfile
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+
+STAMP_FORMAT = "%Y%m%dT%H%M%S.%fZ"
+
+
+def fingerprint(path):
+    stat = path.stat()
+    return stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns
+
+
+def validate_archive(path):
+    # Read through gzip's trailer to check truncation/CRC, without extracting.
+    with gzip.open(path, "rb") as stream:
+        while stream.read(1024 * 1024):
+            pass
+    with tarfile.open(path, "r:gz") as archive:
+        if not archive.getmembers():
+            raise ValueError("pane-content archive is empty")
+
+
+def prune_snapshots(root, cutoff):
+    for candidate in root.iterdir():
+        if candidate.is_symlink() or not candidate.is_dir():
+            continue
+        try:
+            created = datetime.strptime(candidate.name, STAMP_FORMAT).replace(
+                tzinfo=timezone.utc
+            )
+        except ValueError:
+            continue
+        if created >= cutoff:
+            continue
+        try:
+            metadata = json.loads((candidate / "snapshot.json").read_text())
+        except (OSError, ValueError):
+            continue
+        if isinstance(metadata, dict) and metadata.get("format") == "tmux-resurrect-pair-v1":
+            shutil.rmtree(candidate)
+
+
+def snapshot(directory, keep_days):
+    if keep_days < 1:
+        raise ValueError("keep-days must be at least 1")
+    directory = Path(directory).expanduser().resolve()
+    root = directory / "snapshots"
+    root.mkdir(mode=0o700, exist_ok=True)
+    # Serialize our hooks; this does not lock tmux-resurrect itself.
+    with (root / ".lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        layout = (directory / "last").resolve(strict=True)
+        archive = directory / "pane_contents.tar.gz"
+        before = fingerprint(layout), fingerprint(archive)
+        now = datetime.now(timezone.utc)
+        destination = root / now.strftime(STAMP_FORMAT)
+        # Only publish a completed pair; failed copies never trigger pruning.
+        staging = Path(tempfile.mkdtemp(prefix=".pending-", dir=root))
+        try:
+            shutil.copyfile(layout, staging / "layout.txt")
+            shutil.copyfile(archive, staging / "pane_contents.tar.gz")
+            if (directory / "last").resolve(strict=True) != layout or before != (
+                fingerprint(layout), fingerprint(archive)
+            ):
+                raise RuntimeError("resurrect files changed during backup; retry after saving")
+            if not (staging / "layout.txt").stat().st_size:
+                raise ValueError("layout file is empty")
+            validate_archive(staging / "pane_contents.tar.gz")
+            (staging / "snapshot.json").write_text(
+                json.dumps({
+                    "format": "tmux-resurrect-pair-v1",
+                    "created_utc": now.isoformat(),
+                    "layout_source": layout.name,
+                }, indent=2) + "\n"
+            )
+            staging.rename(destination)
+        finally:
+            if staging.exists():
+                shutil.rmtree(staging)
+        prune_snapshots(root, now - timedelta(days=keep_days))
+        return destination
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("directory", help="tmux-resurrect save directory")
+    parser.add_argument("--keep-days", type=int, default=30)
+    parser.add_argument("--quiet", action="store_true")
+    args = parser.parse_args()
+    # Terminal output may contain secrets; new backup files are owner-only.
+    os.umask(0o077)
+    try:
+        destination = snapshot(args.directory, args.keep_days)
+    except (OSError, ValueError, RuntimeError, EOFError, tarfile.TarError) as error:
+        print(f"tmux-resurrect-snapshot: {error}", file=sys.stderr)
+        return 1
+    if not args.quiet:
+        print(destination)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
