@@ -1,5 +1,5 @@
 import decman
-from decman.plugins import pacman, aur, systemd
+from decman.plugins import aur, pacman, systemd
 
 from modules._systemd import reconcile_units
 
@@ -15,7 +15,7 @@ class NiriModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
-            "hyprpolkitagent",
+            # "hyprpolkitagent",
             "niri",
             "xwayland-satellite",
         }
@@ -31,15 +31,8 @@ class NiriModule(decman.Module):
 
     @systemd.user_units
     def user_units(self) -> dict[str, set[str]]:
-        # hyprpolkitagent ships a user unit gated on WAYLAND_DISPLAY and
-        # WantedBy=graphical-session.target. Enabling it makes pkexec /
-        # NetworkManager / udisks prompts work inside niri.
-        return {
-            "sboynton": {
-                "hyprpolkitagent.service",
-                # "sunsetr.service",
-            },
-        }
+        # No user units currently enabled; {} would be a dict, not a set.
+        return {"sboynton": set()}
 
     def on_change(self, store):
         reconcile_units(self, store)

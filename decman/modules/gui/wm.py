@@ -88,7 +88,7 @@ class WmModule(decman.Module):
                 #"quickshell.service",
                 # Socket activation starts foot-server.service on the first footclient.
                 "foot-server.socket",
-                "swayidle.service",
+                # "swayidle.service",
                 # "wayward.service",
             },
         }
