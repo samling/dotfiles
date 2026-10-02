@@ -744,5 +744,59 @@ function fzg() ( # fuzzygrep
       --query "$*"
 )
 
+#========= cs: finished commands replace the `cs exec` line
+# Typing `cs` or `cs exec [NAME] [--set ...]` and pressing Enter opens CS right
+# away; the finished command then REPLACES that line on the same prompt, like
+# the Ctrl-S widget: edit it or press Enter to run. The `cs exec` line is not
+# executed or added to history. A full path to the binary works the same way
+# (`~/.local/bin/cs exec`, `$HOME/.local/bin/cs exec`, `/any/path/cs exec`).
+# Every other line (and `cs exec` with --run/--prompt/--help, pipes, `;`, `&&`,
+# redirects) goes to the normal Enter. Captured or piped output
+# (`$(cs exec)`, `cs exec | pbcopy`) prints as before.
+# Prefers the user-local build; /usr/bin/cs is an older, incompatible release.
+cs() {
+    local bin=${HOME}/.local/bin/cs
+    [[ -x $bin ]] || bin=$(whence -p cs)
+    "$bin" "$@"
+}
 
+__cs_exec_inline() {
+    local -a words
+    words=(${(z)BUFFER})
+    # The first word may be `cs` or a path to a cs binary; expand ~ and $HOME.
+    local first=${(Q)words[1]} bin
+    case $first in
+        cs) bin=${HOME}/.local/bin/cs; [[ -x $bin ]] || bin=$(whence -p cs) ;;
+        \~/*) bin=${HOME}/${first#\~/} ;;
+        \$HOME/*) bin=${HOME}/${first#\$HOME/} ;;
+        \$\{HOME\}/*) bin=${HOME}/${first#\$\{HOME\}/} ;;
+        */cs) bin=$first ;;
+    esac
+    if [[ -n $bin && -x $bin && ( ${#words} -eq 1 || $words[2] == exec ) \
+          && ${words[(I)(--run|--prompt|-h|--help|\||\|\||\&|\&\&|\;|\>|\>\>|\<)]} -eq 0 ]]; then
+        local cmd
+        # Run the line's own arguments; quotes in NAME are honored via (Q).
+        local -a args=("${(@Q)words[2,-1]}")
+        (( ${#words} == 1 )) && args=(exec)
+        zle -I
+        cmd=$("$bin" "${args[@]}" </dev/tty 2>/dev/tty)
+        if [[ $? -eq 0 && -n $cmd ]]; then
+            BUFFER=$cmd
+            CURSOR=${#BUFFER}
+        fi
+        zle reset-prompt
+        return
+    fi
+    zle __cs_exec_inline_orig_accept_line
+}
+
+# Install after plugins (autosuggestions/syntax-highlighting rewrap accept-line).
+__cs_exec_inline_install() {
+    add-zsh-hook -d precmd __cs_exec_inline_install
+    [[ -n ${widgets[__cs_exec_inline_orig_accept_line]} ]] && return
+    zle -A accept-line __cs_exec_inline_orig_accept_line
+    zle -N accept-line __cs_exec_inline
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd __cs_exec_inline_install
 

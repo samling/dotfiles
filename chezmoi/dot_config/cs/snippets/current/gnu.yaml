@@ -1,0 +1,87 @@
+snippets:
+- id: aafae01d-6b41-4501-89d0-f36495e5cc30
+  name: Grep with Custom Regex
+  description: Search files using a custom regular expression pattern
+  command: grep -E {{pattern_arg}} {{files_arg}}
+  inputs:
+  - name: pattern
+    help: Regular expression pattern to search for
+    required: true
+    validate:
+      regex: true
+  - name: files
+    help: Files to search in
+    default: '*.txt'
+  expressions:
+    pattern_arg: quote(inputs.pattern)
+    files_arg: inputs.files
+- id: 084317b8-a125-4406-96e3-f46134880d15
+  name: Sed Replace with Regex
+  description: Replace text using sed with a regex pattern
+  command: sed -E {{script_arg}} {{file_arg}}
+  inputs:
+  - name: search_pattern
+    help: Regex pattern to search for
+    required: true
+    validate:
+      regex: true
+  - name: replacement
+    help: Replacement text
+    required: true
+  - name: global
+    help: Global replacement switch
+    default: false
+    kind: toggle
+    flag: g
+  - name: file
+    help: File to process
+    required: true
+  expressions:
+    script_arg: 'quote("s/" + inputs.search_pattern + "/" + inputs.replacement + "/" + (inputs.global ? "g" : ""))'
+    file_arg: inputs.file
+- id: 05333d82-d5c0-4a4a-a32e-03cb34dca3bd
+  name: Sed Replace File In Place
+  description: Replace text in a file in-place using sed with a regex pattern
+  command: sed -i {{script_arg}} {{file_arg}}
+  inputs:
+  - name: search_pattern
+    help: Regex pattern to search for
+    required: true
+    validate:
+      regex: true
+  - name: replacement
+    help: Replacement text
+    required: true
+  - name: global
+    help: Global replacement switch
+    default: false
+    kind: toggle
+    flag: g
+  - name: file
+    help: File to process
+    required: true
+  expressions:
+    script_arg: 'quote("s/" + inputs.search_pattern + "/" + inputs.replacement + "/" + (inputs.global ? "g" : ""))'
+    file_arg: inputs.file
+- id: 38f60d0f-fca2-436b-b7a2-0284d141eb0d
+  name: Analyze Logs with Regex
+  description: Extract specific patterns from log files
+  command: awk {{awk_script}} {{logfile_arg}} | sed -E {{sed_script}}
+  inputs:
+  - name: pattern
+    help: Initial filter pattern (must be valid regex)
+    required: true
+    validate:
+      regex: true
+  - name: extract_pattern
+    help: Pattern to extract specific parts (must be valid regex with capture groups)
+    default: (.*)
+    validate:
+      regex: true
+  - name: logfile
+    help: Log file to analyze
+    required: true
+  expressions:
+    awk_script: quote("/" + inputs.pattern + "/ {print $0}")
+    logfile_arg: inputs.logfile
+    sed_script: quote("s/" + inputs.extract_pattern + "/\\1/g")

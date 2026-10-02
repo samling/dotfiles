@@ -1,9 +1,12 @@
 settings:
-    additional_configs:
-        - snippets/*.yaml
-    interactive:
-        confirm_before_execute: false
-        show_final_command: true
-    selector:
-        command: fzf
-        options: --height 60% --reverse --border --sort --bind ctrl-u:page-up --bind ctrl-d:page-down
+    sources:
+        - snippets/current/*.yaml
+    default_source: snippets/current/custom.yaml
+    # Legacy project-local .csnippets files are not part of this repair.
+    project_source: false
+    color: auto
+    theme: catppuccin-mocha
+    theme_colors:
+        background: transparent
+        panel: transparent
+snippets: []

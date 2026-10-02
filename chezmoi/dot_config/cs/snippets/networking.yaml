@@ -13,3 +13,12 @@ snippets:
     tags: ["networking", "netstat"]
     created_at: "2025-01-01T00:00:00Z"
     updated_at: "2025-01-01T00:00:00Z"
+
+  ssh-tunnel-35923:
+    id: "ssh-tunnel-35923"
+    name: "ssh-tunnel-35923"
+    description: "Forward local port 35923 to port 35923 on 192.168.86.210 over SSH"
+    command: "ssh -N -L 127.0.0.1:35923:127.0.0.1:35923 sboynton@192.168.86.210"
+    tags: ["networking", "ssh", "tunnel"]
+    created_at: "2026-09-30T16:36:10Z"
+    updated_at: "2026-09-30T16:36:10Z"
