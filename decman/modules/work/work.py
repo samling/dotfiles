@@ -12,6 +12,9 @@ class WorkModule(decman.Module):
 
     def __init__(self):
         super().__init__("work")
+        # Installed and updated by work, not available from repos or AUR.
+        assert decman.aur is not None
+        decman.aur.ignored_packages.add("fleet-osquery")
 
     @pacman.packages
     def pkgs(self) -> set[str]:
@@ -35,6 +38,7 @@ class WorkModule(decman.Module):
         base = {
             "dcvviewer-bin",
             "globalprotect-openconnect-git",
+            "himmelblau",
             "slack-desktop",
             "teams-for-linux-bin",
             "teleport-bin",

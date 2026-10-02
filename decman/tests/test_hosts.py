@@ -51,6 +51,7 @@ with (
         'modules': [mod.name for mod in decman.modules],
         'packages': sorted(packages),
         'aur_packages': sorted(aur_packages),
+        'aur_ignored_packages': sorted(decman.aur.ignored_packages),
         'units': sorted(units),
         'user_units': sorted(user_units),
         'game_files': [path for mod in decman.modules
@@ -114,6 +115,13 @@ class HostCompositionTests(unittest.TestCase):
             'globalprotect-openconnect-git', 'rustdesk-bin', 'parsec-bin',
         } <= set(self.ada['aur_packages']))
         self.assertNotIn('cursor-bin', self.ada['packages'])
+
+    def test_work_hosts_leave_fleet_osquery_externally_managed(self):
+        for host in (self.ada, self.titan):
+            with self.subTest(modules=host['modules']):
+                self.assertIn('fleet-osquery', host['aur_ignored_packages'])
+                self.assertNotIn('fleet-osquery', host['packages'])
+                self.assertNotIn('fleet-osquery', host['aur_packages'])
 
     def test_ada_omits_gaming_and_titan_only_services(self):
         packages = set(self.ada['packages']) | set(self.ada['aur_packages'])
