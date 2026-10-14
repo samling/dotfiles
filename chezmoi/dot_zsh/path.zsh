@@ -21,6 +21,9 @@ PATH=$PATH:${HOME}/.local/bin
 #=== asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
+#=== cuda
+export PATH=$PATH:/opt/cuda/bin
+
 #=== XDG
 export XDG_DATA_DIRS=/usr/share:/usr/local/share:$XDG_DATA_DIRS
 

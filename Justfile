@@ -3,19 +3,19 @@ host := `hostname`
 
 init:
     chezmoi init --source={{root}}
-    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
+    /usr/bin/python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo SYSTEMD_LOG_LEVEL=warning decman --source={{root}}/decman/source.py
 
 [linux]
 apply:
-    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
+    /usr/bin/python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo SYSTEMD_LOG_LEVEL=warning decman
 
 # Retry a failed AUR batch, reusing matching cached development builds too.
 # Recovery only: cached VCS packages may not contain the latest upstream commits.
 [linux]
 resume-aur:
-    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
+    /usr/bin/python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo DECMAN_AUR_RESUME=1 SYSTEMD_LOG_LEVEL=warning decman
 
 # macOS counterpart to decman: brew bundle + pyinfra config modules.
@@ -25,11 +25,11 @@ apply:
     DOTFILES_ROOT={{root}} uvx pyinfra @local {{root}}/macos/deploy.py
 
 dry-run:
-    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py --dry-run
+    /usr/bin/python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py --dry-run
     sudo SYSTEMD_LOG_LEVEL=warning decman --dry-run
 
 update:
-    python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
+    /usr/bin/python {{root}}/decman/check_declared_asdeps.py --source={{root}}/decman/source.py
     sudo DECMAN_NO_UPGRADE=1 SYSTEMD_LOG_LEVEL=warning decman
 
 # Discover validpgpkeys from @aur.packages PKGBUILDs (or pass specific
@@ -37,4 +37,4 @@ update:
 # to decman/modules/common/aur_keys.toml after y/N prompts. Run when
 # an AUR build fails with "unknown public key <id>".
 sync-aur-keys *pkgs:
-    python {{root}}/decman/sync_aur_keys.py {{pkgs}}
+    /usr/bin/python {{root}}/decman/sync_aur_keys.py {{pkgs}}
