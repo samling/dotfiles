@@ -96,6 +96,9 @@ export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--no-height"
 # Default command to run in fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
+#=== Cuda
+export CUDA_HOME="/opt/cuda"
+
 #=== GCC
 export ARCHFLAGS="-arch $(uname -m)"
 

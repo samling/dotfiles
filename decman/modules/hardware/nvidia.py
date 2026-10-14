@@ -29,12 +29,16 @@ class NvidiaModule(decman.Module):
     def pkgs(self) -> set[str]:
         packages = {
             # 64-bit userspace.
+            "cuda",
             "egl-wayland",
+            "ggml-cuda",
             "libva-nvidia-driver",
+            "llama-cpp",
             "nvidia-settings",
             "nvidia-utils",
             "opencl-nvidia",
             "openrgb",
+            "python-pytorch-cuda",
             "vulkan-icd-loader",
         }
 

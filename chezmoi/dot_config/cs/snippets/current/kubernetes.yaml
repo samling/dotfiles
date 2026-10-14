@@ -1,0 +1,114 @@
+# Kubernetes-specific command snippets
+snippets:
+- id: 31219fb3-188d-435d-a7e5-27e4b8269114
+  name: kubectl-port-forward
+  description: Forward local port to pod or service
+  command: kubectl port-forward {{resource_arg}} {{port_mapping_arg}} {{namespace}}
+  tags: [kubernetes, port-forward, networking]
+  inputs:
+  - name: resource_type
+    help: 'Resource type: [pod, svc]'
+    required: true
+    default: svc
+    kind: choice
+    choices:
+    - label: pod
+      value: pod
+    - label: svc
+      value: svc
+  - name: resource_name
+    help: Resource name (e.g., my-pod, my-service)
+    required: true
+  - name: host_port
+    help: Host port (e.g., 8080)
+    required: true
+    default: '8080'
+    validate:
+      range: [1, 65535]
+  - name: target_port
+    help: Target port (leave empty to use host port)
+    default: ''
+    validate:
+      range: [1, 65535]
+  - name: namespace
+    help: Namespace name
+    default: ''
+    kind: flag
+    flag: -n
+    special:
+      all: -A
+  expressions:
+    resource_arg: inputs.resource_type + "/" + inputs.resource_name
+    port_mapping_arg: inputs.host_port + ":" + default(inputs.target_port, inputs.host_port)
+- id: b5e71077-5bef-4814-9cf7-dc9f451fc7e3
+  name: kubectl-top-pods-with-sort
+  description: kubectl top pods with additional sorting options
+  command: kubectl top pods {{namespace}} | { read -r header; printf '%s\n' "$header"; sort -k{{column_name}} -h -r; }
+  inputs:
+  - name: namespace
+    help: Namespace name
+    default: ''
+    kind: flag
+    flag: -n
+    special:
+      all: -A
+  - name: column_name
+    help: Column to sort by
+    default: cpu
+    kind: choice
+    choices:
+    - label: cpu
+      value: '3'
+    - label: memory
+      value: '4'
+- id: 14a4e790-2276-4bb4-8525-58039edf824f
+  name: kubectl-get-pods-advanced
+  description: Advanced kubectl get pods with multiple options
+  command: kubectl get pods {{namespace}} {{output_arg}} {{selector}}
+  tags: [kubernetes, pods, advanced]
+  inputs:
+  - name: namespace
+    help: Namespace name
+    default: ''
+    kind: flag
+    flag: -n
+    special:
+      all: -A
+  - name: output
+    help: Output format
+    kind: choice
+    choices:
+    - label: default
+      value: ''
+    - label: wide
+      value: wide
+    - label: yaml
+      value: yaml
+    - label: json
+      value: json
+    default: default
+  - name: selector
+    help: Label selector
+    default: ''
+    kind: flag
+    flag: --selector
+  expressions:
+    output_arg: 'inputs.output == "default" ? "" : flag("-o", inputs.output)'
+- id: 39732f2f-77b5-4750-a280-f9bdc7cc02d2
+  name: kubectl-get-pods-with-labels
+  description: List pods with the standard columns plus all labels
+  command: kubectl get pods --show-labels {{namespace}}
+  tags: [kubernetes, pods, labels]
+  inputs:
+  - name: namespace
+    help: Namespace name (empty for current, all for all namespaces)
+    default: ''
+    kind: flag
+    flag: -n
+    special:
+      all: -A
+- id: dfa9b5c5-9d10-4b50-99c5-f52b9491c88a
+  name: kubectl-get-node-labels
+  description: Show kubernetes node labels as nested lists
+  command: 'kubectl get nodes -o yaml | yq ''.items[] | {.metadata.name: .metadata.labels}'''
+  tags: [kubernetes, nodes, labels, advanced]

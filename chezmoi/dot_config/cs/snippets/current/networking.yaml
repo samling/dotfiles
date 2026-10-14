@@ -1,0 +1,19 @@
+# Networking command snippets
+snippets:
+- id: 5c8631d7-148f-44d8-89e9-2b57fe768b23
+  name: netstat-find-process-by-port
+  description: Find process by port number
+  command: sudo netstat -tulpn {{port_number}}
+  tags: [networking, netstat]
+  inputs:
+  - name: port_number
+    help: Port (e.g., 8080)
+    required: true
+    default: '8080'
+    validate:
+      range: [1, 65535]
+- id: 54030f5f-d0ed-4dbc-99b1-14736a47bb94
+  name: ssh-tunnel-35923
+  description: Forward local port 35923 to port 35923 on 192.168.86.210 over SSH
+  command: ssh -N -L 127.0.0.1:35923:127.0.0.1:35923 sboynton@192.168.86.210
+  tags: [networking, ssh, tunnel]

@@ -1,0 +1,110 @@
+# Docker-specific command snippets
+snippets:
+- id: 9607ff8d-43c7-47d6-90ac-48b623366d11
+  name: docker-ps
+  description: List Docker containers with optional filters
+  command: docker ps {{show_all}} {{filter}}
+  tags: [docker, containers, list]
+  inputs:
+  - name: show_all
+    help: Show all containers (including stopped)
+    default: false
+    kind: toggle
+    flag: -a
+  - name: filter
+    help: Filter containers (e.g., name=myapp)
+    default: ''
+    kind: flag
+    flag: --filter
+- id: fea80a7e-7b6d-4e73-b597-58167daa4cf6
+  name: docker-exec
+  description: Execute command in running container
+  command: docker exec {{interactive}} {{container_name_arg}} {{command_arg}}
+  tags: [docker, exec, containers]
+  inputs:
+  - name: interactive
+    help: Run in interactive mode
+    default: true
+    kind: toggle
+    flag: -it
+  - name: container_name
+    help: Container name or ID
+    required: true
+  - name: command
+    help: Command to execute
+    default: /bin/bash
+  expressions:
+    container_name_arg: inputs.container_name
+    command_arg: inputs.command
+- id: 060a19d5-7451-49c1-b143-483bd6945e31
+  name: docker-build
+  description: Build Docker image from Dockerfile
+  command: docker build {{dockerfile}} -t {{image_tag_arg}} {{context_path_arg}}
+  tags: [docker, build, image]
+  inputs:
+  - name: image_tag
+    help: Docker image tag (e.g., myapp:latest)
+    required: true
+  - name: context_path
+    help: Build context path
+    default: .
+  - name: dockerfile
+    help: Path to Dockerfile (optional)
+    default: ''
+    kind: flag
+    flag: -f
+  expressions:
+    image_tag_arg: inputs.image_tag
+    context_path_arg: inputs.context_path
+- id: a1a1941a-4139-4cd9-a6e4-5d446841ad56
+  name: docker-run
+  description: Run docker container with optional port mapping
+  command: docker run {{port_arg}} {{image_name_arg}}
+  tags: [docker, run]
+  inputs:
+  - name: port
+    help: Port to expose (empty for none)
+    default: ''
+    validate:
+      range: [1, 65535]
+  - name: image_name
+    help: Docker image name
+    required: true
+  expressions:
+    port_arg: 'inputs.port == "" ? "" : flag("-p", inputs.port + ":" + inputs.port)'
+    image_name_arg: inputs.image_name
+- id: 142907d0-a1c5-4e8d-9c5c-7222e8cb82df
+  name: docker-run-advanced
+  description: Advanced docker run with complex configuration
+  command: docker run {{detach}} {{port}} {{volume}} {{env_var}} {{image_name_arg}}
+  tags: [docker, advanced]
+  inputs:
+  - name: image_name
+    help: Docker image name
+    required: true
+  - name: port
+    help: Port to expose (1-65535)
+    default: ''
+    validate:
+      range: [1, 65535]
+    kind: flag
+    flag: -p
+  - name: volume
+    help: Volume to mount
+    default: ''
+    kind: flag
+    flag: -v
+  - name: env_var
+    help: Environment variable (KEY=VALUE)
+    default: []
+    validate:
+      pattern: ^[A-Za-z_][A-Za-z0-9_]*=[^[:space:]]+$
+    kind: repeat
+    flag: -e
+  - name: detach
+    help: Run in detached mode
+    default: false
+    kind: toggle
+    flag: -d
+  expressions:
+    image_name_arg: inputs.image_name

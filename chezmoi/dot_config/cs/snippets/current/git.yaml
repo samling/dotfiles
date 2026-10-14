@@ -1,0 +1,62 @@
+# Git-specific command snippets
+snippets:
+- id: 36f3b1d2-2107-4f72-a83f-00e9a8540b87
+  name: git-log-oneline
+  description: Show git log in one line format with optional limits
+  command: git log --oneline {{limit_arg}} {{branch_arg}}
+  tags: [git, log, history]
+  inputs:
+  - name: limit
+    help: Number of commits to show
+    default: '10'
+  - name: branch
+    help: Branch or commit range (optional)
+    default: ''
+  expressions:
+    limit_arg: 'inputs.limit == "" ? "" : "-" + inputs.limit'
+    branch_arg: inputs.branch
+- id: b99b0bc2-b9db-4f0f-a31f-3c8ed3281e44
+  name: git-branch-create
+  description: Create and switch to new git branch
+  command: git checkout -b {{branch_name_arg}} {{base_branch_arg}}
+  tags: [git, branch, create]
+  inputs:
+  - name: branch_name
+    help: New branch name
+    required: true
+  - name: base_branch
+    help: Base branch to branch from
+    default: main
+  expressions:
+    branch_name_arg: inputs.branch_name
+    base_branch_arg: inputs.base_branch
+- id: ac7eb502-d834-4869-8c69-487422d22913
+  name: git-commit-amend
+  description: Amend the last commit
+  command: git commit --amend {{no_edit}} {{new_message}}
+  tags: [git, commit, amend]
+  inputs:
+  - name: no_edit
+    help: Don't edit commit message
+    default: false
+    kind: toggle
+    flag: --no-edit
+  - name: new_message
+    help: New commit message (optional)
+    default: ''
+    kind: flag
+    flag: -m
+- id: eeb721f7-bf46-4c91-b3fe-437c9ca1848b
+  name: git-checkout
+  description: Checkout git branch with optional remote
+  command: git checkout {{branch_ref}}
+  tags: [git, checkout]
+  inputs:
+  - name: branch
+    help: Branch name
+    required: true
+  - name: remote
+    help: Remote name
+    default: origin
+  expressions:
+    branch_ref: 'inputs.remote == "" ? inputs.branch : inputs.remote + "/" + inputs.branch'
