@@ -47,7 +47,7 @@ class TitanServicesModule(decman.Module):
 # - MkinitcpioModule supplies the initramfs builder (CachyOS default,
 #   also vanilla Arch default).
 # - CachyOSModule supplies the cachyos kernels (linux-cachyos +
-#   linux-cachyos-lts + their nvidia-open module variants), limine
+#   linux-cachyos-lts + 580xx open DKMS modules for both), limine
 #   bootloader, plymouth splash, and a pile of installer-shipped
 #   packages pinned so decman doesn't remove them on first apply.
 # - NvidiaModule supplies the nvidia userspace (utils, settings,
@@ -62,7 +62,8 @@ decman.modules += MODULES + [
     GamesModule(),
     MkinitcpioModule(),
     CachyOSModule(),
-    NvidiaModule(),
+    # NvidiaModule(),  # Current driver branch; retain for easy rollback.
+    NvidiaModule(legacy_580=True),
     TitanServicesModule(),
     WorkModule(),
 ]

@@ -15,8 +15,8 @@ class CachyOSModule(decman.Module):
        for kernel/driver updates to flow.
 
     2. Kernel + bootloader. Replaces `ArchKernelModule` on this host:
-       linux-cachyos / linux-cachyos-lts (plus their nvidia-open
-       precompiled module variants), booted by limine via
+       linux-cachyos / linux-cachyos-lts (plus 580xx open DKMS modules
+       built for both kernels), booted by limine via
        limine-mkinitcpio-hook, splash via plymouth + the CachyOS
        plymouth theme. Initramfs builder comes from `MkinitcpioModule`
        (vanilla Arch default, kept by titan). Titan filters
@@ -66,15 +66,15 @@ class CachyOSModule(decman.Module):
             "chwd",
             "cpupower",
 
-            # CachyOS kernel stack. nvidia-open kernel modules are
-            # precompiled against the matching cachyos kernel, so no
-            # DKMS rebuild on kernel updates.
+            # CachyOS kernel stack. Keep both headers for 580xx DKMS builds.
             "linux-cachyos",
             "linux-cachyos-headers",
             "linux-cachyos-lts",
             "linux-cachyos-lts-headers",
-            "linux-cachyos-lts-nvidia-open",
-            "linux-cachyos-nvidia-open",
+            # Precompiled modules track the current driver, not 580xx.
+            # "linux-cachyos-lts-nvidia-open",
+            # "linux-cachyos-nvidia-open",
+            "nvidia-580xx-open-dkms",
 
             # Bootloader. limine-mkinitcpio-hook regenerates
             # /boot/limine entries when the kernel package's
