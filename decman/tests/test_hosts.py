@@ -146,9 +146,26 @@ class HostCompositionTests(unittest.TestCase):
                 self.assertEqual(host['game_files'], [
                     '/etc/firewalld/services/steam-remote-play.xml',
                 ])
-        self.assertIn('lib32-nvidia-utils', self.titan['packages'])
+        self.assertIn('lib32-nvidia-580xx-utils', self.titan['packages'])
         self.assertIn('sunshine.service', self.titan['user_units'])
         self.assertEqual(self.titan['upgrade'][-2:], ['--ignore', 'lib32-gamescope'])
+
+
+    def test_titan_uses_consistent_580_driver_stack(self):
+        packages = set(self.titan['packages'])
+        self.assertTrue({
+            'linux-cachyos', 'linux-cachyos-headers',
+            'linux-cachyos-lts', 'linux-cachyos-lts-headers',
+            'nvidia-580xx-open-dkms', 'nvidia-580xx-utils',
+            'nvidia-580xx-settings', 'opencl-nvidia-580xx',
+            'lib32-nvidia-580xx-utils', 'lib32-opencl-nvidia-580xx',
+        } <= packages)
+        self.assertFalse({
+            'linux-cachyos-nvidia-open', 'linux-cachyos-lts-nvidia-open',
+            'nvidia-open-dkms', 'nvidia-580xx-dkms',
+            'nvidia-utils', 'nvidia-settings', 'opencl-nvidia',
+            'lib32-nvidia-utils', 'lib32-opencl-nvidia',
+        } & packages)
 
 
 if __name__ == '__main__':
