@@ -32,7 +32,8 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn "footclient"; }
     // Mod+Space hotkey-overlay-title="Run an Application: rofi" { spawn-sh "rofi -show drun"; }
     Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
-    Mod+E hotkey-overlay-title="Open a File Manager: thunar" { spawn "thunar"; }
+    // Mod+E hotkey-overlay-title="Open a File Manager: thunar" { spawn "thunar"; }
+    Mod+E hotkey-overlay-title="Open a File Manager: dolphin" { spawn "dolphin"; }
     //Mod+Shift+Q hotkey-overlay-title="Toggle Wallpaper Picker" { spawn "qs" "ipc" "call" "wallpaper" "toggle"; }
     Mod+Shift+Ctrl+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock" "-f"; }
 

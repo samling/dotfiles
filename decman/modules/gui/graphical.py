@@ -15,9 +15,13 @@ class GraphicalModule(decman.Module):
     def pkgs(self) -> set[str]:
         return {
             "accountsservice",
+            "ark",
             "brightnessctl",
             "cantarell-fonts",
             "dconf",
+            "dolphin",
+            "dolphin-plugins",
+            "ffmpegthumbs",
             "file-roller",
             "gnome-power-manager",
             "gpu-screen-recorder",

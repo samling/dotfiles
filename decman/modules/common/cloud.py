@@ -12,9 +12,12 @@ class CloudModule(decman.Module):
     @pacman.packages
     def pkgs(self) -> set[str]:
         return {
-            "aws-cli-v2"
+            "aws-cli-v2",
+            "googleworkspace-cli"
         }
 
     @aur.packages
     def aurpkgs(self) -> set[str]:
-        return set()
+        return {
+            "google-cloud-cli",
+        }
