@@ -17,6 +17,7 @@ PATH=$PATH:/usr/sbin
 PATH=$PATH:/sbin
 PATH=$PATH:${HOME}/.local/usr/bin
 PATH=$PATH:${HOME}/.local/bin
+PATH=$PATH:${HOME}/bin
 
 #=== asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
