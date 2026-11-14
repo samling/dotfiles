@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+jq -s '
+  (.[0] // {})
+  | .icons.host = "\uf109"
+  | .icons.folder = "\uf115"
+'

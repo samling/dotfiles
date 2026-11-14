@@ -20,5 +20,9 @@ jq -s '
           if index($package) == null then . + [$package] else . end
         )
     )
-  | .powerline.separator = "dot"
+  | .powerline.separator = "pipe"
+  | .powerline.layout.left = [
+      "hostname", "model", "thinking", "shell_mode", "path", "git",
+      "queue", "context_pct", "cost"
+    ]
 '
