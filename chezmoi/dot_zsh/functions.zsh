@@ -159,6 +159,9 @@ function tsh-kube-pane() {
   KUBECONFIG="$pane_kubeconfig" command tsh kube login "$@" || return
   export KUBECONFIG_PANE="$pane_kubeconfig"
   export KUBECONFIG="$pane_kubeconfig:$global_kubeconfig"
+  if (( $+functions[_kube-prompt-refresh] )); then
+    _kube-prompt-refresh --force
+  fi
   print -r -- "Pane kube context: $(command kubectl config current-context 2>/dev/null)"
 }
 
@@ -178,7 +181,10 @@ function kx-pane() {
 
   export KUBECONFIG_PANE="$pane_kubeconfig"
   export KUBECONFIG="$pane_kubeconfig:$global_kubeconfig"
-  FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --reverse" command kubectl ctx "$@"
+  FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --reverse" command kubectl ctx "$@" || return
+  if (( $+functions[_kube-prompt-refresh] )); then
+    _kube-prompt-refresh --force
+  fi
 }
 
 # Undo a manual KUBECONFIG export or any pane-scoped override in this shell.
@@ -193,6 +199,9 @@ function kube-reset() {
 
   unset KUBECONFIG_PANE
   export KUBECONFIG="$KUBECONFIG_GLOBAL"
+  if (( $+functions[_kube-prompt-refresh] )); then
+    _kube-prompt-refresh --force
+  fi
   print -r -- "Global kube context: $(command kubectl config current-context 2>/dev/null)"
 }
 

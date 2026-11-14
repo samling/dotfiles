@@ -8,7 +8,7 @@ $git_branch\
 $git_state\
 $git_status\
 $cmd_duration\
-${custom.kube_pane}\
+${env_var.kube_pane}\
 $line_break\
 $python\
 $character"""
@@ -50,15 +50,7 @@ style = "bright-black"
 detect_extensions = []
 detect_files = []
 
-[custom.kube_pane]
-command = '''
-pane_context=$(command kubectl config current-context 2>/dev/null) || exit 1
-global_context=$(KUBECONFIG="$KUBECONFIG_GLOBAL" command kubectl config current-context 2>/dev/null)
-[ -n "$pane_context" ] && [ "$pane_context" != "$global_context" ] || exit 1
-printf ' ⎈ %s' "$pane_context"
-'''
-# Identical config paths cannot produce a pane-specific context.
-when = '[ "${KUBECONFIG:-}" != "${KUBECONFIG_GLOBAL:-}" ]'
-format = "[$output]($style)"
+[env_var.kube_pane]
+variable = "STARSHIP_KUBE_PANE_CONTEXT"
+format = " [⎈ $env_value]($style)"
 style = "bold yellow"
-shell = ["bash", "--noprofile", "--norc"]

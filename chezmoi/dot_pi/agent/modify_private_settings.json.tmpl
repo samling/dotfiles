@@ -3,18 +3,18 @@ jq -s '
   (.[0] // {})
   | .packages = (
       ((.packages // []) + [
-        "npm:pi-subagents@0.58.0",
-        "npm:pi-catppuccin-tui",
+        "npm:@tintinweb/pi-subagents@latest",
+        "npm:pi-catppuccin-tui@latest",
         "git:github.com/EveryInc/compound-engineering-plugin",
-        "npm:pi-mcp-adapter@2.29.0",
-        "npm:@narumitw/pi-plan-mode@0.55.3",
-        "npm:@juicesharp/rpiv-ask-user-question@2.7.1",
-        "npm:pi-lens@4.1.2",
-        "npm:@gotgenes/pi-permission-system@27.1.0",
+        "npm:pi-mcp-adapter@latest",
+        "npm:@narumitw/pi-plan-mode@latest",
+        "npm:@juicesharp/rpiv-ask-user-question@latest",
+        "npm:pi-lens@latest",
+        "npm:@gotgenes/pi-permission-system@latest",
         "npm:pi-background-tasks@latest",
-        "npm:pi-hermes-memory@0.9.6",
-        "npm:@plannotator/pi-extension@0.27.8",
-        "npm:pi-powerline-footer"
+        "npm:pi-hermes-memory@latest",
+        "npm:@plannotator/pi-extension@latest",
+        "npm:pi-powerline-footer@latest"
       ])
       | reduce .[] as $package ([];
           if index($package) == null then . + [$package] else . end

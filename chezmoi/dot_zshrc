@@ -16,6 +16,7 @@ source ~/.zsh/env.zsh
 source ~/.zsh/opt.zsh
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
+source ~/.zsh/kube-prompt.zsh
 source ~/.zsh/plugins.zsh
 source ~/.zsh/completions.zsh
 # keys.zsh must come after completions.zsh: `fzf --zsh` (sourced there) installs

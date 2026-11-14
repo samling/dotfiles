@@ -39,6 +39,7 @@ class SecurityModule(decman.Module):
         return {
             "ctrld-bin",
             "doppler-cli-bin",
+            "lastpass-cli",
             "littlesnitch-bin",
             "trufflehog-bin",
         }

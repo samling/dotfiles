@@ -20,6 +20,11 @@ window-rule {
 }
 
 window-rule {
+  match app-id=r#"^google-chrome$"#
+  clip-to-geometry false
+}
+
+window-rule {
   match app-id=r#"^chrome-.*"#
   open-floating true;
   open-focused true;
