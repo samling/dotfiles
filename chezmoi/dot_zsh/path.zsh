@@ -32,6 +32,10 @@ export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
 export XDG_DATA_DIRS=/var/lib/flatpak/exports/share/applications:$XDG_DATA_DIRS
 export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS
 
+#=== Grok
+#
+PATH=$PATH:${HOME}/.grok/bin
+
 #=== Homebrew
 #
 PATH=$PATH:/opt/homebrew/sbin:/opt/homebrew/bin

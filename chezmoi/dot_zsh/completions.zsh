@@ -1,5 +1,5 @@
 #=== fpath (must be at top)
-fpath=($HOME/.zsh $fpath)
+fpath=($HOME/.zsh $HOME/.grok/completions/zsh $fpath)
 
 #=== compinit
 # Fast path: skip compaudit + dump rebuild unless ~/.zcompdump is older than 24h.
