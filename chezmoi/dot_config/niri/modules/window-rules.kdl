@@ -67,7 +67,7 @@ window-rule {
 //=== CODE
 
 window-rule {
-  match at-startup=true app-id="code"
+  match at-startup=true app-id=r#"^com\.microsoft\.VSCode$"#
   open-on-workspace "Code"
 }
 
