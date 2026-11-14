@@ -1,8 +1,14 @@
 settings:
+    # Explicit paths exclude legacy files left behind in existing installations.
     sources:
-        - snippets/current/*.yaml
-    default_source: snippets/current/custom.yaml
-    # Legacy project-local .csnippets files are not part of this repair.
+        - snippets/custom.yaml
+        - snippets/docker.yaml
+        - snippets/git.yaml
+        - snippets/gnu.yaml
+        - snippets/kubernetes.yaml
+        - snippets/networking.yaml
+    default_source: snippets/custom.yaml
+    # Only load the managed library, not project-local .csnippets files.
     project_source: false
     color: auto
     theme: catppuccin-mocha

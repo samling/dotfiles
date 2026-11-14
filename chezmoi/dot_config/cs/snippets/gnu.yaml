@@ -1,98 +1,83 @@
 snippets:
-  grep-with-custom-regex:
-    id: grep-regex
-    name: Grep with Custom Regex
-    description: Search files using a custom regular expression pattern
-    command: grep -E ${pattern_arg} ${files_arg}
-    variables:
-      - name: pattern
-        description: Regular expression pattern to search for
-        type: regex
-        required: true
-      - name: files
-        description: Files to search in
-        default: "*.txt"
-        required: false
-    computed:
-      pattern_arg:
-        value: "quote(pattern)"
-      files_arg:
-        value: "files"
-
-  sed-replace:
-    id: sed-replace
-    name: Sed Replace with Regex
-    description: Replace text using sed with a regex pattern
-    command: sed -E ${script_arg} ${file_arg}
-    variables:
-      - name: search_pattern
-        description: Regex pattern to search for
-        type: regex
-        required: true
-      - name: replacement
-        description: Replacement text
-        required: true
-      - name: global
-        description: Global replacement switch
-        type: "boolean"
-        default: "false"
-      - name: file
-        description: File to process
-        required: true
-    computed:
-      script_arg:
-        value: 'quote("s/" + search_pattern + "/" + replacement + "/" + (global == "true" ? "g" : ""))'
-      file_arg:
-        value: "file"
-
-  sed-replace-file-in-place:
-    id: sed-replace-file-in-place
-    name: Sed Replace File In Place
-    description: Replace text in a file in-place using sed with a regex pattern
-    command: sed -i ${script_arg} ${file_arg}
-    variables:
-      - name: search_pattern
-        description: Regex pattern to search for
-        type: regex
-        required: true
-      - name: replacement
-        description: Replacement text
-        required: true
-      - name: global
-        description: Global replacement switch
-        type: "boolean"
-        default: "false"
-      - name: file
-        description: File to process
-        required: true
-    computed:
-      script_arg:
-        value: 'quote("s/" + search_pattern + "/" + replacement + "/" + (global == "true" ? "g" : ""))'
-      file_arg:
-        value: "file"
-
-  log-analyzer:
-    id: log-analyzer
-    name: Analyze Logs with Regex
-    description: Extract specific patterns from log files
-    command: awk ${awk_script} ${logfile_arg} | sed -E ${sed_script}
-    variables:
-      - name: pattern
-        description: Initial filter pattern (must be valid regex)
-        type: regex
-        required: true
-      - name: extract_pattern
-        description: Pattern to extract specific parts (must be valid regex with capture groups)
-        type: regex
-        default: "(.*)"
-        required: false
-      - name: logfile
-        description: Log file to analyze
-        required: true
-    computed:
-      awk_script:
-        value: 'quote("/" + pattern + "/ {print $0}")'
-      logfile_arg:
-        value: "logfile"
-      sed_script:
-        value: 'quote("s/" + extract_pattern + "/\\1/g")'
+- id: aafae01d-6b41-4501-89d0-f36495e5cc30
+  name: Grep with Custom Regex
+  description: Search files using a custom regular expression pattern
+  command: grep -E {{pattern}} {{files_arg}}
+  inputs:
+  - name: pattern
+    help: Regular expression pattern to search for
+    required: true
+    validate:
+      regex: true
+  - name: files
+    help: Files or globs (shell syntax; quote paths containing spaces)
+    default: '*.txt'
+  expressions:
+    files_arg: inputs.files
+- id: 084317b8-a125-4406-96e3-f46134880d15
+  name: Sed Replace with Regex
+  description: Replace text using sed with a regex pattern
+  command: sed -E {{script_arg}} {{file}}
+  inputs:
+  - name: search_pattern
+    help: Regex pattern to search for
+    required: true
+    validate:
+      regex: true
+  - name: replacement
+    help: Replacement text
+    required: true
+  - name: global
+    help: Global replacement switch
+    default: false
+    kind: toggle
+    flag: g
+  - name: file
+    help: File to process
+    required: true
+  expressions:
+    script_arg: 'quote("s/" + inputs.search_pattern + "/" + inputs.replacement + "/" + (inputs.global ? "g" : ""))'
+- id: 05333d82-d5c0-4a4a-a32e-03cb34dca3bd
+  name: Sed Replace File In Place
+  description: Replace text in a file in-place using sed with a regex pattern
+  command: sed -i {{script_arg}} {{file}}
+  inputs:
+  - name: search_pattern
+    help: Regex pattern to search for
+    required: true
+    validate:
+      regex: true
+  - name: replacement
+    help: Replacement text
+    required: true
+  - name: global
+    help: Global replacement switch
+    default: false
+    kind: toggle
+    flag: g
+  - name: file
+    help: File to process
+    required: true
+  expressions:
+    script_arg: 'quote("s/" + inputs.search_pattern + "/" + inputs.replacement + "/" + (inputs.global ? "g" : ""))'
+- id: 38f60d0f-fca2-436b-b7a2-0284d141eb0d
+  name: Analyze Logs with Regex
+  description: Extract specific patterns from log files
+  command: awk {{awk_script}} {{logfile}} | sed -E {{sed_script}}
+  inputs:
+  - name: pattern
+    help: Initial filter pattern (must be valid regex)
+    required: true
+    validate:
+      regex: true
+  - name: extract_pattern
+    help: Pattern to extract specific parts (must be valid regex with capture groups)
+    default: (.*)
+    validate:
+      regex: true
+  - name: logfile
+    help: Log file to analyze
+    required: true
+  expressions:
+    awk_script: quote("/" + inputs.pattern + "/ {print $0}")
+    sed_script: quote("s/" + inputs.extract_pattern + "/\\1/g")
