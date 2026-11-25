@@ -1,6 +1,7 @@
 # Dotfiles
 
-Personal dotfiles mainly for Arch Linux-based and MacOS machines.
+Personal dotfiles for Arch Linux-based and macOS machines, with a CLI-only
+Ubuntu 24.04 profile for DGX Spark and other development hosts.
 
 ## 1. Layout
 
@@ -39,6 +40,59 @@ Configure and run `chezmoi` and `decman`:
 1. `just apply`
 
 Apply any manual theme configuration in [THEMING.md](./THEMING.md)
+
+### Ubuntu 24.04 / DGX Spark (CLI only)
+
+Clone this repo to `~/.local/share/dotfiles`, then run as your normal user:
+
+```bash
+bash ~/.local/share/dotfiles/scripts/bootstrap-ubuntu.sh
+```
+
+The script uses sudo only for explicit Ubuntu CLI/build prerequisites. Mise
+installs current ARM64/x86_64 CLI tools and Node/Go in your home directory;
+Ubuntu's packaged fzf and Neovim are too old for this configuration. Zinit and
+tmux plugins are also user-owned. No Decman, NVIDIA packages, desktop settings,
+boot settings, system services, or firmware updates are involved.
+
+The local file `~/.config/chezmoi/local.yaml` selects the profile:
+
+```yaml
+profile: cli
+```
+
+This allowlists zsh, tmux, Neovim, Git/delta, terminal-tool settings, and Pi
+configuration. All other targets stay unmanaged, including SSH configuration,
+desktop settings, and templates that need Doppler secrets. Existing desktop
+hosts are unchanged when `profile` is unset. Claude/Codex settings that depend on
+Arch sandbox paths or Doppler need a separate port before being enabled here.
+
+The script previews the chezmoi changes and asks before applying. It can prepare
+just the user-owned tools with `--user-only` when system prerequisites have
+already been installed; that option does **not** provide zsh, direnv, keychain,
+or the other apt packages. After setup:
+
+```bash
+zsh                              # initialize zinit plugins and test the shell
+chsh -s /usr/bin/zsh              # optional: make it the login shell
+chezmoi diff                     # preview future user-configuration changes
+chezmoi apply                    # apply them
+```
+
+Start tmux and press **Ctrl-a, Shift-i** to install TPM plugins. Over SSH, copy
+mode uses tmux/OSC 52 instead of requiring a local Wayland clipboard.
+Your client terminal must permit OSC 52 clipboard writes.
+
+No credentials, private SSH keys, or AI authentication files are copied. This
+is a personal profile, not a generic installer. If reusing it, review the Git
+identity and signing-key path in `chezmoi/dot_gitconfig` before applying. Its
+`credential.helper = store` saves credentials in plaintext; use your preferred
+helper instead. Git signing stays enabled, so enroll a host-specific SSH
+signing key before committing. Log in separately to `gh` and Pi.
+
+Do **not** run `just init`, `just apply`, or `just update` on Ubuntu: those Linux
+recipes invoke Arch's Decman. Use DGX Dashboard for NVIDIA system updates.
+Model-serving projects and services are managed separately.
 
 ## 3. Reference
 

@@ -96,11 +96,22 @@ export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--no-height"
 # Default command to run in fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
-#=== Cuda
-export CUDA_HOME="/opt/cuda"
+#=== CUDA (DGX/Ubuntu uses /usr/local/cuda; Arch uses /opt/cuda)
+if [[ -z ${CUDA_HOME:-} ]]; then
+  for cuda_dir in /usr/local/cuda /opt/cuda; do
+    if [[ -d $cuda_dir ]]; then
+      export CUDA_HOME="$cuda_dir"
+      break
+    fi
+  done
+  unset cuda_dir
+fi
+[[ -n ${CUDA_HOME:-} ]] && export PATH="$PATH:$CUDA_HOME/bin"
 
-#=== GCC
-export ARCHFLAGS="-arch $(uname -m)"
+#=== GCC (Apple's -arch flag is not supported by Linux compilers)
+if [[ $OSTYPE == darwin* ]]; then
+  export ARCHFLAGS="-arch $(uname -m)"
+fi
 
 #=== GoLang
 unset GOROOT
