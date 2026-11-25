@@ -809,3 +809,18 @@ __cs_exec_inline_install() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd __cs_exec_inline_install
 
+hf() {
+  if [[ ${1-} == download ]]; then
+    local arg
+    for arg in "$@"; do
+      case "$arg" in
+        --local-dir|--local-dir=*) command hf "$@"; return ;;
+        --) break ;;
+      esac
+    done
+    shift
+    command hf download --local-dir . "$@"
+  else
+    command hf "$@"
+  fi
+ }
