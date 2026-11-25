@@ -22,8 +22,10 @@ PATH=$PATH:${HOME}/bin
 #=== asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
-#=== cuda
-export PATH=$PATH:/opt/cuda/bin
+#=== mise (Ubuntu CLI profile; shims also work in non-interactive shells)
+if [[ -x ${HOME}/.local/bin/mise ]]; then
+  export PATH="${MISE_DATA_DIR:-$HOME/.local/share/mise}/shims:$PATH"
+fi
 
 #=== XDG
 export XDG_DATA_DIRS=/usr/share:/usr/local/share:$XDG_DATA_DIRS

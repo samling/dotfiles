@@ -12,3 +12,44 @@
      next to the chezmoi-managed config.json so Config.qml can pick
      it up, but is never tracked or removed by chezmoi. */ -}}
 .config/quickshell/common/config.local.json
+
+{{- /* Opt-in headless/CLI profile. An allowlist prevents new desktop targets,
+     SSH configuration, or secret-backed agent templates from leaking onto
+     compute hosts. local.yaml is read by .chezmoi.yaml.tmpl during init. */}}
+{{ if eq (get . "profile" | default "desktop") "cli" }}
+**
+!.zshrc
+!.zsh
+!.zsh/**
+!.gitconfig
+!.ripgreprc
+!.tmux.conf
+!.tmux
+!.tmux/**
+!.config
+{{ range list "nvim" "delta" "lsd" "eza" "btop" "k9s" "tmux-palette" }}
+!.config/{{ . }}
+!.config/{{ . }}/**
+{{ end }}
+!.config/starship.toml
+!.config/gitmux.conf
+!.config/tmux
+!.config/tmux/plugins
+!.config/tmux/plugins/tpm
+!.config/tmux/plugins/tpm/**
+!.pi
+!.pi/agent
+!.pi/agent/settings.json
+!.pi/agent/hermes-memory-config.json
+!.pi/agent/extensions
+!.pi/agent/extensions/powerline-footer
+!.pi/agent/extensions/powerline-footer/theme.json
+!.local
+!.local/bin
+!.local/bin/tmux-resurrect-snapshot
+# Never deploy editor/agent scratch configuration nested in allowed trees.
+.config/nvim/.claude
+.config/nvim/.claude/**
+.zsh/.pi
+.zsh/.pi/**
+{{ end }}

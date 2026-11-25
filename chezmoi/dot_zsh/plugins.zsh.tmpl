@@ -5,7 +5,11 @@ ZINIT[HOME_DIR]="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit"
 {{- if eq .chezmoi.os "darwin" }}
 source /opt/homebrew/opt/zinit/zinit.zsh
 {{- else }}
-source /usr/share/zinit/zinit.zsh
+if [[ -r /usr/share/zinit/zinit.zsh ]]; then
+  source /usr/share/zinit/zinit.zsh
+else
+  source "${ZINIT[HOME_DIR]}/zinit.git/zinit.zsh"
+fi
 {{- end }}
 
 # Must load before zsh-syntax-highlighting
